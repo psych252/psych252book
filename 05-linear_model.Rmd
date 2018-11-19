@@ -1,0 +1,1418 @@
+# The linear model 
+
+## Resources 
+
+- [modeling data in the tidyverse](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)
+- [how to build lmers](https://stats.stackexchange.com/questions/13166/rs-lmer-cheat-sheet)
+- [lmer performance tips](https://cran.r-project.org/web/packages/lme4/vignettes/lmerperf.html)
+- [lmer vignettes](https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf)
+- [data camp course](https://campus.datacamp.com/courses/hierarchical-and-mixed-effects-models/generalized-linear-mixed-effect-models?ex=9)
+- [simulating linear models](https://aosmith.rbind.io/2018/01/09/simulate-simulate-part1/)
+
+## Learning goals 
+
+- general approach: ordinal least squares 
+- two-level predictor
+- multi-level predictor
+- one continuous predictor
+  + correlation
+- one continuous predictor, and one two-level predictor 
+- two continuous predictors 
+
+- x predictors 
+- model comparison: 
+  + the problem of overfitting
+  + likelihood test
+  + F-test 
+  + AIC and BIC
+  + cross-validation 
+- model assumptions
+  + breaking assumptions and seeing how much it matters
+  + QQ plot for assessing normality of residuals (see nice explanation in Julian's book)
+
+## Todo 
+
+- understand the different columns returned by `augment()`
+- start with continuous predictor or binary predictor? 
+- ordinal predictors as numerical (assumes that differences between categories are the same) vs. dummy-coded 
+- centered predictors make it easier to interpret intercept 
+- z-scored predictors make it easy to compare how much each predictor mattered in a multiple regression
+  + give some intuition on what z-scoring does 
+- interpreting interactions:
+  + a separate line for each categorical predictor
+  + "infinite separate lines" when the other predictor is continuous
+- go through anscombe's quartet to illustrate correlations 
+- how to deal with highly correlated predictors (fit a model with one predictor first, and then see whether the residual variance can be explained by another predictor)
+- interpretation of sum of squares in ANOVA (regression with multiple predictors) --> nice explanation in Julian's book
+- change the base category in the regression
+- for the QQ plot section: maybe keep the theoretical distribution the same and change the empirical distribution? 
+
+## General points to make 
+
+- why squared error? 
+  - makes all errors positive (so they don't cancel out when summing)
+  - punishes one larger error more than several smaller errors
+
+
+```{r echo=FALSE, message=FALSE}
+library("knitr") #for markdown things 
+library("broom") #for getting tidy model summaries
+library("lme4") #for mixed effects models 
+library("patchwork") #for making figure panels
+library("janitor") #for cleaning variable names 
+library("emmeans") #for comparing estimated marginal means 
+library("boot") #for bootstrapping
+library("modelr") #for cross-validation
+library("tictoc") #for timing things
+library("tidyverse") #for everything else
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+theme_set(
+  theme_classic()+
+    theme(text = element_text(size = 20)) #text size
+  )
+```
+
+## General approach 
+
+1. Define a statistical model 
+2. Check assumptions of the model 
+3. Assess the fit of the model as a whole 
+4. Assess direction and magnitude of individual predictors 
+
+## Model fitting 
+
+[Wickham book chapter on modeling basics](https://r4ds.had.co.nz/model-basics.html#a-simple-model)
+
+- find the line that best captures the data (i.e. that minimizes the sum of squared errors)
+- use the Wickham example as a first instruction
+
+In general, statistical models take the following form: 
+
+$$
+data = model + error 
+$$
+
+For the linear model that we'll focus on heres
+
+## One binary predictor
+
+$$
+y = \alpha + \beta \cdot condition + \epsilon
+$$
+
+- regression predicts the mean value for each group (mean minimizes the sum of squared errors)
+- t-test then tests whether the two averages are different from each other 
+- dummy coding for factors as predictors
+
+
+```{r}
+set.seed(0) #to make example reproducible
+
+df.data = data_frame(
+  condition = rep(c("1","2"), each = 40),
+  response = c(rnorm(40, mean = 8, sd = 2),
+              rnorm(40, mean = 7, sd = 2))
+)
+
+# show top five and bottom five rows of data 
+rbind(head(df.data),
+      tail(df.data)
+      )
+
+```
+
+
+```{r}
+# alternative way that generates data using the regression formula
+
+# set.seed(0) #to make example reproducible
+# n_participants = 80 
+# 
+# alpha = 5
+# beta = 2
+# 
+# df.data = data_frame(
+#   participant = 1:n_participants,
+#   condition = rep(0:1, each = n_participants/2),
+#   error = rnorm(n = n_participants, sd = 1),
+#   response = alpha + beta * condition + error
+# ) %>% 
+#   mutate(condition = factor(condition, levels = 0:1, labels = c("condition1", "condition2")))
+# 
+# # show top five and bottom five rows of data 
+# rbind(head(df.data),
+#       tail(df.data)
+#       )
+```
+
+Here, I've generated samples from two hypothetical conditions. For Condition 1, I've sampled from a normal distribution with a mean of 8 and a standard deviation of two. For Condition 2, I've used the same standard deviation but a mean of 7.
+
+This is what the two distributions look like: 
+
+```{r normal-overlap, fig.cap="Two normal distributions with different means but the same variance."}
+ggplot(data_frame(x = c(0, 15)), aes(x))+
+  stat_function(fun = dnorm, args = list(mean = 8, sd = 2), geom = "area", fill = "red", color = "black", alpha = 0.1)+
+  stat_function(fun = dnorm, args = list(mean = 7, sd = 2), geom = "area", fill = "blue", color = "black", alpha = 0.1)
+```
+
+As we see, the overlap a lot. Because both of the distributions have the same standard deviation, we can calculate the overlap in the following way: 
+```{r}
+mu1 = 7
+mu2 = 8
+sd = 2
+d = abs((7-8)/sd)
+2 * pnorm(-d/2)
+```
+
+So, 80% of the two distributions overlap. To double check, let's get the result through simulation. 
+
+```{r}
+set.seed(0)
+
+# parameters 
+mu1 = 7
+sd1 = 2 
+
+mu2 = 8
+sd2 = 2 
+
+nsamples = 1000
+
+#generate samples 
+samples1 = rnorm(n = nsamples, mean = mu1, sd = sd1)
+samples2 = rnorm(n = nsamples, mean = mu2, sd = sd2)
+
+df.histogram = data_frame(
+  hist1 = hist(samples1, plot = F, breaks = -5:15)$count,
+  hist2 = hist(samples2, plot = F, breaks = -5:15)$count) %>% 
+  mutate_all(funs(./sum(.))) %>% #normalize each distribution
+  rowwise() %>% #group by rows 
+  mutate(overlap = min(hist1, hist2)) %>% #we calculate the overlap by getting the minimum of both distributions
+  ungroup()
+
+#overlap 
+sum(df.histogram$overlap) 
+```
+
+Pretty close! Here, I've sampled 1000 values from each distribution, build a histogram based on the samples for each distribution, normalized each distribution, and then calculated the overlap of both distributions by taking the minimum value for each bin and then summing up. Why the minimum? Take a look at \@ref(fig:normal-overlap). Can you see that if we go along the x-axis from left to right, and take the minimum of both distributions at each point, we calculate the overlap of both distributions (i.e. the purple part). 
+
+Let's see what our hypothetical data for the two conditions looks like. 
+
+```{r}
+set.seed(0)
+
+ggplot(data = df.data, aes(x = condition, y = response))+
+  stat_summary(fun.y = mean, geom = 'bar', color = 'black', fill = "gray80")+
+  stat_summary(fun.data = mean_cl_boot, geom = 'linerange', size = 1)+
+  geom_point(position = position_jitter(height = 0, width = 0.1), alpha = 0.4)+
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1))) #removes padding at bottom 
+```
+
+As expected, the mean for Condition 1 is higher than that for Condition 2. However, is that difference significant? There is quite a bit of variance in each condition. One way to find out would be to run the permutation test that we covered earlier. Here, we will use the linear model instead. 
+
+In short, the linear model fits a line to this data that goes through the means of each condition. It then tests whether the slope of the line is significantly different from 0. 
+
+```{r}
+fit1 = lm(formula = response ~ condition, data = df.data)
+```
+
+I've used the `lm()` (linear model) function to fit the data. This function takes a `formula` and the `data` as input. In the formula, we specify the dependent variable on the left side of the tilde `~` and the independent variable(s) on the right side of the tilde.
+
+A line is defined by an intercept and a slope. Let's see what coefficients the linear model came up with to fit our data.
+
+```{r}
+fit1 %>% print()
+```
+
+The `print()` function (which can be omitted here) outputs the call as well as the coefficients. The intercept is `r fit1$coef[1]` and the slope is `r fit1$coef[2]`. Note that the `lm()` function used `condition1` as the reference category. Let's plot this line on top of our data. 
+
+```{r}
+set.seed(0)
+
+df.plot = df.data %>% 
+  mutate(condition = as.numeric(condition) - 1)
+
+ggplot(data = df.plot, aes(x = condition, y = response))+
+  stat_summary(fun.y = mean, geom = 'bar', color = 'black', fill = "gray80")+
+  stat_summary(fun.data = mean_cl_boot, geom = 'linerange', size = 1)+
+  geom_point(position = position_jitter(height = 0, width = 0.1), alpha = 0.4)+
+  geom_abline(intercept = fit1$coef[1], slope = fit1$coef[2], color = "red", size = 2)+
+  scale_y_continuous(expand = expand_scale(mult = c(0, 0.1)))+ #removes padding at bottom 
+  scale_x_continuous(breaks = 0:1, labels = 1:2)
+
+```
+
+The line goes right through the means of each condition. Note that to display this right, I've had to move the bars over to the left (so that the middle of the left bar is centered at x = 0). 
+
+```{r}
+fit1 %>% summary()
+```
+
+```{r}
+fit2 = lm(response ~ 1, data = df.data)
+fit2 %>% print()
+```
+
+We contrast this with a model that tries to fit the data with a single parameter. The best fitting parameter `r fit2$coef[1]` corresponds to the overall mean of the data. 
+
+```{r}
+mean(df.data$response)
+```
+
+```{r}
+tmp.anova = anova(fit1, fit2)
+print(tmp.anova)
+```
+
+The ANOVA test compares the residual sums of squares (RSS), and takes into account the difference in degrees of freedom (which is a function of the number of parameters in each model). 
+
+We can calculate the residual sums of squares like so: 
+
+```{r}
+df.residuals = df.data %>% 
+  mutate(mean.overall = mean(response)) %>% 
+  group_by(condition) %>% 
+  mutate(mean.condition = mean(response)) %>% 
+  ungroup() %>% 
+  mutate(residual.overall = (response - mean.overall)^2,
+         residual.condition = (response - mean.condition)^2)
+
+print(str_c("RSS (overall): ", df.residuals$residual.overall %>% sum() %>% round(2)))
+print(str_c("RSS (condition): ", df.residuals$residual.condition %>% sum() %>% round(2)))
+```
+
+
+The difference in the sum of squares follows an F-distribution. 
+
+```{r}
+ggplot(data_frame(x = c(0, 15)), aes(x))+
+  stat_function(fun = df, args = list(df1 = 1, df2 = 78))+
+  geom_vline(xintercept = tmp.anova$F[2], linetype = 2)
+```
+
+
+To get a better sense for what's going on, let's illustrate the residuals for the two different models. 
+
+Here is the model that only considers a global intercept. 
+
+```{r}
+set.seed(1)
+
+df.plot = df.data %>% 
+  mutate(condition = as.numeric(condition), #make condition numeric 
+         condition.jittered = condition + rnorm(nrow(.), sd = 0.2) #add random jitter
+         )
+  
+ggplot(data = df.plot, aes(x = condition.jittered, y = rating))+
+  geom_point(aes(color = as.factor(condition)), alpha = 0.4)+
+  geom_hline(yintercept = fit2$coef[1], color = "black", size = 1)+
+  geom_segment(aes(xend = condition.jittered, yend = fit2$coef[1]), alpha = .2)+
+  labs(title = "RSS for intercept only model")+
+  scale_color_manual(values = c("blue", "red"))+
+  scale_x_continuous(breaks = 1:2, labels = 1:2)+
+  scale_y_continuous(breaks = seq(0, 10, 5), labels  = seq(0, 10, 5), limits = c(0, 15))+
+  theme(legend.position = "none",
+        axis.title.x = element_blank())
+```
+
+And here is a model that accounts for a difference between the conditions. 
+
+```{r}
+set.seed(1)
+
+df.plot = fit1 %>% 
+  augment() %>% #the augment function from the broom package returns data and residuals (and some other things)
+  mutate(condition = as.numeric(condition), #make condition numeric 
+         condition.jittered = condition + rnorm(nrow(.), sd = 0.2) #add random jitter
+         )
+  
+ggplot(data = df.plot, aes(x = condition.jittered, y = rating))+
+  geom_point(aes(color = as.factor(condition)), alpha = 0.4)+
+  geom_segment(aes(x = 0.5, xend = 1.5, y = fit1$coef[1], yend = fit1$coef[1]), color = "blue")+
+  geom_segment(aes(x = 1.5, xend = 2.5, y = fit1$coef[1] + fit1$coef[2], yend = fit1$coef[1] + fit1$coef[2]), color = "red")+
+  geom_segment(aes(xend = condition.jittered, yend = .fitted), alpha = .2)+
+  labs(title = "RSS for intercept + predictor model")+
+  scale_color_manual(values = c("blue", "red"))+
+  scale_x_continuous(breaks = 1:2, labels = 1:2)+
+  scale_y_continuous(breaks = seq(0, 10, 5), labels  = seq(0, 10, 5), limits = c(0, 15))+
+  theme(legend.position = "none",
+        axis.title.x = element_blank())
+```
+
+Just to be clear, there are really only two values here on the x-axis. I've just moved the points so as to better illustrate how the residuals are calculated. 
+
+So, the basic question here is: how much are we reducing the error of the model, if we assume allow for a difference between conditions, compared to when we don't allow for that difference. Is the reduction of error statistically significant? 
+
+### Interpreting `summary.lm()` output
+
+`summary()` gives: 
+- the call 
+- information about how the residuals are distributed 
+- coefficients:
+  + point estimate
+  + standard error 
+  + t-value 
+  + p-value 
+- model fit measures: 
+  + residual standard error
+  + R^2 and adjusted R^2 
+  + F-statistic (which tests to what extent the whole model accounts for variation in the data) with p-value 
+
+[interpreting lm summary](https://www.quora.com/How-do-I-interpret-the-summary-of-a-linear-model-in-R)
+
+Point estimate: 
+
+- correlation coefficients (non-standardized)
+
+- interpretation of intercept: 
+  + predicted value when all predictors are 0 (sometimes doesn't make sense: in that case, center the predictors to interpret the intercept)
+  + when predictors are centered, then intercept is the average value
+
+Coefficient standard error: 
+
+- [this post](https://stats.stackexchange.com/questions/44838/how-are-the-standard-errors-of-coefficients-calculated-in-a-regression) explains how these standard errors are calculated
+
+- can be used to calculate confidence intervals 
+- and test hypotheses 
+
+t-value: 
+
+Wald test of the hypothesis that the corresponding regression coefficient is equal to 0. If the errors are normally distributed or the sample size is large enough, then these t statistics are distributed under the null hypothesis as t random variables with degrees of freedom (df ) equal to the residual df under the model.
+
+p-value: 
+
+two-sided p-values that are not adjusted for multiple comparisons
+
+```{r}
+# get p-values with Bonferroni correction
+tmp = fit1 %>% 
+  tidy() %>% 
+  pull(p.value) %>% 
+  p.adjust(method = "bonferroni")
+```
+
+Text in this section is taken from here: [interpreting lm summary output](http://www.learnbymarketing.com/tutorials/explaining-the-lm-summary-in-r/)
+
+```{r}
+# Residual Standard error (Like Standard Deviation)
+model = fit1
+
+k = length(model$coefficients) - 1 #Subtract one to ignore intercept
+SSE = sum(model$residuals^2)
+n = length(model$residuals)
+sqrt(SSE/(n - (1 + k))) #Residual Standard Error
+
+```
+
+In R, the lm summary produces the standard deviation of the error  with a slight twist.  Standard deviation is the square root of variance.  Standard Error is very similar.  The only difference is that instead of dividing by n-1, you subtract n minus 1 + # of variables involved.
+
+```{r}
+#Multiple R-Squared (Coefficient of Determination)
+y = df.data$rating
+model = fit1
+
+SST = sum((y - mean(y))^2)
+SSE = sum((y - model$fitted.values)^2)
+1 - SSE / SST
+```
+
+Also called the coefficient of determination, this is an oft-cited measurement of how well your model fits to the data.  While there are many issues with using it alone (see Anscombe's quartet), it's a quick and pre-computed check for your model.
+
+R-Squared subtracts the residual error from the variance in Y.  The bigger the error, the worse the remaining variance will appear. If you notice, numerator doesn't have to be positive. If the model is so bad, you can actually end up with a negative R-Squared.
+
+```{r}
+#Adjusted R-Squared
+n = length(y)
+k = length(model$coefficients) - 1 #Subtract one to ignore intercept
+SSE = sum(model$residuals^2)
+SSyy = sum((y - mean(y))^2)
+1 - (SSE / SSyy)*(n - 1)/(n - (k + 1))
+```
+
+Multiple R-Squared works great for simple linear (one variable) regression.  However, in most cases, the model has multiple variables. The more variables you add, the more variance you're going to explain. So you have to control for the extra variables.
+
+Adjusted R-Squared normalizes Multiple R-Squared by taking into account how many samples you have and how many variables you're using.
+
+Notice how k is in the denominator.  If you have 100 observations (n) and 5 variables, you'll be dividing by 100-5-1 = 94.  If you have 20 variables instead, you're dividing by 100-20-1 = 79.  As the denominator gets smaller, the results get larger: 99/94 = 1.05; 79/94 = 1.25.
+
+A larger normalizing value is going to make the Adjusted R-Squared worse since we're subtracting its product from one.
+
+```{r}
+#F-Statistic
+#Ho: All coefficients are zero
+#Ha: At least one coefficient is nonzero
+#Compare test statistic to F Distribution table
+y = df.data$rating
+model = fit1
+
+n = length(y)
+SSE = sum(model$residuals^2)
+SSyy = sum((y - mean(y))^2)
+k = length(model$coefficients) - 1
+((SSyy - SSE)/k) / (SSE/(n - (k + 1)))
+```
+
+Finally, the F-Statistic. Including the t-tests, this is the second "test" that the summary function produces for lm models. The F-Statistic is a "global" test that checks if at least one of your coefficients are nonzero.
+
+
+
+```{r}
+fit1 %>% confint()
+```
+
+Confidence intervals (95%) on the coefficients. 
+
+```{r}
+fit1 %>% fitted()
+```
+
+Fitted values. 
+
+```{r}
+fit2 = lm(rating ~ 1, data = df.data)
+fit2 %>% summary()
+```
+```{r}
+anova(fit1, fit2)
+```
+
+
+The grand mean is `r mean(df.data$rating)` 
+
+(df.data$rating %>% sd()) / sqrt((nrow(df.data))) 
+
+
+### Simulating from the statistical model 
+
+CONTINUE HERE 
+
+[simulation example](https://aosmith.rbind.io/2018/01/09/simulate-simulate-part1/)
+
+### Analyzing residuals 
+
+QQ plots, or quantile-quantile plots, are a good way of visually comparing two distributions. One common usage in statistics is to assess whether a variable is normally distributed. For example, let's say that we fit a regression model and want to now assess whether the residuals (i.e. the model errors) are normally distributed. Let's first just plot the residuals from the model we fit above. 
+
+```{r empirical-theoretical-distribution, fig.cap="Empirical distribution of residuals, and theoretical distribution."}
+
+df.plot = fit1 %>% 
+  augment() %>% 
+  clean_names() %>% #handy function that cleans up messy column names
+  select(condition, rating, fitted, residual = resid) #I've selected only some of the columns
+
+theoretical.params = as.list(MASS::fitdistr(df.plot$residual, "normal")$estimate) #fit a normal distribution to the residuals 
+
+ggplot(data = df.plot, aes(x = residual))+
+  stat_density(geom = "line", aes(color = "green"), size = 1.5)+
+  stat_function(fun = "dnorm", args = params, aes(color = "black"), size = 1.5)+
+  scale_color_manual(values = c("black", "green"), labels = c("theoretical", "empirical"))+
+  theme(legend.title = element_blank(),
+        legend.position = c(0.9, 0.9))
+
+```
+
+Here, the empirical distribution of the errors and the theoretical normal distribution with a mean of 0 and a SD of 2 correspond very closely. Let's take a look at the corresponding QQ plot. 
+
+
+```{r}
+ggplot(data = df.plot, aes(sample = residual))+
+  geom_abline(intercept = 0, slope = 1, linetype = 2)+
+  geom_qq(distribution = "qnorm", dparams = theoretical.params)+
+  geom_qq_line(distribution = "qnorm", dparams = theoretical.params)
+```
+
+Note that the QQ plot is sensitive to the general shape of the distribution. 
+
+I've used the `geom_qq()` and `geom_qq_line()` functions that are part of ggplot. By default, these functions assume a normal distribution as the theoretical distribution. This plot is just another way of showing the information in Figure \@ref(fig:empirical-theoretical-distribution). Intuitively, a QQ plot is built in the following way: imagine going with your finger from left to right along the x-axis on Figure \@ref(fig:empirical-theoretical-distribution), and then add a point on the QQ plot which captures the cumulative density for each distribution. 
+
+Here are some more examples for what these plots would look like when comparing different theoretical distributions to the same empirical distribution. 
+
+```{r}
+# data frame with parameters saved in a list column 
+df.parameters = data_frame(
+  parameters = list(
+    theoretical.params,
+    list(mean = -2, sd = 2),
+    list(mean = 2, sd = 2),
+    list(mean = 0, sd = 5)
+  )
+)
+
+# list container for plots
+l.plots = list()
+
+for (i in 1:nrow(df.parameters)){
+  p1 = ggplot(data = df.plot, aes(x = residual))+
+    stat_density(geom = "line", color = "green", size = 1.5)+
+    stat_function(fun = "dnorm", args = df.parameters$parameters[[i]], color = "black", size = 1.5)
+  
+  p2 = ggplot(data = df.plot, aes(sample = residual))+
+    geom_abline(intercept = 0, slope = 1, linetype = 2)+
+    geom_qq(dparams = df.parameters$parameters[[i]])+
+    geom_qq_line(dparams = df.parameters$parameters[[i]])
+  
+  l.plots[[length(l.plots) + 1]] = p1
+  l.plots[[length(l.plots) + 1]] = p2
+}
+
+# use patchwork for plotting 
+l.plots[[1]] + 
+l.plots[[2]] +
+l.plots[[3]] +
+l.plots[[4]] +
+l.plots[[5]] +
+l.plots[[6]] +
+l.plots[[7]] +
+l.plots[[8]] +
+  plot_layout(ncol = 4, byrow = F) &
+  theme(text = element_text(size = 10))
+```
+
+The line changes, but it's still a line. So the QQ plot helps us detect what kind of distribution the data follows. 
+
+Now, let's see what happens if distributions don't have the same shape. 
+
+```{r}
+
+#let's generate some "empirical" data from a beta distribution 
+set.seed(0)
+
+df.plot = data_frame(
+  residual = rbeta(1000, shape1 = 5, shape2 = 5)
+)
+
+# data frame with parameters saved in a list column 
+df.parameters = data_frame(
+  parameters = list(
+    list(shape1 = 1, shape2 = 5),
+    list(shape1 = 2, shape2 = 5),
+    list(shape1 = 5, shape2 = 2),
+    list(shape1 = 5, shape2 = 1)
+  )
+)
+
+# list container for plots
+l.plots = list()
+
+for (i in 1:nrow(df.parameters)){
+  p1 = ggplot(data = df.plot, aes(x = residual))+
+    stat_density(geom = "line", color = "green", size = 1.5)+
+    stat_function(fun = "dbeta", args = df.parameters$parameters[[i]], color = "black", size = 1.5)
+  
+  p2 = ggplot(data = df.plot, aes(sample = residual))+
+    geom_abline(intercept = 0, slope = 1, linetype = 2)+
+    geom_qq(distribution = "qbeta", dparams = df.parameters$parameters[[i]])
+  
+  l.plots[[length(l.plots) + 1]] = p1
+  l.plots[[length(l.plots) + 1]] = p2
+}
+
+# use patchwork for plotting
+l.plots[[1]] + 
+l.plots[[2]] +
+l.plots[[3]] +
+l.plots[[4]] +
+l.plots[[5]] +
+l.plots[[6]] +
+l.plots[[7]] +
+l.plots[[8]] +
+  plot_layout(ncol = 4, byrow = F) &
+  theme(text = element_text(size = 10))
+
+```
+
+The qqplot on the 
+
+## One categorical predictor
+
+Let's say we ran a study with three different groups. 
+
+```{r}
+set.seed(0)
+
+n_samples = 50
+
+df.data = data_frame(
+  condition = rep(c("beaver", "tree", "control"), each = n_samples),
+  performance = c(rnorm(n_samples, mean = 55, sd = 10),
+                  rnorm(n_samples, mean = 65, sd = 5),
+                  rnorm(n_samples, mean = 60, sd = 20))
+  ) %>% 
+  mutate(condition = factor(condition, levels = c("control", "beaver", "tree")))
+
+```
+
+
+Let's take a look at the data first:
+
+```{r}
+df.plot = df.data 
+
+ggplot(data = df.plot, aes(x = condition, y = performance))+
+  geom_point(position = position_jitter(height = 0, width = 0.1), alpha = 0.2)+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange")+
+  stat_summary(fun.y = "mean", geom = "point", size = 3)
+```
+
+The plot nicely shows the difference in means between conditions, as well as the difference in variance. Let's first test whether performance scores were overall affected by our manipulation. To do so, we first fit the linear model. 
+
+```{r}
+fit1 = lm(performance~condition, data = df.data)
+fit2 = lm(performance~1, data = df.data)
+```
+
+Now we can use the `anova()` function to test whether a significant proportion of the variance in the data can be explained by our manipulation. 
+
+```{r}
+anova(fit1)
+```
+
+```{r}
+# comparing to a model without any predictors
+anova(fit1, fit2)
+```
+
+Here, that's the case. 
+
+But let's say what we actually interested in are the differences between conditions. For example, was there any difference between the "control" condition and the "beaver" condition? Let's take a look at the summary of the model: 
+
+```{r}
+summary(fit1)
+```
+
+<!-- Note: global ANOVA test is reported at the bottom -->
+
+We see that the model now has three coefficients: one for the intercept (`(Intercept`), and two for the condition predictor (`conditionbeaver` and `conditiontree`). 
+
+<!-- write down model formula -->
+
+Let's say that we wanted to compare whether the results in the "beaver" condition differ significantly from the results in the "tree" condition. Logically, this should be the case: the "tree" condition is significantly different from the "control" condition, and the mean in the "control" condition is greater than the mean in the "beaver" condition. But let's check anyhow. 
+
+To do so, we need to change the default value of the condition factor. 
+
+```{r}
+
+df.data = df.data %>%
+  mutate(condition = fct_relevel(condition, "beaver")) #move beaver to the front
+
+fit3 = lm(performance ~ condition, data = df.data)
+
+summary(fit3)
+
+```
+
+```{r}
+fit3 %>% 
+  tidy() %>% 
+  mutate(p.value_adjusted = p.adjust(p.value, method = "bonferroni", n = 3)) #adjust p-values for multiple comparisons
+```
+
+
+As expected, the difference between the "beaver" condition and the "tree condition" was significant. 
+
+### Post-hoc tests 
+
+Let's say we would like to have all pairwise comparisons between our three conditions. The `emmeans` package helps us to do so ("emm" stands for estimated marginal means aka least-squares means).
+
+<!-- https://cran.r-project.org/web/packages/emmeans/vignettes/comparisons.html -->
+
+```{r}
+# library("emmeans")
+
+# emmeans(fit3)
+
+```
+
+CONTINUE HERE ... 
+
+
+
+### Dummy coding 
+
+<!-- explain the different ways of doing coding for coefficients  -->
+
+### Multiple testing 
+
+- correct for the number of tests
+
+### Planned contrasts 
+
+- a way of avoiding multiple comparisons 
+- the emphasis is on "planned": so these comparisons should be pre-registered 
+
+## One continuous predictor
+
+Now, let's say that we are interested in the relationship between two continuous variables. 
+
+```{r}
+set.seed(0)
+
+# let's make a dataset
+n_samples = 100
+df.data = data_frame(
+  intelligence = rnorm(n_samples, mean = 100, sd = 10),
+  score = intelligence/10 + rnorm(n_samples, mean = 0, sd = 2)
+)
+df.data %>% head()
+```
+
+Let's visualize the relationship between intelligence and result: 
+
+```{r}
+df.plot = df.data
+
+ggplot(data = df.plot, aes(x = intelligence, y = score))+
+  geom_point()
+
+```
+
+It looks like intelligence is somewhat predictive of the test score. People with higher intelligence values tend to have higher test scores. Let's fit a linear model again.  
+
+```{r}
+fit4 = lm(score ~ intelligence, data = df.data)
+fit4 %>% summary()
+```
+
+The intercept gives the predicted score when intelligence is 0. This doesn't really make sense here. First, it predicts a test score that is out of the range, and second nobody has an intelligence score of 0. The coefficient means that for each intelligence point, the model predicts an increase of the test score by `r fit4 %>% coef() %>% .[2] %>% round(2)`.  
+
+One thing we can do to make the intercept more meaningful is to center our predictor variable. That is, we subtract the mean 
+
+```{r}
+
+fit4b = lm(score ~ intelligence, 
+           data = df.data %>% 
+             mutate(intelligence = intelligence - mean(intelligence)))
+fit4b %>% summary()
+```
+
+The average test score is `r fit5 %>% coef() %>% .[1] %>% round(2)`. Note that the estimate for the "intelligence" coefficient hasn't changed. 
+
+Let's draw the regression line: 
+
+```{r}
+df.plot = df.data
+
+ggplot(data = df.plot, aes(x = intelligence, y = score))+
+  geom_point()+
+  geom_abline(intercept = coef(fit4)[1], slope = coef(fit4)[2])
+
+```
+
+Like we have seen when 
+
+
+```{r}
+df.plot = fit4 %>% 
+  augment() %>% 
+  clean_names()
+
+ggplot(data = df.plot, aes(x = intelligence, y = score))+
+  geom_point()+
+  geom_abline(intercept = coef(fit4)[1], slope = coef(fit4)[2])+
+  geom_segment(aes(xend = intelligence, yend = fitted), alpha = .2)
+```
+
+Let's compare this with a model that only has a single parameter. 
+
+```{r}
+fit5 = lm(score ~ 1, data = df.data)
+```
+
+We already know that the single value that minimizes the least squared error is the mean. 
+
+```{r}
+df.plot = df.data
+
+ggplot(data = df.plot, aes(x = intelligence, y = score))+
+  geom_point()+
+  geom_hline(yintercept = mean(df.data$score))+
+  geom_segment(aes(xend = intelligence, yend = mean(df.data$score)), alpha = .2)
+```
+
+Let's compare whether the model with two parameters explains the data significantly better than a model that only has a single parameter. 
+
+```{r}
+anova(fit4, fit5)
+```
+
+It does! The residual sum of squares is significantly lower for the model that includes "intelligence" as a predictor. 
+
+### Confidence intervals 
+
+[difference between confidence interval and prediction interval](https://www.graphpad.com/support/faq/the-distinction-between-confidence-intervals-prediction-intervals-and-tolerance-intervals/)
+
+> Confidence intervals tell you about how well you have determined the mean. Assume that the data really are randomly sampled from a Gaussian distribution. If you do this many times, and calculate a confidence interval of the mean from each sample, you'd expect about 95 % of those intervals to include  the true value of the population mean. The key point is that the confidence interval tells you about the likely location of the true population parameter.
+
+> Prediction intervals tell you where you can expect to see the next data point sampled. Assume that the data really are randomly sampled from a Gaussian distribution. Collect a sample of data and calculate a prediction interval. Then sample one more value from the population. If you do this many times, you'd expect that next value to lie within that prediction interval in 95% of the samples.The key point is that the prediction interval tells you about the distribution of values, not the uncertainty in determining the population mean.  
+Prediction intervals must account for both the uncertainty in knowing the value of the population mean, plus data scatter. So a prediction interval is always wider than a confidence interval.  
+
+
+How confident are we in the predictions that the model makes? 
+
+```{r}
+df.plot = fit4 %>% 
+  augment() %>% 
+  clean_names()
+
+ggplot(data = df.plot, aes(x = intelligence, y = score))+
+  geom_point()+
+  geom_smooth(method = "lm", level = 0.95, color = "black")+
+  geom_segment(aes(xend = intelligence, yend = fitted), alpha = .2)
+
+```
+
+Notice the peculiar shape of the confidence interval. It's narrower in the center and wider on the outsides. 
+
+- confidence interval indicates a range of possible straight lines that describe the relationship between intelligence and score
+- use bootstrapping to get this interval 
+
+```{r}
+conf_predictors = confint(fit4)
+
+# confidence interval on the predictions
+prediction = predict(fit4, interval = "confidence", level = .95) %>% 
+  as_data_frame()
+
+df.plot = fit4 %>% 
+  augment() %>% 
+  clean_names() %>% 
+  left_join(prediction %>% rename(fitted = fit), by = "fitted")
+
+ggplot(data = df.plot, aes(x = intelligence, y = score))+
+  geom_point(aes(y = fitted), color = "black")+
+  geom_linerange(aes(ymin = lwr, ymax = upr))+
+  geom_smooth(method = "lm", level = 0.95, color = "black")
+
+```
+
+### Bootstrapped confidence intervals 
+
+```{r}
+set.seed(0)
+
+# create two bootstrap samples 
+df.boot1 = df.data %>% 
+    sample_n(size = nrow(.), replace = T) %>% 
+    add_count(intelligence)
+
+df.boot2 = df.data %>% 
+    sample_n(size = nrow(.), replace = T) %>% 
+    add_count(intelligence)
+
+df.boot1 %>% head() %>% print()
+
+```
+
+```{r bootstrap-example, fig.cap="The black lines show the best fitting regression line for the dataset, and the blue lines show the best fitting regression line for the other data set."}
+
+fit.boot1 = lm(score ~ intelligence, data = df.boot1)
+fit.boot2 = lm(score ~ intelligence, data = df.boot2)
+  
+
+p1 = ggplot(data = df.boot1, aes(x = intelligence, y = score))+
+  geom_abline(intercept = coef(fit.boot2)[1],
+              slope = coef(fit.boot2)[2],
+              color = "blue")+
+  geom_point(aes(color = n))+
+  geom_smooth(method = "lm", se = F, color = "black")+
+  labs(title = "Bootstrap 1")+
+  scale_color_gradient(low = "gray60", high = "gray0")
+
+p2 = ggplot(data = df.boot2, aes(x = intelligence, y = score))+
+  geom_abline(intercept = coef(fit.boot1)[1],
+              slope = coef(fit.boot1)[2],
+              color = "blue")+
+  geom_point(aes(color = n))+
+  geom_smooth(method = "lm", se = F, color = "black")+
+  labs(title = "Bootstrap 2")+
+  scale_color_gradient(low = "gray60", high = "gray0")
+
+p1 + p2 &
+  theme(legend.position = "none")
+
+```
+
+Notice how the data points are different for each bootstrap. And notice how some points are darker than others. The darkness indicates how often a particular data point has been sampled.
+
+Now let's do this many times and save the coefficients. 
+
+```{r}
+
+# set number of boostrapped samples
+n_bootstraps = 100 
+
+# set up data frame to store coefficients 
+df.coefficients = data_frame(
+  sample = 1:n_bootstraps, 
+  intercept = NA,
+  slope = NA
+)
+
+# estimate parameters for each bootstrapped sample 
+for (i in 1:n_bootstraps){
+  df.boot = df.data %>% 
+    sample_n(size = nrow(.), replace = T) %>% 
+    add_count(intelligence) #column indicating how often a particular value was sampled
+  
+  fit = lm(score ~ intelligence, data = df.boot)
+  df.coefficients$intercept[i] = coef(fit)[1]
+  df.coefficients$slope[i] = coef(fit)[2]
+}
+  
+df.coefficients %>% head() %>% print
+
+```
+
+And then plot the regression lines from our bootstrapped samples on top of the fitted model. 
+
+```{r}
+# scatter plot with linear regression 
+p = ggplot(data = df.plot, aes(x = intelligence, y = score))+
+  geom_point(color = "black")+
+  geom_smooth(method = "lm", level = 0.95, color = "black")
+
+# add bootstrapped regression lines
+for (i in 1:nrow(df.coefficients)){
+  p = p + 
+    geom_abline(intercept = df.coefficients$intercept[i],
+                slope = df.coefficients$slope[i],
+                alpha = 0.1,
+                color = "blue")
+}
+p
+
+```
+
+You can also make use of the `boot` package. This package makes it easy to get estimates and confidence intervals of choice from bootstrapped samples. 
+
+```{r}
+tic() #start timer 
+
+# function to calculate desired statistic 
+func_boot_mean = function(data, variable, indices){
+  d = data[[variable]][indices]
+  out = mean(d)
+  return(out)
+}
+
+boot.mean = boot(data = df.data,
+     statistic = func_boot_mean,
+     variable = "intelligence",
+     R = 100)
+
+boot.mean %>% boot.ci(type = "perc") %>% .$perc %>% .[4:5]
+toc() #stop timer 
+
+# the same result using a for loop 
+
+tic() #start timer
+result = numeric(100)
+for (i in 1:100){
+  result[i] = df.data %>% 
+    sample_n(size = nrow(.), replace = T) %>% 
+    pull(intelligence) %>% 
+    mean()
+}
+quantile(result, prob = c(0.05, 0.95))
+toc() #stop timer
+
+```
+
+
+```{r}
+# using the boostrap package 
+
+fun_boot = function(formula, data, indices){
+  d = data[indices, ]
+  fit = lm(formula, data = d)
+  out = coef(fit)
+  return(out)
+}
+
+results = boot(data = df.data, 
+               statistic = fun_boot,
+               formula = score ~ intelligence,
+               R = 1000)
+
+quantile(results$t[,1], prob = c(.05, .95))
+quantile(results$t[,2], prob = c(.05, .95))
+
+results %>% boot.ci(type = "perc", index = 1)
+results %>% boot.ci(type = "bca", index = 2)
+```
+
+## One continuous and one discrete predictor 
+
+- with multiple predictors: 
+  - explain one predictor holding all the others constant 
+  
+$$
+y = \alpha + \beta_1 \cdot condition + \beta_2 \cdot x + \epsilon
+$$
+
+
+
+```{r}
+set.seed(0)
+
+alpha = 10 
+beta1 = 3
+beta2 = 0.4
+
+n_participants = 100
+
+df.data = data_frame(
+  participant = 1:n_participants,
+  condition = rep(0:1, each = n_participants/2),
+  x = runif(n = n_participants, min = 0, max = 20),
+  error = rnorm(n = n_participants, sd = 1),
+  response = alpha + beta1 * condition + beta2 * x + error
+) %>% 
+  mutate(condition = factor(condition, levels = 0:1, labels = 1:2))
+
+df.plot = df.data
+
+ggplot(data = df.plot, aes(x = x, y = response, color = condition))+
+  geom_point(size = 2, show.legend = F)
+```
+
+```{r}
+fit.categorical = lm(response ~ condition, data = df.data)
+fit.categorical %>% summary()
+
+ggplot(data = df.data, aes(x = x, y = response, color = condition))+
+  geom_point(size = 2)+
+  geom_hline(yintercept = coef(fit.categorical)[1], color = "#F8766D", size = 1.5)+
+  geom_hline(yintercept = coef(fit.categorical)[1] + coef(fit.categorical)[2], color = "#00BFC4", size = 1.5)
+
+```
+
+```{r}
+fit.continuous = lm(response ~ x, data = df.data)
+fit.continuous %>% summary()
+
+ggplot(data = df.data, aes(x = x, y = response, color = condition))+
+  geom_point(size = 2)+
+  geom_smooth(method = "lm", se = F, aes(group = 1), color = "black")
+  # geom_abline(intercept = coef(fit.continuous)[1], slope = coef(fit.continuous)[2], color = "red", size = 1.5)
+  
+```
+
+
+```{r}
+fit.combined = lm(response ~ x + condition, data = df.data)
+
+ggplot(data = df.data, aes(x = x, y = response, color = condition, group = condition))+
+  geom_point(size = 2)+
+  geom_smooth(method = "lm", se = F)
+  
+```
+
+```{r}
+fit.combined %>% summary()
+```
+
+- explain how the linear model expresses the different results
+
+### Interactions 
+
+Let's first create a dataset in which a binary predictor interacts with a continuous one. 
+
+$$
+y = \alpha + \beta_1 \cdot condition + \beta_2 \cdot x + beta_3 \cdot condition \cdot x + \epsilon
+$$
+
+```{r}
+set.seed(0)
+
+alpha = 10 
+beta1 = 2
+beta2 = 0.4
+beta3 = 0.5
+
+n_participants = 100
+
+df.data.interaction = data_frame(
+  participant = 1:n_participants,
+  condition = rep(0:1, each = n_participants/2),
+  x = runif(n = n_participants, min = 0, max = 20),
+  error = rnorm(n = n_participants, sd = 1),
+  response = alpha + beta1 * condition + beta2 * x + beta3 * condition * x + error
+) %>% 
+  mutate(condition = factor(condition, levels = 0:1, labels = 1:2))
+
+df.plot = df.data.interaction
+
+ggplot(data = df.plot, aes(x = x, y = response, color = condition))+
+  geom_point(size = 2, show.legend = F)
+```
+
+```{r}
+fit6 = lm(response ~ condition + x, data = df.data.interaction)
+summary(fit6)
+
+```
+
+```{r}
+df.plot = df.data.interaction
+df.fit = fit6 %>% 
+  tidy()
+
+ggplot(data = df.plot, aes(x = x, y = response, color = condition))+
+  geom_point(size = 2, show.legend = F)+
+  geom_abline(intercept = df.fit$estimate[1], slope = df.fit$estimate[3], color = "#F8766D")+
+  geom_abline(intercept = df.fit$estimate[1] + df.fit$estimate[2], slope = df.fit$estimate[3], color = "#00BFC4")
+```
+
+Let's take a look at the residuals.
+
+```{r}
+df.plot = fit6 %>% 
+  augment() %>% 
+  clean_names()
+  
+ggplot(data = df.plot, aes(x = fitted, y = resid))+
+  geom_hline(yintercept = 0)+
+  geom_point()+
+  geom_smooth()
+```
+
+We can see from the residuals that we're missing something important in the data.
+
+Let's fit a model with an interaction and visualize the model.
+
+```{r}
+fit7 = lm(response ~ 1 + condition * x, data = df.data.interaction)
+
+df.fit = fit7 %>% 
+  tidy()
+
+df.plot = df.data.interaction
+
+ggplot(data = df.plot, aes(x = x, y = response, color = condition))+
+  geom_point(size = 2, show.legend = F)+
+  geom_abline(intercept = df.fit$estimate[1], slope = df.fit$estimate[3] , color = "#F8766D")+
+  geom_abline(intercept = df.fit$estimate[1] + df.fit$estimate[2], slope = df.fit$estimate[3] + df.fit$estimate[4], color = "#00BFC4")
+```
+
+Let's take a look at the residuals. 
+
+```{r}
+df.plot = fit7 %>% 
+  augment() %>% 
+  clean_names()
+  
+ggplot(data = df.plot, aes(x = fitted, y = resid))+
+  geom_hline(yintercept = 0)+
+  geom_point()+
+  geom_smooth()
+```
+
+That looks better! Of course, this is not particularly surprising since we generated the data assuming an interaction. Let's see how well the regression recovers the parameters that we've used to generated the data. 
+
+
+```{r regression-recovery}
+fit7 = lm(response ~ 1 + condition * x, data = df.data.interaction)
+
+df.fit = fit7 %>% 
+  tidy() %>%
+  left_join( # add confidence intervals 
+    confint(fit7) %>% 
+      as.data.frame() %>% 
+      rownames_to_column("term"),
+    by = "term"
+  ) %>% 
+  mutate(truth = c(alpha, beta1, beta2, beta3)) %>% 
+  mutate(parameter = c("alpha", "beta1", "beta2", "beta3")) %>% 
+  select(term, parameter, truth, estimate, contains("%"))
+
+kable(df.fit, digits = 2, caption = "Ground truth and inferred parameters values.")
+```
+
+As Table \@ref(tab:regression-recovery) shows, we were able to recover the ground truth parameters fairly accurately. 
+
+
+Note that the following two ways are equivalent for specifying the model: 
+
+```{r}
+fit.1 = lm(response ~ 1 + condition * x, data = df.data.interaction)
+fit.1 %>% print()
+
+fit.2 = lm(response ~ 1 + condition + x + condition:x, data = df.data.interaction)
+fit.2 %>% print()
+  
+# let's add the interaction as a predictor to the data frame
+df.tmp = df.data.interaction %>% 
+  mutate(condition = condition %>% as.character() %>% as.numeric() - 1,
+    interaction = x * condition)
+
+fit.3 = lm(response ~ 1 + condition + x + interaction, df.tmp)
+fit.3 %>% print()
+```
+
+
+## Interpretation of coefficiencts 
+
+p. 34 in Gelman book: 
+
+- *predictive interpretation*: 
+  - how does the outcome variable differ (on average), when comparing two groups who differ on the predictive variable 
+- *counterfactual interpretation*: 
+  - how would an individual differ if something had been different --> causal interpretation; changing this variable would result in such a change
+
+
+## Crossvalidation 
+
+[tutorial on cross validation](http://ijlyttle.github.io/model_cv_selection.html)
+
+We start by generating the data. 
+
+```{r}
+set.seed(0)
+
+alpha = 1 
+beta1 = 2 
+beta2 = -1
+
+n_participants = 100
+
+df.data = data_frame(
+  participant = 1:n_participants,
+  x = runif(n = n_participants, min = 0, max = 1),
+  error = rnorm(n = n_participants, sd = 0.1),
+  y = alpha + beta1 * x + beta2 * x^2 + error
+)
+  
+df.data %>% head()
+
+```
+
+The true generating function is a quadratic function $y = 1 + 2 \cdot x - x^2$. Let's visualize the data. 
+
+```{r}
+df.plot = df.data 
+
+ggplot(df.plot, aes(x = x, y = y)) +
+  stat_function(fun = function(x){alpha + beta1 * x + beta2 * x^2}, color = "black", alpha = 0.7, linetype = "dashed") +
+  geom_point(alpha = 0.6)
+```
+
+Let's first fit a simple linear model and take a look at the residuals. 
+
+```{r}
+fit8 = lm(y ~ 1 + x, data = df.data)
+
+df.plot = fit8 %>% 
+  augment() %>% 
+  clean_names()
+
+ggplot(data = df.plot, aes(x = fitted, y = resid))+
+  geom_hline(yintercept = 0)+
+  geom_point()+
+  geom_smooth()
+```
+
+This is the signature for a residual plot when the model misses a quadratic relationship. Let's fit a model that includes a quadratic predictor.
+
+```{r}
+df.data = df.data %>% 
+  mutate(x_squared = x^2)
+
+fit9 = lm(y ~ 1 + x + x_squared, data = df.data)
+
+df.plot = fit9 %>% 
+  augment() %>% 
+  clean_names()
+
+ggplot(data = df.plot, aes(x = fitted, y = resid))+
+  geom_hline(yintercept = 0)+
+  geom_point()+
+  geom_smooth()
+```
+
+Which model provides a better explanation of the data? Which model is more likely to yield correct predictions for new data that is generated from the ground truth?  
+
+So far, we have seen how we can use model selection criteria (AIC, BIC), and a likelihood test 
+
+```{r}
+# Likelihood test 
+anova(fit9, fit8)
+```
+
+The likelihood test is significant. The residual sum of squares is significantly lower for the more complex model. 
+
+```{r}
+# Selection criteria 
+fit8 %>% 
+  glance() %>% 
+  rbind(
+fit9 %>% 
+  glance()
+  ) %>% 
+  mutate(model = c("linear", "quadratic")) %>% 
+  clean_names() %>% 
+  select(model, r_squared, log_lik, aic, bic, deviance) %>% 
+  kable(digits = 2, caption = "Model selection criteria.")
+```
+
+The more complex model explains more variance, and better trades of model complexity. Does it also generalize better? 
+
+Let's include another model that also third degree polynomial. 
+
+```{r}
+fit10  = lm(y ~ x + I(x^2) + I(x^3), data = df.data)
+fit10 %>% summary()
+```
+
+TODO: 
+- explain the `I()` function formula
+- `^` has special meaning within a formula; see `help(formula)`
+
+Notice how now, neither the quadratic nor the cubic predictor are significant. Let's plot the model's predictions. 
+
+```{r}
+df.plot = df.data
+  
+df.fit = fit10 %>% 
+  tidy() %>% 
+  clean_names()
+
+ggplot(data = df.plot, aes(x = x, y = y))+
+  geom_point()+
+  stat_function(fun = function(x){df.fit$estimate[1] + 
+                  df.fit$estimate[2] * x +
+                  df.fit$estimate[3] * x^2 +
+                  df.fit$estimate[4] * x^3},
+                geom = "line"
+                  )
+
+
+```
+
+
+
+- Reading: assign some Gigerenzer paper on prediction vs. fitting
+
+## Parameter estimation via bootstrap 
+
+[tutorial on bootstrap](http://ijlyttle.github.io/model_bootstrap_parameter.html)
+
+## Bootstrap vs. crossvalidation? 
+
+- [crossvalidated blog post](https://stats.stackexchange.com/questions/18348/differences-between-cross-validation-and-bootstrapping-to-estimate-the-predictio))
+- [tutorial](https://www.burns-stat.com/documents/tutorials/the-statistical-bootstrap-and-other-resampling-methods-2/)
+
+
+- __cross-validation__:
+  - model selection 
+
+- __bootstrap__:
+  - confidence in estimates  
+
+```{r}
+print(sessionInfo(), locale = FALSE)
+```
+
+

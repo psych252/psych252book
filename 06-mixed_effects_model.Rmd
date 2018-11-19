@@ -1,0 +1,442 @@
+# Mixed effects model 
+
+```{r echo=FALSE, message=FALSE}
+library("knitr") #for markdown things 
+library("broom") #for getting tidy model summaries
+library("broom.mixed") #for getting tidy mixed model summaries
+library("lme4") #for mixed effects models 
+library("brms") #Bayesian regression
+# library("patchwork") #for making figure panels
+library("janitor") #for cleaning variable names
+library("emmeans") #for comparing estimated marginal means 
+library("dotwhisker") #dot whisker plots for regression results
+library("pbkrtest") #model comparison for linear mixed effects models
+# library("boot") #for bootstrapping
+# library("tictoc") #for timing things
+# library("tidyboot") #for tidy bootstrapping (might not use this)
+library("tidyverse") #for everything else
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+options(digits = 2) #only print two digits
+
+theme_set(
+  theme_classic()+
+    theme(text = element_text(size = 20)) #text size
+  )
+```
+
+## Resources 
+
+### Online tutorials 
+- [introduction to mixed models](https://ourcodingclub.github.io/2017/03/15/mixed-models.html)
+- []
+
+### Books 
+
+- @gelman2006data
+
+
+## Learning goals 
+
+## Motiation for multi-level modeling 
+
+- learning about treatment effects that vary: 
+  - how does the effect of a treatment vary between groups within the population 
+
+- using all the data to perform inferences for groups with small sample size: 
+  - classical estimation is problematic for small sample sizes 
+  - multilevel modeling allows estimate of group averages and group-level effects; a compromise between overly noisy within-group estimates and oversimplified regression that ignores group indicators 
+
+- prediction: 
+  - make predictions about individuals in new groups: group-effect is predicted from the group level model, observations predicted from the unit-level model
+
+- analysis of structured data: 
+  - some datasets have an inherent multilevel structure (e.g. students within schools, patients within hospitals, ...)
+  - analysis should match the structure with which the data was generated as closely as possible 
+  - multilevel models include indicators for clusters at all levels without falling prey to overfitting 
+
+- more efficient inference for regression parameters: 
+  - complete pooling --> differences between groups are ignored (one global regression)
+    - suppresses variation 
+  - no pooling --> data from different sources are analyzed separately (many separate individual regressions)
+    - ignores information; yields very variable inferences 
+  - partial pooling --> what comes out of multi-level model 
+  
+- including predictors at two different levels: 
+  - classical regression cannot deal with nested predictors because of collinearity 
+  
+- getting the right standard error: accurately accounting for uncertainty in prediction and estimation 
+  - account for correlation of the outcome between groups 
+  
+  
+
+## Gelman book notes 
+
+- key feature that distinguishes multilevel models from classical regression is in the explicit modeling of variation between groups
+
+### Chapter 2: 
+
+- probability distributions: 
+  - distributions of data
+  - distributions of parameter values 
+  - distributions of error terms 
+- 
+
+## Notes 
+
+```{r}
+load("data/lmm_tutorial/dragons.RData")
+head(dragons)
+
+dragons = dragons %>%
+  mutate(bodyLength2 = scale(bodyLength)[,])
+
+basic.lm <- lm(testScore ~ bodyLength2, data = dragons)
+summary(basic.lm)
+
+ggplot(dragons, aes(x = bodyLength, y = testScore)) +
+  geom_point() +
+  geom_smooth(method = "lm") 
+
+#residual plot 
+
+df.plot = basic.lm %>% 
+  augment() %>% 
+  clean_names()
+  
+ggplot(data = df.plot, aes(x = fitted, y = resid))+
+  geom_hline(yintercept = 0)+
+  geom_point()+
+  geom_smooth()
+
+# qq plot 
+
+ggplot(data = df.plot, aes(sample = resid))+
+  geom_abline(intercept = 0, slope = 1, linetype = 2)+
+  geom_qq()+
+  geom_qq_line()
+
+# distributions for different ranges 
+
+ggplot(data = dragons, aes(x = mountainRange, y = testScore))+
+  geom_point(alpha = 0.2, position = position_jitter(width = 0.1, height = 0))+
+  stat_summary(fun.y = "mean", geom = "point", color = "black")+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange")+
+  theme(axis.text.x = element_text(size = 10))
+
+
+ggplot(dragons, aes(x = bodyLength, y = testScore, colour = mountainRange))+
+  geom_point(size = 2)+
+  theme(legend.position = "bottom")
+
+# multiple regression
+
+mountain.lm <- lm(testScore ~ bodyLength2 + mountainRange, data = dragons)
+summary(mountain.lm)
+
+# linear mixed effects model 
+
+mixed.lmer <- lmer(testScore ~ bodyLength2 + (1|mountainRange), data = dragons)
+summary(mixed.lmer)
+
+#residual plot 
+
+df.plot = mixed.lmer %>% 
+  augment() %>% 
+  clean_names()
+  
+ggplot(data = df.plot, aes(x = fitted, y = resid))+
+  geom_hline(yintercept = 0)+
+  geom_point()+
+  geom_smooth()
+
+# qq plot 
+
+ggplot(data = df.plot, aes(sample = resid))+
+  geom_abline(intercept = 0, slope = 1, linetype = 2)+
+  geom_qq()+
+  geom_qq_line()
+
+# sites are nested within mountain ranges 
+dragons = dragons %>%
+  mutate(sample = str_c(mountainRange, site, sep = "_"))
+
+mixed.lmer2 = lmer(testScore ~ bodyLength2 + (1|mountainRange) + (1|sample), data = dragons)  # the syntax stays the same, but now the nesting is taken into account
+summary(mixed.lmer2)
+
+ggplot(dragons, aes(x = bodyLength, y = testScore, colour = site)) +
+  facet_wrap(~mountainRange, nrow=3) +
+  geom_point() +
+  theme_classic() +
+  geom_line(data = cbind(dragons, pred = predict(mixed.lmer2)), aes(y = pred)) +
+  theme(legend.position = "none")
+
+mixed.lmer2 %>%
+  tidy() %>%
+  dwplot(style = "distribution",
+    show_intercept = T,
+         vline = geom_vline(xintercept = 0, linetype = 2))
+
+mixed.lmer2 %>%
+  tidy() %>%
+  clean_names() %>% 
+  ggplot(aes(x = term, y = estimate))+
+  geom_point()+
+  geom_linerange(aes(ymin = estimate-std_error, ymax = estimate +std_error))+
+  coord_flip()
+
+```
+
+- proportion of variance in random effect compared to total variance gives a sense for how much of the remaining variance (after taking into account the fixed effects) is explained by the random effect 
+
+- crossed and random nested random effects
+- not all mixed models are hierarchical (e.g. there can be crossed random factors that don't represent a hierarchy)
+- _crossed_: 
+  - possibility that the same subject is observed under multiple values of the random factor (e.g. the same dragon in different mountain ranges)
+- _nested_: 
+  - factor appears only within one particular level of another factor 
+
+
+
+
+## Linear regression on the aggregate
+
+- doesn't take into account the uncertainty of individual aggregate data points (some means might be based on fewer observations, and so they shouldn't affect the overall as much) 
+
+## Separate individual regressions 
+
+- many parameters 
+- inflated Type I error (of falsely rejecting the null)
+- 
+
+## Mixed effects models 
+
+- use all the data we have 
+- account for correlations within our data 
+- estimate fewer parameters (hence more robust)
+- avoide problems with multiple comparisons 
+- confidence intervals on parameters 
+
+```{r}
+mixed.lmer2 = lmer(testScore ~ bodyLength2 + (1|mountainRange) + (1|sample), data = dragons)
+mixed.lmer2 %>% confint(method = "boot",
+                        nsim = 500,
+                        boot.type = "perc")
+
+# could add confidence intervals to table ...
+tmp = mixed.lmer2 %>% 
+  tidy()
+```
+
+
+```{r}
+mixed.brm = brm(testScore ~ bodyLength2 + (1|mountainRange) + (1|sample), data = dragons)
+mixed.brm %>% 
+  tidy()
+
+```
+
+## Example
+
+```{r}
+set.seed(2)
+df.data = data_frame(
+  participant = rep(1:20,2),
+  individual = rep(rnorm(20, mean = 0, sd = 10), 2), #explore for different values of SD 
+  condition = rep(c(1, 2), each = 20),
+  fixed.mean = ifelse(test = condition == 1, yes = 3, no = 10),
+  x = runif(40, -10, 10),
+  y = x + rnorm(40, mean = fixed.mean, sd = 1) + rnorm(40, mean = individual, sd = 1)
+) %>% 
+  mutate(condition = as.factor(condition))
+
+fit.lm = lm(y ~ condition + x, data = df.data)
+fit.lmer = lmer(y ~ x + condition + (1 | participant), data = df.data)
+# fit.lmer = lmer(y ~ x + condition + (1 | participant), data = df.data)
+
+#calculate confidence intervals 
+fit.lm %>% confint()
+fit.lmer %>% confint()
+
+#summaries
+fit.lmer %>% summary()
+fit.lm %>% summary()
+
+#fitted with lmer() 
+p1 = ggplot(data = fit.lmer %>% augment, aes(x = .fitted, y = y))+
+  geom_point(aes(color = as.factor(condition)))+
+  geom_smooth(method = lm, se = F)+
+  labs(title = "lmer()")+
+  theme(legend.position = "none")
+
+#fitted with lm()
+p2 = ggplot(data = fit.lm %>% augment, aes(x = .fitted, y = y))+
+  geom_point(aes(color = as.factor(condition)))+
+  geom_smooth(method = lm, se = F)+
+  labs(title = "lm()")+
+  theme(legend.position = "bottom")
+
+p1 + p2
+```
+
+```{r}
+#main effect of condition
+ggplot(data = df.data, aes(x = condition, y = y))+
+  geom_point(aes(color = condition))+
+  geom_line(aes(group = participant), alpha = 0.1)
+
+ggplot(data = df.data, aes(x = x, y = y, color = condition))+
+  geom_point()+
+  geom_smooth(method = lm, se = F)+
+  geom_line(aes(group = participant), alpha = 0.1)
+
+# tmp = df.data %>% 
+#   select(participant, condition, x, y) %>% 
+#   spread(condition, y)
+```
+
+
+```{r}
+#model comparison 
+set.seed(2)
+df.data = data_frame(
+  participant = rep(1:20,2),
+  individual = rep(rnorm(20, mean = 0, sd = 10),2), #explore for different values of SD 
+  condition = rep(c(1, 2), each = 20),
+  fixed.mean = ifelse(test = condition == 1, yes = 3, no = 10),
+  x = runif(40, -10, 10),
+  y = x + rnorm(40, mean = fixed.mean, sd = 1) + rnorm(40, mean = individual, sd = 1)
+) %>% 
+  mutate(condition = as.factor(condition))
+  
+# lmer 
+fit.lmer1 = lmer(y ~ x + condition + (1 | participant), data = df.data)
+fit.lmer2 = lmer(y ~ x + (1 | participant), data = df.data)
+# fit.lmer2 = lmer(y ~ x * condition + (1 | participant), data = df.data)
+anova(fit.lmer1, fit.lmer2)
+
+fit.lmer1 = lmer(y ~ x + condition + (1 | participant), data = df.data)
+fit.lmer2 = lmer(y ~ condition + (1 | participant), data = df.data)
+anova(fit.lmer1, fit.lmer2)
+
+# #lm
+# fit.lm1 = lm(y ~ x + condition, data = df.data)
+# fit.lm2 = lm(y ~ x , data = df.data)
+# anova(fit.lm1, fit.lm2)
+
+# alternative way using the car package 
+# library(car)
+# Anova(fit.lmer1)
+
+
+```
+
+## A mix of predictors ... 
+
+- talk about standardizing predictors --> to interpret estimates 
+  - differences expressed in standard deviations
+
+
+## Comparison of two dependent samples 
+
+```{r}
+set.seed(0)
+df.dependent.wide = data_frame(
+  participant = 1:20,
+  type = sample(c(-2, 2), size = 20, replace = T),
+  cond_1 = rnorm(20, mean = 8, sd = 2) + rnorm(20, mean = type, sd = 2),
+  cond_2 = rnorm(20, mean = 7, sd = 2) + rnorm(20, mean = type, sd = 2)
+) 
+
+# paired samples t-test 
+t.test(df.dependent.wide$cond_1, df.dependent.wide$cond_2, paired = T, alternative = "greater")
+
+
+# make a long data frame 
+df.dependent.long = df.dependent.wide %>% 
+  gather("condition", "rating", contains("cond"))
+
+# linear mixed effects model 
+tmp = lmer(rating ~ condition + (1 | participant), data = df.dependent.long) #different intercept for each participant
+
+tmp %>% coef()
+tmp2 = tmp %>% tidy
+
+tmp2 = tmp %>% augment
+
+df.plot = df.dependent.wide %>% 
+  left_join(tmp %>% 
+           augment() %>% 
+           select(participant, coef = .fitted, .fixed),
+           by = "participant") %>% 
+  gather("condition", "rating", contains("cond"))
+
+df.model = tmp %>% 
+  augment
+
+ggplot(data = df.plot, aes(x = condition, y = rating, color = participant))+
+  geom_line(data = df.model, aes(y = .fitted, group = participant))+
+  geom_point()+
+  stat_summary(data = df.model, 
+               fun.y = "mean",
+               aes(x = condition, y = .fixed),
+               geom = "point", 
+               shape = 21,
+               color = "black",
+               fill = "red",
+               size = 4)
+
+```
+
+
+### Fixed and random effects 
+
+[difference between fixed and random effects](https://stats.stackexchange.com/questions/4700/what-is-the-difference-between-fixed-effect-random-effect-and-mixed-effect-mode)
+
+- what are we interested in? 
+- what do we want to control for / take into account? 
+
+- fixed effects: variables that we expect will have an effect on the dv 
+- random effects/factors: grouping factors that we try to control for 
+  - data for random effect is just a sample of all the possibilities 
+  - often: random effects should have more than five levels
+- overall goal: have the model make better estimates 
+- need to use random effects whenever we have repeated observations of the same object
+
+
+## Model selection
+
+- guided by theory
+- not just randomly plugging in and dropping variables
+- likelihood ratio tests using `anova()` (ok for large sample sizes)
+ - only works for comparing more complex and simpler model 
+ - only works for fixed effects
+ - use maximum likelihood method when comparing models with different fixed effects (so set `REML = FALSE` when aiming to compare models via `anova()`)
+ - use ML to compare models but still report parameter estimates from the best REML model (ML underestimates variance of the random effects)
+- AIC for mixed effects models: `library("AICcmodavg")`
+ 
+
+## Reporting results 
+
+### Tables 
+
+- stargazer package 
+- stargazer cheatsheet 
+
+### Plots 
+
+- [dotwhisker plots](https://cran.r-project.org/web/packages/dotwhisker/vignettes/dotwhisker-vignette.html)
+
+### Text 
+
+
+
+
+```{r}
+print(sessionInfo(), locale = FALSE)
+```
+
+
+

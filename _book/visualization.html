@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Psych 252 course notes</title>
+  <meta name="description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Psych 252 course notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Psych 252 course notes" />
+  
+  <meta name="twitter:description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  
+
+<meta name="author" content="Tobias Gerstenberg">
+
+
+<meta name="date" content="2018-10-01">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="intro.html">
+<link rel="next" href="data-wrangling.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>2</b> Visualizing Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="visualization.html"><a href="visualization.html#resources"><i class="fa fa-check"></i><b>2.1</b> Resources</a></li>
+<li class="chapter" data-level="2.2" data-path="visualization.html"><a href="visualization.html#why-visualize-data"><i class="fa fa-check"></i><b>2.2</b> Why visualize data?</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="visualization.html"><a href="visualization.html#why-use-r-to-visualize-data"><i class="fa fa-check"></i><b>2.2.1</b> Why use R to visualize data?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="visualization.html"><a href="visualization.html#bad-visualizations"><i class="fa fa-check"></i><b>2.3</b> Bad visualizations</a></li>
+<li class="chapter" data-level="2.4" data-path="visualization.html"><a href="visualization.html#data-visualization-using-ggplot2"><i class="fa fa-check"></i><b>2.4</b> Data visualization using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="2.4.1" data-path="visualization.html"><a href="visualization.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.4.1</b> Setting up a plot</a></li>
+<li class="chapter" data-level="2.4.2" data-path="visualization.html"><a href="visualization.html#scatter-plot"><i class="fa fa-check"></i><b>2.4.2</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.4.3" data-path="visualization.html"><a href="visualization.html#making-a-line-plot"><i class="fa fa-check"></i><b>2.4.3</b> Making a line plot</a></li>
+<li class="chapter" data-level="2.4.4" data-path="visualization.html"><a href="visualization.html#adding-error-bars"><i class="fa fa-check"></i><b>2.4.4</b> Adding error bars</a></li>
+<li class="chapter" data-level="2.4.5" data-path="visualization.html"><a href="visualization.html#grouping-data"><i class="fa fa-check"></i><b>2.4.5</b> Grouping data</a></li>
+<li class="chapter" data-level="2.4.6" data-path="visualization.html"><a href="visualization.html#making-facets"><i class="fa fa-check"></i><b>2.4.6</b> Making facets</a></li>
+<li class="chapter" data-level="2.4.7" data-path="visualization.html"><a href="visualization.html#more-on-aesthetics"><i class="fa fa-check"></i><b>2.4.7</b> More on aesthetics</a></li>
+<li class="chapter" data-level="2.4.8" data-path="visualization.html"><a href="visualization.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>2.4.8</b> Overview of different plot types for different things</a></li>
+<li class="chapter" data-level="2.4.9" data-path="visualization.html"><a href="visualization.html#customizing-plots"><i class="fa fa-check"></i><b>2.4.9</b> Customizing plots</a></li>
+<li class="chapter" data-level="2.4.10" data-path="visualization.html"><a href="visualization.html#saving-plots"><i class="fa fa-check"></i><b>2.4.10</b> Saving plots</a></li>
+<li class="chapter" data-level="2.4.11" data-path="visualization.html"><a href="visualization.html#creating-figure-panels"><i class="fa fa-check"></i><b>2.4.11</b> Creating figure panels</a></li>
+<li class="chapter" data-level="2.4.12" data-path="visualization.html"><a href="visualization.html#peeking-behind-the-scenes"><i class="fa fa-check"></i><b>2.4.12</b> Peeking behind the scenes</a></li>
+<li class="chapter" data-level="2.4.13" data-path="visualization.html"><a href="visualization.html#defining-snippets"><i class="fa fa-check"></i><b>2.4.13</b> Defining snippets</a></li>
+<li class="chapter" data-level="2.4.14" data-path="visualization.html"><a href="visualization.html#making-animations"><i class="fa fa-check"></i><b>2.4.14</b> Making animations</a></li>
+<li class="chapter" data-level="2.4.15" data-path="visualization.html"><a href="visualization.html#shiny-apps"><i class="fa fa-check"></i><b>2.4.15</b> Shiny apps</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="visualization.html"><a href="visualization.html#to-do-list"><i class="fa fa-check"></i><b>2.5</b> To do list</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data wrangling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#setting-up-rstudio"><i class="fa fa-check"></i><b>3.1</b> Setting up RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#some-r-basics"><i class="fa fa-check"></i><b>3.2</b> Some R basics</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#getting-help"><i class="fa fa-check"></i><b>3.2.1</b> Getting help</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#data-types"><i class="fa fa-check"></i><b>3.2.2</b> Data types</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#data-types-1"><i class="fa fa-check"></i><b>3.2.3</b> Data types</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#operators"><i class="fa fa-check"></i><b>3.2.4</b> Operators</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data-wrangling.html"><a href="data-wrangling.html#looking-at-data"><i class="fa fa-check"></i><b>3.2.5</b> Looking at data</a></li>
+<li class="chapter" data-level="3.2.6" data-path="data-wrangling.html"><a href="data-wrangling.html#accessing-data"><i class="fa fa-check"></i><b>3.2.6</b> Accessing data</a></li>
+<li class="chapter" data-level="3.2.7" data-path="data-wrangling.html"><a href="data-wrangling.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>3.2.7</b> A quick note on naming things</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#reading-in-data"><i class="fa fa-check"></i><b>3.3</b> Reading in data</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#csv"><i class="fa fa-check"></i><b>3.3.1</b> csv</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#xls"><i class="fa fa-check"></i><b>3.3.2</b> xls</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#json"><i class="fa fa-check"></i><b>3.3.3</b> json</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#sav"><i class="fa fa-check"></i><b>3.3.4</b> sav</a></li>
+<li class="chapter" data-level="3.3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#feather"><i class="fa fa-check"></i><b>3.3.5</b> feather</a></li>
+<li class="chapter" data-level="3.3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#rdata"><i class="fa fa-check"></i><b>3.3.6</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#saving-data"><i class="fa fa-check"></i><b>3.4</b> Saving data</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-wrangling.html"><a href="data-wrangling.html#rdata-1"><i class="fa fa-check"></i><b>3.4.1</b> RData</a></li>
+<li class="chapter" data-level="3.4.2" data-path="data-wrangling.html"><a href="data-wrangling.html#csv-1"><i class="fa fa-check"></i><b>3.4.2</b> csv</a></li>
+<li class="chapter" data-level="3.4.3" data-path="data-wrangling.html"><a href="data-wrangling.html#feather-1"><i class="fa fa-check"></i><b>3.4.3</b> feather …</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#wrangling-data"><i class="fa fa-check"></i><b>3.5</b> Wrangling data</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#filter"><i class="fa fa-check"></i><b>3.5.1</b> filter()</a></li>
+<li class="chapter" data-level="3.5.2" data-path="data-wrangling.html"><a href="data-wrangling.html#select"><i class="fa fa-check"></i><b>3.5.2</b> select()</a></li>
+<li class="chapter" data-level="3.5.3" data-path="data-wrangling.html"><a href="data-wrangling.html#arrange"><i class="fa fa-check"></i><b>3.5.3</b> arrange()</a></li>
+<li class="chapter" data-level="3.5.4" data-path="data-wrangling.html"><a href="data-wrangling.html#mutate"><i class="fa fa-check"></i><b>3.5.4</b> mutate()</a></li>
+<li class="chapter" data-level="3.5.5" data-path="data-wrangling.html"><a href="data-wrangling.html#group_by-and-summarize"><i class="fa fa-check"></i><b>3.5.5</b> group_by() and summarize()</a></li>
+<li class="chapter" data-level="3.5.6" data-path="data-wrangling.html"><a href="data-wrangling.html#join-multiple-data-frames"><i class="fa fa-check"></i><b>3.5.6</b> join multiple data frames</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a><ul>
+<li class="chapter" data-level="4.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
+<li class="chapter" data-level="4.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="cheatsheets.html"><a href="cheatsheets.html"><i class="fa fa-check"></i><b>5</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="5.1" data-path="cheatsheets.html"><a href="cheatsheets.html#statistics"><i class="fa fa-check"></i><b>5.1</b> Statistics</a></li>
+<li class="chapter" data-level="5.2" data-path="cheatsheets.html"><a href="cheatsheets.html#r"><i class="fa fa-check"></i><b>5.2</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="6" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i><b>6</b> Test</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psych 252 course notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="visualization" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Visualizing Data</h1>
+<p>In this chapter, we’ll take a look at how to visualize data using the <a href="https://ggplot2.tidyverse.org/">ggplot2</a> package developed by Hadley Wickham.</p>
+<div id="resources" class="section level2">
+<h2><span class="header-section-number">2.1</span> Resources</h2>
+<ul>
+<li><a href="#add-link">ggplot2 cheatsheet</a></li>
+<li><a href="https://www.datacamp.com/courses/data-visualization-with-ggplot2-1">interactive ggplot2 datacamp course</a></li>
+<li><a href="http://www.ggplot2-exts.org/gallery/">ggplot2 extensions</a></li>
+</ul>
+<p><strong>Books</strong>
+- <a href="http://www.cookbook-r.com/Graphs/">R graphics cookbook</a> –&gt; quick intro to the the most common graphs
+- <a href="http://r4ds.had.co.nz/">R for Data Science book</a>
++ <a href="http://r4ds.had.co.nz/data-visualisation.html">Data visualization chapter</a>
++ <a href="http://r4ds.had.co.nz/graphics-for-communication.html">Graphics for communication chapter</a>
+- <a href="http://socviz.co/">Data Visualization – A practical introduction (by Kieran Healy)</a>
+- <a href="https://serialmentor.com/dataviz/">Fundamentals of Data Visualization</a> –&gt; very nice resource that goes beyond basic functionality of <code>ggplot</code> and focuses on how to make good figures (e.g. how to choose colors, axes, …)</p>
+</div>
+<div id="why-visualize-data" class="section level2">
+<h2><span class="header-section-number">2.2</span> Why visualize data?</h2>
+<blockquote>
+<p>…make <strong>both</strong> calculations <strong>and</strong> graphs. Both sorts of output should be studied; each will contribute to understanding.
+F. J. Anscombe, 1973</p>
+</blockquote>
+<div class="figure"><span id="fig:same-stats-plots"></span>
+<img src="figures/images/same_stats_different_plot.png" alt="Eight different data sets, same high-level stats." width="1335" />
+<p class="caption">
+Figure 2.1: Eight different data sets, same high-level stats.
+</p>
+</div>
+<p>The data sets for the eight different plots in Figure <a href="visualization.html#fig:same-stats-plots">2.1</a> all share the same mean and standard deviations (SD) (shown in Table <a href="visualization.html#tab:same-stats-table">2.1</a>).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">data =<span class="st"> </span><span class="kw">data_frame</span>(</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="dt">variable =</span> <span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, <span class="st">&quot;y&quot;</span>),</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="dt">mean =</span> <span class="kw">c</span>(<span class="fl">54.02</span>, <span class="fl">48.09</span>),</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="dt">SD =</span> <span class="kw">c</span>(<span class="fl">14.52</span>, <span class="fl">24.79</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">kable</span>(<span class="dt">x =</span> data, </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">      <span class="dt">caption =</span> <span class="st">&quot;Mean and standard deviation (SD) for x and y.&quot;</span>, </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">      <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;c&quot;</span>),</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">      <span class="dt">booktabs =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<table>
+<caption><span id="tab:same-stats-table">Table 2.1: </span>Mean and standard deviation (SD) for x and y.</caption>
+<thead>
+<tr class="header">
+<th align="right">variable</th>
+<th align="center">mean</th>
+<th align="center">SD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">x</td>
+<td align="center">54.02</td>
+<td align="center">14.52</td>
+</tr>
+<tr class="even">
+<td align="right">y</td>
+<td align="center">48.09</td>
+<td align="center">24.79</td>
+</tr>
+</tbody>
+</table>
+<p>All data sets also have the same correlation coefficient of <span class="math inline">\(r = .32\)</span>. Clearly, the data sets are not the same though. To get a better understanding of what’s going on in our data, we should look at the data.[^1]
+[^1]: <a href="https://www.autodeskresearch.com/publications/samestats">Here</a> is the paper from which I took the figure. It shows more interesting examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what’s going on in the data.box</p>
+<div id="why-use-r-to-visualize-data" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Why use R to visualize data?</h3>
+<p>R makes it easy to visualize data in many different ways.</p>
+<ul>
+<li>reproducible</li>
+<li>powerful way of quickly looking at data in many different ways</li>
+<li>ideally, no need to use anything else</li>
+<li>can write complete papers in R</li>
+<li>change the pdf which then is updated in latex</li>
+</ul>
+</div>
+</div>
+<div id="bad-visualizations" class="section level2">
+<h2><span class="header-section-number">2.3</span> Bad visualizations</h2>
+<p>Below are some examples of visualizations that could be improved. How would you make them better?</p>
+<div class="figure"><span id="fig:bad-plot1"></span>
+<img src="figures/images/bad_plot.png" alt="Example of a bad plot (from Data Visualization -- A practical introduction by Kieran Healy)" width="388" />
+<p class="caption">
+Figure 2.2: Example of a bad plot (from Data Visualization – A practical introduction by Kieran Healy)
+</p>
+</div>
+<p>How could Figure <a href="visualization.html#fig:bad-plot1">2.2</a> be improved?</p>
+<div class="figure"><span id="fig:bad-plot2"></span>
+<img src="figures/images/pie_chart.jpg" alt="Finally a pie chart that makes sense." width="397" />
+<p class="caption">
+Figure 2.3: Finally a pie chart that makes sense.
+</p>
+</div>
+<p>You won’t learn how to make pie charts in this class. Why not?</p>
+<!-- 
+A lot of space for very little data  
+Difficult to make comparisons
+-->
+</div>
+<div id="data-visualization-using-ggplot2" class="section level2">
+<h2><span class="header-section-number">2.4</span> Data visualization using <code>ggplot2</code></h2>
+<p>We will use the <code>ggplot2</code> package to visualize data. By the end of this chapter, you’ll be able to make a figure like this:</p>
+<div class="figure"><span id="fig:nice-plot"></span>
+<img src="figures/combined_plot.pdf" alt="What a nice figure!"  />
+<p class="caption">
+Figure 2.4: What a nice figure!
+</p>
+</div>
+<p>Now let’s figure out how to get there.</p>
+<p>First, we install <code>ggplot2</code>. Actually, instead of only installing <code>ggplot2</code> we will install all the packages within the <code>tidyverse</code>. The <code>tidyverse</code> is a suite of packages that we’ll make heavy use of. To install this package in R, we run the following command in the console in RStudio:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
+<p>Now, let’s open a new R Script file: <code>File -&gt; New File -&gt; R script</code>. You can also use the keyboard shortcut <kbd>⌘ Command</kbd> + <kbd>shift</kbd> + <kbd>n</kbd> In my own workflow, I use keyboard shortcuts a lot. It helps me keep my hands on the keyboard and get things done faster. If you find yourself repeatedly doing the same thing over and over again, it’s worth defining a shortcut that makes this easier.</p>
+<p>In the newly opened file, load the <code>tidyverse</code> library (which contains <code>ggplot2</code>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
+<p>R already comes equipped with many useful plotting functions. The <code>ggplot2</code> library provides a unified framework for defining plots – it defines a grammar of graphics.</p>
+<div id="setting-up-a-plot" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Setting up a plot</h3>
+<p>We start by setting up the plot. To do so, we pass a data frame to the function <code>ggplot()</code> in the following way.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>This, by itself, won’t do anything yet. We also need to specify what to plot. Let’s take a look at the diamonds.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">head</span>(diamonds)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 10
+##   carat cut       color clarity depth table price     x     y     z
+##   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+## 2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+## 3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+## 4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+## 5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+## 6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48</code></pre>
+<p>The <code>head()</code>command allows us to just look at the first six rows of the data frame. Let’s take a look at how much differently colored diamonds cost.</p>
+<p>Since this is a dataset that comes with a package, we can also call the help function on it to find out more about it.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">help</span>(diamonds)</a></code></pre></div>
+<blockquote>
+<p><strong>Tip</strong>: To see the help file, hover over a function (or dataset) with the mouse (or select the text) and then press <code>F1</code>.</p>
+</blockquote>
+<p>data = diamonds</p>
+<p>Let’s take a look at how much diamonds of different color cost. The help file says that diamonds labeled D have the best color, and diamonds labeled J the worst color (I’m not quite sure what a “bad” color is for a diamond …). Anyhow, let’s make a bar plot that shows the average price of diamonds for different colors.</p>
+<p>We do so via specifying the plot aesthetics with the function <code>aes()</code>. We need to tell <code>aes()</code> what we would like to display on the x-axis, and the y-axis of the plot.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Here, we specified that we want to plot color on the x-axis, and the average price on the y-axis. However, we still need to specify <em>how</em> to plot it. Let’s make a <strong>bar graph</strong>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Neat! Two lines of code produce an almost-publication-ready plot (to be published in the <em>Proceedings of Expensive Diamonds</em>)! Note how we used a <code>+</code> at the end of the first line of code to specify that there will be more. This is a very powerful idea underlying <code>ggplot2</code>. We can start simple and keep adding things to the plot step by step.</p>
+<p>We used the <code>stat_summary()</code> function to define <em>what</em> we want to plot (the “mean”), and <em>how</em> (as a “bar” chart). Let’s take a closer look at that function.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">help</span>(stat_summary)</a></code></pre></div>
+<p>Not the the easiest help file … We supplied two arguments to the function, <code>fun.y =</code> and <code>geom =</code>.</p>
+<ol style="list-style-type: decimal">
+<li>The <code>fun.y</code> argument specifies <em>what</em> function we’d like to apply to the data for each value of x. Here, we said that we would like to take the <code>mean</code> and we specified that as a string.</li>
+<li>The <code>geom</code> argument specifies <em>how</em> we would like to plot the result, namely as a “bar” plot.</li>
+</ol>
+<p>Instead of showing the “mean”, we could also show the “median” instead.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;median&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>And instead of making a bar plot, we could show some points instead.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<blockquote>
+<p><strong>Tip</strong>: Take a look <a href="https://ggplot2.tidyverse.org/reference/#section-layer-geoms">here</a> to see what other geoms ggplot2 supports.</p>
+</blockquote>
+<p>Somewhat surprisingly, diamonds with the best color (D) are not the most expensive ones. What’s going on here? Well, the diamonds not only differ in color, the differ along other dimensions as well. Let’s take another look at the data.</p>
+</div>
+<div id="scatter-plot" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Scatter plot</h3>
+<p>I don’t know much about diamonds, but I do know that diamonds with a higher <code>carat</code> value are better. <code>color</code> was a discrete variable with seven different values. <code>carat</code>, however, is a continuous variable. We want to see how the price of diamonds differs as a function of the <code>carat</code> value. Since we are interested in the relationship between two continuous variables, plotting a bar graph doesn’t really make much sense here. Instead, let’s make a <strong>scatter plot</strong>. Let’s put the <code>carat</code> value on the x-axis, and the <code>price</code> on the y-axis.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/scatterplot-1.png" width="672" /></p>
+<ul>
+<li>make clear that we didn’t need to summarize anything here – we are just directly plotting the data</li>
+</ul>
+<p>Cool! That looks sensible (even though it’s unclear whether paying over $15,000 for a sparkly stone makes sense). Diamonds with a higher <code>carat</code> value have a higher <code>price</code>. Our dataset has 53940 rows. So the plot actually shows 53940 circles even though we can’t see all of them since they overlap.</p>
+<p>Let’s make some progress on trying to figure out why the diamonds with the better color weren’t the most expensive ones on average. We’ll add some color to the scatter plot in Figure <a href="#fig:scatterplot"><strong>??</strong></a>. We color each of the points based on the diamond’s color. To do so, we pass another argument to the aesthetics of the plot via <code>aes()</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">color =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/scatterplot-color-1.png" width="672" /></p>
+<p>Aha! Now we’ve got some color. Notice how in Figure <a href="#fig:scatterplot-color"><strong>??</strong></a> <code>ggplot2</code> nicely added a legend for us, thanks! We’ll see later how to play around with legends. Form just eye-balling the plot, it looks like the diamonds with the best <code>color</code> (D) tended to have a lower <code>carat</code> value, and the ones with the worst <code>color</code> (J), tended to have the highest carat values.</p>
+<p>There are many other things that we can define in <code>aes()</code>. Take a quick look at the vignette:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">&quot;ggplot2-specs&quot;</span>)</a></code></pre></div>
+</div>
+<div id="making-a-line-plot" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Making a line plot</h3>
+<p>What else do we know about the diamonds? We actually know the quality of how they were cut. The <code>cut</code> variable ranges from “Fair” to “Ideal”. First, let’s take a look at the relationship between <code>cut</code> and <code>price</code>. This time, we’ll make a line plot instead of a bar plot (just because we can).</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</a></code></pre></div>
+<pre><code>## geom_path: Each group consists of only one observation. Do you need to
+## adjust the group aesthetic?</code></pre>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Oops! All we did is that we replaced <code>x = color</code> with <code>x = cut</code>, and <code>geom = &quot;bar&quot;</code> with <code>geom = &quot;line&quot;</code>. However, the plot doesn’t look like expected. What happened here? The reason is that the line plot needs to know what points to connect. The error message tells us that each group consists of only one observation. Let’s adjust the group asthetic to fix this.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price, <span class="dt">group =</span> <span class="dv">1</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>By adding the parameter <code>group = 1</code> to <code>aes()</code>, we specify that we would like all the levels in <code>x = cut</code> to be treated as coming from the same group. We’ll learn more about grouping below.</p>
+</div>
+<div id="adding-error-bars" class="section level3">
+<h3><span class="header-section-number">2.4.4</span> Adding error bars</h3>
+<p>We often don’t just want to show the means but also give a sense for how much the data varies. <code>ggplot2</code> has some convenient ways of specifying error bars. Let’s take a look at how much <code>price</code> varies as a function of <code>clarity</code> (another variable in our <code>diamonds</code> data frame).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> clarity, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="co"># plot bootstrapped error bars first</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="co">#add points with means</span></a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Here we have it. The average price of our diamonds for different levels of <code>clarity</code> together with bootstrapped 95% confidence intervals. How do we know that we have 95% confidence intervals? That’s what <code>mean_cl_boot()</code> computes as a default. Let’s take a look at that function</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">help</span>(mean_cl_boot)</a></code></pre></div>
+<p>Remember that you can just select the text (or merely put the cursor over the word) and press <code>F1</code> to see the help. The help file tell us about the function <code>smean.cl.boot</code> in the <code>Hmisc</code> package. The <code>mean_cl_boot()</code> function is a version that works well with <code>ggplot2</code>. We see that this function takes as inputs, the confidence interval <code>conf.int</code>, the number of bootstrap samples <code>B</code>, and some other ones that we don’t care about for now. So let’s make the same plot again with 99.9% confidence intervals, and 2000 bootstrap samples.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> clarity, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">conf.int =</span> <span class="fl">.999</span>, <span class="dt">B =</span> <span class="dv">2000</span>))<span class="op">+</span><span class="st"> </span><span class="co"># plot bootstrapped error bars first</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="co">#add points with means</span></a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>Note how the error bars are larger now compared to Figure #. Note the somewhat peculiar way in which we supplied the parameters to the <code>mean_cl_boot</code> function. The <code>fun.args</code> argument takes in a list of arguments that it then passes on to the function <code>mean_cl_boot</code>.</p>
+<p>One cool feature about using <code>stat_summary()</code> is that we did not have to change anything about the data frame that we used to make the plots. We directly used our raw data instead of having to make separate data frames that contain the relevant information (such as the means and the confidence intervals).</p>
+<p>Let’s take a look at two more principles for plotting data that are extremely helpful: groups and facets.</p>
+</div>
+<div id="grouping-data" class="section level3">
+<h3><span class="header-section-number">2.4.5</span> Grouping data</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price, <span class="dt">group =</span> cut))<span class="op">+</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price, <span class="dt">group =</span> cut, <span class="dt">color =</span> cut))<span class="op">+</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>I’ve made the lines a little thicker here by setting the <code>size</code> argument to 2.</p>
+<p>Grouping is particularly handy for bar plots. Let’s take a look at how the average price of diamonds looks like taking into account both <code>cut</code> and <code>color</code> (I know – exciting times!). Let’s put the <code>color</code> on the x-axis and then group by the <code>cut</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price, <span class="dt">group =</span> cut, <span class="dt">color =</span> cut))<span class="op">+</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>That’s a fail! Several things went wrong here. First, all the bars are gray and only their outline is colored differently. Instead we want the bars to have a different color. For that we need to specify the <code>fill</code> argument rather than the <code>color</code> argument. But it’s worse. The bars currently are shown on top of each other. Instead, we’d like to put them next to each other. Here is how to do that:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price, <span class="dt">group =</span> cut, <span class="dt">fill =</span> cut))<span class="op">+</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>())</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Neato! We’ve changed the <code>color</code> argument to <code>fill</code>, and have added the <code>position = position_dodge()</code> argument to the <code>stat_summary()</code> call. This argument makes it such that the bars are nicely dodged next to each other. Let’s add some error bars just for kicks.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price, <span class="dt">group =</span> cut, <span class="dt">fill =</span> cut))<span class="op">+</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>Voila! Now with error bars. Note that we’ve added the <code>width = 0.9</code> argument to <code>position_dodge()</code>. Somehow R was complaining when this was not defined for geom “linerange”. I’ve also added some outline to the bars by including the argument <code>color = &quot;black&quot;</code> when plotting the bars. I think it looks nicer this way.</p>
+</div>
+<div id="making-facets" class="section level3">
+<h3><span class="header-section-number">2.4.6</span> Making facets</h3>
+<p>Having too much information in a single plot can be overwhelming. The previous plot is already pretty busy. Facets are a nice way of spliting up plots and showing information in separate panels.</p>
+<p>Let’s take a look at how wide these diamonds tend to be. The width in mm is given in the <code>y</code> column of the diamonds data frame. We’ll make a histogram first.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> y))<span class="op">+</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>()</a></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="bookdown-demo_files/figure-html/histogram1-1.png" width="672" /></p>
+<p>That looks bad! Let’s pick a different value for the width of the bins in the histogram.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> y))<span class="op">+</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.1</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/histogram2-1.png" width="672" /></p>
+<p>Still bad. There seems to be an outlier diamond that happens to be almost 60 mm wide, while most of the rest is much narrower. One option would be to remove the outlier from the data before plotting it. But generally, we don’t want to make new data frames. Instead, let’s just limit what data we want to show in the plot.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> y))<span class="op">+</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.1</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/histogram3-1.png" width="672" /></p>
+<p>I’ve used the <code>coord_cartesian()</code> function to restrict the range of data we’d like to show by passing a minimum and maximum to the <code>xlim</code> argument. This looks better now.</p>
+<p>Instead of histograms, we can also plot a density fitted to the distribution.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> y))<span class="op">+</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_density</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/density1-1.png" width="672" /></p>
+<p>Looks pretty similar to our histogram above! Just like we can play around with the binwidth of the histogram, we can change the smoothing bandwidth of the kernel that is used to create the histogram. Here is a histogram with a much wider bandwidth:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> y))<span class="op">+</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.5</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/density2-1.png" width="672" /></p>
+<p>I promised that this section was about making facets, right? We’re getting there! Let’s first take a look at how wide diamonds of different color are. I promise we’ll look at some actually interesting data sets very soon – for now, we mostly just want to figure out how to plot stuff. We can use grouping to make this happen.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> y, <span class="dt">group =</span> color, <span class="dt">fill =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/density3-1.png" width="672" /></p>
+<p>OK! That’s a little tricky to tell apart. Notice that I’ve specified the <code>alpha</code> argument in the <code>geom_density()</code> function so that the densities in the front don’t completely hide the densities in the back. But this still looks a little busy. Instead of grouping, let’s put the densities for the different colors, in separate panels. That’s what facetting allows you to do.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> y, <span class="dt">fill =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.2</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/density4-1.png" width="672" /></p>
+<p>Now we have the densities next to each other in separate panels. I’ve removed the <code>alpha</code> argument since the densities aren’t overlapping anymore. To make the different panels, I used the <code>facet_grid()</code> function and specified that I want separate columns for the different colors (<code>cols = vars(color)</code>). What’s the deal with <code>vars()</code>? Why couldn’t we just write <code>facet_grid(cols = color)</code> instead? The short answer is: that’s what the function wants. The long answer is: long. (We’ll learn more about this later in the course.) So, what does this plot actually show us? Well, J-colored diamonds tend to be wider than D-colored diamonds. Fascinating!</p>
+<p>Of course, we could go completely overboard with facets and groups. So let’s do it! Let’s look at how the average <code>price</code> (somewhat more interesting) varies as a function of <code>color</code>, <code>cut</code>, and <code>clarity</code>. We’ll put color on the x-axis, and make separate rows for <code>cut</code> and columns for <code>clarity</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">y =</span> price, <span class="dt">x =</span> color, <span class="dt">fill =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows =</span> <span class="kw">vars</span>(cut), <span class="dt">cols =</span> <span class="kw">vars</span>(clarity))</a></code></pre></div>
+<pre><code>## Warning: Removed 5 rows containing missing values (geom_linerange).</code></pre>
+<p><img src="bookdown-demo_files/figure-html/density5-1.png" width="672" /></p>
+<p>Figure <a href="#fig:density5"><strong>??</strong></a> is stretching it in terms of how much information it presents. But it gives you a sense for how to combine the differnet bits and pieces we’ve learned so far.</p>
+</div>
+<div id="more-on-aesthetics" class="section level3">
+<h3><span class="header-section-number">2.4.7</span> More on aesthetics</h3>
+<p><code>ggplot2</code> allows you to specify the plot aesthetics in different ways.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">color =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>Here, for example, I have defined all the aesthetics at the top level, that is, directly within the <code>ggplot()</code> function. This means that the aesthetics apply to all the functions afterwards. In this case, the <code>geom_point()</code> and the <code>geom_smooth()</code> functions. The <code>geom_smooth()</code> function produces separate best-fit regression lines for each different color.</p>
+<p>But what if we only wanted to show one regression line instead that applies to all the data? Here is one way of doing so:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>Here, I’ve moved the color aesthetic into the <code>geom_point()</code> function call. Now, the <code>x</code> and <code>y</code> aesthetics still apply to both the <code>geom_point()</code> and the <code>geom_smooth()</code> function call, but the <code>color</code> aesthetic applies only to <code>geom_point()</code>. Alternatively, we can simply overwrite global aesthetics within local function calls.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">color =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Here, I’ve set <code>color = 'black'</code> within the <code>geom_smooth()</code> function, and now only one global regression line is displayed.</p>
+</div>
+<div id="overview-of-different-plot-types-for-different-things" class="section level3">
+<h3><span class="header-section-number">2.4.8</span> Overview of different plot types for different things</h3>
+<p>Let’s briefly take stock of what we’ve learned so far.</p>
+<div id="comparisons" class="section level4">
+<h4><span class="header-section-number">2.4.8.1</span> Comparisons</h4>
+<p>Often we want to compare the data from many different conditions. And sometimes, it’s also useful to get a sense for what the individual participant data look like. Here is a plot that achieves both.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds[<span class="dv">1</span><span class="op">:</span><span class="dv">200</span>,], <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>, <span class="dt">height =</span> <span class="dv">0</span>), <span class="dt">size =</span> <span class="dv">2</span>)<span class="op">+</span><span class="st"> </span><span class="co"># individual data points (jittered horizontally)</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>)<span class="op">+</span><span class="st"> </span><span class="co"># error bars </span></a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">fill =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="dv">4</span>) <span class="co"># means</span></a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>This plot shows means, bootstrapped confidence intervals, and individual data points. I’ve used two tricks to make the individual data points easier to see.
+1. I’ve set the <code>alpha</code> attribute to make the points somewhat transparent.
+2. I’ve used the <code>position_jitter()</code> function to jitter the points horizontally.</p>
+<p>Note that I’m only plotting the first 200 entries of the data here by setting <code>data = diamonds[1:200,]</code> in <code>gpplot()</code>.</p>
+<p>Another way to get a sense for the distribution of the data is to use box plots.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds[<span class="dv">1</span><span class="op">:</span><span class="dv">200</span>,], <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>What do boxplots show? Here adapted from <code>help(geom_boxplot())</code>:</p>
+<blockquote>
+<p>The boxplots show the median as a horizontal black line. The lower and upper hinges correspond to the first and third quartiles (the 25th and 75th percentiles) of the data. The whiskers (= black vertical lines) extend from the top or bottom of the hinge by at most 1.5 * IQR (where IQR is the inter-quartile range, or distance between the first and third quartiles). Data beyond the end of the whiskers are called “outlying” points and are plotted individually.</p>
+</blockquote>
+<p>Personally, I’m not a big fan of boxplots and find them difficult to interpret. And many data sets are consistent with the same boxplot.</p>
+<div class="figure">
+<embed src="%22figures/images/boxplots.gif%22" />
+<p class="caption">Boxplot distributions</p>
+</div>
+<p>The figure above shows three different distributions that each correspond to the same boxplot.</p>
+<p>If there is not too much data, I recommend to plot jittered individual data points instead. If you do have a lot of data points, then violin plots can be helpful.</p>
+<div class="figure">
+<embed src="%22figures/images/box_violin.gif%22" />
+<p class="caption">Boxplot distributions</p>
+</div>
+<p>The figure above shows how the same raw data is represented as jittered dots, boxplots, and violin plots.</p>
+<p>We make violin plots like so:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_violin</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>Violin plots are good for detecting bimodal distributions. They work well when:
+1. You have many data points
+2. The data is continuous</p>
+<p>Violin plots don’t look good for Likert-scale data. Here is a simple example:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2">data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">rating =</span> <span class="kw">sample</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="dv">0</span>, <span class="fl">0.1</span>), <span class="dt">size =</span> <span class="dv">300</span>, <span class="dt">replace =</span> T))</a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="kw">ggplot</span>(<span class="dt">data =</span> data, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&#39;Likert&#39;</span>, <span class="dt">y =</span> rating))<span class="op">+</span></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_violin</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>This represents a vase much better than it represents the data.</p>
+<p>Here are some other options for representing distributions.</p>
+</div>
+<div id="scatter-plots" class="section level4">
+<h4><span class="header-section-number">2.4.8.2</span> Scatter plots</h4>
+<p>Scatter plots are great for looking at the relationship between two continuous variables. Let’s make a busy plot that looks at the relationship between <code>carat</code> and <code>price</code> again. This time, I’ll show you how to add regression lines to the plot, too. We’ll learn later in the course what these lines actually mean.</p>
+<p>Let’s start with the plot from above:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">color =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>Let’s separate the colors by using facets.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">color =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows =</span> <span class="kw">vars</span>(color))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>And let’s add some regression lines.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">color =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows =</span> <span class="kw">vars</span>(color))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+</div>
+<div id="raster-plots" class="section level4">
+<h4><span class="header-section-number">2.4.8.3</span> Raster plots</h4>
+<p>These are useful for looking how a variable of interest varies as a function of two other variables. For example, when we are trying to fit a model with two parameters, we might be interested to see how well the model does for different combinations of these two parameters. Here, we’ll plot what <code>carat</code> values diamonds of different <code>color</code> and <code>clarity</code> have.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> clarity, <span class="dt">z =</span> carat))<span class="op">+</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary_2d</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;tile&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p>Not too bad. Let’s add a few tweaks to make it look nicer.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> clarity, <span class="dt">z =</span> carat))<span class="op">+</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary_2d</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;tile&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;black&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>What I’ve done here is that I’ve added some outlines to the tiles by specifying <code>color = &quot;black&quot;</code> in <code>geom_tile()</code>. And then I’ve changed the scale for the fill gradient. I’ve defined the color for the low value to be “white”, and for the high value to be “black.” Finally, I’ve changed the lower and upper limit of the scale via the <code>limits</code> argument. Looks much better now! We see that diamonds with clarity <code>I1</code> tend to have the highest <code>carat</code> values on average, and diamonds that have the color <code>J</code>.</p>
+</div>
+</div>
+<div id="customizing-plots" class="section level3">
+<h3><span class="header-section-number">2.4.9</span> Customizing plots</h3>
+<p>So far, we’ve seen a number of different ways of plotting data. Now, let’s look into how to customize the plots. For example, we may wanta to change the axis labels, add a title, increase the font size. <code>ggplot2</code> let’s you customize almost anything.</p>
+<p>Let’s start pretty simple.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>This plot shows the average price for diamonds with a different quality of the cut, as well as the bootstrapped confidence intervals. Here are some things we can do to make it look nicer.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">width =</span> <span class="fl">0.85</span>)<span class="op">+</span><span class="st"> </span><span class="co">#change color of the fill, make a little more space between bars by setting their width</span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>)<span class="op">+</span><span class="st"> </span><span class="co">#make error bars thicker</span></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(</a>
+<a class="sourceLine" id="cb50-5" data-line-number="5">    <span class="dt">title =</span> <span class="st">&quot;Price as a function of quality of cut&quot;</span>, </a>
+<a class="sourceLine" id="cb50-6" data-line-number="6">    <span class="dt">subtitle =</span> <span class="st">&quot;Note: The price is in US dollars&quot;</span>,</a>
+<a class="sourceLine" id="cb50-7" data-line-number="7">    <span class="dt">tag =</span> <span class="st">&quot;A&quot;</span>,</a>
+<a class="sourceLine" id="cb50-8" data-line-number="8">    <span class="dt">x =</span> <span class="st">&quot;Quality of the cut&quot;</span>, </a>
+<a class="sourceLine" id="cb50-9" data-line-number="9">    <span class="dt">y =</span> <span class="st">&quot;Price&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="co">#added a title, subtitle, and changed axis labels </span></a>
+<a class="sourceLine" id="cb50-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span><span class="st"> </span><span class="co">#use a simple black and white theme </span></a>
+<a class="sourceLine" id="cb50-11" data-line-number="11"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">4000</span>, <span class="dt">by =</span> <span class="dv">2000</span>),</a>
+<a class="sourceLine" id="cb50-12" data-line-number="12">                     <span class="dt">labels =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">4000</span>, <span class="dt">by =</span> <span class="dv">2000</span>))<span class="op">+</span><span class="st"> </span><span class="co">#adjusted what to show on the y-axis</span></a>
+<a class="sourceLine" id="cb50-13" data-line-number="13"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">5.75</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5000</span>), <span class="dt">expand =</span> F)<span class="op">+</span><span class="st"> </span><span class="co">#adjusted the range of both axes</span></a>
+<a class="sourceLine" id="cb50-14" data-line-number="14"><span class="st">  </span><span class="kw">theme</span>(</a>
+<a class="sourceLine" id="cb50-15" data-line-number="15">    <span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>), <span class="co">#adjust the text size </span></a>
+<a class="sourceLine" id="cb50-16" data-line-number="16">    <span class="dt">panel.border =</span> <span class="kw">element_blank</span>(), <span class="co">#remove the border around the panel</span></a>
+<a class="sourceLine" id="cb50-17" data-line-number="17">    <span class="dt">axis.line =</span> <span class="kw">element_line</span>(), <span class="co">#add line for each axis</span></a>
+<a class="sourceLine" id="cb50-18" data-line-number="18">    <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(), <span class="co">#remove the grid lines in the background</span></a>
+<a class="sourceLine" id="cb50-19" data-line-number="19">    <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">margin =</span> <span class="kw">margin</span>(<span class="dt">t =</span> <span class="fl">0.2</span>, <span class="dt">unit =</span> <span class="st">&quot;inch&quot;</span>)), <span class="co">#added some space at top of x-title </span></a>
+<a class="sourceLine" id="cb50-20" data-line-number="20">    <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">margin =</span> <span class="kw">margin</span>(<span class="dt">r =</span> <span class="fl">0.1</span>, <span class="dt">unit =</span> <span class="st">&quot;inch&quot;</span>)), <span class="co">#added some space t the right of y-title</span></a>
+<a class="sourceLine" id="cb50-21" data-line-number="21">    <span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">margin =</span> <span class="kw">margin</span>(<span class="dt">b =</span> <span class="fl">0.3</span>, <span class="dt">unit =</span> <span class="st">&quot;inch&quot;</span>),</a>
+<a class="sourceLine" id="cb50-22" data-line-number="22">                                 <span class="dt">color =</span> <span class="st">&quot;gray70&quot;</span>), <span class="co">#added some space underneath the subtitle, and made it gray,</span></a>
+<a class="sourceLine" id="cb50-23" data-line-number="23">    <span class="dt">plot.tag =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>), <span class="co">#make the plot tag bold </span></a>
+<a class="sourceLine" id="cb50-24" data-line-number="24">    <span class="dt">plot.tag.position =</span> <span class="kw">c</span>(<span class="fl">0.05</span>, <span class="fl">0.99</span>) <span class="co">#move it a little</span></a>
+<a class="sourceLine" id="cb50-25" data-line-number="25">  )</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&quot;figures/nice_plot.pdf&quot;</span>, <span class="dt">width =</span> <span class="dv">8</span>, <span class="dt">height =</span> <span class="dv">6</span>)</a></code></pre></div>
+<p>I’ve tweaked quite a few things here.</p>
+</div>
+<div id="saving-plots" class="section level3">
+<h3><span class="header-section-number">2.4.10</span> Saving plots</h3>
+<p>To save plots, use the <code>ggsave()</code> command. Personally, I prefer to save my plots as pdf files. This way, the plot looks good no matter what size you need it to be. This means it’ll look good both in presentations as well as in a paper. You can save the plot in any format that you like.</p>
+<p>I strongly recommend to use a relative path to specify where the figure should be saved. This way, if you are sharing the project with someone else via Stanford Box, Dropbox, or Github, they will be able to run the code without errors.</p>
+<p>Here is an example for how to save one of the plots that we’ve created above.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;figures/diamond_plot.pdf&#39;</span>, <span class="dt">width =</span> <span class="dv">8</span>, <span class="dt">height =</span> <span class="dv">6</span>)</a></code></pre></div>
+<p>Here, I’m saving the plot in the <code>figures</code> folder and it’s name is <code>diamond_plot.pdf</code>. I also specify the width and height as the plot in inches (which is the default unit).</p>
+</div>
+<div id="creating-figure-panels" class="section level3">
+<h3><span class="header-section-number">2.4.11</span> Creating figure panels</h3>
+<p>Sometimes, we want to create a figure with several subfigures, each of which is labeled with a), b), etc. We have already learned how to make separate panels using <code>facet_wrap()</code> or <code>facet_grid()</code>. The R package <code>patchwork</code> makes it very easy to combine multiple plots.</p>
+<p>Let’s first install the package. It’s not on <a href="https://cran.r-project.org/">CRAN</a> yet (where most of the R packages live), but we can install it directly from the <a href="https://github.com/thomasp85/patchwork">github repository</a>.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;thomasp85/patchwork&quot;</span>)</a></code></pre></div>
+<p>Then we load the package and use it. First, I’m just combining a few plots that we’ve made above into one.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb55-3" data-line-number="3"><span class="co"># first plot</span></a>
+<a class="sourceLine" id="cb55-4" data-line-number="4">p1 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> y, <span class="dt">fill =</span> color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.2</span>, <span class="dt">show.legend =</span> F)<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-6" data-line-number="6"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(color))<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-7" data-line-number="7"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-8" data-line-number="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Width of differently colored diamonds&quot;</span>,</a>
+<a class="sourceLine" id="cb55-9" data-line-number="9">    <span class="dt">tag =</span> <span class="st">&quot;A&quot;</span>)</a>
+<a class="sourceLine" id="cb55-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb55-11" data-line-number="11"><span class="co"># second plot</span></a>
+<a class="sourceLine" id="cb55-12" data-line-number="12">p2 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> clarity, <span class="dt">z =</span> carat))<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-13" data-line-number="13"><span class="st">  </span><span class="kw">stat_summary_2d</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;tile&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-14" data-line-number="14"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Carat values&quot;</span>,</a>
+<a class="sourceLine" id="cb55-15" data-line-number="15">       <span class="dt">subtitle =</span> <span class="st">&quot;For different color and clarity&quot;</span>,</a>
+<a class="sourceLine" id="cb55-16" data-line-number="16">       <span class="dt">x =</span> <span class="st">&#39;width in mm&#39;</span>,</a>
+<a class="sourceLine" id="cb55-17" data-line-number="17">       <span class="dt">tag =</span> <span class="st">&quot;B&quot;</span>)</a>
+<a class="sourceLine" id="cb55-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb55-19" data-line-number="19"><span class="co"># third plot</span></a>
+<a class="sourceLine" id="cb55-20" data-line-number="20">p3 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-21" data-line-number="21"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">width =</span> <span class="fl">0.85</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-22" data-line-number="22"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>)<span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-23" data-line-number="23"><span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;fair&#39;</span>, <span class="st">&#39;good&#39;</span>, <span class="st">&#39;very</span><span class="ch">\n</span><span class="st">good&#39;</span>, <span class="st">&#39;premium&#39;</span>, <span class="st">&#39;ideal&#39;</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb55-24" data-line-number="24"><span class="st">  </span><span class="kw">labs</span>(</a>
+<a class="sourceLine" id="cb55-25" data-line-number="25">    <span class="dt">title =</span> <span class="st">&quot;Price as a function of cut&quot;</span>, </a>
+<a class="sourceLine" id="cb55-26" data-line-number="26">    <span class="dt">subtitle =</span> <span class="st">&quot;Note: The price is in US dollars&quot;</span>,</a>
+<a class="sourceLine" id="cb55-27" data-line-number="27">    <span class="dt">tag =</span> <span class="st">&quot;C&quot;</span>,</a>
+<a class="sourceLine" id="cb55-28" data-line-number="28">    <span class="dt">x =</span> <span class="st">&quot;Quality of the cut&quot;</span>, </a>
+<a class="sourceLine" id="cb55-29" data-line-number="29">    <span class="dt">y =</span> <span class="st">&quot;Price&quot;</span>)<span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-30" data-line-number="30"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">5.75</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5000</span>), <span class="dt">expand =</span> F)</a>
+<a class="sourceLine" id="cb55-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb55-32" data-line-number="32"><span class="co"># combine the plots</span></a>
+<a class="sourceLine" id="cb55-33" data-line-number="33">p1 <span class="op">+</span><span class="st"> </span>(p2 <span class="op">+</span><span class="st"> </span>p3) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-34" data-line-number="34"><span class="st">  </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">1</span>) <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-35" data-line-number="35"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-36" data-line-number="36"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.tag =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb55-37" data-line-number="37">        )</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="st">&quot;figures/combined_plot.pdf&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">6</span>)</a></code></pre></div>
+<p>Not a perfect plot yet, but you get the idea. To combine the plots, we defined that we would like p2 and p3 to be displayed in the same row using the <code>()</code> syntax. And we specified that we only want one column via the <code>plot_layout()</code> function. We also applied the same <code>theme_bw()</code> to all the plots using the <code>&amp;</code> operator, and formatted how the plot tags should be displayed. For more info on how to use <code>patchwork</code>, take a look at the <a href="https://github.com/thomasp85/patchwork">readme</a> on the github page.</p>
+<p>Other packages that provide additional functionality for combining multiple plots into one are <a href="https://cran.r-project.org/web/packages/gridExtra/index.html"><code>gridExtra</code></a> and <a href="https://cran.r-project.org/web/packages/cowplot/index.html"><code>cowplot</code></a>. You can find more information on how to lay out multiple plots <a href="https://cran.r-project.org/web/packages/egg/vignettes/Ecosystem.html">here</a>.</p>
+<p>An alternative way for making these plots is to use Adobe Illustrator, Powerpoint, or Keynote. However, you want to make changing plots as easy as possible. Adobe Illustrator has a feature that allows you to link to files. This way, if you change the plot, the plot within the illustrator file gets updated automatically as well.</p>
+<p>If possible, it’s <strong>much</strong> better to do everything in R though so that your plot can easily be reproduced by someone else.</p>
+</div>
+<div id="peeking-behind-the-scenes" class="section level3">
+<h3><span class="header-section-number">2.4.12</span> Peeking behind the scenes</h3>
+<p>Sometimes it can be helpful for debugging to take a look behind the scenes. Silently, <code>ggplot2</code> computes a data frame based on the information you pass to it. We can take a look at the data frame that’s underlying the plot.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> clarity, <span class="dt">z =</span> carat))<span class="op">+</span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary_2d</span>(<span class="dt">fun =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;tile&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;black&quot;</span>)</a>
+<a class="sourceLine" id="cb57-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb57-5" data-line-number="5"><span class="kw">print</span>(p)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">info =<span class="st"> </span><span class="kw">ggplot_build</span>(p)</a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="co"># print(info$data)</span></a></code></pre></div>
+<p>I’ve called the <code>ggplot_build()</code> function on the ggplot2 object that we saved as <code>p</code>. I’ve then printed out the data associated with that plot object. The first thing we note about the data frame is how many entries it has, 56. That’s good. This means there is one value for each of the 7 x 8 grids. The columns tell us what color was used for the <code>fill</code>, the <code>value</code> associated with each row, where each row is being displayed (<code>x</code> and <code>y</code>), etc.</p>
+<p>If a plot looks weird, it’s worth taking a look behind the scenes. For example, one thing we thing we could have tried is the following (in fact, this is what I tried first):</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> clarity, <span class="dt">fill =</span> carat))<span class="op">+</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_tile</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb59-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_fill_gradient</span>(<span class="dt">low =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;black&quot;</span>)</a>
+<a class="sourceLine" id="cb59-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb59-5" data-line-number="5"><span class="kw">print</span>(p)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">info =<span class="st"> </span><span class="kw">ggplot_build</span>(p)</a>
+<a class="sourceLine" id="cb60-2" data-line-number="2"><span class="co"># print(info$data)</span></a></code></pre></div>
+<p>Why does this plot look different from the one before? What went wrong here? Notice that the data frame associated with the ggplot2 object has 53940 rows. So instead of plotting means here, we plotted all the individual data points. So what we are seeing here is just the top layer of many, many layers.</p>
+</div>
+<div id="defining-snippets" class="section level3">
+<h3><span class="header-section-number">2.4.13</span> Defining snippets</h3>
+<p>Often, we want to create similar plots over and over again. One way to achieve this is by finding the original plot, copy and pasting it, and changing the bits that need changing. Another more flexible and faster way to do this is by using snippets. Snippets are short pieces of code that</p>
+<p>Here are some snippets I use:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">snippet snbar</a>
+<a class="sourceLine" id="cb61-2" data-line-number="2">    <span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="op">$</span>{<span class="dv">1</span><span class="op">:</span>data}, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="op">$</span>{<span class="dv">2</span><span class="op">:</span>x}, <span class="dt">y =</span> <span class="op">$</span>{<span class="dv">3</span><span class="op">:</span>y}))<span class="op">+</span></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="st">        </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb61-4" data-line-number="4"><span class="st">        </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>)</a>
+<a class="sourceLine" id="cb61-5" data-line-number="5">        </a>
+<a class="sourceLine" id="cb61-6" data-line-number="6">snippet sngg</a>
+<a class="sourceLine" id="cb61-7" data-line-number="7">    <span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="op">$</span>{<span class="dv">1</span><span class="op">:</span>data}, <span class="kw">aes</span>(<span class="op">$</span>{<span class="dv">2</span><span class="op">:</span>aes}))<span class="op">+</span></a>
+<a class="sourceLine" id="cb61-8" data-line-number="8"><span class="st">        </span><span class="er">$</span>{<span class="dv">0</span>}</a>
+<a class="sourceLine" id="cb61-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb61-10" data-line-number="10">snippet sndf</a>
+<a class="sourceLine" id="cb61-11" data-line-number="11">    <span class="op">$</span>{<span class="dv">1</span><span class="op">:</span>data} =<span class="st"> </span><span class="er">$</span>{<span class="dv">1</span><span class="op">:</span>data} <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-12" data-line-number="12"><span class="st">        </span><span class="er">$</span>{<span class="dv">0</span>}</a></code></pre></div>
+<p>To make a bar plot, I now only need to type <code>snbar</code> and then hit TAB to activate the snippet. I can then cycle through the bits in the code that are marked with <code>${Number:word}</code> by hitting TAB again.</p>
+<p>In RStudio, you can change and add snippets by going to Tools –&gt; Global Options… –&gt; Code –&gt; Edit Snippets. Make sure to set the tick mark in front of Enable Code Snippets (see below).</p>
+<div class="figure">
+<embed src="%22figures/screenshots/snippets.png%22" />
+<p class="caption">Code snippets</p>
+</div>
+<p>To edit code snippets faster, run this command from the <code>usethis</code> package. Make sure to install the package first.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">usethis<span class="op">::</span><span class="kw">edit_rstudio_snippets</span>()</a></code></pre></div>
+<p>This command opens up a separate tab in RStudio called <code>r.snippets</code> so that you can make new snippets and adapt old ones more quickly. Take a look at the snippets that RStudio already comes with. And then, make some new ones! By using snippets you will be able to avoid typing the same code over and over again, and you won’t have to memorize as much, too.</p>
+</div>
+<div id="making-animations" class="section level3">
+<h3><span class="header-section-number">2.4.14</span> Making animations</h3>
+<p>Animated plots can be a great way to illustrate your data in presentations. The R package <code>gganimate</code> lets you do just that.</p>
+<p>Again, we install the package <code>gganimate</code> directly from the <a href="https://github.com/thomasp85/gganimate/">github repository</a>.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&#39;thomasp85/gganimate&#39;</span>)</a></code></pre></div>
+<pre><code>## Skipping install of &#39;gganimate&#39; from a github remote, the SHA1 (b1dce006) has not changed since last install.
+##   Use `force = TRUE` to force installation</code></pre>
+<p>Here is an example showing how to use it.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw">library</span>(gganimate)</a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="kw">library</span>(gapminder)</a>
+<a class="sourceLine" id="cb65-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb65-4" data-line-number="4"><span class="kw">ggplot</span>(gapminder, <span class="kw">aes</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> lifeExp, <span class="dt">size =</span> pop, <span class="dt">colour =</span> country)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb65-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb65-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> gapminder <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;United States&quot;</span>, <span class="st">&quot;China&quot;</span>, <span class="st">&quot;India&quot;</span>)), <span class="kw">aes</span>(<span class="dt">label =</span> country), <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">vjust =</span> <span class="fl">-0.75</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb65-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> country_colors) <span class="op">+</span></a>
+<a class="sourceLine" id="cb65-8" data-line-number="8"><span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">12</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb65-9" data-line-number="9"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb65-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_bw</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb65-11" data-line-number="11"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">24</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb65-12" data-line-number="12"><span class="st">  </span><span class="co"># Here comes the gganimate specific bits</span></a>
+<a class="sourceLine" id="cb65-13" data-line-number="13"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Year: {frame_time}&#39;</span>, <span class="dt">x =</span> <span class="st">&#39;GDP per capita&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;life expectancy&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb65-14" data-line-number="14"><span class="st">  </span><span class="kw">transition_time</span>(year) <span class="op">+</span></a>
+<a class="sourceLine" id="cb65-15" data-line-number="15"><span class="st">  </span><span class="kw">ease_aes</span>(<span class="st">&#39;linear&#39;</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-45-1.gif" /><!-- --></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;figures/life_gdp_animation.gif&#39;</span>)</a></code></pre></div>
+<p>This takes a while to run but it’s worth the wait. The plot shows the relationship between GDP per capita (on the x-axis) and life expectancy (on the y-axis) changes across different years for the countries of different continents. The size of each dot represents the population size of the respective country. And different countries are shown in different colors. This animation is not super useful yet in that we don’t know which continents and countries the different dots represent. I’ve added a label to the United States, China, and India.</p>
+<p>Note how little is required to define the <code>gganimate</code>-specific information! The <code>{frame_time}</code> variable changes the title for each frame. The <code>transition_time()</code> variable is set to <code>year</code>, and the kind of transition is set as ‘linear’ in <code>ease_aes()</code>. I’ve saved the animation as a gif in the figures folder.</p>
+<p>We won’t have time to go into more detail here but I encourage you to play around with <code>gganimate</code>.</p>
+</div>
+<div id="shiny-apps" class="section level3">
+<h3><span class="header-section-number">2.4.15</span> Shiny apps</h3>
+<p>The package <a href="https://shiny.rstudio.com/"><code>shiny</code></a> makes it relatively easy to create interactive plots that can be hosted online. Here is a <a href="https://shiny.rstudio.com/gallery/">gallery</a> with some examples.</p>
+</div>
+</div>
+<div id="to-do-list" class="section level2">
+<h2><span class="header-section-number">2.5</span> To do list</h2>
+<ul>
+<li>section on how to manipulate legends</li>
+<li>use <code>theme_set()</code> to set the theme for all the plots</li>
+<li>use section headers to structure an R file –&gt; learn shortcuts to run code sections</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-wrangling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-visualization.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+# Introduction {#intro}
+
+You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+
+Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+
+
+```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+par(mar = c(4, 4, .1, .1))
+plot(pressure, type = 'b', pch = 19)
+```
+
+Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+
+```{r nice-tab, tidy=FALSE}
+knitr::kable(
+  head(iris, 20), caption = 'Here is a nice table!',
+  booktabs = TRUE
+)
+```
+
+You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+
+```{r stats-help, fig.cap='Stats cheatsheet',fig.align='center',echo=FALSE}
+knitr::include_graphics('figures/cheatsheets/stats-help.jpg') 
+```
+
+See figure \@ref(fig:stats-help)
+
+
+```{r klippy, echo=FALSE, include=TRUE}
+klippy::klippy()
+```
+
+## Resources
+
+- [Advanced R by Hadley Wickham](http://adv-r.had.co.nz/)
+- [Getting started in R](http://ilustat.com/shared/Getting-Started-in-R.pdf)
+
+## General points 
+
+- You will have software to help you with computation, but model specification and interpretation will be up to you.
+- Motivation in first lecture: [tidyverse philosophy](https://r4ds.had.co.nz/introduction.html#what-you-will-learn)
+
+## To do list 
+
+- have a separate chapter on organization? 
+  + information about how I run code (with code sections)
+  + use temporary variable names and delete at the end of a code section
+  + save the outputs of more intensive computations as RData 
+  + how to structure code
+- use normal plotting functions as well? `hist()`, `plot()`, nice way of showing distributions
+- teach meta skills: 
+  + how to navigate all the R packages? (shiny apps for searching)
+  + which packages to use (make sure it's up to date)
+  + the structure of a CRAN page
+- installing R:
+  + set a permanent location for the R packages in the environment variable
+- general rules for typesetting: 
+  - only use lower case 
+  - use "." for structure: 
+    - data frames: df.
+    - lists: l.
+    - functions: fun.
+    - model fits: fit.
+    - temporary variables: tmp.
+  - otherwise use "_" for names

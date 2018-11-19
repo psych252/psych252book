@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Psych 252 course notes</title>
+  <meta name="description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Psych 252 course notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Psych 252 course notes" />
+  
+  <meta name="twitter:description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  
+
+<meta name="author" content="Tobias Gerstenberg">
+
+
+<meta name="date" content="2018-10-30">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="data-wrangling.html">
+<link rel="next" href="the-linear-model.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Psych 252</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#resources"><i class="fa fa-check"></i><b>1.1</b> Resources</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#general-points"><i class="fa fa-check"></i><b>1.2</b> General points</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#to-do-list"><i class="fa fa-check"></i><b>1.3</b> To do list</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>2</b> Visualizing Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="visualization.html"><a href="visualization.html#to-do-list-1"><i class="fa fa-check"></i><b>2.1</b> To do list</a></li>
+<li class="chapter" data-level="2.2" data-path="visualization.html"><a href="visualization.html#learning-objectives"><i class="fa fa-check"></i><b>2.2</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.3" data-path="visualization.html"><a href="visualization.html#resources-1"><i class="fa fa-check"></i><b>2.3</b> Resources</a></li>
+<li class="chapter" data-level="2.4" data-path="visualization.html"><a href="visualization.html#why-visualize-data"><i class="fa fa-check"></i><b>2.4</b> Why visualize data?</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="visualization.html"><a href="visualization.html#why-use-r-to-visualize-data"><i class="fa fa-check"></i><b>2.4.1</b> Why use R to visualize data?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="visualization.html"><a href="visualization.html#bad-visualizations"><i class="fa fa-check"></i><b>2.5</b> Bad visualizations</a></li>
+<li class="chapter" data-level="2.6" data-path="visualization.html"><a href="visualization.html#data-visualization-using-ggplot2"><i class="fa fa-check"></i><b>2.6</b> Data visualization using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="2.6.1" data-path="visualization.html"><a href="visualization.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.6.1</b> Setting up a plot</a></li>
+<li class="chapter" data-level="2.6.2" data-path="visualization.html"><a href="visualization.html#scatter-plot"><i class="fa fa-check"></i><b>2.6.2</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.6.3" data-path="visualization.html"><a href="visualization.html#making-a-line-plot"><i class="fa fa-check"></i><b>2.6.3</b> Making a line plot</a></li>
+<li class="chapter" data-level="2.6.4" data-path="visualization.html"><a href="visualization.html#adding-error-bars"><i class="fa fa-check"></i><b>2.6.4</b> Adding error bars</a></li>
+<li class="chapter" data-level="2.6.5" data-path="visualization.html"><a href="visualization.html#grouping-data"><i class="fa fa-check"></i><b>2.6.5</b> Grouping data</a></li>
+<li class="chapter" data-level="2.6.6" data-path="visualization.html"><a href="visualization.html#making-facets"><i class="fa fa-check"></i><b>2.6.6</b> Making facets</a></li>
+<li class="chapter" data-level="2.6.7" data-path="visualization.html"><a href="visualization.html#more-on-aesthetics"><i class="fa fa-check"></i><b>2.6.7</b> More on aesthetics</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="visualization.html"><a href="visualization.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>2.7</b> Overview of different plot types for different things</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="visualization.html"><a href="visualization.html#proportions"><i class="fa fa-check"></i><b>2.7.1</b> Proportions</a></li>
+<li class="chapter" data-level="2.7.2" data-path="visualization.html"><a href="visualization.html#comparisons"><i class="fa fa-check"></i><b>2.7.2</b> Comparisons</a></li>
+<li class="chapter" data-level="2.7.3" data-path="visualization.html"><a href="visualization.html#bee-swarm-plots"><i class="fa fa-check"></i><b>2.7.3</b> Bee swarm plots</a></li>
+<li class="chapter" data-level="2.7.4" data-path="visualization.html"><a href="visualization.html#relationships"><i class="fa fa-check"></i><b>2.7.4</b> Relationships</a></li>
+<li class="chapter" data-level="2.7.5" data-path="visualization.html"><a href="visualization.html#raster-plots"><i class="fa fa-check"></i><b>2.7.5</b> Raster plots</a></li>
+<li class="chapter" data-level="2.7.6" data-path="visualization.html"><a href="visualization.html#temporal-data"><i class="fa fa-check"></i><b>2.7.6</b> Temporal data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="visualization.html"><a href="visualization.html#customizing-plots"><i class="fa fa-check"></i><b>2.8</b> Customizing plots</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="visualization.html"><a href="visualization.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>2.8.1</b> Changing the order of things</a></li>
+<li class="chapter" data-level="2.8.2" data-path="visualization.html"><a href="visualization.html#dealing-with-legends"><i class="fa fa-check"></i><b>2.8.2</b> Dealing with legends</a></li>
+<li class="chapter" data-level="2.8.3" data-path="visualization.html"><a href="visualization.html#customizing-themes"><i class="fa fa-check"></i><b>2.8.3</b> Customizing themes</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="visualization.html"><a href="visualization.html#saving-plots"><i class="fa fa-check"></i><b>2.9</b> Saving plots</a></li>
+<li class="chapter" data-level="2.10" data-path="visualization.html"><a href="visualization.html#creating-figure-panels"><i class="fa fa-check"></i><b>2.10</b> Creating figure panels</a></li>
+<li class="chapter" data-level="2.11" data-path="visualization.html"><a href="visualization.html#peeking-behind-the-scenes"><i class="fa fa-check"></i><b>2.11</b> Peeking behind the scenes</a></li>
+<li class="chapter" data-level="2.12" data-path="visualization.html"><a href="visualization.html#defining-snippets"><i class="fa fa-check"></i><b>2.12</b> Defining snippets</a></li>
+<li class="chapter" data-level="2.13" data-path="visualization.html"><a href="visualization.html#making-animations"><i class="fa fa-check"></i><b>2.13</b> Making animations</a></li>
+<li class="chapter" data-level="2.14" data-path="visualization.html"><a href="visualization.html#shiny-apps"><i class="fa fa-check"></i><b>2.14</b> Shiny apps</a></li>
+<li class="chapter" data-level="2.15" data-path="visualization.html"><a href="visualization.html#residuals-in-a-regression-model"><i class="fa fa-check"></i><b>2.15</b> Residuals in a regression model</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data wrangling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#setting-up-rstudio"><i class="fa fa-check"></i><b>3.1</b> Setting up RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#some-r-basics"><i class="fa fa-check"></i><b>3.2</b> Some R basics</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#getting-help"><i class="fa fa-check"></i><b>3.2.1</b> Getting help</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#modes"><i class="fa fa-check"></i><b>3.2.2</b> Modes</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#data-types"><i class="fa fa-check"></i><b>3.2.3</b> Data types</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#operators"><i class="fa fa-check"></i><b>3.2.4</b> Operators</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data-wrangling.html"><a href="data-wrangling.html#control-flow"><i class="fa fa-check"></i><b>3.2.5</b> Control flow</a></li>
+<li class="chapter" data-level="3.2.6" data-path="data-wrangling.html"><a href="data-wrangling.html#functions"><i class="fa fa-check"></i><b>3.2.6</b> Functions</a></li>
+<li class="chapter" data-level="3.2.7" data-path="data-wrangling.html"><a href="data-wrangling.html#looking-at-data"><i class="fa fa-check"></i><b>3.2.7</b> Looking at data</a></li>
+<li class="chapter" data-level="3.2.8" data-path="data-wrangling.html"><a href="data-wrangling.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>3.2.8</b> A quick note on naming things</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#wrangling-data"><i class="fa fa-check"></i><b>3.3</b> Wrangling data</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#filter"><i class="fa fa-check"></i><b>3.3.1</b> filter()</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#rename"><i class="fa fa-check"></i><b>3.3.2</b> rename()</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#select"><i class="fa fa-check"></i><b>3.3.3</b> select()</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#arrange"><i class="fa fa-check"></i><b>3.3.4</b> arrange()</a></li>
+<li class="chapter" data-level="3.3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#mutate"><i class="fa fa-check"></i><b>3.3.5</b> mutate()</a></li>
+<li class="chapter" data-level="3.3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#group_by-and-summarize"><i class="fa fa-check"></i><b>3.3.6</b> group_by() and summarize()</a></li>
+<li class="chapter" data-level="3.3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#gather-and-spread"><i class="fa fa-check"></i><b>3.3.7</b> gather() and spread()</a></li>
+<li class="chapter" data-level="3.3.8" data-path="data-wrangling.html"><a href="data-wrangling.html#missing-values"><i class="fa fa-check"></i><b>3.3.8</b> missing values</a></li>
+<li class="chapter" data-level="3.3.9" data-path="data-wrangling.html"><a href="data-wrangling.html#join-multiple-data-frames"><i class="fa fa-check"></i><b>3.3.9</b> join multiple data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#reading-in-data"><i class="fa fa-check"></i><b>3.4</b> Reading in data</a></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#saving-data"><i class="fa fa-check"></i><b>3.5</b> Saving data</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#csv"><i class="fa fa-check"></i><b>3.5.1</b> csv</a></li>
+<li class="chapter" data-level="3.5.2" data-path="data-wrangling.html"><a href="data-wrangling.html#xls"><i class="fa fa-check"></i><b>3.5.2</b> xls</a></li>
+<li class="chapter" data-level="3.5.3" data-path="data-wrangling.html"><a href="data-wrangling.html#json"><i class="fa fa-check"></i><b>3.5.3</b> json</a></li>
+<li class="chapter" data-level="3.5.4" data-path="data-wrangling.html"><a href="data-wrangling.html#sav"><i class="fa fa-check"></i><b>3.5.4</b> sav</a></li>
+<li class="chapter" data-level="3.5.5" data-path="data-wrangling.html"><a href="data-wrangling.html#feather"><i class="fa fa-check"></i><b>3.5.5</b> feather</a></li>
+<li class="chapter" data-level="3.5.6" data-path="data-wrangling.html"><a href="data-wrangling.html#rdata"><i class="fa fa-check"></i><b>3.5.6</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#saving-data-1"><i class="fa fa-check"></i><b>3.6</b> Saving data</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="data-wrangling.html"><a href="data-wrangling.html#rdata-1"><i class="fa fa-check"></i><b>3.6.1</b> RData</a></li>
+<li class="chapter" data-level="3.6.2" data-path="data-wrangling.html"><a href="data-wrangling.html#csv-1"><i class="fa fa-check"></i><b>3.6.2</b> csv</a></li>
+<li class="chapter" data-level="3.6.3" data-path="data-wrangling.html"><a href="data-wrangling.html#feather-1"><i class="fa fa-check"></i><b>3.6.3</b> feather …</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#todo"><i class="fa fa-check"></i><b>3.7</b> Todo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html"><i class="fa fa-check"></i><b>4</b> Understanding core statistical concepts through simulation</a><ul>
+<li class="chapter" data-level="4.1" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#learning-goals"><i class="fa fa-check"></i><b>4.1</b> Learning goals</a></li>
+<li class="chapter" data-level="4.2" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#sampling"><i class="fa fa-check"></i><b>4.2</b> Sampling</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#sample"><i class="fa fa-check"></i><b>4.2.1</b> <code>sample()</code></a></li>
+<li class="chapter" data-level="4.2.2" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#sample_n"><i class="fa fa-check"></i><b>4.2.2</b> <code>sample_n()</code></a></li>
+<li class="chapter" data-level="4.2.3" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#sampling-from-probability-distributions"><i class="fa fa-check"></i><b>4.2.3</b> Sampling from probability distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#central-limit-theorm"><i class="fa fa-check"></i><b>4.3</b> Central limit theorm</a></li>
+<li class="chapter" data-level="4.4" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#what-is-a-p-value"><i class="fa fa-check"></i><b>4.4</b> What is a p-value?</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#permutation-test"><i class="fa fa-check"></i><b>4.4.1</b> Permutation test</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="understanding-core-statistical-concepts-through-simulation.html"><a href="understanding-core-statistical-concepts-through-simulation.html#bootstrap"><i class="fa fa-check"></i><b>4.5</b> Bootstrap</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>5</b> The linear model</a><ul>
+<li class="chapter" data-level="5.1" data-path="the-linear-model.html"><a href="the-linear-model.html#resources-2"><i class="fa fa-check"></i><b>5.1</b> Resources</a></li>
+<li class="chapter" data-level="5.2" data-path="the-linear-model.html"><a href="the-linear-model.html#todo-1"><i class="fa fa-check"></i><b>5.2</b> Todo</a></li>
+<li class="chapter" data-level="5.3" data-path="the-linear-model.html"><a href="the-linear-model.html#comparison-of-two-independent-samples"><i class="fa fa-check"></i><b>5.3</b> Comparison of two independent samples</a></li>
+<li class="chapter" data-level="5.4" data-path="the-linear-model.html"><a href="the-linear-model.html#one-continuous-and-one-discrete-predictor"><i class="fa fa-check"></i><b>5.4</b> One continuous and one discrete predictor</a></li>
+<li class="chapter" data-level="5.5" data-path="the-linear-model.html"><a href="the-linear-model.html#comparison-of-two-dependent-samples"><i class="fa fa-check"></i><b>5.5</b> Comparison of two dependent samples</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="mixed-effects-model.html"><a href="mixed-effects-model.html"><i class="fa fa-check"></i><b>6</b> Mixed effects model</a><ul>
+<li class="chapter" data-level="6.1" data-path="mixed-effects-model.html"><a href="mixed-effects-model.html#learning-goals-1"><i class="fa fa-check"></i><b>6.1</b> Learning goals</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="cheatsheets.html"><a href="cheatsheets.html"><i class="fa fa-check"></i><b>7</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="7.1" data-path="cheatsheets.html"><a href="cheatsheets.html#statistics"><i class="fa fa-check"></i><b>7.1</b> Statistics</a></li>
+<li class="chapter" data-level="7.2" data-path="cheatsheets.html"><a href="cheatsheets.html#r"><i class="fa fa-check"></i><b>7.2</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="8" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i><b>8</b> Test</a></li>
+<li class="chapter" data-level="9" data-path="eda-graphs.html"><a href="eda-graphs.html"><i class="fa fa-check"></i><b>9</b> EDA graphs</a><ul>
+<li class="chapter" data-level="9.1" data-path="eda-graphs.html"><a href="eda-graphs.html#to-do-notes"><i class="fa fa-check"></i><b>9.1</b> To do notes</a></li>
+<li class="chapter" data-level="9.2" data-path="eda-graphs.html"><a href="eda-graphs.html#sample-data-for-graph-of-ols-normality-assumption"><i class="fa fa-check"></i><b>9.2</b> Sample data for graph of OLS normality assumption</a></li>
+<li class="chapter" data-level="9.3" data-path="eda-graphs.html"><a href="eda-graphs.html#code-from-httpsstackoverflow.comquestions31794876ggplot2-how-to-curve-small-gaussian-densities-on-a-regression-linerq1"><i class="fa fa-check"></i><b>9.3</b> Code from <span>https://stackoverflow.com/questions/31794876/ggplot2-how-to-curve-small-gaussian-densities-on-a-regression-line?rq=1</span></a></li>
+<li class="chapter" data-level="9.4" data-path="eda-graphs.html"><a href="eda-graphs.html#breaks-where-you-want-to-compute-densities"><i class="fa fa-check"></i><b>9.4</b> breaks: where you want to compute densities</a></li>
+<li class="chapter" data-level="9.5" data-path="eda-graphs.html"><a href="eda-graphs.html#get-the-residuals"><i class="fa fa-check"></i><b>9.5</b> Get the residuals</a></li>
+<li class="chapter" data-level="9.6" data-path="eda-graphs.html"><a href="eda-graphs.html#compute-densities-for-each-section-flip-the-axes-add-means-of-sections"><i class="fa fa-check"></i><b>9.6</b> Compute densities for each section, flip the axes, add means of sections</a></li>
+<li class="chapter" data-level="9.7" data-path="eda-graphs.html"><a href="eda-graphs.html#note-densities-need-to-be-scaled-in-relation-to-section-size-2000-here"><i class="fa fa-check"></i><b>9.7</b> Note: densities need to be scaled in relation to section size (2000 here)</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psych 252 course notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="understanding-core-statistical-concepts-through-simulation" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Understanding core statistical concepts through simulation</h1>
+<div id="learning-goals" class="section level2">
+<h2><span class="header-section-number">4.1</span> Learning goals</h2>
+<ul>
+<li>descriptive statistics –&gt; describing the sample</li>
+<li>inferential statistics –&gt; drawing inferences about the population from the sample</li>
+<li>central limit theorem</li>
+<li>standard error of the mean</li>
+<li>confidence intervals</li>
+<li>bootstrap</li>
+<li>bootstrapped confidence intervals</li>
+<li>NHST
+<ul>
+<li>p-value</li>
+<li>permutation test</li>
+</ul></li>
+<li>power analysis
+<ul>
+<li>bootstrap</li>
+<li>type I and type II errors</li>
+</ul></li>
+<li>use ideas from data camp course</li>
+<li>illustrate ideas related to correlation: <a href="https://crumplab.github.io/statistics/Correlation.html#if-something-caused-something-else-to-change-what-would-that-look-like" class="uri">https://crumplab.github.io/statistics/Correlation.html#if-something-caused-something-else-to-change-what-would-that-look-like</a></li>
+<li>how gifs were produced: <a href="https://crumplab.github.io/statistics/gifs.html#correlation-gifs" class="uri">https://crumplab.github.io/statistics/gifs.html#correlation-gifs</a></li>
+</ul>
+</div>
+<div id="sampling" class="section level2">
+<h2><span class="header-section-number">4.2</span> Sampling</h2>
+<p>Throughout the course, we will use sampling and visualization to get an intuitive understanding of important statistical principles. R makes it easy to generate data.</p>
+<div id="sample" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> <code>sample()</code></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;blue&#39;</span>))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; [1] &quot;red&quot;   &quot;green&quot; &quot;blue&quot;</span></a></code></pre></div>
+<p><code>sample()</code> randomly samples the elements of a vector. So each time you run <code>sample()</code>, you might get a different answer.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;blue&#39;</span>), <span class="dt">size =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; [1] &quot;green&quot; &quot;red&quot;</span></a></code></pre></div>
+<p>We can define how many samples we’d like to draw using the <code>size</code> argument.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;blue&#39;</span>), <span class="dt">size =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; Error in sample.int(length(x), size, replace, prob): cannot take a sample larger than the population when &#39;replace = FALSE&#39;</span></a></code></pre></div>
+<p>I got an error here because I asked for more samples than there are elements in the vector.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;blue&#39;</span>), <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] &quot;red&quot;   &quot;green&quot; &quot;green&quot; &quot;blue&quot;  &quot;blue&quot;</span></a></code></pre></div>
+<p>This worked because I specified to sample with replacement. So now, the same value might be sampled multiple times.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;green&#39;</span>, <span class="st">&#39;blue&#39;</span>), <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.8</span>), <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1] &quot;blue&quot; &quot;blue&quot; &quot;blue&quot; &quot;blue&quot; &quot;blue&quot; &quot;blue&quot; &quot;blue&quot; &quot;blue&quot; &quot;red&quot;  &quot;red&quot;</span></a></code></pre></div>
+<p>Here, I’ve specified the probability with which the different elements should be sampled via the <code>prob</code> argument. So now, I’m more likely to see “blue” than “red”, or “green”.</p>
+</div>
+<div id="sample_n" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> <code>sample_n()</code></h3>
+<p>Instead of sampling individual values from a vector, we sometimes want to sample rows from a data frame. We can use the <code>sample_n()</code> function to do so.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">df.tmp =<span class="st"> </span><span class="kw">data_frame</span>(</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="dt">condition =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>), <span class="dt">each =</span> <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="dt">rating =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace =</span> T)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">print</span>(df.tmp)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;       id condition rating</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;      &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;  1     1 a              1</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  2     2 a              5</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt;  3     3 a              8</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="co">#&gt;  4     4 a              4</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="co">#&gt;  5     5 a              4</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;  6     6 b              2</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt;  7     7 b              8</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt;  8     8 b              4</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt;  9     9 b              6</span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt; 10    10 b              7</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#we sample 5 rows from the data frame</span></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22">df.tmp <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="st">  </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co">#&gt; # A tibble: 5 x 3</span></a>
+<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="co">#&gt;      id condition rating</span></a>
+<a class="sourceLine" id="cb6-26" data-line-number="26"><span class="co">#&gt;   &lt;int&gt; &lt;chr&gt;      &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="co">#&gt; 1     5 a              4</span></a>
+<a class="sourceLine" id="cb6-28" data-line-number="28"><span class="co">#&gt; 2     4 a              4</span></a>
+<a class="sourceLine" id="cb6-29" data-line-number="29"><span class="co">#&gt; 3     6 b              2</span></a>
+<a class="sourceLine" id="cb6-30" data-line-number="30"><span class="co">#&gt; 4    10 b              7</span></a>
+<a class="sourceLine" id="cb6-31" data-line-number="31"><span class="co">#&gt; 5     9 b              6</span></a></code></pre></div>
+<p>Instead of defining the number of rows to sample, we can also specify the fraction.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">#let&#39;s randomly sample 20% of the rows </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">df.tmp <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">sample_frac</span>(<span class="dt">size =</span> <span class="fl">0.2</span>)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt; # A tibble: 2 x 3</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;      id condition rating</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;   &lt;int&gt; &lt;chr&gt;      &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; 1     5 a              4</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; 2    10 b              7</span></a></code></pre></div>
+<p>Like in <code>sample()</code>, we can also specify whether to sample with replacement, and assign weights that influence how likely each row is sampled.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">df.tmp =<span class="st"> </span><span class="kw">data_frame</span>(</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="dt">condition =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>), <span class="dt">each =</span> <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">  <span class="dt">rating =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">replace =</span> T),</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">  <span class="dt">weight =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">each =</span> <span class="dv">5</span>) <span class="co">#these weights will make it more likely that condition &#39;a&#39; will be sampled </span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">df.tmp <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw">sample_frac</span>(<span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">replace =</span> T, <span class="dt">weight =</span> weight)</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; # A tibble: 10 x 4</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;       id condition rating weight</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;      &lt;int&gt;  &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  1     9 b              9      1</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt;  2     1 a              8      2</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt;  3     7 b              3      1</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt;  4     4 a             10      2</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt;  5     4 a             10      2</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt;  6     3 a              6      2</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt;  7     4 a             10      2</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt;  8    10 b             10      1</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;  9     6 b              5      1</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; 10     3 a              6      2</span></a></code></pre></div>
+</div>
+<div id="sampling-from-probability-distributions" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Sampling from probability distributions</h3>
+<p>R comes equipped with a large number of probability distributions that we can sample from. <a href="https://cran.r-project.org/web/views/Distributions.html">Here</a> is an extensive list of probability distributions that come with R (and any of its many packages).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">runif</span>(<span class="dt">n =</span> <span class="dv">5</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; [1]  0.2818159 12.8286099 12.7112274 16.5778526 12.1238944</span></a></code></pre></div>
+<p>Here, I’ve sampled 5 times from a uniform distribution with a minimum of 0 and a maximum of 20.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; [1]  0.9081758 -0.6598348 -1.3266769 -0.8010712 -0.1053378</span></a></code></pre></div>
+<p>This time, I’ve sampled 5 times from a normal distribution with mean 0 and standard deviation 2. R makes it easy to visualize what different distributions look like via the <code>curve()</code> function.</p>
+<p>Figure <a href="#fig:duniform"><strong>??</strong></a> shows the density of the uniform distribution with a minimum of 0 and a maximum of 3.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">curve</span>(<span class="kw">dunif</span>(x, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">3</span>), <span class="dt">from =</span> <span class="dv">-5</span>, <span class="dt">to =</span> <span class="dv">5</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/duniform-1.png" width="672" /></p>
+<p>Figure <a href="#fig:dnormal"><strong>??</strong></a> shows the density of the normal distribution with a mean of 0 and a standard deviation of 1.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>), <span class="dt">from =</span> <span class="dv">-5</span>, <span class="dt">to =</span> <span class="dv">5</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/dnormal-1.png" width="672" /></p>
+<p>Figure <a href="#fig:dbeta"><strong>??</strong></a> shows the density of the beta distribution with shape parameters 5 and 3.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">curve</span>(<span class="kw">dbeta</span>(x, <span class="dt">shape1 =</span> <span class="dv">5</span>, <span class="dt">shape2 =</span> <span class="dv">3</span>), <span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/dbeta-1.png" width="672" /></p>
+<p>Most probability distributions in R can be used in four different ways (I use foo here as a place holder for the distribution name):</p>
+<table>
+<caption><span id="tab:unnamed-chunk-12">Table 4.1: </span>Handling probability distributions</caption>
+<thead>
+<tr class="header">
+<th align="right">name</th>
+<th align="left">form</th>
+<th align="left">description</th>
+<th align="left">use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>dfoo()</code></td>
+<td align="left">f(x) = P(X = x)</td>
+<td align="left">density</td>
+<td align="left">density of a particular value</td>
+</tr>
+<tr class="even">
+<td align="right"><code>pfoo()</code></td>
+<td align="left">f(x) = P(X &lt;= x)</td>
+<td align="left">distribution function</td>
+<td align="left">cumulative density function</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>qfoo()</code></td>
+<td align="left"></td>
+<td align="left">quantile function</td>
+<td align="left">inverse cumulative density function</td>
+</tr>
+<tr class="even">
+<td align="right"><code>rfoo()</code></td>
+<td align="left"></td>
+<td align="left">random generation</td>
+<td align="left">sample random numbers from distribution</td>
+</tr>
+</tbody>
+</table>
+<p>How much of the probability lies within one standard deviation of the normal distribution?</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt; [1] 0.6826895</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">0.1</span>),</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">                         <span class="dt">y =</span> <span class="kw">dnorm</span>(x)</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">                         ), <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y))<span class="op">+</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+And within two?</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; [1] 0.9544997</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">0.1</span>),</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">                         <span class="dt">y =</span> <span class="kw">dnorm</span>(x)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">                         ), <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y))<span class="op">+</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">2</span>,<span class="dv">2</span>), <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+</div>
+<div id="central-limit-theorm" class="section level2">
+<h2><span class="header-section-number">4.3</span> Central limit theorm</h2>
+</div>
+<div id="what-is-a-p-value" class="section level2">
+<h2><span class="header-section-number">4.4</span> What is a p-value?</h2>
+<p>Probability of observing data that is as extreme (or more) assuming that the null hypothesis is true.</p>
+<div id="permutation-test" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Permutation test</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">df.data =<span class="st"> </span><span class="kw">data_frame</span>(</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">  <span class="dt">a =</span> <span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">6</span>, <span class="dt">sd =</span> <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">  <span class="dt">b =</span> <span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="st">  </span><span class="kw">gather</span>(<span class="st">&#39;condition&#39;</span>,<span class="st">&#39;rating&#39;</span>)</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">df.data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="st">  </span><span class="kw">group_by</span>(condition) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rating.mean =</span> <span class="kw">mean</span>(rating),</a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">            <span class="dt">rating.sd =</span> <span class="kw">sd</span>(rating)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">condition</th>
+<th align="right">rating.mean</th>
+<th align="right">rating.sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">a</td>
+<td align="right">5.996443</td>
+<td align="right">2.042983</td>
+</tr>
+<tr class="even">
+<td align="left">b</td>
+<td align="right">5.223299</td>
+<td align="right">1.434074</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">  </a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co"># calculate the difference between conditions</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">difference.actual =<span class="st"> </span>df.data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(condition) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rating.mean =</span> <span class="kw">mean</span>(rating)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="st">  </span><span class="kw">pull</span>(rating.mean) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="st">  </span><span class="kw">diff</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="st">  </span><span class="op">-</span>.</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.data, <span class="kw">aes</span>(<span class="dt">x =</span> condition, <span class="dt">y =</span> rating))<span class="op">+</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&#39;bar&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_boot, <span class="dt">geom =</span> <span class="st">&#39;linerange&#39;</span>, <span class="dt">size =</span> <span class="dv">1</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>, <span class="dt">width =</span> <span class="fl">0.1</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>The difference in the mean rating between condition a and b is 0.7731439. Is this difference between conditions statistically significant? What we are asking is: what are the chances that a result like this (or more extreme) could come about due to chance?</p>
+<p>Let’s answer the question using simulation. Here is the main idea: imagine that we were very sloppy in how we recorded the data, and now we don’t remember anymore which participants were in condition a and which ones were in condition b (we still remember though, that we tested 20 participants in each condition).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">df.permutation =<span class="st"> </span>df.data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">permutation =</span> <span class="kw">sample</span>(condition)) <span class="co">#randomly assign labels</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">df.permutation <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(permutation) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">rating.mean =</span> <span class="kw">mean</span>(rating),</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">            <span class="dt">rating.sd =</span> <span class="kw">sd</span>(rating)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">permutation</th>
+<th align="right">rating.mean</th>
+<th align="right">rating.sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">a</td>
+<td align="right">5.459136</td>
+<td align="right">1.915439</td>
+</tr>
+<tr class="even">
+<td align="left">b</td>
+<td align="right">5.760605</td>
+<td align="right">1.681729</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.permutation, <span class="kw">aes</span>(<span class="dt">x =</span> permutation, <span class="dt">y =</span> rating))<span class="op">+</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> mean, <span class="dt">geom =</span> <span class="st">&#39;bar&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;black&#39;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> mean_cl_boot, <span class="dt">geom =</span> <span class="st">&#39;linerange&#39;</span>, <span class="dt">size =</span> <span class="dv">1</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> condition), <span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>, <span class="dt">width =</span> <span class="fl">0.1</span>))</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Here, the difference between the two conditions is -0.3014695.</p>
+<!-- maybe add animations here? look in crump book -->
+<p>Now, let’s do this many times to get a distribution of the differences we would expect, if there was no effect of condition.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">n.permutations =<span class="st"> </span><span class="dv">300</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#construct a data frame to save the results of our simulations</span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">df.permutations =<span class="st"> </span><span class="kw">data_frame</span>(</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">  <span class="dt">permutation =</span> <span class="dv">1</span><span class="op">:</span>n.permutations, </a>
+<a class="sourceLine" id="cb21-7" data-line-number="7">  <span class="dt">mean.difference =</span> <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">#calculate the mean difference for each random permutation </span></a>
+<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n.permutations){</a>
+<a class="sourceLine" id="cb21-12" data-line-number="12">  df.permutations<span class="op">$</span>mean.difference[i] =<span class="st"> </span>df.data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">condition =</span> <span class="kw">sample</span>(condition)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#we randomly shuffle the condition labels </span></a>
+<a class="sourceLine" id="cb21-14" data-line-number="14"><span class="st">    </span><span class="kw">group_by</span>(condition) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-15" data-line-number="15"><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(rating)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-16" data-line-number="16"><span class="st">    </span><span class="kw">pull</span>(mean) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-17" data-line-number="17"><span class="st">    </span><span class="kw">diff</span>(.) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-18" data-line-number="18"><span class="st">    </span><span class="op">-</span>. <span class="co">#looks funny but works </span></a>
+<a class="sourceLine" id="cb21-19" data-line-number="19">}</a>
+<a class="sourceLine" id="cb21-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb21-21" data-line-number="21"><span class="co">#alternative specification using a function</span></a>
+<a class="sourceLine" id="cb21-22" data-line-number="22"><span class="co"># func_permutations = function(x){</span></a>
+<a class="sourceLine" id="cb21-23" data-line-number="23"><span class="co">#   x %&gt;% </span></a>
+<a class="sourceLine" id="cb21-24" data-line-number="24"><span class="co">#     mutate(condition = sample(condition)) %&gt;% #we randomly shuffle the condition labels </span></a>
+<a class="sourceLine" id="cb21-25" data-line-number="25"><span class="co">#     group_by(condition) %&gt;% </span></a>
+<a class="sourceLine" id="cb21-26" data-line-number="26"><span class="co">#     summarize(mean = mean(rating)) %&gt;% </span></a>
+<a class="sourceLine" id="cb21-27" data-line-number="27"><span class="co">#     pull(mean) %&gt;% </span></a>
+<a class="sourceLine" id="cb21-28" data-line-number="28"><span class="co">#     diff(.) %&gt;% </span></a>
+<a class="sourceLine" id="cb21-29" data-line-number="29"><span class="co">#     -.</span></a>
+<a class="sourceLine" id="cb21-30" data-line-number="30"><span class="co"># }</span></a>
+<a class="sourceLine" id="cb21-31" data-line-number="31"><span class="co"># replicate(10, func_permutations(df.data))</span></a>
+<a class="sourceLine" id="cb21-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb21-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb21-34" data-line-number="34"><span class="co">#plot the distribution of the differences </span></a>
+<a class="sourceLine" id="cb21-35" data-line-number="35"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.permutations, <span class="kw">aes</span>(<span class="dt">x =</span> mean.difference))<span class="op">+</span></a>
+<a class="sourceLine" id="cb21-36" data-line-number="36"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;gray80&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb21-37" data-line-number="37"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> difference.actual, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb21-38" data-line-number="38"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F)</a></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#calculate p-value of our observed result</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">p_value.actual =<span class="st"> </span><span class="kw">sum</span>(df.permutations<span class="op">$</span>mean.difference <span class="op">&gt;</span><span class="st"> </span>difference.actual)<span class="op">/</span><span class="kw">length</span>(df.permutations<span class="op">$</span>mean.difference)</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="kw">print</span>(p_value.actual)</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">#&gt; [1] 0.08333333</span></a></code></pre></div>
+</div>
+</div>
+<div id="bootstrap" class="section level2">
+<h2><span class="header-section-number">4.5</span> Bootstrap</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-wrangling.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-linear-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-simulation.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,931 @@
+# Understanding statistical concepts through simulation 
+
+```{r echo=FALSE, message=FALSE}
+
+library("knitr")     # for knitting stuff
+library("NHANES")    # national health and nutrition examination survey
+library("janitor")   # for cleaning variable names
+library("broom")     # for tidying model fits
+library("modelr")    # for modeling
+library("patchwork") # for making figure panels
+library("tidyverse") # for data wrangling
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+theme_set(
+  theme_classic()+
+    theme(text = element_text(size = 20))
+  )
+```
+
+## To do 
+
+- do quiz on p-values and on confidence intervals (see Hoekstra et al. - 2014 - Robust misinterpretation of confidence intervals.pdf)
+
+## Learning goals
+
+- descriptive statistics --> describing the sample 
+- inferential statistics --> drawing inferences about the population from the sample 
+- central limit theorem 
+- standard error of the mean 
+- confidence intervals 
+- bootstrap
+- bootstrapped confidence intervals 
+- NHST
+	+ p-value 
+	+ permutation test 
+- power analysis 
+	+ bootstrap 
+	+ type I and type II errors 
+- effect sizes
+
+- use ideas from data camp course
+- illustrate ideas related to correlation: https://crumplab.github.io/statistics/Correlation.html#if-something-caused-something-else-to-change-what-would-that-look-like
+- how gifs were produced: https://crumplab.github.io/statistics/gifs.html#correlation-gifs
+
+## Goal of statistical analysis 
+
+- draw conclusions about the population from a sample of observations 
+- e.g. infer a population parameter from measuring a representative sample
+- normally we don't know the population parameter (here we sometimes assume we know to illustrate some of the key concepts in statistics)
+- sampling without vs. with replacement
+
+- sampling error: how sample estimate differs from the population parameter
+- 
+
+## Sampling 
+
+Throughout the course, we will use sampling and visualization to get an intuitive understanding of important statistical principles. R makes it easy to generate data. 
+
+### `sample()`
+
+```{r}
+sample(c('red', 'green', 'blue'))
+```
+
+`sample()` randomly samples the elements of a vector. So each time you run `sample()`, you might get a different answer. 
+
+```{r}
+sample(c('red', 'green', 'blue'), size = 2)
+```
+
+We can define how many samples we'd like to draw using the `size` argument. 
+
+```{r error=TRUE}
+sample(c('red', 'green', 'blue'), size = 5)
+```
+
+I got an error here because I asked for more samples than there are elements in the vector. 
+
+```{r}
+sample(c('red', 'green', 'blue'), size = 5, replace = T)
+```
+
+This worked because I specified to sample with replacement. So now, the same value might be sampled multiple times. 
+
+```{r}
+sample(c('red', 'green', 'blue'), prob = c(0.1, 0.1, 0.8), size = 10, replace = T)
+```
+
+Here, I've specified the probability with which the different elements should be sampled via the `prob` argument. So now, I'm more likely to see "blue" than "red", or "green". 
+
+### `sample_n()`
+
+Instead of sampling individual values from a vector, we sometimes want to sample rows from a data frame. We can use the `sample_n()` function to do so. 
+
+```{r}
+df.tmp = data_frame(
+  id = 1:10,
+  condition = rep(c('a', 'b'), each = 5),
+  rating = sample(1:10, size = 10, replace = T)
+)
+print(df.tmp)
+
+#we sample 5 rows from the data frame
+df.tmp %>% 
+  sample_n(size = 5)
+
+```
+
+Instead of defining the number of rows to sample, we can also specify the fraction. 
+
+```{r}
+#let's randomly sample 20% of the rows 
+df.tmp %>% 
+  sample_frac(size = 0.2)
+```
+
+Like in `sample()`, we can also specify whether to sample with replacement, and assign weights that influence how likely each row is sampled. 
+
+```{r}
+df.tmp = data_frame(
+  id = 1:10,
+  condition = rep(c('a', 'b'), each = 5),
+  rating = sample(1:10, size = 10, replace = T),
+  weight = rep(c(2, 1), each = 5) #these weights will make it more likely that condition 'a' will be sampled 
+)
+
+df.tmp %>% 
+  sample_frac(size = 1, replace = T, weight = weight)
+```
+
+### Sampling from probability distributions 
+
+R comes equipped with a large number of probability distributions that we can sample from. [Here](https://cran.r-project.org/web/views/Distributions.html) is an extensive list of probability distributions that come with R (and any of its many packages).
+
+```{r}
+runif(n = 5, min = 0, max = 20)
+```
+
+Here, I've sampled 5 times from a uniform distribution with a minimum of 0 and a maximum of 20. 
+
+```{r}
+rnorm(n = 5, mean = 0, sd = 2)
+```
+
+This time, I've sampled 5 times from a normal distribution with mean 0 and standard deviation 2. R makes it easy to visualize what different distributions look like via the `curve()` function. 
+
+Figure \@ref(fig:duniform) shows the density of the uniform distribution with a minimum of 0 and a maximum of 3. 
+
+```{r duniform}
+curve(dunif(x, min = 0, max = 3), from = -5, to = 5)
+```
+
+Figure \@ref(fig:dnormal) shows the density of the normal distribution with a mean of 0 and a standard deviation of 1.
+
+```{r dnormal}
+curve(dnorm(x, mean = 0, sd = 1), from = -5, to = 5)
+```
+
+Figure \@ref(fig:dbeta) shows the density of the beta distribution with shape parameters 5 and 3.
+
+```{r dbeta}
+curve(dbeta(x, shape1 = 5, shape2 = 3), from = 0, to = 1)
+```
+
+Most probability distributions in R can be used in four different ways (I use foo here as a place holder for the distribution name): 
+
+```{r echo=F}
+# more infos here: http://www.stat.umn.edu/geyer/old/5101/rlook.html
+data_frame(
+  name = c("`dfoo()`",
+           "`pfoo()`",
+           "`qfoo()`",
+           "`rfoo()`"),
+  form = c("f(x) = P(X = x)",
+           "f(x) = P(X <= x)",
+           "",
+           ""),
+  description = c("density",
+                  "distribution function",
+                  "quantile function",
+                  "random generation"),
+  use = c("density of a particular value",
+          "cumulative density function",
+          "inverse cumulative density function",
+          "sample random numbers from distribution")
+) %>% 
+  kable(caption = "Handling probability distributions", 
+      align = c("r", "l", "l", "l"),
+      booktabs = TRUE)
+```
+
+How much of the probability lies within one standard deviation of the normal distribution? 
+
+```{r}
+pnorm(1, mean = 0, sd = 1) - pnorm(-1, mean = 0, sd = 1)
+
+ggplot(data = data_frame(x = seq(-3, 3, 0.1),
+                         y = dnorm(x)
+                         ), aes(x = x, y = y))+
+  geom_line()+
+  geom_vline(xintercept = c(-1,1), color = "blue", size = 1.5)
+```
+And within two? 
+
+```{r}
+pnorm(2, mean = 0, sd = 1) - pnorm(-2, mean = 0, sd = 1)
+
+ggplot(data = data_frame(x = seq(-3, 3, 0.1),
+                         y = dnorm(x)
+                         ), aes(x = x, y = y))+
+  geom_line()+
+  geom_vline(xintercept = c(-2,2), color = "red", size = 1.5)
+```
+
+## Central limit theorm 
+
+[interactive visualization 1](https://seeing-theory.brown.edu/probability-distributions/index.html#section3)
+[interactive visualization 2](http://mfviz.com/central-limit/)
+
+
+Here is the central limit theorem: 
+
+>In probability theory, the central limit theorem (CLT) establishes that, in some situations, when independent random variables are added, their properly normalized sum tends toward a normal distribution (informally a "bell curve") even if the original variables themselves are not normally distributed. The theorem is a key ("central") concept in probability theory because it implies that probabilistic and statistical methods that work for normal distributions can be applicable to many problems involving other types of distributions. [(Wikipedia)](https://en.wikipedia.org/wiki/Central_limit_theorem)
+
+- the sum of many small independent random variables will be a random variable with an approximate normal distribution
+- height example: normally distributed within gender, but not overall (mixture of two normal distributions)
+  - within gender: height is affected by many small additive factors 
+  - overall: there is a single factor large factor that account for much of the variation
+
+```{r}
+df.nhanes = NHANES %>% 
+  clean_names() %>% 
+  distinct(id, .keep_all = T) #drop duplicates
+
+df.nhanes %>% glimpse()
+
+```
+
+
+```{r}
+df.plot = df.nhanes %>% 
+  drop_na(height) %>% # remove missing values
+  filter(
+    age >= 18, # only look at adults 
+    gender == "female"
+    ) 
+  
+ggplot(data = df.plot, aes(x = height))+
+  geom_density(size = 1, fill = "red", alpha = 0.5)+
+  stat_function(fun = "dnorm", color = "red", args = list(mean = mean(df.plot$height), sd = sd(df.plot$height)), size = 2)+
+  labs(title = "Womens' height")
+  
+```
+
+```{r}
+
+df.plot = df.nhanes %>% 
+  drop_na(height) %>% # remove missing values
+  filter(
+    age >= 18 # only look at adults
+    ) 
+  
+ggplot(data = df.plot, aes(x = height))+
+  geom_density(size = 1, fill = "gray50", alpha = 0.5)+
+  stat_function(fun = "dnorm", color = "black", args = list(mean = mean(df.plot$height), sd = sd(df.plot$height)), size = 2)+
+  labs(title = "Adults' height")
+  
+```
+
+```{r}
+
+df.plot = df.nhanes %>% 
+  drop_na(height) %>% # remove missing values
+  filter(
+    age >= 18
+    )
+
+ggplot(data = df.plot, aes(x = height, group = gender, fill = gender))+
+  geom_density(size = 1, alpha = 0.5)+
+  stat_function(fun = "dnorm", color = "blue", 
+                args = df.plot %>% 
+                  filter(gender == "male") %>% 
+                  summarise(mean = mean(height),
+                            sd = sd(height)) %>% 
+                  as.list(),
+                size = 2)+
+  stat_function(fun = "dnorm", color = "red", 
+                args = df.plot %>% 
+                  filter(gender == "female") %>% 
+                  summarise(mean = mean(height),
+                            sd = sd(height)) %>% 
+                  as.list(),
+                size = 2)+
+  labs(title = "Adult's height (separated by gender)")+
+  theme(legend.position = c(0.9, 0.8))
+  
+```
+
+Let's say that we want to infer the population mean from a sample that we drew. What are the conditions under which we can do so? 
+
+```{r}
+
+ggplot(data = data_frame(x = c(0, 20)), aes(x = x))+
+  stat_function(fun = "dnorm", args = list(mean = 10, sd = 5), size = 1, color = "red")+
+  stat_function(fun = "dunif", args = list(min = 0, max = 20), size = 1, color = "green")+
+  stat_function(fun = "dexp", args = list(rate = 0.1), size = 1, color = "blue")+
+  annotate(geom = "text", label = "normal", x = 0, y = .03, hjust = 0, color = "red", size = 6)+
+  annotate(geom = "text", label = "uniform", x = 0, y = .055, hjust = 0, color = "green", size = 6)+
+  annotate(geom = "text", label = "exponential", x = 0, y = .105, hjust = 0, color = "blue", size = 6)
+
+```
+
+
+```{r}
+# Parameters for the simulation
+draws = c(10, 100, 1000, 10000)
+sample_size = c(5, 10, 25)
+distributions = c("normal", "uniform", "exponential")
+
+# calculate the sample mean 
+fun_sample_mean = function(n, distribution){
+  if (distribution == "normal"){
+    tmp = rnorm(n, mean = 10, sd = 5)
+  }else if (distribution == "uniform"){
+    tmp = runif(n, min = 0, max = 20) 
+  }else if (distribution == "exponential"){
+    tmp = rexp(n, rate = 0.1)
+  }
+  return(mean(tmp)) 
+}
+
+df.central_limit = data_frame()
+
+for (i in 1:length(draws)){
+  for (j in 1:length(sample_size)){
+    for (k in 1:length(distributions)){
+      # calculate sample mean 
+      sample_mean = replicate(draws[i], fun_sample_mean(sample_size[j], distributions[k]))
+      df.tmp = data_frame(draws = draws[i], 
+                       sample_size = sample_size[j],
+                       distribution = distributions[k],
+                       mean_value = list(sample_mean))
+      df.central_limit = rbind(df.central_limit, df.tmp)
+    }
+  }
+}
+
+# transform from list column
+df.plot = df.central_limit %>% 
+  unnest() %>% 
+  mutate(sample_size = str_c("n = ", sample_size),
+         sample_size = factor(sample_size, levels = str_c("n = ", c(5, 10, 25))),
+         draws = str_c("d = ", draws),
+         distribution = factor(distribution, levels = c("normal", "uniform", "exponential"))
+         )
+  
+# histogram of sample means 
+ggplot(df.plot, aes(x = mean_value, color = distribution))+
+  stat_density(geom = "line", position = "identity")+
+  facet_grid(draws ~ sample_size, scales = "free")+
+  scale_x_continuous(breaks = c(0, 10, 20))+
+  coord_cartesian(xlim = c(0, 20))+
+  labs(x = "sample mean")+
+  theme(
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_text(size = 10),
+    strip.text.y = element_text(size = 10),
+    legend.position = "bottom",
+    panel.background = element_rect(color = "black")
+    )
+
+```
+
+
+## Estimating the mean of the population 
+
+```{r}
+population_mean = 10
+population_sd = 2
+
+n_samples = 1000 
+sample_size = 40
+
+df.means = data_frame(
+  n_sample = 1:n_samples,
+  sample = replicate(n = n_samples, 
+                     expr = rnorm(n = sample_size, mean = population_mean, sd = population_sd),
+                     simplify = F)) %>% 
+  unnest() %>% 
+  group_by(n_sample) %>% 
+  summarize(sample_mean = mean(sample))
+
+df.plot = df.means 
+
+p1 = ggplot(data = data_frame(x = c(5, 15)), aes(x = x))+
+  stat_function(fun = "dnorm", args = list(mean = 10, sd = 2), size = 1)+
+  labs(title = "Population", y = "density")
+
+p2 = ggplot(data = df.plot, aes(x = sample_mean))+
+  stat_density(geom = "line", size = 1)+
+  coord_cartesian(xlim = c(5, 15))+
+  labs(title = "Distribution of sample means")
+
+p1 + p2 + 
+  plot_layout(ncol = 1) & 
+  theme(axis.title.x = element_blank())
+
+```
+
+We calculate the standard error of the mean by taking the standard deviation of our sampled means. 
+
+```{r}
+# based on sampling 
+sd(df.means$sample_mean)
+
+# theoretical 
+population_sd/sqrt(sample_size)
+
+```
+
+>Put simply, the standard error of the sample mean is an estimate of how far the sample mean is likely to be from the population mean, whereas the standard deviation of the sample is the degree to which individuals within the sample differ from the sample mean.
+[wikipedia](https://en.wikipedia.org/wiki/Standard_error)
+
+In practice we only have a single sample. What can we say about the population mean from drawing a single sample 
+
+CONTINUE HERE (talk about confidence intervals now, contrast with bootstrap)
+
+
+```{r}
+set.seed(4)
+
+single_sample = rnorm(sample_size, mean = population_mean, sd = population_sd)
+mean(single_sample)
+```
+
+## Sampling distributions 
+
+- sampling distribution captures key propoerties of the statistical estimate 
+
+
+
+## Estimating the standard deviation of the population
+
+Here is the formula for calculating the standard deviation: 
+
+$$
+\sqrt\frac{\sum_{i = 1}^{n}{(x_i - \bar x)^2}}{n},
+$$
+where $x_i$ is an individual observation, $\bar x$ is the mean, and $n$ is the number of observations. 
+
+Let's implement this and take a look at what we get for a particular situation. 
+
+```{r}
+fun.standard_deviation = function(x){
+  return(sqrt(sum((x - mean(x))^2) / length(x)))
+}
+
+sample = c(1, 4, 2, 5)
+fun.standard_deviation(sample)
+
+```
+Here, for our sample we get a standard deviation of `r fun.standard_deviation(sample)`. R also has an inbuilt function for calculating the standard deviation. 
+
+```{r}
+sd(sample)
+```
+
+Hmm! What happened here? Do I have a bug in my standard deviation formula? No, the reason why we get a different answer from R's `sd()` function is that it applies a correction to the denominator. Instead of dividing the sum of squared differences by $n$, it uses $n-1$ instead. Let's check that this is the case by adapting our function.  
+
+```{r}
+fun.standard_deviation_corrected = function(x){
+  return(sqrt(sum((x - mean(x))^2) / (length(x) - 1)))
+}
+
+fun.standard_deviation_corrected(sample)
+```
+
+Now we get the same thing as R's `sd()` function. Why $n-1$ you may wonder. The reason is that this correction provides a better estimate for the standard deviation in the population that we are interested in inferring. 
+
+
+$$
+\sqrt\frac{\sum_{i = 1}^{n}{(x_i - \bar x)^2}}{n-1}
+$$
+
+
+
+```{r sd-distribution, fig.cap="Densities for standard deviations calculated in a biased, unbiased, or overcorrected way."}
+set.seed(0)
+
+# population parameters 
+true_mean = 0 
+true_sd = 20
+
+# samples 
+sample_size = 5
+n_samples = 1e4 
+
+# biased sd function 
+fun.biased_sd = function(x){
+  return(sqrt(sum((x - mean(x))^2) / length(x)))
+}
+
+# unbiased sd function
+fun.unbiased_sd = function(x){
+  return(sqrt(sum((x - mean(x))^2) / (length(x) - 1)))
+}
+
+# overcorrected sd function
+fun.overcorrected_sd = function(x){
+  return(sqrt(sum((x - mean(x))^2) / (length(x) - 2)))
+}
+
+# generate samples
+samples = replicate(n = n_samples, 
+          expr = rnorm(n = sample_size, mean = true_mean, sd = true_sd), 
+          simplify = F)
+
+# calculate standard deviations 
+df.samples = data_frame(
+  sample = 1:n_samples,
+  biased = samples %>% map_dbl(~ fun.biased_sd(.x)),
+  unbiased = samples %>% map_dbl(~ fun.unbiased_sd(.x)),
+  overcorrected = samples %>% map_dbl(~ fun.overcorrected_sd(.x))
+) %>% 
+  gather("method", "value", -sample) %>% 
+  mutate(method = factor(method, levels = c("biased", "unbiased", "overcorrected")),
+         difference = true_sd - value)
+
+df.plot = df.samples
+
+ggplot(data = df.plot, aes(x = value, group = method, color = method))+
+  geom_vline(xintercept = 20, linetype = 2, color = "black")+
+  stat_density(geom = "line", size = 2, position = "identity")+
+  geom_vline(data = df.samples %>% 
+                   group_by(method) %>% 
+                   summarize(mean = mean(value)), 
+             aes(xintercept = mean,
+                 colour = method),
+             linetype = 2, size = 1)+
+  theme(legend.position = "top")
+
+```
+
+Here, I've drawn `r n_samples` samples of size `r sample_size`. I then calculated the standard deviation in the sample either by dividing by $n$ (biased), $n-1$ (unbiased), and $n-2$ (overcorrected). Figure \@ref(fig:sd-distribution) shows what the distributions look like for each method. It also shows the mean for each distribution as a vertical line (the ground truth is shown as a black dotted line). 
+
+
+Naturally, the correction makes more of a difference for samples with a smaller sample size $n$. For larger samples, subtracting 1 doesn't change much. You can try this out by manipulating `sample_size`. Note also how the shape of the distributions change as you change the sample size. For small sample sizes, the distributions are positively skewed (see Figure \@ref(fig:skewed-distributions) for a reminder on labeling skewed distributions). For larger sample sizes, the distributions look normal. 
+
+
+```{r skewed-distributions, fig.cap="Reminder for what skewed distributions look like (and what they are called)."}
+p1 = ggplot(data = data_frame(x = c(0, 1)), aes(x = x))+
+  stat_function(fun = "dbeta", args = list(shape1 = 5, shape2 = 2))+
+  labs(title = "negative/left skew",
+       subtitle = "the left tail is longer")
+
+p2 = ggplot(data = data_frame(x = c(0, 1)), aes(x = x))+
+  stat_function(fun = "dbeta", args = list(shape1 = 2, shape2 = 5))+
+  labs(title = "positive/right skew",
+       subtitle = "the right tail is longer")
+
+p1 + p2
+```
+
+## Standard error of the mean 
+
+- relationship between standard deviation and standard error of the mean
+- standard error = standard deviation of a sampling distribution
+- sampling distribution of the mean
+
+$$
+\frac{sd(x)}{\sqrt(n)}
+$$
+
+## Confidence interval 
+
+
+## What is a p-value? 
+
+
+$$
+\text{p-value = P(observed or more extreme sample statistic | H0 true)}
+$$
+
+
+Probability of observing data that is as extreme (or more) assuming that the null hypothesis is true. 
+
+- classical hypothesis testing: possible outcomes --> "reject" or "not reject" (never "accept"; the data are not sufficient to reject the null)
+
+- hypothesis that a parameter equals 0: 
+  - fit the model which includes that parameter
+  - look at the 95% confidence interval for that parameter
+  - if the interval excludes 0, then the hypothesis is rejected at the 5% level 
+  
+- testing whether two parameters are equal
+  - test whether their difference equals 0 
+  - include both parameters in the model, and look at the 95% interval for their difference 
+
+- problems with significance: 
+  - statistical significance does not equal practical significance 
+  - changes in statistical significance are not themselves significant --> even large changes in significance levels can correspond to small, nonsignificant changes in the underlying variables
+
+
+### Permutation test 
+
+```{r}
+set.seed(0)
+df.data = data_frame(
+  a = rnorm(20, mean = 6, sd = 2),
+  b = rnorm(20, mean = 5, sd = 2)
+) %>% 
+  gather('condition','rating')
+
+df.data %>% 
+  group_by(condition) %>% 
+  summarize(rating.mean = mean(rating),
+            rating.sd = sd(rating)) %>% 
+  kable()
+  
+# calculate the difference between conditions
+difference.actual = df.data %>% 
+  group_by(condition) %>% 
+  summarize(rating.mean = mean(rating)) %>% 
+  pull(rating.mean) %>% 
+  diff() %>% 
+  -.
+```
+
+```{r}
+ggplot(data = df.data, aes(x = condition, y = rating))+
+  stat_summary(fun.data = mean_cl_boot, geom = 'linerange', size = 1)+
+  stat_summary(fun.y = "mean", geom = 'point', shape = 21, color = "black", fill = "white", size = 4)+
+  geom_point(position = position_jitter(height = 0, width = 0.1))
+  
+```
+
+The difference in the mean rating between condition a and b is `r difference.actual`. Is this difference between conditions statistically significant? What we are asking is: what are the chances that a result like this (or more extreme) could come about due to chance? 
+
+Let's answer the question using simulation. Here is the main idea: imagine that we were very sloppy in how we recorded the data, and now we don't remember anymore which participants were in condition a and which ones were in condition b (we still remember though, that we tested 20 participants in each condition). 
+
+
+```{r}
+set.seed(0)
+df.permutation = df.data %>% 
+  mutate(permutation = sample(condition)) #randomly assign labels
+
+df.permutation %>% 
+  group_by(permutation) %>% 
+  summarize(rating.mean = mean(rating),
+            rating.sd = sd(rating)) %>% 
+  kable()
+```
+```{r}
+ggplot(data = df.permutation, aes(x = permutation, y = rating))+
+  stat_summary(fun.data = mean_cl_boot, geom = 'linerange', size = 1)+
+  stat_summary(fun.y = "mean", geom = 'point', shape = 21, color = "black", fill = "white", size = 4)+
+  geom_point(aes(color = condition), position = position_jitter(height = 0, width = 0.1))
+```
+
+Here, the difference between the two conditions is `r df.permutation %>% filter(permutation == 'a') %>% summarise(mean(rating)) - df.permutation %>% filter(permutation == 'b') %>% summarise(mean(rating))`.
+
+<!-- maybe add animations here? look in crump book -->
+
+Now, let's do this many times to get a distribution of the differences we would expect, if there was no effect of condition. 
+
+```{r}
+set.seed(0)
+n.permutations = 300
+
+#construct a data frame to save the results of our simulations
+df.permutations = data_frame(
+  permutation = 1:n.permutations, 
+  mean.difference = NA
+)
+
+#calculate the mean difference for each random permutation 
+for (i in 1:n.permutations){
+  df.permutations$mean.difference[i] = df.data %>% 
+    mutate(condition = sample(condition)) %>% #we randomly shuffle the condition labels 
+    group_by(condition) %>% 
+    summarize(mean = mean(rating)) %>% 
+    pull(mean) %>% 
+    diff(.) %>% 
+    -. #looks funny but works 
+}
+
+#alternative specification using a function
+# func_permutations = function(x){
+#   x %>% 
+#     mutate(condition = sample(condition)) %>% #we randomly shuffle the condition labels 
+#     group_by(condition) %>% 
+#     summarize(mean = mean(rating)) %>% 
+#     pull(mean) %>% 
+#     diff(.) %>% 
+#     -.
+# }
+# replicate(10, func_permutations(df.data))
+
+
+#plot the distribution of the differences 
+ggplot(data = df.permutations, aes(x = mean.difference))+
+  geom_density(fill = "gray80")+
+  geom_vline(xintercept = difference.actual, color = "red", size = 2)
+
+#calculate p-value of our observed result
+p_value.actual = sum(df.permutations$mean.difference > difference.actual)/length(df.permutations$mean.difference)
+
+print(p_value.actual)
+```
+
+## Confidence intervals 
+
+- 
+
+- for model parameter (such as the mean)
+
+If we assume normally distributed data, then we can calculate the confidence interval on the estimate of the mean in the following way: $\overline X \pm Z \frac{s}{\sqrt{n}}$, where $Z$ equals the value of the standard normal distribution for the desired level of confidence. 
+
+```{r}
+set.seed(0)
+
+population_size = 1e5
+population_mean = 180
+population_sd = 25
+# population_sd = 5
+
+df.population = data_frame(
+  id = 1:population_size,
+  height = rnorm(n = population_size, mean = population_mean, sd = population_sd)
+)
+
+# true population mean 
+df.population$height %>% mean()
+
+# visualization of the population
+ggplot(data = data_frame(x = c(mean-100, mean+100)), aes(x))+
+  stat_function(fun = dnorm, args = list(mean = mean, sd = sd))
+
+```
+
+### Assuming a normal distribution 
+
+```{r}
+set.seed(0)
+
+df.sample = df.population %>% 
+  sample_n(size = 50) %>% 
+  summarize(mean = mean(height),
+            sd = sd(height),
+            n = nrow(.))
+
+df.sample = df.sample %>%
+  mutate(error = qnorm(0.975) * sd / sqrt(n),
+         conf_low = mean - error,
+         conf_high = mean + error) %>% 
+  print()
+
+```
+
+Based on a random sample of 50 individuals, we estimate that the population parameter is `r df.sample$height %>% mean()`. How confident can we be in our estimate of the population parameter of interest? What if we had only sampled 10 people? What if we had sampled 100? 
+
+
+```{r}
+set.seed(0)
+
+n_samples = 50 
+
+# empty data frame 
+df.samples = data_frame()
+
+for (i in 1:n_samples){
+  # get sample mean and sd 
+  tmp.sample = df.population %>% 
+    sample_n(size = 50) %>% 
+    summarize(mean = mean(height),
+            sd = sd(height),
+            n = nrow(.))
+  
+  # bind results 
+  df.samples = rbind(df.samples, tmp.sample)
+}
+
+# calculate confidence interval (assuming normal distribution)
+df.samples = df.samples %>% 
+  mutate(error = qnorm(0.975) * sd / sqrt(n),
+         conf_low = mean - error,
+         conf_high = mean + error)
+
+df.samples %>% head()
+```
+
+```{r}
+df.plot = df.samples %>% 
+  mutate(sample = factor(1:nrow(.)))
+
+ggplot(data = df.plot, aes(x = sample, y = mean))+
+  geom_hline(yintercept = 180, color = "red")+
+  geom_point()+
+  geom_linerange(aes(ymin = conf_low, ymax = conf_high))+
+  coord_flip()+
+  theme(axis.text.y = element_text(size = 6))
+
+```
+
+```{r}
+df.plot = df.samples %>% 
+  mutate(sample = factor(1:nrow(.)),
+         sample = fct_reorder(sample, mean),
+         conf_index = ifelse(conf_low > population_mean | conf_high < population_mean, 'outside', 'inside'))
+
+ggplot(data = df.plot, aes(x = sample, y = mean, color = conf_index))+
+  geom_hline(yintercept = 180, color = "blue")+
+  geom_point()+
+  geom_linerange(aes(ymin = conf_low, ymax = conf_high))+
+  coord_flip()+
+  scale_color_manual(values = c("black", "red"), labels = c("inside", "outside"))+
+  theme(axis.text.y = element_text(size = 6),
+        legend.position = "none")
+```
+
+
+```{r}
+set.seed(0)
+
+# parameters
+n_samples = 50 
+sample_size = 100
+alpha = 0.05
+
+# empty data frame 
+df.samples = data_frame()
+
+for (i in 1:n_samples){
+  # get sample mean and sd 
+  tmp.sample = df.population %>% 
+    sample_n(size = sample_size) %>% 
+    summarize(mean = mean(height),
+            sd = sd(height),
+            n = nrow(.))
+  
+  # bind results 
+  df.samples = rbind(df.samples, tmp.sample)
+}
+
+# calculate confidence interval (assuming normal distribution)
+# df.samples = df.samples %>%
+#   mutate(error = qnorm(1 - alpha/2) * sd / sqrt(n),
+#          conf_low = mean - error,
+#          conf_high = mean + error)
+
+# calculate confidence interval (assuming t distribution)
+df.samples = df.samples %>%
+  mutate(conf_low = mean + (qt(alpha, df = n-1) * sd / sqrt(n)),
+         conf_high = mean + (qt(1-alpha, df = n-1) * sd / sqrt(n)))
+
+# plot results 
+df.plot = df.samples %>% 
+  mutate(sample = factor(1:nrow(.)),
+         sample = fct_reorder(sample, mean),
+         conf_index = ifelse(conf_low > population_mean | conf_high < population_mean, 'outside', 'inside'))
+
+ggplot(data = df.plot, aes(x = sample, y = mean, color = conf_index))+
+  geom_hline(yintercept = 180, color = "blue")+
+  geom_point()+
+  geom_linerange(aes(ymin = conf_low, ymax = conf_high))+
+  coord_flip()+
+  scale_color_manual(values = c("black", "red"), labels = c("inside", "outside"))+
+  theme(axis.text.y = element_text(size = 6),
+        legend.position = "none")
+
+```
+
+- confidence interval: critical value * standard error 
+  - standard error = sd / sqrt(n)
+
+- confidence interval is affected by: 
+  - sample size 
+  - desired alpha level
+  - standard deviation in the sample
+  
+- use normal distribution when variance of the population is known 
+- use t-distribution for the mean of a normal distribution with unkown variance
+
+Suggested reading: Hoekstra et al. - 2014 - Robust misinterpretation of confidence intervals.pdf
+  
+### Bootstrap 
+
+```{r}
+
+```
+
+
+## Prediction interval 
+
+- for individual data points
+- make a plot that shows both confidence intervals and prediction intervals
+
+
+## Bootstrap 
+
+## Power analysis 
+
+example taken from [here](https://www.stat.berkeley.edu/~s133/Random2a.html)
+
+```{r}
+t.power = function(nsamp=c(10,10),nsim=1000,means=c(0,0),sds = c(1,1)){
+    lower = qt(.025,df=sum(nsamp) - 2)
+    upper = qt(.975,df=sum(nsamp) - 2)
+    ts = replicate(nsim,
+       t.test(rnorm(nsamp[1],mean=means[1],sd=sds[1]),
+              rnorm(nsamp[2],mean=means[2],sd=sds[2]))$statistic)
+
+    sum(ts < lower | ts > upper) / nsim
+}
+
+t.power(means = c(0, 1))
+```
+
+- recipe: specify an alpha level, calculate the rejection region, simulate data under the alternative hypothesis, and see how many times we'd reject the null hypothesis
+
+
+## Resources 
+
+[nice tutorial on simulating data](https://aosmith.rbind.io/2018/08/29/getting-started-simulating-data/)
+
+
+```{r}
+print(sessionInfo(), locale = FALSE)
+```

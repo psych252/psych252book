@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Psych 252 course notes</title>
+  <meta name="description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Psych 252 course notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Psych 252 course notes" />
+  
+  <meta name="twitter:description" content="Course notes for Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  
+
+<meta name="author" content="Tobias Gerstenberg">
+
+
+<meta name="date" content="2018-10-04">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="visualization.html">
+<link rel="next" href="applications.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Psych 252</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>2</b> Visualizing Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="visualization.html"><a href="visualization.html#resources"><i class="fa fa-check"></i><b>2.1</b> Resources</a></li>
+<li class="chapter" data-level="2.2" data-path="visualization.html"><a href="visualization.html#why-visualize-data"><i class="fa fa-check"></i><b>2.2</b> Why visualize data?</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="visualization.html"><a href="visualization.html#why-use-r-to-visualize-data"><i class="fa fa-check"></i><b>2.2.1</b> Why use R to visualize data?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="visualization.html"><a href="visualization.html#bad-visualizations"><i class="fa fa-check"></i><b>2.3</b> Bad visualizations</a></li>
+<li class="chapter" data-level="2.4" data-path="visualization.html"><a href="visualization.html#data-visualization-using-ggplot2"><i class="fa fa-check"></i><b>2.4</b> Data visualization using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="2.4.1" data-path="visualization.html"><a href="visualization.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.4.1</b> Setting up a plot</a></li>
+<li class="chapter" data-level="2.4.2" data-path="visualization.html"><a href="visualization.html#scatter-plot"><i class="fa fa-check"></i><b>2.4.2</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.4.3" data-path="visualization.html"><a href="visualization.html#making-a-line-plot"><i class="fa fa-check"></i><b>2.4.3</b> Making a line plot</a></li>
+<li class="chapter" data-level="2.4.4" data-path="visualization.html"><a href="visualization.html#adding-error-bars"><i class="fa fa-check"></i><b>2.4.4</b> Adding error bars</a></li>
+<li class="chapter" data-level="2.4.5" data-path="visualization.html"><a href="visualization.html#grouping-data"><i class="fa fa-check"></i><b>2.4.5</b> Grouping data</a></li>
+<li class="chapter" data-level="2.4.6" data-path="visualization.html"><a href="visualization.html#making-facets"><i class="fa fa-check"></i><b>2.4.6</b> Making facets</a></li>
+<li class="chapter" data-level="2.4.7" data-path="visualization.html"><a href="visualization.html#more-on-aesthetics"><i class="fa fa-check"></i><b>2.4.7</b> More on aesthetics</a></li>
+<li class="chapter" data-level="2.4.8" data-path="visualization.html"><a href="visualization.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>2.4.8</b> Overview of different plot types for different things</a></li>
+<li class="chapter" data-level="2.4.9" data-path="visualization.html"><a href="visualization.html#customizing-plots"><i class="fa fa-check"></i><b>2.4.9</b> Customizing plots</a></li>
+<li class="chapter" data-level="2.4.10" data-path="visualization.html"><a href="visualization.html#saving-plots"><i class="fa fa-check"></i><b>2.4.10</b> Saving plots</a></li>
+<li class="chapter" data-level="2.4.11" data-path="visualization.html"><a href="visualization.html#creating-figure-panels"><i class="fa fa-check"></i><b>2.4.11</b> Creating figure panels</a></li>
+<li class="chapter" data-level="2.4.12" data-path="visualization.html"><a href="visualization.html#peeking-behind-the-scenes"><i class="fa fa-check"></i><b>2.4.12</b> Peeking behind the scenes</a></li>
+<li class="chapter" data-level="2.4.13" data-path="visualization.html"><a href="visualization.html#defining-snippets"><i class="fa fa-check"></i><b>2.4.13</b> Defining snippets</a></li>
+<li class="chapter" data-level="2.4.14" data-path="visualization.html"><a href="visualization.html#making-animations"><i class="fa fa-check"></i><b>2.4.14</b> Making animations</a></li>
+<li class="chapter" data-level="2.4.15" data-path="visualization.html"><a href="visualization.html#shiny-apps"><i class="fa fa-check"></i><b>2.4.15</b> Shiny apps</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="visualization.html"><a href="visualization.html#to-do-list"><i class="fa fa-check"></i><b>2.5</b> To do list</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>3</b> Data wrangling</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#setting-up-rstudio"><i class="fa fa-check"></i><b>3.1</b> Setting up RStudio</a></li>
+<li class="chapter" data-level="3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#some-r-basics"><i class="fa fa-check"></i><b>3.2</b> Some R basics</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#getting-help"><i class="fa fa-check"></i><b>3.2.1</b> Getting help</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#modes"><i class="fa fa-check"></i><b>3.2.2</b> Modes</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#data-types"><i class="fa fa-check"></i><b>3.2.3</b> Data types</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#operators"><i class="fa fa-check"></i><b>3.2.4</b> Operators</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data-wrangling.html"><a href="data-wrangling.html#control-flow"><i class="fa fa-check"></i><b>3.2.5</b> Control flow</a></li>
+<li class="chapter" data-level="3.2.6" data-path="data-wrangling.html"><a href="data-wrangling.html#functions"><i class="fa fa-check"></i><b>3.2.6</b> Functions</a></li>
+<li class="chapter" data-level="3.2.7" data-path="data-wrangling.html"><a href="data-wrangling.html#looking-at-data"><i class="fa fa-check"></i><b>3.2.7</b> Looking at data</a></li>
+<li class="chapter" data-level="3.2.8" data-path="data-wrangling.html"><a href="data-wrangling.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>3.2.8</b> A quick note on naming things</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#wrangling-data"><i class="fa fa-check"></i><b>3.3</b> Wrangling data</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-wrangling.html"><a href="data-wrangling.html#filter"><i class="fa fa-check"></i><b>3.3.1</b> filter()</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-wrangling.html"><a href="data-wrangling.html#rename"><i class="fa fa-check"></i><b>3.3.2</b> rename()</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data-wrangling.html"><a href="data-wrangling.html#select"><i class="fa fa-check"></i><b>3.3.3</b> select()</a></li>
+<li class="chapter" data-level="3.3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#arrange"><i class="fa fa-check"></i><b>3.3.4</b> arrange()</a></li>
+<li class="chapter" data-level="3.3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#mutate"><i class="fa fa-check"></i><b>3.3.5</b> mutate()</a></li>
+<li class="chapter" data-level="3.3.6" data-path="data-wrangling.html"><a href="data-wrangling.html#group_by-and-summarise"><i class="fa fa-check"></i><b>3.3.6</b> group_by() and summarise()</a></li>
+<li class="chapter" data-level="3.3.7" data-path="data-wrangling.html"><a href="data-wrangling.html#join-multiple-data-frames"><i class="fa fa-check"></i><b>3.3.7</b> join multiple data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="data-wrangling.html"><a href="data-wrangling.html#reading-in-data"><i class="fa fa-check"></i><b>3.4</b> Reading in data</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="data-wrangling.html"><a href="data-wrangling.html#csv"><i class="fa fa-check"></i><b>3.4.1</b> csv</a></li>
+<li class="chapter" data-level="3.4.2" data-path="data-wrangling.html"><a href="data-wrangling.html#xls"><i class="fa fa-check"></i><b>3.4.2</b> xls</a></li>
+<li class="chapter" data-level="3.4.3" data-path="data-wrangling.html"><a href="data-wrangling.html#json"><i class="fa fa-check"></i><b>3.4.3</b> json</a></li>
+<li class="chapter" data-level="3.4.4" data-path="data-wrangling.html"><a href="data-wrangling.html#sav"><i class="fa fa-check"></i><b>3.4.4</b> sav</a></li>
+<li class="chapter" data-level="3.4.5" data-path="data-wrangling.html"><a href="data-wrangling.html#feather"><i class="fa fa-check"></i><b>3.4.5</b> feather</a></li>
+<li class="chapter" data-level="3.4.6" data-path="data-wrangling.html"><a href="data-wrangling.html#rdata"><i class="fa fa-check"></i><b>3.4.6</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="data-wrangling.html"><a href="data-wrangling.html#saving-data"><i class="fa fa-check"></i><b>3.5</b> Saving data</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="data-wrangling.html"><a href="data-wrangling.html#rdata-1"><i class="fa fa-check"></i><b>3.5.1</b> RData</a></li>
+<li class="chapter" data-level="3.5.2" data-path="data-wrangling.html"><a href="data-wrangling.html#csv-1"><i class="fa fa-check"></i><b>3.5.2</b> csv</a></li>
+<li class="chapter" data-level="3.5.3" data-path="data-wrangling.html"><a href="data-wrangling.html#feather-1"><i class="fa fa-check"></i><b>3.5.3</b> feather …</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a><ul>
+<li class="chapter" data-level="4.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
+<li class="chapter" data-level="4.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="cheatsheets.html"><a href="cheatsheets.html"><i class="fa fa-check"></i><b>5</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="5.1" data-path="cheatsheets.html"><a href="cheatsheets.html#statistics"><i class="fa fa-check"></i><b>5.1</b> Statistics</a></li>
+<li class="chapter" data-level="5.2" data-path="cheatsheets.html"><a href="cheatsheets.html#r"><i class="fa fa-check"></i><b>5.2</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="6" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i><b>6</b> Test</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psych 252 course notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-wrangling" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Data wrangling</h1>
+<p>In this chapter, we will learn how to read in and manipulate data. I promised that we’ll look at a more interesting data set this time. We are going to take a look at London Crime Data, 2008-2016.</p>
+<ul>
+<li>data.frames as the</li>
+<li>tidy data format</li>
+<li>each row is one observation</li>
+<li><a href="https://data.police.uk/">UK police data</a></li>
+<li><a href="https://data.gov.uk/dataset/994da1a8-6360-43f5-b32f-f9843d189136/crime-rates-by-london-borough">specific data set that we’ll be using</a></li>
+<li><a href="https://geocompr.robinlovelace.net/">geocomputation in R</a> –&gt; excellent resource</li>
+</ul>
+<div id="setting-up-rstudio" class="section level2">
+<h2><span class="header-section-number">3.1</span> Setting up RStudio</h2>
+<div class="figure"><span id="fig:pref-general"></span>
+<img src="figures/screenshots/r_preferences_general.png" alt="General preferences." width="296" />
+<p class="caption">
+Figure 3.1: General preferences.
+</p>
+</div>
+<p><strong>Make sure that</strong>:</p>
+<ul>
+<li>Restore .RData into workspace at startup is <em>unselected</em></li>
+<li>Save workspace to .RData on exit is set to <em>Never</em></li>
+</ul>
+<div class="figure"><span id="fig:pref-code"></span>
+<img src="figures/screenshots/r_preferences_code.png" alt="Code window preferences." width="296" />
+<p class="caption">
+Figure 3.2: Code window preferences.
+</p>
+</div>
+<p><strong>Make sure that</strong>:</p>
+<ul>
+<li>Soft-wrap R source files is <em>selected</em></li>
+</ul>
+<p>This way you don’t have to scroll horizontally. At the same time, avoid writing long single lines of code. For example, instead of writing code like so:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>, <span class="dt">width =</span> <span class="fl">0.85</span>)<span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>)<span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Price as a function of quality of cut&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Note: The price is in US dollars&quot;</span>, <span class="dt">tag =</span> <span class="st">&quot;A&quot;</span>, <span class="dt">x =</span> <span class="st">&quot;Quality of the cut&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Price&quot;</span>)</a></code></pre></div>
+<p>You may want to write it this way instead:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price))<span class="op">+</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="co"># display the means</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">               <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">               <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">               <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">               <span class="dt">width =</span> <span class="fl">0.85</span>)<span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="co"># display the error bars</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>,</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">               <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, </a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">               <span class="dt">size =</span> <span class="fl">1.5</span>)<span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="co"># change labels </span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="st">  </span><span class="kw">labs</span>(</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="dt">title =</span> <span class="st">&quot;Price as a function of quality of cut&quot;</span>, </a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">    <span class="dt">subtitle =</span> <span class="st">&quot;Note: The price is in US dollars&quot;</span>, <span class="co"># we might want to change this later</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">    <span class="dt">tag =</span> <span class="st">&quot;A&quot;</span>,</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="dt">x =</span> <span class="st">&quot;Quality of the cut&quot;</span>, </a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">    <span class="dt">y =</span> <span class="st">&quot;Price&quot;</span>)</a></code></pre></div>
+<p>This makes it much easier to see what’s going on, and you can easily add comments to individual lines of code.</p>
+<p>RStudio makes it easy to write nice code. It figures out where to put the next line of code when you press <code>ENTER</code>. And if things ever get messy, just select the code of interest and hit <code>cmd+I</code> to re-indent the code.</p>
+<p>Here are some more resources with tips for how to write nice code in R:
+- <a href="http://adv-r.had.co.nz/Style.html">Advanced R style guide</a></p>
+</div>
+<div id="some-r-basics" class="section level2">
+<h2><span class="header-section-number">3.2</span> Some R basics</h2>
+<p>To test your knowledge of the R basics, I recommend taking the free interactive tutorial on datacamp: <a href="https://www.datacamp.com/courses/free-introduction-to-r">Introduction to R</a>. Here, I will just give a very quick overview of some of the basics.</p>
+<p>Let’s start again by loading the <code>tidyverse</code> R package. If you don’t have one of these packages yet, make sure to install it via running <code>install.packages(&quot;packagename&quot;)</code> in your console.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
+<div id="getting-help" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Getting help</h3>
+<p>There are three simple ways to get help in R. You can either put a <code>?</code> in front of the function you’d like to learn more about, or use the <code>help()</code> function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">?print </a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">help</span>(<span class="st">&quot;print&quot;</span>)</a></code></pre></div>
+<blockquote>
+<p><strong>Tip</strong>: To see the help file, hover over a function (or dataset) with the mouse (or select the text) and then press <code>F1</code>.</p>
+</blockquote>
+<p>I recommend using <code>F1</code> to get to help files – it’s the fastest way!</p>
+<p>R help files can sometimes look a little cryptic. Most R help files have the following sections (copied from <a href="https://www.dummies.com/programming/r/r-for-dummies-cheat-sheet/">here</a>):</p>
+<hr />
+<p><strong>Title</strong>: A one-sentence overview of the function.</p>
+<p><strong>Description</strong>: An introduction to the high-level objectives of the function, typically about one paragraph long.</p>
+<p><strong>Usage</strong>: A description of the syntax of the function (in other words, how the function is called). This is where you find all the arguments that you can supply to the function, as well as any default values of these arguments.</p>
+<p><strong>Arguments</strong>: A description of each argument. Usually this includes a specification of the class (for example, character, numeric, list, and so on). This section is an important one to understand, because arguments are frequently a cause of errors in R.</p>
+<p><strong>Details</strong>: Extended details about how the function works, provides longer descriptions of the various ways to call the function (if applicable), and a longer discussion of the arguments.</p>
+<p><strong>Value</strong>: A description of the class of the value returned by the function.</p>
+<p><strong>See also</strong>: Links to other relevant functions. In most of the R editors, you can click these links to read the Help files for these functions.</p>
+<p><strong>Examples</strong>: Worked examples of real R code that you can paste into your console and run.</p>
+<hr />
+<p>Here is the help file for the <code>print()</code> function:</p>
+<div class="figure"><span id="fig:print-function"></span>
+<img src="figures/screenshots/help_print.png" alt="Help file for the print() function." width="1520" />
+<p class="caption">
+Figure 3.3: Help file for the print() function.
+</p>
+</div>
+</div>
+<div id="modes" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Modes</h3>
+<p>Variables in R can have different modes. Table shows the most common ones.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">name =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;logical&quot;</span>, <span class="st">&#39;not available&#39;</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">example =<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="st">&quot;`1`, `3`, `48`&quot;</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="st">&quot;`&#39;Steve&#39;`, `&#39;a&#39;`, `&#39;78&#39;`&quot;</span>,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="st">&quot;`TRUE`, `FALSE`&quot;</span>,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="st">&quot;`NA`&quot;</span>)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw">kable</span>(<span class="dt">x =</span> <span class="kw">tibble</span>(name, example), </a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">      <span class="dt">caption =</span> <span class="st">&quot;Most commonly used variable modes in R.&quot;</span>, </a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">      <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;l&quot;</span>),</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">      <span class="dt">booktabs =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-6">Table 3.1: </span>Most commonly used variable modes in R.</caption>
+<thead>
+<tr class="header">
+<th align="right">name</th>
+<th align="left">example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">numeric</td>
+<td align="left"><code>1</code>, <code>3</code>, <code>48</code></td>
+</tr>
+<tr class="even">
+<td align="right">character</td>
+<td align="left"><code>'Steve'</code>, <code>'a'</code>, <code>'78'</code></td>
+</tr>
+<tr class="odd">
+<td align="right">logical</td>
+<td align="left"><code>TRUE</code>, <code>FALSE</code></td>
+</tr>
+<tr class="even">
+<td align="right">not available</td>
+<td align="left"><code>NA</code></td>
+</tr>
+</tbody>
+</table>
+<p>For characters you can either use <code>&quot;</code> or <code>'</code>. R has a number of functions to convert a variable from one mode to another. <code>NA</code> is used for missing values.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">tmp1 =<span class="st"> &#39;1&#39;</span> <span class="co">#we start with a character</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">str</span>(tmp1) </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt;  chr &quot;1&quot;</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">tmp2 =<span class="st"> </span><span class="kw">as.numeric</span>(tmp1) <span class="co">#turn it into a numeric</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">str</span>(tmp2) </a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;  num 1</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">tmp3 =<span class="st"> </span><span class="kw">as.factor</span>(tmp2) <span class="co">#turn that into a factor</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="kw">str</span>(tmp3)</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;  Factor w/ 1 level &quot;1&quot;: 1</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">tmp4 =<span class="st"> </span><span class="kw">as.character</span>(tmp3) <span class="co">#and go full cycle by turning it back into a character</span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="kw">str</span>(tmp4)</a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt;  chr &quot;1&quot;</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="kw">identical</span>(tmp1, tmp4) <span class="co">#checks whether tmp1 and tmp4 are the same</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
+<p>The <code>str()</code> function displays the structure of an R object. Here, it shows us what mode the variable is.</p>
+</div>
+<div id="data-types" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Data types</h3>
+<p>R has a number of different data types. Table <a href="data-wrangling.html#tab:types">3.2</a> shows the ones you’re most likely to come across (taken from <a href="https://www.statmethods.net/input/datatypes.html">this source</a>):</p>
+<table>
+<caption><span id="tab:types">Table 3.2: </span>Most commonly used variable types in R.</caption>
+<thead>
+<tr class="header">
+<th align="right">name</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">vector</td>
+<td align="left">list of values with of the same variable mode</td>
+</tr>
+<tr class="even">
+<td align="right">factor</td>
+<td align="left">for ordinal variables</td>
+</tr>
+<tr class="odd">
+<td align="right">matrix</td>
+<td align="left">2D data structure</td>
+</tr>
+<tr class="even">
+<td align="right">array</td>
+<td align="left">same as matrix for higher dimensional data</td>
+</tr>
+<tr class="odd">
+<td align="right">data frame</td>
+<td align="left">similar to matrix but with column names</td>
+</tr>
+<tr class="even">
+<td align="right">list</td>
+<td align="left">flexible type that can contain different other variable types</td>
+</tr>
+</tbody>
+</table>
+<div id="vectors" class="section level4">
+<h4><span class="header-section-number">3.2.3.1</span> Vectors</h4>
+<p>We build vectors using the concatenate function <code>c()</code>, and we use <code>[]</code> to access one or more elements of a vector.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">numbers =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>) <span class="co">#make a vector</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">numbers[<span class="dv">2</span>] <span class="co">#access the second element </span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; [1] 4</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">numbers[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] <span class="co">#access the first two elements</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [1] 1 4</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">numbers[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] <span class="co">#access the first and last element</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; [1] 1 5</span></a></code></pre></div>
+<p>In R (unlike in Python for example), 1 refers to the first element of a vector (or list).</p>
+</div>
+<div id="matrix" class="section level4">
+<h4><span class="header-section-number">3.2.3.2</span> Matrix</h4>
+<p>We build a matrix using the <code>matrix()</code> function, and we use <code>[]</code> to access its elements.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">matrix =<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">data =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">matrix <span class="co">#the full matrix</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;      [,1] [,2]</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; [1,]    1    4</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [2,]    2    5</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; [3,]    3    6</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">matrix[<span class="dv">1</span>, <span class="dv">2</span>] <span class="co">#element in row 1, column 2</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; [1] 4</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">matrix[<span class="dv">1</span>, ] <span class="co">#all elements in the first row </span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; [1] 1 4</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">matrix[ , <span class="dv">1</span>] <span class="co">#all elements in the first column </span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; [1] 1 2 3</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">matrix[<span class="op">-</span><span class="dv">1</span> , ] <span class="co">#a matrix which excludes the first row</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt;      [,1] [,2]</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; [1,]    2    5</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; [2,]    3    6</span></a></code></pre></div>
+<p>Note how we use an empty placeholder to indicate that we want to select all the values in a row or column, and <code>-</code> to indicate that we want to remove something.</p>
+</div>
+<div id="array" class="section level4">
+<h4><span class="header-section-number">3.2.3.3</span> Array</h4>
+<p>Arrays work the same was as matrices with data of more than two dimensions.</p>
+</div>
+<div id="data-frame" class="section level4">
+<h4><span class="header-section-number">3.2.3.4</span> Data frame</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">df =<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">participant_id =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">                <span class="dt">participant_name =</span> <span class="kw">c</span>(<span class="st">&quot;Leia&quot;</span>, <span class="st">&quot;Luke&quot;</span>, <span class="st">&quot;Darth&quot;</span>)) <span class="co">#make the data frame </span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">df <span class="co"># the complete data frame</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; # A tibble: 3 x 2</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;   participant_id participant_name</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;            &lt;dbl&gt; &lt;chr&gt;           </span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt; 1              1 Leia            </span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; 2              2 Luke            </span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; 3              3 Darth</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">df[<span class="dv">1</span>, <span class="dv">2</span>] <span class="co">#a single element using numbers </span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; # A tibble: 1 x 1</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;   participant_name</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;   &lt;chr&gt;           </span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; 1 Leia</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">df<span class="op">$</span>participant_id <span class="co">#all participants </span></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; [1] 1 2 3</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">df[[<span class="st">&quot;participant_id&quot;</span>]] <span class="co">#same as before but using [[]] instead of $</span></a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt; [1] 1 2 3</span></a>
+<a class="sourceLine" id="cb9-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb9-22" data-line-number="22">df<span class="op">$</span>participant_name[<span class="dv">2</span>] <span class="co">#name of the second participant</span></a>
+<a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">#&gt; [1] &quot;Luke&quot;</span></a>
+<a class="sourceLine" id="cb9-24" data-line-number="24">df[[<span class="st">&quot;participant_name&quot;</span>]][<span class="dv">2</span>] <span class="co">#same as above</span></a>
+<a class="sourceLine" id="cb9-25" data-line-number="25"><span class="co">#&gt; [1] &quot;Luke&quot;</span></a></code></pre></div>
+<p>We’ll use data frames a lot. Data frames are like a matrix with column names. Data frames are also more general than matrices in that different columns can have different modes. For example, one column might be a character, another one numeric, and another one a factor. You may sometimes also see a <code>tibble</code> instead of a data frame. A <code>tibble</code> is almost the same asa data frame but it has better defaults for formatting output in the console (more information on tibbles is <a href="http://r4ds.had.co.nz/tibbles.html">here</a>).</p>
+<!-- Mention that one can have lists inside data frames here? -->
+</div>
+<div id="lists" class="section level4">
+<h4><span class="header-section-number">3.2.3.5</span> Lists</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">l.mixed =<span class="st"> </span><span class="kw">list</span>(<span class="dt">number =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">               <span class="dt">character =</span> <span class="st">&quot;2&quot;</span>, </a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">               <span class="dt">factor =</span> <span class="kw">factor</span>(<span class="dv">3</span>), </a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">               <span class="dt">matrix =</span> <span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">               <span class="dt">df =</span> <span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">4</span>)))</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">l.mixed</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; $number</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt; $character</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt; [1] &quot;2&quot;</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt; $factor</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; [1] 3</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; Levels: 3</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt; $matrix</span></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt;      [,1] [,2]</span></a>
+<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; [1,]    1    3</span></a>
+<a class="sourceLine" id="cb10-20" data-line-number="20"><span class="co">#&gt; [2,]    2    4</span></a>
+<a class="sourceLine" id="cb10-21" data-line-number="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb10-22" data-line-number="22"><span class="co">#&gt; $df</span></a>
+<a class="sourceLine" id="cb10-23" data-line-number="23"><span class="co">#&gt; # A tibble: 2 x 2</span></a>
+<a class="sourceLine" id="cb10-24" data-line-number="24"><span class="co">#&gt;       x     y</span></a>
+<a class="sourceLine" id="cb10-25" data-line-number="25"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb10-26" data-line-number="26"><span class="co">#&gt; 1     1     3</span></a>
+<a class="sourceLine" id="cb10-27" data-line-number="27"><span class="co">#&gt; 2     2     4</span></a>
+<a class="sourceLine" id="cb10-28" data-line-number="28">l.mixed<span class="op">$</span>character</a>
+<a class="sourceLine" id="cb10-29" data-line-number="29"><span class="co">#&gt; [1] &quot;2&quot;</span></a>
+<a class="sourceLine" id="cb10-30" data-line-number="30">l.mixed[[<span class="st">&#39;character&#39;</span>]]</a>
+<a class="sourceLine" id="cb10-31" data-line-number="31"><span class="co">#&gt; [1] &quot;2&quot;</span></a>
+<a class="sourceLine" id="cb10-32" data-line-number="32">l.mixed[[<span class="dv">2</span>]] <span class="co">#three different ways of accessing a list</span></a>
+<a class="sourceLine" id="cb10-33" data-line-number="33"><span class="co">#&gt; [1] &quot;2&quot;</span></a></code></pre></div>
+<p>Lists are a very flexible data format. You can put almost anything in a list. You can then access the elements of a list either using</p>
+<p>tibble; same as data frame with better defaults for formatting output in the console; more information on <a href="http://r4ds.had.co.nz/tibbles.html">tibbles</a></p>
+</div>
+</div>
+<div id="operators" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> Operators</h3>
+<p>Table <a href="data-wrangling.html#tab:operators">3.3</a> shows the comparison operators that result in logical outputs.</p>
+<table>
+<caption><span id="tab:operators">Table 3.3: </span>Table of comparison operators that result in boolean (TRUE/FALSE) outputs.</caption>
+<thead>
+<tr class="header">
+<th align="left">symbol</th>
+<th align="left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>==</code></td>
+<td align="left">equal to</td>
+</tr>
+<tr class="even">
+<td align="left"><code>!=</code></td>
+<td align="left">not equal to</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>&gt;, &lt;</code></td>
+<td align="left">greater/less than</td>
+</tr>
+<tr class="even">
+<td align="left"><code>&gt;=, &lt;=</code></td>
+<td align="left">greater/less than or equal</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>&amp;, |, !</code></td>
+<td align="left">logical operators: and, or, not</td>
+</tr>
+<tr class="even">
+<td align="left"><code>%in%</code></td>
+<td align="left">checks whether an element is in an object</td>
+</tr>
+</tbody>
+</table>
+<div id="the-pipe-operator" class="section level4">
+<h4><span class="header-section-number">3.2.4.1</span> The pipe operator <code>%&gt;%</code></h4>
+<!-- mention that it's similar to the + operation in ggplot -->
+<div class="figure"><span id="fig:pipe"></span>
+<img src="figures/images/pipe.jpg" alt="Inspiration for the `magrittr` package name." width="189" />
+<p class="caption">
+Figure 3.4: Inspiration for the <code>magrittr</code> package name.
+</p>
+</div>
+<p>The pipe operator <code>%&gt;%</code> is a special operator introduced in the <code>magrittr</code> package. It is used heavily in the tidyverse. The basic idea is simple: this operator allows us to “pipe” several functions into one long chain.</p>
+<p>The logic is the following:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">a =<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">b =<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw">sum</span>(a, b) <span class="co">#standard way </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; [1] 7</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>(b) <span class="co">#the pipe way </span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; [1] 7</span></a></code></pre></div>
+<p>The pipe operator inserts the result of one computation as a first element into the next computation. So, <code>a %&gt;% sum(b)</code> is equivalent to <code>sum(a, b)</code>. We can also specify to insert the result at a different position via the <code>.</code> operator. For example:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">a =<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">b =<span class="st"> </span><span class="dv">1</span> </a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> b, <span class="dt">to =</span> .)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></a></code></pre></div>
+<p>Here, I used the <code>.</code> operator to specify that I woud like to insert the result of <code>a</code> where I’ve put the <code>.</code> in the <code>seq()</code> function. So far, the pipe operator may not seem particularly useful. One of the great features of the operator though is that it allows us to write code in an intuitive way that fits the order in which we would like to do stuff.</p>
+<p>For example, consider that we want to calculate the root mean squared error between data and prediction. In base R, we would do the following.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">data =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">prediction =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co"># calculate root mean squared error</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((data<span class="op">-</span>prediction)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="kw">print</span>(rmse)</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt; [1] 1.183216</span></a></code></pre></div>
+<p>Using the pipe operator, makes the operation more intuitive:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">data =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">prediction =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co"># calculate root mean squared error</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">rmse =<span class="st"> </span>(data<span class="op">-</span>prediction)<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#  first we calculate the squared difference </span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># then we take the mean</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw">sqrt</span>() <span class="co"># and then the square root</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="kw">print</span>(rmse)</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; [1] 1.183216</span></a></code></pre></div>
+<p>First, we calculate the squared error, then we take the mean, and then the square root. The pipe operator <code>%&gt;%</code> is similar to the <code>+</code> used in <code>ggplot2</code>. It allows us to take step-by-step actions in</p>
+</div>
+</div>
+<div id="control-flow" class="section level3">
+<h3><span class="header-section-number">3.2.5</span> Control flow</h3>
+<div id="if-else" class="section level4">
+<h4><span class="header-section-number">3.2.5.1</span> if-then</h4>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">number =<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="cf">if</span>(number <span class="op">==</span><span class="st"> </span><span class="dv">1</span>){</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">  <span class="kw">print</span>(<span class="st">&quot;The number is 1.&quot;</span>)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">}<span class="cf">else</span> <span class="cf">if</span> (number <span class="op">==</span><span class="st"> </span><span class="dv">2</span>){</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">  <span class="kw">print</span>(<span class="st">&quot;The number is 2.&quot;</span>)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">}<span class="cf">else</span>{</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">  <span class="kw">print</span>(<span class="st">&quot;The number is neither 1 nor 2.&quot;</span>)</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">}</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; [1] &quot;The number is neither 1 nor 2.&quot;</span></a></code></pre></div>
+</div>
+<div id="for-loop" class="section level4">
+<h4><span class="header-section-number">3.2.5.2</span> for loop</h4>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">sequence =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(sequence)){</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">  <span class="kw">print</span>(i)</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt; [1] 2</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">#&gt; [1] 3</span></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt; [1] 4</span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">#&gt; [1] 5</span></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; [1] 6</span></a>
+<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">#&gt; [1] 7</span></a>
+<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">#&gt; [1] 8</span></a>
+<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="co">#&gt; [1] 9</span></a>
+<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="co">#&gt; [1] 10</span></a></code></pre></div>
+</div>
+<div id="while-loop" class="section level4">
+<h4><span class="header-section-number">3.2.5.3</span> while loop</h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">number =<span class="st"> </span><span class="dv">1</span> </a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="cf">while</span>(number <span class="op">&lt;=</span><span class="st"> </span><span class="dv">10</span>){</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">  <span class="kw">print</span>(number)</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">  number =<span class="st"> </span>number <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; [1] 2</span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; [1] 3</span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; [1] 4</span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; [1] 5</span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; [1] 6</span></a>
+<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co">#&gt; [1] 7</span></a>
+<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="co">#&gt; [1] 8</span></a>
+<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="co">#&gt; [1] 9</span></a>
+<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co">#&gt; [1] 10</span></a></code></pre></div>
+</div>
+</div>
+<div id="functions" class="section level3">
+<h3><span class="header-section-number">3.2.6</span> Functions</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">fun_addition =<span class="st"> </span><span class="cf">function</span>(a, b){</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">  x =<span class="st"> </span>a <span class="op">+</span><span class="st"> </span>b</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">  <span class="kw">return</span>(<span class="kw">paste0</span>(<span class="st">&quot;The result is &quot;</span>, x))</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="kw">fun_addition</span>(<span class="dv">1</span>,<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">#&gt; [1] &quot;The result is 3&quot;</span></a></code></pre></div>
+<!-- maybe introduce `str_c()` directly instead of `paste0()`? -->
+<p>I’ve used the <code>paste0()</code> function here to concatenate the string with the number. (R converts the number <code>x</code> into a string for us.) Note, R functions can only return a single object. However, this object can be a list (which can contain anything).</p>
+<div id="some-often-used-functions" class="section level4">
+<h4><span class="header-section-number">3.2.6.1</span> Some often used functions</h4>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">name =<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">&quot;`length()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">&quot;`dim()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">&quot;`rm()  `&quot;</span>,</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">&quot;`seq()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="st">&quot;`rep()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="st">&quot;`max()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="st">&quot;`min()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="st">&quot;`which.max()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="st">&quot;`which.min()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="st">&quot;`mean()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-12" data-line-number="12"><span class="st">&quot;`median()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-13" data-line-number="13"><span class="st">&quot;`sum()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-14" data-line-number="14"><span class="st">&quot;`var()`&quot;</span>,</a>
+<a class="sourceLine" id="cb19-15" data-line-number="15"><span class="st">&quot;`sd()`&quot;</span></a>
+<a class="sourceLine" id="cb19-16" data-line-number="16">)</a>
+<a class="sourceLine" id="cb19-17" data-line-number="17">description =<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb19-18" data-line-number="18"><span class="st">&quot;length of an object&quot;</span>,</a>
+<a class="sourceLine" id="cb19-19" data-line-number="19"><span class="st">&quot;dimensions of an object (e.g. number of rows and columns)&quot;</span>,</a>
+<a class="sourceLine" id="cb19-20" data-line-number="20"><span class="st">&quot;remove an object&quot;</span>,</a>
+<a class="sourceLine" id="cb19-21" data-line-number="21"><span class="st">&quot;generate a sequence of numbers&quot;</span>,</a>
+<a class="sourceLine" id="cb19-22" data-line-number="22"><span class="st">&quot;repeat something n times&quot;</span>,</a>
+<a class="sourceLine" id="cb19-23" data-line-number="23"><span class="st">&quot;maximum&quot;</span>,</a>
+<a class="sourceLine" id="cb19-24" data-line-number="24"><span class="st">&quot;minimum&quot;</span>,</a>
+<a class="sourceLine" id="cb19-25" data-line-number="25"><span class="st">&quot;index of the maximum&quot;</span>,</a>
+<a class="sourceLine" id="cb19-26" data-line-number="26"><span class="st">&quot;index of the maximum&quot;</span>,</a>
+<a class="sourceLine" id="cb19-27" data-line-number="27"><span class="st">&quot;mean&quot;</span>,</a>
+<a class="sourceLine" id="cb19-28" data-line-number="28"><span class="st">&quot;median&quot;</span>,</a>
+<a class="sourceLine" id="cb19-29" data-line-number="29"><span class="st">&quot;sum&quot;</span>,</a>
+<a class="sourceLine" id="cb19-30" data-line-number="30"><span class="st">&quot;variance&quot;</span>,</a>
+<a class="sourceLine" id="cb19-31" data-line-number="31"><span class="st">&quot;standard deviation&quot;</span></a>
+<a class="sourceLine" id="cb19-32" data-line-number="32">)</a>
+<a class="sourceLine" id="cb19-33" data-line-number="33"><span class="kw">kable</span>(<span class="dt">x =</span> <span class="kw">tibble</span>(name, description), </a>
+<a class="sourceLine" id="cb19-34" data-line-number="34">      <span class="dt">caption =</span> <span class="st">&quot;Some frequently used functions.&quot;</span>, </a>
+<a class="sourceLine" id="cb19-35" data-line-number="35">      <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;l&quot;</span>),</a>
+<a class="sourceLine" id="cb19-36" data-line-number="36">      <span class="dt">booktabs =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<table>
+<caption><span id="tab:frequent-functions">Table 3.4: </span>Some frequently used functions.</caption>
+<thead>
+<tr class="header">
+<th align="right">name</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><code>length()</code></td>
+<td align="left">length of an object</td>
+</tr>
+<tr class="even">
+<td align="right"><code>dim()</code></td>
+<td align="left">dimensions of an object (e.g. number of rows and columns)</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>rm()</code></td>
+<td align="left">remove an object</td>
+</tr>
+<tr class="even">
+<td align="right"><code>seq()</code></td>
+<td align="left">generate a sequence of numbers</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>rep()</code></td>
+<td align="left">repeat something n times</td>
+</tr>
+<tr class="even">
+<td align="right"><code>max()</code></td>
+<td align="left">maximum</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>min()</code></td>
+<td align="left">minimum</td>
+</tr>
+<tr class="even">
+<td align="right"><code>which.max()</code></td>
+<td align="left">index of the maximum</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>which.min()</code></td>
+<td align="left">index of the maximum</td>
+</tr>
+<tr class="even">
+<td align="right"><code>mean()</code></td>
+<td align="left">mean</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>median()</code></td>
+<td align="left">median</td>
+</tr>
+<tr class="even">
+<td align="right"><code>sum()</code></td>
+<td align="left">sum</td>
+</tr>
+<tr class="odd">
+<td align="right"><code>var()</code></td>
+<td align="left">variance</td>
+</tr>
+<tr class="even">
+<td align="right"><code>sd()</code></td>
+<td align="left">standard deviation</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="looking-at-data" class="section level3">
+<h3><span class="header-section-number">3.2.7</span> Looking at data</h3>
+<p>The package <code>dplyr</code> which we loaded as part of the tidyverse, includes a data set with information about starwars characters. Let’s store this as <code>df.starwars</code>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">df.starwars =<span class="st"> </span>starwars</a></code></pre></div>
+<blockquote>
+<p>Note: Unlike in other languages (such as Python or Matlab), a <code>.</code> in a variable name has no special meaning and can just be used as part of the name. I’ve used <code>df</code> here to indicate for myself that this variable is a data frame.</p>
+</blockquote>
+<p>There are several ways of taking a look at data in R. Personally, I like to look at the data within RStudio’s data viewer. To do so, you can:
+- click on the <code>df.starwars</code> variable in the “Environment” tab<br />
+- type <code>View(df.starwars)</code> in the console
+- move your mouse over (or select) the variable in the editor (or console) and hit <code>F2</code></p>
+<p>I like the <code>F2</code> route the best as it’s fast and flexible.</p>
+<p>Sometimes it’s also helpful to look at data in the console instead of the data viewer. Particularly when the data is very large, the data viewer can be sluggish.</p>
+<p>Here are some useful functions:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">head</span>(df.starwars)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; # A tibble: 6 x 13</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt;   name  height  mass hair_color skin_color eye_color birth_year gender</span></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#&gt; 1 Luke…    172    77 blond      fair       blue            19   male  </span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#&gt; 2 C-3PO    167    75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co">#&gt; 3 R2-D2     96    32 &lt;NA&gt;       white, bl… red             33   &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co">#&gt; 4 Dart…    202   136 none       white      yellow          41.9 male  </span></a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co">#&gt; 5 Leia…    150    49 brown      light      brown           19   female</span></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">#&gt; 6 Owen…    178   120 brown, gr… light      blue            52   male  </span></a>
+<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co">#&gt; # ... with 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,</span></a>
+<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co">#&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;</span></a></code></pre></div>
+<p><code>head()</code> only shows the top six rows of the data.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">glimpse</span>(df.starwars)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#&gt; Observations: 87</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co">#&gt; Variables: 13</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">#&gt; $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, ...</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="co">#&gt; $ height     &lt;int&gt; 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188...</span></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">#&gt; $ mass       &lt;dbl&gt; 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 8...</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">#&gt; $ hair_color &lt;chr&gt; &quot;blond&quot;, NA, NA, &quot;none&quot;, &quot;brown&quot;, &quot;brown, grey&quot;, &quot;b...</span></a>
+<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="co">#&gt; $ skin_color &lt;chr&gt; &quot;fair&quot;, &quot;gold&quot;, &quot;white, blue&quot;, &quot;white&quot;, &quot;light&quot;, &quot;l...</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="co">#&gt; $ eye_color  &lt;chr&gt; &quot;blue&quot;, &quot;yellow&quot;, &quot;red&quot;, &quot;yellow&quot;, &quot;brown&quot;, &quot;blue&quot;,...</span></a>
+<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">#&gt; $ birth_year &lt;dbl&gt; 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0...</span></a>
+<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">#&gt; $ gender     &lt;chr&gt; &quot;male&quot;, NA, NA, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;,...</span></a>
+<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="co">#&gt; $ homeworld  &lt;chr&gt; &quot;Tatooine&quot;, &quot;Tatooine&quot;, &quot;Naboo&quot;, &quot;Tatooine&quot;, &quot;Alder...</span></a>
+<a class="sourceLine" id="cb22-13" data-line-number="13"><span class="co">#&gt; $ species    &lt;chr&gt; &quot;Human&quot;, &quot;Droid&quot;, &quot;Droid&quot;, &quot;Human&quot;, &quot;Human&quot;, &quot;Human...</span></a>
+<a class="sourceLine" id="cb22-14" data-line-number="14"><span class="co">#&gt; $ films      &lt;list&gt; [&lt;&quot;Revenge of the Sith&quot;, &quot;Return of the Jedi&quot;, &quot;Th...</span></a>
+<a class="sourceLine" id="cb22-15" data-line-number="15"><span class="co">#&gt; $ vehicles   &lt;list&gt; [&lt;&quot;Snowspeeder&quot;, &quot;Imperial Speeder Bike&quot;&gt;, &lt;&gt;, &lt;&gt;,...</span></a>
+<a class="sourceLine" id="cb22-16" data-line-number="16"><span class="co">#&gt; $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&gt;, &lt;&gt;, &lt;&gt;, &quot;TIE Adva...</span></a></code></pre></div>
+<p><code>glimpse()</code> is helpful when the data frame has many columns. The data is shown in a transposed way with columns as rows.</p>
+</div>
+<div id="a-quick-note-on-naming-things" class="section level3">
+<h3><span class="header-section-number">3.2.8</span> A quick note on naming things</h3>
+<p>Personally, I like to name things in a (pretty) consistent way so that I have no trouble finding stuff even when I open up a project that I haven’t worked on for a while. I try to use the following naming conventions:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">name =<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">  <span class="st">&quot;df.thing&quot;</span>,</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">  <span class="st">&quot;l.thing&quot;</span>,</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">  <span class="st">&quot;fun.thing&quot;</span>,</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">  <span class="st">&quot;tmp&quot;</span>)</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">use =<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">  <span class="st">&quot;for data frames&quot;</span>,</a>
+<a class="sourceLine" id="cb23-8" data-line-number="8">  <span class="st">&quot;for lists&quot;</span>,</a>
+<a class="sourceLine" id="cb23-9" data-line-number="9">  <span class="st">&quot;for functions&quot;</span>,</a>
+<a class="sourceLine" id="cb23-10" data-line-number="10">  <span class="st">&quot;for temporary variables&quot;</span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11">  )</a>
+<a class="sourceLine" id="cb23-12" data-line-number="12"><span class="kw">kable</span>(<span class="dt">x =</span> <span class="kw">tibble</span>(name, use), </a>
+<a class="sourceLine" id="cb23-13" data-line-number="13">      <span class="dt">caption =</span> <span class="st">&quot;Some naming conventions I adopt to make my life easier.&quot;</span>, </a>
+<a class="sourceLine" id="cb23-14" data-line-number="14">      <span class="dt">align =</span> <span class="kw">c</span>(<span class="st">&quot;r&quot;</span>, <span class="st">&quot;l&quot;</span>),</a>
+<a class="sourceLine" id="cb23-15" data-line-number="15">      <span class="dt">booktabs =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-23">Table 3.5: </span>Some naming conventions I adopt to make my life easier.</caption>
+<thead>
+<tr class="header">
+<th align="right">name</th>
+<th align="left">use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">df.thing</td>
+<td align="left">for data frames</td>
+</tr>
+<tr class="even">
+<td align="right">l.thing</td>
+<td align="left">for lists</td>
+</tr>
+<tr class="odd">
+<td align="right">fun.thing</td>
+<td align="left">for functions</td>
+</tr>
+<tr class="even">
+<td align="right">tmp</td>
+<td align="left">for temporary variables</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="wrangling-data" class="section level2">
+<h2><span class="header-section-number">3.3</span> Wrangling data</h2>
+<p>We use the functions in the package <code>dplyr</code> to manipulate our data.</p>
+<div id="filter" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> filter()</h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(gender <span class="op">==</span><span class="st"> &#39;male&#39;</span>,</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">    height <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(height, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">    <span class="op">!</span><span class="kw">is.na</span>(mass)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="st">  </span><span class="kw">head</span>()</a>
+<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="co">#&gt; # A tibble: 6 x 13</span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="co">#&gt;   name  height  mass hair_color skin_color eye_color birth_year gender</span></a>
+<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="co">#&gt;   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="co">#&gt; 1 Dart…    202 136   none       white      yellow          41.9 male  </span></a>
+<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="co">#&gt; 2 Bigg…    183  84   black      light      brown           24   male  </span></a>
+<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="co">#&gt; 3 Obi-…    182  77   auburn, w… fair       blue-gray       57   male  </span></a>
+<a class="sourceLine" id="cb24-12" data-line-number="12"><span class="co">#&gt; 4 Anak…    188  84   blond      fair       blue            41.9 male  </span></a>
+<a class="sourceLine" id="cb24-13" data-line-number="13"><span class="co">#&gt; 5 Chew…    228 112   brown      unknown    blue           200   male  </span></a>
+<a class="sourceLine" id="cb24-14" data-line-number="14"><span class="co">#&gt; 6 Boba…    183  78.2 black      fair       brown           31.5 male  </span></a>
+<a class="sourceLine" id="cb24-15" data-line-number="15"><span class="co">#&gt; # ... with 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,</span></a>
+<a class="sourceLine" id="cb24-16" data-line-number="16"><span class="co">#&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;</span></a></code></pre></div>
+<p><code>filter()</code> lets us apply logical operators (see Table <a href="data-wrangling.html#tab:operators">3.3</a>) to subset the data. Here, we filtered out the male characters whose height is greater than the median height (i.e. in the top 50 percentile), and whose mass was not <code>NA</code>. Many functions like <code>mean()</code>, <code>median()</code>, <code>var()</code>, <code>sd()</code>, <code>sum()</code> have the argument <code>na.rm</code> which is set to <code>FALSE</code> by default. I set the argument to <code>TRUE</code> here (or <code>T</code> for short), which means that the <code>NA</code> values are ignored, and the <code>median()</code> is calculated based on the remaning values.</p>
+<p>You can use <code>,</code> and <code>&amp;</code> interchangeably in <code>filter()</code>. Make sure to use parentheses when using several logical operators to indicate which logical operation should be performed first:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>((skin_color <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;dark&quot;</span>, <span class="st">&quot;pale&quot;</span>) <span class="op">|</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;hermaphrodite&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>height <span class="op">&gt;</span><span class="st"> </span><span class="dv">170</span>)</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt; # A tibble: 10 x 13</span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt;    name  height  mass hair_color skin_color eye_color birth_year gender</span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt;  1 Jabb…    175  1358 &lt;NA&gt;       green-tan… orange           600 herma…</span></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co">#&gt;  2 Land…    177    79 black      dark       brown             31 male  </span></a>
+<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="co">#&gt;  3 Quar…    183    NA black      dark       brown             62 male  </span></a>
+<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="co">#&gt;  4 Bib …    180    NA none       pale       pink              NA male  </span></a>
+<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="co">#&gt;  5 Mace…    188    84 none       dark       brown             72 male  </span></a>
+<a class="sourceLine" id="cb25-11" data-line-number="11"><span class="co">#&gt;  6 Ki-A…    198    82 white      pale       yellow            92 male  </span></a>
+<a class="sourceLine" id="cb25-12" data-line-number="12"><span class="co">#&gt;  7 Adi …    184    50 none       dark       blue              NA female</span></a>
+<a class="sourceLine" id="cb25-13" data-line-number="13"><span class="co">#&gt;  8 Saes…    188    NA none       pale       orange            NA male  </span></a>
+<a class="sourceLine" id="cb25-14" data-line-number="14"><span class="co">#&gt;  9 Greg…    185    85 black      dark       brown             NA male  </span></a>
+<a class="sourceLine" id="cb25-15" data-line-number="15"><span class="co">#&gt; 10 Sly …    178    48 none       pale       white             NA female</span></a>
+<a class="sourceLine" id="cb25-16" data-line-number="16"><span class="co">#&gt; # ... with 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,</span></a>
+<a class="sourceLine" id="cb25-17" data-line-number="17"><span class="co">#&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;</span></a></code></pre></div>
+<p>So here we have it. The starwars characters that have either a <code>&quot;dark&quot;</code> or a <code>&quot;pale&quot;</code> skin tone, or whose gender is <code>&quot;hermaphrodite&quot;</code>, and whose height is at least <code>170</code> cm. The <code>%in%</code> operator is useful when there are multiple options. Instead of <code>skin_color %in% c(&quot;dark&quot;, &quot;pale&quot;)</code>, I could have also written <code>skin_color == &quot;dark&quot; | skin_color == &quot;pale&quot;</code> but this gets cumbersome as the options increase.</p>
+</div>
+<div id="rename" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> rename()</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">person =</span> name,</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">         <span class="dt">mass_kg =</span> mass) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="st">  </span><span class="kw">head</span>()</a>
+<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; # A tibble: 6 x 13</span></a>
+<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#&gt;   person height mass_kg hair_color skin_color eye_color birth_year gender</span></a>
+<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="co">#&gt;   &lt;chr&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="co">#&gt; 1 Luke …    172      77 blond      fair       blue            19   male  </span></a>
+<a class="sourceLine" id="cb26-9" data-line-number="9"><span class="co">#&gt; 2 C-3PO     167      75 &lt;NA&gt;       gold       yellow         112   &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt; 3 R2-D2      96      32 &lt;NA&gt;       white, bl… red             33   &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; 4 Darth…    202     136 none       white      yellow          41.9 male  </span></a>
+<a class="sourceLine" id="cb26-12" data-line-number="12"><span class="co">#&gt; 5 Leia …    150      49 brown      light      brown           19   female</span></a>
+<a class="sourceLine" id="cb26-13" data-line-number="13"><span class="co">#&gt; 6 Owen …    178     120 brown, gr… light      blue            52   male  </span></a>
+<a class="sourceLine" id="cb26-14" data-line-number="14"><span class="co">#&gt; # ... with 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,</span></a>
+<a class="sourceLine" id="cb26-15" data-line-number="15"><span class="co">#&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;</span></a></code></pre></div>
+<p><code>rename()</code> renames column names.</p>
+</div>
+<div id="select" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> select()</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(name, height, mass)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="co">#&gt; # A tibble: 87 x 3</span></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt;    name               height  mass</span></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb27-6" data-line-number="6"><span class="co">#&gt;  1 Luke Skywalker        172    77</span></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="co">#&gt;  2 C-3PO                 167    75</span></a>
+<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="co">#&gt;  3 R2-D2                  96    32</span></a>
+<a class="sourceLine" id="cb27-9" data-line-number="9"><span class="co">#&gt;  4 Darth Vader           202   136</span></a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt;  5 Leia Organa           150    49</span></a>
+<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co">#&gt;  6 Owen Lars             178   120</span></a>
+<a class="sourceLine" id="cb27-12" data-line-number="12"><span class="co">#&gt;  7 Beru Whitesun lars    165    75</span></a>
+<a class="sourceLine" id="cb27-13" data-line-number="13"><span class="co">#&gt;  8 R5-D4                  97    32</span></a>
+<a class="sourceLine" id="cb27-14" data-line-number="14"><span class="co">#&gt;  9 Biggs Darklighter     183    84</span></a>
+<a class="sourceLine" id="cb27-15" data-line-number="15"><span class="co">#&gt; 10 Obi-Wan Kenobi        182    77</span></a>
+<a class="sourceLine" id="cb27-16" data-line-number="16"><span class="co">#&gt; # ... with 77 more rows</span></a></code></pre></div>
+<p><code>select()</code> allows us to select a subset of the columns in the data frame. We can also rename some of the columns using select like so</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="dt">person =</span> name, height, <span class="dt">mass_kg =</span> mass)</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; # A tibble: 87 x 3</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">#&gt;    person             height mass_kg</span></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt;               &lt;int&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="co">#&gt;  1 Luke Skywalker        172      77</span></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="co">#&gt;  2 C-3PO                 167      75</span></a>
+<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="co">#&gt;  3 R2-D2                  96      32</span></a>
+<a class="sourceLine" id="cb28-9" data-line-number="9"><span class="co">#&gt;  4 Darth Vader           202     136</span></a>
+<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="co">#&gt;  5 Leia Organa           150      49</span></a>
+<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="co">#&gt;  6 Owen Lars             178     120</span></a>
+<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="co">#&gt;  7 Beru Whitesun lars    165      75</span></a>
+<a class="sourceLine" id="cb28-13" data-line-number="13"><span class="co">#&gt;  8 R5-D4                  97      32</span></a>
+<a class="sourceLine" id="cb28-14" data-line-number="14"><span class="co">#&gt;  9 Biggs Darklighter     183      84</span></a>
+<a class="sourceLine" id="cb28-15" data-line-number="15"><span class="co">#&gt; 10 Obi-Wan Kenobi        182      77</span></a>
+<a class="sourceLine" id="cb28-16" data-line-number="16"><span class="co">#&gt; # ... with 77 more rows</span></a></code></pre></div>
+<p>There are several helper functions for <code>select()</code>. Here are a few examples:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;_&quot;</span>)) <span class="co">#every column that contains the character &quot;_&quot;</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co">#&gt; # A tibble: 87 x 4</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt;    hair_color    skin_color  eye_color birth_year</span></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co">#&gt;  1 blond         fair        blue            19  </span></a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt;  2 &lt;NA&gt;          gold        yellow         112  </span></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">#&gt;  3 &lt;NA&gt;          white, blue red             33  </span></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt;  4 none          white       yellow          41.9</span></a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt;  5 brown         light       brown           19  </span></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co">#&gt;  6 brown, grey   light       blue            52  </span></a>
+<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="co">#&gt;  7 brown         light       blue            47  </span></a>
+<a class="sourceLine" id="cb29-13" data-line-number="13"><span class="co">#&gt;  8 &lt;NA&gt;          white, red  red             NA  </span></a>
+<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="co">#&gt;  9 black         light       brown           24  </span></a>
+<a class="sourceLine" id="cb29-15" data-line-number="15"><span class="co">#&gt; 10 auburn, white fair        blue-gray       57  </span></a>
+<a class="sourceLine" id="cb29-16" data-line-number="16"><span class="co">#&gt; # ... with 77 more rows</span></a>
+<a class="sourceLine" id="cb29-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb29-18" data-line-number="18">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-19" data-line-number="19"><span class="st">  </span><span class="kw">select</span>(eye_color, birth_year, <span class="kw">everything</span>()) <span class="co">#useful trick for changing the column order</span></a>
+<a class="sourceLine" id="cb29-20" data-line-number="20"><span class="co">#&gt; # A tibble: 87 x 13</span></a>
+<a class="sourceLine" id="cb29-21" data-line-number="21"><span class="co">#&gt;    eye_color birth_year name  height  mass hair_color skin_color gender</span></a>
+<a class="sourceLine" id="cb29-22" data-line-number="22"><span class="co">#&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb29-23" data-line-number="23"><span class="co">#&gt;  1 blue            19   Luke…    172    77 blond      fair       male  </span></a>
+<a class="sourceLine" id="cb29-24" data-line-number="24"><span class="co">#&gt;  2 yellow         112   C-3PO    167    75 &lt;NA&gt;       gold       &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb29-25" data-line-number="25"><span class="co">#&gt;  3 red             33   R2-D2     96    32 &lt;NA&gt;       white, bl… &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb29-26" data-line-number="26"><span class="co">#&gt;  4 yellow          41.9 Dart…    202   136 none       white      male  </span></a>
+<a class="sourceLine" id="cb29-27" data-line-number="27"><span class="co">#&gt;  5 brown           19   Leia…    150    49 brown      light      female</span></a>
+<a class="sourceLine" id="cb29-28" data-line-number="28"><span class="co">#&gt;  6 blue            52   Owen…    178   120 brown, gr… light      male  </span></a>
+<a class="sourceLine" id="cb29-29" data-line-number="29"><span class="co">#&gt;  7 blue            47   Beru…    165    75 brown      light      female</span></a>
+<a class="sourceLine" id="cb29-30" data-line-number="30"><span class="co">#&gt;  8 red             NA   R5-D4     97    32 &lt;NA&gt;       white, red &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb29-31" data-line-number="31"><span class="co">#&gt;  9 brown           24   Bigg…    183    84 black      light      male  </span></a>
+<a class="sourceLine" id="cb29-32" data-line-number="32"><span class="co">#&gt; 10 blue-gray       57   Obi-…    182    77 auburn, w… fair       male  </span></a>
+<a class="sourceLine" id="cb29-33" data-line-number="33"><span class="co">#&gt; # ... with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb29-34" data-line-number="34"><span class="co">#&gt; #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</span></a>
+<a class="sourceLine" id="cb29-35" data-line-number="35"></a>
+<a class="sourceLine" id="cb29-36" data-line-number="36">df.starwars <span class="op">%&gt;%</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb29-37" data-line-number="37"><span class="st">  </span><span class="kw">select</span>(name<span class="op">:</span>birth_year) <span class="co">#from name to birth_year</span></a>
+<a class="sourceLine" id="cb29-38" data-line-number="38"><span class="co">#&gt; # A tibble: 87 x 7</span></a>
+<a class="sourceLine" id="cb29-39" data-line-number="39"><span class="co">#&gt;    name          height  mass hair_color   skin_color eye_color birth_year</span></a>
+<a class="sourceLine" id="cb29-40" data-line-number="40"><span class="co">#&gt;    &lt;chr&gt;          &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb29-41" data-line-number="41"><span class="co">#&gt;  1 Luke Skywalk…    172    77 blond        fair       blue            19  </span></a>
+<a class="sourceLine" id="cb29-42" data-line-number="42"><span class="co">#&gt;  2 C-3PO            167    75 &lt;NA&gt;         gold       yellow         112  </span></a>
+<a class="sourceLine" id="cb29-43" data-line-number="43"><span class="co">#&gt;  3 R2-D2             96    32 &lt;NA&gt;         white, bl… red             33  </span></a>
+<a class="sourceLine" id="cb29-44" data-line-number="44"><span class="co">#&gt;  4 Darth Vader      202   136 none         white      yellow          41.9</span></a>
+<a class="sourceLine" id="cb29-45" data-line-number="45"><span class="co">#&gt;  5 Leia Organa      150    49 brown        light      brown           19  </span></a>
+<a class="sourceLine" id="cb29-46" data-line-number="46"><span class="co">#&gt;  6 Owen Lars        178   120 brown, grey  light      blue            52  </span></a>
+<a class="sourceLine" id="cb29-47" data-line-number="47"><span class="co">#&gt;  7 Beru Whitesu…    165    75 brown        light      blue            47  </span></a>
+<a class="sourceLine" id="cb29-48" data-line-number="48"><span class="co">#&gt;  8 R5-D4             97    32 &lt;NA&gt;         white, red red             NA  </span></a>
+<a class="sourceLine" id="cb29-49" data-line-number="49"><span class="co">#&gt;  9 Biggs Darkli…    183    84 black        light      brown           24  </span></a>
+<a class="sourceLine" id="cb29-50" data-line-number="50"><span class="co">#&gt; 10 Obi-Wan Keno…    182    77 auburn, whi… fair       blue-gray       57  </span></a>
+<a class="sourceLine" id="cb29-51" data-line-number="51"><span class="co">#&gt; # ... with 77 more rows</span></a>
+<a class="sourceLine" id="cb29-52" data-line-number="52"></a>
+<a class="sourceLine" id="cb29-53" data-line-number="53">columns =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;height&quot;</span>, <span class="st">&quot;species&quot;</span>)</a>
+<a class="sourceLine" id="cb29-54" data-line-number="54">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-55" data-line-number="55"><span class="st">  </span><span class="kw">select</span>(<span class="kw">one_of</span>(columns)) <span class="co">#useful when using a variable for column selection</span></a>
+<a class="sourceLine" id="cb29-56" data-line-number="56"><span class="co">#&gt; # A tibble: 87 x 3</span></a>
+<a class="sourceLine" id="cb29-57" data-line-number="57"><span class="co">#&gt;    name               height species</span></a>
+<a class="sourceLine" id="cb29-58" data-line-number="58"><span class="co">#&gt;    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;  </span></a>
+<a class="sourceLine" id="cb29-59" data-line-number="59"><span class="co">#&gt;  1 Luke Skywalker        172 Human  </span></a>
+<a class="sourceLine" id="cb29-60" data-line-number="60"><span class="co">#&gt;  2 C-3PO                 167 Droid  </span></a>
+<a class="sourceLine" id="cb29-61" data-line-number="61"><span class="co">#&gt;  3 R2-D2                  96 Droid  </span></a>
+<a class="sourceLine" id="cb29-62" data-line-number="62"><span class="co">#&gt;  4 Darth Vader           202 Human  </span></a>
+<a class="sourceLine" id="cb29-63" data-line-number="63"><span class="co">#&gt;  5 Leia Organa           150 Human  </span></a>
+<a class="sourceLine" id="cb29-64" data-line-number="64"><span class="co">#&gt;  6 Owen Lars             178 Human  </span></a>
+<a class="sourceLine" id="cb29-65" data-line-number="65"><span class="co">#&gt;  7 Beru Whitesun lars    165 Human  </span></a>
+<a class="sourceLine" id="cb29-66" data-line-number="66"><span class="co">#&gt;  8 R5-D4                  97 Droid  </span></a>
+<a class="sourceLine" id="cb29-67" data-line-number="67"><span class="co">#&gt;  9 Biggs Darklighter     183 Human  </span></a>
+<a class="sourceLine" id="cb29-68" data-line-number="68"><span class="co">#&gt; 10 Obi-Wan Kenobi        182 Human  </span></a>
+<a class="sourceLine" id="cb29-69" data-line-number="69"><span class="co">#&gt; # ... with 77 more rows</span></a>
+<a class="sourceLine" id="cb29-70" data-line-number="70"></a>
+<a class="sourceLine" id="cb29-71" data-line-number="71">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-72" data-line-number="72"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;h&quot;</span>)) <span class="co">#every column that starts with an &quot;h&quot;</span></a>
+<a class="sourceLine" id="cb29-73" data-line-number="73"><span class="co">#&gt; # A tibble: 87 x 3</span></a>
+<a class="sourceLine" id="cb29-74" data-line-number="74"><span class="co">#&gt;    height hair_color    homeworld</span></a>
+<a class="sourceLine" id="cb29-75" data-line-number="75"><span class="co">#&gt;     &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;    </span></a>
+<a class="sourceLine" id="cb29-76" data-line-number="76"><span class="co">#&gt;  1    172 blond         Tatooine </span></a>
+<a class="sourceLine" id="cb29-77" data-line-number="77"><span class="co">#&gt;  2    167 &lt;NA&gt;          Tatooine </span></a>
+<a class="sourceLine" id="cb29-78" data-line-number="78"><span class="co">#&gt;  3     96 &lt;NA&gt;          Naboo    </span></a>
+<a class="sourceLine" id="cb29-79" data-line-number="79"><span class="co">#&gt;  4    202 none          Tatooine </span></a>
+<a class="sourceLine" id="cb29-80" data-line-number="80"><span class="co">#&gt;  5    150 brown         Alderaan </span></a>
+<a class="sourceLine" id="cb29-81" data-line-number="81"><span class="co">#&gt;  6    178 brown, grey   Tatooine </span></a>
+<a class="sourceLine" id="cb29-82" data-line-number="82"><span class="co">#&gt;  7    165 brown         Tatooine </span></a>
+<a class="sourceLine" id="cb29-83" data-line-number="83"><span class="co">#&gt;  8     97 &lt;NA&gt;          Tatooine </span></a>
+<a class="sourceLine" id="cb29-84" data-line-number="84"><span class="co">#&gt;  9    183 black         Tatooine </span></a>
+<a class="sourceLine" id="cb29-85" data-line-number="85"><span class="co">#&gt; 10    182 auburn, white Stewjon  </span></a>
+<a class="sourceLine" id="cb29-86" data-line-number="86"><span class="co">#&gt; # ... with 77 more rows</span></a></code></pre></div>
+<p>For more details, take a look at the help file for <code>select()</code>.</p>
+</div>
+<div id="arrange" class="section level3">
+<h3><span class="header-section-number">3.3.4</span> arrange()</h3>
+<p><code>arrange()</code> allows us to sort the values in a data frame by one or more column entries.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(gender, <span class="kw">desc</span>(height))</a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="co">#&gt; # A tibble: 87 x 13</span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="co">#&gt;    name  height  mass hair_color skin_color eye_color birth_year gender</span></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="co">#&gt;  1 Taun…    213  NA   none       grey       black             NA female</span></a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="co">#&gt;  2 Adi …    184  50   none       dark       blue              NA female</span></a>
+<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="co">#&gt;  3 Ayla…    178  55   none       blue       hazel             48 female</span></a>
+<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="co">#&gt;  4 Shaa…    178  57   none       red, blue… black             NA female</span></a>
+<a class="sourceLine" id="cb30-10" data-line-number="10"><span class="co">#&gt;  5 Sly …    178  48   none       pale       white             NA female</span></a>
+<a class="sourceLine" id="cb30-11" data-line-number="11"><span class="co">#&gt;  6 Lumi…    170  56.2 black      yellow     blue              58 female</span></a>
+<a class="sourceLine" id="cb30-12" data-line-number="12"><span class="co">#&gt;  7 Zam …    168  55   blonde     fair, gre… yellow            NA female</span></a>
+<a class="sourceLine" id="cb30-13" data-line-number="13"><span class="co">#&gt;  8 Joca…    167  NA   white      fair       blue              NA female</span></a>
+<a class="sourceLine" id="cb30-14" data-line-number="14"><span class="co">#&gt;  9 Barr…    166  50   black      yellow     blue              40 female</span></a>
+<a class="sourceLine" id="cb30-15" data-line-number="15"><span class="co">#&gt; 10 Beru…    165  75   brown      light      blue              47 female</span></a>
+<a class="sourceLine" id="cb30-16" data-line-number="16"><span class="co">#&gt; # ... with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb30-17" data-line-number="17"><span class="co">#&gt; #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</span></a></code></pre></div>
+<p>Here, I’ve sorted the data frame first by gender, and then by height. I’ve used the <code>desc()</code> function to sort height in descending order. The first entry in the output is now the tallest female starwars character.</p>
+</div>
+<div id="mutate" class="section level3">
+<h3><span class="header-section-number">3.3.5</span> mutate()</h3>
+<p><code>mutate()</code> is used to change exisitng columns or make new ones.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height =</span> height <span class="op">/</span><span class="st"> </span><span class="dv">100</span>, <span class="co"># to get height in meters</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3">    <span class="dt">bmi =</span> mass<span class="op">/</span>(height<span class="op">^</span><span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#bmi = kg/(m^2)</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(name, height, mass, bmi) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="st">  </span><span class="kw">head</span>()</a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">#&gt; # A tibble: 6 x 4</span></a>
+<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="co">#&gt;   name           height  mass   bmi</span></a>
+<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="co">#&gt; 1 Luke Skywalker   1.72    77  26.0</span></a>
+<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="co">#&gt; 2 C-3PO            1.67    75  26.9</span></a>
+<a class="sourceLine" id="cb31-11" data-line-number="11"><span class="co">#&gt; 3 R2-D2            0.96    32  34.7</span></a>
+<a class="sourceLine" id="cb31-12" data-line-number="12"><span class="co">#&gt; 4 Darth Vader      2.02   136  33.3</span></a>
+<a class="sourceLine" id="cb31-13" data-line-number="13"><span class="co">#&gt; 5 Leia Organa      1.5     49  21.8</span></a>
+<a class="sourceLine" id="cb31-14" data-line-number="14"><span class="co">#&gt; 6 Owen Lars        1.78   120  37.9</span></a></code></pre></div>
+<p>Here, I’ve calculated the bmi for the different starwars characters. I first mutated the height variable by going from cm to m, and then created the new column “bmi”.</p>
+<p>A useful helper function for <code>mutate()</code> is <code>ifelse()</code> which is a shorthand for the if-else control flow (Section <a href="data-wrangling.html#if-else">3.2.5.1</a>). Here is an example:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height_categorical =</span> <span class="kw">ifelse</span>(height <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(height, <span class="dt">na.rm =</span> T), <span class="st">&#39;tall&#39;</span>, <span class="st">&#39;short&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>))</a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co">#&gt; # A tibble: 87 x 3</span></a>
+<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="co">#&gt;    name               height height_categorical</span></a>
+<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;             </span></a>
+<a class="sourceLine" id="cb32-7" data-line-number="7"><span class="co">#&gt;  1 Luke Skywalker        172 short             </span></a>
+<a class="sourceLine" id="cb32-8" data-line-number="8"><span class="co">#&gt;  2 C-3PO                 167 short             </span></a>
+<a class="sourceLine" id="cb32-9" data-line-number="9"><span class="co">#&gt;  3 R2-D2                  96 short             </span></a>
+<a class="sourceLine" id="cb32-10" data-line-number="10"><span class="co">#&gt;  4 Darth Vader           202 tall              </span></a>
+<a class="sourceLine" id="cb32-11" data-line-number="11"><span class="co">#&gt;  5 Leia Organa           150 short             </span></a>
+<a class="sourceLine" id="cb32-12" data-line-number="12"><span class="co">#&gt;  6 Owen Lars             178 short             </span></a>
+<a class="sourceLine" id="cb32-13" data-line-number="13"><span class="co">#&gt;  7 Beru Whitesun lars    165 short             </span></a>
+<a class="sourceLine" id="cb32-14" data-line-number="14"><span class="co">#&gt;  8 R5-D4                  97 short             </span></a>
+<a class="sourceLine" id="cb32-15" data-line-number="15"><span class="co">#&gt;  9 Biggs Darklighter     183 tall              </span></a>
+<a class="sourceLine" id="cb32-16" data-line-number="16"><span class="co">#&gt; 10 Obi-Wan Kenobi        182 tall              </span></a>
+<a class="sourceLine" id="cb32-17" data-line-number="17"><span class="co">#&gt; # ... with 77 more rows</span></a></code></pre></div>
+<p><code>ifelse()</code> works in the following way: we first specify the condition, then what should be returned if the condition is true, and finally would should be returned otherwise. The more verbose version of the statement above would be: <code>ifelse(test = height &gt; median(height, na.rm = T), yes = 'tall', no = 'short')</code></p>
+<p>There are a number of variants of the <code>mutate()</code> function. Let’s take a look at them.</p>
+<div id="mutate_at" class="section level4">
+<h4><span class="header-section-number">3.3.5.1</span> mutate_at()</h4>
+<p>With <code>mutate_at()</code>, we can mutate several columns at the same time.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(height, mass, birth_year), <span class="kw">funs</span>(scale))</a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">#&gt; # A tibble: 87 x 13</span></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt;    name   height    mass hair_color skin_color eye_color birth_year gender</span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt;  1 Luke… -0.0678 -0.120  blond      fair       blue          -0.443 male  </span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;  2 C-3PO -0.212  -0.132  &lt;NA&gt;       gold       yellow         0.158 &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co">#&gt;  3 R2-D2 -2.25   -0.385  &lt;NA&gt;       white, bl… red           -0.353 &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co">#&gt;  4 Dart…  0.795   0.228  none       white      yellow        -0.295 male  </span></a>
+<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#&gt;  5 Leia… -0.701  -0.285  brown      light      brown         -0.443 female</span></a>
+<a class="sourceLine" id="cb33-11" data-line-number="11"><span class="co">#&gt;  6 Owen…  0.105   0.134  brown, gr… light      blue          -0.230 male  </span></a>
+<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="co">#&gt;  7 Beru… -0.269  -0.132  brown      light      blue          -0.262 female</span></a>
+<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="co">#&gt;  8 R5-D4 -2.22   -0.385  &lt;NA&gt;       white, red red           NA     &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb33-14" data-line-number="14"><span class="co">#&gt;  9 Bigg…  0.249  -0.0786 black      light      brown         -0.411 male  </span></a>
+<a class="sourceLine" id="cb33-15" data-line-number="15"><span class="co">#&gt; 10 Obi-…  0.220  -0.120  auburn, w… fair       blue-gray     -0.198 male  </span></a>
+<a class="sourceLine" id="cb33-16" data-line-number="16"><span class="co">#&gt; # ... with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb33-17" data-line-number="17"><span class="co">#&gt; #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</span></a></code></pre></div>
+<!-- explain what z-scoring is? -->
+<p><code>vars()</code> and <code>funs()</code> are helper functions. In <code>vars()</code> I’ve specified what variables to mutate, and in <code>funs()</code> I’ve specified what to do with the variables. Here, I’ve z-scored <code>height</code>, <code>mass</code>, and <code>birth_year</code> using the <code>scale()</code> function. Note that I wrote the function without <code>()</code>. The <code>funs()</code> helper expects a list of functions that can be specified by:</p>
+<ul>
+<li>Their name, “mean”</li>
+<li>The function itself, <code>mean</code></li>
+<li>A call to the function with <code>.</code> as a dummy argument, <code>mean(.)</code></li>
+</ul>
+<p>Within <code>vars()</code>, we can use the same helper functions for selecting columns that we’ve seen in Block <a href="#select-helpers"><strong>??</strong></a> for <code>select()</code>.</p>
+<p>We can also use names to create new columns:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(height, mass, birth_year), <span class="kw">funs</span>(<span class="dt">z =</span> scale)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;mass&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;birth_year&quot;</span>))</a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co">#&gt; # A tibble: 87 x 7</span></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="co">#&gt;    name               height height_z  mass  mass_z birth_year birth_year_z</span></a>
+<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;               &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb34-7" data-line-number="7"><span class="co">#&gt;  1 Luke Skywalker        172  -0.0678    77 -0.120        19         -0.443</span></a>
+<a class="sourceLine" id="cb34-8" data-line-number="8"><span class="co">#&gt;  2 C-3PO                 167  -0.212     75 -0.132       112          0.158</span></a>
+<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="co">#&gt;  3 R2-D2                  96  -2.25      32 -0.385        33         -0.353</span></a>
+<a class="sourceLine" id="cb34-10" data-line-number="10"><span class="co">#&gt;  4 Darth Vader           202   0.795    136  0.228        41.9       -0.295</span></a>
+<a class="sourceLine" id="cb34-11" data-line-number="11"><span class="co">#&gt;  5 Leia Organa           150  -0.701     49 -0.285        19         -0.443</span></a>
+<a class="sourceLine" id="cb34-12" data-line-number="12"><span class="co">#&gt;  6 Owen Lars             178   0.105    120  0.134        52         -0.230</span></a>
+<a class="sourceLine" id="cb34-13" data-line-number="13"><span class="co">#&gt;  7 Beru Whitesun lars    165  -0.269     75 -0.132        47         -0.262</span></a>
+<a class="sourceLine" id="cb34-14" data-line-number="14"><span class="co">#&gt;  8 R5-D4                  97  -2.22      32 -0.385        NA         NA    </span></a>
+<a class="sourceLine" id="cb34-15" data-line-number="15"><span class="co">#&gt;  9 Biggs Darklighter     183   0.249     84 -0.0786       24         -0.411</span></a>
+<a class="sourceLine" id="cb34-16" data-line-number="16"><span class="co">#&gt; 10 Obi-Wan Kenobi        182   0.220     77 -0.120        57         -0.198</span></a>
+<a class="sourceLine" id="cb34-17" data-line-number="17"><span class="co">#&gt; # ... with 77 more rows</span></a></code></pre></div>
+<p>And we can apply several functions at the same time.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(height, mass, birth_year), <span class="kw">funs</span>(<span class="dt">z =</span> scale, <span class="dt">centered =</span> <span class="kw">scale</span>(., <span class="dt">scale =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;mass&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;birth_year&quot;</span>))</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="co">#&gt; # A tibble: 87 x 10</span></a>
+<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="co">#&gt;    name  height height_z height_centered  mass  mass_z mass_centered</span></a>
+<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;  &lt;int&gt;    &lt;dbl&gt;           &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb35-7" data-line-number="7"><span class="co">#&gt;  1 Luke…    172  -0.0678           -2.36    77 -0.120          -20.3</span></a>
+<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="co">#&gt;  2 C-3PO    167  -0.212            -7.36    75 -0.132          -22.3</span></a>
+<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="co">#&gt;  3 R2-D2     96  -2.25            -78.4     32 -0.385          -65.3</span></a>
+<a class="sourceLine" id="cb35-10" data-line-number="10"><span class="co">#&gt;  4 Dart…    202   0.795            27.6    136  0.228           38.7</span></a>
+<a class="sourceLine" id="cb35-11" data-line-number="11"><span class="co">#&gt;  5 Leia…    150  -0.701           -24.4     49 -0.285          -48.3</span></a>
+<a class="sourceLine" id="cb35-12" data-line-number="12"><span class="co">#&gt;  6 Owen…    178   0.105             3.64   120  0.134           22.7</span></a>
+<a class="sourceLine" id="cb35-13" data-line-number="13"><span class="co">#&gt;  7 Beru…    165  -0.269            -9.36    75 -0.132          -22.3</span></a>
+<a class="sourceLine" id="cb35-14" data-line-number="14"><span class="co">#&gt;  8 R5-D4     97  -2.22            -77.4     32 -0.385          -65.3</span></a>
+<a class="sourceLine" id="cb35-15" data-line-number="15"><span class="co">#&gt;  9 Bigg…    183   0.249             8.64    84 -0.0786         -13.3</span></a>
+<a class="sourceLine" id="cb35-16" data-line-number="16"><span class="co">#&gt; 10 Obi-…    182   0.220             7.64    77 -0.120          -20.3</span></a>
+<a class="sourceLine" id="cb35-17" data-line-number="17"><span class="co">#&gt; # ... with 77 more rows, and 3 more variables: birth_year &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb35-18" data-line-number="18"><span class="co">#&gt; #   birth_year_z &lt;dbl&gt;, birth_year_centered &lt;dbl&gt;</span></a></code></pre></div>
+<p>Here, I’ve created z-scored and centered versions of the <code>height</code>, <code>mass</code>, and <code>birth_year</code> columns in one go.</p>
+</div>
+<div id="mutate_all" class="section level4">
+<h4><span class="header-section-number">3.3.5.2</span> mutate_all()</h4>
+<p><code>mutate_all()</code> is used to mutate all columns in a data frame.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(height, mass) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate_all</span>(<span class="kw">funs</span>(as.character)) <span class="co">#transform all columns to characters</span></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="co">#&gt; # A tibble: 87 x 2</span></a>
+<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="co">#&gt;    height mass </span></a>
+<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb36-7" data-line-number="7"><span class="co">#&gt;  1 172    77   </span></a>
+<a class="sourceLine" id="cb36-8" data-line-number="8"><span class="co">#&gt;  2 167    75   </span></a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="co">#&gt;  3 96     32   </span></a>
+<a class="sourceLine" id="cb36-10" data-line-number="10"><span class="co">#&gt;  4 202    136  </span></a>
+<a class="sourceLine" id="cb36-11" data-line-number="11"><span class="co">#&gt;  5 150    49   </span></a>
+<a class="sourceLine" id="cb36-12" data-line-number="12"><span class="co">#&gt;  6 178    120  </span></a>
+<a class="sourceLine" id="cb36-13" data-line-number="13"><span class="co">#&gt;  7 165    75   </span></a>
+<a class="sourceLine" id="cb36-14" data-line-number="14"><span class="co">#&gt;  8 97     32   </span></a>
+<a class="sourceLine" id="cb36-15" data-line-number="15"><span class="co">#&gt;  9 183    84   </span></a>
+<a class="sourceLine" id="cb36-16" data-line-number="16"><span class="co">#&gt; 10 182    77   </span></a>
+<a class="sourceLine" id="cb36-17" data-line-number="17"><span class="co">#&gt; # ... with 77 more rows</span></a></code></pre></div>
+<p>Here, I’ve selected some columns first, and then changed the mode to character in each of them.</p>
+<p>Like we’ve seen with <code>mutate_at()</code>, you can add a name in the <code>mutate_all()</code> function call to make new columns instead of replacing the existing ones.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(height, mass) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate_all</span>(<span class="kw">funs</span>(<span class="dt">char =</span> as.character)) <span class="co">#make new character columns</span></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="co">#&gt; # A tibble: 87 x 4</span></a>
+<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="co">#&gt;    height  mass height_char mass_char</span></a>
+<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="co">#&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    </span></a>
+<a class="sourceLine" id="cb37-7" data-line-number="7"><span class="co">#&gt;  1    172    77 172         77       </span></a>
+<a class="sourceLine" id="cb37-8" data-line-number="8"><span class="co">#&gt;  2    167    75 167         75       </span></a>
+<a class="sourceLine" id="cb37-9" data-line-number="9"><span class="co">#&gt;  3     96    32 96          32       </span></a>
+<a class="sourceLine" id="cb37-10" data-line-number="10"><span class="co">#&gt;  4    202   136 202         136      </span></a>
+<a class="sourceLine" id="cb37-11" data-line-number="11"><span class="co">#&gt;  5    150    49 150         49       </span></a>
+<a class="sourceLine" id="cb37-12" data-line-number="12"><span class="co">#&gt;  6    178   120 178         120      </span></a>
+<a class="sourceLine" id="cb37-13" data-line-number="13"><span class="co">#&gt;  7    165    75 165         75       </span></a>
+<a class="sourceLine" id="cb37-14" data-line-number="14"><span class="co">#&gt;  8     97    32 97          32       </span></a>
+<a class="sourceLine" id="cb37-15" data-line-number="15"><span class="co">#&gt;  9    183    84 183         84       </span></a>
+<a class="sourceLine" id="cb37-16" data-line-number="16"><span class="co">#&gt; 10    182    77 182         77       </span></a>
+<a class="sourceLine" id="cb37-17" data-line-number="17"><span class="co">#&gt; # ... with 77 more rows</span></a></code></pre></div>
+</div>
+<div id="mutate_if" class="section level4">
+<h4><span class="header-section-number">3.3.5.3</span> mutate_if()</h4>
+<p><code>mutate_if()</code> can sometimes come in handy. For example, the following code changes all the numeric columns to character columns:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, as.character)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="co">#&gt; # A tibble: 87 x 13</span></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="co">#&gt;    name  height mass  hair_color skin_color eye_color birth_year gender</span></a>
+<a class="sourceLine" id="cb38-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb38-6" data-line-number="6"><span class="co">#&gt;  1 Luke… 172    77    blond      fair       blue      19         male  </span></a>
+<a class="sourceLine" id="cb38-7" data-line-number="7"><span class="co">#&gt;  2 C-3PO 167    75    &lt;NA&gt;       gold       yellow    112        &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb38-8" data-line-number="8"><span class="co">#&gt;  3 R2-D2 96     32    &lt;NA&gt;       white, bl… red       33         &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb38-9" data-line-number="9"><span class="co">#&gt;  4 Dart… 202    136   none       white      yellow    41.9       male  </span></a>
+<a class="sourceLine" id="cb38-10" data-line-number="10"><span class="co">#&gt;  5 Leia… 150    49    brown      light      brown     19         female</span></a>
+<a class="sourceLine" id="cb38-11" data-line-number="11"><span class="co">#&gt;  6 Owen… 178    120   brown, gr… light      blue      52         male  </span></a>
+<a class="sourceLine" id="cb38-12" data-line-number="12"><span class="co">#&gt;  7 Beru… 165    75    brown      light      blue      47         female</span></a>
+<a class="sourceLine" id="cb38-13" data-line-number="13"><span class="co">#&gt;  8 R5-D4 97     32    &lt;NA&gt;       white, red red       &lt;NA&gt;       &lt;NA&gt;  </span></a>
+<a class="sourceLine" id="cb38-14" data-line-number="14"><span class="co">#&gt;  9 Bigg… 183    84    black      light      brown     24         male  </span></a>
+<a class="sourceLine" id="cb38-15" data-line-number="15"><span class="co">#&gt; 10 Obi-… 182    77    auburn, w… fair       blue-gray 57         male  </span></a>
+<a class="sourceLine" id="cb38-16" data-line-number="16"><span class="co">#&gt; # ... with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb38-17" data-line-number="17"><span class="co">#&gt; #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</span></a></code></pre></div>
+</div>
+</div>
+<div id="group_by-and-summarise" class="section level3">
+<h3><span class="header-section-number">3.3.6</span> group_by() and summarise()</h3>
+<p>A particularly powerful way of interating with data is by grouping and summarizing it. For example, let’s say we wanted to get a quick sense for how tall starwars characters from different species are. Here is how we’d do that:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">height.mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T))</a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="co">#&gt; # A tibble: 38 x 2</span></a>
+<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="co">#&gt;    species   height.mean</span></a>
+<a class="sourceLine" id="cb39-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb39-7" data-line-number="7"><span class="co">#&gt;  1 Aleena            79 </span></a>
+<a class="sourceLine" id="cb39-8" data-line-number="8"><span class="co">#&gt;  2 Besalisk         198 </span></a>
+<a class="sourceLine" id="cb39-9" data-line-number="9"><span class="co">#&gt;  3 Cerean           198 </span></a>
+<a class="sourceLine" id="cb39-10" data-line-number="10"><span class="co">#&gt;  4 Chagrian         196 </span></a>
+<a class="sourceLine" id="cb39-11" data-line-number="11"><span class="co">#&gt;  5 Clawdite         168 </span></a>
+<a class="sourceLine" id="cb39-12" data-line-number="12"><span class="co">#&gt;  6 Droid            140 </span></a>
+<a class="sourceLine" id="cb39-13" data-line-number="13"><span class="co">#&gt;  7 Dug              112 </span></a>
+<a class="sourceLine" id="cb39-14" data-line-number="14"><span class="co">#&gt;  8 Ewok              88 </span></a>
+<a class="sourceLine" id="cb39-15" data-line-number="15"><span class="co">#&gt;  9 Geonosian        183 </span></a>
+<a class="sourceLine" id="cb39-16" data-line-number="16"><span class="co">#&gt; 10 Gungan           209.</span></a>
+<a class="sourceLine" id="cb39-17" data-line-number="17"><span class="co">#&gt; # ... with 28 more rows</span></a></code></pre></div>
+<p>I’ve first used <code>group_by()</code> to group our data frame by the different species, and then used <code>summarise()</code> to calculate the mean height of each species.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#group by species</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">height.mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T))</a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="co">#&gt; # A tibble: 38 x 2</span></a>
+<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="co">#&gt;    species   height.mean</span></a>
+<a class="sourceLine" id="cb40-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;           &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb40-7" data-line-number="7"><span class="co">#&gt;  1 Aleena            79 </span></a>
+<a class="sourceLine" id="cb40-8" data-line-number="8"><span class="co">#&gt;  2 Besalisk         198 </span></a>
+<a class="sourceLine" id="cb40-9" data-line-number="9"><span class="co">#&gt;  3 Cerean           198 </span></a>
+<a class="sourceLine" id="cb40-10" data-line-number="10"><span class="co">#&gt;  4 Chagrian         196 </span></a>
+<a class="sourceLine" id="cb40-11" data-line-number="11"><span class="co">#&gt;  5 Clawdite         168 </span></a>
+<a class="sourceLine" id="cb40-12" data-line-number="12"><span class="co">#&gt;  6 Droid            140 </span></a>
+<a class="sourceLine" id="cb40-13" data-line-number="13"><span class="co">#&gt;  7 Dug              112 </span></a>
+<a class="sourceLine" id="cb40-14" data-line-number="14"><span class="co">#&gt;  8 Ewok              88 </span></a>
+<a class="sourceLine" id="cb40-15" data-line-number="15"><span class="co">#&gt;  9 Geonosian        183 </span></a>
+<a class="sourceLine" id="cb40-16" data-line-number="16"><span class="co">#&gt; 10 Gungan           209.</span></a>
+<a class="sourceLine" id="cb40-17" data-line-number="17"><span class="co">#&gt; # ... with 28 more rows</span></a></code></pre></div>
+<p>It would also be useful to know how many observations there are in each group.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#group by species</span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">height.mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T), <span class="co">#calculate mean height</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4">            <span class="dt">group.size =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#number of observations in each group</span></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(group.size)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#arrange by group size in descending order </span></a>
+<a class="sourceLine" id="cb41-6" data-line-number="6"><span class="st">  </span><span class="kw">na.omit</span>() <span class="co">#remove all rows that contain at least one NA value</span></a>
+<a class="sourceLine" id="cb41-7" data-line-number="7"><span class="co">#&gt; # A tibble: 37 x 3</span></a>
+<a class="sourceLine" id="cb41-8" data-line-number="8"><span class="co">#&gt;    species  height.mean group.size</span></a>
+<a class="sourceLine" id="cb41-9" data-line-number="9"><span class="co">#&gt;    &lt;chr&gt;          &lt;dbl&gt;      &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb41-10" data-line-number="10"><span class="co">#&gt;  1 Human           177.         35</span></a>
+<a class="sourceLine" id="cb41-11" data-line-number="11"><span class="co">#&gt;  2 Droid           140           5</span></a>
+<a class="sourceLine" id="cb41-12" data-line-number="12"><span class="co">#&gt;  3 Gungan          209.          3</span></a>
+<a class="sourceLine" id="cb41-13" data-line-number="13"><span class="co">#&gt;  4 Kaminoan        221           2</span></a>
+<a class="sourceLine" id="cb41-14" data-line-number="14"><span class="co">#&gt;  5 Mirialan        168           2</span></a>
+<a class="sourceLine" id="cb41-15" data-line-number="15"><span class="co">#&gt;  6 Twi&#39;lek         179           2</span></a>
+<a class="sourceLine" id="cb41-16" data-line-number="16"><span class="co">#&gt;  7 Wookiee         231           2</span></a>
+<a class="sourceLine" id="cb41-17" data-line-number="17"><span class="co">#&gt;  8 Zabrak          173           2</span></a>
+<a class="sourceLine" id="cb41-18" data-line-number="18"><span class="co">#&gt;  9 Aleena           79           1</span></a>
+<a class="sourceLine" id="cb41-19" data-line-number="19"><span class="co">#&gt; 10 Besalisk        198           1</span></a>
+<a class="sourceLine" id="cb41-20" data-line-number="20"><span class="co">#&gt; # ... with 27 more rows</span></a></code></pre></div>
+<p>Here, I’ve used the <code>n()</code> function to get the number of observations in each group, and then I’ve arranged the data frame according to group size in descending order, and I’ve removed all the rows that contain at least one missing value via <code>na.omit()</code>. So, Humans are the largest group in our data frame, followed by Droids (who are considerably smaller) and Gungans (who would make for good Basketball players).</p>
+<p>Sometimes <code>group_by()</code> is also useful without summarising the data. For example, we often want to z-score data on the level of individual participants. To do so, we first group the data on the level of participants, and then use <code>mutate()</code> to scale the data. Here is an example:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="co"># generate some random data </span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="kw">data_frame</span>(</a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">  <span class="dt">participant =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each =</span> <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb42-4" data-line-number="4">  <span class="dt">judgment =</span> <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb42-5" data-line-number="5">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb42-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(participant) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#group by participants</span></a>
+<a class="sourceLine" id="cb42-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">judgment_zscored =</span> <span class="kw">scale</span>(judgment)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#zscore data on individual participant level </span></a>
+<a class="sourceLine" id="cb42-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="co">#ungroup the data frame </span></a>
+<a class="sourceLine" id="cb42-9" data-line-number="9"><span class="co">#&gt; # A tibble: 15 x 3</span></a>
+<a class="sourceLine" id="cb42-10" data-line-number="10"><span class="co">#&gt;    participant judgment judgment_zscored</span></a>
+<a class="sourceLine" id="cb42-11" data-line-number="11"><span class="co">#&gt;          &lt;int&gt;    &lt;int&gt;            &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb42-12" data-line-number="12"><span class="co">#&gt;  1           1       29          -0.851 </span></a>
+<a class="sourceLine" id="cb42-13" data-line-number="13"><span class="co">#&gt;  2           1       14          -1.27  </span></a>
+<a class="sourceLine" id="cb42-14" data-line-number="14"><span class="co">#&gt;  3           1       84           0.689 </span></a>
+<a class="sourceLine" id="cb42-15" data-line-number="15"><span class="co">#&gt;  4           1       95           0.997 </span></a>
+<a class="sourceLine" id="cb42-16" data-line-number="16"><span class="co">#&gt;  5           1       75           0.437 </span></a>
+<a class="sourceLine" id="cb42-17" data-line-number="17"><span class="co">#&gt;  6           2       28          -0.422 </span></a>
+<a class="sourceLine" id="cb42-18" data-line-number="18"><span class="co">#&gt;  7           2       48           0.148 </span></a>
+<a class="sourceLine" id="cb42-19" data-line-number="19"><span class="co">#&gt;  8           2        0          -1.22  </span></a>
+<a class="sourceLine" id="cb42-20" data-line-number="20"><span class="co">#&gt;  9           2       42          -0.0228</span></a>
+<a class="sourceLine" id="cb42-21" data-line-number="21"><span class="co">#&gt; 10           2       96           1.52  </span></a>
+<a class="sourceLine" id="cb42-22" data-line-number="22"><span class="co">#&gt; 11           3       96           1.30  </span></a>
+<a class="sourceLine" id="cb42-23" data-line-number="23"><span class="co">#&gt; 12           3       35          -0.646 </span></a>
+<a class="sourceLine" id="cb42-24" data-line-number="24"><span class="co">#&gt; 13           3       25          -0.966 </span></a>
+<a class="sourceLine" id="cb42-25" data-line-number="25"><span class="co">#&gt; 14           3       81           0.825 </span></a>
+<a class="sourceLine" id="cb42-26" data-line-number="26"><span class="co">#&gt; 15           3       39          -0.518</span></a></code></pre></div>
+<p>First, I’ve generated some random data using the repeat function <code>rep()</code> for making a <code>participant</code> column, and the <code>sample()</code> function to randomly choose values from a range between 0 and 100 with replacement. I’ve then grouped the data by participatn, and used the scale function to z-score the data.</p>
+<!-- anything to add? -->
+</div>
+<div id="join-multiple-data-frames" class="section level3">
+<h3><span class="header-section-number">3.3.7</span> join multiple data frames</h3>
+</div>
+</div>
+<div id="reading-in-data" class="section level2">
+<h2><span class="header-section-number">3.4</span> Reading in data</h2>
+<div id="csv" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> csv</h3>
+</div>
+<div id="xls" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> xls</h3>
+</div>
+<div id="json" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> json</h3>
+</div>
+<div id="sav" class="section level3">
+<h3><span class="header-section-number">3.4.4</span> sav</h3>
+</div>
+<div id="feather" class="section level3">
+<h3><span class="header-section-number">3.4.5</span> feather</h3>
+</div>
+<div id="rdata" class="section level3">
+<h3><span class="header-section-number">3.4.6</span> RData</h3>
+</div>
+</div>
+<div id="saving-data" class="section level2">
+<h2><span class="header-section-number">3.5</span> Saving data</h2>
+<div id="rdata-1" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> RData</h3>
+<ul>
+<li>useful for saving more complex computations</li>
+</ul>
+</div>
+<div id="csv-1" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> csv</h3>
+</div>
+<div id="feather-1" class="section level3">
+<h3><span class="header-section-number">3.5.3</span> feather …</h3>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="visualization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="applications.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/03-data_wrangling.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
