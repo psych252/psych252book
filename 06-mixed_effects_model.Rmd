@@ -9,7 +9,6 @@ library("brms") #Bayesian regression
 # library("patchwork") #for making figure panels
 library("janitor") #for cleaning variable names
 library("emmeans") #for comparing estimated marginal means 
-library("dotwhisker") #dot whisker plots for regression results
 library("pbkrtest") #model comparison for linear mixed effects models
 # library("boot") #for bootstrapping
 # library("tictoc") #for timing things
@@ -27,11 +26,19 @@ theme_set(
   )
 ```
 
+## Todo 
+
+- look into [ggeffects](https://strengejacke.github.io/ggeffects/) package 
+
 ## Resources 
 
 ### Online tutorials 
 - [introduction to mixed models](https://ourcodingclub.github.io/2017/03/15/mixed-models.html)
-- []
+- [tutorial on simulating a mixed model](https://aosmith.rbind.io/2018/04/23/simulate-simulate-part-2/)
+- [how to build lmers](https://stats.stackexchange.com/questions/13166/rs-lmer-cheat-sheet)
+- [lmer performance tips](https://cran.r-project.org/web/packages/lme4/vignettes/lmerperf.html)
+- [lmer vignettes](https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf)
+- [data camp course](https://campus.datacamp.com/courses/hierarchical-and-mixed-effects-models/generalized-linear-mixed-effect-models?ex=9)
 
 ### Books 
 
@@ -84,7 +91,203 @@ theme_set(
   - distributions of error terms 
 - 
 
-## Notes 
+## Tutorials
+
+### Bodo Winter tutorial 2
+
+- in mixed models, everything in the "fixed effects" part of the model works just like with linear models 
+- the error terms ("random effects") are modeled more precisely --> random effects give structure to the error term 
+- random effect for participant: 
+  - different baseline value for each subject 
+  - different items
+
+- helpful visualizations: 
+  - variability by subject
+  - variability by item 
+
+- in the past: 
+  - averaging over subjects to get a by-item analysis 
+  - averaging over items to get a by-subjects analysis
+- mixed models take the full data into account (account for both item and subject variation)
+
+```{r}
+df.politeness = read.csv("data/politeness_data.csv")
+  
+df.politeness = df.politeness %>%
+  mutate(gender = factor(gender, levels = c("F", "M"), labels = c("female", "male")),
+         attitude = factor(attitude, levels = c("inf", "pol"), labels = c("informal", "polite"))) %>% 
+  rename(pitch = frequency)
+
+df.politeness %>% glimpse()
+```
+
+- Variation across subjects
+
+```{r}
+df.plot = df.politeness
+
+ggplot(data = df.plot, aes(x = subject, y = pitch))+
+  geom_point(alpha = 0.5, position = position_jitter(height = 0, width = 0.1))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1)+
+  stat_summary(fun.y = "mean", geom = "point", shape = 21, fill = "red", color = "black", size = 3)+
+  labs(y = "pitch (Hz)")
+```
+
+- Variation across scenarios
+
+```{r}
+df.plot = df.politeness %>% 
+  mutate(scenario = as.factor(scenario))
+
+ggplot(data = df.plot, aes(x = scenario, y = pitch))+
+  geom_point(alpha = 0.5, position = position_jitter(height = 0, width = 0.1))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1)+
+  stat_summary(fun.y = "mean", geom = "point", shape = 21, fill = "red", color = "black", size = 3)+
+  labs(y = "pitch (Hz)")
+```
+
+
+
+```{r}
+df.plot = df.politeness
+
+ggplot(data = df.plot, aes(x = attitude, y = pitch))+
+  geom_point(alpha = 0.5, position = position_jitter(height = 0, width = 0.1),
+             aes(color = subject))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1)+
+  stat_summary(fun.y = "mean", geom = "point", shape = 21, fill = "red", color = "black", size = 3)+
+  facet_grid(~gender)+
+  labs(y = "pitch (Hz)")
+```
+
+Simple linear model:
+
+```{r}
+fit.lm = lm(pitch ~ attitude, data = df.politeness)
+fit.lm %>% summary()
+```
+
+Model interpretation 
+
+Residuals: 
+
+```{r}
+df.plot = fit.lm %>% 
+  augment() %>% 
+  clean_names() %>% 
+  left_join(df.politeness,
+            by = c("pitch", "gender", "attitude"))
+  
+
+ggplot(data = df.plot, aes(x = fitted, y = resid, color = subject))+
+  geom_point()+
+  geom_smooth(method = "lm", aes(group = 1), show.legend = F)
+```
+
+Linear mixed effects model
+
+```{r}
+fit.lmer = lmer(pitch ~ attitude + (1 | subject) + (1 | scenario), data = df.politeness)
+fit.lmer %>% summary()
+```
+
+
+
+
+```{r}
+fit.lmer = lmer(pitch ~ attitude + gender + (1 | subject) + (1 | scenario), data = df.politeness)
+fit.lmer %>% summary()
+```
+
+- variation for subject error term dropped (since much of the variation is explained by gender)
+
+get p-values via the likelihood ratio test
+- likelihood = probability of seeing the data given the model
+- compare likelihood of two models: one with the term of interest, and one without
+- for likelihood tests, set `REML=F` 
+
+```{r}
+fit.simple = lmer(pitch ~ gender + (1 | subject) + (1 | scenario), data = df.politeness, REML = F)
+fit.complex = lmer(pitch ~ attitude + gender + (1 | subject) + (1 | scenario), data = df.politeness, REML = F)
+fit.interaction = lmer(pitch ~ attitude * gender + (1 | subject) + (1 | scenario), data = df.politeness, REML = F)
+
+anova(fit.simple, fit.complex)
+anova(fit.complex, fit.interaction)
+```
+
+model parameters: 
+
+```{r}
+fit.complex %>% coef()
+```
+
+```{r}
+df.plot = df.politeness
+
+ggplot(data = df.plot, aes(x = attitude, y = pitch, group = subject, fill = subject))+
+  geom_point(alpha = 0.5, position = position_jitterdodge(jitter.height = 0, dodge.width = 0.9, jitter.width = 0.1),
+             aes(color = subject))+
+  stat_summary(fun.y = "mean", geom = "line", position = position_dodge(width = 0.9), aes(color = subject))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1, position = position_dodge(width = 0.9), alpha = 0.5)+
+  stat_summary(fun.y = "mean", geom = "point", shape = 21, color = "black", size = 3, position = position_dodge(width = 0.9))+
+  facet_grid(~gender)+
+  labs(y = "pitch (Hz)")
+```
+
+```{r}
+# fit.test = lm(pitch ~ attitude * gender, data = df.politeness)
+# fit.test = lm(pitch ~ gender, data = df.politeness)
+# fit.test = lm(pitch ~ attitude, data = df.politeness)
+# fit.test = lm(pitch ~ gender + attitude, data = df.politeness)
+# fit.test = lmer(pitch ~ attitude + gender + (1 + attitude | subject), data = df.politeness)
+# fit.test = lmer(pitch ~ attitude + (1 | subject), data = df.politeness)
+# fit.test = lmer(pitch ~ attitude + gender + (1 | subject), data = df.politeness)
+# fit.test = lmer(pitch ~ attitude + (1 + attitude | subject), data = df.politeness)
+fit.test = lmer(pitch ~ attitude + gender + (1 + attitude | subject) + (1 + attitude | scenario), data = df.politeness)
+
+fit.test2 = lmer(pitch ~ gender + (1 + attitude | subject) + (1 + attitude | scenario), data = df.politeness)
+
+anova(fit.test, fit.test2)
+
+fit.test %>% coef()
+fit.test %>% fixef()
+
+fit.test %>% summary()
+
+df.plot = df.politeness %>% 
+  left_join(fit.test %>% 
+  augment() %>% 
+  clean_names())
+
+# df.plot %>% 
+#   na.omit() %>% 
+#   summarize(r = cor(pitch, fitted))
+
+df.fit = fit.test %>% 
+  tidy()
+
+ggplot(data = df.plot, aes(x = attitude, y = pitch, group = subject, fill = subject))+
+  geom_point(alpha = 0.5, position = position_jitterdodge(jitter.height = 0, dodge.width = 0.9, jitter.width = 0.1),aes(color = subject))+
+  stat_summary(fun.y = "mean", geom = "line", position = position_dodge(width = 0.9), aes(color = subject))+
+  stat_summary(fun.y = "mean", geom = "line", position = position_dodge(width = 0.9), aes(color = subject, y = fitted), linetype = 2, size = 1)+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1, position = position_dodge(width = 0.9), alpha = 0.5)+
+  stat_summary(fun.y = "mean", geom = "point", shape = 21, color = "black", size = 3, position = position_dodge(width = 0.9))+
+  facet_grid(~gender)+
+  # stat_summary(fun.y = "mean", geom = "line", aes(color = subject, y = fitted), linetype = 2, size = 1)+
+  labs(y = "pitch (Hz)")
+```
+
+- [how many parameters does my lmer have?](https://stats.stackexchange.com/questions/180230/number-of-parameters-in-mixed-model)
+  - `summary()` shows the fit parameters 
+
+- which random effects to include? 
+  - use a full model if it works (and makes sense)
+  - random intercepts-only models have a relatively high Type I error rate 
+  - keep it maximal [@barr2013random-e]
+
+
+
+### Dragons tutorial
 
 ```{r}
 load("data/lmm_tutorial/dragons.RData")
@@ -199,19 +402,17 @@ mixed.lmer2 %>%
   - factor appears only within one particular level of another factor 
 
 
-
-
-## Linear regression on the aggregate
+#### Linear regression on the aggregate
 
 - doesn't take into account the uncertainty of individual aggregate data points (some means might be based on fewer observations, and so they shouldn't affect the overall as much) 
 
-## Separate individual regressions 
+#### Separate individual regressions 
 
 - many parameters 
 - inflated Type I error (of falsely rejecting the null)
 - 
 
-## Mixed effects models 
+#### Mixed effects models 
 
 - use all the data we have 
 - account for correlations within our data 
@@ -241,6 +442,7 @@ mixed.brm %>%
 ## Example
 
 ```{r}
+# not sure whether the generating model is legit here ... 
 set.seed(2)
 df.data = data_frame(
   participant = rep(1:20,2),
@@ -390,8 +592,7 @@ ggplot(data = df.plot, aes(x = condition, y = rating, color = participant))+
 
 ```
 
-
-### Fixed and random effects 
+## Fixed and random effects 
 
 [difference between fixed and random effects](https://stats.stackexchange.com/questions/4700/what-is-the-difference-between-fixed-effect-random-effect-and-mixed-effect-mode)
 
@@ -405,7 +606,6 @@ ggplot(data = df.plot, aes(x = condition, y = rating, color = participant))+
 - overall goal: have the model make better estimates 
 - need to use random effects whenever we have repeated observations of the same object
 
-
 ## Model selection
 
 - guided by theory
@@ -416,7 +616,22 @@ ggplot(data = df.plot, aes(x = condition, y = rating, color = participant))+
  - use maximum likelihood method when comparing models with different fixed effects (so set `REML = FALSE` when aiming to compare models via `anova()`)
  - use ML to compare models but still report parameter estimates from the best REML model (ML underestimates variance of the random effects)
 - AIC for mixed effects models: `library("AICcmodavg")`
- 
+
+## Pooling 
+
+[pooling visualizations](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/)
+
+### Complete pooling 
+
+### No pooling 
+
+### Partial pooling 
+
+## Simulating data 
+
+- [crossvalidated post](https://stats.stackexchange.com/questions/187981/how-to-simulate-data-to-demonstrate-mixed-effects-with-r-lme4)
+- [stackoverflow post](https://stackoverflow.com/questions/51937986/simulate-data-for-mixed-effects-model-with-predefined-parameter)
+
 
 ## Reporting results 
 
@@ -430,6 +645,14 @@ ggplot(data = df.plot, aes(x = condition, y = rating, color = participant))+
 - [dotwhisker plots](https://cran.r-project.org/web/packages/dotwhisker/vignettes/dotwhisker-vignette.html)
 
 ### Text 
+
+from Bodo Winter tutorial
+
+- likelihood ratio test: 
+
+“... politeness affected pitch (χ2(1)=11.62, p=0.00065), lowering it by about 19.7 Hz ± 5.6 (standard errors) ...”
+
+"We used R (R Core Team, 2012) and lme4 (Bates, Maechler & Bolker, 2012) to perform a linear mixed effects analysis of the relationship between pitch and politeness. As fixed effects, we entered politeness and gender (without interaction term) into the model. As random effects, we had intercepts for subjects and items, as well as by-subject and by-item random slopes for the effect of politeness. Visual inspection of residual plots did not reveal any obvious deviations from homoscedasticity or normality. P-values were obtained by likelihood ratio tests of the full model with the effect in question against the model without the effect in question."
 
 
 
