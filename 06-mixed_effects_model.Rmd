@@ -10,10 +10,12 @@ library("brms") #Bayesian regression
 library("janitor") #for cleaning variable names
 library("emmeans") #for comparing estimated marginal means 
 library("pbkrtest") #model comparison for linear mixed effects models
+library("patchwork") #figure panels
 # library("boot") #for bootstrapping
 # library("tictoc") #for timing things
 # library("tidyboot") #for tidy bootstrapping (might not use this)
 library("tidyverse") #for everything else
+library("optimx") #for optimizing lmers
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>")
@@ -77,7 +79,136 @@ theme_set(
 - getting the right standard error: accurately accounting for uncertainty in prediction and estimation 
   - account for correlation of the outcome between groups 
   
+## Exploring the dependence assumption
+
+```{r}
+set.seed(0)
+df.dependence = data_frame(
+  participant = 1:20,
+  condition1 = rnorm(20),
+  condition2 = condition1 + rnorm(20, mean = 0.2, sd = 0.1)
+) %>% 
+  mutate(condition2shuffled = sample(condition2))
+
+# df.dependence.shuffled = df.dependence %>% 
+#   mutate(condition2 = sample(condition2)) #shuffle 
+
+df.plot = df.dependence %>% 
+  gather("condition", "value", -participant) %>% 
+  mutate(condition = str_replace(condition, "condition", ""))
+
+p1 = ggplot(data = df.plot %>% filter(condition != "2shuffled"), aes(x = condition, y = value))+
+  geom_line(aes(group = participant), alpha = 0.3)+
+  geom_point()+
+  labs(title = "original",
+       tag = "a)")
   
+
+p2 = ggplot(data = df.plot %>% filter(condition != "2"), aes(x = condition, y = value))+
+  geom_line(aes(group = participant), alpha = 0.3)+
+  geom_point()+
+  labs(title = "shuffled",
+       tag = "b)")
+
+p1 + p2 
+  
+
+```
+
+```{r}
+# separate the data sets 
+df.original = df.dependence %>% 
+  gather("condition", "value", -participant) %>% 
+  mutate(condition = str_replace(condition, "condition", "")) %>% 
+  filter(condition != "2shuffled")
+  
+df.shuffled = df.dependence %>% 
+  gather("condition", "value", -participant) %>% 
+  mutate(condition = str_replace(condition, "condition", "")) %>% 
+  filter(condition != "2")
+```
+
+```{r}
+# independent samples
+
+# linear model 
+lm(value ~ condition, data = df.original) %>% summary() 
+
+# t.test
+t.test(df.original$value[df.original$condition == "1"],
+       df.original$value[df.original$condition == "2"],
+       alternative = "two.sided",
+       paired = F
+       )
+```
+
+The mean difference between the conditions is very small 
+
+```{r}
+# dependent samples: original data set
+fit.lmer1 = lmer(value ~ condition + (1 | participant), data = df.original)
+fit.lmer2 = lmer(value ~ 1 + (1 | participant), data = df.original)
+
+anova(fit.lmer1, fit.lmer2)
+
+t.test(df.original$value[df.original$condition == "1"],
+       df.original$value[df.original$condition == "2"],
+       alternative = "two.sided",
+       paired = T
+       )
+```
+
+
+```{r}
+# dependent samples: shuffled data set
+fit.lmer1 = lmer(value ~ condition + (1 | participant), data = df.shuffled)
+fit.lmer2 = lmer(value ~ 1 + (1 | participant), data = df.shuffled)
+
+anova(fit.lmer1, fit.lmer2)
+
+t.test(df.shuffled$value[df.shuffled$condition == "1"],
+       df.shuffled$value[df.shuffled$condition == "2"],
+       alternative = "two.sided",
+       paired = T
+       )
+```
+
+
+
+```{r}
+# Bayesian test 
+
+fit.brms1 = brm(value ~ condition + (1 | participant),
+                data = df.original,
+                file = "brms1")
+
+# we use update() since we are fitting the same model to a new data set
+fit.brms2 = update(fit.brms1, 
+                   newdata = df.shuffled,
+                   file = "brms2")
+
+fit.brms1 %>% summary()
+
+```
+
+```{r}
+df.plot = df.original %>% 
+  bind_cols(fit.brms1 %>% 
+              predict() %>% 
+              as_data_frame() %>% 
+              set_names(names(.) %>% tolower())) 
+
+df.fit = fit.brms1 %>% 
+  tidy()
+
+ggplot(data = df.plot, aes(x = estimate, y = value, color = condition))+
+  geom_abline(intercept = 0, slope = 1, linetype = 2, alpha = 0.2)+
+  geom_linerange(aes(ymin = q2.5, ymax = q97.5), alpha = 0.3)+
+  geom_point()
+
+```
+
+
 
 ## Gelman book notes 
 
@@ -621,6 +752,223 @@ ggplot(data = df.plot, aes(x = condition, y = rating, color = participant))+
 
 [pooling visualizations](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/)
 
+```{r}
+df.sleep = sleepstudy %>% 
+  as_data_frame() %>% 
+  mutate(Subject = as.character(Subject))
+
+# Add two fake participants
+df.sleep <- bind_rows(
+  df.sleep,
+  data_frame(Reaction = c(286, 288), Days = 0:1, Subject = "374"),
+  data_frame(Reaction = 245, Days = 0, Subject = "373")) %>% 
+  clean_names()
+
+df.sleep
+
+```
+
+Visualize the data 
+
+```{r}
+ggplot(df.sleep) + 
+  aes(x = days, y = reaction) + 
+  # stat_smooth(method = "lm", se = FALSE, fullrange = T) +
+  stat_smooth(method = "lm", se = FALSE) +
+  # Put the points on top of lines
+  geom_point() +
+  facet_wrap(~subject) +
+  labs(x = "Days of sleep deprivation", 
+       y = "Average reaction time (ms)") + 
+  # We also need to help the x-axis, so it doesn't 
+  # create gridlines/ticks on 2.5 days
+  scale_x_continuous(breaks = 0:4 * 2)
+```
+
+- no pooling: separate regression line for each participant --> none of the information from different participants is shared/pooled 
+
+```{r}
+# df.no_pooling = lmList(reaction ~ days | subject, data = df.sleep) %>% 
+#   coef() %>% 
+#   # Subject IDs are stored as row-names. Make them an explicit column
+#   rownames_to_column("subject") %>% 
+#   rename(intercept = `(Intercept)`) %>% 
+#   add_column(model = "No pooling") %>% 
+#   # Remove the participant who only had one data-point
+#   filter(subject != "373")
+
+#alternative way 
+df.no_pooling = df.sleep %>% 
+  group_by(subject) %>%
+  do(model = lm(reaction ~ days, data = .) %>% tidy()) %>%
+  unnest() %>% 
+  complete(subject, term) %>% 
+  ungroup() %>% 
+  select(subject:estimate) %>% 
+  spread(term, estimate) %>% 
+  rename(intercept = `(Intercept)`,
+         days_slope = days) %>% 
+  mutate(model = "no pooling")
+
+#or 
+# df.no_pooling3 = df.sleep %>% 
+#   group_by(subject) %>% 
+#   nest() %>%
+#   mutate(model = map(data, ~lm(reaction ~ days, data = .) %>% tidy())) %>%
+#   unnest(model) %>% 
+#   complete(subject, term) %>% 
+#   ungroup()
+
+```
+
+```{r}
+fit.complete = lm(reaction ~ days, df.sleep)
+
+df.complete_pooling <- data_frame(
+  subject = unique(df.sleep$subject),
+  intercept = coef(fit.complete)[1], 
+  days_slope = coef(fit.complete)[2],
+  model = "complete pooling")
+
+```
+
+Combine data sets and visualize 
+
+```{r}
+df.models = df.no_pooling %>% 
+  bind_rows(df.complete_pooling) %>% 
+  left_join(df.sleep, by = "subject")
+
+p = ggplot(df.models) + 
+  aes(x = days, y = reaction) + 
+  # Set the color mapping in this layer so the points don't get a color
+  geom_abline(aes(intercept = intercept, slope = days_slope, color = model),
+              size = .75) + 
+  geom_point() +
+  facet_wrap(~subject) +
+  labs(x = "Days of sleep deprivation", 
+       y = "Average reaction time (ms)")+
+  scale_x_continuous(breaks = 0:4 * 2) + 
+  # Fix the color palette 
+  scale_color_brewer(palette = "Dark2") + 
+  theme(legend.position = "top")
+p
+```
+
+ Partial pooling
+ 
+```{r}
+fit.partial = lmer(reaction ~ 1 + days + (1 + days | subject), data = df.sleep)
+# arm::display(fit.partial)
+summary(fit.partial)
+```
+
+Exctract parameters and plot results 
+
+```{r}
+df.partial = coef(fit.partial)[['subject']] %>% 
+  as_tibble() %>% 
+  rownames_to_column("subject") %>% 
+  rename(intercept = `(Intercept)`, days_slope = days) %>% 
+  add_column(model = "partial pooling")
+
+
+df.models = bind_rows(df.complete_pooling, df.no_pooling, df.partial) %>% 
+  left_join(df.sleep, by = "subject")
+
+
+p %+% df.models
+```
+
+selection of participants 
+ 
+```{r}
+df.selection <- df.models %>% 
+  filter(subject %in% c("335", "350", "373", "374"))
+
+p %+% df.selection
+```
+
+- partial pooling model pulls extreme estimates towards an overall average 
+
+visualization of shrinkage: 
+
+```{r}
+df.fixed_partial = data_frame(
+  model = "partial pooling (average)",
+  intercept = fixef(fit.partial)[1],
+  days_slope = fixef(fit.partial)[2]
+)
+
+df.complete = df.complete_pooling %>% 
+  distinct(model, intercept, days_slope)
+
+df.averages = df.fixed_partial %>% 
+  bind_rows(df.complete)
+
+df.plot = df.no_pooling %>% 
+  bind_rows(df.partial)
+
+ggplot(df.plot) + 
+  aes(x = intercept, y = days_slope, color = model) + 
+  geom_point(size = 2) + 
+  geom_point(data = df.averages, size = 5) + 
+  # Draw an arrow connecting the observations between models
+  geom_path(aes(group = subject, color = NULL), 
+            arrow = arrow(length = unit(.02, "npc"))) + 
+  # Use ggrepel to jitter the labels away from the points
+  ggrepel::geom_text_repel(
+    aes(label = subject, color = NULL), 
+    data = df.no_pooling) + 
+  theme(legend.position = "bottom") + 
+  ggtitle("Pooling of regression parameters") + 
+  xlab("Intercept estimate") + 
+  ylab("Slope estimate") + 
+  scale_color_brewer(palette = "Dark2") 
+
+```
+
+- shrinkage stronger for: 
+  - more extreme values 
+  - when data is limited 
+
+- model avoids overfitting by taming extreme estimates 
+
+Bayesian version 
+
+```{r}
+b <- stan_glmer(
+  reaction ~ days + (days | subject),
+  family = gaussian(),
+  data = df.sleep,
+  prior = normal(0, 2),
+  prior_intercept = normal(0, 5),
+  prior_covariance = decov(regularization = 2),
+  prior_aux = cauchy(0, 1))
+```
+
+
+```{r}
+df_posterior <- b %>% 
+  as.data.frame() %>% 
+  as_tibble()
+
+ggplot(df_posterior) + 
+  aes(x = `(Intercept)`, y = `days`) + 
+  # Calculate the density
+  stat_density_2d(aes(fill = ..level..), geom = "polygon") +
+  ggtitle("Where's the average intercept and slope?") + 
+  xlab("Estimate for average intercept") + 
+  ylab("Estimate for average slope") +
+  # Use the same coordinate limits as last plot
+  # coord_cartesian(
+  #   xlim = range(df_pulled$Intercept), 
+  #   ylim = range(df_pulled$Slope_Days),
+  #   expand = TRUE) + 
+  guides(fill = "none")
+```
+
+
 ### Complete pooling 
 
 ### No pooling 
@@ -631,6 +979,255 @@ ggplot(data = df.plot, aes(x = condition, y = rating, color = participant))+
 
 - [crossvalidated post](https://stats.stackexchange.com/questions/187981/how-to-simulate-data-to-demonstrate-mixed-effects-with-r-lme4)
 - [stackoverflow post](https://stackoverflow.com/questions/51937986/simulate-data-for-mixed-effects-model-with-predefined-parameter)
+
+## Dice data 
+
+```{r}
+# read in data 
+
+df.dice = read_csv("data/dice_data(main data).csv")
+df.dice.additional = read_csv("data/dice_data(additional data).csv")
+
+# combine and structure data 
+df.dice = df.dice %>% 
+  clean_names() %>% 
+  select(participant:experiment) %>% 
+  left_join(df.dice.additional %>% 
+              clean_names() %>% 
+              select(participant:experiment)) %>% 
+  mutate(gender = factor(gender, levels = 1:2, labels = c("female", "male"))) %>% 
+  group_by(experiment, participant) %>% 
+  mutate(round = 1:n()) %>% 
+  ungroup() %>% 
+  mutate(phase = ifelse(round <= 20, 1, 2))
+
+df.dice = df.dice %>% 
+  gather("index", "value", die_p1:resp_p3) %>%
+  separate(col = index, into = c("index", "player"), sep = "_") %>% 
+  spread(index, value) %>% 
+  arrange(participant, round) %>% 
+  select(experiment, participant, round, phase, result, player, die, roll, payoff, resp) %>% 
+  arrange(experiment, participant, round)
+
+```
+
+```{r}
+# mixed effects model 
+
+df.data = df.dice %>%
+  filter(phase == 2) %>% 
+  mutate(die = as.factor(die))
+
+# positive results
+# df.data = df.dice %>%
+#   filter(result == 1, phase == 2) %>%
+#   mutate(die = as.factor(die))
+
+# negative results
+# df.data = df.dice %>% 
+#   filter(result == 0, phase == 2) %>% 
+#   mutate(die = as.factor(die))
+
+# fit2 = lmer(resp ~ 1 + die + roll + (1 | participant), data = df.data)
+# fit1 = lmer(resp ~ 1 + die * roll + (1 | participant), data = df.data)
+fit2 = lmer(formula = resp ~ 1 + (die + roll) * result + (1 + (die + roll) * result | participant),
+            data = df.data,
+            control = lmerControl(optimizer="Nelder_Mead"))
+
+# fit2 = lmer(resp ~ 1 + die + roll + (1 + die | participant), data = df.data)
+# fit3 = lmer(resp ~ 1 + die + roll + (1 + die | participant), data = df.data)
+# fit4 = lmer(resp ~ 1 + die + roll + (1 + roll | participant), data = df.data)
+# fit5 = lmer(resp ~ 1 + die * roll + (1 + die * roll | participant), data = df.data)
+
+# fit %>% summary()
+# fit1 %>% summary()
+fit2 %>% summary()
+# fit5 %>% summary()
+
+tmp = coef(fit2)[["participant"]] %>% 
+  as_data_frame() %>% 
+  clean_names()
+
+# anova(fit2, fit3)
+# anova(fit5, fit2)
+
+#overall plot 
+df.fit.overall = fixef(fit2) %>% 
+  as_data_frame() %>% 
+  rownames_to_column() %>% 
+  spread(rowname, value) %>% 
+  clean_names()
+
+ggplot(data = df.data, aes(x = roll, y = resp, group = die, color = die, fill = die))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "ribbon", alpha = 0.1, color = NA)+
+  stat_summary(fun.y = "mean", geom = "line", size = 1)+
+  scale_x_continuous(breaks = 1:6, labels = 1:6)+
+  scale_y_continuous(breaks = 0:10, labels = 0:10)+
+  coord_cartesian(ylim = c(0, 10))+
+  # stat_summary(fun.y = "mean", geom = "line", linetype = 3, data = df.tmp, aes(y = fitted))+
+  geom_abline(intercept = df.fit.overall$intercept, slope = df.fit.overall$roll, color = "red", linetype = 2)+
+  geom_abline(intercept = df.fit.overall$intercept + df.fit.overall$die2, slope = df.fit.overall$roll, color = "green", linetype = 2)+
+  geom_abline(intercept = df.fit.overall$intercept + df.fit.overall$die3, slope = df.fit.overall$roll, color = "blue", linetype = 2)
+  
+# individual plots
+df.fit.participant = coef(fit2)[["participant"]] %>%
+# df.fit.participant = coef(fit5)[["participant"]] %>% 
+  clean_names() %>% 
+  gather("index", "value") %>% 
+  mutate(index = factor(index, levels = c("intercept", "die2", "die3", "roll")))
+
+# visualize parameters 
+ggplot(data = df.fit.participant, aes(x = value))+
+  stat_density(geom = "line")+
+  facet_wrap(~index, scales = "free")+
+  theme(strip.background = element_blank())
+
+df.tmp = fit2 %>%
+# df.tmp = fit5 %>% 
+  augment() %>% 
+  clean_names()
+
+# residuals
+ggplot(df.tmp, aes(x = fitted, y = resid))+
+  geom_point(alpha = 0.1)+
+  geom_smooth(method = "loess")
+
+ggplot(data = df.data, aes(x = roll, y = resp, group = die, color = die, fill = die))+
+  # stat_summary(fun.data = "mean_cl_boot", geom = "ribbon", alpha = 0.1, color = NA)+
+  stat_summary(fun.y = "mean", geom = "line")+
+  geom_line(data = df.tmp, aes(y = fitted), linetype = 2)+
+  facet_wrap(~ participant, ncol = 9)+
+  theme(axis.text.y = element_blank(),
+        strip.text = element_text(size = 6))
+
+```
+
+```{r}
+# Bayesian version 
+
+df.data.positive = df.dice %>% 
+              filter(experiment == 2, phase == 2, result == 1) %>% 
+              mutate(die = as.factor(die))
+
+df.data.negative = df.dice %>% 
+                            filter(experiment == 2, phase == 2, result == 0) %>% 
+                            mutate(die = as.factor(die))
+
+fit.brm.positive = brm(formula = resp ~ 1 + die + roll + (1 + die + roll | participant),
+            data = df.data.positive,
+            file = "fit.brm.positive")
+
+fit.brm.negative = update(fit.brm.positive, 
+                          newdata = df.data.negative,
+                          file = "fit.brm.negative")
+
+
+plot(marginal_effects(fit.brm.positive,
+                      spaghetti = T, nsamples = 200),
+     points = T,
+     point_args = c(alpha = 1/2, size = 1))
+
+fit.brm.positive %>% 
+  tidy()
+
+fit.brm.positive %>% 
+  posterior_summary()
+
+# positive 
+df.parameters.positive = coef(fit.brm.positive)[["participant"]] %>% 
+  as_data_frame() %>% 
+  mutate(participant = 1:nrow(.)) %>% 
+  select(-contains("error")) %>% 
+  set_names(str_replace_all(names(.), "Q2.5", "low")) %>% 
+  set_names(str_replace_all(names(.), "Q97.5", "high")) %>% 
+  clean_names() %>%
+  mutate(roll_index = ifelse(sign(low_roll) == sign(high_roll), 1, 0),
+         die_index = ifelse(sign(low_die2) == sign(high_die2) | 
+                             sign(low_die3) == sign(high_die3), 1, 0),
+         both_index = roll_index * die_index,
+         category = ifelse(roll_index, "roll", "neither"),
+         category = ifelse(die_index, "die", category),
+         category = ifelse(both_index, "both", category)
+         ) %>% 
+  select(-contains("index")) %>% 
+  gather("index", "value", -c(participant, category)) %>% 
+  separate(index, into = c("index", "parameter")) %>% 
+  spread(index, value) %>% 
+  mutate(parameter = factor(parameter, levels = c("intercept", "die2", "die3", "roll")))
+
+# positive outcome 
+df.model.positive = fit.brm.positive %>%
+  augment() %>% 
+  clean_names() %>% 
+  bind_cols(df.data.positive) %>% 
+  left_join(df.parameters.positive %>% 
+              distinct(participant, category), by = "participant") %>% 
+  mutate(participant = str_c(category, "_", participant))
+
+df.plot.positive = df.data.positive %>% 
+  left_join(df.parameters.positive %>% 
+              distinct(participant, category), by = "participant") %>% 
+  mutate(participant = str_c(category, "_", participant))
+
+p.positive = ggplot(data = df.plot.positive, aes(x = roll, y = resp, group = die, color = die, fill = die))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "ribbon", alpha = 0.1, color = NA)+
+  stat_summary(fun.y = "mean", geom = "line")+
+  geom_line(data = df.model.positive, aes(y = fitted), linetype = 2)+
+  facet_wrap(~ participant, ncol = 9)+
+  theme(axis.text.y = element_blank(),
+        strip.text = element_text(size = 6),
+        strip.background = element_blank())
+
+# negative 
+df.parameters.negative = coef(fit.brm.negative)[["participant"]] %>% 
+  as_data_frame() %>% 
+  mutate(participant = 1:nrow(.)) %>% 
+  select(-contains("error")) %>% 
+  set_names(str_replace_all(names(.), "Q2.5", "low")) %>% 
+  set_names(str_replace_all(names(.), "Q97.5", "high")) %>% 
+  clean_names() %>%
+  mutate(roll_index = ifelse(sign(low_roll) == sign(high_roll), 1, 0),
+         die_index = ifelse(sign(low_die2) == sign(high_die2) | 
+                             sign(low_die3) == sign(high_die3), 1, 0),
+         both_index = roll_index * die_index,
+         category = ifelse(roll_index, "roll", "neither"),
+         category = ifelse(die_index, "die", category),
+         category = ifelse(both_index, "both", category)
+         ) %>% 
+  select(-contains("index")) %>% 
+  gather("index", "value", -c(participant, category)) %>% 
+  separate(index, into = c("index", "parameter")) %>% 
+  spread(index, value) %>% 
+  mutate(parameter = factor(parameter, levels = c("intercept", "die2", "die3", "roll")))
+
+# negative outcome 
+df.model.negative = fit.brm.negative %>%
+  augment() %>% 
+  clean_names() %>% 
+  bind_cols(df.data.negative) %>% 
+  left_join(df.parameters.negative %>% 
+              distinct(participant, category), by = "participant") %>% 
+  mutate(participant = str_c(category, "_", participant))
+
+df.plot.negative = df.data.negative %>% 
+  left_join(df.parameters.negative %>% 
+              distinct(participant, category), by = "participant") %>% 
+  mutate(participant = str_c(category, "_", participant))
+
+p.negative = ggplot(data = df.plot.negative, aes(x = roll, y = resp, group = die, color = die, fill = die))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "ribbon", alpha = 0.1, color = NA)+
+  stat_summary(fun.y = "mean", geom = "line")+
+  geom_line(data = df.model.negative, aes(y = fitted), linetype = 2)+
+  facet_wrap(~ participant, ncol = 9)+
+  theme(axis.text.y = element_blank(),
+        strip.text = element_text(size = 6),
+        strip.background = element_blank())
+
+p.positive + p.negative + plot_layout(ncol = 1)
+
+```
+
+
 
 
 ## Reporting results 

@@ -1,0 +1,133 @@
+# Bayesian data analysis 
+
+```{r echo=FALSE, message=FALSE}
+library("knitr") #for markdown things 
+library("broom") #for getting tidy model summaries
+library("broom.mixed") #for getting tidy mixed model summaries
+library("lme4") #for mixed effects models 
+library("brms") #Bayesian regression
+library("patchwork") #for making figure panels
+library("janitor") #for cleaning variable names
+library("emmeans") #for comparing estimated marginal means 
+library("pbkrtest") #model comparison for linear mixed effects models
+library("tidyverse") #for everything else
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
+options(digits = 2) #only print two digits
+
+theme_set(
+  theme_classic()+
+    theme(text = element_text(size = 20)) #text size
+  )
+```
+
+## Bayes factors 
+
+- [matti vuorre tutorial](https://mvuorre.github.io/post/2017/bayes-factors-with-brms/)
+
+- use `brms::hypothesis()` to calculate bayes factors 
+
+
+```{r}
+# analytic solution with beta distribution
+d = data.frame(s = 9, k = 10)
+d
+
+pd <- tibble(
+    x = seq(0, 1, by = .01),
+    Prior = dbeta(x, 1, 1)
+    )
+
+ggplot(pd, aes(x, Prior)) +
+    geom_line() +
+    coord_cartesian(xlim = 0:1, ylim = c(0, 6), expand = 0) +
+    labs(y = "Density", x = bquote(theta))
+
+pd$Posterior <- dbeta(pd$x, 10, 2)
+pdw <- gather(pd, key=Type, value=density, Prior:Posterior)
+ggplot(pdw, aes(x, density, col=Type)) +
+    geom_line() +
+    annotate("point", x=c(.5, .5), y = c(pdw$density[pdw$x==.5])) +
+    annotate("label", x=c(.5, .5), 
+             y = pdw$density[pdw$x==.5], 
+             label = round(pdw$density[pdw$x==.5], 3),
+             vjust=-.5)
+
+# hypothsis test for proportion = 0.5 
+filter(pd, x == .5) %>% 
+    mutate(BF01 = Posterior/Prior,
+           BF10 = 1/BF01) %>% 
+    round(3)
+```
+
+```{r}
+# with brms 
+
+get_prior(s | trials(k) ~ 0 + intercept, 
+          family=binomial(link="identity"),
+          data = d)
+
+Prior <- set_prior("beta(1, 1)", class = "b", lb = 0, ub = 1)
+
+m <- brm(s | trials(k) ~ 0 + intercept, 
+         family = binomial(link="identity"),
+         prior = Prior,
+         data = d,
+         sample_prior = TRUE,
+         iter = 1e4,
+         cores = 4,
+         file = "bayesfactormodel")
+
+m$fit
+
+# get posterior samples
+samples <- posterior_samples(m, "b")
+head(samples)
+
+h <- hypothesis(m, "intercept = 0.5")
+print(h, digits = 4)
+
+plot(h)
+
+```
+
+```{r}
+d <- data.frame(
+    pledge = c("yes", "no"),
+    s = c(424, 5416),
+    n = c(777, 9072)
+)
+d
+
+get_prior(s | trials(n) ~ 0 + pledge, 
+          family=binomial(link="identity"),
+          data = d)
+
+# sets the prior for both coefficients (by setting the same prior for all coefficientes in the class)
+Prior <- set_prior("beta(1, 1)", class = "b", lb = 0, ub = 1)
+
+m1 <- brm(s | trials(n) ~ 0 + pledge, 
+         family = binomial(link="identity"),
+         prior = Prior,
+         sample_prior = TRUE,
+         iter = 1e4,
+         data = d,
+         cores = 4,
+         file = "bayesfactormodel2")
+
+h1 <- hypothesis(m1, "pledgeyes = pledgeno")
+print(h1, digits = 3)
+
+h1p1 <- plot(h1, theme = theme_get(), plot = F)[[1]] +
+    theme(legend.position = "top")
+h1p2 <- plot(h1, theme = theme_get(), plot = F)[[1]] + 
+    coord_cartesian(xlim = c(-.05, .05), ylim = c(0, 5)) +
+    theme(legend.position = "top")
+gridExtra::grid.arrange(h1p1, h1p2, nrow = 1)
+```
+
+
+

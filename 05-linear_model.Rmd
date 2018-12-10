@@ -4,6 +4,9 @@
 
 - [modeling data in the tidyverse](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)
 - [simulating linear models](https://aosmith.rbind.io/2018/01/09/simulate-simulate-part1/)
+- [great homework template](http://www.andrew.cmu.edu/user/achoulde/94842/homework/homework5.html)
+- [linear regression tutorial](https://rpubs.com/aaronsc32/simple-linear-regression)
+- [multiple regression tutorial](https://rpubs.com/aaronsc32/multiple-regression)
 
 ## Learning goals 
 
@@ -58,6 +61,7 @@
   - punishes one larger error more than several smaller errors
 
 ```{r echo=FALSE, message=FALSE}
+# packages 
 library("knitr") #for markdown things 
 library("broom") #for getting tidy model summaries
 library("lme4") #for mixed effects models 
@@ -65,13 +69,21 @@ library("patchwork") #for making figure panels
 library("janitor") #for cleaning variable names 
 library("emmeans") #for comparing estimated marginal means 
 library("boot") #for bootstrapping
+library("GGally") #for ggpairs() function
 library("modelr") #for cross-validation
 library("tictoc") #for timing things
+library("corrr") #for timing things
 library("tidyverse") #for everything else
+
+# knitr options 
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>")
 
+# display options 
+options(scipen = 4) # don't use scientific notation in output 
+
+# set ggplot theme
 theme_set(
   theme_classic()+
     theme(text = element_text(size = 20)) #text size
@@ -98,12 +110,35 @@ $$
 data = model + error 
 $$
 
-For the linear model that we'll focus on heres
+Here, we try to predict the dependent variable $Y$ as a function of the independent variable $X$ (I'll sometimes refer to $X$ as _predictor_).
+
+$$
+Y = f(X) + \epsilon
+$$
+The linear model. 
+
+$$
+Y = \beta_0 + \beta_1 X + \epsilon 
+$$
+
+
+
+
+### OLS vs. MLE 
+
+- OLS: 
+  - method for approximately determining unknown parameters in a linear regression model
+  - minimize sums of squared errors 
+- MLE: 
+  - estimate parameters of a statistical model 
+  - inlcudes least-absolute deviations (L1-norm) and least squares (l2-norm)
+
+- minimizing squared error is equivalent to maximizing the likelihood 
 
 ## One binary predictor
 
 $$
-y = \alpha + \beta \cdot condition + \epsilon
+y = \beta_0 + \beta_1 \cdot condition + \epsilon
 $$
 
 - regression predicts the mean value for each group (mean minimizes the sum of squared errors)
@@ -121,9 +156,8 @@ df.data = data_frame(
 )
 
 # show top five and bottom five rows of data 
-rbind(head(df.data),
-      tail(df.data)
-      )
+head(df.data, 5) %>% 
+  bind_rows(tail(df.data, 5))
 
 ```
 
@@ -349,6 +383,27 @@ Just to be clear, there are really only two values here on the x-axis. I've just
 
 So, the basic question here is: how much are we reducing the error of the model, if we assume allow for a difference between conditions, compared to when we don't allow for that difference. Is the reduction of error statistically significant? 
 
+### Likelihood 
+
+```{r}
+# https://rdrr.io/r/stats/sigma.html
+
+# fit = lm(formula = response ~ condition, data = df.data)
+fit = lm(formula = response ~ 1, data = df.data)
+
+sigma = sigma(fit)
+# sqrt(sum((fit$residuals - mean(fit$residuals))^2) / (nobs(fit) - sum(!is.na(coef(fit)))))
+
+dnorm(fit$residuals, mean = mean(fit$residuals), sd = sigma)  %>% 
+  log() %>% 
+  sum()
+
+logLik(fit)
+```
+
+
+
+
 ### Interpreting `summary.lm()` output
 
 `summary()` gives: 
@@ -377,11 +432,41 @@ Point estimate:
 Coefficient standard error: 
 
 - [this post](https://stats.stackexchange.com/questions/44838/how-are-the-standard-errors-of-coefficients-calculated-in-a-regression) explains how these standard errors are calculated
+- [tutorial on confidence intervals](https://rpubs.com/aaronsc32/regression-confidence-prediction-intervals)
 
 - can be used to calculate confidence intervals 
 - and test hypotheses 
 
-TODO: illustrate how these can be estimated via bootstrap 
+```{r}
+
+# how to go from standard error to confidence intervals 
+n_obs = nrow(df.data)
+fit1 %>%
+  tidy() %>%
+  cbind(fit1 %>%
+          confint_tidy()) %>%
+  mutate(ci_low = estimate + std.error * qt(0.025, df = n_obs-2),
+         ci_high = estimate + std.error * qt(0.975, df = n_obs-2))
+
+
+# how to go to confidence interval for each data point 
+
+# tmp = fit1 %>% 
+#   augment() %>% 
+#   cbind(fit1 %>% 
+#           predict(interval = "confidence")) %>% 
+#   clean_names() %>% 
+#   select(response, condition, fitted, se_fit, lwr, upr) %>% 
+#   mutate(ci_low = fitted + se_fit * qt(0.025, df = n()-2),
+#          ci_high = fitted + se_fit * qt(0.975, df = n()-2)
+#          )
+
+  
+
+```
+
+
+TODO: illustrate how these can be simulated 
 
 t-value: 
 
@@ -402,22 +487,42 @@ tmp = fit1 %>%
 - relationship to other measures 
 
 ```{r}
-# fit %>% 
-#   tidy() %>% 
-#   clean_names() %>% 
-#   left_join(confint(fit, level = 0.95) %>% 
-#               as.data.frame() %>% 
-#               rownames_to_column("term"),
-#             by = "term") %>% 
-#   mutate(cf_low = estimate + std_error * qt(0.025, df = nobs(fit)-1),
-#          cf_high = estimate + std_error * qt(0.975, df = nobs(fit)-1),
-#          stat = estimate / std_error,
-#          p = dt(stat, df = nobs(fit))*2
-#          )
+fit1 %>%
+  tidy() %>%
+  clean_names() %>%
+  cbind(confint_tidy(fit1)) %>% 
+  mutate(cf_low = estimate + std_error * qt(0.025, df = nobs(fit1) - 2),
+         cf_high = estimate + std_error * qt(0.975, df = nobs(fit1) - 2),
+         stat = estimate / std_error,
+         p = 2 * pt(stat, nobs(fit1) - 2, lower = FALSE) #two tailed test 
+         )
 ```
 
 - [how to calculate the likelihood of a model](https://stats.stackexchange.com/questions/73196/recalculate-log-likelihood-from-a-simple-r-lm-model)
 
+```{r}
+# binom.test(1, 20, p = 0.5)
+# 
+# pbinom(1, 20, p = 0.5)*2
+
+df.data = data_frame(
+  x = 0:20,
+  y = dbinom(x, 20, p = 0.5))
+
+ggplot(data = df.data, aes(x = x, y = y))+
+  geom_bar(stat = "identity")+
+  geom_vline(xintercept = c(qbinom(0.025, size = 20, prob = 0.5),
+                            qbinom(0.975, size = 20, prob = 0.5)),
+             linetype = 2)
+
+ggplot(data_frame(x = 0:1), aes(x))+
+  stat_function(fun = "qbinom", args = list(size = 20, prob = 0.5))+
+  scale_y_continuous(breaks = 0:20)+
+  theme(panel.grid.major.y = element_line(linetype = 2))
+
+
+
+```
 
 
 
@@ -487,7 +592,7 @@ Finally, the F-Statistic. Including the t-tests, this is the second "test" that 
 
 
 ```{r}
-fit1 %>% confint()
+fit1 %>% confint_tidy()
 ```
 
 Confidence intervals (95%) on the coefficients. 
@@ -641,19 +746,116 @@ CLD(leastsquare$emmeans,
 
 
 
-
-### Dummy coding 
-
-<!-- explain the different ways of doing coding for coefficients  -->
-
 ### Multiple testing 
 
 - correct for the number of tests
 
-### Planned contrasts 
+### Contrasts 
 
+- [tutorial](http://www.flutterbys.com.au/stats/tut/tut7.1.html)
+- [manual](https://stats.idre.ucla.edu/r/library/r-library-contrast-coding-systems-for-categorical-variables/)
+- [course slides](https://www.andrew.cmu.edu/user/achoulde/94842/lectures/lecture10/lecture10-94842.html)
 - a way of avoiding multiple comparisons 
 - the emphasis is on "planned": so these comparisons should be pre-registered 
+
+```{r}
+# dummy coding 
+
+df.dummy = data_frame(
+  condition = rep(c("A", "B"), each = 20),
+  response = ifelse(condition == "A",
+                    rnorm(20, mean = 10, sd = 2),
+                    rnorm(20, mean = 20, sd = 2))
+)
+
+fit.dummy = lm(response ~ condition, data = df.dummy)
+fit.dummy %>% summary()
+
+df.plot = df.dummy %>% 
+  mutate(condition = ifelse(condition == "A", 0, 1))
+
+ggplot(data = df.plot, aes(x = condition, y = response))+
+  geom_vline(xintercept = 0, linetype = 2)+
+  geom_smooth(method = "lm", se = F, color = "black")+
+  geom_point(position = position_jitter(width = 0.01, height = 0))+
+  stat_summary(fun.y = "mean", geom = "point", shape = 21, color = "black", fill = "yellow", size = 4)
+
+```
+
+```{r}
+# contrast coding 
+
+fit.contrast = lm(response ~ condition, data = df.dummy)
+fit.contrast %>% summary()
+
+df.plot = df.dummy %>% 
+  mutate(condition = ifelse(condition == "A", -1, 1))
+
+ggplot(data = df.plot, aes(x = condition, y = response))+
+  geom_vline(xintercept = 0, linetype = 2)+
+  geom_smooth(method = "lm", se = F, color = "black")+
+  geom_point(position = position_jitter(width = 0.01, height = 0))+
+  stat_summary(fun.y = "mean", geom = "point", shape = 21, color = "black", fill = "yellow", size = 4)
+```
+
+```{r}
+# proportinal contrast coding 
+
+df.dummy = df.dummy %>% 
+  mutate(condition = factor(condition, levels = c("B", "A")))
+
+fit.contrast = lm(response ~ condition, data = df.dummy)
+fit.contrast %>% summary()
+
+df.plot = df.dummy %>% 
+  mutate(condition = ifelse(condition == "A", -0.5, 0.5))
+
+ggplot(data = df.plot, aes(x = condition, y = response))+
+  geom_vline(xintercept = 0, linetype = 2)+
+  geom_smooth(method = "lm", se = F, color = "black")+
+  geom_point(position = position_jitter(width = 0.01, height = 0))+
+  stat_summary(fun.y = "mean", geom = "point", shape = 21, color = "black", fill = "yellow", size = 4)
+```
+
+
+#### Tutorial
+
+- [tutorial](https://pagepiccinini.com/2016/01/08/introduction-and-linear-models-part-1/)
+- [tutorial 2](https://pagepiccinini.com/2016/03/18/contrast-coding-with-three-level-variables/)
+
+```{r}
+data_threelevel = data_frame(group = c(rep("A", 10), rep("B", 10), rep("C", 10)),
+                  score = c(rnorm(10, 40, 5), rnorm(10, 50, 5), rnorm(10, 60, 5)))
+
+data_twolevel = data_threelevel %>%
+  filter(group != "C") %>%
+  mutate(group = factor(group))
+
+data_twolevel %>% 
+  group_by(group) %>% 
+  summarize(mean = mean(score),
+            sd = sd(score))
+
+# dummy coding
+ab_dummy.lm = lm(score ~ group, data_twolevel)
+ab_dummy.lm %>% summary()
+
+# contrast coding 
+data_twolevel_contrast = data_twolevel %>%
+  mutate(contrast_AvB = ifelse(group == "A", -0.5, 0.5))
+
+ab_contrast.lm = lm(score ~ contrast_AvB, data_twolevel_contrast)
+ab_contrast.lm %>% summary()
+
+
+# data_twolevel %>% 
+#   summarize(mean = mean(score))
+
+ab_ac_dummy.lm = lm(score ~ group, data_threelevel)
+kable(tidy(ab_ac_dummy.lm))
+
+```
+
 
 ## One continuous predictor
 
@@ -789,6 +991,40 @@ What to do if residual plot indicates non-linearity?
 - don't include highly correlated predictors in the model 
 - only include the most meaningful predictor (drop the others) --> don't base this decision on significance! 
 - use PCA to combine multiple predictors into one 
+- ggpairs 
+- corrr
+
+#### `correlate()`
+
+```{r}
+df.data = diamonds
+
+df.data %>% 
+  filter(row_number() < 100) %>% 
+  select(carat, depth, x:z) %>%
+  correlate() %>% 
+  shave()
+```
+
+
+#### `ggpairs()`
+
+```{r}
+df.data = diamonds
+
+df.data %>% 
+  filter(row_number() < 100) %>% 
+  select(carat, depth, x:z) %>%
+  ggpairs(
+    lower = list(continuous = wrap("points", alpha = 0.1))
+  )+
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank()
+  )
+```
+
+
 
 ### Homoskedasticity 
 
@@ -1268,6 +1504,8 @@ fit.combined %>% summary()
 - explain how the linear model expresses the different results
 
 ### Interactions 
+
+- be extra careful when interpreting regressions with interactions [see](https://pagepiccinini.com/2016/01/08/introduction-and-linear-models-part-1/)
 
 Let's first create a dataset in which a binary predictor interacts with a continuous one. 
 
@@ -1955,6 +2193,118 @@ TODO:
 
 - __bootstrap__:
   - confidence in estimates  
+
+## Power analysis 
+
+- [power analysis with dplyr](http://www.imachordata.com/linear-model-power-analysis-with-dplyr/)
+
+```{r}
+df.seals = read_csv("data/ShrinkingSeals.csv")
+
+ggplot(df.seals, aes(x=age, y=length)) +
+  geom_point()
+
+fit.seals = lm(formula = length ~ age,
+               data = df.seals)
+```
+
+
+```{r}
+# get parameters 
+
+df.parameters = fit.seals %>% 
+  tidy() %>% 
+  select(term, estimate) %>% 
+  bind_rows(
+    fit.seals %>% 
+    glance() %>% 
+    select(estimate = sigma) %>% 
+    mutate(term = "sigma")
+  ) %>% 
+  spread(term, estimate) %>% 
+  clean_names() %>% 
+  rename(slope = age)
+
+df.simulation = df.parameters %>% 
+  crossing(n = 10:100) %>% 
+  group_by(intercept, slope, sigma, n) %>% 
+  expand(reps = 1:n) %>% 
+  ungroup() %>% 
+  crossing(sim = 1:100) %>% 
+  mutate(age = runif(n(), min = 1000, max = 8500),
+         length = rnorm(n(), mean = intercept + slope * age, sd = sigma))
+
+df.models = df.simulation %>% 
+  group_by(intercept, slope, sigma, n, sim) %>% 
+  nest() %>% 
+  mutate(mod = map(data, ~lm(length ~ age, data = .)),
+         coefs = map(mod, ~tidy(.)))
+
+df.coefficients = df.models %>% 
+  unnest(coefs, .id = "id") %>% 
+  ungroup() %>% 
+  filter(term == "age")
+
+df.power = df.coefficients %>% 
+  group_by(n) %>% 
+  summarise(power = 1-sum(p.value > .05)/n()) %>% 
+  ungroup()
+
+ggplot(data = df.power, aes(x = n, y = power))+
+  geom_line()+
+  geom_point()
+```
+
+```{r}
+# get parameters 
+
+df.parameters = fit.seals %>% 
+  tidy() %>% 
+  select(term, estimate) %>% 
+  bind_rows(
+    fit.seals %>% 
+    glance() %>% 
+    select(estimate = sigma) %>% 
+    mutate(term = "sigma")
+  ) %>% 
+  spread(term, estimate) %>% 
+  clean_names() %>% 
+  rename(slope = age)
+
+df.simulation = df.parameters %>% 
+  select(-sigma) %>% 
+  crossing(n = seq(10, 100, 10)) %>% 
+  group_by(intercept, slope, n) %>% 
+  expand(reps = 1:n) %>% 
+  ungroup() %>% 
+  crossing(sim = 1:100,
+           sigma = seq(1, 10, 1)) %>% 
+  crossing() %>% 
+  mutate(age = runif(n(), min = 1000, max = 8500),
+         length = rnorm(n(), mean = intercept + slope * age, sd = sigma))
+
+df.models = df.simulation %>% 
+  group_by(intercept, slope, sigma, n, sim) %>% 
+  nest() %>% 
+  mutate(mod = map(data, ~lm(length ~ age, data = .)),
+         coefs = map(mod, ~tidy(.)))
+
+df.coefficients = df.models %>% 
+  unnest(coefs, .id = "id") %>% 
+  ungroup() %>% 
+  filter(term == "age")
+
+df.power = df.coefficients %>% 
+  group_by(n, sigma) %>% 
+  summarise(power = 1 - sum(p.value > .05) / n()) %>% 
+  ungroup() %>% 
+  mutate(sigma = as.factor(sigma))
+
+ggplot(data = df.power, aes(x = n, y = power, color = sigma))+
+  geom_line()+
+  geom_point()
+```
+
 
 ```{r}
 print(sessionInfo(), locale = FALSE)

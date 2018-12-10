@@ -1,7 +1,159 @@
 # Test
 
 ```{r echo=FALSE, message=FALSE}
+library("tidyjson")
 library("tidyverse")
+library("janitor")
 library("knitr")
+```
+
+## Datasets 
+
+### World Cup 2018 results 
+
+```{r}
+df.data = read_json("data/football.json")
+  
+df.stadiums = df.data %>% 
+  enter_object(stadiums) %>% 
+  gather_array("stadium") %>% 
+  gather_object() %>% 
+  append_values_string("value") %>% 
+  as_data_frame() %>% 
+  spread(name, value) %>% 
+  select(-document.id, id)
+
+df.tv = df.data %>% 
+  enter_object(tvchannels) %>% 
+  gather_array("tvchannels") %>% 
+  gather_object() %>% 
+  append_values_string("value") %>% 
+  as_data_frame() %>% 
+  spread(name, value) %>% 
+  select(-document.id, id)
+
+df.teams = df.data %>% 
+  enter_object(teams) %>% 
+  gather_array("teams") %>% 
+  gather_object() %>% 
+  append_values_string("value") %>% 
+  as_data_frame() %>% 
+  spread(name, value) %>% 
+  select(-document.id, id)
+
+df.knockout = df.data %>% 
+  enter_object(knockout) %>% 
+  gather_object("round_index") %>% 
+  spread_values(round = jstring("name")) %>%
+  enter_object(matches) %>% 
+  gather_array("match") %>% 
+  spread_values(name = jnumber("name"),
+                type = jstring("type"),
+                home_team = jnumber("home_team"),
+                away_team = jnumber("away_team"),
+                home_result = jnumber("home_result"),
+                away_result = jnumber("away_result"),
+                home_penalty = jnumber("home_penalty"),
+                away_penalty = jnumber("away_penalty"),
+                winner = jnumber("winner"),
+                date = jstring("date"),
+                stadium = jstring("stadium"),
+                finished = jlogical("finished"),
+                matchday = jnumber("finished")
+                ) %>% 
+  enter_object(channels) %>% 
+  gather_array("channels") %>% 
+  append_values_number("channel") %>% 
+  as_data_frame() %>% 
+  select(-c(document.id, round_index))
+
+df.groups = df.data %>% 
+  enter_object(groups) %>% 
+  gather_object("index") %>% 
+  # gather_object() %>% 
+  # json_types()
+   spread_values(group = jstring("name"),
+                winner = jnumber("winner"),
+                runnerup = jnumber("runnerup")
+                ) %>% 
+  enter_object(matches) %>%  
+  gather_array("match") %>% 
+  spread_values(name = jnumber("name"),
+                type = jstring("type"),
+                home_team = jnumber("home_team"),
+                away_team = jnumber("away_team"),
+                home_result = jnumber("home_result"),
+                away_result = jnumber("away_result"),
+                date = jstring("date"),
+                stadium = jstring("stadium"),
+                finished = jlogical("finished"),
+                matchday = jnumber("finished")
+                ) %>% 
+  enter_object(channels) %>% 
+  gather_array("channels") %>% 
+  append_values_number("channel") %>% 
+  as_data_frame() %>% 
+  select(-c(document.id, group, channels)) %>% 
+  select(group = index, everything())
+
+df.knockout.short = df.knockout %>% 
+  select(-c(channels, channel, matchday, finished)) %>% 
+  distinct() %>% 
+  mutate_at(vars(home_team, away_team, winner), funs(factor(., levels = df.teams$teams, labels = df.teams$name)))
+
+df.groups.short = df.groups %>% 
+  select(-c(finished:channel)) %>% 
+  distinct() %>% 
+  mutate_at(vars(home_team, away_team, winner, runnerup), funs(factor(., levels = df.teams$teams, labels = df.teams$name)))
+
+```
+
+
+### Titanic 
+
+- dataset for logistic regression
+
+```{r}
+df.titanic = read_csv("data/titanic.csv") %>% 
+  clean_names() %>% 
+  mutate(gender = factor(gender, levels = 0:1, labels = c("male", "female")),
+         residence = factor(residence, levels = 0:2, labels = c("American", "British", "other"))) %>% 
+  rename(n_siblings_spouses = sibsp,
+         n_parents_children = parch) %>% 
+  mutate(pclass = as.factor(pclass))
+```
+
+```{r}
+# plots 
+
+df.plot = df.titanic %>% 
+  group_by(residence, pclass) %>% 
+  mutate(group_size = n()) %>% 
+  ungroup()
+
+ggplot(df.plot, aes(x = residence, y = survived))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange")+
+  stat_summary(fun.y = "mean", geom = "point", aes(size = group_size))+
+  facet_wrap(~pclass)
+
+# ggplot(df.titanic, aes(x = residence, y = survived))+
+ggplot(df.titanic, aes(x = pclass, y = survived))+
+  stat_summary(fun.data = "mean_cl_boot", geom = "linerange")+
+  stat_summary(fun.y = "mean", geom = "point", size = 2)
+```
+
+
+```{r}
+# stats 
+
+fit1 = glm(formula = survived ~ residence,
+          data = df.titanic,
+          family = binomial)
+
+fit2 = glm(formula = survived ~ residence + pclass,
+          data = df.titanic,
+          family = binomial)
+
+fit2 %>% summary()
 ```
 

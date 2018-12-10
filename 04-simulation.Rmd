@@ -2,13 +2,14 @@
 
 ```{r echo=FALSE, message=FALSE}
 
-library("knitr")     # for knitting stuff
+library("knitr")     # knitting stuff
+library("boot")      # bootstrapping
 library("NHANES")    # national health and nutrition examination survey
-library("janitor")   # for cleaning variable names
-library("broom")     # for tidying model fits
-library("modelr")    # for modeling
-library("patchwork") # for making figure panels
-library("tidyverse") # for data wrangling
+library("janitor")   # cleaning variable names
+library("broom")     # tidying model fits
+library("modelr")    # modeling
+library("patchwork") # making figure panels
+library("tidyverse") # data wrangling
 
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -150,19 +151,22 @@ This time, I've sampled 5 times from a normal distribution with mean 0 and stand
 Figure \@ref(fig:duniform) shows the density of the uniform distribution with a minimum of 0 and a maximum of 3. 
 
 ```{r duniform}
-curve(dunif(x, min = 0, max = 3), from = -5, to = 5)
+ggplot(data = data_frame(x = c(-5, 5)), aes(x = x))+
+  stat_function(fun = "dunif", args = list(min = 0, max = 3))
 ```
 
 Figure \@ref(fig:dnormal) shows the density of the normal distribution with a mean of 0 and a standard deviation of 1.
 
 ```{r dnormal}
-curve(dnorm(x, mean = 0, sd = 1), from = -5, to = 5)
+ggplot(data = data_frame(x = c(-5, 5)), aes(x = x))+
+  stat_function(fun = "dnorm", args = list(mean = 0, sd = 1))
 ```
 
 Figure \@ref(fig:dbeta) shows the density of the beta distribution with shape parameters 5 and 3.
 
 ```{r dbeta}
-curve(dbeta(x, shape1 = 5, shape2 = 3), from = 0, to = 1)
+ggplot(data = data_frame(x = c(0, 1)), aes(x = x))+
+  stat_function(fun = "dbeta", args = list(shape1 = 5, shape2 = 3))
 ```
 
 Most probability distributions in R can be used in four different ways (I use foo here as a place holder for the distribution name): 
@@ -214,6 +218,18 @@ ggplot(data = data_frame(x = seq(-3, 3, 0.1),
   geom_line()+
   geom_vline(xintercept = c(-2,2), color = "red", size = 1.5)
 ```
+
+- TODO: explain how to use the different functions (and when they are useful)
+  - dnorm 
+  - pnorm 
+  - qnorm 
+  
+```{r}
+# qnorm(0.025)
+# pnorm(-1.96)
+
+```
+
 
 ## Central limit theorm 
 
@@ -574,6 +590,31 @@ $$
 \frac{sd(x)}{\sqrt(n)}
 $$
 
+```{r}
+
+fun.sample_mean = function(nsamples){
+  mean(runif(nsamples, min = 0, max = 10))  
+}
+
+sampling_distribution = replicate(10000,fun.sample_mean(10)) 
+
+df.plot = sampling_distribution %>% 
+  as_data_frame()
+
+ggplot(data = df.plot, aes(x = value))+
+  stat_density(geom = "line")
+
+sample = runif(10, min = 0, max = 10)
+
+sd(sample)
+
+df.plot$value %>% sd()
+
+sd(sample)/sqrt(length(sample))
+
+```
+
+
 ## Confidence interval 
 
 
@@ -885,13 +926,6 @@ ggplot(data = df.plot, aes(x = sample, y = mean, color = conf_index))+
 
 Suggested reading: Hoekstra et al. - 2014 - Robust misinterpretation of confidence intervals.pdf
   
-### Bootstrap 
-
-```{r}
-
-```
-
-
 ## Prediction interval 
 
 - for individual data points
@@ -899,6 +933,272 @@ Suggested reading: Hoekstra et al. - 2014 - Robust misinterpretation of confiden
 
 
 ## Bootstrap 
+
+
+> In statistics, bootstrapping is any test or metric that relies on random sampling with replacement. Bootstrapping allows assigning measures of accuracy (defined in terms of bias, variance, confidence intervals, prediction error or some other such measure) to sample estimates.[1][2] This technique allows estimation of the sampling distribution of almost any statistic using random sampling methods.[3][4] Generally, it falls in the broader class of resampling methods.
+Bootstrapping is the practice of estimating properties of an estimator (such as its variance) by measuring those properties when sampling from an approximating distribution. One standard choice for an approximating distribution is the empirical distribution function of the observed data. In the case where a set of observations can be assumed to be from an independent and identically distributed population, this can be implemented by constructing a number of resamples with replacement, of the observed dataset (and of equal size to the observed dataset).
+It may also be used for constructing hypothesis tests. It is often used as an alternative to statistical inference based on the assumption of a parametric model when that assumption is in doubt, or where parametric inference is impossible or requires complicated formulas for the calculation of standard errors. [wikipedia](https://en.wikipedia.org/wiki/Bootstrapping_(statistics))
+
+>Although for most problems it is impossible to know the true confidence interval, bootstrap is asymptotically more accurate than the standard intervals obtained using sample variance and assumptions of normality. 
+
+https://www.datacamp.com/community/tutorials/bootstrap-r
+
+Bootstrap is a method of inference about a population using sample data.
+
+- sampling with replacement from sample data 
+- can be useed to estimate the standard error of any statistic and obtain confidence intervals (CI) for it 
+- especially usefull when CI is difficult to compute (or assumptions aren't met)
+
+general schema: 
+- sample with replacement from the available sample 
+- calculate desired statistic of this sample 
+- repeat R times 
+- as a result we have $T_1:T_R$ realizations of T and we can use that distribution to calculate CI for T 
+- percentile method is the most straightforward 
+
+```{r}
+df.iris = iris %>% 
+  clean_names()
+
+df.iris %>% head()
+```
+
+Goal: Confidence intervals on the median `sepal_length`, median `sepal_width`, and the Spearman's rank correlation coefficient between the two. 
+
+```{r bootstrap, cache=TRUE}
+
+func.boot = function(data, indices){
+  df.boot = data[indices, ] #bootstrapped sample 
+  results = df.boot %>% 
+    summarize(
+      sepal_length_median = median(sepal_length),
+      sepal_width_median = median(sepal_width),
+      width_length_r = cor(sepal_length, sepal_width, method = "spearman")
+    )
+  return(results %>% as.numeric()) #we need to return a vector rather than a data frame 
+}
+
+l.bootstrap = boot(data = df.iris, statistic = func.boot, R = 1000) #we specify the data, statistic, and the number of bootstrapped samples
+
+l.bootstrap %>% print
+```
+
+The `bias` is the difference between the mean of the bootstrapped samples and the value based on the original dataset. The `std.error` is the standard error of the bootstrap estimate which is equals the standard deviation of boostrap realizations. 
+
+Let's double check: 
+
+```{r}
+l.bootstrap$t %>% 
+  as_data_frame() %>% 
+  set_names(c("sepal_length_median", "sepal_width_median", "width_length_r")) %>% 
+  summarize_all(funs(sd(.)))
+```
+
+And let's plot the results, too: 
+
+```{r}
+df.plot = l.bootstrap$t %>% 
+  as_data_frame() %>% 
+  set_names(c("sepal_length_median", "sepal_width_median", "width_length_r")) %>% 
+  mutate(sample = 1:n()) %>% 
+  gather("statistic", "value", -sample)
+
+ggplot(data = df.plot, aes(x = value))+
+  stat_density(geom = "line")+
+  facet_wrap(~statistic, scales = "free")+
+  theme(text = element_text(size = 14))
+```
+
+The `boot` package also comes with a pre-build plotting function: 
+
+```{r}
+plot(l.bootstrap, index = 3)
+```
+
+
+### Different types of boostrap confidence intervals 
+
+We can find the confidence interval for a bootstrapped statistics with the `boot.ci()` function. We define the desired confidence level via `conf`, the `type` of method, and point to the statistic of interest via `index`.
+
+```{r}
+l.boot_ci = boot.ci(l.bootstrap,
+        conf = 0.95,
+        type = "perc",
+        index = 3)
+l.boot_ci
+```
+
+So, for the Spearman rank order correlation coefficeint between `sepal_length` and `sepal_width`, we find that based on our original dataset and the bootstrapped samples, the value is $r = $`r l.boot_ci$t0 %>% round(2)` with a boostrapped 95% confidence interval of [`r paste(l.boot_ci$percent[c(4, 5)] %>% round(2), collapse = ", ")`].  
+
+Some notation, let: 
+
+- $t^*$ be the bootstrap estimate (mean of bootstrap realizations),
+- $t_0$ be a value of our statistic in the original dataset,
+- $se^*$ be a standard error of the bootstrap estimate,
+- $b$ be a bias of the bootstrap estimate $b = t^*−t_0$
+- $\alpha$ be a confidence level, typically $\alpha$ = 0.95,
+- $z_\alpha$ be a $1−\frac{\alpha}{2}$-quantile of standard normal distribution,
+- $\theta_\alpha$ be an $\alpha$-percentile of distribution of bootstrap realizations.
+
+#### Percentile Confidence interval 
+
+Just takes the relevant percentiles of the bootstrapped sample: 
+
+$$
+\theta_{(1-\alpha)/2}\\
+\theta_{1 - (1-\alpha)/2}
+$$
+Let's double check: 
+
+```{r}
+# using the boot.ci() function
+method1 = boot.ci(l.bootstrap,
+        conf = 0.95,
+        type = "perc",
+        index = 3)$percent[c(4, 5)]
+
+# calculating directly on the bootstrap samples
+method2 = l.bootstrap$t[ , 3] %>% 
+  quantile(prob = c(.025, .975))
+
+kable(data_frame(
+  method = c("boot.ci(type = 'perc')", "test"),
+  ci_low = c(method1[1], method2[1]),
+  ci_high = c(method1[2], method2[2])) %>%
+    mutate_at(vars(contains("ci_")), funs(round(., 2)))
+)
+
+```
+
+#### Normal confidence interval 
+
+A typical confidence interval is computed as 
+
+$$
+t_0 \pm z_\alpha \cdot se^*
+$$
+In the bootstrap case, we need to correct it for bias in the following way: 
+
+$$
+t_0 - b \pm z_\alpha \cdot se^*
+$$
+
+Let's check again: 
+
+```{r}
+# using the boot.ci() function
+method1 = boot.ci(l.bootstrap,
+        conf = 0.95,
+        type = "norm",
+        index = 3)$norm[c(2, 3)]
+
+# calculating directly on the bootstrap samples
+boot_tidy = l.bootstrap %>% 
+  tidy() %>% 
+  clean_names() %>% 
+  filter(row_number() == 3)
+
+method2 = boot_tidy$statistic - boot_tidy$bias + qnorm(c(0.025, 0.975)) * boot_tidy$std_error
+
+kable(data_frame(
+  method = c("boot.ci(type = 'norm')", "test"),
+  ci_low = c(method1[1], method2[1]),
+  ci_high = c(method1[2], method2[2])) %>%
+    mutate_at(vars(contains("ci_")), funs(round(., 2)))
+)
+```
+
+#### Basic confidence interval 
+
+Percentile confidence interval performs poorly for weird-tailed distributions. Basic confidence interval is more robust. The basic idea (pun intended!) is to compute differences between each bootstrap replication and $t_0$ and use percentiles of this distribution of differences. 
+
+It's calculated in the following way: 
+
+$$
+2 \cdot t_0 − \theta_{1 - (1 − \alpha) / 2}\\
+2 \cdot t_0 − \theta_{(1 − \alpha) / 2}
+$$
+Let's compare these methods on some generated data! 
+
+```{r}
+
+set.seed(0)
+nobs = 50 # number of observations 
+
+df.boot_test = data_frame(
+  samples = rexp(nobs, rate = 1)
+)
+
+dexp(0.5, rate = 1)
+
+df.boot_test %>% 
+  summarize_all(funs(median = median(.)))
+  
+fun.boot_median = function(data, indices){
+  d = data[indices, ]
+  return(median(d$samples))
+}
+
+l.boot_test = boot(data = df.boot_test,
+     statistic = fun.boot_median,
+     R = 1000)
+
+boot.ci(l.boot_test, type = c("perc", "basic"), index = 1)
+
+```
+
+ground truth is unclear here ... 
+
+
+#### More control?! 
+
+To make your bootstrap analysis reproducible in R, you can use the `set.seed()` function. But what if someone would like to reproduce your results who doesn't use R? You can gain even more control over what `boot` does by using the `boot.array()` function. 
+
+```{r}
+
+# create data frame with indices
+df.boot_samples = boot.array(l.bootstrap, indices = T) %>% 
+  as_data_frame() %>% 
+  set_names(str_c(1:ncol(.))) %>% 
+  mutate(sample = 1:n()) %>% 
+  gather("number", "index", -sample) %>% 
+  arrange(sample)
+
+# add the values from the original data 
+df.boot_samples = df.boot_samples %>% 
+  left_join(df.iris %>% 
+              mutate(index = 1:n()) %>% 
+              select(index, sepal_width, sepal_length),
+            by = "index")
+
+# compute statistics 
+df.boot_samples = df.boot_samples %>% 
+  group_by(sample) %>% 
+  summarize(sepal_width_median = median(sepal_width),
+            sepal_length_median = median(sepal_length),
+            width_length_r = cor(sepal_width, sepal_length, method = "spearman")
+            ) %>% 
+  ungroup()
+
+# calculate mean() and sd() of sample statistic 
+  
+kable(
+  df.boot_samples %>% 
+    summarize_at(vars(-sample), funs(mean = mean(.), sd = sd(.))) %>% 
+    gather("measure", "value") %>% 
+    separate(measure, into = c("variable", "dimension", "statistic", "parameter")) %>% 
+    unite("variable", variable, dimension, statistic) %>% 
+    mutate(value = round(value, 2)) %>% 
+    spread(parameter, value)
+)
+
+# l.bootstrap
+
+```
+
+
+
+
 
 ## Power analysis 
 
@@ -917,8 +1217,93 @@ t.power = function(nsamp=c(10,10),nsim=1000,means=c(0,0),sds = c(1,1)){
 
 t.power(means = c(0, 1))
 ```
-
 - recipe: specify an alpha level, calculate the rejection region, simulate data under the alternative hypothesis, and see how many times we'd reject the null hypothesis
+
+### Binomial test 
+
+```{r}
+
+n_simulations = 100
+
+df.power = crossing(n = seq(10, 100, 10),
+                    simulation = 1:n_simulations,
+                    p = seq(0.5, 0.9, 0.1)
+                    ) %>% 
+  mutate(index = 1:n()) %>% #add an index column
+  group_by(index, n, simulation) %>% 
+  mutate(response = rbinom(n = n(), size = n, prob = p)) %>% #generate random data
+  group_by(index, simulation, p) %>% 
+  nest() %>% #put data in list column
+  mutate(fit = map(data, 
+                   ~ binom.test(x = .$response,
+                          n = .$n,
+                          p = 0.5,
+                          alternative = "two.sided")),
+         p.value = map_dbl(fit, ~ .$p.value)) %>% #run binomial test and extract p-value
+  unnest(data)
+  
+df.plot = df.power %>% 
+  group_by(n, p) %>% 
+  summarize(power = 1 - sum(p.value > 0.05) / n()) %>% 
+  ungroup() %>% 
+  mutate(p = as.factor(p))
+
+ggplot(data = df.plot, aes(x = n, y = power, color = p, group = p))+
+  geom_line()+
+  geom_point()
+
+# based on simulations
+df.plot %>% 
+  filter(n == 50, p == 0.7)
+
+# analytic solution
+pwr.p.test(h = ES.h(0.5, 0.7),
+           n = 50)
+```
+
+## Density estimation 
+
+```{r}
+values = c(1, 1.2, 1.5, 2, 3)
+
+bandwidth = 0.25
+
+tmp = density(values, bw = bandwidth)
+
+df.density = data_frame(
+  x = tmp$x,
+  y = tmp$y * length(values)
+)
+
+# add densities for the normal distributions 
+for (i in 1:length(values)){
+  df.density[[str_c("values_",i)]] = dnorm(df.density$x, mean = values[i], sd = bandwidth)
+}
+
+# sum densities 
+df.density = df.density %>% 
+  mutate(sum_norm = rowSums(select(., contains("values_"))))
+
+# draw initial density plot 
+p = ggplot(data = df.density, aes(x = x, y = y))+
+  geom_line(size = 2)
+
+# add individual Gaussians 
+for (i in 1:length(values)){
+  p = p + stat_function(fun = "dnorm", args = list(mean = values[i], sd = bandwidth))  
+}
+
+# add the sum of Gaussians 
+p = p + 
+  geom_line(data = df.density,
+            aes(x = x, y = sum_norm),
+            size = 1,
+            color = "red",
+            linetype = 2)
+p
+
+```
+
 
 
 ## Resources 
