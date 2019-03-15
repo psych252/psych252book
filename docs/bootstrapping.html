@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 15 Bootstrapping | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
+  <meta name="description" content="Course notes for Psych 252.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 15 Bootstrapping | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course notes for Psych 252." />
+  <meta name="github-repo" content="psych252/psych252book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 Bootstrapping | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  
+  <meta name="twitter:description" content="Course notes for Psych 252." />
+  
+
+<meta name="author" content="Tobias Gerstenberg">
+
+
+<meta name="date" content="2019-03-14">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="power-analysis.html">
+<link rel="next" href="model-comparison.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.5/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Psych 252</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a><ul>
+<li class="chapter" data-level="2.1" data-path="visualization-1.html"><a href="visualization-1.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="visualization-1.html"><a href="visualization-1.html#load-packages"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
+<li class="chapter" data-level="2.3" data-path="visualization-1.html"><a href="visualization-1.html#why-visualize-data"><i class="fa fa-check"></i><b>2.3</b> Why visualize data?</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="visualization-1.html"><a href="visualization-1.html#how-not-to-visualize-data"><i class="fa fa-check"></i><b>2.3.1</b> How <em>not</em> to visualize data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="visualization-1.html"><a href="visualization-1.html#how-to-make-it-better"><i class="fa fa-check"></i><b>2.3.2</b> How to make it better</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-rstudio"><i class="fa fa-check"></i><b>2.4</b> Setting up RStudio</a></li>
+<li class="chapter" data-level="2.5" data-path="visualization-1.html"><a href="visualization-1.html#getting-help"><i class="fa fa-check"></i><b>2.5</b> Getting help</a></li>
+<li class="chapter" data-level="2.6" data-path="visualization-1.html"><a href="visualization-1.html#data-visualization-using-ggplot2"><i class="fa fa-check"></i><b>2.6</b> Data visualization using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="2.6.1" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.6.1</b> Setting up a plot</a></li>
+<li class="chapter" data-level="2.6.2" data-path="visualization-1.html"><a href="visualization-1.html#setting-the-default-plot-theme"><i class="fa fa-check"></i><b>2.6.2</b> Setting the default plot theme</a></li>
+<li class="chapter" data-level="2.6.3" data-path="visualization-1.html"><a href="visualization-1.html#scatter-plot"><i class="fa fa-check"></i><b>2.6.3</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.6.4" data-path="visualization-1.html"><a href="visualization-1.html#line-plot"><i class="fa fa-check"></i><b>2.6.4</b> Line plot</a></li>
+<li class="chapter" data-level="2.6.5" data-path="visualization-1.html"><a href="visualization-1.html#adding-error-bars"><i class="fa fa-check"></i><b>2.6.5</b> Adding error bars</a></li>
+<li class="chapter" data-level="2.6.6" data-path="visualization-1.html"><a href="visualization-1.html#grouping-data"><i class="fa fa-check"></i><b>2.6.6</b> Grouping data</a></li>
+<li class="chapter" data-level="2.6.7" data-path="visualization-1.html"><a href="visualization-1.html#making-facets"><i class="fa fa-check"></i><b>2.6.7</b> Making facets</a></li>
+<li class="chapter" data-level="2.6.8" data-path="visualization-1.html"><a href="visualization-1.html#global-local-and-setting-aes"><i class="fa fa-check"></i><b>2.6.8</b> Global, local, and setting <code>aes()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="visualization-1.html"><a href="visualization-1.html#additional-resources"><i class="fa fa-check"></i><b>2.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="visualization-1.html"><a href="visualization-1.html#cheatsheets"><i class="fa fa-check"></i><b>2.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="2.7.2" data-path="visualization-1.html"><a href="visualization-1.html#data-camp-courses"><i class="fa fa-check"></i><b>2.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="2.7.3" data-path="visualization-1.html"><a href="visualization-1.html#books-and-chapters"><i class="fa fa-check"></i><b>2.7.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="2.7.4" data-path="visualization-1.html"><a href="visualization-1.html#misc"><i class="fa fa-check"></i><b>2.7.4</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualization-2.html"><a href="visualization-2.html"><i class="fa fa-check"></i><b>3</b> Visualization 2</a><ul>
+<li class="chapter" data-level="3.1" data-path="visualization-2.html"><a href="visualization-2.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="visualization-2.html"><a href="visualization-2.html#install-and-load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>3.2</b> Install and load packages, load data, set theme</a></li>
+<li class="chapter" data-level="3.3" data-path="visualization-2.html"><a href="visualization-2.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>3.3</b> Overview of different plot types for different things</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="visualization-2.html"><a href="visualization-2.html#proportions"><i class="fa fa-check"></i><b>3.3.1</b> Proportions</a></li>
+<li class="chapter" data-level="3.3.2" data-path="visualization-2.html"><a href="visualization-2.html#comparisons"><i class="fa fa-check"></i><b>3.3.2</b> Comparisons</a></li>
+<li class="chapter" data-level="3.3.3" data-path="visualization-2.html"><a href="visualization-2.html#relationships"><i class="fa fa-check"></i><b>3.3.3</b> Relationships</a></li>
+<li class="chapter" data-level="3.3.4" data-path="visualization-2.html"><a href="visualization-2.html#temporal-data"><i class="fa fa-check"></i><b>3.3.4</b> Temporal data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-plots"><i class="fa fa-check"></i><b>3.4</b> Customizing plots</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
+<li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
+<li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
+<li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
+<li class="chapter" data-level="3.7" data-path="visualization-2.html"><a href="visualization-2.html#peeking-behind-the-scenes"><i class="fa fa-check"></i><b>3.7</b> Peeking behind the scenes</a></li>
+<li class="chapter" data-level="3.8" data-path="visualization-2.html"><a href="visualization-2.html#making-animations"><i class="fa fa-check"></i><b>3.8</b> Making animations</a></li>
+<li class="chapter" data-level="3.9" data-path="visualization-2.html"><a href="visualization-2.html#shiny-apps"><i class="fa fa-check"></i><b>3.9</b> Shiny apps</a></li>
+<li class="chapter" data-level="3.10" data-path="visualization-2.html"><a href="visualization-2.html#defining-snippets"><i class="fa fa-check"></i><b>3.10</b> Defining snippets</a></li>
+<li class="chapter" data-level="3.11" data-path="visualization-2.html"><a href="visualization-2.html#additional-resources-1"><i class="fa fa-check"></i><b>3.11</b> Additional resources</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="visualization-2.html"><a href="visualization-2.html#cheatsheets-1"><i class="fa fa-check"></i><b>3.11.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="3.11.2" data-path="visualization-2.html"><a href="visualization-2.html#data-camp-courses-1"><i class="fa fa-check"></i><b>3.11.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="3.11.3" data-path="visualization-2.html"><a href="visualization-2.html#books-and-chapters-1"><i class="fa fa-check"></i><b>3.11.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="3.11.4" data-path="visualization-2.html"><a href="visualization-2.html#misc-1"><i class="fa fa-check"></i><b>3.11.4</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html"><i class="fa fa-check"></i><b>4</b> Data wrangling 1</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#learning-objectives-2"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#install-packages"><i class="fa fa-check"></i><b>4.2</b> Install packages</a></li>
+<li class="chapter" data-level="4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#load-packages-1"><i class="fa fa-check"></i><b>4.3</b> Load packages</a></li>
+<li class="chapter" data-level="4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#some-r-basics"><i class="fa fa-check"></i><b>4.4</b> Some R basics</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#modes"><i class="fa fa-check"></i><b>4.4.1</b> Modes</a></li>
+<li class="chapter" data-level="4.4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-types"><i class="fa fa-check"></i><b>4.4.2</b> Data types</a></li>
+<li class="chapter" data-level="4.4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#operators"><i class="fa fa-check"></i><b>4.4.3</b> Operators</a></li>
+<li class="chapter" data-level="4.4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#control-flow"><i class="fa fa-check"></i><b>4.4.4</b> Control flow</a></li>
+<li class="chapter" data-level="4.4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#functions"><i class="fa fa-check"></i><b>4.4.5</b> Functions</a></li>
+<li class="chapter" data-level="4.4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#the-pipe-operator"><i class="fa fa-check"></i><b>4.4.6</b> The pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#looking-at-data"><i class="fa fa-check"></i><b>4.5</b> Looking at data</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#head"><i class="fa fa-check"></i><b>4.5.1</b> <code>head()</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#glimpse"><i class="fa fa-check"></i><b>4.5.2</b> <code>glimpse()</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#distinct"><i class="fa fa-check"></i><b>4.5.3</b> <code>distinct()</code></a></li>
+<li class="chapter" data-level="4.5.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#count"><i class="fa fa-check"></i><b>4.5.4</b> <code>count()</code></a></li>
+<li class="chapter" data-level="4.5.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#datatable"><i class="fa fa-check"></i><b>4.5.5</b> <code>datatable()</code></a></li>
+<li class="chapter" data-level="4.5.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#other-tools-for-taking-a-quick-look-at-data"><i class="fa fa-check"></i><b>4.5.6</b> Other tools for taking a quick look at data</a></li>
+<li class="chapter" data-level="4.5.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>4.5.7</b> A quick note on naming things</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#wrangling-data"><i class="fa fa-check"></i><b>4.6</b> Wrangling data</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#filter"><i class="fa fa-check"></i><b>4.6.1</b> filter()</a></li>
+<li class="chapter" data-level="4.6.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#rename"><i class="fa fa-check"></i><b>4.6.2</b> rename()</a></li>
+<li class="chapter" data-level="4.6.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#select"><i class="fa fa-check"></i><b>4.6.3</b> select()</a></li>
+<li class="chapter" data-level="4.6.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#mutate"><i class="fa fa-check"></i><b>4.6.4</b> mutate()</a></li>
+<li class="chapter" data-level="4.6.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#arrange"><i class="fa fa-check"></i><b>4.6.5</b> arrange()</a></li>
+<li class="chapter" data-level="4.6.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-2"><i class="fa fa-check"></i><b>4.6.6</b> Practice 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#additional-resources-2"><i class="fa fa-check"></i><b>4.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#cheatsheets-2"><i class="fa fa-check"></i><b>4.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="4.7.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-camp-courses-2"><i class="fa fa-check"></i><b>4.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="4.7.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#books-and-chapters-2"><i class="fa fa-check"></i><b>4.7.3</b> Books and chapters</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html"><i class="fa fa-check"></i><b>5</b> Data wrangling 2</a><ul>
+<li class="chapter" data-level="5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#learning-objectives-3"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#load-packages-2"><i class="fa fa-check"></i><b>5.2</b> Load packages</a></li>
+<li class="chapter" data-level="5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#wrangling-data-continued"><i class="fa fa-check"></i><b>5.3</b> Wrangling data (continued)</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#summarizing-data"><i class="fa fa-check"></i><b>5.3.1</b> Summarizing data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reshaping-data"><i class="fa fa-check"></i><b>5.3.2</b> Reshaping data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#joining-multiple-data-frames"><i class="fa fa-check"></i><b>5.3.3</b> Joining multiple data frames</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>5.3.4</b> Dealing with missing data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reading-in-data"><i class="fa fa-check"></i><b>5.4</b> Reading in data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv"><i class="fa fa-check"></i><b>5.4.1</b> csv</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata"><i class="fa fa-check"></i><b>5.4.2</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#saving-data"><i class="fa fa-check"></i><b>5.5</b> Saving data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv-1"><i class="fa fa-check"></i><b>5.5.1</b> csv</a></li>
+<li class="chapter" data-level="5.5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata-1"><i class="fa fa-check"></i><b>5.5.2</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#additional-resources-3"><i class="fa fa-check"></i><b>5.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#cheatsheets-3"><i class="fa fa-check"></i><b>5.6.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="5.6.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#data-camp-courses-3"><i class="fa fa-check"></i><b>5.6.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="5.6.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#books-and-chapters-3"><i class="fa fa-check"></i><b>5.6.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="5.6.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#tutorials"><i class="fa fa-check"></i><b>5.6.4</b> Tutorials</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a><ul>
+<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#load-packages-3"><i class="fa fa-check"></i><b>6.1</b> Load packages</a></li>
+<li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.2</b> Counting</a></li>
+<li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.3</b> Flipping a coin many times</a></li>
+<li class="chapter" data-level="6.4" data-path="probability-and-causality.html"><a href="probability-and-causality.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.4</b> Clue guide to probability</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#conditional-probability"><i class="fa fa-check"></i><b>6.4.1</b> Conditional probability</a></li>
+<li class="chapter" data-level="6.4.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.4.2</b> Law of total probability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="probability-and-causality.html"><a href="probability-and-causality.html#probability-operations"><i class="fa fa-check"></i><b>6.5</b> Probability operations</a></li>
+<li class="chapter" data-level="6.6" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.6</b> Bayesian reasoning example</a></li>
+<li class="chapter" data-level="6.7" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-networks"><i class="fa fa-check"></i><b>6.7</b> Bayesian networks</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#sprinkler-example"><i class="fa fa-check"></i><b>6.7.1</b> Sprinkler example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="probability-and-causality.html"><a href="probability-and-causality.html#additional-resources-4"><i class="fa fa-check"></i><b>6.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.8.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="6.8.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.8.2</b> Books and chapters</a></li>
+<li class="chapter" data-level="6.8.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#misc-2"><i class="fa fa-check"></i><b>6.8.3</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a><ul>
+<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#load-packages-and-set-plotting-theme"><i class="fa fa-check"></i><b>7.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#working-with-distributions"><i class="fa fa-check"></i><b>7.2</b> Working with distributions</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="simulation-1.html"><a href="simulation-1.html#plotting-distributions"><i class="fa fa-check"></i><b>7.2.1</b> Plotting distributions</a></li>
+<li class="chapter" data-level="7.2.2" data-path="simulation-1.html"><a href="simulation-1.html#sampling-from-distributions"><i class="fa fa-check"></i><b>7.2.2</b> Sampling from distributions</a></li>
+<li class="chapter" data-level="7.2.3" data-path="simulation-1.html"><a href="simulation-1.html#cumulative-probability-distribution"><i class="fa fa-check"></i><b>7.2.3</b> Cumulative probability distribution</a></li>
+<li class="chapter" data-level="7.2.4" data-path="simulation-1.html"><a href="simulation-1.html#inverse-cumulative-distribution"><i class="fa fa-check"></i><b>7.2.4</b> Inverse cumulative distribution</a></li>
+<li class="chapter" data-level="7.2.5" data-path="simulation-1.html"><a href="simulation-1.html#computing-probabilities"><i class="fa fa-check"></i><b>7.2.5</b> Computing probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="simulation-1.html"><a href="simulation-1.html#bayesian-inference-with-the-normal-distribution"><i class="fa fa-check"></i><b>7.3</b> Bayesian inference with the normal distribution</a></li>
+<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#working-with-samples"><i class="fa fa-check"></i><b>7.4</b> Working with samples</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="simulation-1.html"><a href="simulation-1.html#understanding-density"><i class="fa fa-check"></i><b>7.4.1</b> Understanding <code>density()</code></a></li>
+<li class="chapter" data-level="7.4.2" data-path="simulation-1.html"><a href="simulation-1.html#the-quantile-function"><i class="fa fa-check"></i><b>7.4.2</b> The <code>quantile()</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="simulation-1.html"><a href="simulation-1.html#comparing-probability-distributions"><i class="fa fa-check"></i><b>7.5</b> Comparing probability distributions</a></li>
+<li class="chapter" data-level="7.6" data-path="simulation-1.html"><a href="simulation-1.html#additional-resources-5"><i class="fa fa-check"></i><b>7.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="simulation-1.html"><a href="simulation-1.html#cheatsheets-5"><i class="fa fa-check"></i><b>7.6.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="7.6.2" data-path="simulation-1.html"><a href="simulation-1.html#datacamp"><i class="fa fa-check"></i><b>7.6.2</b> Datacamp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a><ul>
+<li class="chapter" data-level="8.1" data-path="simulation-2.html"><a href="simulation-2.html#load-packages-and-set-plotting-theme-1"><i class="fa fa-check"></i><b>8.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="8.2" data-path="simulation-2.html"><a href="simulation-2.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>8.2</b> The central limit theorem</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="simulation-2.html"><a href="simulation-2.html#population-distribution"><i class="fa fa-check"></i><b>8.2.1</b> Population distribution</a></li>
+<li class="chapter" data-level="8.2.2" data-path="simulation-2.html"><a href="simulation-2.html#distribution-of-a-single-sample"><i class="fa fa-check"></i><b>8.2.2</b> Distribution of a single sample</a></li>
+<li class="chapter" data-level="8.2.3" data-path="simulation-2.html"><a href="simulation-2.html#the-sampling-distribution"><i class="fa fa-check"></i><b>8.2.3</b> The sampling distribution</a></li>
+<li class="chapter" data-level="8.2.4" data-path="simulation-2.html"><a href="simulation-2.html#exploring-the-clt"><i class="fa fa-check"></i><b>8.2.4</b> Exploring the CLT</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="simulation-2.html"><a href="simulation-2.html#understanding-p-values"><i class="fa fa-check"></i><b>8.3</b> Understanding p-values</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation-2.html"><a href="simulation-2.html#permutation-test"><i class="fa fa-check"></i><b>8.3.1</b> Permutation test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="simulation-2.html"><a href="simulation-2.html#confidence-intervals"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="8.5" data-path="simulation-2.html"><a href="simulation-2.html#additional-resources-6"><i class="fa fa-check"></i><b>8.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="simulation-2.html"><a href="simulation-2.html#datacamp-1"><i class="fa fa-check"></i><b>8.5.1</b> Datacamp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modeling-data.html"><a href="modeling-data.html"><i class="fa fa-check"></i><b>9</b> Modeling data</a><ul>
+<li class="chapter" data-level="9.1" data-path="modeling-data.html"><a href="modeling-data.html#load-packages-and-set-plotting-theme-2"><i class="fa fa-check"></i><b>9.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="9.2" data-path="modeling-data.html"><a href="modeling-data.html#things-that-came-up-in-class"><i class="fa fa-check"></i><b>9.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="modeling-data.html"><a href="modeling-data.html#calculating-rmse-using-magrittr-verbs"><i class="fa fa-check"></i><b>9.2.1</b> Calculating RMSE using <code>magrittr</code> verbs</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modeling-data.html"><a href="modeling-data.html#relationship-between-probability-and-likelihood"><i class="fa fa-check"></i><b>9.2.2</b> Relationship between probability and likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="modeling-data.html"><a href="modeling-data.html#modeling-data-1"><i class="fa fa-check"></i><b>9.3</b> Modeling data</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="modeling-data.html"><a href="modeling-data.html#simplicity-vs.-accuracy-trade-off"><i class="fa fa-check"></i><b>9.3.1</b> Simplicity vs. accuracy trade-off</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modeling-data.html"><a href="modeling-data.html#error-definitions-and-best-estimators"><i class="fa fa-check"></i><b>9.3.2</b> Error definitions and best estimators</a></li>
+<li class="chapter" data-level="9.3.3" data-path="modeling-data.html"><a href="modeling-data.html#sampling-distributions-for-median-and-mean"><i class="fa fa-check"></i><b>9.3.3</b> Sampling distributions for median and mean</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="modeling-data.html"><a href="modeling-data.html#hypothesis-testing-one-sample-t-test"><i class="fa fa-check"></i><b>9.4</b> Hypothesis testing: “One-sample t-test”</a></li>
+<li class="chapter" data-level="9.5" data-path="modeling-data.html"><a href="modeling-data.html#additional-resources-7"><i class="fa fa-check"></i><b>9.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="modeling-data.html"><a href="modeling-data.html#reading"><i class="fa fa-check"></i><b>9.5.1</b> Reading</a></li>
+<li class="chapter" data-level="9.5.2" data-path="modeling-data.html"><a href="modeling-data.html#datacamp-2"><i class="fa fa-check"></i><b>9.5.2</b> Datacamp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="linear-model-1.html"><a href="linear-model-1.html"><i class="fa fa-check"></i><b>10</b> Linear model 1</a><ul>
+<li class="chapter" data-level="10.1" data-path="linear-model-1.html"><a href="linear-model-1.html#load-packages-and-set-plotting-theme-3"><i class="fa fa-check"></i><b>10.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="10.2" data-path="linear-model-1.html"><a href="linear-model-1.html#things-that-came-up-in-class-1"><i class="fa fa-check"></i><b>10.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="linear-model-1.html"><a href="linear-model-1.html#building-a-sampling-distribution-of-pre"><i class="fa fa-check"></i><b>10.2.1</b> Building a sampling distribution of PRE</a></li>
+<li class="chapter" data-level="10.2.2" data-path="linear-model-1.html"><a href="linear-model-1.html#correlation"><i class="fa fa-check"></i><b>10.2.2</b> Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="linear-model-1.html"><a href="linear-model-1.html#regression"><i class="fa fa-check"></i><b>10.3</b> Regression</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="linear-model-1.html"><a href="linear-model-1.html#define-and-fit-the-models"><i class="fa fa-check"></i><b>10.3.1</b> Define and fit the models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="linear-model-1.html"><a href="linear-model-1.html#calculate-the-sum-of-squared-errors-of-each-model"><i class="fa fa-check"></i><b>10.3.2</b> Calculate the sum of squared errors of each model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="linear-model-1.html"><a href="linear-model-1.html#credit-example"><i class="fa fa-check"></i><b>10.4</b> Credit example</a></li>
+<li class="chapter" data-level="10.5" data-path="linear-model-1.html"><a href="linear-model-1.html#additional-resources-8"><i class="fa fa-check"></i><b>10.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="linear-model-1.html"><a href="linear-model-1.html#datacamp-3"><i class="fa fa-check"></i><b>10.5.1</b> Datacamp</a></li>
+<li class="chapter" data-level="10.5.2" data-path="linear-model-1.html"><a href="linear-model-1.html#misc-3"><i class="fa fa-check"></i><b>10.5.2</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="linear-model-2.html"><a href="linear-model-2.html"><i class="fa fa-check"></i><b>11</b> Linear model 2</a><ul>
+<li class="chapter" data-level="11.1" data-path="linear-model-2.html"><a href="linear-model-2.html#load-packages-and-set-plotting-theme-4"><i class="fa fa-check"></i><b>11.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="11.2" data-path="linear-model-2.html"><a href="linear-model-2.html#load-data-sets"><i class="fa fa-check"></i><b>11.2</b> Load data sets</a></li>
+<li class="chapter" data-level="11.3" data-path="linear-model-2.html"><a href="linear-model-2.html#things-that-came-up-in-class-2"><i class="fa fa-check"></i><b>11.3</b> Things that came up in class</a></li>
+<li class="chapter" data-level="11.4" data-path="linear-model-2.html"><a href="linear-model-2.html#multiple-continuous-variables"><i class="fa fa-check"></i><b>11.4</b> Multiple continuous variables</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="linear-model-2.html"><a href="linear-model-2.html#explore-correlations"><i class="fa fa-check"></i><b>11.4.1</b> Explore correlations</a></li>
+<li class="chapter" data-level="11.4.2" data-path="linear-model-2.html"><a href="linear-model-2.html#multipe-regression"><i class="fa fa-check"></i><b>11.4.2</b> Multipe regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="linear-model-2.html"><a href="linear-model-2.html#one-categorical-variable"><i class="fa fa-check"></i><b>11.5</b> One categorical variable</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions"><i class="fa fa-check"></i><b>11.5.1</b> Visualization of the model predictions</a></li>
+<li class="chapter" data-level="11.5.2" data-path="linear-model-2.html"><a href="linear-model-2.html#dummy-coding"><i class="fa fa-check"></i><b>11.5.2</b> Dummy coding</a></li>
+<li class="chapter" data-level="11.5.3" data-path="linear-model-2.html"><a href="linear-model-2.html#reporting-the-results"><i class="fa fa-check"></i><b>11.5.3</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="linear-model-2.html"><a href="linear-model-2.html#one-continuous-and-one-categorical-variable"><i class="fa fa-check"></i><b>11.6</b> One continuous and one categorical variable</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions-1"><i class="fa fa-check"></i><b>11.6.1</b> Visualization of the model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="linear-model-2.html"><a href="linear-model-2.html#interactions"><i class="fa fa-check"></i><b>11.7</b> Interactions</a><ul>
+<li class="chapter" data-level="11.7.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-3"><i class="fa fa-check"></i><b>11.7.1</b> Visualization</a></li>
+<li class="chapter" data-level="11.7.2" data-path="linear-model-2.html"><a href="linear-model-2.html#hypothesis-test"><i class="fa fa-check"></i><b>11.7.2</b> Hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="11.8" data-path="linear-model-2.html"><a href="linear-model-2.html#additional-resources-9"><i class="fa fa-check"></i><b>11.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="11.8.1" data-path="linear-model-2.html"><a href="linear-model-2.html#datacamp-4"><i class="fa fa-check"></i><b>11.8.1</b> Datacamp</a></li>
+<li class="chapter" data-level="11.8.2" data-path="linear-model-2.html"><a href="linear-model-2.html#misc-4"><i class="fa fa-check"></i><b>11.8.2</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-model-3.html"><a href="linear-model-3.html"><i class="fa fa-check"></i><b>12</b> Linear model 3</a><ul>
+<li class="chapter" data-level="12.1" data-path="linear-model-3.html"><a href="linear-model-3.html#load-packages-and-set-plotting-theme-5"><i class="fa fa-check"></i><b>12.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-model-3.html"><a href="linear-model-3.html#load-data-sets-1"><i class="fa fa-check"></i><b>12.2</b> Load data sets</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-model-3.html"><a href="linear-model-3.html#one-way-anova"><i class="fa fa-check"></i><b>12.2.1</b> One-way ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova"><i class="fa fa-check"></i><b>12.3</b> Two-way ANOVA</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="linear-model-3.html"><a href="linear-model-3.html#visualization-5"><i class="fa fa-check"></i><b>12.3.1</b> Visualization</a></li>
+<li class="chapter" data-level="12.3.2" data-path="linear-model-3.html"><a href="linear-model-3.html#model-fitting-1"><i class="fa fa-check"></i><b>12.3.2</b> Model fitting</a></li>
+<li class="chapter" data-level="12.3.3" data-path="linear-model-3.html"><a href="linear-model-3.html#interpreting-interactions"><i class="fa fa-check"></i><b>12.3.3</b> Interpreting interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="linear-model-3.html"><a href="linear-model-3.html#additional-resources-10"><i class="fa fa-check"></i><b>12.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="linear-model-3.html"><a href="linear-model-3.html#datacamp-5"><i class="fa fa-check"></i><b>12.4.1</b> Datacamp</a></li>
+<li class="chapter" data-level="12.4.2" data-path="linear-model-3.html"><a href="linear-model-3.html#misc-5"><i class="fa fa-check"></i><b>12.4.2</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linear-model-4.html"><a href="linear-model-4.html"><i class="fa fa-check"></i><b>13</b> Linear model 4</a><ul>
+<li class="chapter" data-level="13.1" data-path="linear-model-4.html"><a href="linear-model-4.html#load-packages-and-set-plotting-theme-6"><i class="fa fa-check"></i><b>13.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-model-4.html"><a href="linear-model-4.html#load-data-sets-2"><i class="fa fa-check"></i><b>13.2</b> Load data sets</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-model-4.html"><a href="linear-model-4.html#variance-decomposition-in-one-way-anova"><i class="fa fa-check"></i><b>13.3</b> Variance decomposition in one-way ANOVA</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="linear-model-4.html"><a href="linear-model-4.html#calculate-sums-of-squares"><i class="fa fa-check"></i><b>13.3.1</b> Calculate sums of squares</a></li>
+<li class="chapter" data-level="13.3.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualize-model-predictions"><i class="fa fa-check"></i><b>13.3.2</b> Visualize model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="linear-model-4.html"><a href="linear-model-4.html#two-way-anova-linear-model"><i class="fa fa-check"></i><b>13.4</b> Two-way ANOVA (linear model)</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="linear-model-4.html"><a href="linear-model-4.html#calculate-sums-of-squares-1"><i class="fa fa-check"></i><b>13.4.1</b> Calculate sums of squares</a></li>
+<li class="chapter" data-level="13.4.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualize-model-predictions-1"><i class="fa fa-check"></i><b>13.4.2</b> Visualize model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="linear-model-4.html"><a href="linear-model-4.html#anova-with-unbalanced-design"><i class="fa fa-check"></i><b>13.5</b> ANOVA with unbalanced design</a></li>
+<li class="chapter" data-level="13.6" data-path="linear-model-4.html"><a href="linear-model-4.html#two-way-anova-with-interaction"><i class="fa fa-check"></i><b>13.6</b> Two-way ANOVA (with interaction)</a></li>
+<li class="chapter" data-level="13.7" data-path="linear-model-4.html"><a href="linear-model-4.html#planned-contrasts"><i class="fa fa-check"></i><b>13.7</b> Planned contrasts</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="linear-model-4.html"><a href="linear-model-4.html#hypothetical-data"><i class="fa fa-check"></i><b>13.7.1</b> Hypothetical data</a></li>
+<li class="chapter" data-level="13.7.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualization-6"><i class="fa fa-check"></i><b>13.7.2</b> Visualization</a></li>
+<li class="chapter" data-level="13.7.3" data-path="linear-model-4.html"><a href="linear-model-4.html#constrasts"><i class="fa fa-check"></i><b>13.7.3</b> Constrasts</a></li>
+<li class="chapter" data-level="13.7.4" data-path="linear-model-4.html"><a href="linear-model-4.html#post-hoc-tests"><i class="fa fa-check"></i><b>13.7.4</b> Post-hoc tests</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#load-packages-and-set-plotting-theme-7"><i class="fa fa-check"></i><b>14.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="14.2" data-path="power-analysis.html"><a href="power-analysis.html#load-data-sets-3"><i class="fa fa-check"></i><b>14.2</b> Load data sets</a></li>
+<li class="chapter" data-level="14.3" data-path="power-analysis.html"><a href="power-analysis.html#decision-making"><i class="fa fa-check"></i><b>14.3</b> Decision-making</a></li>
+<li class="chapter" data-level="14.4" data-path="power-analysis.html"><a href="power-analysis.html#effect-sizes"><i class="fa fa-check"></i><b>14.4</b> Effect sizes</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="power-analysis.html"><a href="power-analysis.html#eta-squared-and-partial-eta-squared"><i class="fa fa-check"></i><b>14.4.1</b> eta-squared and partial eta-squared</a></li>
+<li class="chapter" data-level="14.4.2" data-path="power-analysis.html"><a href="power-analysis.html#cohens-d"><i class="fa fa-check"></i><b>14.4.2</b> Cohen’s d</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="power-analysis.html"><a href="power-analysis.html#determining-sample-size"><i class="fa fa-check"></i><b>14.5</b> Determining sample size</a><ul>
+<li class="chapter" data-level="14.5.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>14.5.1</b> <code>pwr</code> package</a></li>
+<li class="chapter" data-level="14.5.2" data-path="power-analysis.html"><a href="power-analysis.html#simulation"><i class="fa fa-check"></i><b>14.5.2</b> Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-11"><i class="fa fa-check"></i><b>14.6</b> Additional resources</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="bootstrapping.html"><a href="bootstrapping.html"><i class="fa fa-check"></i><b>15</b> Bootstrapping</a><ul>
+<li class="chapter" data-level="15.1" data-path="bootstrapping.html"><a href="bootstrapping.html#load-packages-and-set-plotting-theme-8"><i class="fa fa-check"></i><b>15.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="15.2" data-path="bootstrapping.html"><a href="bootstrapping.html#whats-wrong-with-parametric-tests"><i class="fa fa-check"></i><b>15.2</b> What’s wrong with parametric tests?</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="bootstrapping.html"><a href="bootstrapping.html#t-tests-on-non-normal-distributions"><i class="fa fa-check"></i><b>15.2.1</b> T-tests on non-normal distributions</a></li>
+<li class="chapter" data-level="15.2.2" data-path="bootstrapping.html"><a href="bootstrapping.html#non-iid-noise-and-linear-models"><i class="fa fa-check"></i><b>15.2.2</b> Non-IID noise and linear models</a></li>
+<li class="chapter" data-level="15.2.3" data-path="bootstrapping.html"><a href="bootstrapping.html#density-estimate-conceptual-plot"><i class="fa fa-check"></i><b>15.2.3</b> Density estimate conceptual plot</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-resampling"><i class="fa fa-check"></i><b>15.3</b> Bootstrap resampling</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="bootstrapping.html"><a href="bootstrapping.html#demo"><i class="fa fa-check"></i><b>15.3.1</b> Demo</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="bootstrapping.html"><a href="bootstrapping.html#applications"><i class="fa fa-check"></i><b>15.4</b> Applications</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>15.4.1</b> Bootstrap confidence intervals</a></li>
+<li class="chapter" data-level="15.4.2" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-permutation-hypothesis-tests"><i class="fa fa-check"></i><b>15.4.2</b> Bootstrap (&amp; permutation) hypothesis tests</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>16</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#load-packages-and-set-plotting-theme-9"><i class="fa fa-check"></i><b>16.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="16.2" data-path="model-comparison.html"><a href="model-comparison.html#determining-sample-size-1"><i class="fa fa-check"></i><b>16.2</b> Determining sample size</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="model-comparison.html"><a href="model-comparison.html#pwr-package-1"><i class="fa fa-check"></i><b>16.2.1</b> <code>pwr</code> package</a></li>
+<li class="chapter" data-level="16.2.2" data-path="model-comparison.html"><a href="model-comparison.html#map"><i class="fa fa-check"></i><b>16.2.2</b> <code>map()</code></a></li>
+<li class="chapter" data-level="16.2.3" data-path="model-comparison.html"><a href="model-comparison.html#via-simulation"><i class="fa fa-check"></i><b>16.2.3</b> via simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="model-comparison.html"><a href="model-comparison.html#model-comparison-1"><i class="fa fa-check"></i><b>16.3</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="model-comparison.html"><a href="model-comparison.html#fitting-vs.-predicting"><i class="fa fa-check"></i><b>16.3.1</b> Fitting vs. predicting</a></li>
+<li class="chapter" data-level="16.3.2" data-path="model-comparison.html"><a href="model-comparison.html#f-test"><i class="fa fa-check"></i><b>16.3.2</b> F-test</a></li>
+<li class="chapter" data-level="16.3.3" data-path="model-comparison.html"><a href="model-comparison.html#cross-validation"><i class="fa fa-check"></i><b>16.3.3</b> Cross-validation</a></li>
+<li class="chapter" data-level="16.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>16.3.4</b> Bootstrap</a></li>
+<li class="chapter" data-level="16.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>16.3.5</b> AIC and BIC</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-12"><i class="fa fa-check"></i><b>16.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="model-comparison.html"><a href="model-comparison.html#cheatsheet"><i class="fa fa-check"></i><b>16.4.1</b> Cheatsheet</a></li>
+<li class="chapter" data-level="16.4.2" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>16.4.2</b> Datacamp course</a></li>
+<li class="chapter" data-level="16.4.3" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>16.4.3</b> Reading</a></li>
+<li class="chapter" data-level="16.4.4" data-path="model-comparison.html"><a href="model-comparison.html#misc-6"><i class="fa fa-check"></i><b>16.4.4</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html"><i class="fa fa-check"></i><b>17</b> Linear mixed effects models 1</a><ul>
+<li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#things-that-came-up-in-class-3"><i class="fa fa-check"></i><b>17.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="17.2.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#comparing-t-test-with-f-test-in-lm"><i class="fa fa-check"></i><b>17.2.1</b> Comparing t-test with F-test in <code>lm()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.3</b> Dependence</a></li>
+<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-13"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="17.4.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.4.1</b> Readings</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html"><i class="fa fa-check"></i><b>18</b> Linear mixed effects models 2</a><ul>
+<li class="chapter" data-level="18.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#load-packages-and-set-plotting-theme-11"><i class="fa fa-check"></i><b>18.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="18.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#things-that-came-up-in-class-4"><i class="fa fa-check"></i><b>18.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#difference-between-replicate-and-map"><i class="fa fa-check"></i><b>18.2.1</b> Difference between <code>replicate()</code> and <code>map()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simulating-a-linear-mixed-effects-model"><i class="fa fa-check"></i><b>18.3</b> Simulating a linear mixed effects model</a></li>
+<li class="chapter" data-level="18.4" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#the-effect-of-outliers"><i class="fa fa-check"></i><b>18.4</b> The effect of outliers</a></li>
+<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.5</b> Different slopes</a></li>
+<li class="chapter" data-level="18.6" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.6</b> Simpson’s paradox</a></li>
+<li class="chapter" data-level="18.7" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-14"><i class="fa fa-check"></i><b>18.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="18.7.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.7.1</b> Readings</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html"><i class="fa fa-check"></i><b>19</b> Linear mixed effects models 3</a><ul>
+<li class="chapter" data-level="19.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-packages-and-set-plotting-theme-12"><i class="fa fa-check"></i><b>19.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="19.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-set"><i class="fa fa-check"></i><b>19.2</b> Load data set</a></li>
+<li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#things-that-came-up-in-class-5"><i class="fa fa-check"></i><b>19.3</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#one-tailed-vs.-two-tailed-tests"><i class="fa fa-check"></i><b>19.3.1</b> One-tailed vs. two-tailed tests</a></li>
+<li class="chapter" data-level="19.3.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixtures-of-participants"><i class="fa fa-check"></i><b>19.3.2</b> Mixtures of participants</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#pooling-and-shrinkage"><i class="fa fa-check"></i><b>19.4</b> Pooling and shrinkage</a><ul>
+<li class="chapter" data-level="19.4.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#complete-pooling"><i class="fa fa-check"></i><b>19.4.1</b> Complete pooling</a></li>
+<li class="chapter" data-level="19.4.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#no-pooling"><i class="fa fa-check"></i><b>19.4.2</b> No pooling</a></li>
+<li class="chapter" data-level="19.4.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#partial-pooling"><i class="fa fa-check"></i><b>19.4.3</b> Partial pooling</a></li>
+<li class="chapter" data-level="19.4.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#compare-results"><i class="fa fa-check"></i><b>19.4.4</b> Compare results</a></li>
+<li class="chapter" data-level="19.4.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#coefficients"><i class="fa fa-check"></i><b>19.4.5</b> Coefficients</a></li>
+<li class="chapter" data-level="19.4.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#shrinkage"><i class="fa fa-check"></i><b>19.4.6</b> Shrinkage</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#bootstrapping-1"><i class="fa fa-check"></i><b>19.5</b> Bootstrapping</a><ul>
+<li class="chapter" data-level="19.5.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#linear-model"><i class="fa fa-check"></i><b>19.5.1</b> Linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#getting-p-values"><i class="fa fa-check"></i><b>19.6</b> Getting p-values</a></li>
+<li class="chapter" data-level="19.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#understanding-the-lmer-syntax"><i class="fa fa-check"></i><b>19.7</b> Understanding the lmer() syntax</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>20</b> Generalized linear model</a><ul>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-packages-and-set-plotting-theme-13"><i class="fa fa-check"></i><b>20.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="20.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set-1"><i class="fa fa-check"></i><b>20.2</b> Load data set</a></li>
+<li class="chapter" data-level="20.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>20.3</b> Logistic regression</a><ul>
+<li class="chapter" data-level="20.3.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#interpreting-the-parameters"><i class="fa fa-check"></i><b>20.3.1</b> Interpreting the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>20.4</b> Simulate a logistic regression</a></li>
+<li class="chapter" data-level="20.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>20.5</b> Testing hypotheses</a></li>
+<li class="chapter" data-level="20.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>20.6</b> Logistic mixed effects model</a></li>
+<li class="chapter" data-level="20.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>20.7</b> Additional information</a><ul>
+<li class="chapter" data-level="20.7.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-6"><i class="fa fa-check"></i><b>20.7.1</b> Datacamp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html"><i class="fa fa-check"></i><b>21</b> Bayesian data analysis 1</a><ul>
+<li class="chapter" data-level="21.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#load-packages-and-set-plotting-theme-14"><i class="fa fa-check"></i><b>21.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="21.2" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#things-that-came-up"><i class="fa fa-check"></i><b>21.2</b> Things that came up</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#bias-in-cosyne-2019-conference-admission"><i class="fa fa-check"></i><b>21.2.1</b> Bias in Cosyne 2019 conference admission?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>22</b> Bayesian data analysis 2</a><ul>
+<li class="chapter" data-level="22.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#load-packages-and-set-plotting-theme-15"><i class="fa fa-check"></i><b>22.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="22.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#doing-bayesian-inference-by-hand"><i class="fa fa-check"></i><b>22.2</b> Doing Bayesian inference “by hand”</a><ul>
+<li class="chapter" data-level="22.2.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#sequential-updating-based-on-the-beta-distribution"><i class="fa fa-check"></i><b>22.2.1</b> Sequential updating based on the Beta distribution</a></li>
+<li class="chapter" data-level="22.2.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#coin-flip-example"><i class="fa fa-check"></i><b>22.2.2</b> Coin flip example</a></li>
+<li class="chapter" data-level="22.2.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#bayesian-inference-by-discretization"><i class="fa fa-check"></i><b>22.2.3</b> Bayesian inference by discretization</a></li>
+<li class="chapter" data-level="22.2.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-prior"><i class="fa fa-check"></i><b>22.2.4</b> Effect of the prior</a></li>
+<li class="chapter" data-level="22.2.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-likelihood"><i class="fa fa-check"></i><b>22.2.5</b> Effect of the likelihood</a></li>
+<li class="chapter" data-level="22.2.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-sample-size"><i class="fa fa-check"></i><b>22.2.6</b> Effect of the sample size</a></li>
+</ul></li>
+<li class="chapter" data-level="22.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions"><i class="fa fa-check"></i><b>22.3</b> Distributions</a><ul>
+<li class="chapter" data-level="22.3.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-vs-student-t-distribution"><i class="fa fa-check"></i><b>22.3.1</b> Normal vs Student-t distribution</a></li>
+<li class="chapter" data-level="22.3.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#beta-distributions"><i class="fa fa-check"></i><b>22.3.2</b> Beta distributions</a></li>
+<li class="chapter" data-level="22.3.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-distributions"><i class="fa fa-check"></i><b>22.3.3</b> Normal distributions</a></li>
+<li class="chapter" data-level="22.3.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions-for-non-negative-parameters"><i class="fa fa-check"></i><b>22.3.4</b> Distributions for non-negative parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="22.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#inference-via-sampling"><i class="fa fa-check"></i><b>22.4</b> Inference via sampling</a></li>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#greta"><i class="fa fa-check"></i><b>22.5</b> Greta</a><ul>
+<li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#attitude-data-set"><i class="fa fa-check"></i><b>22.5.1</b> Attitude data set</a></li>
+<li class="chapter" data-level="22.5.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.5.2</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="22.5.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#bayesian-regression"><i class="fa fa-check"></i><b>22.5.3</b> Bayesian regression</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 3</a><ul>
+<li class="chapter" data-level="23.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-packages-and-set-plotting-theme-16"><i class="fa fa-check"></i><b>23.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="23.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-data-set-2"><i class="fa fa-check"></i><b>23.2</b> Load data set</a></li>
+<li class="chapter" data-level="23.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#poker"><i class="fa fa-check"></i><b>23.3</b> Poker</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualization-7"><i class="fa fa-check"></i><b>23.3.1</b> Visualization</a></li>
+<li class="chapter" data-level="23.3.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#linear-model-5"><i class="fa fa-check"></i><b>23.3.2</b> Linear model</a></li>
+<li class="chapter" data-level="23.3.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-model"><i class="fa fa-check"></i><b>23.3.3</b> Bayesian model</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>23.4</b> Dealing with heteroscedasticity</a></li>
+<li class="chapter" data-level="23.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#ordinal-regression"><i class="fa fa-check"></i><b>23.5</b> Ordinal regression</a></li>
+<li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-15"><i class="fa fa-check"></i><b>23.6</b> Additional resources</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="mediation-moderation.html"><a href="mediation-moderation.html"><i class="fa fa-check"></i><b>24</b> Mediation &amp; Moderation</a><ul>
+<li class="chapter" data-level="24.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#recommended-reading"><i class="fa fa-check"></i><b>24.1</b> Recommended reading</a></li>
+<li class="chapter" data-level="24.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-packages-and-set-plotting-theme-17"><i class="fa fa-check"></i><b>24.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="24.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>24.3</b> Mediation</a><ul>
+<li class="chapter" data-level="24.3.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data"><i class="fa fa-check"></i><b>24.3.1</b> Generate data</a></li>
+<li class="chapter" data-level="24.3.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>24.3.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
+<li class="chapter" data-level="24.3.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>24.3.3</b> Method 2: Sobel Test</a></li>
+<li class="chapter" data-level="24.3.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>24.3.4</b> Method 3: Bootstrapping</a></li>
+<li class="chapter" data-level="24.3.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-4-bayesian-approach"><i class="fa fa-check"></i><b>24.3.5</b> Method 4: Bayesian approach</a></li>
+</ul></li>
+<li class="chapter" data-level="24.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation"><i class="fa fa-check"></i><b>24.4</b> Moderation</a><ul>
+<li class="chapter" data-level="24.4.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data-1"><i class="fa fa-check"></i><b>24.4.1</b> Generate data</a></li>
+<li class="chapter" data-level="24.4.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation-analysis"><i class="fa fa-check"></i><b>24.4.2</b> Moderation analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-16"><i class="fa fa-check"></i><b>24.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="24.5.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#books"><i class="fa fa-check"></i><b>24.5.1</b> Books</a></li>
+<li class="chapter" data-level="24.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-1"><i class="fa fa-check"></i><b>24.5.2</b> Tutorials</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>25</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="25.1" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#statistics"><i class="fa fa-check"></i><b>25.1</b> Statistics</a></li>
+<li class="chapter" data-level="25.2" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#r"><i class="fa fa-check"></i><b>25.2</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psych 252: Statistical Methods for Behavioral and Social Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bootstrapping" class="section level1">
+<h1><span class="header-section-number">Chapter 15</span> Bootstrapping</h1>
+<p>This chapter was written by Andrew Lampinen.</p>
+<div id="load-packages-and-set-plotting-theme-8" class="section level2">
+<h2><span class="header-section-number">15.1</span> Load packages and set plotting theme</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;boot&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>) 
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
+  <span class="kw">theme_classic</span>() <span class="co">#set the theme </span>
+)</code></pre>
+</div>
+<div id="whats-wrong-with-parametric-tests" class="section level2">
+<h2><span class="header-section-number">15.2</span> What’s wrong with parametric tests?</h2>
+<div id="t-tests-on-non-normal-distributions" class="section level3">
+<h3><span class="header-section-number">15.2.1</span> T-tests on non-normal distributions</h3>
+<p>Let’s see some examples! One common non-normal distribution is the <em>log-normal</em> distribution, i.e. a distribution that is normal after you take its logarithm. Many natural processes have distributions like this. One of particular interest to us is reaction times.</p>
+<pre class="sourceCode r"><code class="sourceCode r">num_points =<span class="st"> </span><span class="fl">1e4</span>
+parametric_plotting_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">distribution =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Log-normal&quot;</span>), <span class="dt">each =</span> num_points),
+                                      <span class="dt">value =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(num_points, <span class="dv">0</span>, <span class="dv">1</span>), <span class="co"># normal</span>
+                                                <span class="kw">exp</span>(<span class="kw">rnorm</span>(num_points, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">-</span><span class="st"> </span><span class="kw">exp</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">distribution =</span> <span class="kw">factor</span>(distribution, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Log-normal&quot;</span>)))</code></pre>
+<p>Let’s see how violating the assumption of normality changes the results of <code>t.test</code>. We’ll compare two situations</p>
+<p>Valid: comparing two normally distributed populations with equal means but unequal variances.</p>
+<p>Invalid: comparing two log-normally distributed populations with equal means but unequal variances.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(parametric_plotting_data, <span class="kw">aes</span>(<span class="dt">x=</span>value, <span class="dt">color=</span>distribution)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw=</span><span class="fl">0.5</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">data=</span>parametric_plotting_data <span class="op">%&gt;%</span>
+<span class="st">               </span><span class="kw">group_by</span>(distribution) <span class="op">%&gt;%</span>
+<span class="st">               </span><span class="kw">summarize</span>(<span class="dt">mean_value =</span> <span class="kw">mean</span>(value), <span class="dt">sd_value =</span> <span class="kw">sd</span>(value)),
+             <span class="kw">aes</span>(<span class="dt">xintercept=</span>mean_value, <span class="dt">color=</span>distribution), 
+             <span class="dt">linetype=</span><span class="dv">2</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlim</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">20</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span><span class="st"> </span>distribution, <span class="dt">scales=</span><span class="st">&quot;free&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span>F) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Accent&quot;</span>)</code></pre>
+<pre><code>## Warning: Removed 9 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/log_normal_dists.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre><code>## Warning: Removed 9 rows containing non-finite values (stat_density).</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">gen_data_and_test =<span class="st"> </span><span class="cf">function</span>(num_observations_per) {
+x =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
+y =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
+
+pnormal =<span class="st"> </span><span class="kw">t.test</span>(x, y, <span class="dt">var.equal=</span>T)<span class="op">$</span>p.value
+
+<span class="co"># what if the data are log-normally distributed?</span>
+x =<span class="st"> </span><span class="kw">exp</span>(<span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>))
+y =<span class="st"> </span><span class="kw">exp</span>(<span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>))
+
+pnotnormal =<span class="st"> </span><span class="kw">t.test</span>(x, y, <span class="dt">var.equal=</span>T)<span class="op">$</span>p.value 
+<span class="kw">return</span>(<span class="kw">c</span>(pnormal, pnotnormal))
+}
+
+parametric_issues_demo =<span class="st"> </span><span class="cf">function</span>(num_tests, num_observations_per) {
+  <span class="kw">replicate</span>(num_tests, <span class="kw">gen_data_and_test</span>(num_observations_per))
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">0</span>) <span class="co"># ensures we get the same results each time we run it</span>
+
+num_tests =<span class="st"> </span><span class="dv">1000</span> <span class="co"># how many datasets to generate/tests to run</span>
+num_observations_per =<span class="st"> </span><span class="dv">20</span> <span class="co"># how many obsservations in each dataset</span>
+
+parametric_issues_results =<span class="st"> </span><span class="kw">parametric_issues_demo</span>(<span class="dt">num_tests=</span>num_tests, 
+                                                   <span class="dt">num_observations_per=</span>num_observations_per)
+
+parametric_issues_d =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">valid_tests =</span> parametric_issues_results[<span class="dv">1</span>,],
+                                 <span class="dt">invalid_tests =</span> parametric_issues_results[<span class="dv">2</span>,],
+                                 <span class="dt">iteration=</span><span class="dv">1</span><span class="op">:</span>num_tests) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(type, p_value, <span class="kw">contains</span>(<span class="st">&quot;tests&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">is_significant =</span> p_value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)
+
+<span class="co"># Number significant results with normally distributed data</span>
+<span class="kw">sum</span>(parametric_issues_results[<span class="dv">1</span>,] <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre>
+<pre><code>## [1] 41</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># number of significant results with log-normally distributed data</span>
+<span class="kw">sum</span>(parametric_issues_results[<span class="dv">2</span>,] <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre>
+<pre><code>## [1] 25</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(parametric_issues_d, <span class="kw">aes</span>(<span class="dt">x=</span>type, <span class="dt">fill=</span>is_significant)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Set1&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Parametric t-test&quot;</span>)</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>That’s a non-trivial reduction in power from a misspecified model! (~80% to ~54%).</p>
+<pre class="sourceCode r"><code class="sourceCode r">boot_mean_diff_test =<span class="st"> </span><span class="cf">function</span>(x, y) {
+  obs_t =<span class="st"> </span><span class="kw">t.test</span>(x, y)<span class="op">$</span>statistic
+  boot_iterate =<span class="st"> </span><span class="cf">function</span>(x, y, indices) { <span class="co"># indices is a dummy here</span>
+    x_samp =<span class="st"> </span><span class="kw">sample</span>(x, 
+                    <span class="kw">length</span>(x), 
+                    <span class="dt">replace=</span>T)
+    y_samp =<span class="st"> </span><span class="kw">sample</span>(y, 
+                    <span class="kw">length</span>(y), 
+                    <span class="dt">replace=</span>T)
+    mean_diff =<span class="st"> </span><span class="kw">mean</span>(y_samp) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x_samp)
+    <span class="kw">return</span>(mean_diff)
+  }
+  boots =<span class="st"> </span><span class="kw">boot</span>(<span class="dt">data =</span> <span class="kw">c</span>(x, y), boot_iterate, <span class="dt">R=</span><span class="dv">500</span>)
+  <span class="co">#  boots = replicate(100, boot_iterate(x, y))</span>
+  <span class="co">#  quants = quantile(boots, probs=c(0.025, 0.975))</span>
+  quants =<span class="st"> </span><span class="kw">boot.ci</span>(boots)<span class="op">$</span>bca[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>]
+  <span class="kw">return</span>(<span class="kw">sign</span>(quants[<span class="dv">1</span>]) <span class="op">==</span><span class="st"> </span><span class="kw">sign</span>(quants[<span class="dv">2</span>]))
+}</code></pre>
+<p>(Omitted because with these small sample sizes bootstrapping is problematic – permutations are better)</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># gen_data_and_boot_test = function(num_observations_per) {</span>
+<span class="co"># x = rnorm(num_observations_per, 0, 1.1)</span>
+<span class="co"># y = rnorm(num_observations_per, 0, 1.1)</span>
+<span class="co"># </span>
+<span class="co"># pnormal = boot_mean_diff_test(x, y)</span>
+<span class="co"># </span>
+<span class="co"># # what if the data are log-normally distributed?</span>
+<span class="co"># x = exp(rnorm(num_observations_per, 0, 1.1))</span>
+<span class="co"># y = exp(rnorm(num_observations_per, 1, 1.1))</span>
+<span class="co"># </span>
+<span class="co"># pnotnormal = boot_mean_diff_test(x, y)</span>
+<span class="co"># return(c(pnormal, pnotnormal))</span>
+<span class="co"># }</span>
+<span class="co"># </span>
+<span class="co"># boot_results = replicate(num_tests, gen_data_and_boot_test(num_observations_per))</span>
+<span class="co"># sum(boot_results[1,])</span>
+<span class="co"># sum(boot_results[2,])</span></code></pre>
+<p>While the bootstrap <strong>actually loses power</strong> relative to a perfectly specified model, it is much more <strong>robust</strong> to changes in the assumptions of that model, and so it <strong>retains more power when assumptions are violated</strong>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">perm_mean_diff_test =<span class="st"> </span><span class="cf">function</span>(x, y) {
+  obs_t =<span class="st"> </span><span class="kw">t.test</span>(x, y)<span class="op">$</span>statistic
+  combined_data =<span class="st"> </span><span class="kw">c</span>(x, y)
+  n_combined =<span class="st"> </span><span class="kw">length</span>(combined_data)
+  n_x =<span class="st"> </span><span class="kw">length</span>(x)
+  perm_iterate =<span class="st"> </span><span class="cf">function</span>(x, y) {
+    perm =<span class="st"> </span><span class="kw">sample</span>(n_combined)
+    x_samp =<span class="st"> </span>combined_data[perm[<span class="dv">1</span><span class="op">:</span>n_x]]
+    y_samp =<span class="st"> </span>combined_data[perm[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span>n_x)]]
+    this_t =<span class="st"> </span><span class="kw">t.test</span>(x_samp, y_samp)<span class="op">$</span>statistic
+    <span class="kw">return</span>(this_t)
+  }
+  perms =<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">500</span>, <span class="kw">perm_iterate</span>(x, y))
+  quants =<span class="st"> </span><span class="kw">quantile</span>(perms, <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))
+  <span class="kw">return</span>(obs_t <span class="op">&lt;</span><span class="st"> </span>quants[<span class="dv">1</span>] <span class="op">|</span><span class="st"> </span>obs_t <span class="op">&gt;</span><span class="st"> </span>quants[<span class="dv">2</span>])
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># this could be much more efficient</span>
+gen_data_and_norm_and_perm_test =<span class="st"> </span><span class="cf">function</span>(num_observations_per) {
+  d =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">distribution=</span><span class="kw">c</span>(),
+                 <span class="dt">null_true=</span><span class="kw">c</span>(),
+                 <span class="dt">parametric=</span><span class="kw">c</span>(),
+                 <span class="dt">permutation=</span><span class="kw">c</span>()) 
+    
+  <span class="co"># normally distributed </span>
+  <span class="co">## null</span>
+  x =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
+  y =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
+  
+  sig_par =<span class="st"> </span><span class="kw">t.test</span>(x, y)<span class="op">$</span>p.value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>
+  sig_perm =<span class="st"> </span><span class="kw">perm_mean_diff_test</span>(x, y)
+  d =<span class="st"> </span><span class="kw">bind_rows</span>(d, 
+                <span class="kw">data.frame</span>(<span class="dt">distribution=</span><span class="st">&quot;Normal&quot;</span>,
+                           <span class="dt">null_true=</span>T,
+                           <span class="dt">parametric=</span>sig_par,
+                           <span class="dt">permutation=</span>sig_perm))
+  
+  <span class="co">## non-null</span>
+  x =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
+  y =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">1</span>, <span class="fl">1.1</span>)
+  
+  sig_par =<span class="st"> </span><span class="kw">t.test</span>(x, y)<span class="op">$</span>p.value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>
+  sig_perm =<span class="st"> </span><span class="kw">perm_mean_diff_test</span>(x, y)
+  d =<span class="st"> </span><span class="kw">bind_rows</span>(d, 
+                <span class="kw">data.frame</span>(<span class="dt">distribution=</span><span class="st">&quot;Normal&quot;</span>,
+                           <span class="dt">null_true=</span>F,
+                           <span class="dt">parametric=</span>sig_par,
+                           <span class="dt">permutation=</span>sig_perm))
+  
+  <span class="co"># what if the data are log-normally distributed?</span>
+  <span class="co">## null</span>
+  x =<span class="st"> </span><span class="kw">exp</span>(<span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>))
+  y =<span class="st"> </span><span class="kw">exp</span>(<span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>))
+  
+  sig_par =<span class="st"> </span><span class="kw">t.test</span>(x, y)<span class="op">$</span>p.value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>
+  sig_perm =<span class="st"> </span><span class="kw">perm_mean_diff_test</span>(x, y)
+  d =<span class="st"> </span><span class="kw">bind_rows</span>(d, 
+                <span class="kw">data.frame</span>(<span class="dt">distribution=</span><span class="st">&quot;Log-normal&quot;</span>,
+                           <span class="dt">null_true=</span>T,
+                           <span class="dt">parametric=</span>sig_par,
+                           <span class="dt">permutation=</span>sig_perm))
+  
+  <span class="co">## non-null</span>
+  x =<span class="st"> </span><span class="kw">exp</span>(<span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>))
+  y =<span class="st"> </span><span class="kw">exp</span>(<span class="kw">rnorm</span>(num_observations_per, <span class="dv">1</span>, <span class="fl">1.1</span>))
+  
+  sig_par =<span class="st"> </span><span class="kw">t.test</span>(x, y)<span class="op">$</span>p.value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>
+  sig_perm =<span class="st"> </span><span class="kw">perm_mean_diff_test</span>(x, y)
+  d =<span class="st"> </span><span class="kw">bind_rows</span>(d, 
+                <span class="kw">data.frame</span>(<span class="dt">distribution=</span><span class="st">&quot;Log-normal&quot;</span>,
+                           <span class="dt">null_true=</span>F,
+                           <span class="dt">parametric=</span>sig_par,
+                           <span class="dt">permutation=</span>sig_perm))
+  
+  <span class="kw">return</span>(d)
+}
+
+perm_results =<span class="st"> </span><span class="kw">replicate</span>(num_tests, <span class="kw">gen_data_and_norm_and_perm_test</span>(num_observations_per),
+                         <span class="dt">simplify=</span>F) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bind_rows</span>()</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">perm_results =<span class="st"> </span>perm_results <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(test_type, significant, parametric, permutation) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">distribution=</span><span class="kw">factor</span>(distribution, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Log-normal&quot;</span>)),
+         <span class="dt">null_true=</span><span class="kw">ifelse</span>(null_true, 
+                          <span class="st">&quot;Null True&quot;</span>,
+                          <span class="st">&quot;Alternative True&quot;</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(perm_results <span class="op">%&gt;%</span>
+<span class="st">         </span><span class="kw">filter</span>(null_true <span class="op">==</span><span class="st"> &quot;Alternative True&quot;</span>), <span class="kw">aes</span>(<span class="dt">x=</span>test_type, <span class="dt">fill=</span>significant)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Set1&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(null_true <span class="op">~</span><span class="st"> </span>distribution) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(<span class="dt">null_true=</span><span class="st">&quot;Alternative True&quot;</span>, 
+                        <span class="dt">alpha=</span>num_tests<span class="op">*</span><span class="fl">0.8</span>),
+             <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">yintercept=</span>alpha),
+             <span class="dt">linetype=</span><span class="dv">2</span>,
+             <span class="dt">size=</span><span class="dv">1</span>,
+             <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Test type&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percent&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.8</span>, <span class="dv">1</span>)<span class="op">*</span>num_tests,
+                     <span class="dt">labels =</span> <span class="kw">paste</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">80</span>, <span class="dv">100</span>), <span class="st">&quot;%&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>))</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/perm_test.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">perm_results <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(test_type, distribution, null_true) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">pct_significant =</span> <span class="kw">sum</span>(significant)<span class="op">/</span><span class="kw">n</span>())</code></pre>
+<pre><code>## # A tibble: 8 x 4
+## # Groups:   test_type, distribution [4]
+##   test_type   distribution null_true        pct_significant
+##   &lt;chr&gt;       &lt;fct&gt;        &lt;chr&gt;                      &lt;dbl&gt;
+## 1 parametric  Normal       Alternative True           0.802
+## 2 parametric  Normal       Null True                  0.051
+## 3 parametric  Log-normal   Alternative True           0.547
+## 4 parametric  Log-normal   Null True                  0.04 
+## 5 permutation Normal       Alternative True           0.806
+## 6 permutation Normal       Null True                  0.047
+## 7 permutation Log-normal   Alternative True           0.686
+## 8 permutation Log-normal   Null True                  0.058</code></pre>
+</div>
+<div id="non-iid-noise-and-linear-models" class="section level3">
+<h3><span class="header-section-number">15.2.2</span> Non-IID noise and linear models</h3>
+<pre class="sourceCode r"><code class="sourceCode r">num_points =<span class="st"> </span><span class="dv">500</span>
+true_intercept =<span class="st"> </span><span class="dv">0</span>
+true_slope =<span class="st"> </span><span class="fl">1.</span>
+<span class="kw">set.seed</span>(<span class="dv">0</span>)
+parametric_ci_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">IV =</span> <span class="kw">rep</span>(<span class="kw">runif</span>(num_points,  <span class="dv">-1</span>, <span class="dv">1</span>), <span class="dv">2</span>),
+                                <span class="dt">type =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;IID Error&quot;</span>, <span class="st">&quot;Non-IID Error&quot;</span>), <span class="dt">each=</span>num_points),
+                                <span class="dt">error =</span> <span class="kw">rep</span>(<span class="kw">rnorm</span>(num_points, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DV =</span> <span class="kw">ifelse</span>(
+    type <span class="op">==</span><span class="st"> &quot;IID Error&quot;</span>,
+    true_slope<span class="op">*</span>IV <span class="op">+</span><span class="st"> </span>error,
+    true_slope<span class="op">*</span>IV <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">abs</span>(IV)<span class="op">*</span>error)) <span class="co"># error increases proportional to distance from 0 on the IV</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(parametric_ci_data,
+       <span class="kw">aes</span>(<span class="dt">x=</span>IV, <span class="dt">y=</span>DV, <span class="dt">color=</span>type)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>T, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>, 
+              <span class="dt">size=</span><span class="fl">1.5</span>, <span class="dt">level=</span><span class="fl">0.9999</span>) <span class="op">+</span><span class="st"> </span><span class="co"># inflating the confidence bands a bit</span>
+<span class="st">                                       </span><span class="co"># to show their distribution is similar</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Accent&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>type) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span>F)</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_non_null.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<p>C.f. Anscombe’s quartet, etc.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, parametric_ci_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(type<span class="op">==</span><span class="st">&quot;IID Error&quot;</span>)))</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = DV ~ IV, data = parametric_ci_data %&gt;% filter(type == 
+##     &quot;IID Error&quot;))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.7575 -0.6600 -0.0231  0.6768  3.2956 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.03103    0.04379  -0.709    0.479    
+## IV           1.11977    0.07739  14.470   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9791 on 498 degrees of freedom
+## Multiple R-squared:  0.296,  Adjusted R-squared:  0.2946 
+## F-statistic: 209.4 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, parametric_ci_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(type<span class="op">==</span><span class="st">&quot;Non-IID Error&quot;</span>)))</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = DV ~ IV, data = parametric_ci_data %&gt;% filter(type == 
+##     &quot;Non-IID Error&quot;))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.0872 -0.4030  0.0441  0.5100  3.4718 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.05623    0.04928  -1.141    0.254    
+## IV           1.22127    0.08708  14.024   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.102 on 498 degrees of freedom
+## Multiple R-squared:  0.2831, Adjusted R-squared:  0.2817 
+## F-statistic: 196.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">ex2_lm_bootstrap_CIs =<span class="st"> </span><span class="cf">function</span>(data, <span class="dt">R=</span><span class="dv">1000</span>) {
+  lm_results =<span class="st"> </span><span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, <span class="dt">data=</span>data))<span class="op">$</span>coefficients
+  bootstrap_coefficients =<span class="st"> </span><span class="cf">function</span>(data, indices) {
+    linear_model =<span class="st"> </span><span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, 
+                      <span class="dt">data=</span>data[indices,]) <span class="co"># will select a bootstrap sample of the data</span>
+    <span class="kw">return</span>(linear_model<span class="op">$</span>coefficients)
+  }
+
+  boot_results =<span class="st"> </span><span class="kw">boot</span>(<span class="dt">data=</span>data,
+                      <span class="dt">statistic=</span>bootstrap_coefficients,
+                      <span class="dt">R=</span>R)
+  boot_intercept_CI =<span class="st"> </span><span class="kw">boot.ci</span>(boot_results, <span class="dt">index=</span><span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;bca&quot;</span>)
+  boot_slope_CI =<span class="st"> </span><span class="kw">boot.ci</span>(boot_results, <span class="dt">index=</span><span class="dv">2</span>, <span class="dt">type=</span><span class="st">&quot;bca&quot;</span>)
+  <span class="kw">return</span>(<span class="kw">data.frame</span>(<span class="dt">intercept_estimate=</span>lm_results[<span class="dv">1</span>, <span class="dv">1</span>],
+                    <span class="dt">intercept_SE=</span>lm_results[<span class="dv">1</span>,<span class="dv">2</span>],
+                    <span class="dt">slope_estimate=</span>lm_results[<span class="dv">2</span>, <span class="dv">1</span>],
+                    <span class="dt">slope_SE=</span>lm_results[<span class="dv">2</span>,<span class="dv">2</span>],
+                    <span class="dt">intercept_boot_CI_low=</span>boot_intercept_CI<span class="op">$</span>bca[<span class="dv">4</span>],
+                    <span class="dt">intercept_boot_CI_hi=</span>boot_intercept_CI<span class="op">$</span>bca[<span class="dv">5</span>],
+                    <span class="dt">slope_boot_CI_low=</span>boot_slope_CI<span class="op">$</span>bca[<span class="dv">4</span>],
+                    <span class="dt">slope_boot_CI_hi=</span>boot_slope_CI<span class="op">$</span>bca[<span class="dv">5</span>]))
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">0</span>) <span class="co"># for bootstraps</span>
+coefficient_CI_data =<span class="st"> </span>parametric_ci_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(type) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">do</span>(<span class="kw">ex2_lm_bootstrap_CIs</span>(.)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ungroup</span>() </code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">coefficient_CI_data =<span class="st"> </span>coefficient_CI_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(variable, value, <span class="op">-</span>type) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">separate</span>(variable, <span class="kw">c</span>(<span class="st">&quot;parameter&quot;</span>, <span class="st">&quot;measurement&quot;</span>), <span class="dt">extra=</span><span class="st">&quot;merge&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(measurement, value) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">parametric_CI_low=</span>estimate<span class="fl">-1.96</span><span class="op">*</span>SE,
+         <span class="dt">parametric_CI_hi=</span>estimate<span class="fl">+1.96</span><span class="op">*</span>SE) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(CI_type, value, <span class="kw">contains</span>(<span class="st">&quot;CI&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">separate</span>(CI_type, <span class="kw">c</span>(<span class="st">&quot;CI_type&quot;</span>, <span class="st">&quot;high_or_low&quot;</span>), <span class="dt">extra=</span><span class="st">&quot;merge&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(high_or_low, value) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">CI_type =</span> <span class="kw">factor</span>(CI_type))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">plot_coefficient_CI_data =<span class="st"> </span><span class="cf">function</span>(coefficient_CI_data, <span class="dt">errorbar_width=</span><span class="fl">0.5</span>) {
+  p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>coefficient_CI_data, <span class="kw">aes</span>(<span class="dt">x=</span>parameter, <span class="dt">color=</span>CI_type, <span class="dt">y=</span>estimate, <span class="dt">ymin=</span>CI_low, <span class="dt">ymax=</span>CI_hi)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">data=</span><span class="kw">data.frame</span>(<span class="dt">parameter=</span><span class="kw">c</span>(<span class="st">&quot;intercept&quot;</span>, <span class="st">&quot;slope&quot;</span>),
+                               <span class="dt">estimate=</span><span class="kw">c</span>(true_intercept, true_slope)), 
+               <span class="dt">mapping=</span><span class="kw">aes</span>(<span class="dt">yintercept=</span>estimate),
+               <span class="dt">linetype=</span><span class="dv">3</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">2</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.2</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_errorbar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="dt">width=</span><span class="fl">0.2</span>), <span class="dt">width=</span>errorbar_width) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_grid</span>(<span class="op">~</span>type) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>), <span class="dt">limits=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.2</span>, <span class="fl">1.5</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Dark2&quot;</span>, <span class="dt">drop=</span>F)
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_coefficient_CI_data</span>(coefficient_CI_data)
+<span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_CI_example.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)
+
+<span class="kw">plot_coefficient_CI_data</span>(coefficient_CI_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                           </span><span class="kw">filter</span>(CI_type<span class="op">==</span><span class="st">&quot;parametric&quot;</span>),
+                         <span class="fl">0.25</span>)
+<span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_CI_example_parametric_only.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<p>Challenge Q: Why isn’t the error on the intercept changed in the scaling error case?</p>
+<p>This can result in CIs which aren’t actually at the nominal confidence level! And since CIs are equivalent to t-tests in this setting, this can also increase false positive rates.
+(Also equivalent to Bayesian CrIs.)</p>
+<pre class="sourceCode r"><code class="sourceCode r">num_points =<span class="st"> </span><span class="dv">200</span>
+true_intercept =<span class="st"> </span><span class="dv">0</span>
+true_slope =<span class="st"> </span><span class="fl">0.</span>
+<span class="kw">set.seed</span>(<span class="dv">0</span>)
+parametric_ci_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">IV =</span> <span class="kw">rep</span>(<span class="kw">runif</span>(num_points,  <span class="dv">-1</span>, <span class="dv">1</span>), <span class="dv">2</span>),
+                                <span class="dt">type =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;IID Error&quot;</span>, <span class="st">&quot;Non-IID Error&quot;</span>), <span class="dt">each=</span>num_points),
+                                <span class="dt">error =</span> <span class="kw">rep</span>(<span class="kw">rnorm</span>(num_points, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DV =</span> <span class="kw">ifelse</span>(
+    type <span class="op">==</span><span class="st"> &quot;IID Error&quot;</span>,
+    true_slope<span class="op">*</span>IV <span class="op">+</span><span class="st"> </span>error,
+    true_slope<span class="op">*</span>IV <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">abs</span>(IV)<span class="op">*</span>error)) <span class="co"># error increases proportional to distance from 0 on the IV</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(parametric_ci_data,
+       <span class="kw">aes</span>(<span class="dt">x=</span>IV, <span class="dt">y=</span>DV, <span class="dt">color=</span>type)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>T, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>, 
+              <span class="dt">size=</span><span class="fl">1.5</span>, <span class="dt">level=</span><span class="fl">0.9999</span>) <span class="op">+</span><span class="st"> </span><span class="co"># inflating the confidence bands a bit</span>
+<span class="st">                                       </span><span class="co"># to show their distribution is similar</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Accent&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>type) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span>F)</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_null.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">error_dist_null_sample =<span class="st"> </span><span class="cf">function</span>(num_points) {
+  true_intercept =<span class="st"> </span><span class="dv">0</span>
+  true_slope =<span class="st"> </span><span class="dv">0</span>
+  <span class="co"># We&#39;ll sample only for the scaling error case, we know IID works</span>
+  this_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">IV =</span> <span class="kw">runif</span>(num_points, <span class="dv">-1</span>, <span class="dv">1</span>),
+                         <span class="dt">error =</span> <span class="kw">rnorm</span>(num_points, <span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">DV =</span> true_slope <span class="op">*</span><span class="st"> </span>IV <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">abs</span>(IV) <span class="op">*</span><span class="st"> </span>error) <span class="co"># error increases proportional to distance from 0 on the IV</span>
+  
+  coefficient_CI_data =<span class="st"> </span><span class="kw">ex2_lm_bootstrap_CIs</span>(this_data,
+                                             <span class="dt">R =</span> <span class="dv">500</span>) <span class="co"># take fewer bootstrap samples, to speed things up</span>
+  
+  coefficient_CI_data =<span class="st"> </span>coefficient_CI_data <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">gather</span>(variable, value) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">separate</span>(variable, <span class="kw">c</span>(<span class="st">&quot;parameter&quot;</span>, <span class="st">&quot;measurement&quot;</span>), <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">spread</span>(measurement, value) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">parametric_CI_low =</span> estimate <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>SE,
+           <span class="dt">parametric_CI_hi =</span> estimate <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>SE) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">gather</span>(CI_type, value, <span class="kw">contains</span>(<span class="st">&quot;CI&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">separate</span>(CI_type, <span class="kw">c</span>(<span class="st">&quot;CI_type&quot;</span>, <span class="st">&quot;high_or_low&quot;</span>), <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">spread</span>(high_or_low, value) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">significant =</span> <span class="kw">sign</span>(CI_hi) <span class="op">==</span><span class="st"> </span><span class="kw">sign</span>(CI_low)) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">select</span>(parameter, CI_type, significant)
+  <span class="kw">return</span>(<span class="kw">list</span>(coefficient_CI_data))
+}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">num_simulations =<span class="st"> </span><span class="dv">500</span>
+num_points =<span class="st"> </span><span class="dv">200</span>
+<span class="kw">set.seed</span>(<span class="dv">0</span>)
+noise_dist_simulation_results =<span class="st"> </span><span class="kw">replicate</span>(num_simulations, <span class="kw">error_dist_null_sample</span>(num_points)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bind_rows</span>()</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(noise_dist_simulation_results, <span class="kw">aes</span>(<span class="dt">x =</span> CI_type, <span class="dt">fill =</span> significant)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>parameter) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span> <span class="op">*</span><span class="st"> </span>num_simulations, num_simulations),
+                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;0%&quot;</span>, <span class="kw">expression</span>(Nominal <span class="op">~</span><span class="st"> </span>alpha), <span class="st">&quot;100%&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Test type&quot;</span>,
+       <span class="dt">y =</span> <span class="st">&quot;Proportion significant&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="fl">0.05</span> <span class="op">*</span><span class="st"> </span>num_simulations, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_proportion_significant.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">noise_dist_simulation_results <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">count</span>(parameter, CI_type, significant) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop=</span>n<span class="op">/</span>num_simulations)</code></pre>
+<pre><code>## # A tibble: 8 x 5
+##   parameter CI_type    significant     n  prop
+##   &lt;chr&gt;     &lt;chr&gt;      &lt;lgl&gt;       &lt;int&gt; &lt;dbl&gt;
+## 1 intercept boot       FALSE         471 0.942
+## 2 intercept boot       TRUE           29 0.058
+## 3 intercept parametric FALSE         473 0.946
+## 4 intercept parametric TRUE           27 0.054
+## 5 slope     boot       FALSE         481 0.962
+## 6 slope     boot       TRUE           19 0.038
+## 7 slope     parametric FALSE         428 0.856
+## 8 slope     parametric TRUE           72 0.144</code></pre>
+<p>False positive rate nearly triples for the parametric model!</p>
+</div>
+<div id="density-estimate-conceptual-plot" class="section level3">
+<h3><span class="header-section-number">15.2.3</span> Density estimate conceptual plot</h3>
+<pre class="sourceCode r"><code class="sourceCode r">density_similarity_conceptual_plot_data =<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">x =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="fl">0.01</span>),
+                                                      <span class="dt">y =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="fl">0.01</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">population_1 =</span> <span class="kw">exp</span>(<span class="op">-</span>((x <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="dv">3</span>)<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="dv">8</span>) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>((x <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>y)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>x)<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>), <span class="co"># These are definitely not proper distributions</span>
+         <span class="dt">population_2 =</span> <span class="kw">exp</span>(<span class="op">-</span>((x)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y)<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="dv">8</span>) <span class="op">*</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>((x <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(y <span class="op">/</span><span class="st"> </span><span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>x)<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(population, value, <span class="kw">contains</span>(<span class="st">&quot;population&quot;</span>))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(density_similarity_conceptual_plot_data,
+       <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">z =</span> value, <span class="dt">color =</span> population)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_contour</span>(<span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">bins =</span> <span class="dv">8</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>population) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Feature 1&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Feature 2&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> F)</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/conceptual_density_plot.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+</div>
+</div>
+<div id="bootstrap-resampling" class="section level2">
+<h2><span class="header-section-number">15.3</span> Bootstrap resampling</h2>
+<div id="demo" class="section level3">
+<h3><span class="header-section-number">15.3.1</span> Demo</h3>
+<pre class="sourceCode r"><code class="sourceCode r">num_points =<span class="st"> </span><span class="dv">100</span>
+true_intercept =<span class="st"> </span><span class="dv">0</span>
+true_slope =<span class="st"> </span><span class="fl">1.</span>
+<span class="kw">set.seed</span>(<span class="dv">2</span>) <span class="co"># I p-hacked the shit out of this demo to make the ideas more clear</span>
+parametric_ci_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">IV =</span> <span class="kw">rep</span>(<span class="kw">runif</span>(num_points, <span class="dv">-1</span>, <span class="dv">1</span>), <span class="dv">2</span>),
+                                <span class="dt">type =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;IID Error&quot;</span>, <span class="st">&quot;Scaling Error&quot;</span>), <span class="dt">each =</span> num_points),
+                                <span class="dt">error =</span> <span class="kw">rep</span>(<span class="kw">rnorm</span>(num_points, <span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">2</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DV =</span> <span class="kw">ifelse</span>(
+    type <span class="op">==</span><span class="st"> &quot;IID Error&quot;</span>,
+    true_slope <span class="op">*</span><span class="st"> </span>IV <span class="op">+</span><span class="st"> </span>error,
+    true_slope <span class="op">*</span><span class="st"> </span>IV <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">abs</span>(IV) <span class="op">*</span><span class="st"> </span>error)) <span class="co"># error increases proportional to distance from 0 on the IV</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">p =<span class="st"> </span><span class="kw">ggplot</span>(parametric_ci_data,
+           <span class="kw">aes</span>(<span class="dt">x =</span> IV, <span class="dt">y =</span> DV)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.25</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,
+              <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>type)
+p</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_0.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">15</span>) <span class="co"># See above RE: p-hacking</span>
+samp_<span class="dv">1</span>_indices =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">2</span><span class="op">:</span>num_points, num_points, <span class="dt">replace =</span> T)
+samp_<span class="dv">1</span> =<span class="st"> </span>parametric_ci_data[<span class="kw">c</span>(samp_<span class="dv">1</span>_indices, samp_<span class="dv">1</span>_indices <span class="op">+</span><span class="st"> </span>num_points), ] <span class="co"># take the same rows from each type of data</span>
+<span class="kw">set.seed</span>(<span class="dv">2</span>) <span class="co"># See above RE: p-hacking</span>
+samp_<span class="dv">2</span>_indices =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>num_points, num_points, <span class="dt">replace =</span> T)
+samp_<span class="dv">2</span> =<span class="st"> </span>parametric_ci_data[<span class="kw">c</span>(samp_<span class="dv">2</span>_indices, samp_<span class="dv">2</span>_indices <span class="op">+</span><span class="st"> </span>num_points), ]
+
+many_samples_indices =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>num_points, <span class="dv">8</span> <span class="op">*</span><span class="st"> </span>num_points, <span class="dt">replace =</span> T)
+many_samples =<span class="st"> </span><span class="kw">bind_rows</span>(samp_<span class="dv">1</span> <span class="op">%&gt;%</span>
+<span class="st">                           </span><span class="kw">mutate</span>(<span class="dt">sample =</span> <span class="dv">1</span>),
+                         samp_<span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">sample =</span> <span class="dv">2</span>),
+                         parametric_ci_data[<span class="kw">c</span>(many_samples_indices, many_samples_indices <span class="op">+</span><span class="st"> </span>num_points), ] <span class="op">%&gt;%</span>
+<span class="st">                           </span><span class="kw">mutate</span>(<span class="dt">sample =</span> <span class="kw">rep</span>(<span class="kw">rep</span>(<span class="dv">3</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">each =</span> num_points), <span class="dv">2</span>)))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>samp_<span class="dv">1</span>,
+             <span class="kw">aes</span>(<span class="dt">color=</span><span class="ot">NA</span>), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) </code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_1.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>samp_<span class="dv">1</span>,
+             <span class="kw">aes</span>(<span class="dt">color=</span><span class="ot">NA</span>), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span>samp_<span class="dv">1</span>,
+              <span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>F, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, 
+              <span class="dt">size=</span><span class="fl">1.5</span>) </code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_2.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>samp_<span class="dv">2</span>,
+             <span class="kw">aes</span>(<span class="dt">color=</span><span class="ot">NA</span>), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) </code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_3.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>samp_<span class="dv">2</span>,
+             <span class="kw">aes</span>(<span class="dt">color=</span><span class="ot">NA</span>), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span>samp_<span class="dv">2</span>,
+              <span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>F, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, 
+              <span class="dt">size=</span><span class="fl">1.5</span>) </code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_4.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span>many_samples,
+              <span class="kw">aes</span>(<span class="dt">group=</span>sample),
+              <span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>F, 
+              <span class="dt">size=</span><span class="fl">1.5</span>,
+              <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_5.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+</div>
+</div>
+<div id="applications" class="section level2">
+<h2><span class="header-section-number">15.4</span> Applications</h2>
+<div id="bootstrap-confidence-intervals" class="section level3">
+<h3><span class="header-section-number">15.4.1</span> Bootstrap confidence intervals</h3>
+<pre class="sourceCode r"><code class="sourceCode r">num_top_points =<span class="st"> </span><span class="dv">23</span>
+num_mid_points =<span class="st"> </span><span class="dv">4</span>
+num_outlier_points =<span class="st"> </span><span class="dv">2</span>
+max_score =<span class="st"> </span><span class="dv">100</span>
+<span class="kw">set.seed</span>(<span class="dv">0</span>)
+test_score_data =<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">score =</span> <span class="kw">c</span>(<span class="kw">rbinom</span>(num_top_points, max_score, <span class="fl">0.9999</span>), <span class="kw">rbinom</span>(num_mid_points, max_score, <span class="fl">0.97</span>), <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span>max_score, num_outlier_points, <span class="dt">replace =</span> T)),
+  <span class="dt">type =</span> <span class="st">&quot;Observed sample&quot;</span>
+)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">get_mean_score =<span class="st"> </span><span class="cf">function</span>(data, indices) {
+  <span class="kw">return</span>(<span class="kw">mean</span>(data[indices,]<span class="op">$</span>score))
+}
+
+bootstrap_results =<span class="st"> </span><span class="kw">boot</span>(test_score_data, get_mean_score, <span class="dt">R=</span><span class="dv">1000</span>)
+bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstrap_results)</code></pre>
+<pre><code>## Warning in boot.ci(bootstrap_results): bootstrap variances needed for
+## studentized intervals</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">bootstrap_CIs</code></pre>
+<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = bootstrap_results)
+## 
+## Intervals : 
+## Level      Normal              Basic         
+## 95%   ( 86.53, 101.70 )   ( 88.38, 103.00 )  
+## 
+## Level     Percentile            BCa          
+## 95%   (85.21, 99.83 )   (80.66, 99.59 )  
+## Calculations and Intervals on Original Scale
+## Some BCa intervals may be unstable</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">test_summary_data =<span class="st"> </span>test_score_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(score),
+            <span class="dt">se =</span> <span class="kw">sd</span>(score) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">n</span>()),
+            <span class="dt">parametric_CI_low =</span> mean <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>se,
+            <span class="dt">parametric_CI_high =</span> mean <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>se)
+
+test_score_data =<span class="st"> </span>test_score_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bind_rows</span>(
+    <span class="kw">data.frame</span>(<span class="dt">score =</span> bootstrap_results<span class="op">$</span>t, <span class="dt">type =</span> <span class="st">&quot;Boot. sampling dist.&quot;</span>)
+  ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">factor</span>(type, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Observed sample&quot;</span>, <span class="st">&quot;Boot. sampling dist.&quot;</span>)))</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">test_summary_data =<span class="st"> </span>test_summary_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">factor</span>(<span class="st">&quot;Boot. sampling dist.&quot;</span>, <span class="dt">levels =</span> <span class="kw">levels</span>(test_score_data<span class="op">$</span>type)),
+         <span class="dt">percentile_CI_low =</span> bootstrap_CIs<span class="op">$</span>percent[<span class="dv">4</span>],
+         <span class="dt">percentile_CI_high =</span> bootstrap_CIs<span class="op">$</span>percent[<span class="dv">5</span>],
+         <span class="dt">bca_CI_low =</span> bootstrap_CIs<span class="op">$</span>bca[<span class="dv">4</span>],
+         <span class="dt">bca_CI_high =</span> bootstrap_CIs<span class="op">$</span>bca[<span class="dv">5</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(CI_type, value, <span class="kw">contains</span>(<span class="st">&quot;CI&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">separate</span>(CI_type, <span class="kw">c</span>(<span class="st">&quot;CI_type&quot;</span>, <span class="st">&quot;endpoint&quot;</span>), <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(endpoint, value) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">170</span>, <span class="dv">210</span>, <span class="dv">190</span>),
+         <span class="dt">CI_type =</span> <span class="kw">factor</span>(CI_type, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;parametric&quot;</span>, <span class="st">&quot;percentile&quot;</span>, <span class="st">&quot;bca&quot;</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Normal&quot;</span>, <span class="st">&quot;Boot: %&quot;</span>, <span class="st">&quot;Boot: BCA&quot;</span>)))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(test_summary_data <span class="op">%&gt;%</span>
+<span class="st">         </span><span class="kw">filter</span>(CI_type <span class="op">!=</span><span class="st"> &quot;Boot: BCA&quot;</span>), <span class="kw">aes</span>(<span class="dt">x =</span> score)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">data =</span> test_score_data,
+                 <span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> mean, <span class="dt">y =</span> y, <span class="dt">color =</span> CI_type),
+             <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> y, <span class="dt">color =</span> CI_type, <span class="dt">xmin =</span> CI_low, <span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">xmax =</span> CI_high),
+                 <span class="dt">size =</span> <span class="dv">1</span>,
+                 <span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(type <span class="op">~</span><span class="st"> </span>., <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;CI&quot;</span>))</code></pre>
+<pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_CI_0.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
+<pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(test_summary_data, <span class="kw">aes</span>(<span class="dt">x =</span> score)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">data =</span> test_score_data,
+                 <span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> mean, <span class="dt">y =</span> y, <span class="dt">color =</span> CI_type),
+             <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> y, <span class="dt">color =</span> CI_type, <span class="dt">xmin =</span> CI_low, <span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">xmax =</span> CI_high),
+                 <span class="dt">size =</span> <span class="dv">1</span>,
+                 <span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_grid</span>(type <span class="op">~</span><span class="st"> </span>., <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;CI&quot;</span>))</code></pre>
+<pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_CI_1.png&quot;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
+</div>
+<div id="bootstrap-permutation-hypothesis-tests" class="section level3">
+<h3><span class="header-section-number">15.4.2</span> Bootstrap (&amp; permutation) hypothesis tests</h3>
+<pre class="sourceCode r"><code class="sourceCode r">num_flips =<span class="st"> </span><span class="dv">20</span>
+true_heads_prob =<span class="st"> </span><span class="fl">0.9</span>
+<span class="kw">set.seed</span>(<span class="dv">2</span>)
+flips =<span class="st"> </span><span class="kw">rbinom</span>(num_flips, <span class="dv">1</span>, true_heads_prob)
+flip_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">flip_result =</span> <span class="kw">factor</span>(flips, <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Tails&quot;</span>, <span class="st">&quot;Heads&quot;</span>)))</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flip_data_plot =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> flip_data, <span class="kw">aes</span>(<span class="dt">x =</span> flips, <span class="dt">fill =</span> flips)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_dotplot</span>(<span class="dt">binwidth=</span><span class="fl">0.03</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),
+                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;tails&quot;</span>, <span class="st">&quot;heads&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks=</span><span class="kw">c</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Flip result&quot;</span>, <span class="dt">y=</span><span class="st">&quot;&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">get_mean_heads =<span class="st"> </span><span class="cf">function</span>(data, indices) {
+  <span class="kw">return</span>(<span class="kw">mean</span>(data[indices, <span class="st">&quot;flip_result&quot;</span>] <span class="op">==</span><span class="st"> &quot;Heads&quot;</span>))
+}
+
+<span class="kw">set.seed</span>(<span class="dv">0</span>)
+bootstrap_results =<span class="st"> </span><span class="kw">boot</span>(flip_data, get_mean_heads, <span class="dt">R=</span><span class="dv">20000</span>)
+bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstrap_results)</code></pre>
+<pre><code>## Warning in boot.ci(bootstrap_results): bootstrap variances needed for
+## studentized intervals</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">bootstrap_CIs</code></pre>
+<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 20000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = bootstrap_results)
+## 
+## Intervals : 
+## Level      Normal              Basic         
+## 95%   ( 0.6940,  1.0061 )   ( 0.7000,  1.0000 )  
+## 
+## Level     Percentile            BCa          
+## 95%   ( 0.70,  1.00 )   ( 0.55,  0.95 )  
+## Calculations and Intervals on Original Scale</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flip_boot_plot =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">mean_flips =</span> bootstrap_results<span class="op">$</span>t),
+                        <span class="kw">aes</span>(<span class="dt">x =</span> mean_flips)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.05</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="fl">0.5</span>,
+             <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+             <span class="dt">size =</span> <span class="fl">1.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="st">&quot;Null value&quot;</span>,
+           <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+           <span class="dt">x =</span> <span class="fl">0.43</span>, <span class="dt">y =</span> <span class="dv">2500</span>,
+           <span class="dt">angle =</span> <span class="dv">90</span>,
+           <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="st">&quot;95% CI&quot;</span>,
+           <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>,
+           <span class="dt">x =</span> <span class="fl">0.75</span>, <span class="dt">y =</span> <span class="dv">5400</span>,
+           <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> bootstrap_CIs<span class="op">$</span>bca[<span class="dv">4</span>],
+                     <span class="dt">xmax =</span> bootstrap_CIs<span class="op">$</span>bca[<span class="dv">5</span>],
+                     <span class="dt">y =</span> <span class="dv">5100</span>),
+                 <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>,
+                 <span class="dt">size =</span> <span class="fl">1.1</span>,
+                 <span class="dt">height =</span> <span class="dv">200</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Boot. sampling dist.&quot;</span>)
+
+flip_boot_plot</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">flip_data_plot <span class="op">+</span><span class="st"> </span>flip_boot_plot <span class="op">+</span>
+<span class="st">  </span><span class="kw">plot_layout</span>()</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_test.png&quot;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height =</span> <span class="fl">2.5</span>)</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstrap_results,
+                        <span class="dt">conf =</span> <span class="fl">0.999</span>)</code></pre>
+<pre><code>## Warning in boot.ci(bootstrap_results, conf = 0.999): bootstrap variances
+## needed for studentized intervals</code></pre>
+<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order statistics used as
+## endpoints</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">flip_boot_plot =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">mean_flips =</span> bootstrap_results<span class="op">$</span>t),
+                        <span class="kw">aes</span>(<span class="dt">x =</span> mean_flips)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.05</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="fl">0.5</span>,
+             <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+             <span class="dt">size =</span> <span class="fl">1.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="st">&quot;Null value&quot;</span>,
+           <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+           <span class="dt">x =</span> <span class="fl">0.43</span>, <span class="dt">y =</span> <span class="dv">2500</span>,
+           <span class="dt">angle =</span> <span class="dv">90</span>,
+           <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="st">&quot;99.9% CI&quot;</span>,
+           <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>,
+           <span class="dt">x =</span> <span class="fl">0.75</span>, <span class="dt">y =</span> <span class="dv">5400</span>,
+           <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_errorbarh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> bootstrap_CIs<span class="op">$</span>bca[<span class="dv">4</span>],
+                     <span class="dt">xmax =</span> bootstrap_CIs<span class="op">$</span>bca[<span class="dv">5</span>],
+                     <span class="dt">y =</span> <span class="dv">5100</span>),
+                 <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>,
+                 <span class="dt">size =</span> <span class="fl">1.1</span>,
+                 <span class="dt">height =</span> <span class="dv">200</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Boot. sampling dist.&quot;</span>)
+
+flip_boot_plot</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r">flip_data_plot <span class="op">+</span><span class="st"> </span>flip_boot_plot <span class="op">+</span>
+<span class="st">  </span><span class="kw">plot_layout</span>()</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_test_999.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="fl">2.5</span>)</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="power-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-comparison.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/15-bootstrapping.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["psych252.pdf", "psych252.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

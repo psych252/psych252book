@@ -14,7 +14,7 @@
   
   
   <meta property="og:description" content="Course notes for Psych 252." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta name="github-repo" content="psych252/psych252book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 24 Mediation &amp; Moderation | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
@@ -48,6 +48,17 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.5/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
@@ -131,10 +142,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Psych 252</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i>List of R packages used in this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a><ul>
 <li class="chapter" data-level="2.1" data-path="visualization-1.html"><a href="visualization-1.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="2.2" data-path="visualization-1.html"><a href="visualization-1.html#load-packages"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
@@ -174,7 +186,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
 <li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
 <li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
-<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.4</b> Customizing themes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
 <li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
@@ -815,7 +826,7 @@ fit.mediation <span class="op">%&gt;%</span><span class="st"> </span><span class
 </ul>
 <p>Plot the results:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.mediation <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">plot</span>()</code></pre>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <div id="interpretation-1" class="section level4">
 <h4><span class="header-section-number">24.3.4.1</span> Interpretation</h4>
 <p>The <code>mediate()</code> function gives us our Average Causal Mediation Effects (ACME), our Average Direct Effects (ADE), our combined indirect and direct effects (Total Effect), and the ratio of these estimates (Prop. Mediated). The ACME here is the indirect effect of M (total effect - direct effect) and thus this value tells us if our mediation effect is significant.</p>
@@ -833,108 +844,9 @@ fit.brm_mediation =<span class="st"> </span><span class="kw">brm</span>(
   <span class="dt">data =</span> df.mediation,
   <span class="dt">file =</span> <span class="st">&quot;cache/brm_mediation&quot;</span>,
   <span class="dt">seed =</span> <span class="dv">1</span>
-)</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;98a052aec6ee02498bfa665e483e4671&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 5.9e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.59 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.138969 seconds (Warm-up)
-## Chain 1:                0.107311 seconds (Sampling)
-## Chain 1:                0.24628 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;98a052aec6ee02498bfa665e483e4671&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 2.2e-05 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.13105 seconds (Warm-up)
-## Chain 2:                0.106144 seconds (Sampling)
-## Chain 2:                0.237194 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL &#39;98a052aec6ee02498bfa665e483e4671&#39; NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 3.1e-05 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.31 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 0.138723 seconds (Warm-up)
-## Chain 3:                0.1038 seconds (Sampling)
-## Chain 3:                0.242523 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL &#39;98a052aec6ee02498bfa665e483e4671&#39; NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 2.1e-05 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 0.136668 seconds (Warm-up)
-## Chain 4:                0.107272 seconds (Sampling)
-## Chain 4:                0.24394 seconds (Total)
-## Chain 4:</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># summarize the result</span>
+)
+
+<span class="co"># summarize the result</span>
 fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
 <pre><code>##  Family: MV(gaussian, gaussian) 
 ##   Links: mu = identity; sigma = identity
@@ -964,7 +876,7 @@ fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span><span c
 <p><code>set_rescor(FALSE)</code> makes it such that the residual correlation between the response variables is not modeled.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check inference </span>
 fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">plot</span>()</code></pre>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" width="672" /><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<p><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
 <p>Looks pretty solid!</p>
 <p>Let’s get the posterior samples</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.samples =<span class="st"> </span>fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span>
@@ -978,7 +890,7 @@ fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span><span c
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> effect, <span class="dt">x =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_halfeyeh</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="fl">2.3</span>))</code></pre>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Let’s also get some summaries of the posterior (MAP with highest density intervals).</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.samples <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(ab, total) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1080,7 +992,7 @@ df.moderation <span class="op">%&gt;%</span><span class="st"> </span>
        <span class="dt">y =</span> <span class="st">&quot;attention paid&quot;</span>,
        <span class="dt">color =</span> <span class="st">&quot;coffee consumed&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">df.prediction <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">head</span>(<span class="dv">9</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1294,7 +1206,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"download": ["psych252.pdf", "psych252.epub"],
 "toc": {
 "collapse": "subsection"
 }

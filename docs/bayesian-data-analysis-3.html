@@ -14,7 +14,7 @@
   
   
   <meta property="og:description" content="Course notes for Psych 252." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta name="github-repo" content="psych252/psych252book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 23 Bayesian data analysis 3 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-13">
+<meta name="date" content="2019-03-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -48,6 +48,17 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.5/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
@@ -131,10 +142,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Psych 252</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i>List of R packages used in this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a><ul>
 <li class="chapter" data-level="2.1" data-path="visualization-1.html"><a href="visualization-1.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="2.2" data-path="visualization-1.html"><a href="visualization-1.html#load-packages"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
@@ -174,7 +186,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
 <li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
 <li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
-<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.4</b> Customizing themes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
 <li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
@@ -547,30 +558,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24" data-path="mediation-moderation.html"><a href="mediation-moderation.html"><i class="fa fa-check"></i><b>24</b> Mediation &amp; Moderation</a><ul>
 <li class="chapter" data-level="24.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#recommended-reading"><i class="fa fa-check"></i><b>24.1</b> Recommended reading</a></li>
 <li class="chapter" data-level="24.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-packages-and-set-plotting-theme-17"><i class="fa fa-check"></i><b>24.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="24.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-data-sets-4"><i class="fa fa-check"></i><b>24.3</b> Load data sets</a></li>
-<li class="chapter" data-level="24.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>24.4</b> Mediation</a><ul>
-<li class="chapter" data-level="24.4.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data"><i class="fa fa-check"></i><b>24.4.1</b> Generate data</a></li>
-<li class="chapter" data-level="24.4.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>24.4.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
-<li class="chapter" data-level="24.4.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>24.4.3</b> Method 2: Sobel Test</a></li>
-<li class="chapter" data-level="24.4.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>24.4.4</b> Method 3: Bootstrapping</a></li>
-<li class="chapter" data-level="24.4.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-4-bayesian-approach"><i class="fa fa-check"></i><b>24.4.5</b> Method 4: Bayesian approach</a></li>
+<li class="chapter" data-level="24.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>24.3</b> Mediation</a><ul>
+<li class="chapter" data-level="24.3.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data"><i class="fa fa-check"></i><b>24.3.1</b> Generate data</a></li>
+<li class="chapter" data-level="24.3.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>24.3.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
+<li class="chapter" data-level="24.3.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>24.3.3</b> Method 2: Sobel Test</a></li>
+<li class="chapter" data-level="24.3.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>24.3.4</b> Method 3: Bootstrapping</a></li>
+<li class="chapter" data-level="24.3.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-4-bayesian-approach"><i class="fa fa-check"></i><b>24.3.5</b> Method 4: Bayesian approach</a></li>
 </ul></li>
-<li class="chapter" data-level="24.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation"><i class="fa fa-check"></i><b>24.5</b> Moderation</a><ul>
-<li class="chapter" data-level="24.5.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data-1"><i class="fa fa-check"></i><b>24.5.1</b> Generate data</a></li>
-<li class="chapter" data-level="24.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation-analysis"><i class="fa fa-check"></i><b>24.5.2</b> Moderation analysis</a></li>
+<li class="chapter" data-level="24.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation"><i class="fa fa-check"></i><b>24.4</b> Moderation</a><ul>
+<li class="chapter" data-level="24.4.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data-1"><i class="fa fa-check"></i><b>24.4.1</b> Generate data</a></li>
+<li class="chapter" data-level="24.4.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation-analysis"><i class="fa fa-check"></i><b>24.4.2</b> Moderation analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="24.6" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-16"><i class="fa fa-check"></i><b>24.6</b> Additional resources</a><ul>
-<li class="chapter" data-level="24.6.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#books"><i class="fa fa-check"></i><b>24.6.1</b> Books</a></li>
-<li class="chapter" data-level="24.6.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-1"><i class="fa fa-check"></i><b>24.6.2</b> Tutorials</a></li>
+<li class="chapter" data-level="24.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-16"><i class="fa fa-check"></i><b>24.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="24.5.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#books"><i class="fa fa-check"></i><b>24.5.1</b> Books</a></li>
+<li class="chapter" data-level="24.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-1"><i class="fa fa-check"></i><b>24.5.2</b> Tutorials</a></li>
 </ul></li>
-<li class="chapter" data-level="24.7" data-path="mediation-moderation.html"><a href="mediation-moderation.html#session-info"><i class="fa fa-check"></i><b>24.7</b> Session info</a></li>
-<li class="chapter" data-level="24.8" data-path="mediation-moderation.html"><a href="mediation-moderation.html#references"><i class="fa fa-check"></i><b>24.8</b> References</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>25</b> Cheatsheets</a><ul>
 <li class="chapter" data-level="25.1" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#statistics"><i class="fa fa-check"></i><b>25.1</b> Statistics</a></li>
 <li class="chapter" data-level="25.2" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#r"><i class="fa fa-check"></i><b>25.2</b> R</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -658,7 +666,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;final balance (in Euros)&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-2-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-2-1.png" width="672" /></p>
 </div>
 <div id="linear-model-5" class="section level3">
 <h3><span class="header-section-number">23.3.2</span> Linear model</h3>
@@ -692,110 +700,9 @@ fit.lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">s
 <p>Now, let’s fit a Bayesian regression model using the <code>brm()</code> function:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm1 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>hand,
                <span class="dt">data =</span> df.poker,
-               <span class="dt">file =</span> <span class="st">&quot;cache/brm1&quot;</span>)</code></pre>
-<pre><code>## Compiling the C++ model</code></pre>
-<pre><code>## Start sampling</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 6.8e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.68 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.136517 seconds (Warm-up)
-## Chain 1:                0.109216 seconds (Sampling)
-## Chain 1:                0.245733 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 1.9e-05 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.143584 seconds (Warm-up)
-## Chain 2:                0.115913 seconds (Sampling)
-## Chain 2:                0.259497 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 1.9e-05 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 0.139155 seconds (Warm-up)
-## Chain 3:                0.112831 seconds (Sampling)
-## Chain 3:                0.251986 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 2.1e-05 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 0.143433 seconds (Warm-up)
-## Chain 4:                0.115368 seconds (Sampling)
-## Chain 4:                0.258801 seconds (Total)
-## Chain 4:</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
+               <span class="dt">file =</span> <span class="st">&quot;cache/brm1&quot;</span>)
+
+fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: balance ~ 1 + hand 
@@ -827,7 +734,7 @@ fit.lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">s
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .,
          <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> variable, <span class="dt">x =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_halfeyeh</span>()</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-5-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-5-1.png" width="672" /></p>
 <p>And let’s look at how the samples from the posterior are correlated with each other:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">posterior_samples</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -836,7 +743,7 @@ fit.lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">s
           <span class="dt">upper =</span> <span class="kw">list</span>(<span class="dt">continuous =</span> <span class="kw">wrap</span>(<span class="st">&quot;cor&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>))) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(),
         <span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>))</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-6-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-6-1.png" width="672" /></p>
 </div>
 <div id="compute-highest-density-intervals" class="section level4">
 <h4><span class="header-section-number">23.3.3.2</span> Compute highest density intervals</h4>
@@ -935,7 +842,7 @@ sigma
 <h4><span class="header-section-number">23.3.3.3</span> Posterior predictive check</h4>
 <p>To check whether the model did a good job capturing the data, we can simulate what future data the Baysian model predicts, now that it has learned from the data we feed into it.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pp_check</span>(fit.brm1, <span class="dt">nsamples =</span> <span class="dv">100</span>)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-8-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-8-1.png" width="672" /></p>
 <p>This looks good! The predicted shaped of the data based on samples from the posterior distribution looks very similar to the shape of the actual data.</p>
 <p>Let’s make a hypothetical outcome plot that shows what concrete data sets the model would predict:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate predictive samples </span>
@@ -974,7 +881,7 @@ p =<span class="st"> </span>df.predictive_samples <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">transition_manual</span>(sample)
 
 <span class="kw">animate</span>(p, <span class="dt">nframes =</span> <span class="dv">120</span>, <span class="dt">width =</span> <span class="dv">800</span>, <span class="dt">height =</span> <span class="dv">600</span>, <span class="dt">res =</span> <span class="dv">96</span>, <span class="dt">type =</span> <span class="st">&quot;cairo&quot;</span>)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-9-1.gif" /><!-- --></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-9-1.gif" /><!-- --></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># anim_save(&quot;poker_posterior_predictive.gif&quot;)</span></code></pre>
 </div>
 <div id="test-hypothesis" class="section level4">
@@ -990,7 +897,7 @@ p =<span class="st"> </span>df.predictive_samples <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_halfeyeh</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>,
              <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-10-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-10-1.png" width="672" /></p>
 <p>We see that the posterior is definitely greater than 0.</p>
 <p>We can ask many different kinds of questions about the data by doing basic arithmetic on our posterior samples. The <code>hypothesis()</code> function makes this even easier. Here are some examples:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the probability that the posterior for handneutral is less than 0</span>
@@ -1057,223 +964,25 @@ df.hypothesis <span class="op">%&gt;%</span><span class="st"> </span>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm2 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>hand,
                <span class="dt">data =</span> df.poker,
                <span class="dt">save_all_pars =</span> T,
-               <span class="dt">file =</span> <span class="st">&quot;cache/brm2&quot;</span>)</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 4.7e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.47 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.134611 seconds (Warm-up)
-## Chain 1:                0.111798 seconds (Sampling)
-## Chain 1:                0.246409 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 1.9e-05 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.132776 seconds (Warm-up)
-## Chain 2:                0.100152 seconds (Sampling)
-## Chain 2:                0.232928 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 1.9e-05 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 0.139686 seconds (Warm-up)
-## Chain 3:                0.10609 seconds (Sampling)
-## Chain 3:                0.245776 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 1.9e-05 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 0.143938 seconds (Warm-up)
-## Chain 4:                0.101919 seconds (Sampling)
-## Chain 4:                0.245857 seconds (Total)
-## Chain 4:</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">fit.brm3 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>hand <span class="op">+</span><span class="st"> </span>skill,
+               <span class="dt">file =</span> <span class="st">&quot;cache/brm2&quot;</span>)
+
+fit.brm3 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>hand <span class="op">+</span><span class="st"> </span>skill,
                <span class="dt">data =</span> df.poker,
                <span class="dt">save_all_pars =</span> T,
                <span class="dt">file =</span> <span class="st">&quot;cache/brm3&quot;</span>)</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 5.1e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.51 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.162761 seconds (Warm-up)
-## Chain 1:                0.117732 seconds (Sampling)
-## Chain 1:                0.280493 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 2e-05 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.1633 seconds (Warm-up)
-## Chain 2:                0.114296 seconds (Sampling)
-## Chain 2:                0.277596 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 2e-05 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 0.176815 seconds (Warm-up)
-## Chain 3:                0.115967 seconds (Sampling)
-## Chain 3:                0.292782 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL &#39;d8d7c25c08bf7eeac588d635c6649298&#39; NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 2e-05 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 0.148811 seconds (Warm-up)
-## Chain 4:                0.116988 seconds (Sampling)
-## Chain 4:                0.265799 seconds (Total)
-## Chain 4:</code></pre>
 <p>And then compare the models useing the <code>bayes_factor()</code> function:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_factor</span>(fit.brm3, fit.brm2)</code></pre>
 <pre><code>## Iteration: 1
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
+## Iteration: 5
 ## Iteration: 1
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
 ## Iteration: 5</code></pre>
-<pre><code>## Estimated Bayes factor in favor of bridge1 over bridge2: 3.80058</code></pre>
+<pre><code>## Estimated Bayes factor in favor of bridge1 over bridge2: 3.79543</code></pre>
 </div>
 <div id="full-specification" class="section level4">
 <h4><span class="header-section-number">23.3.3.6</span> Full specification</h4>
@@ -1321,108 +1030,9 @@ df.hypothesis <span class="op">%&gt;%</span><span class="st"> </span>
   <span class="dt">chains =</span> <span class="dv">4</span>,
   <span class="dt">file =</span> <span class="st">&quot;cache/brm4&quot;</span>,
   <span class="dt">seed =</span> <span class="dv">1</span>
-)</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;094065c89427f544966975d3861b4ec7&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 5e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.5 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 4000 [  0%]  (Warmup)
-## Chain 1: Iteration:  400 / 4000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  800 / 4000 [ 20%]  (Warmup)
-## Chain 1: Iteration: 1001 / 4000 [ 25%]  (Sampling)
-## Chain 1: Iteration: 1400 / 4000 [ 35%]  (Sampling)
-## Chain 1: Iteration: 1800 / 4000 [ 45%]  (Sampling)
-## Chain 1: Iteration: 2200 / 4000 [ 55%]  (Sampling)
-## Chain 1: Iteration: 2600 / 4000 [ 65%]  (Sampling)
-## Chain 1: Iteration: 3000 / 4000 [ 75%]  (Sampling)
-## Chain 1: Iteration: 3400 / 4000 [ 85%]  (Sampling)
-## Chain 1: Iteration: 3800 / 4000 [ 95%]  (Sampling)
-## Chain 1: Iteration: 4000 / 4000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.140008 seconds (Warm-up)
-## Chain 1:                0.334259 seconds (Sampling)
-## Chain 1:                0.474267 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;094065c89427f544966975d3861b4ec7&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 2e-05 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 4000 [  0%]  (Warmup)
-## Chain 2: Iteration:  400 / 4000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  800 / 4000 [ 20%]  (Warmup)
-## Chain 2: Iteration: 1001 / 4000 [ 25%]  (Sampling)
-## Chain 2: Iteration: 1400 / 4000 [ 35%]  (Sampling)
-## Chain 2: Iteration: 1800 / 4000 [ 45%]  (Sampling)
-## Chain 2: Iteration: 2200 / 4000 [ 55%]  (Sampling)
-## Chain 2: Iteration: 2600 / 4000 [ 65%]  (Sampling)
-## Chain 2: Iteration: 3000 / 4000 [ 75%]  (Sampling)
-## Chain 2: Iteration: 3400 / 4000 [ 85%]  (Sampling)
-## Chain 2: Iteration: 3800 / 4000 [ 95%]  (Sampling)
-## Chain 2: Iteration: 4000 / 4000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.140916 seconds (Warm-up)
-## Chain 2:                0.369691 seconds (Sampling)
-## Chain 2:                0.510607 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL &#39;094065c89427f544966975d3861b4ec7&#39; NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 2.1e-05 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 4000 [  0%]  (Warmup)
-## Chain 3: Iteration:  400 / 4000 [ 10%]  (Warmup)
-## Chain 3: Iteration:  800 / 4000 [ 20%]  (Warmup)
-## Chain 3: Iteration: 1001 / 4000 [ 25%]  (Sampling)
-## Chain 3: Iteration: 1400 / 4000 [ 35%]  (Sampling)
-## Chain 3: Iteration: 1800 / 4000 [ 45%]  (Sampling)
-## Chain 3: Iteration: 2200 / 4000 [ 55%]  (Sampling)
-## Chain 3: Iteration: 2600 / 4000 [ 65%]  (Sampling)
-## Chain 3: Iteration: 3000 / 4000 [ 75%]  (Sampling)
-## Chain 3: Iteration: 3400 / 4000 [ 85%]  (Sampling)
-## Chain 3: Iteration: 3800 / 4000 [ 95%]  (Sampling)
-## Chain 3: Iteration: 4000 / 4000 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 0.143166 seconds (Warm-up)
-## Chain 3:                0.274677 seconds (Sampling)
-## Chain 3:                0.417843 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL &#39;094065c89427f544966975d3861b4ec7&#39; NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 1.9e-05 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 4000 [  0%]  (Warmup)
-## Chain 4: Iteration:  400 / 4000 [ 10%]  (Warmup)
-## Chain 4: Iteration:  800 / 4000 [ 20%]  (Warmup)
-## Chain 4: Iteration: 1001 / 4000 [ 25%]  (Sampling)
-## Chain 4: Iteration: 1400 / 4000 [ 35%]  (Sampling)
-## Chain 4: Iteration: 1800 / 4000 [ 45%]  (Sampling)
-## Chain 4: Iteration: 2200 / 4000 [ 55%]  (Sampling)
-## Chain 4: Iteration: 2600 / 4000 [ 65%]  (Sampling)
-## Chain 4: Iteration: 3000 / 4000 [ 75%]  (Sampling)
-## Chain 4: Iteration: 3400 / 4000 [ 85%]  (Sampling)
-## Chain 4: Iteration: 3800 / 4000 [ 95%]  (Sampling)
-## Chain 4: Iteration: 4000 / 4000 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 0.153658 seconds (Warm-up)
-## Chain 4:                0.307643 seconds (Sampling)
-## Chain 4:                0.461301 seconds (Total)
-## Chain 4:</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">fit.brm4 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
+)
+
+fit.brm4 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: balance ~ 1 + hand 
@@ -1495,7 +1105,7 @@ df.hypothesis <span class="op">%&gt;%</span><span class="st"> </span>
 <h4><span class="header-section-number">23.3.3.7</span> Inference diagnostics</h4>
 <p>So far, we’ve assumed that the inference has worked out. We can check this by running plot() on our brm object:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.brm1)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-19-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-19-1.png" width="672" /></p>
 <p>Let’s make our own version of a trace plot for one parameter in the model:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread_draws</span>(b_Intercept) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1503,7 +1113,7 @@ df.hypothesis <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">chain =</span> <span class="kw">as.factor</span>(chain)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iteration, <span class="dt">y =</span> b_intercept, <span class="dt">group =</span> chain, <span class="dt">color =</span> chain)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-20-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-20-1.png" width="672" /></p>
 <p>We can also take a look at the auto-correlation plot. Ideally, we want to generate independent samples from the posterior. So we don’t want subsequent samples to be strongly correlated with each other. Let’s take a look:</p>
 <pre class="sourceCode r"><code class="sourceCode r">variables =<span class="st"> </span>fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">get_variables</span>() <span class="op">%&gt;%</span><span class="st"> </span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]
 
@@ -1511,7 +1121,7 @@ fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">posterior_samples</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mcmc_acf</span>(<span class="dt">pars =</span> variables,
            <span class="dt">lags =</span> <span class="dv">4</span>)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-21-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-21-1.png" width="672" /></p>
 <p>Looking good! The autocorrelation should become very small as the lag increases (indicating that we are getting independent samples from the posterior).</p>
 <div id="when-things-go-wrong" class="section level5">
 <h5><span class="header-section-number">23.3.3.7.1</span> When things go wrong</h5>
@@ -1535,65 +1145,6 @@ fit.brm5 =<span class="st"> </span><span class="kw">brm</span>(
   <span class="dt">chains =</span> <span class="dv">2</span>,
   <span class="dt">file =</span> <span class="st">&quot;cache/brm5&quot;</span>
 )</code></pre>
-<pre><code>## Compiling the C++ model</code></pre>
-<pre><code>## Start sampling</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;2efc7914d1400e73d76b5782b34c10eb&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 1.4e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 4000 [  0%]  (Warmup)
-## Chain 1: Iteration:  400 / 4000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  800 / 4000 [ 20%]  (Warmup)
-## Chain 1: Iteration: 1001 / 4000 [ 25%]  (Sampling)
-## Chain 1: Iteration: 1400 / 4000 [ 35%]  (Sampling)
-## Chain 1: Iteration: 1800 / 4000 [ 45%]  (Sampling)
-## Chain 1: Iteration: 2200 / 4000 [ 55%]  (Sampling)
-## Chain 1: Iteration: 2600 / 4000 [ 65%]  (Sampling)
-## Chain 1: Iteration: 3000 / 4000 [ 75%]  (Sampling)
-## Chain 1: Iteration: 3400 / 4000 [ 85%]  (Sampling)
-## Chain 1: Iteration: 3800 / 4000 [ 95%]  (Sampling)
-## Chain 1: Iteration: 4000 / 4000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.114075 seconds (Warm-up)
-## Chain 1:                5.00561 seconds (Sampling)
-## Chain 1:                5.11968 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;2efc7914d1400e73d76b5782b34c10eb&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 9e-06 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 4000 [  0%]  (Warmup)
-## Chain 2: Iteration:  400 / 4000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  800 / 4000 [ 20%]  (Warmup)
-## Chain 2: Iteration: 1001 / 4000 [ 25%]  (Sampling)
-## Chain 2: Iteration: 1400 / 4000 [ 35%]  (Sampling)
-## Chain 2: Iteration: 1800 / 4000 [ 45%]  (Sampling)
-## Chain 2: Iteration: 2200 / 4000 [ 55%]  (Sampling)
-## Chain 2: Iteration: 2600 / 4000 [ 65%]  (Sampling)
-## Chain 2: Iteration: 3000 / 4000 [ 75%]  (Sampling)
-## Chain 2: Iteration: 3400 / 4000 [ 85%]  (Sampling)
-## Chain 2: Iteration: 3800 / 4000 [ 95%]  (Sampling)
-## Chain 2: Iteration: 4000 / 4000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.147078 seconds (Warm-up)
-## Chain 2:                0.706358 seconds (Sampling)
-## Chain 2:                0.853436 seconds (Total)
-## Chain 2:</code></pre>
-<pre><code>## Warning: There were 225 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help. See
-## http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</code></pre>
-<pre><code>## Warning: There were 1005 transitions after warmup that exceeded the maximum treedepth. Increase max_treedepth above 10. See
-## http://mc-stan.org/misc/warnings.html#maximum-treedepth-exceeded</code></pre>
-<pre><code>## Warning: There were 1 chains where the estimated Bayesian Fraction of Missing Information was low. See
-## http://mc-stan.org/misc/warnings.html#bfmi-low</code></pre>
-<pre><code>## Warning: Examine the pairs() plot to diagnose sampling problems</code></pre>
 <p>Let’s take a look at the posterior distributions of the model parameters:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.brm5)</code></pre>
 <pre><code>## Warning: There were 225 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help.
@@ -1621,7 +1172,7 @@ fit.brm5 =<span class="st"> </span><span class="kw">brm</span>(
 <p>Not looking good – The estimates and credible intervals are off the charts. And the effective samples sizes in the chains are very small.</p>
 <p>Let’s visualize the trace plots:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.brm5)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-24-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-24-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm5 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread_draws</span>(b_Intercept) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1631,7 +1182,7 @@ fit.brm5 =<span class="st"> </span><span class="kw">brm</span>(
              <span class="dt">group =</span> chain,
              <span class="dt">color =</span> chain)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-25-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-25-1.png" width="672" /></p>
 <p>Given that we have so little data in this case, we need to help the model a little bit by providing some slighlty more specific priors.</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm6 =<span class="st"> </span><span class="kw">brm</span>(
   <span class="dt">data =</span> df.data,
@@ -1647,61 +1198,6 @@ fit.brm5 =<span class="st"> </span><span class="kw">brm</span>(
   <span class="dt">seed =</span> <span class="dv">1</span>,
   <span class="dt">file =</span> <span class="st">&quot;cache/brm6&quot;</span>
 )</code></pre>
-<pre><code>## Compiling the C++ model</code></pre>
-<pre><code>## Start sampling</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;335cc129c4898ef53614299413335e12&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 1.4e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 4000 [  0%]  (Warmup)
-## Chain 1: Iteration:  400 / 4000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  800 / 4000 [ 20%]  (Warmup)
-## Chain 1: Iteration: 1001 / 4000 [ 25%]  (Sampling)
-## Chain 1: Iteration: 1400 / 4000 [ 35%]  (Sampling)
-## Chain 1: Iteration: 1800 / 4000 [ 45%]  (Sampling)
-## Chain 1: Iteration: 2200 / 4000 [ 55%]  (Sampling)
-## Chain 1: Iteration: 2600 / 4000 [ 65%]  (Sampling)
-## Chain 1: Iteration: 3000 / 4000 [ 75%]  (Sampling)
-## Chain 1: Iteration: 3400 / 4000 [ 85%]  (Sampling)
-## Chain 1: Iteration: 3800 / 4000 [ 95%]  (Sampling)
-## Chain 1: Iteration: 4000 / 4000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.023853 seconds (Warm-up)
-## Chain 1:                0.06685 seconds (Sampling)
-## Chain 1:                0.090703 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;335cc129c4898ef53614299413335e12&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 2.6e-05 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 4000 [  0%]  (Warmup)
-## Chain 2: Iteration:  400 / 4000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  800 / 4000 [ 20%]  (Warmup)
-## Chain 2: Iteration: 1001 / 4000 [ 25%]  (Sampling)
-## Chain 2: Iteration: 1400 / 4000 [ 35%]  (Sampling)
-## Chain 2: Iteration: 1800 / 4000 [ 45%]  (Sampling)
-## Chain 2: Iteration: 2200 / 4000 [ 55%]  (Sampling)
-## Chain 2: Iteration: 2600 / 4000 [ 65%]  (Sampling)
-## Chain 2: Iteration: 3000 / 4000 [ 75%]  (Sampling)
-## Chain 2: Iteration: 3400 / 4000 [ 85%]  (Sampling)
-## Chain 2: Iteration: 3800 / 4000 [ 95%]  (Sampling)
-## Chain 2: Iteration: 4000 / 4000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.024053 seconds (Warm-up)
-## Chain 2:                0.060661 seconds (Sampling)
-## Chain 2:                0.084714 seconds (Total)
-## Chain 2:</code></pre>
-<pre><code>## Warning: There were 3 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help. See
-## http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</code></pre>
-<pre><code>## Warning: Examine the pairs() plot to diagnose sampling problems</code></pre>
 <p>Let’s take a look at the posterior distributions of the model parameters:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.brm6)</code></pre>
 <pre><code>## Warning: There were 3 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help.
@@ -1727,14 +1223,14 @@ fit.brm5 =<span class="st"> </span><span class="kw">brm</span>(
 <p>This looks much better. There is still quite a bit of uncertainty in our paremeter estimates, but it has reduced dramatically.</p>
 <p>Let’s visualize the trace plots:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.brm6)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-28-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-28-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm6 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread_draws</span>(b_Intercept) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">chain =</span> <span class="kw">as.factor</span>(chain)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iteration, <span class="dt">y =</span> b_intercept, <span class="dt">group =</span> chain, <span class="dt">color =</span> chain)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-29-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-29-1.png" width="672" /></p>
 <p>Looking mostly good – except for one hiccup on sigma …</p>
 </div>
 </div>
@@ -1756,7 +1252,7 @@ df.variance <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>,
               <span class="dt">width =</span> <span class="fl">0.1</span>,
               <span class="dt">alpha =</span> <span class="fl">0.7</span>)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-30-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-30-1.png" width="672" /></p>
 <p>While frequentist models (such as a linear regression) assume equality of variance, Baysian models afford us with the flexibility of inferring both the parameter estimates of the groups (i.e. the means and differences between the means), as well as the variances.</p>
 <p>We simply define a multivariate model which tries to fit both the <code>response</code> as well as the variance <code>sigma</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm7 =<span class="st"> </span><span class="kw">brm</span>(
@@ -1765,108 +1261,6 @@ df.variance <span class="op">%&gt;%</span>
   <span class="dt">data =</span> df.variance,
   <span class="dt">file =</span> <span class="st">&quot;cache/brm7&quot;</span>
 )</code></pre>
-<pre><code>## Compiling the C++ model</code></pre>
-<pre><code>## Start sampling</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;f31c535ba4e5a36c921081527c91f23c&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 4.5e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.45 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.340466 seconds (Warm-up)
-## Chain 1:                0.357835 seconds (Sampling)
-## Chain 1:                0.698301 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;f31c535ba4e5a36c921081527c91f23c&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 2.3e-05 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.336257 seconds (Warm-up)
-## Chain 2:                0.375591 seconds (Sampling)
-## Chain 2:                0.711848 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL &#39;f31c535ba4e5a36c921081527c91f23c&#39; NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 1.7e-05 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 0.384651 seconds (Warm-up)
-## Chain 3:                0.333699 seconds (Sampling)
-## Chain 3:                0.71835 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL &#39;f31c535ba4e5a36c921081527c91f23c&#39; NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 1.8e-05 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 0.34683 seconds (Warm-up)
-## Chain 4:                0.31108 seconds (Sampling)
-## Chain 4:                0.65791 seconds (Total)
-## Chain 4:</code></pre>
 <p>Let’s take a look at the model output:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.brm7)</code></pre>
 <pre><code>##  Family: gaussian 
@@ -1899,7 +1293,7 @@ df.variance <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_halfeyeh</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(index))</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-33-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-33-1.png" width="672" /></p>
 <p>This plot shows what the posterior looks like for both mu (the inferred means), and for sigma (the inferred variances) for the different groups.</p>
 </div>
 <div id="ordinal-regression" class="section level2">
@@ -1928,108 +1322,6 @@ df.variance <span class="op">%&gt;%</span>
                <span class="dt">family =</span> <span class="st">&quot;cumulative&quot;</span>,
                <span class="dt">file =</span> <span class="st">&quot;cache/brm8&quot;</span>,
                <span class="dt">seed =</span> <span class="dv">1</span>)</code></pre>
-<pre><code>## Compiling the C++ model</code></pre>
-<pre><code>## Start sampling</code></pre>
-<pre><code>## 
-## SAMPLING FOR MODEL &#39;a521321bc853dbf937f110911292cc8e&#39; NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 4.2e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.42 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.116385 seconds (Warm-up)
-## Chain 1:                0.12092 seconds (Sampling)
-## Chain 1:                0.237305 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL &#39;a521321bc853dbf937f110911292cc8e&#39; NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 1.8e-05 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.113056 seconds (Warm-up)
-## Chain 2:                0.094992 seconds (Sampling)
-## Chain 2:                0.208048 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL &#39;a521321bc853dbf937f110911292cc8e&#39; NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 1.9e-05 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 0.115806 seconds (Warm-up)
-## Chain 3:                0.111445 seconds (Sampling)
-## Chain 3:                0.227251 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL &#39;a521321bc853dbf937f110911292cc8e&#39; NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 1.6e-05 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 0.119893 seconds (Warm-up)
-## Chain 4:                0.118768 seconds (Sampling)
-## Chain 4:                0.238661 seconds (Total)
-## Chain 4:</code></pre>
 <p>Visualize the results:</p>
 <pre class="sourceCode r"><code class="sourceCode r">data_plot =<span class="st"> </span>df.cars <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> mpg, <span class="dt">y =</span> cyl, <span class="dt">color =</span> cyl)) <span class="op">+</span>
@@ -2050,7 +1342,7 @@ fit_plot =<span class="st"> </span>df.cars <span class="op">%&gt;%</span>
           data_plot,
           fit_plot
 )</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-37-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-37-1.png" width="672" /></p>
 <p>Posterior predictive check:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.cars <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(mpg) <span class="op">%&gt;%</span>
@@ -2079,7 +1371,7 @@ fit_plot =<span class="st"> </span>df.cars <span class="op">%&gt;%</span>
     <span class="dt">point.padding =</span> <span class="fl">0.2</span>,
     <span class="dt">label.size =</span> <span class="ot">NA</span>,
     <span class="dt">segment.color =</span> <span class="st">&quot;gray35&quot;</span>)</code></pre>
-<p><img src="bookdown-demo_files/figure-html/bda3-38-1.png" width="672" /></p>
+<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-38-1.png" width="672" /></p>
 </div>
 <div id="additional-resources-15" class="section level2">
 <h2><span class="header-section-number">23.6</span> Additional resources</h2>
@@ -2135,7 +1427,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"download": ["psych252.pdf", "psych252.epub"],
 "toc": {
 "collapse": "subsection"
 }
@@ -2143,6 +1435,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
