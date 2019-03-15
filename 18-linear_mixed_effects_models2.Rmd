@@ -1,0 +1,353 @@
+# Linear mixed effects models 2
+
+## Load packages and set plotting theme  
+
+```{r load-packages, message=FALSE}
+library("knitr")      # for knitting RMarkdown 
+library("kableExtra") # for making nice tables
+library("janitor")    # for cleaning column names
+library("broom")    # for tidying up linear models 
+library("patchwork")    # for making figure panels
+library("lme4")    # for linear mixed effects models
+library("tidyverse")  # for wrangling, plotting, etc. 
+```
+
+```{r set-theme}
+theme_set(
+  theme_classic() + #set the theme 
+    theme(text = element_text(size = 20)) #set the default text size
+)
+```
+
+## Things that came up in class 
+
+### Difference between `replicate()` and `map()`
+
+`replicate()` comes with base R whereas `map()` is part of the tidyverse. `map()` can do everything that `replicate()` can do and more. However, if you just want to run the same function (without changing the parameters) multiple times, you might as well use `replicate()`. 
+
+Here are some examples for what you can do with `replicate()` and `map()`.
+
+```{r lmer2-1}
+# draw from a normal distribution and take mean
+fun.normal_means = function(n, mean, sd){
+  mean(rnorm(n = n, mean = mean, sd = sd))
+}
+
+# execute the function 4 times
+replicate(n = 4, fun.normal_means(n = 20, mean = 1, sd = 0.5))
+
+# same same but different 
+map_dbl(.x = c(20, 20, 20, 20), ~ fun.normal_means(n = .x, mean = 1, sd = 0.5))
+
+# and more flexible
+map_dbl(.x = c(1, 1, 10, 10), ~ fun.normal_means(n = 20, mean = .x, sd = 0.5))
+```
+
+## Simulating a linear mixed effects model 
+
+To generate some data for a linear mixed effects model with random intercepts, we do pretty much what we are used to doing when we generated data for a linear model. However, this time, we have an additional parameter that captures the variance in the intercepts between participants. So, we draw a separate (offset from the global) intercept for each participant from this distribution.  
+
+```{r lmer2-2}
+# make example reproducible 
+set.seed(1)
+
+# parameters
+sample_size = 100
+b0 = 1
+b1 = 2
+sd_residual = 1
+sd_participant = 0.5 
+
+# randomly draw intercepts for each participant
+intercepts = rnorm(sample_size, sd = sd_participant)
+
+# generate the data 
+df.mixed = tibble(
+  condition = rep(0:1, each = sample_size), 
+  participant = rep(1:sample_size, 2)) %>% 
+  group_by(condition) %>% 
+  mutate(value = b0 + b1 * condition + intercepts + rnorm(n(), sd = sd_residual)) %>% 
+  ungroup %>% 
+  mutate(condition = as.factor(condition),
+         participant = as.factor(participant))
+```
+
+Let's fit a model to this data now and take a look at the summary output: 
+
+```{r lmer2-3}
+# fit model
+fit.mixed = lmer(formula = value ~ 1 + condition + (1 | participant),
+                data = df.mixed)
+
+fit.mixed %>% 
+  summary()
+```
+
+Let's visualize the model's predictions: 
+
+```{r lmer2-4}
+fit.mixed %>%
+  augment() %>%
+  clean_names() %>%
+  ggplot(data = .,
+         mapping = aes(x = condition,
+                       y = value,
+                       group = participant)) +
+  geom_point(alpha = 0.5) +
+  geom_line(alpha = 0.5) +
+  geom_point(aes(y = fitted),
+             color = "red") +
+  geom_line(aes(y = fitted),
+             color = "red")
+```
+
+Let's simulate some data from this fitted model: 
+
+```{r lmer2-5}
+# simulated data 
+fit.mixed %>% 
+  simulate() %>% 
+  bind_cols(df.mixed) %>% 
+  ggplot(data = .,
+         mapping = aes(x = condition,
+                       y = sim_1,
+                       group = participant)) +
+  geom_line(alpha = 0.5) +
+  geom_point(alpha = 0.5)
+```
+
+Even though we only fitted random intercepts in this model, when we simulate from the model, we get different slopes since, when simulating new data, the model takes our uncertainty in the residuals into account as well. 
+
+Let's see whether fitting random intercepts was worth it in this case: 
+
+```{r lmer2-6}
+# using chisq test
+fit.compact = lm(formula = value ~ 1 +  condition,
+                data = df.mixed)
+
+fit.augmented = lmer(formula = value ~ 1 + condition +  (1 | participant),
+                data = df.mixed)
+
+anova(fit.augmented, fit.compact)
+```
+
+Nope, it's not worth it in this case. That said, even though having random intercepts does not increase the likelihood of the data given the model significantly, we should still include random intercepts to capture the dependence in the data. 
+
+## The effect of outliers 
+
+Let's take 20 participants from our `df.mixed` data set, and make one of the participants be an outlier: 
+
+```{r lmer2-7}
+# let's make one outlier
+df.outlier = df.mixed %>%
+  mutate(participant = participant %>% as.character() %>% as.numeric()) %>% 
+  filter(participant <= 20) %>% 
+  mutate(value = ifelse(participant == 20, value + 30, value),
+         participant = as.factor(participant))
+```
+
+Let's fit the model and look at the summary: 
+
+```{r lmer2-8}
+# fit model
+fit.outlier = lmer(formula = value ~ 1 + condition + (1 | participant),
+                   data = df.outlier)
+
+fit.outlier %>% 
+  summary()
+```
+
+The variance for the participants' intercepts has increased dramatically! 
+
+Let's visualize the data together with the model's predictions: 
+
+```{r lmer2-9}
+fit.outlier %>%
+  augment() %>%
+  clean_names() %>%
+  ggplot(data = .,
+         mapping = aes(x = condition,
+                       y = value,
+                       group = participant)) +
+  geom_point(alpha = 0.5) +
+  geom_line(alpha = 0.5) +
+  geom_point(aes(y = fitted),
+             color = "red") +
+  geom_line(aes(y = fitted),
+             color = "red")
+```
+
+The model is still able to capture the participants quite well. But note what its simulated data looks like now: 
+
+```{r lmer2-10}
+# simulated data from lmer with outlier
+fit.outlier %>% 
+  simulate() %>% 
+  bind_cols(df.outlier) %>% 
+  ggplot(data = .,
+         mapping = aes(x = condition,
+                       y = sim_1,
+                       group = participant)) +
+  geom_line(alpha = 0.5) +
+  geom_point(alpha = 0.5)
+```
+
+The simulated data doesn't look like our original data. This is because one normal distribution is used to model the variance in the intercepts between participants. 
+
+## Different slopes 
+
+Let's generate data where the effect of condition is different for participants: 
+
+```{r lmer2-11}
+# make example reproducible 
+set.seed(1)
+
+tmp = rnorm(n = 20)
+
+df.slopes = tibble(
+  condition = rep(1:2, each = 20), 
+  participant = rep(1:20, 2),
+  value = ifelse(condition == 1, tmp,
+                 mean(tmp) + rnorm(n = 20, sd = 0.3)) # regression to the mean
+) %>% 
+  mutate(condition = as.factor(condition),
+         participant = as.factor(participant))
+```
+
+Let's fit a model with random intercepts. 
+
+```{r lmer2-12}
+fit.slopes = lmer(formula = value ~ 1 + condition + (1 | participant),
+                data = df.slopes)
+
+fit.slopes %>% summary()
+```
+
+Note how the summary says "singular fit", and how the variance for random intercepts is 0. Here, fitting random intercepts did not help the model fit at all, so the lmer gave up ... 
+
+How about fitting random slopes? 
+
+```{r lmer2-13, eval=F}
+# fit model
+lmer(formula = value ~ 1 + condition + (1 + condition | participant),
+     data = df.slopes)
+```
+
+This won't work because the model has more parameters than there are data points. To fit random slopes, we need more than 2 observations per participants. 
+
+## Simpson's paradox 
+
+Taking dependence in the data into account is extremely important. The Simpson's paradox is an instructive example for what can go wrong when we ignore the dependence in the data. 
+
+Let's start by simulating some data to demonstrate the paradox. 
+
+```{r lmer2-14}
+# make example reproducible 
+set.seed(2)
+
+n_participants = 20
+n_observations = 10
+slope = -10 
+sd_error = 0.4
+sd_participant = 5
+intercept = rnorm(n_participants, sd = sd_participant) %>% sort()
+
+df.simpson = tibble(x = runif(n_participants * n_observations, min = 0, max = 1)) %>%
+  arrange(x) %>% 
+  mutate(intercept = rep(intercept, each = n_observations),
+         y = intercept + x * slope + rnorm(n(), sd = sd_error),
+         participant = factor(intercept, labels = 1:n_participants))
+```
+
+Let's visualize the overall relationship between `x` and `y` with a simple linear model. 
+
+```{r lmer2-15}
+# overall effect 
+ggplot(data = df.simpson,
+       mapping = aes(x = x,
+                     y = y)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              color = "black")
+```
+
+As we see, overall, there is a positive relationship between `x` and `y`.
+
+```{r lmer2-16}
+lm(formula = y ~ x,
+   data = df.simpson) %>% 
+  summary()
+```
+
+And this relationship is significant. 
+
+Let's take another look at the data use different colors for the different participants.
+
+```{r lmer2-17}
+# effect by participant 
+ggplot(data = df.simpson,
+       mapping = aes(x = x,
+                     y = y,
+                     color = participant)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              color = "black") +
+  theme(legend.position = "none")
+```
+
+And let's fit a different regression for each participant:
+
+```{r lmer2-18}
+# effect by participant 
+ggplot(data = df.simpson,
+       mapping = aes(x = x,
+                     y = y,
+                     color = participant,
+                     group = participant)) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              color = "black") +
+  theme(legend.position = "none")
+```
+
+What this plot shows, is that for almost all individual participants, the relationship between `x` and `y` is negative. The different participants where along the `x` spectrum they are. 
+
+Let's fit a linear mixed effects model with random intercepts: 
+
+```{r lmer2-19}
+fit.lmer = lmer(formula = y ~ 1 + x + (1 | participant),
+     data = df.simpson)
+
+fit.lmer %>% 
+  summary()
+```
+
+As we can see, the fixed effect for `x` is now negative! 
+
+```{r lmer2-20}
+
+fit.lmer %>% 
+  augment() %>% 
+  clean_names() %>% 
+  ggplot(data = .,
+         aes(x = x,
+             y = y,
+             group = participant,
+             color = participant)) +
+  geom_point() +
+  geom_line(aes(y = fitted),
+            size = 1,
+            color = "black") +
+  theme(legend.position = "none")
+
+```
+
+Lesson learned: taking dependence into account is critical for drawing correct inferences! 
+
+## Additional resources 
+
+### Readings 
+
+- [Linear mixed effects models tutorial by Bodo Winter](https://arxiv.org/pdf/1308.5499.pdf)
+- [Simpson's paradox](https://paulvanderlaken.com/2017/09/27/simpsons-paradox-two-hr-examples-with-r-code/)
+- [Tutorial on pooling](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/)

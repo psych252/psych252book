@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 16 Model comparison | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
+  <meta name="description" content="Course notes for Psych 252.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 16 Model comparison | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course notes for Psych 252." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 16 Model comparison | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  
+  <meta name="twitter:description" content="Course notes for Psych 252." />
+  
+
+<meta name="author" content="Tobias Gerstenberg">
+
+
+<meta name="date" content="2019-03-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="bootstrapping.html">
+<link rel="next" href="linear-mixed-effects-models-1.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Psych 252</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i>List of R packages used in this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a><ul>
+<li class="chapter" data-level="2.1" data-path="visualization-1.html"><a href="visualization-1.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="visualization-1.html"><a href="visualization-1.html#load-packages"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
+<li class="chapter" data-level="2.3" data-path="visualization-1.html"><a href="visualization-1.html#why-visualize-data"><i class="fa fa-check"></i><b>2.3</b> Why visualize data?</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="visualization-1.html"><a href="visualization-1.html#how-not-to-visualize-data"><i class="fa fa-check"></i><b>2.3.1</b> How <em>not</em> to visualize data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="visualization-1.html"><a href="visualization-1.html#how-to-make-it-better"><i class="fa fa-check"></i><b>2.3.2</b> How to make it better</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-rstudio"><i class="fa fa-check"></i><b>2.4</b> Setting up RStudio</a></li>
+<li class="chapter" data-level="2.5" data-path="visualization-1.html"><a href="visualization-1.html#getting-help"><i class="fa fa-check"></i><b>2.5</b> Getting help</a></li>
+<li class="chapter" data-level="2.6" data-path="visualization-1.html"><a href="visualization-1.html#data-visualization-using-ggplot2"><i class="fa fa-check"></i><b>2.6</b> Data visualization using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="2.6.1" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.6.1</b> Setting up a plot</a></li>
+<li class="chapter" data-level="2.6.2" data-path="visualization-1.html"><a href="visualization-1.html#setting-the-default-plot-theme"><i class="fa fa-check"></i><b>2.6.2</b> Setting the default plot theme</a></li>
+<li class="chapter" data-level="2.6.3" data-path="visualization-1.html"><a href="visualization-1.html#scatter-plot"><i class="fa fa-check"></i><b>2.6.3</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.6.4" data-path="visualization-1.html"><a href="visualization-1.html#line-plot"><i class="fa fa-check"></i><b>2.6.4</b> Line plot</a></li>
+<li class="chapter" data-level="2.6.5" data-path="visualization-1.html"><a href="visualization-1.html#adding-error-bars"><i class="fa fa-check"></i><b>2.6.5</b> Adding error bars</a></li>
+<li class="chapter" data-level="2.6.6" data-path="visualization-1.html"><a href="visualization-1.html#grouping-data"><i class="fa fa-check"></i><b>2.6.6</b> Grouping data</a></li>
+<li class="chapter" data-level="2.6.7" data-path="visualization-1.html"><a href="visualization-1.html#making-facets"><i class="fa fa-check"></i><b>2.6.7</b> Making facets</a></li>
+<li class="chapter" data-level="2.6.8" data-path="visualization-1.html"><a href="visualization-1.html#global-local-and-setting-aes"><i class="fa fa-check"></i><b>2.6.8</b> Global, local, and setting <code>aes()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="visualization-1.html"><a href="visualization-1.html#additional-resources"><i class="fa fa-check"></i><b>2.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="visualization-1.html"><a href="visualization-1.html#cheatsheets"><i class="fa fa-check"></i><b>2.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="2.7.2" data-path="visualization-1.html"><a href="visualization-1.html#data-camp-courses"><i class="fa fa-check"></i><b>2.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="2.7.3" data-path="visualization-1.html"><a href="visualization-1.html#books-and-chapters"><i class="fa fa-check"></i><b>2.7.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="2.7.4" data-path="visualization-1.html"><a href="visualization-1.html#misc"><i class="fa fa-check"></i><b>2.7.4</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualization-2.html"><a href="visualization-2.html"><i class="fa fa-check"></i><b>3</b> Visualization 2</a><ul>
+<li class="chapter" data-level="3.1" data-path="visualization-2.html"><a href="visualization-2.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="visualization-2.html"><a href="visualization-2.html#install-and-load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>3.2</b> Install and load packages, load data, set theme</a></li>
+<li class="chapter" data-level="3.3" data-path="visualization-2.html"><a href="visualization-2.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>3.3</b> Overview of different plot types for different things</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="visualization-2.html"><a href="visualization-2.html#proportions"><i class="fa fa-check"></i><b>3.3.1</b> Proportions</a></li>
+<li class="chapter" data-level="3.3.2" data-path="visualization-2.html"><a href="visualization-2.html#comparisons"><i class="fa fa-check"></i><b>3.3.2</b> Comparisons</a></li>
+<li class="chapter" data-level="3.3.3" data-path="visualization-2.html"><a href="visualization-2.html#relationships"><i class="fa fa-check"></i><b>3.3.3</b> Relationships</a></li>
+<li class="chapter" data-level="3.3.4" data-path="visualization-2.html"><a href="visualization-2.html#temporal-data"><i class="fa fa-check"></i><b>3.3.4</b> Temporal data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-plots"><i class="fa fa-check"></i><b>3.4</b> Customizing plots</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
+<li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
+<li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
+<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.4</b> Customizing themes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
+<li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
+<li class="chapter" data-level="3.7" data-path="visualization-2.html"><a href="visualization-2.html#peeking-behind-the-scenes"><i class="fa fa-check"></i><b>3.7</b> Peeking behind the scenes</a></li>
+<li class="chapter" data-level="3.8" data-path="visualization-2.html"><a href="visualization-2.html#making-animations"><i class="fa fa-check"></i><b>3.8</b> Making animations</a></li>
+<li class="chapter" data-level="3.9" data-path="visualization-2.html"><a href="visualization-2.html#shiny-apps"><i class="fa fa-check"></i><b>3.9</b> Shiny apps</a></li>
+<li class="chapter" data-level="3.10" data-path="visualization-2.html"><a href="visualization-2.html#defining-snippets"><i class="fa fa-check"></i><b>3.10</b> Defining snippets</a></li>
+<li class="chapter" data-level="3.11" data-path="visualization-2.html"><a href="visualization-2.html#additional-resources-1"><i class="fa fa-check"></i><b>3.11</b> Additional resources</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="visualization-2.html"><a href="visualization-2.html#cheatsheets-1"><i class="fa fa-check"></i><b>3.11.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="3.11.2" data-path="visualization-2.html"><a href="visualization-2.html#data-camp-courses-1"><i class="fa fa-check"></i><b>3.11.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="3.11.3" data-path="visualization-2.html"><a href="visualization-2.html#books-and-chapters-1"><i class="fa fa-check"></i><b>3.11.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="3.11.4" data-path="visualization-2.html"><a href="visualization-2.html#misc-1"><i class="fa fa-check"></i><b>3.11.4</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html"><i class="fa fa-check"></i><b>4</b> Data wrangling 1</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#learning-objectives-2"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#install-packages"><i class="fa fa-check"></i><b>4.2</b> Install packages</a></li>
+<li class="chapter" data-level="4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#load-packages-1"><i class="fa fa-check"></i><b>4.3</b> Load packages</a></li>
+<li class="chapter" data-level="4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#some-r-basics"><i class="fa fa-check"></i><b>4.4</b> Some R basics</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#modes"><i class="fa fa-check"></i><b>4.4.1</b> Modes</a></li>
+<li class="chapter" data-level="4.4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-types"><i class="fa fa-check"></i><b>4.4.2</b> Data types</a></li>
+<li class="chapter" data-level="4.4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#operators"><i class="fa fa-check"></i><b>4.4.3</b> Operators</a></li>
+<li class="chapter" data-level="4.4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#control-flow"><i class="fa fa-check"></i><b>4.4.4</b> Control flow</a></li>
+<li class="chapter" data-level="4.4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#functions"><i class="fa fa-check"></i><b>4.4.5</b> Functions</a></li>
+<li class="chapter" data-level="4.4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#the-pipe-operator"><i class="fa fa-check"></i><b>4.4.6</b> The pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#looking-at-data"><i class="fa fa-check"></i><b>4.5</b> Looking at data</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#head"><i class="fa fa-check"></i><b>4.5.1</b> <code>head()</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#glimpse"><i class="fa fa-check"></i><b>4.5.2</b> <code>glimpse()</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#distinct"><i class="fa fa-check"></i><b>4.5.3</b> <code>distinct()</code></a></li>
+<li class="chapter" data-level="4.5.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#count"><i class="fa fa-check"></i><b>4.5.4</b> <code>count()</code></a></li>
+<li class="chapter" data-level="4.5.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#datatable"><i class="fa fa-check"></i><b>4.5.5</b> <code>datatable()</code></a></li>
+<li class="chapter" data-level="4.5.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#other-tools-for-taking-a-quick-look-at-data"><i class="fa fa-check"></i><b>4.5.6</b> Other tools for taking a quick look at data</a></li>
+<li class="chapter" data-level="4.5.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>4.5.7</b> A quick note on naming things</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#wrangling-data"><i class="fa fa-check"></i><b>4.6</b> Wrangling data</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#filter"><i class="fa fa-check"></i><b>4.6.1</b> filter()</a></li>
+<li class="chapter" data-level="4.6.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#rename"><i class="fa fa-check"></i><b>4.6.2</b> rename()</a></li>
+<li class="chapter" data-level="4.6.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#select"><i class="fa fa-check"></i><b>4.6.3</b> select()</a></li>
+<li class="chapter" data-level="4.6.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#mutate"><i class="fa fa-check"></i><b>4.6.4</b> mutate()</a></li>
+<li class="chapter" data-level="4.6.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#arrange"><i class="fa fa-check"></i><b>4.6.5</b> arrange()</a></li>
+<li class="chapter" data-level="4.6.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-2"><i class="fa fa-check"></i><b>4.6.6</b> Practice 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#additional-resources-2"><i class="fa fa-check"></i><b>4.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#cheatsheets-2"><i class="fa fa-check"></i><b>4.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="4.7.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-camp-courses-2"><i class="fa fa-check"></i><b>4.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="4.7.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#books-and-chapters-2"><i class="fa fa-check"></i><b>4.7.3</b> Books and chapters</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html"><i class="fa fa-check"></i><b>5</b> Data wrangling 2</a><ul>
+<li class="chapter" data-level="5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#learning-objectives-3"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#load-packages-2"><i class="fa fa-check"></i><b>5.2</b> Load packages</a></li>
+<li class="chapter" data-level="5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#wrangling-data-continued"><i class="fa fa-check"></i><b>5.3</b> Wrangling data (continued)</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#summarizing-data"><i class="fa fa-check"></i><b>5.3.1</b> Summarizing data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reshaping-data"><i class="fa fa-check"></i><b>5.3.2</b> Reshaping data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#joining-multiple-data-frames"><i class="fa fa-check"></i><b>5.3.3</b> Joining multiple data frames</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>5.3.4</b> Dealing with missing data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reading-in-data"><i class="fa fa-check"></i><b>5.4</b> Reading in data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv"><i class="fa fa-check"></i><b>5.4.1</b> csv</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata"><i class="fa fa-check"></i><b>5.4.2</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#saving-data"><i class="fa fa-check"></i><b>5.5</b> Saving data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv-1"><i class="fa fa-check"></i><b>5.5.1</b> csv</a></li>
+<li class="chapter" data-level="5.5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata-1"><i class="fa fa-check"></i><b>5.5.2</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#additional-resources-3"><i class="fa fa-check"></i><b>5.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#cheatsheets-3"><i class="fa fa-check"></i><b>5.6.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="5.6.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#data-camp-courses-3"><i class="fa fa-check"></i><b>5.6.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="5.6.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#books-and-chapters-3"><i class="fa fa-check"></i><b>5.6.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="5.6.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#tutorials"><i class="fa fa-check"></i><b>5.6.4</b> Tutorials</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a><ul>
+<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#load-packages-3"><i class="fa fa-check"></i><b>6.1</b> Load packages</a></li>
+<li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.2</b> Counting</a></li>
+<li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.3</b> Flipping a coin many times</a></li>
+<li class="chapter" data-level="6.4" data-path="probability-and-causality.html"><a href="probability-and-causality.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.4</b> Clue guide to probability</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#conditional-probability"><i class="fa fa-check"></i><b>6.4.1</b> Conditional probability</a></li>
+<li class="chapter" data-level="6.4.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.4.2</b> Law of total probability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="probability-and-causality.html"><a href="probability-and-causality.html#probability-operations"><i class="fa fa-check"></i><b>6.5</b> Probability operations</a></li>
+<li class="chapter" data-level="6.6" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.6</b> Bayesian reasoning example</a></li>
+<li class="chapter" data-level="6.7" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-networks"><i class="fa fa-check"></i><b>6.7</b> Bayesian networks</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#sprinkler-example"><i class="fa fa-check"></i><b>6.7.1</b> Sprinkler example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="probability-and-causality.html"><a href="probability-and-causality.html#additional-resources-4"><i class="fa fa-check"></i><b>6.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.8.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="6.8.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.8.2</b> Books and chapters</a></li>
+<li class="chapter" data-level="6.8.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#misc-2"><i class="fa fa-check"></i><b>6.8.3</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a><ul>
+<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#load-packages-and-set-plotting-theme"><i class="fa fa-check"></i><b>7.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#working-with-distributions"><i class="fa fa-check"></i><b>7.2</b> Working with distributions</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="simulation-1.html"><a href="simulation-1.html#plotting-distributions"><i class="fa fa-check"></i><b>7.2.1</b> Plotting distributions</a></li>
+<li class="chapter" data-level="7.2.2" data-path="simulation-1.html"><a href="simulation-1.html#sampling-from-distributions"><i class="fa fa-check"></i><b>7.2.2</b> Sampling from distributions</a></li>
+<li class="chapter" data-level="7.2.3" data-path="simulation-1.html"><a href="simulation-1.html#cumulative-probability-distribution"><i class="fa fa-check"></i><b>7.2.3</b> Cumulative probability distribution</a></li>
+<li class="chapter" data-level="7.2.4" data-path="simulation-1.html"><a href="simulation-1.html#inverse-cumulative-distribution"><i class="fa fa-check"></i><b>7.2.4</b> Inverse cumulative distribution</a></li>
+<li class="chapter" data-level="7.2.5" data-path="simulation-1.html"><a href="simulation-1.html#computing-probabilities"><i class="fa fa-check"></i><b>7.2.5</b> Computing probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="simulation-1.html"><a href="simulation-1.html#bayesian-inference-with-the-normal-distribution"><i class="fa fa-check"></i><b>7.3</b> Bayesian inference with the normal distribution</a></li>
+<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#working-with-samples"><i class="fa fa-check"></i><b>7.4</b> Working with samples</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="simulation-1.html"><a href="simulation-1.html#understanding-density"><i class="fa fa-check"></i><b>7.4.1</b> Understanding <code>density()</code></a></li>
+<li class="chapter" data-level="7.4.2" data-path="simulation-1.html"><a href="simulation-1.html#the-quantile-function"><i class="fa fa-check"></i><b>7.4.2</b> The <code>quantile()</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="simulation-1.html"><a href="simulation-1.html#comparing-probability-distributions"><i class="fa fa-check"></i><b>7.5</b> Comparing probability distributions</a></li>
+<li class="chapter" data-level="7.6" data-path="simulation-1.html"><a href="simulation-1.html#additional-resources-5"><i class="fa fa-check"></i><b>7.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="simulation-1.html"><a href="simulation-1.html#cheatsheets-5"><i class="fa fa-check"></i><b>7.6.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="7.6.2" data-path="simulation-1.html"><a href="simulation-1.html#datacamp"><i class="fa fa-check"></i><b>7.6.2</b> Datacamp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a><ul>
+<li class="chapter" data-level="8.1" data-path="simulation-2.html"><a href="simulation-2.html#load-packages-and-set-plotting-theme-1"><i class="fa fa-check"></i><b>8.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="8.2" data-path="simulation-2.html"><a href="simulation-2.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>8.2</b> The central limit theorem</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="simulation-2.html"><a href="simulation-2.html#population-distribution"><i class="fa fa-check"></i><b>8.2.1</b> Population distribution</a></li>
+<li class="chapter" data-level="8.2.2" data-path="simulation-2.html"><a href="simulation-2.html#distribution-of-a-single-sample"><i class="fa fa-check"></i><b>8.2.2</b> Distribution of a single sample</a></li>
+<li class="chapter" data-level="8.2.3" data-path="simulation-2.html"><a href="simulation-2.html#the-sampling-distribution"><i class="fa fa-check"></i><b>8.2.3</b> The sampling distribution</a></li>
+<li class="chapter" data-level="8.2.4" data-path="simulation-2.html"><a href="simulation-2.html#exploring-the-clt"><i class="fa fa-check"></i><b>8.2.4</b> Exploring the CLT</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="simulation-2.html"><a href="simulation-2.html#understanding-p-values"><i class="fa fa-check"></i><b>8.3</b> Understanding p-values</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation-2.html"><a href="simulation-2.html#permutation-test"><i class="fa fa-check"></i><b>8.3.1</b> Permutation test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="simulation-2.html"><a href="simulation-2.html#confidence-intervals"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="8.5" data-path="simulation-2.html"><a href="simulation-2.html#additional-resources-6"><i class="fa fa-check"></i><b>8.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="simulation-2.html"><a href="simulation-2.html#datacamp-1"><i class="fa fa-check"></i><b>8.5.1</b> Datacamp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modeling-data.html"><a href="modeling-data.html"><i class="fa fa-check"></i><b>9</b> Modeling data</a><ul>
+<li class="chapter" data-level="9.1" data-path="modeling-data.html"><a href="modeling-data.html#load-packages-and-set-plotting-theme-2"><i class="fa fa-check"></i><b>9.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="9.2" data-path="modeling-data.html"><a href="modeling-data.html#things-that-came-up-in-class"><i class="fa fa-check"></i><b>9.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="modeling-data.html"><a href="modeling-data.html#calculating-rmse-using-magrittr-verbs"><i class="fa fa-check"></i><b>9.2.1</b> Calculating RMSE using <code>magrittr</code> verbs</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modeling-data.html"><a href="modeling-data.html#relationship-between-probability-and-likelihood"><i class="fa fa-check"></i><b>9.2.2</b> Relationship between probability and likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="modeling-data.html"><a href="modeling-data.html#modeling-data-1"><i class="fa fa-check"></i><b>9.3</b> Modeling data</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="modeling-data.html"><a href="modeling-data.html#simplicity-vs.-accuracy-trade-off"><i class="fa fa-check"></i><b>9.3.1</b> Simplicity vs. accuracy trade-off</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modeling-data.html"><a href="modeling-data.html#error-definitions-and-best-estimators"><i class="fa fa-check"></i><b>9.3.2</b> Error definitions and best estimators</a></li>
+<li class="chapter" data-level="9.3.3" data-path="modeling-data.html"><a href="modeling-data.html#sampling-distributions-for-median-and-mean"><i class="fa fa-check"></i><b>9.3.3</b> Sampling distributions for median and mean</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="modeling-data.html"><a href="modeling-data.html#hypothesis-testing-one-sample-t-test"><i class="fa fa-check"></i><b>9.4</b> Hypothesis testing: “One-sample t-test”</a></li>
+<li class="chapter" data-level="9.5" data-path="modeling-data.html"><a href="modeling-data.html#additional-resources-7"><i class="fa fa-check"></i><b>9.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="modeling-data.html"><a href="modeling-data.html#reading"><i class="fa fa-check"></i><b>9.5.1</b> Reading</a></li>
+<li class="chapter" data-level="9.5.2" data-path="modeling-data.html"><a href="modeling-data.html#datacamp-2"><i class="fa fa-check"></i><b>9.5.2</b> Datacamp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="linear-model-1.html"><a href="linear-model-1.html"><i class="fa fa-check"></i><b>10</b> Linear model 1</a><ul>
+<li class="chapter" data-level="10.1" data-path="linear-model-1.html"><a href="linear-model-1.html#load-packages-and-set-plotting-theme-3"><i class="fa fa-check"></i><b>10.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="10.2" data-path="linear-model-1.html"><a href="linear-model-1.html#things-that-came-up-in-class-1"><i class="fa fa-check"></i><b>10.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="linear-model-1.html"><a href="linear-model-1.html#building-a-sampling-distribution-of-pre"><i class="fa fa-check"></i><b>10.2.1</b> Building a sampling distribution of PRE</a></li>
+<li class="chapter" data-level="10.2.2" data-path="linear-model-1.html"><a href="linear-model-1.html#correlation"><i class="fa fa-check"></i><b>10.2.2</b> Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="linear-model-1.html"><a href="linear-model-1.html#regression"><i class="fa fa-check"></i><b>10.3</b> Regression</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="linear-model-1.html"><a href="linear-model-1.html#define-and-fit-the-models"><i class="fa fa-check"></i><b>10.3.1</b> Define and fit the models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="linear-model-1.html"><a href="linear-model-1.html#calculate-the-sum-of-squared-errors-of-each-model"><i class="fa fa-check"></i><b>10.3.2</b> Calculate the sum of squared errors of each model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="linear-model-1.html"><a href="linear-model-1.html#credit-example"><i class="fa fa-check"></i><b>10.4</b> Credit example</a></li>
+<li class="chapter" data-level="10.5" data-path="linear-model-1.html"><a href="linear-model-1.html#additional-resources-8"><i class="fa fa-check"></i><b>10.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="linear-model-1.html"><a href="linear-model-1.html#datacamp-3"><i class="fa fa-check"></i><b>10.5.1</b> Datacamp</a></li>
+<li class="chapter" data-level="10.5.2" data-path="linear-model-1.html"><a href="linear-model-1.html#misc-3"><i class="fa fa-check"></i><b>10.5.2</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="linear-model-2.html"><a href="linear-model-2.html"><i class="fa fa-check"></i><b>11</b> Linear model 2</a><ul>
+<li class="chapter" data-level="11.1" data-path="linear-model-2.html"><a href="linear-model-2.html#load-packages-and-set-plotting-theme-4"><i class="fa fa-check"></i><b>11.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="11.2" data-path="linear-model-2.html"><a href="linear-model-2.html#load-data-sets"><i class="fa fa-check"></i><b>11.2</b> Load data sets</a></li>
+<li class="chapter" data-level="11.3" data-path="linear-model-2.html"><a href="linear-model-2.html#things-that-came-up-in-class-2"><i class="fa fa-check"></i><b>11.3</b> Things that came up in class</a></li>
+<li class="chapter" data-level="11.4" data-path="linear-model-2.html"><a href="linear-model-2.html#multiple-continuous-variables"><i class="fa fa-check"></i><b>11.4</b> Multiple continuous variables</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="linear-model-2.html"><a href="linear-model-2.html#explore-correlations"><i class="fa fa-check"></i><b>11.4.1</b> Explore correlations</a></li>
+<li class="chapter" data-level="11.4.2" data-path="linear-model-2.html"><a href="linear-model-2.html#multipe-regression"><i class="fa fa-check"></i><b>11.4.2</b> Multipe regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="linear-model-2.html"><a href="linear-model-2.html#one-categorical-variable"><i class="fa fa-check"></i><b>11.5</b> One categorical variable</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions"><i class="fa fa-check"></i><b>11.5.1</b> Visualization of the model predictions</a></li>
+<li class="chapter" data-level="11.5.2" data-path="linear-model-2.html"><a href="linear-model-2.html#dummy-coding"><i class="fa fa-check"></i><b>11.5.2</b> Dummy coding</a></li>
+<li class="chapter" data-level="11.5.3" data-path="linear-model-2.html"><a href="linear-model-2.html#reporting-the-results"><i class="fa fa-check"></i><b>11.5.3</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="linear-model-2.html"><a href="linear-model-2.html#one-continuous-and-one-categorical-variable"><i class="fa fa-check"></i><b>11.6</b> One continuous and one categorical variable</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions-1"><i class="fa fa-check"></i><b>11.6.1</b> Visualization of the model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="linear-model-2.html"><a href="linear-model-2.html#interactions"><i class="fa fa-check"></i><b>11.7</b> Interactions</a><ul>
+<li class="chapter" data-level="11.7.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-3"><i class="fa fa-check"></i><b>11.7.1</b> Visualization</a></li>
+<li class="chapter" data-level="11.7.2" data-path="linear-model-2.html"><a href="linear-model-2.html#hypothesis-test"><i class="fa fa-check"></i><b>11.7.2</b> Hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="11.8" data-path="linear-model-2.html"><a href="linear-model-2.html#additional-resources-9"><i class="fa fa-check"></i><b>11.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="11.8.1" data-path="linear-model-2.html"><a href="linear-model-2.html#datacamp-4"><i class="fa fa-check"></i><b>11.8.1</b> Datacamp</a></li>
+<li class="chapter" data-level="11.8.2" data-path="linear-model-2.html"><a href="linear-model-2.html#misc-4"><i class="fa fa-check"></i><b>11.8.2</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-model-3.html"><a href="linear-model-3.html"><i class="fa fa-check"></i><b>12</b> Linear model 3</a><ul>
+<li class="chapter" data-level="12.1" data-path="linear-model-3.html"><a href="linear-model-3.html#load-packages-and-set-plotting-theme-5"><i class="fa fa-check"></i><b>12.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-model-3.html"><a href="linear-model-3.html#load-data-sets-1"><i class="fa fa-check"></i><b>12.2</b> Load data sets</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-model-3.html"><a href="linear-model-3.html#one-way-anova"><i class="fa fa-check"></i><b>12.2.1</b> One-way ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova"><i class="fa fa-check"></i><b>12.3</b> Two-way ANOVA</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="linear-model-3.html"><a href="linear-model-3.html#visualization-5"><i class="fa fa-check"></i><b>12.3.1</b> Visualization</a></li>
+<li class="chapter" data-level="12.3.2" data-path="linear-model-3.html"><a href="linear-model-3.html#model-fitting-1"><i class="fa fa-check"></i><b>12.3.2</b> Model fitting</a></li>
+<li class="chapter" data-level="12.3.3" data-path="linear-model-3.html"><a href="linear-model-3.html#interpreting-interactions"><i class="fa fa-check"></i><b>12.3.3</b> Interpreting interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="linear-model-3.html"><a href="linear-model-3.html#additional-resources-10"><i class="fa fa-check"></i><b>12.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="linear-model-3.html"><a href="linear-model-3.html#datacamp-5"><i class="fa fa-check"></i><b>12.4.1</b> Datacamp</a></li>
+<li class="chapter" data-level="12.4.2" data-path="linear-model-3.html"><a href="linear-model-3.html#misc-5"><i class="fa fa-check"></i><b>12.4.2</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linear-model-4.html"><a href="linear-model-4.html"><i class="fa fa-check"></i><b>13</b> Linear model 4</a><ul>
+<li class="chapter" data-level="13.1" data-path="linear-model-4.html"><a href="linear-model-4.html#load-packages-and-set-plotting-theme-6"><i class="fa fa-check"></i><b>13.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-model-4.html"><a href="linear-model-4.html#load-data-sets-2"><i class="fa fa-check"></i><b>13.2</b> Load data sets</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-model-4.html"><a href="linear-model-4.html#variance-decomposition-in-one-way-anova"><i class="fa fa-check"></i><b>13.3</b> Variance decomposition in one-way ANOVA</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="linear-model-4.html"><a href="linear-model-4.html#calculate-sums-of-squares"><i class="fa fa-check"></i><b>13.3.1</b> Calculate sums of squares</a></li>
+<li class="chapter" data-level="13.3.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualize-model-predictions"><i class="fa fa-check"></i><b>13.3.2</b> Visualize model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="linear-model-4.html"><a href="linear-model-4.html#two-way-anova-linear-model"><i class="fa fa-check"></i><b>13.4</b> Two-way ANOVA (linear model)</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="linear-model-4.html"><a href="linear-model-4.html#calculate-sums-of-squares-1"><i class="fa fa-check"></i><b>13.4.1</b> Calculate sums of squares</a></li>
+<li class="chapter" data-level="13.4.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualize-model-predictions-1"><i class="fa fa-check"></i><b>13.4.2</b> Visualize model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="linear-model-4.html"><a href="linear-model-4.html#anova-with-unbalanced-design"><i class="fa fa-check"></i><b>13.5</b> ANOVA with unbalanced design</a></li>
+<li class="chapter" data-level="13.6" data-path="linear-model-4.html"><a href="linear-model-4.html#two-way-anova-with-interaction"><i class="fa fa-check"></i><b>13.6</b> Two-way ANOVA (with interaction)</a></li>
+<li class="chapter" data-level="13.7" data-path="linear-model-4.html"><a href="linear-model-4.html#planned-contrasts"><i class="fa fa-check"></i><b>13.7</b> Planned contrasts</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="linear-model-4.html"><a href="linear-model-4.html#hypothetical-data"><i class="fa fa-check"></i><b>13.7.1</b> Hypothetical data</a></li>
+<li class="chapter" data-level="13.7.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualization-6"><i class="fa fa-check"></i><b>13.7.2</b> Visualization</a></li>
+<li class="chapter" data-level="13.7.3" data-path="linear-model-4.html"><a href="linear-model-4.html#constrasts"><i class="fa fa-check"></i><b>13.7.3</b> Constrasts</a></li>
+<li class="chapter" data-level="13.7.4" data-path="linear-model-4.html"><a href="linear-model-4.html#post-hoc-tests"><i class="fa fa-check"></i><b>13.7.4</b> Post-hoc tests</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#load-packages-and-set-plotting-theme-7"><i class="fa fa-check"></i><b>14.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="14.2" data-path="power-analysis.html"><a href="power-analysis.html#load-data-sets-3"><i class="fa fa-check"></i><b>14.2</b> Load data sets</a></li>
+<li class="chapter" data-level="14.3" data-path="power-analysis.html"><a href="power-analysis.html#decision-making"><i class="fa fa-check"></i><b>14.3</b> Decision-making</a></li>
+<li class="chapter" data-level="14.4" data-path="power-analysis.html"><a href="power-analysis.html#effect-sizes"><i class="fa fa-check"></i><b>14.4</b> Effect sizes</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="power-analysis.html"><a href="power-analysis.html#eta-squared-and-partial-eta-squared"><i class="fa fa-check"></i><b>14.4.1</b> eta-squared and partial eta-squared</a></li>
+<li class="chapter" data-level="14.4.2" data-path="power-analysis.html"><a href="power-analysis.html#cohens-d"><i class="fa fa-check"></i><b>14.4.2</b> Cohen’s d</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="power-analysis.html"><a href="power-analysis.html#determining-sample-size"><i class="fa fa-check"></i><b>14.5</b> Determining sample size</a><ul>
+<li class="chapter" data-level="14.5.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>14.5.1</b> <code>pwr</code> package</a></li>
+<li class="chapter" data-level="14.5.2" data-path="power-analysis.html"><a href="power-analysis.html#simulation"><i class="fa fa-check"></i><b>14.5.2</b> Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-11"><i class="fa fa-check"></i><b>14.6</b> Additional resources</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="bootstrapping.html"><a href="bootstrapping.html"><i class="fa fa-check"></i><b>15</b> Bootstrapping</a><ul>
+<li class="chapter" data-level="15.1" data-path="bootstrapping.html"><a href="bootstrapping.html#load-packages-and-set-plotting-theme-8"><i class="fa fa-check"></i><b>15.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="15.2" data-path="bootstrapping.html"><a href="bootstrapping.html#whats-wrong-with-parametric-tests"><i class="fa fa-check"></i><b>15.2</b> What’s wrong with parametric tests?</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="bootstrapping.html"><a href="bootstrapping.html#t-tests-on-non-normal-distributions"><i class="fa fa-check"></i><b>15.2.1</b> T-tests on non-normal distributions</a></li>
+<li class="chapter" data-level="15.2.2" data-path="bootstrapping.html"><a href="bootstrapping.html#non-iid-noise-and-linear-models"><i class="fa fa-check"></i><b>15.2.2</b> Non-IID noise and linear models</a></li>
+<li class="chapter" data-level="15.2.3" data-path="bootstrapping.html"><a href="bootstrapping.html#density-estimate-conceptual-plot"><i class="fa fa-check"></i><b>15.2.3</b> Density estimate conceptual plot</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-resampling"><i class="fa fa-check"></i><b>15.3</b> Bootstrap resampling</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="bootstrapping.html"><a href="bootstrapping.html#demo"><i class="fa fa-check"></i><b>15.3.1</b> Demo</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="bootstrapping.html"><a href="bootstrapping.html#applications"><i class="fa fa-check"></i><b>15.4</b> Applications</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>15.4.1</b> Bootstrap confidence intervals</a></li>
+<li class="chapter" data-level="15.4.2" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-permutation-hypothesis-tests"><i class="fa fa-check"></i><b>15.4.2</b> Bootstrap (&amp; permutation) hypothesis tests</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>16</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#load-packages-and-set-plotting-theme-9"><i class="fa fa-check"></i><b>16.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="16.2" data-path="model-comparison.html"><a href="model-comparison.html#determining-sample-size-1"><i class="fa fa-check"></i><b>16.2</b> Determining sample size</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="model-comparison.html"><a href="model-comparison.html#pwr-package-1"><i class="fa fa-check"></i><b>16.2.1</b> <code>pwr</code> package</a></li>
+<li class="chapter" data-level="16.2.2" data-path="model-comparison.html"><a href="model-comparison.html#map"><i class="fa fa-check"></i><b>16.2.2</b> <code>map()</code></a></li>
+<li class="chapter" data-level="16.2.3" data-path="model-comparison.html"><a href="model-comparison.html#via-simulation"><i class="fa fa-check"></i><b>16.2.3</b> via simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="model-comparison.html"><a href="model-comparison.html#model-comparison-1"><i class="fa fa-check"></i><b>16.3</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="model-comparison.html"><a href="model-comparison.html#fitting-vs.-predicting"><i class="fa fa-check"></i><b>16.3.1</b> Fitting vs. predicting</a></li>
+<li class="chapter" data-level="16.3.2" data-path="model-comparison.html"><a href="model-comparison.html#f-test"><i class="fa fa-check"></i><b>16.3.2</b> F-test</a></li>
+<li class="chapter" data-level="16.3.3" data-path="model-comparison.html"><a href="model-comparison.html#cross-validation"><i class="fa fa-check"></i><b>16.3.3</b> Cross-validation</a></li>
+<li class="chapter" data-level="16.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>16.3.4</b> Bootstrap</a></li>
+<li class="chapter" data-level="16.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>16.3.5</b> AIC and BIC</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-12"><i class="fa fa-check"></i><b>16.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="model-comparison.html"><a href="model-comparison.html#cheatsheet"><i class="fa fa-check"></i><b>16.4.1</b> Cheatsheet</a></li>
+<li class="chapter" data-level="16.4.2" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>16.4.2</b> Datacamp course</a></li>
+<li class="chapter" data-level="16.4.3" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>16.4.3</b> Reading</a></li>
+<li class="chapter" data-level="16.4.4" data-path="model-comparison.html"><a href="model-comparison.html#misc-6"><i class="fa fa-check"></i><b>16.4.4</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html"><i class="fa fa-check"></i><b>17</b> Linear mixed effects models 1</a><ul>
+<li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#things-that-came-up-in-class-3"><i class="fa fa-check"></i><b>17.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="17.2.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#comparing-t-test-with-f-test-in-lm"><i class="fa fa-check"></i><b>17.2.1</b> Comparing t-test with F-test in <code>lm()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.3</b> Dependence</a></li>
+<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-13"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="17.4.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.4.1</b> Readings</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#session-info"><i class="fa fa-check"></i><b>17.5</b> Session info</a></li>
+<li class="chapter" data-level="17.6" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#references"><i class="fa fa-check"></i><b>17.6</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html"><i class="fa fa-check"></i><b>18</b> Linear mixed effects models 2</a><ul>
+<li class="chapter" data-level="18.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#load-packages-and-set-plotting-theme-11"><i class="fa fa-check"></i><b>18.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="18.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#things-that-came-up-in-class-4"><i class="fa fa-check"></i><b>18.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#difference-between-replicate-and-map"><i class="fa fa-check"></i><b>18.2.1</b> Difference between <code>replicate()</code> and <code>map()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simulating-a-linear-mixed-effects-model"><i class="fa fa-check"></i><b>18.3</b> Simulating a linear mixed effects model</a></li>
+<li class="chapter" data-level="18.4" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#the-effect-of-outliers"><i class="fa fa-check"></i><b>18.4</b> The effect of outliers</a></li>
+<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.5</b> Different slopes</a></li>
+<li class="chapter" data-level="18.6" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.6</b> Simpson’s paradox</a></li>
+<li class="chapter" data-level="18.7" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-14"><i class="fa fa-check"></i><b>18.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="18.7.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.7.1</b> Readings</a></li>
+</ul></li>
+<li class="chapter" data-level="18.8" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#session-info-1"><i class="fa fa-check"></i><b>18.8</b> Session info</a></li>
+<li class="chapter" data-level="18.9" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#references-1"><i class="fa fa-check"></i><b>18.9</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html"><i class="fa fa-check"></i><b>19</b> Linear mixed effects models 3</a><ul>
+<li class="chapter" data-level="19.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-packages-and-set-plotting-theme-12"><i class="fa fa-check"></i><b>19.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="19.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-set"><i class="fa fa-check"></i><b>19.2</b> Load data set</a></li>
+<li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#things-that-came-up-in-class-5"><i class="fa fa-check"></i><b>19.3</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#one-tailed-vs.-two-tailed-tests"><i class="fa fa-check"></i><b>19.3.1</b> One-tailed vs. two-tailed tests</a></li>
+<li class="chapter" data-level="19.3.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixtures-of-participants"><i class="fa fa-check"></i><b>19.3.2</b> Mixtures of participants</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#pooling-and-shrinkage"><i class="fa fa-check"></i><b>19.4</b> Pooling and shrinkage</a><ul>
+<li class="chapter" data-level="19.4.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#complete-pooling"><i class="fa fa-check"></i><b>19.4.1</b> Complete pooling</a></li>
+<li class="chapter" data-level="19.4.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#no-pooling"><i class="fa fa-check"></i><b>19.4.2</b> No pooling</a></li>
+<li class="chapter" data-level="19.4.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#partial-pooling"><i class="fa fa-check"></i><b>19.4.3</b> Partial pooling</a></li>
+<li class="chapter" data-level="19.4.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#compare-results"><i class="fa fa-check"></i><b>19.4.4</b> Compare results</a></li>
+<li class="chapter" data-level="19.4.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#coefficients"><i class="fa fa-check"></i><b>19.4.5</b> Coefficients</a></li>
+<li class="chapter" data-level="19.4.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#shrinkage"><i class="fa fa-check"></i><b>19.4.6</b> Shrinkage</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#bootstrapping-1"><i class="fa fa-check"></i><b>19.5</b> Bootstrapping</a><ul>
+<li class="chapter" data-level="19.5.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#linear-model"><i class="fa fa-check"></i><b>19.5.1</b> Linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#getting-p-values"><i class="fa fa-check"></i><b>19.6</b> Getting p-values</a></li>
+<li class="chapter" data-level="19.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#understanding-the-lmer-syntax"><i class="fa fa-check"></i><b>19.7</b> Understanding the lmer() syntax</a></li>
+<li class="chapter" data-level="19.8" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-2"><i class="fa fa-check"></i><b>19.8</b> Session info</a></li>
+<li class="chapter" data-level="19.9" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#references-2"><i class="fa fa-check"></i><b>19.9</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>20</b> Generalized linear model</a><ul>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-packages-and-set-plotting-theme-13"><i class="fa fa-check"></i><b>20.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="20.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set-1"><i class="fa fa-check"></i><b>20.2</b> Load data set</a></li>
+<li class="chapter" data-level="20.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>20.3</b> Logistic regression</a><ul>
+<li class="chapter" data-level="20.3.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#interpreting-the-parameters"><i class="fa fa-check"></i><b>20.3.1</b> Interpreting the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>20.4</b> Simulate a logistic regression</a></li>
+<li class="chapter" data-level="20.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>20.5</b> Testing hypotheses</a></li>
+<li class="chapter" data-level="20.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>20.6</b> Logistic mixed effects model</a></li>
+<li class="chapter" data-level="20.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>20.7</b> Additional information</a><ul>
+<li class="chapter" data-level="20.7.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-6"><i class="fa fa-check"></i><b>20.7.1</b> Datacamp</a></li>
+</ul></li>
+<li class="chapter" data-level="20.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-3"><i class="fa fa-check"></i><b>20.8</b> Session info</a></li>
+<li class="chapter" data-level="20.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#references-3"><i class="fa fa-check"></i><b>20.9</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html"><i class="fa fa-check"></i><b>21</b> Bayesian data analysis</a><ul>
+<li class="chapter" data-level="21.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#load-packages-and-set-plotting-theme-14"><i class="fa fa-check"></i><b>21.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="21.2" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#things-that-came-up"><i class="fa fa-check"></i><b>21.2</b> Things that came up</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#bias-in-cosyne-2019-conference-admission"><i class="fa fa-check"></i><b>21.2.1</b> Bias in Cosyne 2019 conference admission?</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#session-info-4"><i class="fa fa-check"></i><b>21.3</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>22</b> Bayesian data analysis 2</a><ul>
+<li class="chapter" data-level="22.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#load-packages-and-set-plotting-theme-15"><i class="fa fa-check"></i><b>22.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="22.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#doing-bayesian-inference-by-hand"><i class="fa fa-check"></i><b>22.2</b> Doing Bayesian inference “by hand”</a><ul>
+<li class="chapter" data-level="22.2.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#sequential-updating-based-on-the-beta-distribution"><i class="fa fa-check"></i><b>22.2.1</b> Sequential updating based on the Beta distribution</a></li>
+<li class="chapter" data-level="22.2.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#coin-flip-example"><i class="fa fa-check"></i><b>22.2.2</b> Coin flip example</a></li>
+<li class="chapter" data-level="22.2.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#bayesian-inference-by-discretization"><i class="fa fa-check"></i><b>22.2.3</b> Bayesian inference by discretization</a></li>
+<li class="chapter" data-level="22.2.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-prior"><i class="fa fa-check"></i><b>22.2.4</b> Effect of the prior</a></li>
+<li class="chapter" data-level="22.2.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-likelihood"><i class="fa fa-check"></i><b>22.2.5</b> Effect of the likelihood</a></li>
+<li class="chapter" data-level="22.2.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-sample-size"><i class="fa fa-check"></i><b>22.2.6</b> Effect of the sample size</a></li>
+</ul></li>
+<li class="chapter" data-level="22.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions"><i class="fa fa-check"></i><b>22.3</b> Distributions</a><ul>
+<li class="chapter" data-level="22.3.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-vs-student-t-distribution"><i class="fa fa-check"></i><b>22.3.1</b> Normal vs Student-t distribution</a></li>
+<li class="chapter" data-level="22.3.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#beta-distributions"><i class="fa fa-check"></i><b>22.3.2</b> Beta distributions</a></li>
+<li class="chapter" data-level="22.3.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-distributions"><i class="fa fa-check"></i><b>22.3.3</b> Normal distributions</a></li>
+<li class="chapter" data-level="22.3.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions-for-non-negative-parameters"><i class="fa fa-check"></i><b>22.3.4</b> Distributions for non-negative parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="22.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#inference-via-sampling"><i class="fa fa-check"></i><b>22.4</b> Inference via sampling</a></li>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#greta"><i class="fa fa-check"></i><b>22.5</b> Greta</a><ul>
+<li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#attitude-data-set"><i class="fa fa-check"></i><b>22.5.1</b> Attitude data set</a></li>
+<li class="chapter" data-level="22.5.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.5.2</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="22.5.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#bayesian-regression"><i class="fa fa-check"></i><b>22.5.3</b> Bayesian regression</a></li>
+</ul></li>
+<li class="chapter" data-level="22.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-5"><i class="fa fa-check"></i><b>22.6</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 3</a><ul>
+<li class="chapter" data-level="23.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-packages-and-set-plotting-theme-16"><i class="fa fa-check"></i><b>23.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="23.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-data-set-2"><i class="fa fa-check"></i><b>23.2</b> Load data set</a></li>
+<li class="chapter" data-level="23.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#poker"><i class="fa fa-check"></i><b>23.3</b> Poker</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualization-7"><i class="fa fa-check"></i><b>23.3.1</b> Visualization</a></li>
+<li class="chapter" data-level="23.3.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#linear-model-5"><i class="fa fa-check"></i><b>23.3.2</b> Linear model</a></li>
+<li class="chapter" data-level="23.3.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-model"><i class="fa fa-check"></i><b>23.3.3</b> Bayesian model</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>23.4</b> Dealing with heteroscedasticity</a></li>
+<li class="chapter" data-level="23.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#ordinal-regression"><i class="fa fa-check"></i><b>23.5</b> Ordinal regression</a></li>
+<li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-15"><i class="fa fa-check"></i><b>23.6</b> Additional resources</a></li>
+<li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-6"><i class="fa fa-check"></i><b>23.7</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="mediation-moderation.html"><a href="mediation-moderation.html"><i class="fa fa-check"></i><b>24</b> Mediation &amp; Moderation</a><ul>
+<li class="chapter" data-level="24.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#recommended-reading"><i class="fa fa-check"></i><b>24.1</b> Recommended reading</a></li>
+<li class="chapter" data-level="24.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-packages-and-set-plotting-theme-17"><i class="fa fa-check"></i><b>24.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="24.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-data-sets-4"><i class="fa fa-check"></i><b>24.3</b> Load data sets</a></li>
+<li class="chapter" data-level="24.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>24.4</b> Mediation</a><ul>
+<li class="chapter" data-level="24.4.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data"><i class="fa fa-check"></i><b>24.4.1</b> Generate data</a></li>
+<li class="chapter" data-level="24.4.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>24.4.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
+<li class="chapter" data-level="24.4.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>24.4.3</b> Method 2: Sobel Test</a></li>
+<li class="chapter" data-level="24.4.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>24.4.4</b> Method 3: Bootstrapping</a></li>
+<li class="chapter" data-level="24.4.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-4-bayesian-approach"><i class="fa fa-check"></i><b>24.4.5</b> Method 4: Bayesian approach</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation"><i class="fa fa-check"></i><b>24.5</b> Moderation</a><ul>
+<li class="chapter" data-level="24.5.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data-1"><i class="fa fa-check"></i><b>24.5.1</b> Generate data</a></li>
+<li class="chapter" data-level="24.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation-analysis"><i class="fa fa-check"></i><b>24.5.2</b> Moderation analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="24.6" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-16"><i class="fa fa-check"></i><b>24.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="24.6.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#books"><i class="fa fa-check"></i><b>24.6.1</b> Books</a></li>
+<li class="chapter" data-level="24.6.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-1"><i class="fa fa-check"></i><b>24.6.2</b> Tutorials</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="mediation-moderation.html"><a href="mediation-moderation.html#session-info-7"><i class="fa fa-check"></i><b>24.7</b> Session info</a></li>
+<li class="chapter" data-level="24.8" data-path="mediation-moderation.html"><a href="mediation-moderation.html#references-4"><i class="fa fa-check"></i><b>24.8</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>25</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="25.1" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#statistics"><i class="fa fa-check"></i><b>25.1</b> Statistics</a></li>
+<li class="chapter" data-level="25.2" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#r"><i class="fa fa-check"></i><b>25.2</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-5.html"><a href="references-5.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psych 252: Statistical Methods for Behavioral and Social Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="model-comparison" class="section level1">
+<h1><span class="header-section-number">Chapter 16</span> Model comparison</h1>
+<div id="load-packages-and-set-plotting-theme-9" class="section level2">
+<h2><span class="header-section-number">16.1</span> Load packages and set plotting theme</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span>
+<span class="kw">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span>
+<span class="kw">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span>
+<span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># for tidying up linear models </span>
+<span class="kw">library</span>(<span class="st">&quot;pwr&quot;</span>)        <span class="co"># for power analysis </span>
+<span class="kw">library</span>(<span class="st">&quot;cowplot&quot;</span>)    <span class="co"># for figure panels</span>
+<span class="kw">library</span>(<span class="st">&quot;modelr&quot;</span>)     <span class="co"># for cross-validation</span>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
+  <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
+)</code></pre>
+</div>
+<div id="determining-sample-size-1" class="section level2">
+<h2><span class="header-section-number">16.2</span> Determining sample size</h2>
+<div id="pwr-package-1" class="section level3">
+<h3><span class="header-section-number">16.2.1</span> <code>pwr</code> package</h3>
+<p>Let’s figure out how many participants we would need to get a power of <span class="math inline">\(1-\beta = 0.8\)</span> for testing an alternative hypothesis <span class="math inline">\(H_1\)</span> according to which a coin is biased to come up heads with <span class="math inline">\(p = 0.75\)</span> against a null hypothesis <span class="math inline">\(H_0\)</span> according to which the coin is far <span class="math inline">\(p = 0.5\)</span>. Let’s set our desired alpha level to <span class="math inline">\(\alpha = .05\)</span> and considered a one-tailed test. I’ll use the <code>"pwr"</code> library to do determine the sample size.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.p.test</span>(<span class="dt">h =</span> <span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">0.75</span>, <span class="dt">p2 =</span> <span class="fl">0.50</span>),
+           <span class="dt">sig.level =</span> <span class="fl">0.05</span>,
+           <span class="dt">power =</span> <span class="fl">0.80</span>,
+           <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</code></pre>
+<pre><code>## 
+##      proportion power calculation for binomial distribution (arcsine transformation) 
+## 
+##               h = 0.5235988
+##               n = 22.55126
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = greater</code></pre>
+<p>I first calculated the effect size using the <code>ES.h()</code> function providing the two proportions as arguments. Take a look at the help file for <code>ES.h()</code> to figure see how it’s calculated. In short, the effect treats differences in proportions that are close to 0.5 different from ones that are close to the endpoints of the scale (i.e. 0 or 1). Intuitively, it’s more impressive to change a probability from 0.9 to 1 than it would be to change a probability from 0.5 to 0.6. The effect size captures this. We find that to reach a power of 0.8 at a <span class="math inline">\(\alpha = .05\)</span> assuming a one-tailed test, we would need to run <span class="math inline">\(n = 23\)</span> participants.</p>
+<p>The <code>"pwr"</code> package also makes plots to illustrate how power changes with sample size:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.p.test</span>(<span class="dt">h =</span> <span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">0.75</span>, <span class="dt">p2 =</span> <span class="fl">0.50</span>), 
+           <span class="dt">sig.level =</span> <span class="fl">0.05</span>, 
+           <span class="dt">power =</span> <span class="fl">0.80</span>, 
+           <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">plot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>))</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison2-1.png" width="672" /></p>
+</div>
+<div id="map" class="section level3">
+<h3><span class="header-section-number">16.2.2</span> <code>map()</code></h3>
+<p>The family of <code>map()</code> functions comes with the <code>"purrr"</code> package which is loaded as part of the tidyverse. It’s a powerful function that allows us to avoid writing for-loops. Using the <code>map()</code> function makes otherwise complex procedures much simpler, allows for code that’s easier to read, and that’s much faster to run.</p>
+<p>Her are some examples of how <code>map()</code> works:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using the formula notation with ~ </span>
+<span class="kw">map</span>(<span class="dt">.x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span>.x<span class="op">^</span><span class="dv">2</span>)
+
+<span class="co"># the same computation using an anonymous function</span>
+<span class="kw">map</span>(<span class="dt">.x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">.f =</span> <span class="cf">function</span>(.x) .x<span class="op">^</span><span class="dv">2</span>)
+
+<span class="co"># outputs a vector</span>
+<span class="kw">map_dbl</span>(<span class="dt">.x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span>.x<span class="op">^</span><span class="dv">2</span>)
+
+<span class="co"># using a function</span>
+square =<span class="st"> </span><span class="cf">function</span>(x){x<span class="op">^</span><span class="dv">2</span>}
+<span class="kw">map_dbl</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, square)
+
+<span class="co"># with multiple arguments</span>
+<span class="kw">map2_dbl</span>(<span class="dt">.x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">.y =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span>.x <span class="op">*</span><span class="st"> </span>.y)</code></pre>
+<p>I encourage you to take a look at the purrr cheatsheet, as well as skimming the datacamp courses on functional programming (see <a href="visualization-1.html#additional-resources">Additional Resources</a> below). Mastering <code>map()</code> is a key step to becoming an R power user :)</p>
+</div>
+<div id="via-simulation" class="section level3">
+<h3><span class="header-section-number">16.2.3</span> via simulation</h3>
+<div id="simple-example" class="section level4">
+<h4><span class="header-section-number">16.2.3.1</span> simple example</h4>
+<p>Let’s start with a simple example. We want to determine what power we have to correctly reject the <span class="math inline">\(H_0\)</span> according to which the coin is fair, for <span class="math inline">\(H_1: p = 0.75\)</span> with <span class="math inline">\(\alpha = 0.05\)</span> (one-tailed) and a sample size of <span class="math inline">\(n = 10\)</span>.</p>
+<p>Let’s see:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make example reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># parameters</span>
+p1 =<span class="st"> </span><span class="fl">0.5</span>
+p2 =<span class="st"> </span><span class="fl">0.75</span>
+alpha =<span class="st"> </span><span class="fl">0.05</span>
+n_simulations =<span class="st"> </span><span class="dv">100</span> 
+n =<span class="st"> </span><span class="dv">10</span> 
+
+<span class="co"># set up the simulation grid </span>
+df.pwr =<span class="st"> </span><span class="kw">crossing</span>(<span class="dt">sample_size =</span> n,
+                  <span class="dt">n_simulations =</span> <span class="dv">1</span><span class="op">:</span>n_simulations,
+                  <span class="dt">p1 =</span> p1,
+                  <span class="dt">p2 =</span> p2,
+                  <span class="dt">alpha =</span> alpha)
+
+<span class="co"># draw random samples from the binomial distribution </span>
+df.pwr =<span class="st"> </span>df.pwr <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">n_heads =</span> <span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="kw">n</span>(),
+                          <span class="dt">size =</span> sample_size, 
+                          <span class="dt">prob =</span> p2))
+
+<span class="co"># apply binomial test for each simulation and extract p-value </span>
+df.pwr =<span class="st"> </span>df.pwr <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(n_simulations) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">binom_test =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="st"> </span><span class="kw">binom.test</span>(<span class="dt">x =</span> .<span class="op">$</span>n_heads,
+                                             <span class="dt">n =</span> .<span class="op">$</span>sample_size,
+                                             <span class="dt">p =</span> <span class="fl">0.5</span>,
+                                             <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)),
+         <span class="dt">p_value =</span> <span class="kw">map</span>(binom_test, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>p.value))
+
+<span class="co"># calculate the proportion with which the H0 would be rejected (= power)</span>
+
+df.pwr <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">power =</span> <span class="kw">sum</span>(p_value <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span>) <span class="op">/</span><span class="kw">n</span>())</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   power
+##   &lt;dbl&gt;
+## 1  0.18</code></pre>
+<p>So, the results of this example show, that with <span class="math inline">\(n = 10\)</span> participants, we only have a power of .18 to reject the null hypothesis <span class="math inline">\(H_0: p = 0.5\)</span> when the alternative hypothesis <span class="math inline">\(H_1: p = 0.75\)</span> is true. Not an experiment we should run …</p>
+</div>
+<div id="more-advanced-example" class="section level4">
+<h4><span class="header-section-number">16.2.3.2</span> more advanced example</h4>
+<p>This more advanced example, which we discussed in class, calculates power for a different sample sizes (from <span class="math inline">\(n = 10\)</span> to <span class="math inline">\(n = 50\)</span>), and for different alternative hypotheses <span class="math inline">\(H_1: p = 0.75\)</span>, <span class="math inline">\(H_1: p = 0.8\)</span>, and <span class="math inline">\(H_1: p = 0.85\)</span>. I then figure out for what n we would get a power of 0.8 assuming <span class="math inline">\(H_1: p = 0.75\)</span>. Otherwise, the procedure is identical to the simple example above.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># number of simulations</span>
+n_simulations =<span class="st"> </span><span class="dv">200</span>
+
+<span class="co"># run simulation</span>
+df.power =<span class="st"> </span><span class="kw">crossing</span>(<span class="dt">n =</span> <span class="kw">seq</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">1</span>),
+                    <span class="dt">simulation =</span> <span class="dv">1</span><span class="op">:</span>n_simulations,
+                    <span class="dt">p =</span> <span class="kw">c</span>(<span class="fl">0.75</span>, <span class="fl">0.8</span>, <span class="fl">0.85</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">index =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># add an index column</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="kw">rbinom</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">size =</span> n, <span class="dt">prob =</span> p)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># generate random data</span>
+<span class="st">  </span><span class="kw">group_by</span>(index, simulation, p) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># put data in list column</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fit =</span> <span class="kw">map</span>(data, 
+                   <span class="op">~</span><span class="st"> </span><span class="kw">binom.test</span>(<span class="dt">x =</span> .<span class="op">$</span>response, <span class="co"># define formula</span>
+                          <span class="dt">n =</span> .<span class="op">$</span>n,
+                          <span class="dt">p =</span> <span class="fl">0.5</span>,
+                          <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)),
+         <span class="dt">p.value =</span> <span class="kw">map_dbl</span>(fit, <span class="op">~</span><span class="st"> </span>.<span class="op">$</span>p.value)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># run binomial test and extract p-value</span>
+<span class="st">  </span><span class="kw">unnest</span>(data) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>fit)</code></pre>
+<p>Let’s visualze the relationship between power and sample size for the three alternative hypotheses:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data frame for plot   </span>
+df.plot =<span class="st"> </span>df.power <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(n, p) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">power =</span> <span class="kw">sum</span>(p.value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>) <span class="op">/</span><span class="st"> </span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p =</span> <span class="kw">as.factor</span>(p))
+
+<span class="co"># plot data </span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot, 
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> n, <span class="dt">y =</span> power, <span class="dt">color =</span> p, <span class="dt">group =</span> p)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison6-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find optimal n based on simulations</span>
+df.plot <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(p <span class="op">==</span><span class="st"> </span><span class="fl">0.75</span>, <span class="kw">near</span>(power, <span class="fl">0.8</span>, <span class="dt">tol =</span> <span class="fl">0.01</span>))</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##       n p     power
+##   &lt;dbl&gt; &lt;fct&gt; &lt;dbl&gt;
+## 1    27 0.75  0.795</code></pre>
+<p>Let’s compare with the solution that the <code>pwr</code> package gives.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># analytic solution</span>
+<span class="kw">pwr.p.test</span>(<span class="dt">h =</span> <span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">0.75</span>, <span class="dt">p2 =</span> <span class="fl">0.5</span>),
+           <span class="dt">power =</span> <span class="fl">0.8</span>,
+           <span class="dt">sig.level =</span> <span class="fl">0.05</span>,
+           <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</code></pre>
+<pre><code>## 
+##      proportion power calculation for binomial distribution (arcsine transformation) 
+## 
+##               h = 0.5235988
+##               n = 22.55126
+##       sig.level = 0.05
+##           power = 0.8
+##     alternative = greater</code></pre>
+<p>Pretty close! To get more accuracy in our simulation, we would simply need to increase the number of simulated statistical tests we perform to calculate power.</p>
+</div>
+</div>
+</div>
+<div id="model-comparison-1" class="section level2">
+<h2><span class="header-section-number">16.3</span> Model comparison</h2>
+<p>In general, we want our models to explain the data we observed, and correctly predict future data. Often, there is a trade-off between how well the model fits the data we have (e.g. how much of the variance it explains), and how well the model will predict future data. If our model is too complex, then it will not only capture the systematicity in the data but also fit to the noise in the data. If our mdoel is too simple, however, it will not capture some of the systematicity that’s actually present in the data. The goal, as always in statistical modeling, is to find a model that finds the sweet spot between simplicity and complexity.</p>
+<div id="fitting-vs.-predicting" class="section level3">
+<h3><span class="header-section-number">16.3.1</span> Fitting vs. predicting</h3>
+<p>Let’s illustrate the trad-off between complexity and simplicty for fitting vs. prediction. We generate data from a model of the following form:</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 \cdot X_i + \beta_2 + X_i^2 + \epsilon_i
+\]</span>
+where</p>
+<p><span class="math display">\[
+\epsilon_i \sim \mathcal{N}(\text{mean} = 0, ~\text{sd} = 20)
+\]</span>
+Here, I’ll use the following parameters: <span class="math inline">\(\beta_0 = 10\)</span>, <span class="math inline">\(\beta_1 = 3\)</span>, and <span class="math inline">\(\beta_2 = 2\)</span> to generate the data:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+n_plots =<span class="st"> </span><span class="dv">3</span>
+n_samples =<span class="st"> </span><span class="dv">20</span> <span class="co"># sample size </span>
+n_parameters =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="kw">seq</span>(<span class="dv">7</span>, <span class="dv">19</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)) <span class="co"># number of parameters in the polynomial regression</span>
+
+<span class="co"># generate data </span>
+df.data =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="kw">runif</span>(n_samples, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">10</span>), 
+  <span class="dt">y =</span> <span class="dv">10</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n_samples, <span class="dt">sd =</span> <span class="dv">20</span>)
+)
+
+<span class="co"># plotting function</span>
+plot_fit =<span class="st"> </span><span class="cf">function</span>(i){
+  <span class="co"># calculate RMSE</span>
+  rmse =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dt">degree =</span> i, <span class="dt">raw =</span> <span class="ot">TRUE</span>),
+            <span class="dt">data =</span> df.data) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">rmse =</span> .resid<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">round</span>(<span class="dv">2</span>))
+    
+  <span class="co"># make a plot</span>
+  <span class="kw">ggplot</span>(<span class="dt">data =</span> df.data,
+             <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x,
+                           <span class="dt">y =</span> y)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F,
+                <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dt">degree =</span> i, <span class="dt">raw =</span> <span class="ot">TRUE</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>,
+             <span class="dt">x =</span> <span class="ot">Inf</span>,
+             <span class="dt">y =</span> <span class="op">-</span><span class="ot">Inf</span>,
+             <span class="dt">label =</span> <span class="kw">str_c</span>(<span class="st">&quot;RMSE = &quot;</span>, rmse),
+             <span class="dt">hjust =</span> <span class="fl">1.1</span>,
+             <span class="dt">vjust =</span> <span class="fl">-0.3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">axis.text =</span> <span class="kw">element_blank</span>())
+}
+
+<span class="co"># save plots in a list</span>
+l.p =<span class="st"> </span><span class="kw">map</span>(n_parameters, plot_fit)
+
+<span class="co"># make figure panel </span>
+<span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> l.p, <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>## Warning in predict.lm(model, newdata = data.frame(x = xseq), se.fit = se, :
+## prediction from a rank-deficient fit may be misleading
+
+## Warning in predict.lm(model, newdata = data.frame(x = xseq), se.fit = se, :
+## prediction from a rank-deficient fit may be misleading
+
+## Warning in predict.lm(model, newdata = data.frame(x = xseq), se.fit = se, :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison8-1.png" width="672" /></p>
+<p>As we can see, RMSE becomes smaller and smaller the more parameters the model has to fit the data. But how does the RMSE look like for new data that is generated from the same underlying ground truth?</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+n_plots =<span class="st"> </span><span class="dv">3</span>
+n_samples =<span class="st"> </span><span class="dv">20</span> <span class="co"># sample size </span>
+n_parameters =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="kw">seq</span>(<span class="dv">7</span>, <span class="dv">19</span>, <span class="dt">length.out =</span> <span class="dv">5</span>)) <span class="co"># number of parameters in the polynomial regression</span>
+
+<span class="co"># generate data </span>
+df.data =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="kw">runif</span>(n_samples, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">10</span>), 
+  <span class="dt">y =</span> <span class="dv">10</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(n_samples, <span class="dt">sd =</span> <span class="dv">20</span>)
+)
+
+<span class="co"># generate some more data </span>
+df.more_data =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="kw">runif</span>(<span class="dv">50</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">10</span>), 
+  <span class="dt">y =</span> <span class="dv">10</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">50</span>, <span class="dt">sd =</span> <span class="dv">20</span>)
+)
+
+<span class="co"># list for plots </span>
+l.p =<span class="st"> </span><span class="kw">list</span>()
+
+<span class="co"># plotting function</span>
+plot_fit =<span class="st"> </span><span class="cf">function</span>(i){
+  <span class="co"># calculate RMSE for fitted data </span>
+  fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dt">degree =</span> i, <span class="dt">raw =</span> <span class="ot">TRUE</span>),
+            <span class="dt">data =</span> df.data)
+  
+  rmse =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">rmse =</span> .resid<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">round</span>(<span class="dv">2</span>))
+  
+  <span class="co"># calculate RMSE for new data </span>
+  rmse_new =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">augment</span>(<span class="dt">newdata =</span> df.more_data) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">summarize</span>(<span class="dt">rmse =</span> (y <span class="op">-</span><span class="st"> </span>.fitted)<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">                </span><span class="kw">round</span>(<span class="dv">2</span>))
+    
+  <span class="co"># make a plot</span>
+  <span class="kw">ggplot</span>(<span class="dt">data =</span> df.data,
+             <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x,
+                           <span class="dt">y =</span> y)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df.more_data,
+               <span class="dt">size =</span> <span class="dv">2</span>, 
+               <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F,
+                <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(x, <span class="dt">degree =</span> i, <span class="dt">raw =</span> <span class="ot">TRUE</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>,
+             <span class="dt">x =</span> <span class="ot">Inf</span>,
+             <span class="dt">y =</span> <span class="op">-</span><span class="ot">Inf</span>,
+             <span class="dt">label =</span> <span class="kw">str_c</span>(<span class="st">&quot;RMSE = &quot;</span>, rmse),
+             <span class="dt">hjust =</span> <span class="fl">1.1</span>,
+             <span class="dt">vjust =</span> <span class="fl">-0.3</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>,
+             <span class="dt">x =</span> <span class="ot">Inf</span>,
+             <span class="dt">y =</span> <span class="op">-</span><span class="ot">Inf</span>,
+             <span class="dt">label =</span> <span class="kw">str_c</span>(<span class="st">&quot;RMSE = &quot;</span>, rmse_new),
+             <span class="dt">hjust =</span> <span class="fl">1.1</span>,
+             <span class="dt">vjust =</span> <span class="dv">-2</span>,
+             <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">axis.text =</span> <span class="kw">element_blank</span>())
+}
+
+<span class="co"># map over the parameters</span>
+l.p =<span class="st"> </span><span class="kw">map</span>(n_parameters, plot_fit)
+
+<span class="co"># make figure panel </span>
+<span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> l.p, <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>## Warning in predict.lm(model, newdata = data.frame(x = xseq), se.fit = se, :
+## prediction from a rank-deficient fit may be misleading
+
+## Warning in predict.lm(model, newdata = data.frame(x = xseq), se.fit = se, :
+## prediction from a rank-deficient fit may be misleading
+
+## Warning in predict.lm(model, newdata = data.frame(x = xseq), se.fit = se, :
+## prediction from a rank-deficient fit may be misleading</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison9-1.png" width="672" /></p>
+<p>The RMSE in black shows the root mean squared error for the data that the model was fit on. The RMSE in red shows the RMSE on the new data. As you can see, the complex models do really poorly. They overfit the noise in the original data which leads to make poor predictions for new data. The simplest model (with two parameters) doesn’t do particularly well either since it misses out on the quadratic trend in the data. Both the model with the quadratic term (top middle) and a model that includes a cubic term (top right) provide a good balance – their RMSE on the new data is lowest.</p>
+<p>Let’s generate another data set:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make example reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># parameters</span>
+sample_size =<span class="st"> </span><span class="dv">100</span>
+b0 =<span class="st"> </span><span class="dv">1</span>
+b1 =<span class="st"> </span><span class="dv">2</span>
+b2 =<span class="st"> </span><span class="dv">3</span>
+sd =<span class="st"> </span><span class="fl">0.5</span>
+
+<span class="co"># sample</span>
+df.data =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">participant =</span> <span class="dv">1</span><span class="op">:</span>sample_size,
+  <span class="dt">x =</span> <span class="kw">runif</span>(sample_size, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>),
+  <span class="dt">y =</span> b0 <span class="op">+</span><span class="st"> </span>b1<span class="op">*</span>x <span class="op">+</span><span class="st"> </span>b2<span class="op">*</span>x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(sample_size, <span class="dt">sd =</span> sd)
+) </code></pre>
+<p>And plot it:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.data,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x,
+                    <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,
+              <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison11-1.png" width="672" /></p>
+</div>
+<div id="f-test" class="section level3">
+<h3><span class="header-section-number">16.3.2</span> F-test</h3>
+<p>Let’s fit three models of increasing complexity to the data. The model which fits the way in which the data were generated has the following form:</p>
+<p><span class="math display">\[
+\widehat Y_i = b_0 + b_1 \cdot X_i + b_2 \cdot X_i^2
+\]</span></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit models to the data </span>
+fit_simple =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x, <span class="dt">data =</span> df.data)
+fit_correct =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> df.data)
+fit_complex =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> df.data)
+
+<span class="co"># compare the models using an F-test </span>
+<span class="kw">anova</span>(fit_simple, fit_correct)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: y ~ 1 + x
+## Model 2: y ~ 1 + x + I(x^2)
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1     98 25.297                                  
+## 2     97 21.693  1    3.6039 16.115 0.0001175 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit_correct, fit_complex)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: y ~ 1 + x + I(x^2)
+## Model 2: y ~ 1 + x + I(x^2) + I(x^3)
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     97 21.693                           
+## 2     96 21.643  1  0.050399 0.2236 0.6374</code></pre>
+<p>The F-test tells us that <code>fit_correct</code> explains significantly more variance than <code>fit_simple</code>, whereas <code>fit_complex</code> doesn’t explain significantly more variance than <code>fit_correct</code>.</p>
+<p>But, as discussed in class, there are many situations in which we cannot use the F-test to compare models. Namely, whenever we want to compare unnested models where one models does not include all the predictors of the other model. But, we can still use cross-validation in this case.</p>
+<p>Let’s take a look.</p>
+</div>
+<div id="cross-validation" class="section level3">
+<h3><span class="header-section-number">16.3.3</span> Cross-validation</h3>
+<p>Cross-validation is a powerful technique for finding the sweet spot between simplicity and complexity. Moreover, we can use cross-validation to compare models that we cannot compare using the F-test approach that we’ve been using up until now.</p>
+<p>There are many different kinds of cross-validation. All have the same idea in common though:</p>
+<ul>
+<li>we first fit the model to a subset of the data, often called <em>training data</em></li>
+<li>and then check how well the model captures the held-out data, often called <em>test data</em></li>
+</ul>
+<p>Different versions of cross-validation differ in how the training and test data sets are defined. We’ll look at three different cross-validation techniques:</p>
+<ol style="list-style-type: decimal">
+<li>Leave-on-out cross-validation</li>
+<li>k-fold cross-validation</li>
+<li>Monte Carlo cross-validation</li>
+</ol>
+<div id="leave-one-out-cross-validation" class="section level4">
+<h4><span class="header-section-number">16.3.3.1</span> Leave-one-out cross-validation</h4>
+<p>I’ve used code similar to this one to illustrate how LOO works in class. Here is a simple data set with 9 data points. We fit 9 models, where for each model, the training set includes one of the data points, and then we look at how well the model captures the held-out data point. We can then characterize the model’s performance by calculating the mean squared error across the 9 runs.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make example reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># sample</span>
+df.loo =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">9</span>,
+  <span class="dt">y =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">8</span>)
+) 
+
+df.loo_cross =<span class="st"> </span>df.loo <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">crossv_loo</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fit =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> .)),
+         <span class="dt">tidy =</span> <span class="kw">map</span>(fit, tidy)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">unnest</span>(tidy)
+
+<span class="co"># original plot </span>
+df.plot =<span class="st"> </span>df.loo <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">color =</span> <span class="dv">1</span>)
+
+<span class="co"># fit to all data except one </span>
+fun.cv_plot =<span class="st"> </span><span class="cf">function</span>(data_point){
+  
+  <span class="co"># determine which point to leave out </span>
+  df.plot<span class="op">$</span>color[data_point] =<span class="st"> </span><span class="dv">2</span>
+  
+  <span class="co"># fit </span>
+  df.fit =<span class="st"> </span>df.plot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(color <span class="op">!=</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> .) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">augment</span>(<span class="dt">newdata =</span> df.plot[df.plot<span class="op">$</span>color <span class="op">==</span><span class="st"> </span><span class="dv">2</span>,]) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">clean_names</span>()
+  
+  p =<span class="st"> </span><span class="kw">ggplot</span>(df.plot,
+             <span class="kw">aes</span>(x, y, <span class="dt">color =</span> <span class="kw">as.factor</span>(color))) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">xend =</span> x,
+                     <span class="dt">yend =</span> fitted),
+                 <span class="dt">data =</span> df.fit,
+                 <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+                 <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fullrange =</span> T,
+                <span class="dt">data =</span> df.plot <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(color <span class="op">!=</span><span class="st"> </span><span class="dv">2</span>))  <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,
+          <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">axis.text =</span> <span class="kw">element_blank</span>())
+  <span class="kw">return</span>(p)
+}
+
+<span class="co"># save plots in list </span>
+l.plots =<span class="st"> </span><span class="kw">map</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>, fun.cv_plot)
+
+<span class="co"># make figure panel </span>
+<span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> l.plots, <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison13-1.png" width="672" /></p>
+<p>As you can see, the regression line changes quite a bit depending on which data point is in the test set.</p>
+<p>Now, let’s use LOO to evaluate the models on the data set I’ve created above:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit the models and calculate the RMSE for each model on the test set </span>
+df.cross =<span class="st"> </span>df.data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">crossv_loo</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># function which generates training and test data sets </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">model_simple =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x, <span class="dt">data =</span> .)),
+         <span class="dt">model_correct =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> .)),
+         <span class="dt">model_complex =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> .))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;model&quot;</span>, <span class="st">&quot;fit&quot;</span>, <span class="kw">contains</span>(<span class="st">&quot;model&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rmse =</span> <span class="kw">map2_dbl</span>(fit, test, rmse))
+
+<span class="co"># show the average RMSE for each model </span>
+df.cross <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(model) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_rmse =</span> <span class="kw">mean</span>(rmse) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">3</span>))</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   model         mean_rmse
+##   &lt;chr&gt;             &lt;dbl&gt;
+## 1 model_complex     0.382
+## 2 model_correct     0.378
+## 3 model_simple      0.401</code></pre>
+<p>As we can see, the <code>model_correct</code> has the lowest average RMSE on the test data.</p>
+<p>One downside with LOO is that it becomes unfeasible when the number of data points is very large, as the number of cross validation runs equals the number of data points. The next cross-validation procedures help in this case.</p>
+</div>
+<div id="k-fold-cross-validation" class="section level4">
+<h4><span class="header-section-number">16.3.3.2</span> k-fold cross-validation</h4>
+<p>For k-fold cross-validation, we split the data set in k folds, and then use k-1 folds as the training set, and the remaining fold as the test set.</p>
+<p>The code is almost identical as before. Instead of <code>crossv_loo()</code>, we use the <code>crossv_kfold()</code> function instead and say how many times we want to “fold” the data.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># crossvalidation scheme </span>
+df.cross =<span class="st"> </span>df.data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">crossv_kfold</span>(<span class="dt">k =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">model_simple =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x, <span class="dt">data =</span> .)),
+         <span class="dt">model_correct =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> .)),
+         <span class="dt">model_complex =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> .))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;model&quot;</span>, <span class="st">&quot;fit&quot;</span>, <span class="kw">contains</span>(<span class="st">&quot;model&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rsquare =</span> <span class="kw">map2_dbl</span>(fit, test, rsquare))
+
+df.cross <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(model) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">median_rsquare =</span> <span class="kw">median</span>(rsquare))</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   model         median_rsquare
+##   &lt;chr&gt;                  &lt;dbl&gt;
+## 1 model_complex          0.907
+## 2 model_correct          0.906
+## 3 model_simple           0.884</code></pre>
+<p>Note, for this example, I’ve calculated <span class="math inline">\(R^2\)</span> (the variance explained by each model) instead of RMSE – just to show you that you can do this, too. Often it’s useful to do both: show how well the model correlates, but also show the error.</p>
+</div>
+<div id="monte-carlo-cross-validation" class="section level4">
+<h4><span class="header-section-number">16.3.3.3</span> Monte Carlo cross-validation</h4>
+<p>Finally, let’s consider another very flexible version of cross-validation. For this version of cross-validation, we determine how many random splits into training set and test set we would like to do, and what proportion of the data should be in the test set.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># crossvalidation scheme </span>
+df.cross =<span class="st"> </span>df.data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">crossv_mc</span>(<span class="dt">n =</span> <span class="dv">50</span>, <span class="dt">test =</span> <span class="fl">0.5</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># number of samples, and percentage of test </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">model_simple =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x, <span class="dt">data =</span> .x)),
+         <span class="dt">model_correct =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> .x)),
+         <span class="dt">model_complex =</span> <span class="kw">map</span>(train, <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">3</span>), <span class="dt">data =</span> .))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;model&quot;</span>, <span class="st">&quot;fit&quot;</span>, <span class="kw">contains</span>(<span class="st">&quot;model&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rmse =</span> <span class="kw">map2_dbl</span>(fit, test, rmse))
+
+df.cross <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(model) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_rmse =</span> <span class="kw">mean</span>(rmse))</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   model         mean_rmse
+##   &lt;chr&gt;             &lt;dbl&gt;
+## 1 model_complex     0.493
+## 2 model_correct     0.485
+## 3 model_simple      0.513</code></pre>
+<p>In this example, I’ve asked for <span class="math inline">\(n = 50\)</span> splits and for each split, half of the data was in the training set, and half of the data in the test set.</p>
+</div>
+</div>
+<div id="bootstrap" class="section level3">
+<h3><span class="header-section-number">16.3.4</span> Bootstrap</h3>
+<p>We can also use the <code>modelr</code> package for bootstrapping. The idea is the same as when we did cross-validation. We create a number of data sets from our original data set. Instead of splitting the data set in a training and test data set, for bootstrapping, we sample values from the original data set with replacement. Doing so, we can, for example, calculate the confidence interval of different statistics of interest.</p>
+<p>Here is an example for how to boostrap confidence intervals for a mean.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make example reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+sample_size =<span class="st"> </span><span class="dv">10</span> 
+
+<span class="co"># sample</span>
+df.data =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">participant =</span> <span class="dv">1</span><span class="op">:</span>sample_size,
+  <span class="dt">x =</span> <span class="kw">runif</span>(sample_size, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>)
+) 
+
+<span class="co"># mean of the actual sample</span>
+<span class="kw">mean</span>(df.data<span class="op">$</span>x)</code></pre>
+<pre><code>## [1] 0.5515139</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># bootstrap to get confidence intervals around the mean </span>
+df.data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">bootstrap</span>(<span class="dt">n =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># create 1000 boostrapped samples</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">estimate =</span> <span class="kw">map_dbl</span>(strap, <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(.<span class="op">$</span>data<span class="op">$</span>x[.<span class="op">$</span>idx]))) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># get the sample mean</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(estimate),
+            <span class="dt">low =</span> <span class="kw">quantile</span>(estimate, <span class="fl">0.025</span>), <span class="co"># calculate the 2.5 / 97.5 percentiles</span>
+            <span class="dt">high =</span> <span class="kw">quantile</span>(estimate, <span class="fl">0.975</span>))</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##    mean   low  high
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.545 0.367 0.725</code></pre>
+<p>Note the somewhat weird construction <code>~ mean(.$data$x[.$idx]))</code>. This is just because the <code>bootstrap</code> function stores the information about each boostrapped data set in that way. Each boostrapped sample simply points to the original data set, and then uses a different set of indices <code>idx</code> to indicate which values from the original data set it sampled (with replacement).</p>
+</div>
+<div id="aic-and-bic" class="section level3">
+<h3><span class="header-section-number">16.3.5</span> AIC and BIC</h3>
+<p>The Akaike Information Criterion (AIC) and the Bayesian Information Criterion (BIC) are defined as follows:</p>
+<p><span class="math display">\[
+\text{AIC} = 2k-2\ln(\hat L)
+\]</span></p>
+<p><span class="math display">\[
+\text{BIC} = \ln(n)k-2\ln(\hat L)
+\]</span></p>
+<p>where <span class="math inline">\(k\)</span> is the number of parameters in the model, <span class="math inline">\(n\)</span> is the number of observations, and <span class="math inline">\(\hat L\)</span> is the maximized value of the likelihood function of the model. Both AIC and BIC trade off model fit (as measured by the maximum likelihood of the data <span class="math inline">\(\hat L\)</span>) and the number of parameters in the model.</p>
+<p>Calculating AIC and BIC in R is straightforward. We simply need to fit a linear model, and then call the <code>AIC()</code> or <code>BIC()</code> functions on the fitted model like so:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">0</span>)
+
+<span class="co"># let&#39;s generate some data </span>
+df.example =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="kw">runif</span>(<span class="dv">20</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">1</span>),
+  <span class="dt">y =</span> <span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">2</span>)
+)
+
+<span class="co"># fit a linear model </span>
+fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x,
+         <span class="dt">data =</span> df.example)
+
+<span class="co"># get AIC </span>
+<span class="kw">AIC</span>(fit)</code></pre>
+<pre><code>## [1] 75.47296</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get BIC</span>
+<span class="kw">BIC</span>(fit)</code></pre>
+<pre><code>## [1] 78.46016</code></pre>
+<p>We can also just use the <code>broom</code> package to get that information:</p>
+<pre class="sourceCode r"><code class="sourceCode r">fit <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">glance</span>()</code></pre>
+<pre><code>## # A tibble: 1 x 11
+##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+##       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     0.255         0.214  1.45      6.16  0.0232     2  -34.7  75.5  78.5
+## # … with 2 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;</code></pre>
+<p>Both AIC and BIC take the number of parameters and the model’s likelihood into account. BIC additionally considers the number of observations. But how is the likelihood of a linear model determined?</p>
+<p>Let’s visualize the data first:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot the data with a linear model fit  </span>
+<span class="kw">ggplot</span>(df.example,
+       <span class="kw">aes</span>(x, y)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison20-1.png" width="672" /></p>
+<p>Now, let’s take a look at the residuals by plotting the fitted values on the x axis, and the residuals on the y axis.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># residual plot </span>
+df.plot =<span class="st"> </span>df.example <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> .) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">clean_names</span>()
+
+<span class="kw">ggplot</span>(df.plot,
+       <span class="kw">aes</span>(fitted, resid)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison21-1.png" width="672" /></p>
+<p>Remember that the linear model makes the assumption that the residuals are normally distributed with mean 0 (which is always the case if we fit a linear model) and some fitted standard deviation. In fact, the standard deviation of the normal distribution is fitted such that the overall likelihood of the data is maximized.</p>
+<p>Let’s make a plot that shows a normal distribution alongside the residuals:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define a normal distribution </span>
+df.normal =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">y =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">0.1</span>),
+  <span class="dt">x =</span> <span class="kw">dnorm</span>(y, <span class="dt">sd =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="fl">3.9</span>
+)
+
+<span class="co"># show the residual plot together with the normal distribution</span>
+df.plot <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> fitted, <span class="dt">y =</span> resid)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_path</span>(<span class="dt">data =</span> df.normal,
+            <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y),
+            <span class="dt">size =</span> <span class="dv">2</span>)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/model-comparison22-1.png" width="672" /></p>
+<p>To determine the likelihood of the data given the model <span class="math inline">\(\hat L\)</span>, we now calculate the likelihood of each point (with the <code>dnorm()</code> function), and then multiply the likelihood of each data point to get the overall likelihood. We can simply multiply the data points since we also assume that the data points are independent.
+Instead of multiplying likelihoods, we often sum the log likelihoods instead. This is because if we multiply many small values, the overall value gets to close to 0 so that computers get confused. By taking logs instead, we avoid these nasty precision errors.</p>
+<p>To better understand AIC and BIC, let’s calculate them by hand:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we first get the estimate of the standard deviation of the residuals </span>
+sigma =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pull</span>(sigma)
+
+<span class="co"># then we calculate the log likelihood of the model </span>
+log_likelihood =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">likelihood =</span> <span class="kw">dnorm</span>(.resid, <span class="dt">sd =</span> sigma)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">logLik =</span> <span class="kw">sum</span>(<span class="kw">log</span>(likelihood))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.numeric</span>()
+
+<span class="co"># then we calculate AIC and BIC using the formulas introduced above</span>
+aic =<span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="dv">3</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>log_likelihood
+bic =<span class="st"> </span><span class="kw">log</span>(<span class="kw">nrow</span>(df.example)) <span class="op">*</span><span class="st"> </span><span class="dv">3</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>log_likelihood
+
+<span class="kw">print</span>(aic)</code></pre>
+<pre><code>## [1] 75.58017</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(bic)</code></pre>
+<pre><code>## [1] 78.56737</code></pre>
+<p>Cool! The values are the same as when we use the <code>glance()</code> function like so (except for a small difference due to rounding):</p>
+<pre class="sourceCode r"><code class="sourceCode r">fit <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(AIC, BIC)</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##     AIC   BIC
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1  75.5  78.5</code></pre>
+<div id="log-is-your-friend" class="section level4">
+<h4><span class="header-section-number">16.3.5.1</span> log() is your friend</h4>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;log&quot;</span>,
+                <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;probability&quot;</span>,
+       <span class="dt">y =</span> <span class="st">&quot;log(probability)&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">24</span>),
+        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">26</span>))</code></pre>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="additional-resources-12" class="section level2">
+<h2><span class="header-section-number">16.4</span> Additional resources</h2>
+<div id="cheatsheet" class="section level3">
+<h3><span class="header-section-number">16.4.1</span> Cheatsheet</h3>
+<ul>
+<li><a href="%22figures/purrr.pdf%22">purrr</a></li>
+</ul>
+</div>
+<div id="datacamp-course" class="section level3">
+<h3><span class="header-section-number">16.4.2</span> Datacamp course</h3>
+<ul>
+<li><a href="https://www.datacamp.com/courses/foundations-of-functional-programming-with-purrr">Foundations of Functional Programming with purrr</a></li>
+<li><a href="https://www.datacamp.com/courses/intermediate-functional-programming-with-purrr">Intermediate functional programming with purrr</a></li>
+</ul>
+</div>
+<div id="reading-1" class="section level3">
+<h3><span class="header-section-number">16.4.3</span> Reading</h3>
+<ul>
+<li><a href="https://r4ds.had.co.nz/many-models.html">R for Data Science: Chapter 25</a></li>
+</ul>
+</div>
+<div id="misc-6" class="section level3">
+<h3><span class="header-section-number">16.4.4</span> Misc</h3>
+<ul>
+<li><a href="http://www.gpower.hhu.de/">G*Power 3.1</a>: Software for power calculations</li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bootstrapping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-mixed-effects-models-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/16-model_comparison.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

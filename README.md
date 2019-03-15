@@ -1,8 +1,5 @@
-# Psych 252 book info
+# Psych 252 book: Statistical Methods for Behavioral and Social Sciences
 
-This repo contains
+This book contains the RMarkdown notes for the 2018/2019 version of the course. 
 
-## Bookdown extensions 
-
-- [klippy](https://rlesur.github.io/klippy/): Add copy to clipboard button to each code section
-- [code folding](https://statnmap.com/2017-11-13-enable-code-folding-in-bookdown-and-blogdown/#) --> not yet used (tried but was too much work)
+If you have any questions about the notes, please feel free to reach out to email me at [gerstenberg@stanford.edu](mailto:gerstenberg@stanford.edu). 

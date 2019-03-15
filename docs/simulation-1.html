@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 7 Simulation 1 | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
+  <meta name="description" content="Course notes for Psych 252.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 7 Simulation 1 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course notes for Psych 252." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Simulation 1 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  
+  <meta name="twitter:description" content="Course notes for Psych 252." />
+  
+
+<meta name="author" content="Tobias Gerstenberg">
+
+
+<meta name="date" content="2019-03-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="probability-and-causality.html">
+<link rel="next" href="simulation-2.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Psych 252</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i>List of R packages used in this book</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a><ul>
+<li class="chapter" data-level="2.1" data-path="visualization-1.html"><a href="visualization-1.html#learning-objectives"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="visualization-1.html"><a href="visualization-1.html#load-packages"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
+<li class="chapter" data-level="2.3" data-path="visualization-1.html"><a href="visualization-1.html#why-visualize-data"><i class="fa fa-check"></i><b>2.3</b> Why visualize data?</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="visualization-1.html"><a href="visualization-1.html#how-not-to-visualize-data"><i class="fa fa-check"></i><b>2.3.1</b> How <em>not</em> to visualize data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="visualization-1.html"><a href="visualization-1.html#how-to-make-it-better"><i class="fa fa-check"></i><b>2.3.2</b> How to make it better</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-rstudio"><i class="fa fa-check"></i><b>2.4</b> Setting up RStudio</a></li>
+<li class="chapter" data-level="2.5" data-path="visualization-1.html"><a href="visualization-1.html#getting-help"><i class="fa fa-check"></i><b>2.5</b> Getting help</a></li>
+<li class="chapter" data-level="2.6" data-path="visualization-1.html"><a href="visualization-1.html#data-visualization-using-ggplot2"><i class="fa fa-check"></i><b>2.6</b> Data visualization using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="2.6.1" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.6.1</b> Setting up a plot</a></li>
+<li class="chapter" data-level="2.6.2" data-path="visualization-1.html"><a href="visualization-1.html#setting-the-default-plot-theme"><i class="fa fa-check"></i><b>2.6.2</b> Setting the default plot theme</a></li>
+<li class="chapter" data-level="2.6.3" data-path="visualization-1.html"><a href="visualization-1.html#scatter-plot"><i class="fa fa-check"></i><b>2.6.3</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.6.4" data-path="visualization-1.html"><a href="visualization-1.html#line-plot"><i class="fa fa-check"></i><b>2.6.4</b> Line plot</a></li>
+<li class="chapter" data-level="2.6.5" data-path="visualization-1.html"><a href="visualization-1.html#adding-error-bars"><i class="fa fa-check"></i><b>2.6.5</b> Adding error bars</a></li>
+<li class="chapter" data-level="2.6.6" data-path="visualization-1.html"><a href="visualization-1.html#grouping-data"><i class="fa fa-check"></i><b>2.6.6</b> Grouping data</a></li>
+<li class="chapter" data-level="2.6.7" data-path="visualization-1.html"><a href="visualization-1.html#making-facets"><i class="fa fa-check"></i><b>2.6.7</b> Making facets</a></li>
+<li class="chapter" data-level="2.6.8" data-path="visualization-1.html"><a href="visualization-1.html#global-local-and-setting-aes"><i class="fa fa-check"></i><b>2.6.8</b> Global, local, and setting <code>aes()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="visualization-1.html"><a href="visualization-1.html#additional-resources"><i class="fa fa-check"></i><b>2.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="visualization-1.html"><a href="visualization-1.html#cheatsheets"><i class="fa fa-check"></i><b>2.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="2.7.2" data-path="visualization-1.html"><a href="visualization-1.html#data-camp-courses"><i class="fa fa-check"></i><b>2.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="2.7.3" data-path="visualization-1.html"><a href="visualization-1.html#books-and-chapters"><i class="fa fa-check"></i><b>2.7.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="2.7.4" data-path="visualization-1.html"><a href="visualization-1.html#misc"><i class="fa fa-check"></i><b>2.7.4</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualization-2.html"><a href="visualization-2.html"><i class="fa fa-check"></i><b>3</b> Visualization 2</a><ul>
+<li class="chapter" data-level="3.1" data-path="visualization-2.html"><a href="visualization-2.html#learning-objectives-1"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="visualization-2.html"><a href="visualization-2.html#install-and-load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>3.2</b> Install and load packages, load data, set theme</a></li>
+<li class="chapter" data-level="3.3" data-path="visualization-2.html"><a href="visualization-2.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>3.3</b> Overview of different plot types for different things</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="visualization-2.html"><a href="visualization-2.html#proportions"><i class="fa fa-check"></i><b>3.3.1</b> Proportions</a></li>
+<li class="chapter" data-level="3.3.2" data-path="visualization-2.html"><a href="visualization-2.html#comparisons"><i class="fa fa-check"></i><b>3.3.2</b> Comparisons</a></li>
+<li class="chapter" data-level="3.3.3" data-path="visualization-2.html"><a href="visualization-2.html#relationships"><i class="fa fa-check"></i><b>3.3.3</b> Relationships</a></li>
+<li class="chapter" data-level="3.3.4" data-path="visualization-2.html"><a href="visualization-2.html#temporal-data"><i class="fa fa-check"></i><b>3.3.4</b> Temporal data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-plots"><i class="fa fa-check"></i><b>3.4</b> Customizing plots</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
+<li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
+<li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
+<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.4</b> Customizing themes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
+<li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
+<li class="chapter" data-level="3.7" data-path="visualization-2.html"><a href="visualization-2.html#peeking-behind-the-scenes"><i class="fa fa-check"></i><b>3.7</b> Peeking behind the scenes</a></li>
+<li class="chapter" data-level="3.8" data-path="visualization-2.html"><a href="visualization-2.html#making-animations"><i class="fa fa-check"></i><b>3.8</b> Making animations</a></li>
+<li class="chapter" data-level="3.9" data-path="visualization-2.html"><a href="visualization-2.html#shiny-apps"><i class="fa fa-check"></i><b>3.9</b> Shiny apps</a></li>
+<li class="chapter" data-level="3.10" data-path="visualization-2.html"><a href="visualization-2.html#defining-snippets"><i class="fa fa-check"></i><b>3.10</b> Defining snippets</a></li>
+<li class="chapter" data-level="3.11" data-path="visualization-2.html"><a href="visualization-2.html#additional-resources-1"><i class="fa fa-check"></i><b>3.11</b> Additional resources</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="visualization-2.html"><a href="visualization-2.html#cheatsheets-1"><i class="fa fa-check"></i><b>3.11.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="3.11.2" data-path="visualization-2.html"><a href="visualization-2.html#data-camp-courses-1"><i class="fa fa-check"></i><b>3.11.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="3.11.3" data-path="visualization-2.html"><a href="visualization-2.html#books-and-chapters-1"><i class="fa fa-check"></i><b>3.11.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="3.11.4" data-path="visualization-2.html"><a href="visualization-2.html#misc-1"><i class="fa fa-check"></i><b>3.11.4</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html"><i class="fa fa-check"></i><b>4</b> Data wrangling 1</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#learning-objectives-2"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#install-packages"><i class="fa fa-check"></i><b>4.2</b> Install packages</a></li>
+<li class="chapter" data-level="4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#load-packages-1"><i class="fa fa-check"></i><b>4.3</b> Load packages</a></li>
+<li class="chapter" data-level="4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#some-r-basics"><i class="fa fa-check"></i><b>4.4</b> Some R basics</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#modes"><i class="fa fa-check"></i><b>4.4.1</b> Modes</a></li>
+<li class="chapter" data-level="4.4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-types"><i class="fa fa-check"></i><b>4.4.2</b> Data types</a></li>
+<li class="chapter" data-level="4.4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#operators"><i class="fa fa-check"></i><b>4.4.3</b> Operators</a></li>
+<li class="chapter" data-level="4.4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#control-flow"><i class="fa fa-check"></i><b>4.4.4</b> Control flow</a></li>
+<li class="chapter" data-level="4.4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#functions"><i class="fa fa-check"></i><b>4.4.5</b> Functions</a></li>
+<li class="chapter" data-level="4.4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#the-pipe-operator"><i class="fa fa-check"></i><b>4.4.6</b> The pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#looking-at-data"><i class="fa fa-check"></i><b>4.5</b> Looking at data</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#head"><i class="fa fa-check"></i><b>4.5.1</b> <code>head()</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#glimpse"><i class="fa fa-check"></i><b>4.5.2</b> <code>glimpse()</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#distinct"><i class="fa fa-check"></i><b>4.5.3</b> <code>distinct()</code></a></li>
+<li class="chapter" data-level="4.5.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#count"><i class="fa fa-check"></i><b>4.5.4</b> <code>count()</code></a></li>
+<li class="chapter" data-level="4.5.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#datatable"><i class="fa fa-check"></i><b>4.5.5</b> <code>datatable()</code></a></li>
+<li class="chapter" data-level="4.5.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#other-tools-for-taking-a-quick-look-at-data"><i class="fa fa-check"></i><b>4.5.6</b> Other tools for taking a quick look at data</a></li>
+<li class="chapter" data-level="4.5.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>4.5.7</b> A quick note on naming things</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#wrangling-data"><i class="fa fa-check"></i><b>4.6</b> Wrangling data</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#filter"><i class="fa fa-check"></i><b>4.6.1</b> filter()</a></li>
+<li class="chapter" data-level="4.6.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#rename"><i class="fa fa-check"></i><b>4.6.2</b> rename()</a></li>
+<li class="chapter" data-level="4.6.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#select"><i class="fa fa-check"></i><b>4.6.3</b> select()</a></li>
+<li class="chapter" data-level="4.6.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#mutate"><i class="fa fa-check"></i><b>4.6.4</b> mutate()</a></li>
+<li class="chapter" data-level="4.6.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#arrange"><i class="fa fa-check"></i><b>4.6.5</b> arrange()</a></li>
+<li class="chapter" data-level="4.6.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-2"><i class="fa fa-check"></i><b>4.6.6</b> Practice 2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#additional-resources-2"><i class="fa fa-check"></i><b>4.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#cheatsheets-2"><i class="fa fa-check"></i><b>4.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="4.7.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-camp-courses-2"><i class="fa fa-check"></i><b>4.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="4.7.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#books-and-chapters-2"><i class="fa fa-check"></i><b>4.7.3</b> Books and chapters</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html"><i class="fa fa-check"></i><b>5</b> Data wrangling 2</a><ul>
+<li class="chapter" data-level="5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#learning-objectives-3"><i class="fa fa-check"></i><b>5.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#load-packages-2"><i class="fa fa-check"></i><b>5.2</b> Load packages</a></li>
+<li class="chapter" data-level="5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#wrangling-data-continued"><i class="fa fa-check"></i><b>5.3</b> Wrangling data (continued)</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#summarizing-data"><i class="fa fa-check"></i><b>5.3.1</b> Summarizing data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reshaping-data"><i class="fa fa-check"></i><b>5.3.2</b> Reshaping data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#joining-multiple-data-frames"><i class="fa fa-check"></i><b>5.3.3</b> Joining multiple data frames</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>5.3.4</b> Dealing with missing data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reading-in-data"><i class="fa fa-check"></i><b>5.4</b> Reading in data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv"><i class="fa fa-check"></i><b>5.4.1</b> csv</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata"><i class="fa fa-check"></i><b>5.4.2</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#saving-data"><i class="fa fa-check"></i><b>5.5</b> Saving data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv-1"><i class="fa fa-check"></i><b>5.5.1</b> csv</a></li>
+<li class="chapter" data-level="5.5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata-1"><i class="fa fa-check"></i><b>5.5.2</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#additional-resources-3"><i class="fa fa-check"></i><b>5.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#cheatsheets-3"><i class="fa fa-check"></i><b>5.6.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="5.6.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#data-camp-courses-3"><i class="fa fa-check"></i><b>5.6.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="5.6.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#books-and-chapters-3"><i class="fa fa-check"></i><b>5.6.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="5.6.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#tutorials"><i class="fa fa-check"></i><b>5.6.4</b> Tutorials</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a><ul>
+<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#load-packages-3"><i class="fa fa-check"></i><b>6.1</b> Load packages</a></li>
+<li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.2</b> Counting</a></li>
+<li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.3</b> Flipping a coin many times</a></li>
+<li class="chapter" data-level="6.4" data-path="probability-and-causality.html"><a href="probability-and-causality.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.4</b> Clue guide to probability</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#conditional-probability"><i class="fa fa-check"></i><b>6.4.1</b> Conditional probability</a></li>
+<li class="chapter" data-level="6.4.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.4.2</b> Law of total probability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="probability-and-causality.html"><a href="probability-and-causality.html#probability-operations"><i class="fa fa-check"></i><b>6.5</b> Probability operations</a></li>
+<li class="chapter" data-level="6.6" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.6</b> Bayesian reasoning example</a></li>
+<li class="chapter" data-level="6.7" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-networks"><i class="fa fa-check"></i><b>6.7</b> Bayesian networks</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#sprinkler-example"><i class="fa fa-check"></i><b>6.7.1</b> Sprinkler example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="probability-and-causality.html"><a href="probability-and-causality.html#additional-resources-4"><i class="fa fa-check"></i><b>6.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="6.8.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.8.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="6.8.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.8.2</b> Books and chapters</a></li>
+<li class="chapter" data-level="6.8.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#misc-2"><i class="fa fa-check"></i><b>6.8.3</b> Misc</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a><ul>
+<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#load-packages-and-set-plotting-theme"><i class="fa fa-check"></i><b>7.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#working-with-distributions"><i class="fa fa-check"></i><b>7.2</b> Working with distributions</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="simulation-1.html"><a href="simulation-1.html#plotting-distributions"><i class="fa fa-check"></i><b>7.2.1</b> Plotting distributions</a></li>
+<li class="chapter" data-level="7.2.2" data-path="simulation-1.html"><a href="simulation-1.html#sampling-from-distributions"><i class="fa fa-check"></i><b>7.2.2</b> Sampling from distributions</a></li>
+<li class="chapter" data-level="7.2.3" data-path="simulation-1.html"><a href="simulation-1.html#cumulative-probability-distribution"><i class="fa fa-check"></i><b>7.2.3</b> Cumulative probability distribution</a></li>
+<li class="chapter" data-level="7.2.4" data-path="simulation-1.html"><a href="simulation-1.html#inverse-cumulative-distribution"><i class="fa fa-check"></i><b>7.2.4</b> Inverse cumulative distribution</a></li>
+<li class="chapter" data-level="7.2.5" data-path="simulation-1.html"><a href="simulation-1.html#computing-probabilities"><i class="fa fa-check"></i><b>7.2.5</b> Computing probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="simulation-1.html"><a href="simulation-1.html#bayesian-inference-with-the-normal-distribution"><i class="fa fa-check"></i><b>7.3</b> Bayesian inference with the normal distribution</a></li>
+<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#working-with-samples"><i class="fa fa-check"></i><b>7.4</b> Working with samples</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="simulation-1.html"><a href="simulation-1.html#understanding-density"><i class="fa fa-check"></i><b>7.4.1</b> Understanding <code>density()</code></a></li>
+<li class="chapter" data-level="7.4.2" data-path="simulation-1.html"><a href="simulation-1.html#the-quantile-function"><i class="fa fa-check"></i><b>7.4.2</b> The <code>quantile()</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="simulation-1.html"><a href="simulation-1.html#comparing-probability-distributions"><i class="fa fa-check"></i><b>7.5</b> Comparing probability distributions</a></li>
+<li class="chapter" data-level="7.6" data-path="simulation-1.html"><a href="simulation-1.html#additional-resources-5"><i class="fa fa-check"></i><b>7.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="simulation-1.html"><a href="simulation-1.html#cheatsheets-5"><i class="fa fa-check"></i><b>7.6.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="7.6.2" data-path="simulation-1.html"><a href="simulation-1.html#datacamp"><i class="fa fa-check"></i><b>7.6.2</b> Datacamp</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a><ul>
+<li class="chapter" data-level="8.1" data-path="simulation-2.html"><a href="simulation-2.html#load-packages-and-set-plotting-theme-1"><i class="fa fa-check"></i><b>8.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="8.2" data-path="simulation-2.html"><a href="simulation-2.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>8.2</b> The central limit theorem</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="simulation-2.html"><a href="simulation-2.html#population-distribution"><i class="fa fa-check"></i><b>8.2.1</b> Population distribution</a></li>
+<li class="chapter" data-level="8.2.2" data-path="simulation-2.html"><a href="simulation-2.html#distribution-of-a-single-sample"><i class="fa fa-check"></i><b>8.2.2</b> Distribution of a single sample</a></li>
+<li class="chapter" data-level="8.2.3" data-path="simulation-2.html"><a href="simulation-2.html#the-sampling-distribution"><i class="fa fa-check"></i><b>8.2.3</b> The sampling distribution</a></li>
+<li class="chapter" data-level="8.2.4" data-path="simulation-2.html"><a href="simulation-2.html#exploring-the-clt"><i class="fa fa-check"></i><b>8.2.4</b> Exploring the CLT</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="simulation-2.html"><a href="simulation-2.html#understanding-p-values"><i class="fa fa-check"></i><b>8.3</b> Understanding p-values</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation-2.html"><a href="simulation-2.html#permutation-test"><i class="fa fa-check"></i><b>8.3.1</b> Permutation test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="simulation-2.html"><a href="simulation-2.html#confidence-intervals"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="8.5" data-path="simulation-2.html"><a href="simulation-2.html#additional-resources-6"><i class="fa fa-check"></i><b>8.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="simulation-2.html"><a href="simulation-2.html#datacamp-1"><i class="fa fa-check"></i><b>8.5.1</b> Datacamp</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="simulation-2.html"><a href="simulation-2.html#session-info"><i class="fa fa-check"></i><b>8.6</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modeling-data.html"><a href="modeling-data.html"><i class="fa fa-check"></i><b>9</b> Modeling data</a><ul>
+<li class="chapter" data-level="9.1" data-path="modeling-data.html"><a href="modeling-data.html#load-packages-and-set-plotting-theme-2"><i class="fa fa-check"></i><b>9.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="9.2" data-path="modeling-data.html"><a href="modeling-data.html#things-that-came-up-in-class"><i class="fa fa-check"></i><b>9.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="modeling-data.html"><a href="modeling-data.html#calculating-rmse-using-magrittr-verbs"><i class="fa fa-check"></i><b>9.2.1</b> Calculating RMSE using <code>magrittr</code> verbs</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modeling-data.html"><a href="modeling-data.html#relationship-between-probability-and-likelihood"><i class="fa fa-check"></i><b>9.2.2</b> Relationship between probability and likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="modeling-data.html"><a href="modeling-data.html#modeling-data-1"><i class="fa fa-check"></i><b>9.3</b> Modeling data</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="modeling-data.html"><a href="modeling-data.html#simplicity-vs.-accuracy-trade-off"><i class="fa fa-check"></i><b>9.3.1</b> Simplicity vs. accuracy trade-off</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modeling-data.html"><a href="modeling-data.html#error-definitions-and-best-estimators"><i class="fa fa-check"></i><b>9.3.2</b> Error definitions and best estimators</a></li>
+<li class="chapter" data-level="9.3.3" data-path="modeling-data.html"><a href="modeling-data.html#sampling-distributions-for-median-and-mean"><i class="fa fa-check"></i><b>9.3.3</b> Sampling distributions for median and mean</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="modeling-data.html"><a href="modeling-data.html#hypothesis-testing-one-sample-t-test"><i class="fa fa-check"></i><b>9.4</b> Hypothesis testing: “One-sample t-test”</a></li>
+<li class="chapter" data-level="9.5" data-path="modeling-data.html"><a href="modeling-data.html#additional-resources-7"><i class="fa fa-check"></i><b>9.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="modeling-data.html"><a href="modeling-data.html#reading"><i class="fa fa-check"></i><b>9.5.1</b> Reading</a></li>
+<li class="chapter" data-level="9.5.2" data-path="modeling-data.html"><a href="modeling-data.html#datacamp-2"><i class="fa fa-check"></i><b>9.5.2</b> Datacamp</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="modeling-data.html"><a href="modeling-data.html#session-info-1"><i class="fa fa-check"></i><b>9.6</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="linear-model-1.html"><a href="linear-model-1.html"><i class="fa fa-check"></i><b>10</b> Linear model 1</a><ul>
+<li class="chapter" data-level="10.1" data-path="linear-model-1.html"><a href="linear-model-1.html#load-packages-and-set-plotting-theme-3"><i class="fa fa-check"></i><b>10.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="10.2" data-path="linear-model-1.html"><a href="linear-model-1.html#things-that-came-up-in-class-1"><i class="fa fa-check"></i><b>10.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="linear-model-1.html"><a href="linear-model-1.html#building-a-sampling-distribution-of-pre"><i class="fa fa-check"></i><b>10.2.1</b> Building a sampling distribution of PRE</a></li>
+<li class="chapter" data-level="10.2.2" data-path="linear-model-1.html"><a href="linear-model-1.html#correlation"><i class="fa fa-check"></i><b>10.2.2</b> Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="linear-model-1.html"><a href="linear-model-1.html#regression"><i class="fa fa-check"></i><b>10.3</b> Regression</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="linear-model-1.html"><a href="linear-model-1.html#define-and-fit-the-models"><i class="fa fa-check"></i><b>10.3.1</b> Define and fit the models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="linear-model-1.html"><a href="linear-model-1.html#calculate-the-sum-of-squared-errors-of-each-model"><i class="fa fa-check"></i><b>10.3.2</b> Calculate the sum of squared errors of each model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="linear-model-1.html"><a href="linear-model-1.html#credit-example"><i class="fa fa-check"></i><b>10.4</b> Credit example</a></li>
+<li class="chapter" data-level="10.5" data-path="linear-model-1.html"><a href="linear-model-1.html#additional-resources-8"><i class="fa fa-check"></i><b>10.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="linear-model-1.html"><a href="linear-model-1.html#datacamp-3"><i class="fa fa-check"></i><b>10.5.1</b> Datacamp</a></li>
+<li class="chapter" data-level="10.5.2" data-path="linear-model-1.html"><a href="linear-model-1.html#misc-3"><i class="fa fa-check"></i><b>10.5.2</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="linear-model-1.html"><a href="linear-model-1.html#session-info-2"><i class="fa fa-check"></i><b>10.6</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="linear-model-2.html"><a href="linear-model-2.html"><i class="fa fa-check"></i><b>11</b> Linear model 2</a><ul>
+<li class="chapter" data-level="11.1" data-path="linear-model-2.html"><a href="linear-model-2.html#load-packages-and-set-plotting-theme-4"><i class="fa fa-check"></i><b>11.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="11.2" data-path="linear-model-2.html"><a href="linear-model-2.html#load-data-sets"><i class="fa fa-check"></i><b>11.2</b> Load data sets</a></li>
+<li class="chapter" data-level="11.3" data-path="linear-model-2.html"><a href="linear-model-2.html#things-that-came-up-in-class-2"><i class="fa fa-check"></i><b>11.3</b> Things that came up in class</a></li>
+<li class="chapter" data-level="11.4" data-path="linear-model-2.html"><a href="linear-model-2.html#multiple-continuous-variables"><i class="fa fa-check"></i><b>11.4</b> Multiple continuous variables</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="linear-model-2.html"><a href="linear-model-2.html#explore-correlations"><i class="fa fa-check"></i><b>11.4.1</b> Explore correlations</a></li>
+<li class="chapter" data-level="11.4.2" data-path="linear-model-2.html"><a href="linear-model-2.html#multipe-regression"><i class="fa fa-check"></i><b>11.4.2</b> Multipe regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="linear-model-2.html"><a href="linear-model-2.html#one-categorical-variable"><i class="fa fa-check"></i><b>11.5</b> One categorical variable</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions"><i class="fa fa-check"></i><b>11.5.1</b> Visualization of the model predictions</a></li>
+<li class="chapter" data-level="11.5.2" data-path="linear-model-2.html"><a href="linear-model-2.html#dummy-coding"><i class="fa fa-check"></i><b>11.5.2</b> Dummy coding</a></li>
+<li class="chapter" data-level="11.5.3" data-path="linear-model-2.html"><a href="linear-model-2.html#reporting-the-results"><i class="fa fa-check"></i><b>11.5.3</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="linear-model-2.html"><a href="linear-model-2.html#one-continuous-and-one-categorical-variable"><i class="fa fa-check"></i><b>11.6</b> One continuous and one categorical variable</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions-1"><i class="fa fa-check"></i><b>11.6.1</b> Visualization of the model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="linear-model-2.html"><a href="linear-model-2.html#interactions"><i class="fa fa-check"></i><b>11.7</b> Interactions</a><ul>
+<li class="chapter" data-level="11.7.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-3"><i class="fa fa-check"></i><b>11.7.1</b> Visualization</a></li>
+<li class="chapter" data-level="11.7.2" data-path="linear-model-2.html"><a href="linear-model-2.html#hypothesis-test"><i class="fa fa-check"></i><b>11.7.2</b> Hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="11.8" data-path="linear-model-2.html"><a href="linear-model-2.html#additional-resources-9"><i class="fa fa-check"></i><b>11.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="11.8.1" data-path="linear-model-2.html"><a href="linear-model-2.html#datacamp-4"><i class="fa fa-check"></i><b>11.8.1</b> Datacamp</a></li>
+<li class="chapter" data-level="11.8.2" data-path="linear-model-2.html"><a href="linear-model-2.html#misc-4"><i class="fa fa-check"></i><b>11.8.2</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="11.9" data-path="linear-model-2.html"><a href="linear-model-2.html#session-info-3"><i class="fa fa-check"></i><b>11.9</b> Session info</a></li>
+<li class="chapter" data-level="11.10" data-path="linear-model-2.html"><a href="linear-model-2.html#references"><i class="fa fa-check"></i><b>11.10</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-model-3.html"><a href="linear-model-3.html"><i class="fa fa-check"></i><b>12</b> Linear model 3</a><ul>
+<li class="chapter" data-level="12.1" data-path="linear-model-3.html"><a href="linear-model-3.html#load-packages-and-set-plotting-theme-5"><i class="fa fa-check"></i><b>12.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-model-3.html"><a href="linear-model-3.html#load-data-sets-1"><i class="fa fa-check"></i><b>12.2</b> Load data sets</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-model-3.html"><a href="linear-model-3.html#one-way-anova"><i class="fa fa-check"></i><b>12.2.1</b> One-way ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova"><i class="fa fa-check"></i><b>12.3</b> Two-way ANOVA</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="linear-model-3.html"><a href="linear-model-3.html#visualization-5"><i class="fa fa-check"></i><b>12.3.1</b> Visualization</a></li>
+<li class="chapter" data-level="12.3.2" data-path="linear-model-3.html"><a href="linear-model-3.html#model-fitting-1"><i class="fa fa-check"></i><b>12.3.2</b> Model fitting</a></li>
+<li class="chapter" data-level="12.3.3" data-path="linear-model-3.html"><a href="linear-model-3.html#interpreting-interactions"><i class="fa fa-check"></i><b>12.3.3</b> Interpreting interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="linear-model-3.html"><a href="linear-model-3.html#additional-resources-10"><i class="fa fa-check"></i><b>12.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="linear-model-3.html"><a href="linear-model-3.html#datacamp-5"><i class="fa fa-check"></i><b>12.4.1</b> Datacamp</a></li>
+<li class="chapter" data-level="12.4.2" data-path="linear-model-3.html"><a href="linear-model-3.html#misc-5"><i class="fa fa-check"></i><b>12.4.2</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="linear-model-3.html"><a href="linear-model-3.html#session-info-4"><i class="fa fa-check"></i><b>12.5</b> Session info</a></li>
+<li class="chapter" data-level="12.6" data-path="linear-model-3.html"><a href="linear-model-3.html#references-1"><i class="fa fa-check"></i><b>12.6</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linear-model-4.html"><a href="linear-model-4.html"><i class="fa fa-check"></i><b>13</b> Linear model 4</a><ul>
+<li class="chapter" data-level="13.1" data-path="linear-model-4.html"><a href="linear-model-4.html#load-packages-and-set-plotting-theme-6"><i class="fa fa-check"></i><b>13.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-model-4.html"><a href="linear-model-4.html#load-data-sets-2"><i class="fa fa-check"></i><b>13.2</b> Load data sets</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-model-4.html"><a href="linear-model-4.html#variance-decomposition-in-one-way-anova"><i class="fa fa-check"></i><b>13.3</b> Variance decomposition in one-way ANOVA</a><ul>
+<li class="chapter" data-level="13.3.1" data-path="linear-model-4.html"><a href="linear-model-4.html#calculate-sums-of-squares"><i class="fa fa-check"></i><b>13.3.1</b> Calculate sums of squares</a></li>
+<li class="chapter" data-level="13.3.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualize-model-predictions"><i class="fa fa-check"></i><b>13.3.2</b> Visualize model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="linear-model-4.html"><a href="linear-model-4.html#two-way-anova-linear-model"><i class="fa fa-check"></i><b>13.4</b> Two-way ANOVA (linear model)</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="linear-model-4.html"><a href="linear-model-4.html#calculate-sums-of-squares-1"><i class="fa fa-check"></i><b>13.4.1</b> Calculate sums of squares</a></li>
+<li class="chapter" data-level="13.4.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualize-model-predictions-1"><i class="fa fa-check"></i><b>13.4.2</b> Visualize model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="linear-model-4.html"><a href="linear-model-4.html#anova-with-unbalanced-design"><i class="fa fa-check"></i><b>13.5</b> ANOVA with unbalanced design</a></li>
+<li class="chapter" data-level="13.6" data-path="linear-model-4.html"><a href="linear-model-4.html#two-way-anova-with-interaction"><i class="fa fa-check"></i><b>13.6</b> Two-way ANOVA (with interaction)</a></li>
+<li class="chapter" data-level="13.7" data-path="linear-model-4.html"><a href="linear-model-4.html#planned-contrasts"><i class="fa fa-check"></i><b>13.7</b> Planned contrasts</a><ul>
+<li class="chapter" data-level="13.7.1" data-path="linear-model-4.html"><a href="linear-model-4.html#hypothetical-data"><i class="fa fa-check"></i><b>13.7.1</b> Hypothetical data</a></li>
+<li class="chapter" data-level="13.7.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualization-6"><i class="fa fa-check"></i><b>13.7.2</b> Visualization</a></li>
+<li class="chapter" data-level="13.7.3" data-path="linear-model-4.html"><a href="linear-model-4.html#constrasts"><i class="fa fa-check"></i><b>13.7.3</b> Constrasts</a></li>
+<li class="chapter" data-level="13.7.4" data-path="linear-model-4.html"><a href="linear-model-4.html#post-hoc-tests"><i class="fa fa-check"></i><b>13.7.4</b> Post-hoc tests</a></li>
+</ul></li>
+<li class="chapter" data-level="13.8" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-5"><i class="fa fa-check"></i><b>13.8</b> Session info</a></li>
+<li class="chapter" data-level="13.9" data-path="linear-model-4.html"><a href="linear-model-4.html#references-2"><i class="fa fa-check"></i><b>13.9</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#load-packages-and-set-plotting-theme-7"><i class="fa fa-check"></i><b>14.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="14.2" data-path="power-analysis.html"><a href="power-analysis.html#load-data-sets-3"><i class="fa fa-check"></i><b>14.2</b> Load data sets</a></li>
+<li class="chapter" data-level="14.3" data-path="power-analysis.html"><a href="power-analysis.html#decision-making"><i class="fa fa-check"></i><b>14.3</b> Decision-making</a></li>
+<li class="chapter" data-level="14.4" data-path="power-analysis.html"><a href="power-analysis.html#effect-sizes"><i class="fa fa-check"></i><b>14.4</b> Effect sizes</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="power-analysis.html"><a href="power-analysis.html#eta-squared-and-partial-eta-squared"><i class="fa fa-check"></i><b>14.4.1</b> eta-squared and partial eta-squared</a></li>
+<li class="chapter" data-level="14.4.2" data-path="power-analysis.html"><a href="power-analysis.html#cohens-d"><i class="fa fa-check"></i><b>14.4.2</b> Cohen’s d</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="power-analysis.html"><a href="power-analysis.html#determining-sample-size"><i class="fa fa-check"></i><b>14.5</b> Determining sample size</a><ul>
+<li class="chapter" data-level="14.5.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>14.5.1</b> <code>pwr</code> package</a></li>
+<li class="chapter" data-level="14.5.2" data-path="power-analysis.html"><a href="power-analysis.html#simulation"><i class="fa fa-check"></i><b>14.5.2</b> Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-11"><i class="fa fa-check"></i><b>14.6</b> Additional resources</a></li>
+<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#session-info-6"><i class="fa fa-check"></i><b>14.7</b> Session info</a></li>
+<li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#references-3"><i class="fa fa-check"></i><b>14.8</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="bootstrapping.html"><a href="bootstrapping.html"><i class="fa fa-check"></i><b>15</b> Bootstrapping</a><ul>
+<li class="chapter" data-level="15.1" data-path="bootstrapping.html"><a href="bootstrapping.html#load-packages-and-set-plotting-theme-8"><i class="fa fa-check"></i><b>15.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="15.2" data-path="bootstrapping.html"><a href="bootstrapping.html#whats-wrong-with-parametric-tests"><i class="fa fa-check"></i><b>15.2</b> What’s wrong with parametric tests?</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="bootstrapping.html"><a href="bootstrapping.html#t-tests-on-non-normal-distributions"><i class="fa fa-check"></i><b>15.2.1</b> T-tests on non-normal distributions</a></li>
+<li class="chapter" data-level="15.2.2" data-path="bootstrapping.html"><a href="bootstrapping.html#non-iid-noise-and-linear-models"><i class="fa fa-check"></i><b>15.2.2</b> Non-IID noise and linear models</a></li>
+<li class="chapter" data-level="15.2.3" data-path="bootstrapping.html"><a href="bootstrapping.html#density-estimate-conceptual-plot"><i class="fa fa-check"></i><b>15.2.3</b> Density estimate conceptual plot</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-resampling"><i class="fa fa-check"></i><b>15.3</b> Bootstrap resampling</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="bootstrapping.html"><a href="bootstrapping.html#demo"><i class="fa fa-check"></i><b>15.3.1</b> Demo</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="bootstrapping.html"><a href="bootstrapping.html#applications"><i class="fa fa-check"></i><b>15.4</b> Applications</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>15.4.1</b> Bootstrap confidence intervals</a></li>
+<li class="chapter" data-level="15.4.2" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-permutation-hypothesis-tests"><i class="fa fa-check"></i><b>15.4.2</b> Bootstrap (&amp; permutation) hypothesis tests</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="bootstrapping.html"><a href="bootstrapping.html#session-info-7"><i class="fa fa-check"></i><b>15.5</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>16</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#load-packages-and-set-plotting-theme-9"><i class="fa fa-check"></i><b>16.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="16.2" data-path="model-comparison.html"><a href="model-comparison.html#determining-sample-size-1"><i class="fa fa-check"></i><b>16.2</b> Determining sample size</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="model-comparison.html"><a href="model-comparison.html#pwr-package-1"><i class="fa fa-check"></i><b>16.2.1</b> <code>pwr</code> package</a></li>
+<li class="chapter" data-level="16.2.2" data-path="model-comparison.html"><a href="model-comparison.html#map"><i class="fa fa-check"></i><b>16.2.2</b> <code>map()</code></a></li>
+<li class="chapter" data-level="16.2.3" data-path="model-comparison.html"><a href="model-comparison.html#via-simulation"><i class="fa fa-check"></i><b>16.2.3</b> via simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="16.3" data-path="model-comparison.html"><a href="model-comparison.html#model-comparison-1"><i class="fa fa-check"></i><b>16.3</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="model-comparison.html"><a href="model-comparison.html#fitting-vs.-predicting"><i class="fa fa-check"></i><b>16.3.1</b> Fitting vs. predicting</a></li>
+<li class="chapter" data-level="16.3.2" data-path="model-comparison.html"><a href="model-comparison.html#f-test"><i class="fa fa-check"></i><b>16.3.2</b> F-test</a></li>
+<li class="chapter" data-level="16.3.3" data-path="model-comparison.html"><a href="model-comparison.html#cross-validation"><i class="fa fa-check"></i><b>16.3.3</b> Cross-validation</a></li>
+<li class="chapter" data-level="16.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>16.3.4</b> Bootstrap</a></li>
+<li class="chapter" data-level="16.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>16.3.5</b> AIC and BIC</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-12"><i class="fa fa-check"></i><b>16.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="model-comparison.html"><a href="model-comparison.html#cheatsheet"><i class="fa fa-check"></i><b>16.4.1</b> Cheatsheet</a></li>
+<li class="chapter" data-level="16.4.2" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>16.4.2</b> Datacamp course</a></li>
+<li class="chapter" data-level="16.4.3" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>16.4.3</b> Reading</a></li>
+<li class="chapter" data-level="16.4.4" data-path="model-comparison.html"><a href="model-comparison.html#misc-6"><i class="fa fa-check"></i><b>16.4.4</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="model-comparison.html"><a href="model-comparison.html#session-info-8"><i class="fa fa-check"></i><b>16.5</b> Session info</a></li>
+<li class="chapter" data-level="16.6" data-path="model-comparison.html"><a href="model-comparison.html#references-4"><i class="fa fa-check"></i><b>16.6</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html"><i class="fa fa-check"></i><b>17</b> Linear mixed effects models 1</a><ul>
+<li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#things-that-came-up-in-class-3"><i class="fa fa-check"></i><b>17.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="17.2.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#comparing-t-test-with-f-test-in-lm"><i class="fa fa-check"></i><b>17.2.1</b> Comparing t-test with F-test in <code>lm()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.3</b> Dependence</a></li>
+<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-13"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="17.4.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.4.1</b> Readings</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#session-info-9"><i class="fa fa-check"></i><b>17.5</b> Session info</a></li>
+<li class="chapter" data-level="17.6" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#references-5"><i class="fa fa-check"></i><b>17.6</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html"><i class="fa fa-check"></i><b>18</b> Linear mixed effects models 2</a><ul>
+<li class="chapter" data-level="18.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#load-packages-and-set-plotting-theme-11"><i class="fa fa-check"></i><b>18.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="18.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#things-that-came-up-in-class-4"><i class="fa fa-check"></i><b>18.2</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#difference-between-replicate-and-map"><i class="fa fa-check"></i><b>18.2.1</b> Difference between <code>replicate()</code> and <code>map()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simulating-a-linear-mixed-effects-model"><i class="fa fa-check"></i><b>18.3</b> Simulating a linear mixed effects model</a></li>
+<li class="chapter" data-level="18.4" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#the-effect-of-outliers"><i class="fa fa-check"></i><b>18.4</b> The effect of outliers</a></li>
+<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.5</b> Different slopes</a></li>
+<li class="chapter" data-level="18.6" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.6</b> Simpson’s paradox</a></li>
+<li class="chapter" data-level="18.7" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-14"><i class="fa fa-check"></i><b>18.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="18.7.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.7.1</b> Readings</a></li>
+</ul></li>
+<li class="chapter" data-level="18.8" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#session-info-10"><i class="fa fa-check"></i><b>18.8</b> Session info</a></li>
+<li class="chapter" data-level="18.9" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#references-6"><i class="fa fa-check"></i><b>18.9</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html"><i class="fa fa-check"></i><b>19</b> Linear mixed effects models 3</a><ul>
+<li class="chapter" data-level="19.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-packages-and-set-plotting-theme-12"><i class="fa fa-check"></i><b>19.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="19.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-set"><i class="fa fa-check"></i><b>19.2</b> Load data set</a></li>
+<li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#things-that-came-up-in-class-5"><i class="fa fa-check"></i><b>19.3</b> Things that came up in class</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#one-tailed-vs.-two-tailed-tests"><i class="fa fa-check"></i><b>19.3.1</b> One-tailed vs. two-tailed tests</a></li>
+<li class="chapter" data-level="19.3.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixtures-of-participants"><i class="fa fa-check"></i><b>19.3.2</b> Mixtures of participants</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#pooling-and-shrinkage"><i class="fa fa-check"></i><b>19.4</b> Pooling and shrinkage</a><ul>
+<li class="chapter" data-level="19.4.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#complete-pooling"><i class="fa fa-check"></i><b>19.4.1</b> Complete pooling</a></li>
+<li class="chapter" data-level="19.4.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#no-pooling"><i class="fa fa-check"></i><b>19.4.2</b> No pooling</a></li>
+<li class="chapter" data-level="19.4.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#partial-pooling"><i class="fa fa-check"></i><b>19.4.3</b> Partial pooling</a></li>
+<li class="chapter" data-level="19.4.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#compare-results"><i class="fa fa-check"></i><b>19.4.4</b> Compare results</a></li>
+<li class="chapter" data-level="19.4.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#coefficients"><i class="fa fa-check"></i><b>19.4.5</b> Coefficients</a></li>
+<li class="chapter" data-level="19.4.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#shrinkage"><i class="fa fa-check"></i><b>19.4.6</b> Shrinkage</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#bootstrapping-1"><i class="fa fa-check"></i><b>19.5</b> Bootstrapping</a><ul>
+<li class="chapter" data-level="19.5.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#linear-model"><i class="fa fa-check"></i><b>19.5.1</b> Linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#getting-p-values"><i class="fa fa-check"></i><b>19.6</b> Getting p-values</a></li>
+<li class="chapter" data-level="19.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#understanding-the-lmer-syntax"><i class="fa fa-check"></i><b>19.7</b> Understanding the lmer() syntax</a></li>
+<li class="chapter" data-level="19.8" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-11"><i class="fa fa-check"></i><b>19.8</b> Session info</a></li>
+<li class="chapter" data-level="19.9" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#references-7"><i class="fa fa-check"></i><b>19.9</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>20</b> Generalized linear model</a><ul>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-packages-and-set-plotting-theme-13"><i class="fa fa-check"></i><b>20.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="20.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set-1"><i class="fa fa-check"></i><b>20.2</b> Load data set</a></li>
+<li class="chapter" data-level="20.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>20.3</b> Logistic regression</a><ul>
+<li class="chapter" data-level="20.3.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#interpreting-the-parameters"><i class="fa fa-check"></i><b>20.3.1</b> Interpreting the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>20.4</b> Simulate a logistic regression</a></li>
+<li class="chapter" data-level="20.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>20.5</b> Testing hypotheses</a></li>
+<li class="chapter" data-level="20.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>20.6</b> Logistic mixed effects model</a></li>
+<li class="chapter" data-level="20.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>20.7</b> Additional information</a><ul>
+<li class="chapter" data-level="20.7.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-6"><i class="fa fa-check"></i><b>20.7.1</b> Datacamp</a></li>
+</ul></li>
+<li class="chapter" data-level="20.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-12"><i class="fa fa-check"></i><b>20.8</b> Session info</a></li>
+<li class="chapter" data-level="20.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#references-8"><i class="fa fa-check"></i><b>20.9</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html"><i class="fa fa-check"></i><b>21</b> Bayesian data analysis</a><ul>
+<li class="chapter" data-level="21.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#load-packages-and-set-plotting-theme-14"><i class="fa fa-check"></i><b>21.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="21.2" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#things-that-came-up"><i class="fa fa-check"></i><b>21.2</b> Things that came up</a><ul>
+<li class="chapter" data-level="21.2.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#bias-in-cosyne-2019-conference-admission"><i class="fa fa-check"></i><b>21.2.1</b> Bias in Cosyne 2019 conference admission?</a></li>
+</ul></li>
+<li class="chapter" data-level="21.3" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#session-info-13"><i class="fa fa-check"></i><b>21.3</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>22</b> Bayesian data analysis 2</a><ul>
+<li class="chapter" data-level="22.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#load-packages-and-set-plotting-theme-15"><i class="fa fa-check"></i><b>22.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="22.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#doing-bayesian-inference-by-hand"><i class="fa fa-check"></i><b>22.2</b> Doing Bayesian inference “by hand”</a><ul>
+<li class="chapter" data-level="22.2.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#sequential-updating-based-on-the-beta-distribution"><i class="fa fa-check"></i><b>22.2.1</b> Sequential updating based on the Beta distribution</a></li>
+<li class="chapter" data-level="22.2.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#coin-flip-example"><i class="fa fa-check"></i><b>22.2.2</b> Coin flip example</a></li>
+<li class="chapter" data-level="22.2.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#bayesian-inference-by-discretization"><i class="fa fa-check"></i><b>22.2.3</b> Bayesian inference by discretization</a></li>
+<li class="chapter" data-level="22.2.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-prior"><i class="fa fa-check"></i><b>22.2.4</b> Effect of the prior</a></li>
+<li class="chapter" data-level="22.2.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-likelihood"><i class="fa fa-check"></i><b>22.2.5</b> Effect of the likelihood</a></li>
+<li class="chapter" data-level="22.2.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#effect-of-the-sample-size"><i class="fa fa-check"></i><b>22.2.6</b> Effect of the sample size</a></li>
+</ul></li>
+<li class="chapter" data-level="22.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions"><i class="fa fa-check"></i><b>22.3</b> Distributions</a><ul>
+<li class="chapter" data-level="22.3.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-vs-student-t-distribution"><i class="fa fa-check"></i><b>22.3.1</b> Normal vs Student-t distribution</a></li>
+<li class="chapter" data-level="22.3.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#beta-distributions"><i class="fa fa-check"></i><b>22.3.2</b> Beta distributions</a></li>
+<li class="chapter" data-level="22.3.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-distributions"><i class="fa fa-check"></i><b>22.3.3</b> Normal distributions</a></li>
+<li class="chapter" data-level="22.3.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions-for-non-negative-parameters"><i class="fa fa-check"></i><b>22.3.4</b> Distributions for non-negative parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="22.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#inference-via-sampling"><i class="fa fa-check"></i><b>22.4</b> Inference via sampling</a></li>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#greta"><i class="fa fa-check"></i><b>22.5</b> Greta</a><ul>
+<li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#attitude-data-set"><i class="fa fa-check"></i><b>22.5.1</b> Attitude data set</a></li>
+<li class="chapter" data-level="22.5.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.5.2</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="22.5.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#bayesian-regression"><i class="fa fa-check"></i><b>22.5.3</b> Bayesian regression</a></li>
+</ul></li>
+<li class="chapter" data-level="22.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-14"><i class="fa fa-check"></i><b>22.6</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 3</a><ul>
+<li class="chapter" data-level="23.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-packages-and-set-plotting-theme-16"><i class="fa fa-check"></i><b>23.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="23.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-data-set-2"><i class="fa fa-check"></i><b>23.2</b> Load data set</a></li>
+<li class="chapter" data-level="23.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#poker"><i class="fa fa-check"></i><b>23.3</b> Poker</a><ul>
+<li class="chapter" data-level="23.3.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualization-7"><i class="fa fa-check"></i><b>23.3.1</b> Visualization</a></li>
+<li class="chapter" data-level="23.3.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#linear-model-5"><i class="fa fa-check"></i><b>23.3.2</b> Linear model</a></li>
+<li class="chapter" data-level="23.3.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-model"><i class="fa fa-check"></i><b>23.3.3</b> Bayesian model</a></li>
+</ul></li>
+<li class="chapter" data-level="23.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>23.4</b> Dealing with heteroscedasticity</a></li>
+<li class="chapter" data-level="23.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#ordinal-regression"><i class="fa fa-check"></i><b>23.5</b> Ordinal regression</a></li>
+<li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-15"><i class="fa fa-check"></i><b>23.6</b> Additional resources</a></li>
+<li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-15"><i class="fa fa-check"></i><b>23.7</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="mediation-moderation.html"><a href="mediation-moderation.html"><i class="fa fa-check"></i><b>24</b> Mediation &amp; Moderation</a><ul>
+<li class="chapter" data-level="24.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#recommended-reading"><i class="fa fa-check"></i><b>24.1</b> Recommended reading</a></li>
+<li class="chapter" data-level="24.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-packages-and-set-plotting-theme-17"><i class="fa fa-check"></i><b>24.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="24.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-data-sets-4"><i class="fa fa-check"></i><b>24.3</b> Load data sets</a></li>
+<li class="chapter" data-level="24.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>24.4</b> Mediation</a><ul>
+<li class="chapter" data-level="24.4.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data"><i class="fa fa-check"></i><b>24.4.1</b> Generate data</a></li>
+<li class="chapter" data-level="24.4.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>24.4.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
+<li class="chapter" data-level="24.4.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>24.4.3</b> Method 2: Sobel Test</a></li>
+<li class="chapter" data-level="24.4.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>24.4.4</b> Method 3: Bootstrapping</a></li>
+<li class="chapter" data-level="24.4.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-4-bayesian-approach"><i class="fa fa-check"></i><b>24.4.5</b> Method 4: Bayesian approach</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation"><i class="fa fa-check"></i><b>24.5</b> Moderation</a><ul>
+<li class="chapter" data-level="24.5.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data-1"><i class="fa fa-check"></i><b>24.5.1</b> Generate data</a></li>
+<li class="chapter" data-level="24.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation-analysis"><i class="fa fa-check"></i><b>24.5.2</b> Moderation analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="24.6" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-16"><i class="fa fa-check"></i><b>24.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="24.6.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#books"><i class="fa fa-check"></i><b>24.6.1</b> Books</a></li>
+<li class="chapter" data-level="24.6.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-1"><i class="fa fa-check"></i><b>24.6.2</b> Tutorials</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="mediation-moderation.html"><a href="mediation-moderation.html#session-info-16"><i class="fa fa-check"></i><b>24.7</b> Session info</a></li>
+<li class="chapter" data-level="24.8" data-path="mediation-moderation.html"><a href="mediation-moderation.html#references-9"><i class="fa fa-check"></i><b>24.8</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>25</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="25.1" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#statistics"><i class="fa fa-check"></i><b>25.1</b> Statistics</a></li>
+<li class="chapter" data-level="25.2" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#r"><i class="fa fa-check"></i><b>25.2</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references-10.html"><a href="references-10.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psych 252: Statistical Methods for Behavioral and Social Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="simulation-1" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Simulation 1</h1>
+<div id="load-packages-and-set-plotting-theme" class="section level2">
+<h2><span class="header-section-number">7.1</span> Load packages and set plotting theme</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;kableExtra&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;MASS&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
+  <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
+)</code></pre>
+</div>
+<div id="working-with-distributions" class="section level2">
+<h2><span class="header-section-number">7.2</span> Working with distributions</h2>
+<p>Every distribution that R handles has four functions. There is a root name, for example, the root name for the normal distribution is <code>norm</code>. This root is prefixed by one of the letters here:</p>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+letter
+</th>
+<th style="text-align:left;">
+description
+</th>
+<th style="text-align:left;">
+example
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<code>d</code>
+</td>
+<td style="text-align:left;">
+for “<strong>density</strong>”, the density function (probability function (for <em>discrete</em> variables) or probability density function (for <em>continuous</em> variables))
+</td>
+<td style="text-align:left;">
+<code>dnorm()</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>p</code>
+</td>
+<td style="text-align:left;">
+for “<strong>probability</strong>”, the cumulative distribution function
+</td>
+<td style="text-align:left;">
+<code>pnorm()</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>q</code>
+</td>
+<td style="text-align:left;">
+for “<strong>quantile</strong>”, the inverse cumulative distribution function
+</td>
+<td style="text-align:left;">
+<code>qnorm()</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<code>r</code>
+</td>
+<td style="text-align:left;">
+for “<strong>random</strong>”, a random variable having the specified distribution
+</td>
+<td style="text-align:left;">
+<code>rnorm()</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For the normal distribution, these functions are <code>dnorm</code>, <code>pnorm</code>, <code>qnorm</code>, and <code>rnorm</code>. For the binomial distribution, these functions are <code>dbinom</code>, <code>pbinom</code>, <code>qbinom</code>, and <code>rbinom</code>. And so forth.</p>
+<p>You can get more info about the distributions that come with R via running <code>help(Distributions)</code> in your console. If you need a distribution that doesn’t already come with R, then take a look <a href="https://cran.r-project.org/web/views/Distributions.html">here</a> for many more distributions that can be loaded with different R packages.</p>
+<div id="plotting-distributions" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Plotting distributions</h3>
+<p>Here’s an easy way to plot distributions in <code>ggplot2</code> using the <code>stat_function()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/plotting-normal-1.png" width="672" /></p>
+<p>Note that the data frame I created with <code>tibble()</code> only needs to have the minimum and the maximum value of the x-range that we are interested in. Here, I chose <code>-5</code> and <code>5</code> as the minimum and maximum, respectively.</p>
+<p>The <code>stat_function()</code> is very flexible. We can define our own functions and plot these like here:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the breakpoint function </span>
+fun.breakpoint =<span class="st"> </span><span class="cf">function</span>(x, breakpoint){
+  x[x <span class="op">&lt;</span><span class="st"> </span>breakpoint] =<span class="st"> </span>breakpoint
+  <span class="kw">return</span>(x)
+}
+
+<span class="co"># plot the function</span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;fun.breakpoint&quot;</span>,
+                <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">breakpoint =</span> <span class="dv">2</span>)
+                )</code></pre>
+<p><img src="bookdown-demo_files/figure-html/plotting-function-1.png" width="672" /></p>
+<p>Here, I defined a breakpoint function. If the value of <code>x</code> is below the breakpoint, <code>y</code> equals the value of the breakpoint. If the value of <code>x</code> is greater than the breakpoint, then <code>y</code> equals <code>x</code>.</p>
+<p>Note how I used the <code>args =</code> argument in the <code>stat_function()</code> to supply the breakpoint parameter that my <code>fun.breakpoint()</code> wants. Make sure to put these parameters into a <code>list()</code> as shown above.</p>
+<p>Let’s play around with the parameters of the normal distribution. The normal distribution takes two parameters, the mean and standard deviation. Again, I’m going to use the <code>args =</code> argument to supply these parameters.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tmp.mean =<span class="st"> </span><span class="dv">0</span>
+tmp.sd =<span class="st"> </span><span class="dv">2</span>
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">140</span>, <span class="dv">220</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>,
+                <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> tmp.mean,
+                            <span class="dt">sd =</span> tmp.sd))</code></pre>
+<p><img src="bookdown-demo_files/figure-html/plotting-normal2-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_subset</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
+<p>To keep my environment clean, I’ve named the parameters <code>tmp.mean</code> and <code>tmp.sd</code> and then, at the end of the code chunk, I removed all variables from the environment that have “tmp.” in their name using the <code>ls()</code> function (which prints out all variables in the environment as a vector), and the <code>str_subset()</code> function which filters out only those variables that contain the specified pattern.</p>
+</div>
+<div id="sampling-from-distributions" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Sampling from distributions</h3>
+<p>For each distribution, R provides a way of sampling random number from this distribution. For the normal distribution, we can use the <code>rnorm()</code> function to take random samples.</p>
+<p>So let’s take some random samples and plot a histogram.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make this example reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># define how many samples to draw </span>
+tmp.nsamples =<span class="st"> </span><span class="dv">100</span>
+
+<span class="co"># make a data frame with the samples</span>
+df.plot =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> tmp.nsamples, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+) 
+
+<span class="co"># plot the samples using a histogram </span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.2</span>,
+                 <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,
+                 <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">expand =</span> T)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/sampling-distributions1-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_subset</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
+<p>Let’s see how many samples it takes to closely approximate the shape of the normal distribution with our histogram of samples.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make this example reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># play around with this value</span>
+tmp.nsamples =<span class="st"> </span><span class="dv">100</span>
+<span class="co"># tmp.nsamples = 10000</span>
+tmp.binwidth =<span class="st"> </span><span class="fl">0.2</span>
+
+<span class="co"># make a data frame with the samples</span>
+df.plot =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> tmp.nsamples, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+) 
+
+<span class="co"># adjust the density of the normal distribution based on the samples and binwidth </span>
+fun.dnorm =<span class="st"> </span><span class="cf">function</span>(x, mean, sd, n, binwidth){
+  <span class="kw">dnorm</span>(<span class="dt">x =</span> x, <span class="dt">mean =</span> mean, <span class="dt">sd =</span> sd) <span class="op">*</span><span class="st"> </span>n <span class="op">*</span><span class="st"> </span>binwidth
+}
+
+<span class="co"># plot the samples using a histogram </span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> tmp.binwidth,
+                 <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,
+                 <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;fun.dnorm&quot;</span>,
+                <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>,
+                            <span class="dt">sd =</span> <span class="dv">1</span>,
+                            <span class="dt">n =</span> tmp.nsamples,
+                            <span class="dt">binwidth =</span> tmp.binwidth),
+                <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(df.plot<span class="op">$</span>x), <span class="kw">max</span>(df.plot<span class="op">$</span>x)),
+                <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="kw">str_c</span>(<span class="st">&quot;n = &quot;</span>, tmp.nsamples),
+           <span class="dt">x =</span> <span class="fl">-3.9</span>,
+           <span class="dt">y =</span> <span class="ot">Inf</span>,
+           <span class="dt">hjust =</span> <span class="dv">0</span>,
+           <span class="dt">vjust =</span> <span class="fl">1.1</span>,
+           <span class="dt">size =</span> <span class="dv">10</span>,
+           <span class="dt">family =</span> <span class="st">&quot;Courier New&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">expand =</span> F)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/sampling-distributions2-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_subset</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
+<p>With 10,000 samples, our histogram of samples already closely resembles the theoretical shape of the normal distribution.</p>
+</div>
+<div id="cumulative-probability-distribution" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> Cumulative probability distribution</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;pnorm&quot;</span>,
+                <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>,
+                            <span class="dt">sd =</span> <span class="dv">1</span>))</code></pre>
+<p><img src="bookdown-demo_files/figure-html/cumulative1-1.png" width="672" /></p>
+<p>Let’s find the cumulative probability of a particular value.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tmp.x =<span class="st"> </span><span class="dv">1</span>
+tmp.y =<span class="st"> </span><span class="kw">pnorm</span>(tmp.x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+
+<span class="kw">print</span>(tmp.y <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">3</span>))</code></pre>
+<pre><code>## [1] 0.841</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># draw the cumulative probability distribution and show the value</span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;pnorm&quot;</span>,
+                <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>,
+                            <span class="dt">sd =</span> <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>,
+           <span class="dt">x =</span> tmp.x, 
+           <span class="dt">y =</span> tmp.y,
+           <span class="dt">size =</span> <span class="dv">4</span>,
+           <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> tmp.x,
+                             <span class="dt">xend =</span> tmp.x,
+                             <span class="dt">y =</span> <span class="dv">0</span>,
+                             <span class="dt">yend =</span> tmp.y),
+               <span class="dt">size =</span> <span class="dv">1</span>,
+               <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">-5</span>,
+                             <span class="dt">xend =</span> tmp.x,
+                             <span class="dt">y =</span> tmp.y,
+                             <span class="dt">yend =</span> tmp.y),
+               <span class="dt">size =</span> <span class="dv">1</span>,
+               <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-5</span><span class="op">:</span><span class="dv">5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>),
+                  <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>),
+                  <span class="dt">expand =</span> F)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/cumulative2-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">str_subset</span>(<span class="dt">string =</span> <span class="kw">ls</span>(), <span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
+<p>Let’s illustrate what this would look like using a normal density plot.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>,
+                <span class="dt">geom =</span> <span class="st">&quot;area&quot;</span>,
+                <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>,
+                <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">1</span>),
+                <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,
+                <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>,
+                <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-5</span><span class="op">:</span><span class="dv">5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">mult =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))) </code></pre>
+<p><img src="bookdown-demo_files/figure-html/cumulative3-1.png" width="672" /></p>
+</div>
+<div id="inverse-cumulative-distribution" class="section level3">
+<h3><span class="header-section-number">7.2.4</span> Inverse cumulative distribution</h3>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;qnorm&quot;</span>,
+                <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>,
+                            <span class="dt">sd =</span> <span class="dv">1</span>))</code></pre>
+<p><img src="bookdown-demo_files/figure-html/inverse1-1.png" width="672" /></p>
+<p>And let’s compute the inverse cumulative probability for a particular value.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tmp.x = 0.841</span>
+tmp.x =<span class="st"> </span><span class="fl">0.975</span>
+tmp.y =<span class="st"> </span><span class="kw">qnorm</span>(tmp.x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+
+<span class="kw">print</span>(tmp.y <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">3</span>))</code></pre>
+<pre><code>## [1] 1.96</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># draw the cumulative probability distribution and show the value</span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;qnorm&quot;</span>,
+                <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>,
+                            <span class="dt">sd =</span> <span class="dv">1</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>,
+           <span class="dt">x =</span> tmp.x, 
+           <span class="dt">y =</span> tmp.y,
+           <span class="dt">size =</span> <span class="dv">4</span>,
+           <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> tmp.x,
+                             <span class="dt">xend =</span> tmp.x,
+                             <span class="dt">y =</span> <span class="dv">-3</span>,
+                             <span class="dt">yend =</span> tmp.y),
+               <span class="dt">size =</span> <span class="dv">1</span>,
+               <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>,
+                             <span class="dt">xend =</span> tmp.x,
+                             <span class="dt">y =</span> tmp.y,
+                             <span class="dt">yend =</span> tmp.y),
+               <span class="dt">size =</span> <span class="dv">1</span>,
+               <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>),
+                  <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>),
+                  <span class="dt">expand =</span> F)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/inverse2-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">str_subset</span>(<span class="dt">string =</span> <span class="kw">ls</span>(), <span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
+</div>
+<div id="computing-probabilities" class="section level3">
+<h3><span class="header-section-number">7.2.5</span> Computing probabilities</h3>
+<div id="via-probability-distributions" class="section level4">
+<h4><span class="header-section-number">7.2.5.1</span> Via probability distributions</h4>
+<p>Let’s compute the probability of observing a particular value <span class="math inline">\(x\)</span> in a given range.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tmp.lower = -1</span>
+<span class="co"># tmp.upper = 1</span>
+
+<span class="co"># tmp.lower = -2</span>
+<span class="co"># tmp.upper = 2</span>
+
+<span class="co"># tmp.lower = qnorm(0.001)</span>
+<span class="co"># tmp.upper = qnorm(0.95)</span>
+
+<span class="co"># tmp.lower = qnorm(0.05)</span>
+<span class="co"># tmp.upper = qnorm(0.999)</span>
+
+tmp.lower =<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.025</span>)
+tmp.upper =<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)
+
+tmp.prob =<span class="st"> </span><span class="kw">pnorm</span>(tmp.upper) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(tmp.lower)
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)),
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>,
+                <span class="dt">geom =</span> <span class="st">&quot;area&quot;</span>,
+                <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>,
+                <span class="dt">xlim =</span> <span class="kw">c</span>(tmp.lower, tmp.upper),
+                <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,
+                <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>,
+                <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="kw">str_c</span>(tmp.prob <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>, <span class="st">&quot;%&quot;</span>),
+           <span class="dt">x =</span> <span class="dv">0</span>,
+           <span class="dt">y =</span> <span class="fl">0.2</span>,
+           <span class="dt">hjust =</span> <span class="fl">0.5</span>,
+           <span class="dt">size =</span> <span class="dv">10</span>
+           ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-5</span><span class="op">:</span><span class="dv">5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">mult =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))) </code></pre>
+<p><img src="bookdown-demo_files/figure-html/computing1-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">str_subset</span>(<span class="dt">string =</span> <span class="kw">ls</span>(), <span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
+<p>We find that 95% of the density in the normal distribution is between -1.96 and 1.96.</p>
+</div>
+<div id="via-sampling" class="section level4">
+<h4><span class="header-section-number">7.2.5.2</span> Via sampling</h4>
+<p>We can also compute the probability of observing certain events using sampling. We first generate samples from the desired probability distribution, and then use these samples to compute our statistic of interest.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># let&#39;s compute the probability of observing a value within a certain range </span>
+tmp.lower =<span class="st"> </span><span class="fl">-1.96</span>
+tmp.upper =<span class="st"> </span><span class="fl">1.96</span>
+
+<span class="co"># make example reproducible</span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># generate some samples and store them in a data frame </span>
+tmp.nsamples =<span class="st"> </span><span class="dv">10000</span>
+
+df.samples =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">sample =</span> <span class="dv">1</span><span class="op">:</span>tmp.nsamples,
+  <span class="dt">value =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> tmp.nsamples, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+)
+
+<span class="co"># compute the probability that s sample lies within the range of interest</span>
+tmp.prob =<span class="st"> </span>df.samples <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(value <span class="op">&gt;=</span><span class="st"> </span>tmp.lower,
+         value <span class="op">&lt;=</span><span class="st"> </span>tmp.upper) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">prob =</span> <span class="kw">n</span>()<span class="op">/</span>tmp.nsamples)
+
+<span class="co"># illustrate the result using a histogram </span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> df.samples,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> value)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.1</span>,
+                 <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,
+                 <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">expand =</span> F) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> tmp.lower,
+             <span class="dt">size =</span> <span class="dv">1</span>, 
+             <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+             <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> tmp.upper,
+             <span class="dt">size =</span> <span class="dv">1</span>, 
+             <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+             <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;label&quot;</span>,
+           <span class="dt">label =</span> <span class="kw">str_c</span>(tmp.prob <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">3</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>, <span class="st">&quot;%&quot;</span>),
+           <span class="dt">x =</span> <span class="dv">0</span>,
+           <span class="dt">y =</span> <span class="dv">200</span>,
+           <span class="dt">hjust =</span> <span class="fl">0.5</span>,
+           <span class="dt">size =</span> <span class="dv">10</span>)</code></pre>
+<p><img src="bookdown-demo_files/figure-html/sampling1-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
+<span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">str_subset</span>(<span class="dt">string =</span> <span class="kw">ls</span>(), <span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
+</div>
+</div>
+</div>
+<div id="bayesian-inference-with-the-normal-distribution" class="section level2">
+<h2><span class="header-section-number">7.3</span> Bayesian inference with the normal distribution</h2>
+<p>Let’s consider the following scenario. You are helping out at a summer camp. This summer, two different groups of kids go to the same summer camp. The chess kids, and the basketball kids. The chess summer camp is not quite as popular as the basketball summer camp (shocking, I know!). In fact, twice as many children have signed up for the basketball camp.</p>
+<p>When signing up for the camp, the children were asked for some demographic information including their height in cm. Unsurprisingly, the basketball players tend to be taller on average than the chess players. In fact, the basketball players’ height is approximately normally distributed with a mean of 180cm and a standard deviation of 10cm. For the chess players, the mean height is 170cm with a standard deviation of 8cm.</p>
+<p>At the camp site, a child walks over to you and asks you where their gym is. You gage that the child is around 175cm tall. Where should you direct the child to? To the basketball gym, or to the chess gym?</p>
+<pre class="sourceCode r"><code class="sourceCode r">height =<span class="st"> </span><span class="dv">175</span>
+
+<span class="co"># priors </span>
+prior_basketball =<span class="st"> </span><span class="dv">2</span><span class="op">/</span><span class="dv">3</span> 
+prior_chess =<span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">3</span> 
+
+<span class="co"># likelihood  </span>
+mean_basketball =<span class="st"> </span><span class="dv">180</span>
+sd_basketball =<span class="st"> </span><span class="dv">10</span>
+
+mean_chess =<span class="st"> </span><span class="dv">170</span>
+sd_chess =<span class="st"> </span><span class="dv">8</span>
+
+likelihood_basketball =<span class="st"> </span><span class="kw">dnorm</span>(height, <span class="dt">mean =</span> mean_basketball, <span class="dt">sd =</span> sd_basketball)
+likelihood_chess =<span class="st"> </span><span class="kw">dnorm</span>(height, <span class="dt">mean =</span> mean_chess, <span class="dt">sd =</span> sd_chess)
+
+<span class="co"># posterior</span>
+posterior_basketball =<span class="st"> </span>(likelihood_basketball <span class="op">*</span><span class="st"> </span>prior_basketball) <span class="op">/</span><span class="st"> </span>
+<span class="st">  </span>((likelihood_basketball <span class="op">*</span><span class="st"> </span>prior_basketball) <span class="op">+</span><span class="st"> </span>(likelihood_chess <span class="op">*</span><span class="st"> </span>prior_chess))
+
+posterior_basketball <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>()</code></pre>
+<pre><code>## [1] 0.631886</code></pre>
+<p>Let’s do the same thing via sampling.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># number of kids </span>
+tmp.nkids =<span class="st"> </span><span class="dv">10000</span>
+
+<span class="co"># make reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># priors </span>
+prior_basketball =<span class="st"> </span><span class="dv">2</span><span class="op">/</span><span class="dv">3</span> 
+prior_chess =<span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">3</span> 
+
+<span class="co"># likelihood functions </span>
+mean_basketball =<span class="st"> </span><span class="dv">180</span>
+sd_basketball =<span class="st"> </span><span class="dv">10</span>
+
+mean_chess =<span class="st"> </span><span class="dv">170</span>
+sd_chess =<span class="st"> </span><span class="dv">8</span>
+
+<span class="co"># data frame with the kids</span>
+df.camp =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">kid =</span> <span class="dv">1</span><span class="op">:</span>tmp.nkids,
+  <span class="dt">sport =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;chess&quot;</span>, <span class="st">&quot;basketball&quot;</span>),
+                 <span class="dt">size =</span> tmp.nkids,
+                 <span class="dt">replace =</span> T,
+                 <span class="dt">prob =</span> <span class="kw">c</span>(prior_chess, prior_basketball))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height =</span> <span class="kw">ifelse</span>(<span class="dt">test =</span> sport <span class="op">==</span><span class="st"> &quot;chess&quot;</span>,
+                         <span class="dt">yes =</span> <span class="kw">rnorm</span>(., <span class="dt">mean =</span> mean_chess, <span class="dt">sd =</span> sd_chess),
+                         <span class="dt">no =</span> <span class="kw">rnorm</span>(., <span class="dt">mean =</span> mean_basketball, <span class="dt">sd =</span> sd_basketball))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>ungroup
+
+df.camp <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">print</span>()</code></pre>
+<pre><code>## # A tibble: 10,000 x 3
+##      kid sport      height
+##    &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
+##  1     1 basketball   165.
+##  2     2 basketball   163.
+##  3     3 basketball   191.
+##  4     4 chess        160.
+##  5     5 basketball   183.
+##  6     6 chess        164.
+##  7     7 chess        169.
+##  8     8 basketball   193.
+##  9     9 basketball   172.
+## 10    10 basketball   177.
+## # … with 9,990 more rows</code></pre>
+<p>Now we have a data frame with kids whose height was randomly sampled depending on which sport they do. I’ve used the <code>sample()</code> function to assign a sport to each kid first using the <code>prob =</code> argument to make sure that a kid is more likely to be assigned the sport “basketball” than “chess”.</p>
+<p>Note that the solution above is not particularly efficient since it uses the <code>rowwise()</code> function to make sure that a different random value for height is drawn for each row. Running this code will get slow for large samples. A more efficient solution would be the following:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># number of kids </span>
+tmp.nkids =<span class="st"> </span><span class="dv">100000</span>
+
+<span class="co"># make reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">3</span>)
+
+df.camp2 =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">kid =</span> <span class="dv">1</span><span class="op">:</span>tmp.nkids,
+  <span class="dt">sport =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">&quot;chess&quot;</span>, <span class="st">&quot;basketball&quot;</span>),
+                 <span class="dt">size =</span> tmp.nkids,
+                 <span class="dt">replace =</span> T,
+                 <span class="dt">prob =</span> <span class="kw">c</span>(prior_chess, prior_basketball))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(sport) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="kw">sum</span>(sport <span class="op">==</span><span class="st"> &quot;basketball&quot;</span>), <span class="dt">mean =</span> mean_basketball, <span class="dt">sd =</span> sd_basketball),
+                    <span class="kw">rnorm</span>(<span class="kw">sum</span>(sport <span class="op">==</span><span class="st"> &quot;chess&quot;</span>), <span class="dt">mean =</span> mean_chess, <span class="dt">sd =</span> sd_chess))
+         )</code></pre>
+<p>In this solution, I take advantage of the fact that <code>rnorm()</code> is vectorized. That is, it can produce many random draws in one call. To make this work, I first arrange the data frame, and then draw the correct number of samples from each of the two distributions. This works fast, even if I’m drawing a large number of samples.</p>
+<p>How can we now use these samples to answer our question of interest? Let’s see what doesn’t work first:</p>
+<pre class="sourceCode r"><code class="sourceCode r">tmp.height =<span class="st"> </span><span class="dv">175</span>
+
+df.camp <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(height <span class="op">==</span><span class="st"> </span>tmp.height) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">count</span>(sport) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">spread</span>(sport, n) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">prob_basketball =</span> basketball<span class="op">/</span>(basketball <span class="op">+</span><span class="st"> </span>chess))</code></pre>
+<p>The reason this doesn’t work is because none of our kids is exactly 175cm tall. Instead, we need to filter kids that are within a certain height range.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tmp.height =<span class="st"> </span><span class="dv">175</span>
+tmp.margin =<span class="st"> </span><span class="dv">1</span>
+
+df.camp <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(<span class="kw">between</span>(height,
+          <span class="dt">left =</span> tmp.height <span class="op">-</span><span class="st"> </span>tmp.margin,
+          <span class="dt">right =</span> tmp.height <span class="op">+</span><span class="st"> </span>tmp.margin)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">count</span>(sport) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">spread</span>(sport, n) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">prob_basketball =</span> basketball<span class="op">/</span>(basketball <span class="op">+</span><span class="st"> </span>chess))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   prob_basketball
+##             &lt;dbl&gt;
+## 1           0.632</code></pre>
+<p>Here, I’ve used the <code>between()</code> function which is a shortcut for otherwise writing <code>x &gt;= left &amp; x &lt;= right</code>. You can play around with the margin to see how the result changes.</p>
+</div>
+<div id="working-with-samples" class="section level2">
+<h2><span class="header-section-number">7.4</span> Working with samples</h2>
+<div id="understanding-density" class="section level3">
+<h3><span class="header-section-number">7.4.1</span> Understanding <code>density()</code></h3>
+<p>First, let’s calculate the density for a set of observations and store them in a data frame.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate density</span>
+observations =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">1.2</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+bandwidth =<span class="st"> </span><span class="fl">0.25</span> <span class="co"># bandwidth (= sd) of the Gaussian distribution </span>
+tmp.density =<span class="st"> </span><span class="kw">density</span>(observations,
+        <span class="dt">kernel =</span> <span class="st">&quot;gaussian&quot;</span>,
+        <span class="dt">bw =</span> bandwidth,
+        <span class="dt">n =</span> <span class="dv">512</span>)
+
+<span class="co"># save density as data frame </span>
+df.density =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> tmp.density<span class="op">$</span>x,
+  <span class="dt">y =</span> tmp.density<span class="op">$</span>y
+) 
+
+df.density <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
+                <span class="dt">full_width =</span> F)</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+x
+</th>
+<th style="text-align:right;">
+y
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.250
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.257
+</td>
+<td style="text-align:right;">
+0.004
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.264
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.271
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.277
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.284
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now, let’s plot the density.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.density, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">as.tibble</span>(observations),
+             <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">y =</span> <span class="dv">0</span>),
+             <span class="dt">size =</span> <span class="dv">3</span>)</code></pre>
+<pre><code>## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
+## This warning is displayed once per session.</code></pre>
+<p><img src="bookdown-demo_files/figure-html/density2-1.png" width="672" /></p>
+<p>This density shows the sum of the densities of normal distributions that are centered at the observations with the specified bandwidth.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add densities for the individual normal distributions</span>
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(observations)){
+  df.density[[<span class="kw">str_c</span>(<span class="st">&quot;observation_&quot;</span>,i)]] =<span class="st"> </span><span class="kw">dnorm</span>(df.density<span class="op">$</span>x, <span class="dt">mean =</span> observations[i], <span class="dt">sd =</span> bandwidth)
+}
+
+<span class="co"># sum densities</span>
+df.density =<span class="st"> </span>df.density <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sum_norm =</span> <span class="kw">rowSums</span>(<span class="kw">select</span>(., <span class="kw">contains</span>(<span class="st">&quot;observation_&quot;</span>))),
+         <span class="dt">y =</span> y <span class="op">*</span><span class="st"> </span><span class="kw">length</span>(observations))
+
+df.density <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
+                <span class="dt">full_width =</span> F)</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+x
+</th>
+<th style="text-align:right;">
+y
+</th>
+<th style="text-align:right;">
+observation_1
+</th>
+<th style="text-align:right;">
+observation_2
+</th>
+<th style="text-align:right;">
+observation_3
+</th>
+<th style="text-align:right;">
+observation_4
+</th>
+<th style="text-align:right;">
+observation_5
+</th>
+<th style="text-align:right;">
+sum_norm
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.250
+</td>
+<td style="text-align:right;">
+0.019
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.019
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.257
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+<td style="text-align:right;">
+0.019
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.264
+</td>
+<td style="text-align:right;">
+0.023
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.271
+</td>
+<td style="text-align:right;">
+0.024
+</td>
+<td style="text-align:right;">
+0.023
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.024
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.277
+</td>
+<td style="text-align:right;">
+0.027
+</td>
+<td style="text-align:right;">
+0.024
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.026
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+0.284
+</td>
+<td style="text-align:right;">
+0.029
+</td>
+<td style="text-align:right;">
+0.026
+</td>
+<td style="text-align:right;">
+0.002
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.028
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now, let’s plot the individual densities as well as the overall density.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add individual Gaussians</span>
+colors =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;purple&quot;</span>, <span class="st">&quot;orange&quot;</span>)
+
+<span class="co"># original density </span>
+p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.density, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">2</span>)
+
+<span class="co"># individual densities </span>
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(observations)){
+  p =<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>,
+                        <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> observations[i], <span class="dt">sd =</span> bandwidth),
+                        <span class="dt">color =</span> colors[i])
+}
+
+<span class="co"># individual observations </span>
+p =<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">as.tibble</span>(observations),
+             <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="kw">factor</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)),
+             <span class="dt">size =</span> <span class="dv">3</span>,
+             <span class="dt">show.legend =</span> F) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> colors)
+
+<span class="co"># sum of the individual densities</span>
+p =<span class="st"> </span>p <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> df.density,
+            <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> sum_norm),
+            <span class="dt">size =</span> <span class="dv">1</span>,
+            <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+            <span class="dt">linetype =</span> <span class="dv">2</span>)
+p <span class="co"># print the figure</span></code></pre>
+<p><img src="bookdown-demo_files/figure-html/density4-1.png" width="672" /></p>
+<p>Here are the same results when specifying a different bandwidth:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate density</span>
+observations =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">1.2</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+bandwidth =<span class="st"> </span><span class="fl">0.5</span> <span class="co"># bandwidth (= sd) of the Gaussian distribution </span>
+tmp.density =<span class="st"> </span><span class="kw">density</span>(observations,
+        <span class="dt">kernel =</span> <span class="st">&quot;gaussian&quot;</span>,
+        <span class="dt">bw =</span> bandwidth,
+        <span class="dt">n =</span> <span class="dv">512</span>)
+
+<span class="co"># save density as data frame </span>
+df.density =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">x =</span> tmp.density<span class="op">$</span>x,
+  <span class="dt">y =</span> tmp.density<span class="op">$</span>y
+) 
+
+<span class="co"># add densities for the individual normal distributions</span>
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(observations)){
+  df.density[[<span class="kw">str_c</span>(<span class="st">&quot;observation_&quot;</span>,i)]] =<span class="st"> </span><span class="kw">dnorm</span>(df.density<span class="op">$</span>x, <span class="dt">mean =</span> observations[i], <span class="dt">sd =</span> bandwidth)
+}
+
+<span class="co"># sum densities</span>
+df.density =<span class="st"> </span>df.density <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sum_norm =</span> <span class="kw">rowSums</span>(<span class="kw">select</span>(., <span class="kw">contains</span>(<span class="st">&quot;observation_&quot;</span>))),
+         <span class="dt">y =</span> y <span class="op">*</span><span class="st"> </span><span class="kw">length</span>(observations))
+
+<span class="co"># original plot </span>
+p =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.density, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">as.tibble</span>(observations),
+             <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">y =</span> <span class="dv">0</span>),
+             <span class="dt">size =</span> <span class="dv">3</span>)
+
+<span class="co"># add individual Gaussians</span>
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(observations)){
+  p =<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> observations[i], <span class="dt">sd =</span> bandwidth))
+}
+
+<span class="co"># add the sum of Gaussians</span>
+p =<span class="st"> </span>p <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">data =</span> df.density,
+            <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> sum_norm),
+            <span class="dt">size =</span> <span class="dv">1</span>,
+            <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+            <span class="dt">linetype =</span> <span class="dv">2</span>)
+p</code></pre>
+<p><img src="bookdown-demo_files/figure-html/density5-1.png" width="672" /></p>
+</div>
+<div id="the-quantile-function" class="section level3">
+<h3><span class="header-section-number">7.4.2</span> The <code>quantile()</code> function</h3>
+<p>The <code>quantile()</code> function allows us to compute different quantiles of a sample. Boxplots are based on the quantiles of a distribution. To better understand this function, let’s compute our own boxplot.</p>
+<pre class="sourceCode r"><code class="sourceCode r">tmp.samples =<span class="st"> </span><span class="dv">1000</span>
+
+<span class="co"># make example reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># a sample from the normal distribution</span>
+df.quantile =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">sample =</span> <span class="dv">1</span><span class="op">:</span>tmp.samples,
+  <span class="dt">value =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> tmp.samples))
+
+df.quantile <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
+              <span class="dt">full_width =</span> F)</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+sample
+</th>
+<th style="text-align:right;">
+value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+-0.63
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-0.84
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+1.60
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0.33
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-0.82
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0.49
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0.74
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0.58
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-0.31
+</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s draw a boxplot using ggplot.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.quantile,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre>
+<p><img src="bookdown-demo_files/figure-html/quantile2-1.png" width="672" /></p>
+<p>Here is a reminder of what boxplots show from the help file of <code>geom_boxplot()</code>:</p>
+<blockquote>
+<p>The lower and upper hinges correspond to the first and third quartiles (the 25th and 75th percentiles). This differs slightly from the method used by the boxplot() function, and may be apparent with small samples. See boxplot.stats() for for more information on how hinge positions are calculated for boxplot().</p>
+</blockquote>
+<blockquote>
+<p>The upper whisker extends from the hinge to the largest value no further than 1.5 * IQR from the hinge (where IQR is the inter-quartile range, or distance between the first and third quartiles). The lower whisker extends from the hinge to the smallest value at most 1.5 * IQR of the hinge. Data beyond the end of the whiskers are called “outlying” points and are plotted individually.</p>
+</blockquote>
+<p>So, let’s compute the relevant values using the <code>quantile()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r">df.quantile_values =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">median =</span> <span class="kw">quantile</span>(df.quantile<span class="op">$</span>value, <span class="fl">0.5</span>),
+  <span class="dt">quartile_first =</span> <span class="kw">quantile</span>(df.quantile<span class="op">$</span>value, <span class="fl">0.25</span>),
+  <span class="dt">quartile_third =</span> <span class="kw">quantile</span>(df.quantile<span class="op">$</span>value, <span class="fl">0.75</span>),
+  <span class="dt">iqr =</span> quartile_third <span class="op">-</span><span class="st"> </span>quartile_first,
+  <span class="dt">hinge_upper =</span> quartile_third <span class="op">+</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">*</span><span class="st"> </span>iqr,
+  <span class="dt">hinge_lower =</span> quartile_first <span class="op">-</span><span class="st"> </span><span class="fl">1.5</span> <span class="op">*</span><span class="st"> </span>iqr
+)</code></pre>
+<p>Now, let’s check whether our values are correct by plotting them on top of the boxplot.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># original boxplot </span>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> df.quantile,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">x =</span> <span class="fl">-0.75</span>,
+               <span class="dt">xend =</span> <span class="fl">-0.45</span>,
+               <span class="dt">y =</span> df.quantile_values<span class="op">$</span>median,
+               <span class="dt">yend =</span> df.quantile_values<span class="op">$</span>median,
+               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">type =</span> <span class="st">&quot;closed&quot;</span>,
+                             <span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.5</span>, <span class="st">&quot;cm&quot;</span>))
+               ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="st">&quot;median&quot;</span>,
+           <span class="dt">x =</span> <span class="fl">-0.8</span>,
+           <span class="dt">y =</span> df.quantile_values<span class="op">$</span>median,
+           <span class="dt">hjust =</span> <span class="dv">1</span>,
+           <span class="dt">vjust =</span> <span class="fl">0.5</span>,
+           <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">x =</span> <span class="fl">-0.75</span>,
+               <span class="dt">xend =</span> <span class="fl">-0.45</span>,
+               <span class="dt">y =</span> df.quantile_values<span class="op">$</span>quartile_third,
+               <span class="dt">yend =</span> df.quantile_values<span class="op">$</span>quartile_third,
+               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">type =</span> <span class="st">&quot;closed&quot;</span>,
+                             <span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.5</span>, <span class="st">&quot;cm&quot;</span>))
+               ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="st">&quot;3rd quartile&quot;</span>,
+           <span class="dt">x =</span> <span class="fl">-0.8</span>,
+           <span class="dt">y =</span> df.quantile_values<span class="op">$</span>quartile_third,
+           <span class="dt">hjust =</span> <span class="dv">1</span>,
+           <span class="dt">vjust =</span> <span class="fl">0.5</span>,
+           <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">x =</span> <span class="fl">-0.75</span>,
+               <span class="dt">xend =</span> <span class="fl">-0.05</span>,
+               <span class="dt">y =</span> df.quantile_values<span class="op">$</span>hinge_upper,
+               <span class="dt">yend =</span> df.quantile_values<span class="op">$</span>hinge_upper,
+               <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">type =</span> <span class="st">&quot;closed&quot;</span>,
+                             <span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.5</span>, <span class="st">&quot;cm&quot;</span>))
+               ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>,
+           <span class="dt">label =</span> <span class="st">&quot;upper hinge&quot;</span>,
+           <span class="dt">x =</span> <span class="fl">-0.8</span>,
+           <span class="dt">y =</span> df.quantile_values<span class="op">$</span>hinge_upper,
+           <span class="dt">hjust =</span> <span class="dv">1</span>,
+           <span class="dt">vjust =</span> <span class="fl">0.5</span>,
+           <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">1.2</span>, <span class="fl">0.5</span>))</code></pre>
+<p><img src="bookdown-demo_files/figure-html/quantile4-1.png" width="672" /></p>
+<p>Neat! Now we know how boxplots are made.</p>
+<p>We can also use the quantile function to create an inverse cumulative probability plot (i.e. the equivalent of what we get from <code>qnorm()</code> for the normal distribution).</p>
+<pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.quantile<span class="op">$</span>value <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">quantile</span>(<span class="dt">probs =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.01</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="kw">n</span>(), <span class="dt">length.out =</span> <span class="kw">n</span>()))</code></pre>
+<pre><code>## Warning: Calling `as_tibble()` on a vector is discouraged, because the behavior is likely to change in the future. Use `enframe(name = NULL)` instead.
+## This warning is displayed once per session.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,
+       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> value)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
+<p><img src="bookdown-demo_files/figure-html/quantile5-1.png" width="672" /></p>
+<p>And we can calculate quantiles by hand in the following way:</p>
+<pre class="sourceCode r"><code class="sourceCode r">tmp.samples =<span class="st"> </span><span class="dv">1000</span>
+
+<span class="co"># make example reproducible </span>
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+
+<span class="co"># a sample from the normal distribution</span>
+df.quantile =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">sample =</span> <span class="dv">1</span><span class="op">:</span>tmp.samples,
+  <span class="dt">value =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> tmp.samples))
+
+<span class="co"># compute quantiles by hand </span>
+df.quantile =<span class="st"> </span>df.quantile <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(value) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rank =</span> <span class="kw">row_number</span>(),
+         <span class="dt">quantile =</span> rank<span class="op">/</span>tmp.samples)</code></pre>
+<p>To compute the quantiles by hand, I’ve sorted the data frame, ranked the values, and then computed the quantiles by normalizing the ranks (i.e. dividing by the sample size).</p>
+<p>Let’s check whether we get roughly the same result with our hand-calculated quantiles as we do from the <code>quantile()</code> function.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># by hand </span>
+df.quantile <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(rank <span class="op">%in%</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">200</span>, <span class="dt">to =</span> <span class="dv">800</span>, <span class="dt">by =</span> <span class="dv">200</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">pull</span>(value)</code></pre>
+<pre><code>## [1] -0.8848496 -0.2968686  0.2441649  0.8528150</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using quantile</span>
+<span class="kw">quantile</span>(df.quantile<span class="op">$</span>value, <span class="dt">probs =</span> <span class="kw">seq</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">0.2</span>))</code></pre>
+<pre><code>##        20%        40%        60%        80% 
+## -0.8815065 -0.2961539  0.2449833  0.8537340</code></pre>
+<p>As we can see, the results are very similar. Not identical since the <code>quantile()</code> function uses an efficient algorithm for its calculations (see <code>help(quantile)</code>).</p>
+</div>
+</div>
+<div id="comparing-probability-distributions" class="section level2">
+<h2><span class="header-section-number">7.5</span> Comparing probability distributions</h2>
+<p>QQ plots, or quantile-quantile plots, are a good way of visually comparing two distributions. One common usage in statistics is to assess whether a variable is normally distributed. For example, let’s say that we fit a regression model and want to now assess whether the residuals (i.e. the model errors) are normally distributed. (We will learn how to run regressions soon). Let’s first just plot the residuals from the model we fit above.</p>
+<pre class="sourceCode r"><code class="sourceCode r">df.residuals =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">residual =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">10</span>)
+)
+
+params =<span class="st"> </span><span class="kw">as.list</span>(MASS<span class="op">::</span><span class="kw">fitdistr</span>(df.residuals<span class="op">$</span>residual, <span class="st">&quot;normal&quot;</span>)<span class="op">$</span>estimate) <span class="co">#fit a normal distribution to the residuals </span>
+
+<span class="kw">ggplot</span>(<span class="dt">data =</span> df.residuals, <span class="kw">aes</span>(<span class="dt">x =</span> residual))<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="kw">aes</span>(<span class="dt">color =</span> <span class="st">&quot;green&quot;</span>), <span class="dt">size =</span> <span class="fl">1.5</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dt">args =</span> params, <span class="kw">aes</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>), <span class="dt">size =</span> <span class="fl">1.5</span>)<span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;green&quot;</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;theoretical&quot;</span>, <span class="st">&quot;empirical&quot;</span>))<span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
+        <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.9</span>, <span class="fl">0.9</span>))</code></pre>
+<div class="figure"><span id="fig:comparing1"></span>
+<img src="bookdown-demo_files/figure-html/comparing1-1.png" alt="Empirical distribution of residuals, and theoretical distribution." width="672" />
+<p class="caption">
+Figure 7.1: Empirical distribution of residuals, and theoretical distribution.
+</p>
+</div>
+<p>Here, the empirical distribution of the errors and the theoretical normal distribution with a mean of 0 and a SD of 2 correspond very closely. Let’s take a look at the corresponding QQ plot.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.residuals, <span class="kw">aes</span>(<span class="dt">sample =</span> residual)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_qq</span>(<span class="dt">distribution =</span> <span class="st">&quot;qnorm&quot;</span>, <span class="dt">dparams =</span> params) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">40</span>, <span class="dv">40</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">40</span>, <span class="dv">40</span>))</code></pre>
+<p><img src="bookdown-demo_files/figure-html/comparing2-1.png" width="672" /></p>
+<p>Note that the QQ plot is sensitive to the general shape of the distribution.</p>
+<p>I’ve used the <code>geom_qq()</code> and <code>geom_qq_line()</code> functions that are part of <code>ggplot</code>. By default, these functions assume a normal distribution as the theoretical distribution. This plot is just another way of showing the information in Figure <a href="#fig:empirical-theoretical-distribution"><strong>??</strong></a>. Intuitively, a QQ plot is built in the following way: imagine going with your finger from left to right along the x-axis on Figure <a href="#fig:empirical-theoretical-distribution"><strong>??</strong></a>, and then add a point on the QQ plot which captures the cumulative density for each distribution.</p>
+<p>Here are some more examples for what these plots would look like when comparing different theoretical distributions to the same empirical distribution.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data frame with parameters saved in a list column </span>
+df.parameters =<span class="st"> </span><span class="kw">data_frame</span>(
+  <span class="dt">parameters =</span> <span class="kw">list</span>(
+    params,
+    <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">-10</span>, <span class="dt">sd =</span> <span class="dv">10</span>),
+    <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">10</span>),
+    <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">3</span>)
+  )
+)
+
+<span class="co"># list container for plots</span>
+l.plots =<span class="st"> </span><span class="kw">list</span>()
+
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(df.parameters)){
+  p1 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.residuals, <span class="kw">aes</span>(<span class="dt">x =</span> residual)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>, <span class="dt">args =</span> df.parameters<span class="op">$</span>parameters[[i]], <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))
+  
+  p2 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.residuals, <span class="kw">aes</span>(<span class="dt">sample =</span> residual)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_qq</span>(<span class="dt">dparams =</span> df.parameters<span class="op">$</span>parameters[[i]]) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_qq_line</span>(<span class="dt">dparams =</span> df.parameters<span class="op">$</span>parameters[[i]]) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">40</span>, <span class="dv">40</span>))
+  
+  l.plots[[<span class="kw">length</span>(l.plots) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]] =<span class="st"> </span>p1
+  l.plots[[<span class="kw">length</span>(l.plots) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]] =<span class="st"> </span>p2
+}
+
+<span class="co"># use patchwork for plotting </span>
+l.plots[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>
+l.plots[[<span class="dv">2</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">3</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">4</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">5</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">6</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">7</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">8</span>]] <span class="op">+</span>
+<span class="st">  </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">byrow =</span> F) <span class="op">&amp;</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>))</code></pre>
+<pre><code>## geom_path: Each group consists of only one observation. Do you need to
+## adjust the group aesthetic?
+## geom_path: Each group consists of only one observation. Do you need to
+## adjust the group aesthetic?</code></pre>
+<p><img src="bookdown-demo_files/figure-html/comparing3-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ggsave(&quot;figures/qqplots_normal.pdf&quot;, width = 10, height = 6)</span></code></pre>
+<p>The line changes, but it’s still a line. So the QQ plot helps us detect what kind of distribution the data follows.</p>
+<p>Now, let’s see what happens if distributions don’t have the same shape.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#let&#39;s generate some &quot;empirical&quot; data from a beta distribution </span>
+<span class="kw">set.seed</span>(<span class="dv">0</span>)
+
+df.plot =<span class="st"> </span><span class="kw">data_frame</span>(
+  <span class="dt">residual =</span> <span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dt">shape1 =</span> <span class="dv">5</span>, <span class="dt">shape2 =</span> <span class="dv">5</span>)
+)
+
+<span class="co"># data frame with parameters saved in a list column </span>
+df.parameters =<span class="st"> </span><span class="kw">data_frame</span>(
+  <span class="dt">parameters =</span> <span class="kw">list</span>(
+    <span class="kw">list</span>(<span class="dt">shape1 =</span> <span class="dv">1</span>, <span class="dt">shape2 =</span> <span class="dv">5</span>),
+    <span class="kw">list</span>(<span class="dt">shape1 =</span> <span class="dv">2</span>, <span class="dt">shape2 =</span> <span class="dv">5</span>),
+    <span class="kw">list</span>(<span class="dt">shape1 =</span> <span class="dv">5</span>, <span class="dt">shape2 =</span> <span class="dv">2</span>),
+    <span class="kw">list</span>(<span class="dt">shape1 =</span> <span class="dv">5</span>, <span class="dt">shape2 =</span> <span class="dv">1</span>)
+  )
+)
+
+<span class="co"># list container for plots</span>
+l.plots =<span class="st"> </span><span class="kw">list</span>()
+
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(df.parameters)){
+  p1 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot, <span class="kw">aes</span>(<span class="dt">x =</span> residual))<span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>)<span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dbeta&quot;</span>, <span class="dt">args =</span> df.parameters<span class="op">$</span>parameters[[i]], <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">3.5</span>))
+  
+  p2 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot, <span class="kw">aes</span>(<span class="dt">sample =</span> residual))<span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)<span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_qq</span>(<span class="dt">distribution =</span> <span class="st">&quot;qbeta&quot;</span>, <span class="dt">dparams =</span> df.parameters<span class="op">$</span>parameters[[i]]) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">breaks =</span> <span class="kw">seq</span>(.<span class="dv">25</span>, <span class="fl">.75</span>, <span class="fl">.25</span>))
+  
+  l.plots[[<span class="kw">length</span>(l.plots) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]] =<span class="st"> </span>p1
+  l.plots[[<span class="kw">length</span>(l.plots) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]] =<span class="st"> </span>p2
+}
+
+<span class="co"># use patchwork for plotting</span>
+l.plots[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>
+l.plots[[<span class="dv">2</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">3</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">4</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">5</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">6</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">7</span>]] <span class="op">+</span>
+l.plots[[<span class="dv">8</span>]] <span class="op">+</span>
+<span class="st">  </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">byrow =</span> F) <span class="op">&amp;</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>))</code></pre>
+<p><img src="bookdown-demo_files/figure-html/comparing4-1.png" width="672" /></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/qqplots_beta.pdf&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">6</span>)</code></pre>
+<div class="figure"><span id="fig:qqplots"></span>
+<img src="figures/qqplots.png" alt="QQ plots indicating different deviations from normality." width="90%" />
+<p class="caption">
+Figure 7.2: QQ plots indicating different deviations from normality.
+</p>
+</div>
+</div>
+<div id="additional-resources-5" class="section level2">
+<h2><span class="header-section-number">7.6</span> Additional resources</h2>
+<div id="cheatsheets-5" class="section level3">
+<h3><span class="header-section-number">7.6.1</span> Cheatsheets</h3>
+<ul>
+<li><a href="figures/probability.pdf">Probability cheatsheet</a></li>
+</ul>
+</div>
+<div id="datacamp" class="section level3">
+<h3><span class="header-section-number">7.6.2</span> Datacamp</h3>
+<ul>
+<li><a href="https://www.datacamp.com/courses/foundations-of-probability-in-r">Foundations of probability in R</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="probability-and-causality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simulation-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/07-simulation1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
