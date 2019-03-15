@@ -2,12 +2,12 @@
 
 ## Load packages and set plotting theme  
 
-```{r install-packages, include=FALSE, eval=FALSE}
+```{r, include=FALSE, eval=FALSE}
 # run this code chunk once to make sure you have all the packages
 install.packages(c("kableExtra", "MASS"))
 ```
 
-```{r load-packages, message=FALSE}
+```{r, message=FALSE}
 library("knitr")
 library("kableExtra")
 library("MASS")
@@ -15,7 +15,7 @@ library("patchwork")
 library("tidyverse")
 ```
 
-```{r set-theme}
+```{r}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -864,7 +864,7 @@ Here are some more examples for what these plots would look like when comparing 
 
 ```{r comparing3, warning=FALSE}
 # data frame with parameters saved in a list column 
-df.parameters = data_frame(
+df.parameters = tibble(
   parameters = list(
     params,
     list(mean = -10, sd = 10),
@@ -915,12 +915,12 @@ Now, let's see what happens if distributions don't have the same shape.
 #let's generate some "empirical" data from a beta distribution 
 set.seed(0)
 
-df.plot = data_frame(
+df.plot = tibble(
   residual = rbeta(1000, shape1 = 5, shape2 = 5)
 )
 
 # data frame with parameters saved in a list column 
-df.parameters = data_frame(
+df.parameters = tibble(
   parameters = list(
     list(shape1 = 1, shape2 = 5),
     list(shape1 = 2, shape2 = 5),
