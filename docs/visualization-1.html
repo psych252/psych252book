@@ -48,6 +48,18 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.5/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -174,7 +186,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
 <li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
 <li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
-<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.4</b> Customizing themes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
 <li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
@@ -799,18 +810,18 @@ Figure 2.14: What a nice figure!
 <p>The <code>df.diamonds</code> data frame contains information about almost 60,000 diamonds, including their <code>price</code>, <code>carat</code> value, size, etc. Let’s use visualization to get a better sense for this dataset.
 We start by setting up the plot. To do so, we pass a data frame to the function <code>ggplot()</code> in the following way.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-21-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-21-1.png" width="672" /></p>
 <p>This, by itself, won’t do anything yet. We also need to specify what to plot.</p>
 <p>Let’s take a look at how much diamonds of different color cost. The help file says that diamonds labeled D have the best color, and diamonds labeled J the worst color. Let’s make a bar plot that shows the average price of diamonds for different colors.</p>
 <p>We do so via specifying a mapping from the data to the plot aesthetics with the function <code>aes()</code>. We need to tell <code>aes()</code> what we would like to display on the x-axis, and the y-axis of the plot.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-22-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-22-1.png" width="672" /></p>
 <p>Here, we specified that we want to plot <code>color</code> on the x-axis, and <code>price</code> on the y-axis. As you can see, <code>ggplot2</code> has already figured out how to label the axes. However, we still need to specify <em>how</em> to plot it. Let’s make a <strong>bar graph</strong>:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-23-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-23-1.png" width="672" /></p>
 <p>Neat! Three lines of code produce an almost-publication-ready plot (to be published in the <em>Proceedings of Unnecessary Diamonds</em>)! Note how we used a <code>+</code> at the end of the first line of code to specify that there will be more. This is a very powerful idea underlying <code>ggplot2</code>. We can start simple and keep adding things to the plot step by step.</p>
 <p>We used the <code>stat_summary()</code> function to define <em>what</em> we want to plot (the “mean”), and <em>how</em> (as a “bar” chart). Let’s take a closer look at that function.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">help</span>(stat_summary)</code></pre>
@@ -822,11 +833,11 @@ We start by setting up the plot. To do so, we pass a data frame to the function 
 <p>Instead of showing the “mean”, we could also show the “median” instead.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;median&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-25-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-25-1.png" width="672" /></p>
 <p>And instead of making a bar plot, we could plot some points.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df.diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-26-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-26-1.png" width="672" /></p>
 <blockquote>
 <p><strong>Tip</strong>: Take a look <a href="https://ggplot2.tidyverse.org/reference/#section-layer-geoms">here</a> to see what other geoms ggplot2 supports.</p>
 </blockquote>
@@ -837,7 +848,7 @@ We start by setting up the plot. To do so, we pass a data frame to the function 
 <p>While this works:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price), <span class="dt">data =</span> df.diamonds) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-28-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-28-1.png" width="672" /></p>
 <p>In general, it’s good practice to include the specifiers – particularly for functions that are not used all the time. If the same function is used multiple times throughout the script, I would suggest to use the specifiers first, and then it’s ok to drop them later.</p>
 </div>
 <div id="setting-the-default-plot-theme" class="section level3">
@@ -855,7 +866,7 @@ We start by setting up the plot. To do so, we pass a data frame to the function 
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
 <div class="figure"><span id="fig:visualization1-30"></span>
-<img src="psych252_files/figure-html/visualization1-30-1.png" alt="Scatterplot." width="672" />
+<img src="02-visualization1_files/figure-html/visualization1-30-1.png" alt="Scatterplot." width="672" />
 <p class="caption">
 Figure 2.15: Scatterplot.
 </p>
@@ -868,7 +879,7 @@ Figure 2.15: Scatterplot.
                      <span class="dt">color =</span> color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
 <div class="figure"><span id="fig:visualization1-31"></span>
-<img src="psych252_files/figure-html/visualization1-31-1.png" alt="Scatterplot with color." width="672" />
+<img src="02-visualization1_files/figure-html/visualization1-31-1.png" alt="Scatterplot with color." width="672" />
 <p class="caption">
 Figure 2.16: Scatterplot with color.
 </p>
@@ -897,11 +908,11 @@ Figure 2.17: Practice plot 1.
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</code></pre>
 <pre><code>## geom_path: Each group consists of only one observation. Do you need to
 ## adjust the group aesthetic?</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-35-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-35-1.png" width="672" /></p>
 <p>Oops! All we did is that we replaced <code>x = color</code> with <code>x = cut</code>, and <code>geom = "bar"</code> with <code>geom = "line"</code>. However, the plot doesn’t look like expected (i.e. there is no real plot). What happened here? The reason is that the line plot needs to know what points to connect. The error message tells us that each group consists of only one observation. Let’s adjust the group asthetic to fix this.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cut, <span class="dt">y =</span> price, <span class="dt">group =</span> <span class="dv">1</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-36-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-36-1.png" width="672" /></p>
 <p>By adding the parameter <code>group = 1</code> to <code>mapping = aes()</code>, we specify that we would like all the levels in <code>x = cut</code> to be treated as coming from the same group. The reason for this is that <code>cut</code> (our x-axis variable) is a factor (and not a numeric variable), so, by default, <code>ggplot2</code> tries to draw a separate line for each factor level. We’ll learn more about grouping below (and about factors later).</p>
 <p>Interestingly, there is no simple relationship between the quality of the cut and the price of the diamond. In fact, “Ideal” diamonds tend to be cheapest.</p>
 </div>
@@ -915,7 +926,7 @@ Figure 2.17: Practice plot 1.
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>,
                <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="co"># add points with means</span></code></pre>
 <div class="figure"><span id="fig:visualization1-37"></span>
-<img src="psych252_files/figure-html/visualization1-37-1.png" alt="Relationship between diamond clarity and price. Error bars indicate 95% bootstrapped confidence intervals." width="672" />
+<img src="02-visualization1_files/figure-html/visualization1-37-1.png" alt="Relationship between diamond clarity and price. Error bars indicate 95% bootstrapped confidence intervals." width="672" />
 <p class="caption">
 Figure 2.18: Relationship between diamond clarity and price. Error bars indicate 95% bootstrapped confidence intervals.
 </p>
@@ -929,7 +940,7 @@ Figure 2.18: Relationship between diamond clarity and price. Error bars indicate
                <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">conf.int =</span> <span class="fl">.999</span>, <span class="dt">B =</span> <span class="dv">2000</span>)) <span class="op">+</span><span class="st"> </span><span class="co"># plot bootstrapped error bars first</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>,
                <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="co"># add points with means</span></code></pre>
-<p><img src="psych252_files/figure-html/visualization1-39-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-39-1.png" width="672" /></p>
 <p>Note how the error bars are larger now compared to Figure <a href="#fig:visualization-37"><strong>??</strong></a>
 . Note the somewhat peculiar way in which we supplied the parameters to the <code>mean_cl_boot</code> function. The <code>fun.args</code> argument takes in a list of arguments that it then passes on to the function <code>mean_cl_boot</code>.</p>
 <div id="order-matters" class="section level4">
@@ -939,7 +950,7 @@ Figure 2.18: Relationship between diamond clarity and price. Error bars indicate
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
 <div class="figure"><span id="fig:visualization1-40"></span>
-<img src="psych252_files/figure-html/visualization1-40-1.png" alt="This figure looks good. Error bars and means are drawn in the correct order." width="672" />
+<img src="02-visualization1_files/figure-html/visualization1-40-1.png" alt="This figure looks good. Error bars and means are drawn in the correct order." width="672" />
 <p class="caption">
 Figure 2.19: This figure looks good. Error bars and means are drawn in the correct order.
 </p>
@@ -950,7 +961,7 @@ Figure 2.19: This figure looks good. Error bars and means are drawn in the corre
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>)</code></pre>
 <div class="figure"><span id="fig:visualization1-41"></span>
-<img src="psych252_files/figure-html/visualization1-41-1.png" alt="This figure looks good. Error bars and means are drawn in the correct order." width="672" />
+<img src="02-visualization1_files/figure-html/visualization1-41-1.png" alt="This figure looks good. Error bars and means are drawn in the correct order." width="672" />
 <p class="caption">
 Figure 2.20: This figure looks good. Error bars and means are drawn in the correct order.
 </p>
@@ -982,7 +993,7 @@ Figure 2.21: Practice plot 2.
                      <span class="dt">y =</span> price,
                      <span class="dt">group =</span> cut)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-44-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-44-1.png" width="672" /></p>
 <p>Well, we got some separate lines here but we don’t know which line corresponds to which cut. Let’s add some color!</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> color,
@@ -992,7 +1003,7 @@ Figure 2.21: Practice plot 2.
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>,
                <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>,
                <span class="dt">size =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-45-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-45-1.png" width="672" /></p>
 <p>Nice! In addition to adding color, I’ve made the lines a little thicker here by setting the <code>size</code> argument to 2.</p>
 <p>Grouping is very useful for bar plots. Let’s take a look at how the average price of diamonds looks like taking into account both <code>cut</code> and <code>color</code> (I know – exciting times!). Let’s put the <code>color</code> on the x-axis and then group by the <code>cut</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
@@ -1001,7 +1012,7 @@ Figure 2.21: Practice plot 2.
                      <span class="dt">group =</span> cut,
                      <span class="dt">color =</span> cut)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-46-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-46-1.png" width="672" /></p>
 <p>That’s a fail! Several things went wrong here. All the bars are gray and only their outline is colored differently. Instead we want the bars to have a different color. For that we need to specify the <code>fill</code> argument rather than the <code>color</code> argument! But things are worse. The bars currently are shown on top of each other. Instead, we’d like to put them next to each other. Here is how we can do that:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> color,
@@ -1012,7 +1023,7 @@ Figure 2.21: Practice plot 2.
                <span class="dt">geom =</span> <span class="st">&quot;bar&quot;</span>,
                <span class="dt">position =</span> <span class="kw">position_dodge</span>()) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;orangered&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-47-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-47-1.png" width="672" /></p>
 <p>Neato! We’ve changed the <code>color</code> argument to <code>fill</code>, and have added the <code>position = position_dodge()</code> argument to the <code>stat_summary()</code> call. This argument makes it such that the bars are nicely dodged next to each other. Let’s add some error bars just for kicks.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> color,
@@ -1026,7 +1037,7 @@ Figure 2.21: Practice plot 2.
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>,
                <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>,
                <span class="dt">position =</span> <span class="kw">position_dodge</span>(<span class="dt">width =</span> <span class="fl">0.9</span>))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-48-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-48-1.png" width="672" /></p>
 <p>Voila! Now with error bars. Note that we’ve added the <code>width = 0.9</code> argument to <code>position_dodge()</code>. Somehow R was complaining when this was not defined for geom “linerange”. I’ve also added some outline to the bars by including the argument <code>color = "black"</code>. I think it looks nicer this way.</p>
 <p>So, still somewhat surprisingly, diamonds with the worst color (J) are more expensive than dimanods with the best color (D), and diamonds with better cuts are not necessarily more expensive.</p>
 <div id="practice-plot-3" class="section level4">
@@ -1036,7 +1047,7 @@ Figure 2.21: Practice plot 2.
 <span class="kw">ggplot</span>(diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> color, <span class="dt">y =</span> price, <span class="dt">group =</span> clarity, <span class="dt">color =</span> clarity))<span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;linerange&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-49-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-49-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">include_graphics</span>(<span class="st">&quot;figures/practice_plot3.png&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:visualization1-50"></span>
 <img src="figures/practice_plot3.png" alt="Practice plot 3." width="90%" />
@@ -1054,27 +1065,27 @@ Figure 2.22: Practice plot 3.
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>()</code></pre>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-51-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-51-1.png" width="672" /></p>
 <p>That looks bad! Let’s pick a different value for the width of the bins in the histogram.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.1</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-52-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-52-1.png" width="672" /></p>
 <p>Still bad. There seems to be an outlier diamond that happens to be almost 60 mm wide, while most of the rest is much narrower. One option would be to remove the outlier from the data before plotting it. But generally, we don’t want to make new data frames. Instead, let’s just limit what data we want to show in the plot.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-53-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-53-1.png" width="672" /></p>
 <p>I’ve used the <code>coord_cartesian()</code> function to restrict the range of data to show by passing a minimum and maximum to the <code>xlim</code> argument. This looks better now.</p>
 <p>Instead of histograms, we can also plot a density fitted to the distribution.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-54-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-54-1.png" width="672" /></p>
 <p>Looks pretty similar to our histogram above! Just like we can play around with the binwidth of the histogram, we can change the smoothing bandwidth of the kernel that is used to create the histogram. Here is a histogram with a much wider bandwidth:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> y)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.5</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-55-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-55-1.png" width="672" /></p>
 <p>We’ll learn more about how these densities are determined later in class.</p>
 <p>I promised that this section was about making facets, right? We’re getting there! Let’s first take a look at how wide diamonds of different <code>color</code> are. We can use grouping to make this happen.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
@@ -1083,21 +1094,21 @@ Figure 2.22: Practice plot 3.
                      <span class="dt">fill =</span> color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.2</span>, <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-56-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-56-1.png" width="672" /></p>
 <p>OK! That’s a little tricky to tell apart. Notice that I’ve specified the <code>alpha</code> argument in the <code>geom_density()</code> function so that the densities in the front don’t completely hide the densities in the back. But this plot still looks too busy. Instead of grouping, let’s put the densities for the different colors, in separate panels. That’s what facetting allows you to do.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> y, <span class="dt">fill =</span> color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-57-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-57-1.png" width="672" /></p>
 <p>Now we have the densities next to each other in separate panels. I’ve removed the <code>alpha</code> argument since the densities aren’t overlapping anymore. To make the different panels, I used the <code>facet_grid()</code> function and specified that I want separate columns for the different colors (<code>cols = vars(color)</code>). What’s the deal with <code>vars()</code>? Why couldn’t we just write <code>facet_grid(cols = color)</code> instead? The short answer is: that’s what the function wants. The long answer is: long. (We’ll learn more about this later in the course.)</p>
 <p>To show the facets in different rows instead of columns we simply replace <code>cols = vars(color)</code> with <code>rows = vars(color)</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> y, <span class="dt">fill =</span> color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">bw =</span> <span class="fl">0.2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows =</span> <span class="kw">vars</span>(color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-58-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-58-1.png" width="672" /></p>
 <p>Several aspects about this plot should be improved:</p>
 <ul>
 <li>the y-axis text is overlapping</li>
@@ -1119,7 +1130,7 @@ Figure 2.22: Practice plot 3.
              <span class="dt">cols =</span> <span class="kw">vars</span>(clarity))</code></pre>
 <pre><code>## Warning: Removed 5 rows containing missing values (geom_linerange).</code></pre>
 <div class="figure"><span id="fig:visualization1-59"></span>
-<img src="psych252_files/figure-html/visualization1-59-1.png" alt="A figure that is stretching it in terms of information." width="672" />
+<img src="02-visualization1_files/figure-html/visualization1-59-1.png" alt="A figure that is stretching it in terms of information." width="672" />
 <p class="caption">
 Figure 2.23: A figure that is stretching it in terms of information.
 </p>
@@ -1141,7 +1152,7 @@ Figure 2.23: A figure that is stretching it in terms of information.
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows =</span> <span class="kw">vars</span>(clarity)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>))</code></pre>
 <pre><code>## Warning: Removed 5 rows containing missing values (geom_linerange).</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-60-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-60-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">include_graphics</span>(<span class="st">&quot;figures/practice_plot4.png&quot;</span>)</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:visualization1-61"></span>
 <img src="figures/practice_plot4.png" alt="Practice plot 4." width="90%" />
@@ -1160,19 +1171,19 @@ Figure 2.24: Practice plot 4.
                      <span class="dt">color =</span> color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-62-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-62-1.png" width="672" /></p>
 <p>Here, I’ve drawn a scatter plot of the relationship between <code>carat</code> and <code>price</code>, and I have added the best-fitting regression lines via the <code>geom_smooth(method = "lm")</code> call. (We will learn more about what these regression lines mean later in class.)</p>
 <p>Because I have defined all the aesthetics at the top level (i.e. directly within the <code>ggplot()</code> function), the aesthetics apply to all the functions afterwards. Aesthetics defined in the <code>ggplot()</code> call are <strong>global</strong>. In this case, the <code>geom_point()</code> and the <code>geom_smooth()</code> functions. The <code>geom_smooth()</code> function produces separate best-fit regression lines for each different color.</p>
 <p>But what if we only wanted to show one regression line instead that applies to all the data? Here is one way of doing so:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">color =</span> color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-63-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-63-1.png" width="672" /></p>
 <p>Here, I’ve moved the color aesthetic into the <code>geom_point()</code> function call. Now, the <code>x</code> and <code>y</code> aesthetics still apply to both the <code>geom_point()</code> and the <code>geom_smooth()</code> function call (they are <strong>global</strong>), but the <code>color</code> aesthetic applies only to <code>geom_point()</code> (it is <strong>local</strong>). Alternatively, we can simply overwrite global aesthetics within local function calls.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds, <span class="kw">aes</span>(<span class="dt">x =</span> carat, <span class="dt">y =</span> price, <span class="dt">color =</span> color)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/visualization1-64-1.png" width="672" /></p>
+<p><img src="02-visualization1_files/figure-html/visualization1-64-1.png" width="672" /></p>
 <p>Here, I’ve set <code>color = 'black'</code> within the <code>geom_smooth()</code> function, and now only one overall regression line is displayed since the global color aesthetic was overwritten in the local function call.</p>
 </div>
 </div>

@@ -8,9 +8,9 @@ This chapter was written by Andrew Lampinen.
 
 
 ```r
-library("boot")
-library("patchwork") 
-library("tidyverse")
+library("boot")      # for bootstrapping
+library("patchwork") # for making figure panels
+library("tidyverse") # for data wrangling etc.
 ```
 
 
@@ -57,7 +57,7 @@ ggplot(parametric_plotting_data, aes(x=value, color=distribution)) +
 ```
 
 ```
-## Warning: Removed 9 rows containing non-finite values (stat_density).
+## Warning: Removed 10 rows containing non-finite values (stat_density).
 ```
 
 <img src="15-bootstrapping_files/figure-html/unnamed-chunk-5-1.png" width="672" />
@@ -67,7 +67,7 @@ ggsave("figures/log_normal_dists.png", width=5, height=3)
 ```
 
 ```
-## Warning: Removed 9 rows containing non-finite values (stat_density).
+## Warning: Removed 10 rows containing non-finite values (stat_density).
 ```
 
 
@@ -265,6 +265,7 @@ gen_data_and_norm_and_perm_test = function(num_observations_per) {
   
   return(d)
 }
+num_tests = 100
 
 perm_results = replicate(num_tests, gen_data_and_norm_and_perm_test(num_observations_per),
                          simplify=F) %>%
@@ -317,14 +318,14 @@ perm_results %>%
 ## # Groups:   test_type, distribution [4]
 ##   test_type   distribution null_true        pct_significant
 ##   <chr>       <fct>        <chr>                      <dbl>
-## 1 parametric  Normal       Alternative True           0.802
-## 2 parametric  Normal       Null True                  0.051
-## 3 parametric  Log-normal   Alternative True           0.547
-## 4 parametric  Log-normal   Null True                  0.04 
-## 5 permutation Normal       Alternative True           0.806
-## 6 permutation Normal       Null True                  0.047
-## 7 permutation Log-normal   Alternative True           0.686
-## 8 permutation Log-normal   Null True                  0.058
+## 1 parametric  Normal       Alternative True            0.75
+## 2 parametric  Normal       Null True                   0.07
+## 3 parametric  Log-normal   Alternative True            0.53
+## 4 parametric  Log-normal   Null True                   0.02
+## 5 permutation Normal       Alternative True            0.76
+## 6 permutation Normal       Null True                   0.07
+## 7 permutation Log-normal   Alternative True            0.68
+## 8 permutation Log-normal   Null True                   0.03
 ```
 
 

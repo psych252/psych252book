@@ -9,10 +9,10 @@
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
-library("broom")    # for tidying up linear models 
-library("afex")    # for running ANOVAs
+library("broom")      # for tidying up linear models 
+library("afex")       # for running ANOVAs
 library("emmeans")    # for calculating constrasts
-library("car")    # for calculating ANOVAs
+library("car")        # for calculating ANOVAs
 library("tidyverse")  # for wrangling, plotting, etc.
 ```
 

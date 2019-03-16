@@ -35,25 +35,25 @@ The `tidyverse` is a collection of packages that includes `ggplot2`.
 <p class="caption">(\#fig:visualization1-02)Anscombe's quartet.</p>
 </div>
 
-Anscombe's quartet in Figure \@ref(fig:visualization1-1) (left side) illustrates the importance of visualizing data. Even though the datasets I-IV have the same summary statistics (mean, standard deviation, correlation), they are importantly different from each other. On the right side, we have four data sets with the same summary statistics that are very similar to each other.
+Anscombe's quartet in Figure \@ref(fig:visualization1-01) (left side) illustrates the importance of visualizing data. Even though the datasets I-IV have the same summary statistics (mean, standard deviation, correlation), they are importantly different from each other. On the right side, we have four data sets with the same summary statistics that are very similar to each other.
 
 <div class="figure">
 <img src="figures/correlations.png" alt="The Pearson's $r$ correlation coefficient is the same for all of these datasets. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)" width="1056" />
 <p class="caption">(\#fig:visualization1-03)The Pearson's $r$ correlation coefficient is the same for all of these datasets. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)</p>
 </div>
 
-All the datasets in Figure \@ref(fig:visualization1-2) share the same correlation coefficient. However, again, they are very different from each other.
+All the datasets in Figure \@ref(fig:visualization1-02) share the same correlation coefficient. However, again, they are very different from each other.
 
 <div class="figure">
 <img src="figures/datasaurus_dozen.png" alt="__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation)." width="2474" />
 <p class="caption">(\#fig:visualization1-04)__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation).</p>
 </div>
 
-The data sets in Figure \@ref(fig:visualization1-3) all share the same summary statistics. Clearly, the data sets are not the same though.
+The data sets in Figure \@ref(fig:visualization1-03) all share the same summary statistics. Clearly, the data sets are not the same though.
 
 > __Tip__: Always plot the data first!
 
-[Here](https://www.autodeskresearch.com/publications/samestats) is the paper from which I took Figure \@ref(fig:visualization1-1) and \@ref(fig:visualization1-3). It explains how the figures were generated and shows more examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what's going on in the data.
+[Here](https://www.autodeskresearch.com/publications/samestats) is the paper from which I took Figure \@ref(fig:visualization1-01) and \@ref(fig:visualization1-03). It explains how the figures were generated and shows more examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what's going on in the data.
 
 <div class="figure">
 <img src="figures/data_dino.gif" alt="Animation showing different data sets that all share the same summary statistics."  />
@@ -386,7 +386,7 @@ vignette("ggplot2-specs")
 
 #### Practice plot 1
 
-Make a scatter plot that shows the relationship between the variables `depth` (on the x-axis), and `table` (on the y-axis). Take a look at the description for the `diamonds` dataset so you know what these different variables mean. Your plot should look like the one shown in Figure \@ref(fig:practice-plot1).
+Make a scatter plot that shows the relationship between the variables `depth` (on the x-axis), and `table` (on the y-axis). Take a look at the description for the `diamonds` dataset so you know what these different variables mean. Your plot should look like the one shown in Figure \@ref(fig:visualization1-34).
 
 
 ```r

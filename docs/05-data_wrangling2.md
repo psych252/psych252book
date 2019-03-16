@@ -127,21 +127,21 @@ df.summarize = tibble(
 ## # A tibble: 15 x 2
 ##    participant judgment
 ##          <int>    <int>
-##  1           1       36
-##  2           1       64
-##  3           1        6
-##  4           1       83
-##  5           1       17
-##  6           2       92
-##  7           2       57
-##  8           2       16
-##  9           2        5
-## 10           2       93
-## 11           3       87
-## 12           3       23
-## 13           3       58
-## 14           3       93
-## 15           3       77
+##  1           1       12
+##  2           1       48
+##  3           1        8
+##  4           1       87
+##  5           1        8
+##  6           2       82
+##  7           2      100
+##  8           2       66
+##  9           2       96
+## 10           2       70
+## 11           3       56
+## 12           3       16
+## 13           3       32
+## 14           3       69
+## 15           3       36
 ```
 
 
@@ -157,16 +157,16 @@ df.summarize %>%
 ## # A tibble: 10 x 3
 ##    participant judgment judgment_zscored
 ##          <int>    <int>            <dbl>
-##  1           1       36           -0.162
-##  2           1       64            0.711
-##  3           1        6           -1.10 
-##  4           1       83            1.30 
-##  5           1       17           -0.754
-##  6           2       92            0.955
-##  7           2       57            0.107
-##  8           2       16           -0.887
-##  9           2        5           -1.15 
-## 10           2       93            0.979
+##  1           1       12          -0.593 
+##  2           1       48           0.443 
+##  3           1        8          -0.708 
+##  4           1       87           1.57  
+##  5           1        8          -0.708 
+##  6           2       82          -0.0528
+##  7           2      100           1.14  
+##  8           2       66          -1.11  
+##  9           2       96           0.872 
+## 10           2       70          -0.845
 ```
 
 First, I've generated some random data using the repeat function `rep()` for making a `participant` column, and the `sample()` function to randomly choose values from a range between 0 and 100 with replacement. (We will learn more about these functions later when we look into how to simulate data.) I've then grouped the data by participant, and used the scale function to z-score the data. 

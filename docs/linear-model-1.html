@@ -48,6 +48,17 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.5/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<script src="libs/viz-0.3/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
@@ -175,7 +186,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
 <li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
 <li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
-<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.4</b> Customizing themes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
 <li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
@@ -665,7 +675,7 @@ df.samples =<span class="st"> </span>samples <span class="op">%&gt;%</span><span
 <span class="kw">ggplot</span>(<span class="dt">data =</span> df.samples,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> pre)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/linear-model2-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model2-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the p-value for our sample </span>
 df.samples <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p_value =</span> <span class="kw">sum</span>(pre <span class="op">&gt;=</span><span class="st"> </span>df.summary<span class="op">$</span>pre)<span class="op">/</span><span class="kw">n</span>())</code></pre>
@@ -989,7 +999,7 @@ df.correlation =<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;chocolate&quot;</span>,
        <span class="dt">y =</span> <span class="st">&quot;happiness&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/linear-model4-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model4-1.png" width="672" /></p>
 <div id="variance" class="section level4">
 <h4><span class="header-section-number">10.2.2.1</span> Variance</h4>
 <p>Variance is the average squared difference between each data point and the mean:</p>
@@ -1020,7 +1030,7 @@ df.variance =<span class="st"> </span><span class="kw">tibble</span>(
         <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),
         <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>()
         )</code></pre>
-<p><img src="psych252_files/figure-html/linear-model5-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model5-1.png" width="672" /></p>
 </div>
 <div id="covariance" class="section level4">
 <h4><span class="header-section-number">10.2.2.2</span> Covariance</h4>
@@ -1044,7 +1054,7 @@ df.covariance =<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>(),
         <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),
         <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>())</code></pre>
-<p><img src="psych252_files/figure-html/linear-model6-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model6-1.png" width="672" /></p>
 <p>Add lines for <span class="math inline">\(\overline X\)</span> and <span class="math inline">\(\overline Y\)</span> to the data:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(df.covariance,
        <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span>
@@ -1058,7 +1068,7 @@ df.covariance =<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>(),
         <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),
         <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>())</code></pre>
-<p><img src="psych252_files/figure-html/linear-model7-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model7-1.png" width="672" /></p>
 <p>Illustrate how covariance is computed by drawing the distance to <span class="math inline">\(\overline X\)</span> and <span class="math inline">\(\overline Y\)</span> for three data points:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.covariance <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">covariance =</span> (x<span class="op">-</span><span class="kw">mean</span>(x)) <span class="op">*</span>( y<span class="op">-</span><span class="kw">mean</span>(y))) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1126,7 +1136,7 @@ df.plot<span class="op">$</span>color[<span class="dv">19</span>] =<span class="
         <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),
         <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
         <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/linear-model8-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model8-1.png" width="672" /></p>
 </div>
 <div id="spearmans-rank-order-correlation" class="section level4">
 <h4><span class="header-section-number">10.2.2.3</span> Spearman’s rank order correlation</h4>
@@ -1156,7 +1166,7 @@ df.ranking =<span class="st"> </span><span class="kw">tibble</span>(
             <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">6</span>),
                   <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">4</span>))</code></pre>
-<p><img src="psych252_files/figure-html/linear-model9-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model9-1.png" width="672" /></p>
 <p>Show that Spearman’s <span class="math inline">\(\rho\)</span> is equivalent to Pearson’s <span class="math inline">\(r\)</span> applied to ranked data.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data set</span>
 df.spearman =<span class="st"> </span>df.correlation <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1179,7 +1189,7 @@ df.spearman <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">20</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">20</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/linear-model10-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model10-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show some of the data and ranks </span>
 df.spearman <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1370,7 +1380,7 @@ df.example <span class="op">%&gt;%</span><span class="st"> </span>
        <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="co"># see the original data</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/linear-model11-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model11-1.png" width="672" /></p>
 <p>Another example</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make example reproducible </span>
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
@@ -1398,7 +1408,7 @@ df.example2 <span class="op">%&gt;%</span><span class="st"> </span>
        <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y)) <span class="op">+</span><span class="st"> </span><span class="co"># see the original data</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>))</code></pre>
-<p><img src="psych252_files/figure-html/linear-model12-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model12-1.png" width="672" /></p>
 </div>
 </div>
 </div>
@@ -1421,7 +1431,7 @@ df.regression =<span class="st"> </span><span class="kw">tibble</span>(
        <span class="kw">aes</span>(<span class="dt">x =</span> chocolate,
            <span class="dt">y =</span> happiness)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>)</code></pre>
-<p><img src="psych252_files/figure-html/linear-model13-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model13-1.png" width="672" /></p>
 <div id="define-and-fit-the-models" class="section level3">
 <h3><span class="header-section-number">10.3.1</span> Define and fit the models</h3>
 <p>Define and fit the compact model (Model C): <span class="math inline">\(Y_i = \beta_0 + \epsilon_i\)</span></p>
@@ -1439,7 +1449,7 @@ df.compact =<span class="st"> </span><span class="kw">tidy</span>(lm.compact)
              <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>,
               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) </code></pre>
-<p><img src="psych252_files/figure-html/linear-model14-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model14-1.png" width="672" /></p>
 <p>Define and fit the augmented model (Model A): <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{1i} + \epsilon_i\)</span></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit the augmented model</span>
 lm.augmented =<span class="st"> </span><span class="kw">lm</span>(happiness <span class="op">~</span><span class="st"> </span>chocolate, <span class="dt">data =</span> df.regression)
@@ -1456,7 +1466,7 @@ df.augmented =<span class="st"> </span><span class="kw">tidy</span>(lm.augmented
              <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) </code></pre>
-<p><img src="psych252_files/figure-html/linear-model15-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model15-1.png" width="672" /></p>
 </div>
 <div id="calculate-the-sum-of-squared-errors-of-each-model" class="section level3">
 <h3><span class="header-section-number">10.3.2</span> Calculate the sum of squared errors of each model</h3>
@@ -1483,7 +1493,7 @@ df.compact_model =<span class="st"> </span><span class="kw">augment</span>(lm.co
                    <span class="dt">yend =</span> df.compact_summary<span class="op">$</span>estimate),
                <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) </code></pre>
-<p><img src="psych252_files/figure-html/linear-model16-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model16-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the sum of squared errors</span>
 df.compact_model <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">SSE =</span> <span class="kw">sum</span>(resid<span class="op">^</span><span class="dv">2</span>))</code></pre>
@@ -1515,7 +1525,7 @@ df.augmented_model =<span class="st"> </span><span class="kw">augment</span>(lm.
                    <span class="dt">yend =</span> fitted),
                <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">3</span>) </code></pre>
-<p><img src="psych252_files/figure-html/linear-model17-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model17-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the sum of squared errors</span>
 df.augmented_model <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">SSE =</span> <span class="kw">sum</span>(resid<span class="op">^</span><span class="dv">2</span>))</code></pre>
@@ -1557,7 +1567,7 @@ p_value =<span class="st"> </span><span class="dv">1</span><span class="op">-</s
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> f,
              <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
              <span class="dt">size =</span> <span class="dv">1</span>)</code></pre>
-<p><img src="psych252_files/figure-html/linear-model19-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model19-1.png" width="672" /></p>
 <p>The short version of doing what we did above :)</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(lm.compact, lm.augmented)</code></pre>
 <pre><code>## Analysis of Variance Table
@@ -1702,7 +1712,7 @@ average credit card debt
                      <span class="dt">y =</span> balance)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(df.credit<span class="op">$</span>income)))</code></pre>
-<p><img src="psych252_files/figure-html/linear-model23-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model23-1.png" width="672" /></p>
 <p>To make the model intercept interpretable, we can center the predictor variable by subtracting the mean from each value.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.credit <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">income_centered =</span> income <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(income)) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1721,7 +1731,7 @@ fit =<span class="st"> </span><span class="kw">lm</span>(balance <span class="op
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> F) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>))</code></pre>
-<p><img src="psych252_files/figure-html/linear-model24-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model24-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">  <span class="co"># coord_cartesian(xlim = c(0, max(df.plot$income_centered)))</span></code></pre>
 <p>Let’s fit the model and take a look at the model summary:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit =<span class="st"> </span><span class="kw">lm</span>(balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>income, <span class="dt">data =</span> df.credit) 
@@ -1771,7 +1781,7 @@ fit <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>,
              <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.3</span>)</code></pre>
-<p><img src="psych252_files/figure-html/linear-model27-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model27-1.png" width="672" /></p>
 <p>We can use the <code>glance()</code> function from the <code>broom</code> package to print out model statistics.</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1973,7 +1983,7 @@ income
            <span class="dt">x =</span> <span class="dv">130</span>,
            <span class="dt">y =</span> <span class="kw">predict</span>(fit, <span class="dt">newdata =</span> <span class="kw">tibble</span>(<span class="dt">income =</span> <span class="dv">130</span>))) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(df.credit<span class="op">$</span>income)))</code></pre>
-<p><img src="psych252_files/figure-html/linear-model32-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model32-1.png" width="672" /></p>
 <p>Finally, let’s take a look at how the residuals are distributed.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the residuals </span>
 df.plot =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1984,11 +1994,11 @@ df.plot =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span clas
 <span class="kw">ggplot</span>(df.plot, <span class="kw">aes</span>(<span class="dt">sample =</span> resid)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_qq_line</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_qq</span>()</code></pre>
-<p><img src="psych252_files/figure-html/linear-model33-1.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model33-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># and a density of the residuals</span>
 <span class="kw">ggplot</span>(df.plot, <span class="kw">aes</span>(<span class="dt">x =</span> resid)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</code></pre>
-<p><img src="psych252_files/figure-html/linear-model33-2.png" width="672" /></p>
+<p><img src="10-linear_model1_files/figure-html/linear-model33-2.png" width="672" /></p>
 <p>Not quite as normally distributed as we would hope. We learn what to do if some of the assumptions of the linear model are violated later in class.</p>
 </div>
 <div id="additional-resources-8" class="section level2">

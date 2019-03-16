@@ -172,7 +172,7 @@ If there is not too much data, I recommend to plot jittered individual data poin
 <p class="caption">(\#fig:visualization2-12, boxplot-violin)Boxplot distributions. Source: https://www.autodeskresearch.com/publications/samestats</p>
 </div>
 
-Figure \@ref(fig:boxplot-violin) shows the same raw data represented as jittered dots, boxplots, and violin plots.  
+Figure \@ref(fig:visualization2-12) shows the same raw data represented as jittered dots, boxplots, and violin plots.  
 
 The `ggpol` packages has a `geom_boxjitter()` function which displays a boxplot and the jittered data right next to each other. 
 

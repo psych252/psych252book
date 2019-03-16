@@ -458,7 +458,6 @@ bayes_factor(fit.brm3, fit.brm2)
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
-## Iteration: 5
 ## Iteration: 1
 ## Iteration: 2
 ## Iteration: 3
@@ -467,7 +466,7 @@ bayes_factor(fit.brm3, fit.brm2)
 ```
 
 ```
-## Estimated Bayes factor in favor of bridge1 over bridge2: 3.79543
+## Estimated Bayes factor in favor of bridge1 over bridge2: 3.81054
 ```
 
 #### Full specification
