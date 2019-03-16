@@ -9,9 +9,9 @@ This chapter was written by Andrew Lampinen.
 ## Load packages and set plotting theme  
 
 ```{r, message=FALSE}
-library("boot")
-library("patchwork") 
-library("tidyverse")
+library("boot")      # for bootstrapping
+library("patchwork") # for making figure panels
+library("tidyverse") # for data wrangling etc.
 ```
 
 ```{r}
@@ -173,7 +173,7 @@ perm_mean_diff_test = function(x, y) {
 }
 ```
 
-```{r message=F, warning=FALSE}
+```{r message=F, warning=FALSE, cache=TRUE}
 # this could be much more efficient
 gen_data_and_norm_and_perm_test = function(num_observations_per) {
   d = data.frame(distribution=c(),
@@ -233,6 +233,7 @@ gen_data_and_norm_and_perm_test = function(num_observations_per) {
   
   return(d)
 }
+num_tests = 100
 
 perm_results = replicate(num_tests, gen_data_and_norm_and_perm_test(num_observations_per),
                          simplify=F) %>%
