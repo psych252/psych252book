@@ -2,12 +2,12 @@
 
 ## Load packages and set plotting theme  
 
-```{r simulation1-1, include=FALSE, eval=FALSE}
+```{r simulation1-01, include=FALSE, eval=FALSE}
 # run this code chunk once to make sure you have all the packages
 install.packages(c("kableExtra", "MASS", "extrafont"))
 ```
 
-```{r simulation1-2, message=FALSE}
+```{r simulation1-02, message=FALSE}
 library("knitr")
 library("kableExtra")
 library("MASS")
@@ -16,7 +16,7 @@ library("extrafont")
 library("tidyverse")
 ```
 
-```{r simulation1-3}
+```{r simulation1-03}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -27,7 +27,7 @@ theme_set(
 
 Every distribution that R handles has four functions. There is a root name, for example, the root name for the normal distribution is `norm`. This root is prefixed by one of the letters here:
 
-```{r simulation1-4, echo=F}
+```{r simulation1-04, echo=F}
 tibble(
   letter = c("`d`","`p`","`q`","`r`"),
   description = c('for "__density__", the density function (probability function (for _discrete_ variables) or probability density function (for _continuous_ variables))',
@@ -50,7 +50,7 @@ You can get more info about the distributions that come with R via running `help
 
 Here's an easy way to plot distributions in `ggplot2` using the `stat_function()` function. 
 
-```{r simulation1-5, results = "hold"}
+```{r simulation1-05, results = "hold"}
 ggplot(data = tibble(x = c(-5, 5)),
        mapping = aes(x = x)) +
   stat_function(fun = "dnorm")
@@ -60,7 +60,7 @@ Note that the data frame I created with `tibble()` only needs to have the minimu
 
 The `stat_function()` is very flexible. We can define our own functions and plot these like here: 
 
-```{r simulation1-6, results='hold'}
+```{r simulation1-06, results='hold'}
 # define the breakpoint function 
 fun.breakpoint = function(x, breakpoint){
   x[x < breakpoint] = breakpoint
@@ -81,7 +81,7 @@ Note how I used the `args = ` argument in the `stat_function()` to supply the br
 
 Let's play around with the parameters of the normal distribution. The normal distribution takes two parameters, the mean and standard deviation. Again, I'm going to use the `args = ` argument to supply these parameters.  
 
-```{r simulation1-7}
+```{r simulation1-07}
 tmp.mean = 0
 tmp.sd = 2
 
@@ -103,7 +103,7 @@ For each distribution, R provides a way of sampling random number from this dist
 
 So let's take some random samples and plot a histogram. 
 
-```{r simulation1-8}
+```{r simulation1-08}
 # make this example reproducible 
 set.seed(1)
 
@@ -130,7 +130,7 @@ rm(list = ls() %>% str_subset(pattern = "tmp."))
 
 Let's see how many samples it takes to closely approximate the shape of the normal distribution with our histogram of samples. 
 
-```{r simulation1-9}
+```{r simulation1-09}
 # make this example reproducible 
 set.seed(1)
 
@@ -859,11 +859,11 @@ ggplot(data = df.residuals, aes(sample = residual)) +
 
 Note that the QQ plot is sensitive to the general shape of the distribution. 
 
-I've used the `geom_qq()` and `geom_qq_line()` functions that are part of `ggplot`. By default, these functions assume a normal distribution as the theoretical distribution. This plot is just another way of showing the information in Figure \@ref(fig:simulation1-34). Intuitively, a QQ plot is built in the following way: imagine going with your finger from left to right along the x-axis on Figure \@ref(fig:simulation1-34), and then add a point on the QQ plot which captures the cumulative density for each distribution. 
+I've used the `geom_qq()` and `geom_qq_line()` functions that are part of `ggplot`. By default, these functions assume a normal distribution as the theoretical distribution. This plot is just another way of showing the information in Figure \@ref(fig:simulation1-36). Intuitively, a QQ plot is built in the following way: imagine going with your finger from left to right along the x-axis on Figure \@ref(fig:simulation1-37), and then add a point on the QQ plot which captures the cumulative density for each distribution. 
 
 Here are some more examples for what these plots would look like when comparing different theoretical distributions to the same empirical distribution. 
 
-```{r simulation1-36, warning=FALSE}
+```{r simulation1-38, warning=FALSE}
 # data frame with parameters saved in a list column 
 df.parameters = tibble(
   parameters = list(
@@ -911,7 +911,7 @@ The line changes, but it's still a line. So the QQ plot helps us detect what kin
 
 Now, let's see what happens if distributions don't have the same shape. 
 
-```{r simulation1-37, warning=FALSE}
+```{r simulation1-39, warning=FALSE}
 
 #let's generate some "empirical" data from a beta distribution 
 set.seed(0)
@@ -963,7 +963,7 @@ ggsave("figures/qqplots_beta.pdf", width = 10, height = 6)
 
 ```
 
-```{r simulation1-38, echo=FALSE, out.width='90%', fig.cap="QQ plots indicating different deviations from normality."}
+```{r simulation1-40, echo=FALSE, out.width='90%', fig.cap="QQ plots indicating different deviations from normality."}
 include_graphics("figures/qqplots.png")
 ```
 
