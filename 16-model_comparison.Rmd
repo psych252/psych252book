@@ -1,12 +1,12 @@
 # Model comparison
 
-```{r, include=FALSE, eval=FALSE}
+```{r model-comparison-01, include=FALSE, eval=FALSE}
 install.packages(c("pwr", "cowplot"))
 ```
 
 ## Load packages and set plotting theme  
 
-```{r, message=FALSE}
+```{r model-comparison-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -17,7 +17,7 @@ library("modelr")     # for cross-validation
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
 
-```{r}
+```{r model-comparison-03}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -30,7 +30,7 @@ theme_set(
 
 Let's figure out how many participants we would need to get a power of $1-\beta = 0.8$ for testing an alternative hypothesis $H_1$ according to which a coin is biased to come up heads with $p = 0.75$ against a null hypothesis $H_0$ according to which the coin is far $p = 0.5$. Let's set our desired alpha level to $\alpha = .05$ and considered a one-tailed test. I'll use the `"pwr"` library to do determine the sample size. 
 
-```{r model-comparison1}
+```{r model-comparison-04}
 pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
            sig.level = 0.05,
            power = 0.80,
@@ -41,7 +41,7 @@ I first calculated the effect size using the `ES.h()` function providing the two
 
 The `"pwr"` package also makes plots to illustrate how power changes with sample size: 
 
-```{r model-comparison2}
+```{r model-comparison-05}
 pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50), 
            sig.level = 0.05, 
            power = 0.80, 
@@ -56,7 +56,7 @@ The family of `map()` functions comes with the `"purrr"` package which is loaded
 
 Her are some examples of how `map()` works: 
 
-```{r model-comparison3, eval=FALSE}
+```{r model-comparison-06, eval=FALSE}
 # using the formula notation with ~ 
 map(.x = 1:3, .f = ~ .x^2)
 
@@ -84,7 +84,7 @@ Let's start with a simple example. We want to determine what power we have to co
 
 Let's see: 
 
-```{r model-comparison4}
+```{r model-comparison-07}
 # make example reproducible 
 set.seed(1)
 
@@ -131,7 +131,7 @@ So, the results of this example show, that with $n = 10$ participants, we only h
 
 This more advanced example, which we discussed in class, calculates power for a different sample sizes (from $n = 10$ to $n = 50$), and for different alternative hypotheses $H_1: p = 0.75$, $H_1: p = 0.8$, and $H_1: p = 0.85$. I then figure out for what n we would get a power of 0.8 assuming $H_1: p = 0.75$. Otherwise, the procedure is identical to the simple example above. 
 
-```{r model-comparison5}
+```{r model-comparison-08}
 # make reproducible 
 set.seed(1)
 
@@ -158,7 +158,7 @@ df.power = crossing(n = seq(10, 50, 1),
 
 Let's visualze the relationship between power and sample size for the three alternative hypotheses:
 
-```{r model-comparison6}
+```{r model-comparison-09}
 # data frame for plot   
 df.plot = df.power %>% 
   group_by(n, p) %>% 
@@ -178,7 +178,7 @@ df.plot %>%
 
 Let's compare with the solution that the `pwr` package gives.
 
-```{r model-comparison7}
+```{r model-comparison-10}
 # analytic solution
 pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.5),
            power = 0.8,
@@ -206,7 +206,7 @@ $$
 $$
 Here, I'll use the following parameters: $\beta_0 = 10$, $\beta_1 = 3$, and $\beta_2 = 2$ to generate the data:
 
-```{r model-comparison8}
+```{r model-comparison-11}
 set.seed(1)
 
 n_plots = 3
@@ -257,7 +257,7 @@ plot_grid(plotlist = l.p, ncol = 3)
 
 As we can see, RMSE becomes smaller and smaller the more parameters the model has to fit the data. But how does the RMSE look like for new data that is generated from the same underlying ground truth? 
 
-```{r model-comparison9}
+```{r model-comparison-12}
 set.seed(1)
 
 n_plots = 3
@@ -339,7 +339,7 @@ The RMSE in black shows the root mean squared error for the data that the model 
 
 Let's generate another data set: 
 
-```{r model-comparison10}
+```{r model-comparison-13}
 # make example reproducible 
 set.seed(1)
 
@@ -360,7 +360,7 @@ df.data = tibble(
 
 And plot it: 
 
-```{r model-comparison11}
+```{r model-comparison-14}
 ggplot(data = df.data,
        mapping = aes(x = x,
                     y = y)) + 
@@ -377,7 +377,7 @@ $$
 \widehat Y_i = b_0 + b_1 \cdot X_i + b_2 \cdot X_i^2
 $$
 
-```{r model-comparison12}
+```{r model-comparison-15}
 # fit models to the data 
 fit_simple = lm(y ~ 1 + x, data = df.data)
 fit_correct = lm(y ~ 1 + x + I(x^2), data = df.data)
@@ -413,7 +413,7 @@ Different versions of cross-validation differ in how the training and test data 
 
 I've used code similar to this one to illustrate how LOO works in class. Here is a simple data set with 9 data points. We fit 9 models, where for each model, the training set includes one of the data points, and then we look at how well the model captures the held-out data point. We can then characterize the model's performance by calculating the mean squared error across the 9 runs. 
 
-```{r model-comparison13}
+```{r model-comparison-16}
 # make example reproducible 
 set.seed(1)
 
@@ -476,7 +476,7 @@ As you can see, the regression line changes quite a bit depending on which data 
 
 Now, let's use LOO to evaluate the models on the data set I've created above: 
 
-```{r model-comparison14}
+```{r model-comparison-17}
 # fit the models and calculate the RMSE for each model on the test set 
 df.cross = df.data %>% 
   crossv_loo() %>% # function which generates training and test data sets 
@@ -502,7 +502,7 @@ For k-fold cross-validation, we split the data set in k folds, and then use k-1 
 
 The code is almost identical as before. Instead of `crossv_loo()`, we use the `crossv_kfold()` function instead and say how many times we want to "fold" the data. 
 
-```{r model-comparison15}
+```{r model-comparison-18}
 # crossvalidation scheme 
 df.cross = df.data %>% 
   crossv_kfold(k = 10) %>% 
@@ -523,7 +523,7 @@ Note, for this example, I've calculated $R^2$ (the variance explained by each mo
 
 Finally, let's consider another very flexible version of cross-validation. For this version of cross-validation, we determine how many random splits into training set and test set we would like to do, and what proportion of the data should be in the test set. 
 
-```{r model-comparison16}
+```{r model-comparison-19}
 # crossvalidation scheme 
 df.cross = df.data %>% 
   crossv_mc(n = 50, test = 0.5) %>% # number of samples, and percentage of test 
@@ -546,7 +546,7 @@ We can also use the `modelr` package for bootstrapping. The idea is the same as 
 
 Here is an example for how to boostrap confidence intervals for a mean. 
 
-```{r model-comparison17}
+```{r model-comparison-20}
 # make example reproducible 
 set.seed(1)
 
@@ -588,7 +588,7 @@ where $k$ is the number of parameters in the model, $n$ is the number of observa
 
 Calculating AIC and BIC in R is straightforward. We simply need to fit a linear model, and then call the `AIC()` or `BIC()` functions on the fitted model like so: 
 
-```{r model-comparison18}
+```{r model-comparison-21}
 set.seed(0)
 
 # let's generate some data 
@@ -610,7 +610,7 @@ BIC(fit)
 
 We can also just use the `broom` package to get that information: 
 
-```{r model-comparison19}
+```{r model-comparison-22}
 fit %>% 
   glance()
 ```
@@ -619,7 +619,7 @@ Both AIC and BIC take the number of parameters and the model's likelihood into a
 
 Let's visualize the data first: 
 
-```{r model-comparison20}
+```{r model-comparison-23}
 # plot the data with a linear model fit  
 ggplot(df.example,
        aes(x, y)) + 
@@ -629,7 +629,7 @@ ggplot(df.example,
 
 Now, let's take a look at the residuals by plotting the fitted values on the x axis, and the residuals on the y axis. 
 
-```{r model-comparison21}
+```{r model-comparison-24}
 # residual plot 
 df.plot = df.example %>% 
   lm(y ~ x, data = .) %>% 
@@ -645,7 +645,7 @@ Remember that the linear model makes the assumption that the residuals are norma
 
 Let's make a plot that shows a normal distribution alongside the residuals: 
 
-```{r model-comparison22}
+```{r model-comparison-25}
 # define a normal distribution 
 df.normal = tibble(
   y = seq(-5, 5, 0.1),
@@ -666,7 +666,7 @@ Instead of multiplying likelihoods, we often sum the log likelihoods instead. Th
 
 To better understand AIC and BIC, let's calculate them by hand: 
 
-```{r model-comparison23}
+```{r model-comparison-26}
 # we first get the estimate of the standard deviation of the residuals 
 sigma = fit %>% 
   glance() %>% 
@@ -690,7 +690,7 @@ print(bic)
 
 Cool! The values are the same as when we use the `glance()` function like so (except for a small difference due to rounding): 
 
-```{r model-comparison24}
+```{r model-comparison-27}
 fit %>% 
   glance() %>% 
   select(AIC, BIC)
@@ -698,7 +698,7 @@ fit %>%
 
 #### log() is your friend 
 
-```{r}
+```{r model-comparison-28}
 ggplot(data = tibble(x = c(0, 1)),
        mapping = aes(x = x)) + 
   stat_function(fun = "log",

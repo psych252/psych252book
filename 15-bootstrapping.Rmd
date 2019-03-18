@@ -2,19 +2,19 @@
 
 This chapter was written by Andrew Lampinen. 
 
-```{r, include=FALSE, eval=FALSE}
+```{r bootstrapping-01, include=FALSE, eval=FALSE}
 # devtools::install_github("thomasp85/patchwork", force=T)
 ```
 
 ## Load packages and set plotting theme  
 
-```{r, message=FALSE}
+```{r bootstrapping-02, message=FALSE}
 library("boot")      # for bootstrapping
 library("patchwork") # for making figure panels
 library("tidyverse") # for data wrangling etc.
 ```
 
-```{r}
+```{r bootstrapping-03}
 theme_set(
   theme_classic() #set the theme 
 )
@@ -26,7 +26,7 @@ theme_set(
 
 Let's see some examples! One common non-normal distribution is the *log-normal* distribution, i.e. a distribution that is normal after you take its logarithm. Many natural processes have distributions like this. One of particular interest to us is reaction times.
 
-```{r}
+```{r bootstrapping-04}
 num_points = 1e4
 parametric_plotting_data = data.frame(distribution = rep(c("Normal", "Log-normal"), each = num_points),
                                       value = c(rnorm(num_points, 0, 1), # normal
@@ -40,7 +40,7 @@ Valid: comparing two normally distributed populations with equal means but unequ
 
 Invalid: comparing two log-normally distributed populations with equal means but unequal variances.
 
-```{r}
+```{r bootstrapping-05}
 ggplot(parametric_plotting_data, aes(x=value, color=distribution)) +
   geom_density(bw=0.5, size=1) +
   geom_vline(data=parametric_plotting_data %>%
@@ -53,11 +53,11 @@ ggplot(parametric_plotting_data, aes(x=value, color=distribution)) +
   guides(color=F) +
   scale_color_brewer(palette="Accent")
 ```
-```{r}
+```{r bootstrapping-06}
 ggsave("figures/log_normal_dists.png", width=5, height=3)
 ```
 
-```{r}
+```{r bootstrapping-07}
 gen_data_and_test = function(num_observations_per) {
 x = rnorm(num_observations_per, 0, 1.1)
 y = rnorm(num_observations_per, 0, 1.1)
@@ -77,7 +77,7 @@ parametric_issues_demo = function(num_tests, num_observations_per) {
 }
 ```
 
-```{r}
+```{r bootstrapping-08}
 set.seed(0) # ensures we get the same results each time we run it
 
 num_tests = 1000 # how many datasets to generate/tests to run
@@ -99,7 +99,7 @@ sum(parametric_issues_results[1,] < 0.05)
 sum(parametric_issues_results[2,] < 0.05)
 ```
  
-```{r}
+```{r bootstrapping-09}
 ggplot(parametric_issues_d, aes(x=type, fill=is_significant)) +
   geom_bar(stat="count", color="black") +
   scale_fill_brewer(palette="Set1") +
@@ -108,7 +108,7 @@ ggplot(parametric_issues_d, aes(x=type, fill=is_significant)) +
 
 That's a non-trivial reduction in power from a misspecified model! (~80% to ~54%).
 
-```{r, cache=TRUE}
+```{r bootstrapping-10, cache=TRUE}
 boot_mean_diff_test = function(x, y) {
   obs_t = t.test(x, y)$statistic
   boot_iterate = function(x, y, indices) { # indices is a dummy here
@@ -130,7 +130,7 @@ boot_mean_diff_test = function(x, y) {
 ```
 
 (Omitted because with these small sample sizes bootstrapping is problematic -- permutations are better)
-```{r}
+```{r bootstrapping-11}
 # gen_data_and_boot_test = function(num_observations_per) {
 # x = rnorm(num_observations_per, 0, 1.1)
 # y = rnorm(num_observations_per, 0, 1.1)
@@ -154,7 +154,7 @@ While the bootstrap **actually loses power** relative to a perfectly specified m
  
 
 
-```{r}
+```{r bootstrapping-12}
 perm_mean_diff_test = function(x, y) {
   obs_t = t.test(x, y)$statistic
   combined_data = c(x, y)
@@ -173,7 +173,7 @@ perm_mean_diff_test = function(x, y) {
 }
 ```
 
-```{r message=F, warning=FALSE, cache=TRUE}
+```{r bootstrapping-13 message=F, warning=FALSE, cache=TRUE}
 # this could be much more efficient
 gen_data_and_norm_and_perm_test = function(num_observations_per) {
   d = data.frame(distribution=c(),
@@ -240,7 +240,7 @@ perm_results = replicate(num_tests, gen_data_and_norm_and_perm_test(num_observat
   bind_rows()
 ```
 
-```{r}
+```{r bootstrapping-14}
 perm_results = perm_results %>%
   gather(test_type, significant, parametric, permutation) %>%
   mutate(distribution=factor(distribution, levels=c("Normal", "Log-normal")),
@@ -249,7 +249,7 @@ perm_results = perm_results %>%
                           "Alternative True"))
 ```
 
-```{r}
+```{r bootstrapping-15}
 ggplot(perm_results %>%
          filter(null_true == "Alternative True"), aes(x=test_type, fill=significant)) +
   geom_bar(stat="count", color="black") +
@@ -265,11 +265,11 @@ ggplot(perm_results %>%
   scale_y_continuous(breaks = c(0, 0.8, 1)*num_tests,
                      labels = paste(c(0, 80, 100), "%", sep=""))
 ```
-```{r}
+```{r bootstrapping-16}
 ggsave("figures/perm_test.png", width=5, height=3)
 ```
 
-```{r}
+```{r bootstrapping-17}
 perm_results %>% 
   group_by(test_type, distribution, null_true) %>%
   summarize(pct_significant = sum(significant)/n())
@@ -279,7 +279,7 @@ perm_results %>%
 
 ### Non-IID noise and linear models
 
-```{r}
+```{r bootstrapping-18}
 num_points = 500
 true_intercept = 0
 true_slope = 1.
@@ -294,7 +294,7 @@ parametric_ci_data = data.frame(IV = rep(runif(num_points,  -1, 1), 2),
 
 ```
 
-```{r}
+```{r bootstrapping-19}
 ggplot(parametric_ci_data,
        aes(x=IV, y=DV, color=type)) +
   geom_point(alpha=0.5) +
@@ -305,17 +305,17 @@ ggplot(parametric_ci_data,
   facet_wrap(~type) +
   guides(color=F)
 ```
-```{r}
+```{r bootstrapping-20}
 ggsave("figures/error_dist_non_null.png", width=5, height=3)
 ```
 
 C.f. Anscombe's quartet, etc.
 
-```{r}
+```{r bootstrapping-21}
 summary(lm(DV ~ IV, parametric_ci_data %>% filter(type=="IID Error")))
 summary(lm(DV ~ IV, parametric_ci_data %>% filter(type=="Non-IID Error")))
 ```
-```{r}
+```{r bootstrapping-22}
 ex2_lm_bootstrap_CIs = function(data, R=1000) {
   lm_results = summary(lm(DV ~ IV, data=data))$coefficients
   bootstrap_coefficients = function(data, indices) {
@@ -340,7 +340,7 @@ ex2_lm_bootstrap_CIs = function(data, R=1000) {
 }
 ```
 
-```{r}
+```{r bootstrapping-23}
 set.seed(0) # for bootstraps
 coefficient_CI_data = parametric_ci_data %>%
   group_by(type) %>%
@@ -348,7 +348,7 @@ coefficient_CI_data = parametric_ci_data %>%
   ungroup() 
 ```
 
-```{r}
+```{r bootstrapping-24}
 coefficient_CI_data = coefficient_CI_data %>%
   gather(variable, value, -type) %>%
   separate(variable, c("parameter", "measurement"), extra="merge") %>%
@@ -361,7 +361,7 @@ coefficient_CI_data = coefficient_CI_data %>%
   mutate(CI_type = factor(CI_type))
 ```
 
-```{r}
+```{r bootstrapping-25}
 plot_coefficient_CI_data = function(coefficient_CI_data, errorbar_width=0.5) {
   p = ggplot(data=coefficient_CI_data, aes(x=parameter, color=CI_type, y=estimate, ymin=CI_low, ymax=CI_hi)) +
     geom_hline(data=data.frame(parameter=c("intercept", "slope"),
@@ -376,7 +376,7 @@ plot_coefficient_CI_data = function(coefficient_CI_data, errorbar_width=0.5) {
 }
 ```
 
-```{r}
+```{r bootstrapping-26}
 plot_coefficient_CI_data(coefficient_CI_data)
 ggsave("figures/error_dist_CI_example.png", width=5, height=3)
 
@@ -392,7 +392,7 @@ This can result in CIs which aren't actually at the nominal confidence level! An
 (Also equivalent to Bayesian CrIs.)
 
 
-```{r}
+```{r bootstrapping-27}
 num_points = 200
 true_intercept = 0
 true_slope = 0.
@@ -407,7 +407,7 @@ parametric_ci_data = data.frame(IV = rep(runif(num_points,  -1, 1), 2),
 
 ```
 
-```{r}
+```{r bootstrapping-28}
 ggplot(parametric_ci_data,
        aes(x=IV, y=DV, color=type)) +
   geom_point(alpha=0.5) +
@@ -419,12 +419,12 @@ ggplot(parametric_ci_data,
   guides(color=F)
 ```
 
-```{r}
+```{r bootstrapping-29}
 ggsave("figures/error_dist_null.png", width=5, height=3)
 ```
 
 
-```{r}
+```{r bootstrapping-30}
 error_dist_null_sample = function(num_points) {
   true_intercept = 0
   true_slope = 0
@@ -451,7 +451,7 @@ error_dist_null_sample = function(num_points) {
 }
 ```
 
-```{r}
+```{r bootstrapping-31}
 num_simulations = 500
 num_points = 200
 set.seed(0)
@@ -459,7 +459,7 @@ noise_dist_simulation_results = replicate(num_simulations, error_dist_null_sampl
   bind_rows()
 ```
 
-```{r}
+```{r bootstrapping-32}
 ggplot(noise_dist_simulation_results, aes(x = CI_type, fill = significant)) +
   geom_bar(stat = "count", color = "black") +
   scale_fill_brewer(palette = "Set1", direction = -1) +
@@ -471,11 +471,11 @@ ggplot(noise_dist_simulation_results, aes(x = CI_type, fill = significant)) +
   geom_hline(yintercept = 0.05 * num_simulations, linetype = 2)
 ```
 
-```{r}
+```{r bootstrapping-33}
 ggsave("figures/error_dist_proportion_significant.png", width=5, height=3)
 ```
 
-```{r}
+```{r bootstrapping-34}
 noise_dist_simulation_results %>%
   count(parameter, CI_type, significant) %>%
   mutate(prop=n/num_simulations)
@@ -485,7 +485,7 @@ False positive rate nearly triples for the parametric model!
 
 ### Density estimate conceptual plot
 
-```{r}
+```{r bootstrapping-35}
 density_similarity_conceptual_plot_data = expand.grid(x = seq(0, 4, 0.01),
                                                       y = seq(0, 4, 0.01)) %>%
   mutate(population_1 = exp(-((x - 2)^2 + (y - 3)^2) / 8) * exp(-((x - 2 / y)^2 + (y - 1 / x)^2) / 2), # These are definitely not proper distributions
@@ -493,7 +493,7 @@ density_similarity_conceptual_plot_data = expand.grid(x = seq(0, 4, 0.01),
   gather(population, value, contains("population"))
 ```
 
-```{r}
+```{r bootstrapping-36}
 ggplot(density_similarity_conceptual_plot_data,
        aes(x = x, y = y, z = value, color = population)) +
   geom_contour(size = 1, bins = 8) +
@@ -503,14 +503,14 @@ ggplot(density_similarity_conceptual_plot_data,
   guides(color = F)
 ```
 
-```{r}
+```{r bootstrapping-37}
 ggsave("figures/conceptual_density_plot.png", width=5, height=3)
 ```
 
 ## Bootstrap resampling
 
 ### Demo
-```{r}
+```{r bootstrapping-38}
 num_points = 100
 true_intercept = 0
 true_slope = 1.
@@ -524,7 +524,7 @@ parametric_ci_data = data.frame(IV = rep(runif(num_points, -1, 1), 2),
     true_slope * IV + 2 * abs(IV) * error)) # error increases proportional to distance from 0 on the IV
 ```
 
-```{r}
+```{r bootstrapping-39}
 p = ggplot(parametric_ci_data,
            aes(x = IV, y = DV)) +
   geom_point(alpha = 0.25) +
@@ -534,11 +534,11 @@ p = ggplot(parametric_ci_data,
 p
 ```
 
-```{r}
+```{r bootstrapping-40}
 ggsave("figures/bootstrap_demo_0.png", width=5, height=3)
 ```
 
-```{r}
+```{r bootstrapping-41}
 set.seed(15) # See above RE: p-hacking
 samp_1_indices = sample(2:num_points, num_points, replace = T)
 samp_1 = parametric_ci_data[c(samp_1_indices, samp_1_indices + num_points), ] # take the same rows from each type of data
@@ -554,18 +554,18 @@ many_samples = bind_rows(samp_1 %>%
                            mutate(sample = rep(rep(3:10, each = num_points), 2)))
 ```
 
-```{r}
+```{r bootstrapping-42}
 p + 
   geom_point(data=samp_1,
              aes(color=NA), color="red", alpha=0.5) 
 
 ```
 
-```{r}
+```{r bootstrapping-43}
 ggsave("figures/bootstrap_demo_1.png", width=5, height=3)
 ```
 
-```{r}
+```{r bootstrapping-44}
 p + 
   geom_point(data=samp_1,
              aes(color=NA), color="red", alpha=0.5) +
@@ -575,22 +575,22 @@ p +
 
 ```
 
-```{r}
+```{r bootstrapping-45}
 ggsave("figures/bootstrap_demo_2.png", width=5, height=3)
 ```
 
-```{r}
+```{r bootstrapping-46}
 p + 
   geom_point(data=samp_2,
              aes(color=NA), color="red", alpha=0.5) 
 ```
 
-```{r}
+```{r bootstrapping-47}
 ggsave("figures/bootstrap_demo_3.png", width=5, height=3)
 ```
 
 
-```{r}
+```{r bootstrapping-48}
 p + 
   geom_point(data=samp_2,
              aes(color=NA), color="red", alpha=0.5) +
@@ -599,11 +599,11 @@ p +
               size=1.5) 
 ```
 
-```{r}
+```{r bootstrapping-49}
 ggsave("figures/bootstrap_demo_4.png", width=5, height=3)
 ```
 
-```{r}
+```{r bootstrapping-50}
 p +  
   geom_smooth(data=many_samples,
               aes(group=sample),
@@ -612,7 +612,7 @@ p +
               color="red")
 ```
 
-```{r}
+```{r bootstrapping-51}
 ggsave("figures/bootstrap_demo_5.png", width=5, height=3)
 ```
 
@@ -620,7 +620,7 @@ ggsave("figures/bootstrap_demo_5.png", width=5, height=3)
 
 ### Bootstrap confidence intervals
 
-```{r}
+```{r bootstrapping-52}
 num_top_points = 23
 num_mid_points = 4
 num_outlier_points = 2
@@ -632,7 +632,7 @@ test_score_data = data.frame(
 )
 ```
 
-```{r}
+```{r bootstrapping-53}
 get_mean_score = function(data, indices) {
   return(mean(data[indices,]$score))
 }
@@ -642,7 +642,7 @@ bootstrap_CIs = boot.ci(bootstrap_results)
 bootstrap_CIs
 ```
 
-```{r}
+```{r bootstrapping-54}
 test_summary_data = test_score_data %>%
   summarise(mean = mean(score),
             se = sd(score) / sqrt(n()),
@@ -668,7 +668,7 @@ test_summary_data = test_summary_data %>%
          CI_type = factor(CI_type, levels = c("parametric", "percentile", "bca"), labels = c("Normal", "Boot: %", "Boot: BCA")))
 ```
 
-```{r}
+```{r bootstrapping-55}
 ggplot(test_summary_data %>%
          filter(CI_type != "Boot: BCA"), aes(x = score)) +
   geom_histogram(data = test_score_data,
@@ -683,11 +683,11 @@ ggplot(test_summary_data %>%
   guides(color = guide_legend(title = "CI"))
 ```
 
-```{r}
+```{r bootstrapping-56}
 ggsave("figures/bootstrap_CI_0.png", width=5, height=3)
 ```
 
-```{r}
+```{r bootstrapping-57}
 ggplot(test_summary_data, aes(x = score)) +
   geom_histogram(data = test_score_data,
                  binwidth = 1) +
@@ -704,7 +704,7 @@ ggsave("figures/bootstrap_CI_1.png", width = 5, height = 3)
 
 ### Bootstrap (& permutation) hypothesis tests
 
-```{r}
+```{r bootstrapping-58}
 num_flips = 20
 true_heads_prob = 0.9
 set.seed(2)
@@ -712,7 +712,7 @@ flips = rbinom(num_flips, 1, true_heads_prob)
 flip_data = data.frame(flip_result = factor(flips, labels=c("Tails", "Heads")))
 ```
 
-```{r}
+```{r bootstrapping-59}
 flip_data_plot = ggplot(data = flip_data, aes(x = flips, fill = flips)) +
   geom_dotplot(binwidth=0.03) +
   scale_x_continuous(breaks = c(0, 1),
@@ -721,7 +721,7 @@ flip_data_plot = ggplot(data = flip_data, aes(x = flips, fill = flips)) +
   labs(x="Flip result", y="")
 ```
 
-```{r}
+```{r bootstrapping-60}
 get_mean_heads = function(data, indices) {
   return(mean(data[indices, "flip_result"] == "Heads"))
 }
@@ -732,7 +732,7 @@ bootstrap_CIs = boot.ci(bootstrap_results)
 bootstrap_CIs
 ```
 
-```{r}
+```{r bootstrapping-61}
 flip_boot_plot = ggplot(data = data.frame(mean_flips = bootstrap_results$t),
                         aes(x = mean_flips)) +
   geom_histogram(binwidth = 0.05) +
@@ -762,14 +762,14 @@ flip_boot_plot = ggplot(data = data.frame(mean_flips = bootstrap_results$t),
 flip_boot_plot
 ```
 
-```{r}
+```{r bootstrapping-62}
 flip_data_plot + flip_boot_plot +
   plot_layout()
 
 ggsave("figures/bootstrap_test.png", width = 5, height = 2.5)
 ```
 
-```{r}
+```{r bootstrapping-63}
 bootstrap_CIs = boot.ci(bootstrap_results,
                         conf = 0.999)
 flip_boot_plot = ggplot(data = data.frame(mean_flips = bootstrap_results$t),
@@ -801,7 +801,7 @@ flip_boot_plot = ggplot(data = data.frame(mean_flips = bootstrap_results$t),
 flip_boot_plot
 ```
 
-```{r}
+```{r bootstrapping-64}
 flip_data_plot + flip_boot_plot +
   plot_layout()
 
