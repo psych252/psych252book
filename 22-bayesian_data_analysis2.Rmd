@@ -1,13 +1,13 @@
 # Bayesian data analysis 2
 
-```{r, eval=FALSE, echo=FALSE, include=FALSE}
+```{r bda2-01, eval=FALSE, echo=FALSE, include=FALSE}
 install.packages(c("tidybayes", "extraDistr"))
 devtools::install_github("greta-dev/greta")
 ```
 
 ## Load packages and set plotting theme  
 
-```{r, message=FALSE}
+```{r bda2-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -20,7 +20,7 @@ library("extraDistr") # additional probability distributions
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
 
-```{r}
+```{r bda2-03}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -31,7 +31,7 @@ theme_set(
 
 ### Sequential updating based on the Beta distribution 
 
-```{r bda2-1}
+```{r bda2-04}
 # data 
 data = c(0, 1, 1, 0, 1, 1, 1, 1)
 
@@ -68,7 +68,7 @@ plot_grid(plotlist = plots)
 
 Is the coin biased? 
 
-```{r bda2-2}
+```{r bda2-05}
 # data 
 data = rep(0:1, c(8, 2))
 
@@ -98,7 +98,7 @@ df.coins = tibble(
 
 Visualize the results: 
 
-```{r bda2-3}
+```{r bda2-06}
 df.coins %>% 
   gather("index", "value", -theta) %>% 
   mutate(index = factor(index, levels = c("prior", "likelihood", "posterior")),
@@ -127,7 +127,7 @@ df.coins %>%
 
 ### Effect of the prior 
 
-```{r bda2-4, fig.cap="Illustration of how the prior affects the posterior."}
+```{r bda2-07, fig.cap="Illustration of how the prior affects the posterior."}
 # grid
 theta = seq(0, 1, 0.01)
 
@@ -177,7 +177,7 @@ df.prior_effect %>%
 
 ### Effect of the likelihood 
 
-```{r bda2-5, fig.cap="Illustration of how the likelihood of the data affects the posterior."}
+```{r bda2-08, fig.cap="Illustration of how the likelihood of the data affects the posterior."}
 # grid
 theta = seq(0, 1, 0.01)
 
@@ -222,7 +222,7 @@ df.likelihood_effect %>%
 
 ### Effect of the sample size  
 
-```{r bda2-6}
+```{r bda2-09}
 # grid
 theta = seq(0, 1, 0.01)
 
@@ -267,7 +267,7 @@ df.sample_size_effect %>%
 
 ### Normal vs Student-t distribution
 
-```{r bda2-7, fig.cap="Comparison between the normal distribution and the student-t distribution."}
+```{r bda2-10, fig.cap="Comparison between the normal distribution and the student-t distribution."}
 tibble(x = c(-5, 5)) %>% 
   ggplot(aes(x = x)) + 
   stat_function(fun = "dnorm",
@@ -281,7 +281,7 @@ tibble(x = c(-5, 5)) %>%
 
 ### Beta distributions
 
-```{r bda2-8, fig.cap="Beta distributions with different parameter settings."}
+```{r bda2-11, fig.cap="Beta distributions with different parameter settings."}
 
 fun.draw_beta = function(shape1, shape2){
   ggplot(data = tibble(x = c(0, 1)),
@@ -312,7 +312,7 @@ plot_grid(plotlist = p.list)
 
 ### Normal distributions 
 
-```{r bda2-9, fig.cap="Normal distributions with different standard deviation."}
+```{r bda2-12, fig.cap="Normal distributions with different standard deviation."}
 tibble(x = c(-10, 10)) %>% 
   ggplot(aes(x = x)) + 
   stat_function(fun = "dnorm",
@@ -327,7 +327,7 @@ tibble(x = c(-10, 10)) %>%
 
 ### Distributions for non-negative parameters 
 
-```{r bda2-10, fig.cap="Cauchy and Gamma distribution."}
+```{r bda2-13, fig.cap="Cauchy and Gamma distribution."}
 tibble(x = c(0, 10)) %>% 
   ggplot(aes(x = x)) + 
   stat_function(fun = "dcauchy",
@@ -346,7 +346,7 @@ tibble(x = c(0, 10)) %>%
 
 Example for how we can compute probabilities based on random samples generated from a distribution. 
 
-```{r bda2-11}
+```{r bda2-14}
 # generate samples 
 df.samples = tibble(x = rnorm(n = 10000, mean = 1, sd = 2)) 
 
@@ -375,14 +375,14 @@ You can find out more about how get started with "greta" here: [https://greta-st
 
 ### Attitude data set 
 
-```{r bda2-12}
+```{r bda2-15}
 # load the attitude data set 
 df.attitude = attitude
 ```
 
 Visualize relationship between how well complaints are handled and the overall rating of an employee
 
-```{r bda2-13}
+```{r bda2-16}
 ggplot(data = df.attitude,
        mapping = aes(x = complaints,
                      y = rating)) +
@@ -391,7 +391,7 @@ ggplot(data = df.attitude,
 
 ### Frequentist analysis 
 
-```{r bda2-14}
+```{r bda2-17}
 # fit model 
 fit = lm(formula = rating ~ 1 + complaints, 
          data = df.attitude)
@@ -402,7 +402,7 @@ fit %>% summary()
 
 Visualize the model's predictions
 
-```{r bda2-15}
+```{r bda2-18}
 ggplot(data = df.attitude,
        mapping = aes(x = complaints,
                      y = rating)) +
@@ -415,7 +415,7 @@ ggplot(data = df.attitude,
 
 #### Fit the model
 
-```{r bda2-16}
+```{r bda2-19}
 # variables & priors
 b0 = normal(0, 10)
 b1 = normal(0, 10)
@@ -433,14 +433,14 @@ m = model(b0, b1, sd)
 
 Visualize the model as graph: 
 
-```{r bda2-17}
+```{r bda2-20}
 # plotting
 plot(m)
 ```
 
 Draw samples from the posterior distribution: 
 
-```{r bda2-18, cache=TRUE, message=FALSE}
+```{r bda2-21, cache=TRUE, message=FALSE}
 # sampling
 draws = mcmc(m, n_samples = 1000)
 
@@ -453,7 +453,7 @@ df.draws = tidy_draws(draws) %>%
 
 These are the priors I used for the intercept, regression weights, and the standard deviation of the Gaussian likelihood function:  
 
-```{r bda2-19}
+```{r bda2-22}
 # Gaussian
 ggplot(tibble(x = c(-30, 30)),
        aes(x = x)) +
@@ -474,7 +474,7 @@ ggplot(tibble(x = c(0, 30)),
 
 This is what the posterior looks like for the three parameters in the model: 
 
-```{r bda2-20}
+```{r bda2-23}
 df.draws %>% 
   select(draw:sd) %>% 
   gather("index", "value", -draw) %>% 
@@ -500,7 +500,7 @@ df.draws %>%
 
 Let's take some samples from the posterior to visualize the model predictions: 
 
-```{r bda2-21}
+```{r bda2-24}
 ggplot(data = df.attitude,
        mapping = aes(x = complaints, 
                      y = rating)) + 
@@ -517,7 +517,7 @@ ggplot(data = df.attitude,
 
 Let's make an animation that illustrates what predicted data sets (based on samples from the posterior) would look like: 
 
-```{r bda2-22, message=FALSE}
+```{r bda2-25, message=FALSE}
 p = df.draws %>% 
   sample_n(size = 10) %>%  
   mutate(complaints = list(seq(min(df.attitude$complaints),
@@ -544,7 +544,7 @@ animate(p, nframes = 60, width = 800, height = 600, res = 96, type = "cairo")
 
 And let's illustrate what data we would have expected to see just based on the information that we encoded in our priors. 
 
-```{r bda2-23, message=FALSE}
+```{r bda2-26, message=FALSE}
 sample_size = 10
 
 p = tibble(

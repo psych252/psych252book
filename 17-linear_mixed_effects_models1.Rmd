@@ -1,12 +1,12 @@
 # Linear mixed effects models 1
 
-```{r, include=FALSE, eval=FALSE}
+```{r lmer1-01, include=FALSE, eval=FALSE}
 install.packages(c("lme4", "lmerTest", "pbkrtest"))
 ```
 
 ## Load packages and set plotting theme  
 
-```{r, message=FALSE}
+```{r lmer1-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -16,7 +16,7 @@ library("lme4")    # for linear mixed effects models
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
 
-```{r}
+```{r lmer1-03}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -31,7 +31,7 @@ What's the difference between the t-test on individual predictors in the model a
 
 Let's generate some data first: 
 
-```{r lmer1-1}
+```{r lmer1-04}
 # make example reproducible 
 set.seed(1)
 
@@ -61,7 +61,7 @@ fit %>% summary()
 
 Let's visualize the data: 
 
-```{r lmer1-2}
+```{r lmer1-05}
 df.data %>% 
   ggplot(data = .,
          mapping = aes(x = x1,
@@ -76,7 +76,7 @@ df.data %>%
 
 The global F-test which is shown by the F-statistic at the bottom of the `summary()` output compares the full model with a  model that only has an intercept. So, to use our model comparison approach, we would compare the following two models: 
 
-```{r lmer1-3}
+```{r lmer1-06}
 # fit models 
 model_compact = lm(formula = y ~ 1,
                    data = df.data)
@@ -95,7 +95,7 @@ Note how the result of the F-test using the `anova()` function which compares th
 
 To test for individual predictors in the model, we compare two models, a compact model without that predictor, and an augmented model with that predictor. Let's test the significance of `x1`. 
 
-```{r lmer1-4}
+```{r lmer1-07}
 # fit models 
 model_compact = lm(formula = y ~ 1 + x2,
                    data = df.data)
@@ -115,7 +115,7 @@ $$
 
 Let's check that that's correct: 
 
-```{r lmer1-5, warning=FALSE}
+```{r lmer1-08, warning=FALSE}
 # get the t-value from the fitted lm
 t_value = fit %>% 
   tidy() %>% 
@@ -143,7 +143,7 @@ Yip, they are the same.
 
 Let's generate a data set in which two observations from the same participants are dependent, and then let's also shuffle this data set to see whether taking into account the dependence in the data matters. 
 
-```{r lmer1-6}
+```{r lmer1-09}
 # make example reproducible 
 set.seed(1)
 
@@ -157,7 +157,7 @@ df.dependence = data_frame(
 
 Let's visualize the original and shuffled data set: 
 
-```{r lmer1-7}
+```{r lmer1-10}
 df.plot = df.dependence %>% 
   gather("condition", "value", -participant) %>% 
   mutate(condition = str_replace(condition, "condition", ""))
@@ -191,7 +191,7 @@ p1 + p2
 
 Let's save the two original and shuffled data set as two separate data sets.
 
-```{r lmer1-8}
+```{r lmer1-11}
 # separate the data sets 
 df.original = df.dependence %>% 
   gather("condition", "value", -participant) %>% 
@@ -206,7 +206,7 @@ df.shuffled = df.dependence %>%
 
 Let's run a linear model, and independent samples t-test on the original data set. 
 
-```{r lmer1-9}
+```{r lmer1-12}
 # linear model (assuming independent samples)
 lm(formula = value ~ condition,
    data = df.original) %>% 
@@ -223,7 +223,7 @@ The mean difference between the conditions is extremely small, and non-significa
 
 Let's fit a linear mixed effects model with a random intercept for each participant: 
 
-```{r lmer1-10}
+```{r lmer1-13}
 # fit a linear mixed effects model 
 lmer(formula = value ~ condition + (1 | participant),
      data = df.original) %>% 
@@ -232,7 +232,7 @@ lmer(formula = value ~ condition + (1 | participant),
 
 To test for whether condition is a significant predictor, we need to use our model comparison approach: 
 
-```{r lmer1-11}
+```{r lmer1-14}
 # fit models
 fit.compact = lmer(formula = value ~ 1 + (1 | participant),
                    data = df.original)
@@ -245,7 +245,7 @@ anova(fit.compact, fit.augmented)
 
 This result is identical to running a paired samples t-test: 
 
-```{r lmer1-12}
+```{r lmer1-15}
 t.test(df.original$value[df.original$condition == "1"],
        df.original$value[df.original$condition == "2"],
        alternative = "two.sided",
@@ -256,7 +256,7 @@ But, unlike in the paired samples t-test, the linear mixed effects model explici
 
 Let's fit a linear model and a linear mixed effects model to the original (non-shuffled) data. 
 
-```{r lmer1-13}
+```{r lmer1-16}
 # model assuming independence
 fit.independent = lm(formula = value ~ 1 + condition,
                      data = df.original)
@@ -268,7 +268,7 @@ fit.dependent = lmer(formula = value ~ 1 + condition + (1 | participant),
 
 Let's visualize the linear model's predictions: 
 
-```{r lmer1-14}
+```{r lmer1-17}
 # plot with predictions by fit.independent 
 fit.independent %>% 
   augment() %>% 
@@ -288,7 +288,7 @@ fit.independent %>%
 
 And this is what the residuals look like: 
 
-```{r lmer1-15}
+```{r lmer1-18}
 # make example reproducible 
 set.seed(1)
 
@@ -323,7 +323,7 @@ It's clear from this residual plot, that fitting two separate lines (or points) 
 
 Let's visualize the predictions of the linear mixed effects model: 
 
-```{r lmer1-16}
+```{r lmer1-19}
 # plot with predictions by fit.independent 
 fit.dependent %>% 
   augment() %>% 
@@ -342,7 +342,7 @@ fit.dependent %>%
 
 Let's compare the residuals of the linear model with that of the linear mixed effects model: 
 
-```{r lmer1-17}
+```{r lmer1-20}
 # linear model 
 p1 = fit.independent %>% 
   augment() %>% 
@@ -368,7 +368,7 @@ p1 + p2
 
 The residuals of the linear mixed effects model are much smaller. Let's test whether taking the individual variation into account is worth it (statistically speaking). 
 
-```{r lmer1-18}
+```{r lmer1-21}
 # fit models (without and with dependence)
 fit.compact = lm(formula = value ~ 1 + condition,
                  data = df.original)

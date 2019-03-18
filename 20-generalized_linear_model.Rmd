@@ -1,13 +1,13 @@
 # Generalized linear model 
 
-```{r, include=FALSE, eval=FALSE}
+```{r glm-01, include=FALSE, eval=FALSE}
 # new packages
 install.packages(c("titanic", "effects", "nlme"))
 ```
 
 ## Load packages and set plotting theme  
 
-```{r, message=FALSE}
+```{r glm-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
 library("titanic")    # titanic dataset
 library("kableExtra") # for making nice tables
@@ -19,7 +19,7 @@ library("effects")    # for showing effects in linear, generalized linear, and o
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
 
-```{r}
+```{r glm-03}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -28,7 +28,7 @@ theme_set(
 
 ## Load data set 
 
-```{r glm1}
+```{r glm-04}
 df.titanic = titanic_train %>% 
   clean_names() %>% 
   mutate(sex = as.factor(sex))
@@ -36,11 +36,11 @@ df.titanic = titanic_train %>%
 
 Let's take a quick look at the data: 
 
-```{r glm2}
+```{r glm-05}
 df.titanic %>% glimpse()
 ```
 
-```{r glm3}
+```{r glm-06}
 # Table of the first 10 entries
 df.titanic %>% 
   head(10) %>% 
@@ -55,7 +55,7 @@ Let's see if we can predict whether or not a passenger survived based on the pri
 
 Let's run a simple regression first: 
 
-```{r glm4}
+```{r glm-07}
 # fit a linear model 
 fit.lm = lm(formula = survived ~ 1 + fare,
             data = df.titanic)
@@ -66,7 +66,7 @@ fit.lm %>% summary()
 
 Look's like `fare` is a significant predictor of whether or not a person survived. Let's visualize the model's predictions:
 
-```{r glm5}
+```{r glm-08}
 ggplot(data = df.titanic,
        mapping = aes(x = fare,
                      y = survived)) + 
@@ -79,7 +79,7 @@ This doesn't look good! The model predicts intermediate values of `survived` (wh
 
 Let's run a logistic regression instead. 
 
-```{r glm6}
+```{r glm-09}
 # fit a logistic regression 
 fit.glm = glm(formula = survived ~ 1 + fare,
               family = "binomial",
@@ -90,7 +90,7 @@ fit.glm %>% summary()
 
 And let's visualize the predictions of the logistic regression: 
 
-```{r glm7}
+```{r glm-10}
 ggplot(data = df.titanic,
        mapping = aes(x = fare,
                      y = survived)) + 
@@ -126,13 +126,13 @@ In R, we can use `log(x)` to calculate the natural logarithm $\ln(x)$, and `exp(
 
 ### Interpreting the parameters 
 
-```{r glm8}
+```{r glm-11}
 fit.glm %>% summary()
 ```
 
 The estimate for the intercept and fare are in log-odds. We apply the inverse logit transformation to turn these into probabilities: 
 
-```{r glm9}
+```{r glm-12}
 fit.glm$coefficients[1] %>% inv.logit()
 ```
 
@@ -142,7 +142,7 @@ Here, we see that the intercept is $p = 0.28$. That is, the predicted chance of 
 
 Let's see whether the probability of survival differed between male and female passengers. 
 
-```{r glm10}
+```{r glm-13}
 fit.glm2 = glm(formula = survived ~ sex,
                family = "binomial",
                data = df.titanic)
@@ -152,7 +152,7 @@ fit.glm2 %>% summary()
 
 It looks like it did! Let's visualize: 
 
-```{r glm11}
+```{r glm-14}
 df.titanic %>% 
   mutate(survived = factor(survived, labels = c("died", "survived"))) %>% 
   ggplot(data = .,
@@ -178,7 +178,7 @@ $$
 $$
 The predicted probability is: 
 
-```{r glm12}
+```{r glm-15}
 fit.glm2$coefficients[1] %>% inv.logit()
 ```
 
@@ -195,13 +195,13 @@ $$
 
 The predicted probability of male passengers surviving is: 
 
-```{r glm13}
+```{r glm-16}
 sum(fit.glm2$coefficients) %>% inv.logit()
 ```
 
 Here is the same information in a table: 
 
-```{r glm14}
+```{r glm-17}
 df.titanic %>% 
   count(sex, survived) %>% 
   mutate(p = n/sum(n)) %>% 
@@ -218,7 +218,7 @@ df.titanic %>%
 
 To interpret the predictions when a continuous predictor is invovled, it's easiest to consider a few concrete cases. Here, I use the `augment()` function from the "broom" package to get the model's predictions for some values of interest: 
 
-```{r glm15}
+```{r glm-18}
 fit.glm %>% 
   augment(newdata = tibble(fare = c(0, 10, 50, 100, 500))) %>% 
   clean_names() %>% 
@@ -235,7 +235,7 @@ fit.glm %>%
 
 Let's fit a logistic regression that predicts the probability of survival based both on the passenger's sex and what fare they paid (allowing for an interaction of the two predictors): 
 
-```{r glm16}
+```{r glm-19}
 fit.glm = glm(formula = survived ~ 1 + sex * fare,
               family = "binomial",
               data = df.titanic)
@@ -245,7 +245,7 @@ fit.glm %>% summary()
 
 And let's visualize the result: 
 
-```{r glm17}
+```{r glm-20}
 df.titanic %>% 
   mutate(sex = as.factor(sex)) %>% 
   ggplot(data = .,
@@ -263,7 +263,7 @@ df.titanic %>%
 
 We notice that there is one outlier who was male and paid a $500 fare (or maybe this is a mistake in the data entry?!). Let's remove this outlier and see what happens: 
 
-```{r glm18}
+```{r glm-21}
 df.titanic %>% 
   filter(fare < 500) %>% 
   mutate(sex = as.factor(sex)) %>% 
@@ -282,7 +282,7 @@ df.titanic %>%
 
 There is still a clear difference between female and male passengers, but the prediction for male passengers has changed a bit. Let's look at a concrete example: 
 
-```{r glm19}
+```{r glm-22}
 # with the outlier: 
 
 # predicted probability of survival for a male passenger who paid $200 for their fare 
@@ -306,7 +306,7 @@ With the oulier removed, the predicted probability of survival for a male passen
 
 The "effects" package helps with the interpretation of the results. It applies the inverse logit transform for us, and shows the predictions for a range of cases. 
 
-```{r glm20}
+```{r glm-23}
 # show effects 
 allEffects(mod = fit.glm, xlevels = list(fare = c(0, 100, 200, 300, 400, 500)))
 ```
@@ -317,7 +317,7 @@ I've used the xlevels argument to specify for what values of the predictor `fare
 
 As always, to better understand a statistical modeling procedure, it's helpful to simulate data from the assumed data-generating process, fit the model, and see whether we can reconstruct the parameters.  
 
-```{r glm21}
+```{r glm-24}
 # make example reproducible 
 set.seed(1)
 
@@ -347,7 +347,7 @@ Nice! The inferred estimates are very close to the parameter values we used to s
 
 Let's visualize the result: 
 
-```{r glm22}
+```{r glm-25}
 ggplot(data = df.data,
        mapping = aes(x = x,
                      y = response)) + 
@@ -364,7 +364,7 @@ To calculate the likelihood of the data for a given logistic model, we look at t
 
 This table illustrate the steps involved: 
 
-```{r glm23}
+```{r glm-26}
 fit %>% 
   augment() %>% 
   clean_names() %>% 
@@ -382,7 +382,7 @@ fit %>%
 
 Let's calculate the log-likelihood by hand:
 
-```{r glm24}
+```{r glm-27}
 fit %>% 
   augment() %>% 
   clean_names() %>% 
@@ -394,7 +394,7 @@ fit %>%
 
 And compare it with the model summary
 
-```{r glm25}
+```{r glm-28}
 fit %>% 
   glance() %>% 
   select(logLik, AIC, BIC) %>% 
@@ -410,7 +410,7 @@ We're getting the same result -- neat! Now we know how the likelihood of the dat
 
 To test hypotheses, we use our gold old model comparison approach: 
 
-```{r glm26}
+```{r glm-29}
 # fit compact model
 fit.compact = glm(formula = survived ~ 1 + fare,
                   family = "binomial",
@@ -434,7 +434,7 @@ Just like we can build linear mixed effects models using `lmer()` instead of `lm
 
 Let's read in some data: 
 
-```{r glm27}
+```{r glm-30}
 # load bdf data set from nlme package
 data(bdf, package = "nlme")
 
@@ -448,7 +448,7 @@ rm(bdf)
 
 Fit the model, and print out the results: 
 
-```{r glm28}
+```{r glm-31}
 fit =  glmer(repeatgr ~ 1 + ses * minority + (1 | school_nr),
              data = df.language,
              family = "binomial")
