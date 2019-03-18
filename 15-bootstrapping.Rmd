@@ -424,7 +424,7 @@ ggsave("figures/error_dist_null.png", width=5, height=3)
 ```
 
 
-```{r bootstrapping-30}
+```{r bootstrapping-30, cache=TRUE}
 error_dist_null_sample = function(num_points) {
   true_intercept = 0
   true_slope = 0
@@ -434,7 +434,7 @@ error_dist_null_sample = function(num_points) {
     mutate(DV = true_slope * IV + 2 * abs(IV) * error) # error increases proportional to distance from 0 on the IV
   
   coefficient_CI_data = ex2_lm_bootstrap_CIs(this_data,
-                                             R = 500) # take fewer bootstrap samples, to speed things up
+                                             R = 100) # take fewer bootstrap samples, to speed things up
   
   coefficient_CI_data = coefficient_CI_data %>%
     gather(variable, value) %>%
@@ -451,8 +451,8 @@ error_dist_null_sample = function(num_points) {
 }
 ```
 
-```{r bootstrapping-31}
-num_simulations = 500
+```{r bootstrapping-31, cache=TRUE}
+num_simulations = 100
 num_points = 200
 set.seed(0)
 noise_dist_simulation_results = replicate(num_simulations, error_dist_null_sample(num_points)) %>%
