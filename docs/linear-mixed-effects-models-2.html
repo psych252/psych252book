@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-15">
+<meta name="date" content="2019-03-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -628,13 +628,13 @@ fun.normal_means =<span class="st"> </span><span class="cf">function</span>(n, m
 
 <span class="co"># execute the function 4 times</span>
 <span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">4</span>, <span class="kw">fun.normal_means</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.5</span>))</code></pre>
-<pre><code>## [1] 0.9457959 0.9939978 0.9977807 0.9325283</code></pre>
+<pre><code>## [1] 1.021479 1.132758 1.001009 1.072784</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># same same but different </span>
 <span class="kw">map_dbl</span>(<span class="dt">.x =</span> <span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>), <span class="op">~</span><span class="st"> </span><span class="kw">fun.normal_means</span>(<span class="dt">n =</span> .x, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.5</span>))</code></pre>
-<pre><code>## [1] 1.0153530 0.9805029 1.0288655 1.1276102</code></pre>
+<pre><code>## [1] 1.0813721 0.8877639 1.0108873 1.0401081</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># and more flexible</span>
 <span class="kw">map_dbl</span>(<span class="dt">.x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">10</span>), <span class="op">~</span><span class="st"> </span><span class="kw">fun.normal_means</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">mean =</span> .x, <span class="dt">sd =</span> <span class="fl">0.5</span>))</code></pre>
-<pre><code>## [1]  0.7730499  0.9457895 10.0803328  9.8966848</code></pre>
+<pre><code>## [1]  0.9655795  0.8907218 10.1239343  9.9443870</code></pre>
 </div>
 </div>
 <div id="simulating-a-linear-mixed-effects-model" class="section level2">
@@ -707,7 +707,7 @@ fit.mixed <span class="op">%&gt;%</span><span class="st"> </span>
              <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> fitted),
              <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
-<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-4-1.png" width="672" /></p>
+<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-06-1.png" width="672" /></p>
 <p>Let’s simulate some data from this fitted model:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simulated data </span>
 fit.mixed <span class="op">%&gt;%</span><span class="st"> </span>
@@ -719,7 +719,7 @@ fit.mixed <span class="op">%&gt;%</span><span class="st"> </span>
                        <span class="dt">group =</span> participant)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>)</code></pre>
-<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-5-1.png" width="672" /></p>
+<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-07-1.png" width="672" /></p>
 <p>Even though we only fitted random intercepts in this model, when we simulate from the model, we get different slopes since, when simulating new data, the model takes our uncertainty in the residuals into account as well.</p>
 <p>Let’s see whether fitting random intercepts was worth it in this case:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using chisq test</span>
@@ -795,7 +795,7 @@ fit.outlier <span class="op">%&gt;%</span><span class="st"> </span>
              <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> fitted),
              <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
-<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-9-1.png" width="672" /></p>
+<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-11-1.png" width="672" /></p>
 <p>The model is still able to capture the participants quite well. But note what its simulated data looks like now:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># simulated data from lmer with outlier</span>
 fit.outlier <span class="op">%&gt;%</span><span class="st"> </span>
@@ -807,7 +807,7 @@ fit.outlier <span class="op">%&gt;%</span><span class="st"> </span>
                        <span class="dt">group =</span> participant)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>)</code></pre>
-<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-10-1.png" width="672" /></p>
+<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-12-1.png" width="672" /></p>
 <p>The simulated data doesn’t look like our original data. This is because one normal distribution is used to model the variance in the intercepts between participants.</p>
 </div>
 <div id="different-slopes" class="section level2">
@@ -891,7 +891,7 @@ df.simpson =<span class="st"> </span><span class="kw">tibble</span>(<span class=
 <span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,
               <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)</code></pre>
-<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-15-1.png" width="672" /></p>
+<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-17-1.png" width="672" /></p>
 <p>As we see, overall, there is a positive relationship between <code>x</code> and <code>y</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x,
    <span class="dt">data =</span> df.simpson) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -925,7 +925,7 @@ df.simpson =<span class="st"> </span><span class="kw">tibble</span>(<span class=
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,
               <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre>
-<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-17-1.png" width="672" /></p>
+<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-19-1.png" width="672" /></p>
 <p>And let’s fit a different regression for each participant:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># effect by participant </span>
 <span class="kw">ggplot</span>(<span class="dt">data =</span> df.simpson,
@@ -937,7 +937,7 @@ df.simpson =<span class="st"> </span><span class="kw">tibble</span>(<span class=
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,
               <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre>
-<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-18-1.png" width="672" /></p>
+<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-20-1.png" width="672" /></p>
 <p>What this plot shows, is that for almost all individual participants, the relationship between <code>x</code> and <code>y</code> is negative. The different participants where along the <code>x</code> spectrum they are.</p>
 <p>Let’s fit a linear mixed effects model with random intercepts:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.lmer =<span class="st"> </span><span class="kw">lmer</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>participant),
@@ -983,7 +983,7 @@ fit.lmer <span class="op">%&gt;%</span><span class="st"> </span>
             <span class="dt">size =</span> <span class="dv">1</span>,
             <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre>
-<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-20-1.png" width="672" /></p>
+<p><img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-22-1.png" width="672" /></p>
 <p>Lesson learned: taking dependence into account is critical for drawing correct inferences!</p>
 </div>
 <div id="additional-resources-14" class="section level2">
@@ -1034,12 +1034,15 @@ gitbook.start({
 "family": "sans",
 "size": 2
 },
-"edit": null,
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/18-linear_mixed_effects_models2.Rmd",
+"text": "Edit"
+},
 "history": {
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["psych252.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

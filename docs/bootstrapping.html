@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-15">
+<meta name="date" content="2019-03-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -635,10 +635,10 @@ parametric_plotting_data =<span class="st"> </span><span class="kw">data.frame</
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span><span class="st"> </span>distribution, <span class="dt">scales=</span><span class="st">&quot;free&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span>F) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Accent&quot;</span>)</code></pre>
-<pre><code>## Warning: Removed 10 rows containing non-finite values (stat_density).</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre><code>## Warning: Removed 11 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-05-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/log_normal_dists.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
-<pre><code>## Warning: Removed 10 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>## Warning: Removed 11 rows containing non-finite values (stat_density).</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">gen_data_and_test =<span class="st"> </span><span class="cf">function</span>(num_observations_per) {
 x =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
 y =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
@@ -680,7 +680,7 @@ parametric_issues_d =<span class="st"> </span><span class="kw">data.frame</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Set1&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Parametric t-test&quot;</span>)</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-09-1.png" width="672" /></p>
 <p>That’s a non-trivial reduction in power from a misspecified model! (~80% to ~54%).</p>
 <pre class="sourceCode r"><code class="sourceCode r">boot_mean_diff_test =<span class="st"> </span><span class="cf">function</span>(x, y) {
   obs_t =<span class="st"> </span><span class="kw">t.test</span>(x, y)<span class="op">$</span>statistic
@@ -819,7 +819,7 @@ perm_results =<span class="st"> </span><span class="kw">replicate</span>(num_tes
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Test type&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Percent&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.8</span>, <span class="dv">1</span>)<span class="op">*</span>num_tests,
                      <span class="dt">labels =</span> <span class="kw">paste</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">80</span>, <span class="dv">100</span>), <span class="st">&quot;%&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>))</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-15-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/perm_test.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">perm_results <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(test_type, distribution, null_true) <span class="op">%&gt;%</span>
@@ -859,7 +859,7 @@ parametric_ci_data =<span class="st"> </span><span class="kw">data.frame</span>(
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Accent&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>type) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span>F)</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-19-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_non_null.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <p>C.f. Anscombe’s quartet, etc.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, parametric_ci_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(type<span class="op">==</span><span class="st">&quot;IID Error&quot;</span>)))</code></pre>
@@ -981,7 +981,7 @@ parametric_ci_data =<span class="st"> </span><span class="kw">data.frame</span>(
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Accent&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>type) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color=</span>F)</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-28-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_null.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">error_dist_null_sample =<span class="st"> </span><span class="cf">function</span>(num_points) {
   true_intercept =<span class="st"> </span><span class="dv">0</span>
@@ -1021,7 +1021,7 @@ noise_dist_simulation_results =<span class="st"> </span><span class="kw">replica
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Test type&quot;</span>,
        <span class="dt">y =</span> <span class="st">&quot;Proportion significant&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="fl">0.05</span> <span class="op">*</span><span class="st"> </span>num_simulations, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-32-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_proportion_significant.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">noise_dist_simulation_results <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">count</span>(parameter, CI_type, significant) <span class="op">%&gt;%</span>
@@ -1053,7 +1053,7 @@ noise_dist_simulation_results =<span class="st"> </span><span class="kw">replica
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>population) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Feature 1&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Feature 2&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> F)</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-36-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/conceptual_density_plot.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 </div>
 </div>
@@ -1079,7 +1079,7 @@ parametric_ci_data =<span class="st"> </span><span class="kw">data.frame</span>(
               <span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>type)
 p</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-39-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_0.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">15</span>) <span class="co"># See above RE: p-hacking</span>
 samp_<span class="dv">1</span>_indices =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">2</span><span class="op">:</span>num_points, num_points, <span class="dt">replace =</span> T)
@@ -1097,7 +1097,7 @@ many_samples =<span class="st"> </span><span class="kw">bind_rows</span>(samp_<s
 <pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>samp_<span class="dv">1</span>,
              <span class="kw">aes</span>(<span class="dt">color=</span><span class="ot">NA</span>), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) </code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-42-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_1.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>samp_<span class="dv">1</span>,
@@ -1105,12 +1105,12 @@ many_samples =<span class="st"> </span><span class="kw">bind_rows</span>(samp_<s
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span>samp_<span class="dv">1</span>,
               <span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>F, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, 
               <span class="dt">size=</span><span class="fl">1.5</span>) </code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-44-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_2.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>samp_<span class="dv">2</span>,
              <span class="kw">aes</span>(<span class="dt">color=</span><span class="ot">NA</span>), <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">alpha=</span><span class="fl">0.5</span>) </code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-46-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_3.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>samp_<span class="dv">2</span>,
@@ -1118,7 +1118,7 @@ many_samples =<span class="st"> </span><span class="kw">bind_rows</span>(samp_<s
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span>samp_<span class="dv">2</span>,
               <span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>F, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, 
               <span class="dt">size=</span><span class="fl">1.5</span>) </code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-48-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_4.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">p <span class="op">+</span><span class="st">  </span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">data=</span>many_samples,
@@ -1126,7 +1126,7 @@ many_samples =<span class="st"> </span><span class="kw">bind_rows</span>(samp_<s
               <span class="dt">method=</span><span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span>F, 
               <span class="dt">size=</span><span class="fl">1.5</span>,
               <span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-50-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_demo_5.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 </div>
 </div>
@@ -1207,7 +1207,7 @@ test_score_data =<span class="st"> </span>test_score_data <span class="op">%&gt;
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;CI&quot;</span>))</code></pre>
 <pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-55-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_CI_0.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(test_summary_data, <span class="kw">aes</span>(<span class="dt">x =</span> score)) <span class="op">+</span>
@@ -1222,7 +1222,7 @@ test_score_data =<span class="st"> </span>test_score_data <span class="op">%&gt;
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;CI&quot;</span>))</code></pre>
 <pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-57-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_CI_1.png&quot;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height =</span> <span class="dv">3</span>)</code></pre>
 <pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
 </div>
@@ -1290,11 +1290,11 @@ bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstra
 
 flip_boot_plot</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-61-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">flip_data_plot <span class="op">+</span><span class="st"> </span>flip_boot_plot <span class="op">+</span>
 <span class="st">  </span><span class="kw">plot_layout</span>()</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-62-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_test.png&quot;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height =</span> <span class="fl">2.5</span>)</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstrap_results,
@@ -1331,11 +1331,11 @@ flip_boot_plot</code></pre>
 
 flip_boot_plot</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-63-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">flip_data_plot <span class="op">+</span><span class="st"> </span>flip_boot_plot <span class="op">+</span>
 <span class="st">  </span><span class="kw">plot_layout</span>()</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-64-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_test_999.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="fl">2.5</span>)</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
 
@@ -1377,12 +1377,15 @@ gitbook.start({
 "family": "sans",
 "size": 2
 },
-"edit": null,
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/15-bootstrapping.Rmd",
+"text": "Edit"
+},
 "history": {
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["psych252.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

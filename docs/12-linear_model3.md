@@ -164,7 +164,7 @@ df.poker %>%
   theme(legend.position = "none")
 ```
 
-<img src="12-linear_model3_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="12-linear_model3_files/figure-html/linear-model3-06-1.png" width="672" />
 
 #### Model fitting 
 
@@ -246,7 +246,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="12-linear_model3_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="12-linear_model3_files/figure-html/linear-model3-09-1.png" width="672" />
 
 > Note that since we have a categorical variable here, we don't really have a continuous x-axis. I've just jittered the values so it's easier to show the residuals. 
 
@@ -326,7 +326,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="12-linear_model3_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="12-linear_model3_files/figure-html/linear-model3-10-1.png" width="672" />
 
 The vertical lines illustrate the residual sum of squares. 
 
@@ -392,7 +392,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="12-linear_model3_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="12-linear_model3_files/figure-html/linear-model3-11-1.png" width="672" />
 
 This captures the variance in the data that is accounted for by the `hand` variable. 
 
@@ -714,7 +714,7 @@ ggplot(data = df.poker,
   guides(shape = F)
 ```
 
-<img src="12-linear_model3_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="12-linear_model3_files/figure-html/linear-model3-18-1.png" width="672" />
 
 And now let's take a look at the means for the full the 3 (hand) x 2 (skill) design:
 
@@ -744,7 +744,7 @@ ggplot(data = df.poker,
   guides(fill = F)
 ```
 
-<img src="12-linear_model3_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="12-linear_model3_files/figure-html/linear-model3-19-1.png" width="672" />
 
 ### Model fitting
 
@@ -864,7 +864,7 @@ ggplot(df.data,
   scale_fill_brewer(palette = "Set1")
 ```
 
-<img src="12-linear_model3_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="12-linear_model3_files/figure-html/linear-model3-22-1.png" width="672" />
 
 And here is one specific example. Let's generate the data first: 
 
@@ -981,7 +981,7 @@ ggplot(df.data,
   scale_fill_brewer(palette = "Set1")
 ```
 
-<img src="12-linear_model3_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="12-linear_model3_files/figure-html/linear-model3-25-1.png" width="672" />
 
 And check whether we can successfully infer the parameters that we used to generate the data: 
 

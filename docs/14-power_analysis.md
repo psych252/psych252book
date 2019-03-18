@@ -121,7 +121,7 @@ ggplot(data = tibble(x = c(0, 30)),
   coord_cartesian(expand = F)
 ```
 
-<img src="14-power_analysis_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="14-power_analysis_files/figure-html/power-analysis-05-1.png" width="672" />
 
 ## Effect sizes
 
@@ -280,7 +280,7 @@ pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
   theme(title = element_text(size = 16))
 ```
 
-<img src="14-power_analysis_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="14-power_analysis_files/figure-html/power-analysis-10-1.png" width="672" />
 
 ### Simulation
 
@@ -323,7 +323,7 @@ ggplot(data = df.plot,
   geom_smooth(method = "loess")
 ```
 
-<img src="14-power_analysis_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="14-power_analysis_files/figure-html/power-analysis-11-1.png" width="672" />
 
 ```r
 # based on simulations

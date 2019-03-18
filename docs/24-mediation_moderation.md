@@ -39,12 +39,12 @@ theme_set(
 
 <div class="figure">
 <img src="figures/mediation.png" alt="__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y." width="75%" />
-<p class="caption">(\#fig:mediation)__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y.</p>
+<p class="caption">(\#fig:mediation-04)__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y.</p>
 </div>
 
 Mediation tests whether the effects of __X__ (the independent variable) on __Y__ (the dependent variable) operate through a third variable, __M__ (the mediator). In this way, mediators explain the causal relationship between two variables or "how" the relationship works, making it a very popular method in psychological research.
 
-Figure \@ref(fig:mediation) shows the standard mediation model. Perfect mediation occurs when the effect of __X__ on __Y__ decreases to 0 with __M__ in the model. Partial mediation occurs when the effect of __X__ on __Y__ decreases by a nontrivial amount (the actual amount is up for debate) with __M__ in the model.
+Figure \@ref(fig:mediation-04) shows the standard mediation model. Perfect mediation occurs when the effect of __X__ on __Y__ decreases to 0 with __M__ in the model. Partial mediation occurs when the effect of __X__ on __Y__ decreases by a nontrivial amount (the actual amount is up for debate) with __M__ in the model.
 
 __Important__: Both mediation and moderation assume that the DV __did not CAUSE the mediator/moderator__.
 
@@ -291,7 +291,7 @@ Plot the results:
 fit.mediation %>% plot()
 ```
 
-<img src="24-mediation_moderation_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="24-mediation_moderation_files/figure-html/mediation-12-1.png" width="672" />
 
 #### Interpretation 
 
@@ -353,7 +353,7 @@ fit.brm_mediation %>% summary()
 fit.brm_mediation %>% plot()
 ```
 
-<img src="24-mediation_moderation_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-13-2.png" width="672" />
+<img src="24-mediation_moderation_files/figure-html/mediation-14-1.png" width="672" /><img src="24-mediation_moderation_files/figure-html/mediation-14-2.png" width="672" />
 
 Looks pretty solid! 
 
@@ -380,7 +380,7 @@ df.samples %>%
   coord_cartesian(ylim = c(1.5, 2.3))
 ```
 
-<img src="24-mediation_moderation_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="24-mediation_moderation_files/figure-html/mediation-16-1.png" width="672" />
 
 Let's also get some summaries of the posterior (MAP with highest density intervals).
 
@@ -406,7 +406,7 @@ df.samples %>%
 
 <div class="figure">
 <img src="figures/moderation.png" alt="__Basic moderation model__." width="75%" />
-<p class="caption">(\#fig:moderation)__Basic moderation model__.</p>
+<p class="caption">(\#fig:mediation-18)__Basic moderation model__.</p>
 </div>
 
 Moderation can be tested by looking for significant interactions between the moderating variable (Z) and the IV (X). Notably, it is important to mean center both your moderator and your IV to reduce multicolinearity and make interpretation easier.
@@ -503,7 +503,7 @@ df.moderation %>%
   scale_color_brewer(palette = "Set1")
 ```
 
-<img src="24-mediation_moderation_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="24-mediation_moderation_files/figure-html/mediation-21-1.png" width="672" />
 
 
 ```r

@@ -67,8 +67,8 @@ ggplot(data = tibble(x = c(-3, 3)),
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/probability-likelihood1-1.png" alt="Probability is the area under the curve of the density" width="672" />
-<p class="caption">(\#fig:probability-likelihood1)Probability is the area under the curve of the density</p>
+<img src="09-modeling_data_files/figure-html/modeling-04-likelihood1-1.png" alt="Probability is the area under the curve of the density" width="672" />
+<p class="caption">(\#fig:modeling-04-likelihood1)Probability is the area under the curve of the density</p>
 </div>
 
 
@@ -111,8 +111,8 @@ ggplot(data = tibble(x = c(-3, 3)),
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/probability-likelihood2-1.png" alt="Likelihood is a particular value." width="672" />
-<p class="caption">(\#fig:probability-likelihood2)Likelihood is a particular value.</p>
+<img src="09-modeling_data_files/figure-html/modeling-05-likelihood2-1.png" alt="Likelihood is a particular value." width="672" />
+<p class="caption">(\#fig:modeling-05-likelihood2)Likelihood is a particular value.</p>
 </div>
 
 
@@ -164,8 +164,8 @@ p1 + p2 +
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/probability-likelihood3-1.png" alt="Relationship between density and cumulative probability distribution." width="672" />
-<p class="caption">(\#fig:probability-likelihood3)Relationship between density and cumulative probability distribution.</p>
+<img src="09-modeling_data_files/figure-html/modeling-06-likelihood3-1.png" alt="Relationship between density and cumulative probability distribution." width="672" />
+<p class="caption">(\#fig:modeling-06-likelihood3)Relationship between density and cumulative probability distribution.</p>
 </div>
 
 
@@ -216,8 +216,8 @@ p1 + p2 +
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/probability-likelihood4-1.png" alt="The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution." width="672" />
-<p class="caption">(\#fig:probability-likelihood4)The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution.</p>
+<img src="09-modeling_data_files/figure-html/modeling-07-likelihood4-1.png" alt="The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution." width="672" />
+<p class="caption">(\#fig:modeling-07-likelihood4)The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution.</p>
 </div>
 
 
@@ -269,8 +269,8 @@ ggplot(data = tibble(x = c(-3, 3)),
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/probability-likelihood5-1.png" alt="The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0." width="672" />
-<p class="caption">(\#fig:probability-likelihood5)The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0.</p>
+<img src="09-modeling_data_files/figure-html/modeling-08-likelihood5-1.png" alt="The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0." width="672" />
+<p class="caption">(\#fig:modeling-08-likelihood5)The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0.</p>
 </div>
 
 ```r
@@ -322,8 +322,8 @@ ggplot(data = df.data,
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/simplicity1-1.png" alt="Tradeoff between fit and model simplicity." width="672" />
-<p class="caption">(\#fig:simplicity1)Tradeoff between fit and model simplicity.</p>
+<img src="09-modeling_data_files/figure-html/modeling-09-1.png" alt="Tradeoff between fit and model simplicity." width="672" />
+<p class="caption">(\#fig:modeling-09)Tradeoff between fit and model simplicity.</p>
 </div>
 
 
@@ -352,8 +352,8 @@ ggplot(data = df.pre,
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/simplicity2-1.png" alt="Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive." width="672" />
-<p class="caption">(\#fig:simplicity2)Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive.</p>
+<img src="09-modeling_data_files/figure-html/modeling-10-1.png" alt="Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive." width="672" />
+<p class="caption">(\#fig:modeling-10)Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive.</p>
 </div>
 
 ### Error definitions and best estimators
@@ -384,7 +384,7 @@ ggplot(data = df.data,
         text = element_text(size = 24))
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling2-1.png" width="672" />
+<img src="09-modeling_data_files/figure-html/modeling-12-1.png" width="672" />
 
 This is what the sum of absolute errors looks like for a given `value_predicted`. 
 
@@ -446,8 +446,8 @@ ggplot(data = df.data,
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling3-1.png" alt="Sum of absolute errors." width="672" />
-<p class="caption">(\#fig:modeling3)Sum of absolute errors.</p>
+<img src="09-modeling_data_files/figure-html/modeling-13-1.png" alt="Sum of absolute errors." width="672" />
+<p class="caption">(\#fig:modeling-13)Sum of absolute errors.</p>
 </div>
 
 Play around with the code below to see how using (1) the sum of absolute errors, or (2) the sum of squared errors affects what estimate minimizes the error. 
@@ -491,7 +491,7 @@ ggplot(data = df.model,
   labs(y = "Sum of squared errors")
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling4-1.png" width="672" />
+<img src="09-modeling_data_files/figure-html/modeling-14-1.png" width="672" />
 
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -554,8 +554,8 @@ ggplot(data = tibble(x = c(-3, 3)),
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling6-1.png" alt="Mean, median, and mode on the normal distribution." width="672" />
-<p class="caption">(\#fig:modeling6)Mean, median, and mode on the normal distribution.</p>
+<img src="09-modeling_data_files/figure-html/modeling-16-1.png" alt="Mean, median, and mode on the normal distribution." width="672" />
+<p class="caption">(\#fig:modeling-16)Mean, median, and mode on the normal distribution.</p>
 </div>
 
 
@@ -595,8 +595,8 @@ ggplot(data = tibble(x = c(-0.1, 3)),
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling7-1.png" alt="Mean, median, and mode on the exponential distribution." width="672" />
-<p class="caption">(\#fig:modeling7)Mean, median, and mode on the exponential distribution.</p>
+<img src="09-modeling_data_files/figure-html/modeling-17-1.png" alt="Mean, median, and mode on the exponential distribution." width="672" />
+<p class="caption">(\#fig:modeling-17)Mean, median, and mode on the exponential distribution.</p>
 </div>
 
 ### Sampling distributions for median and mean 
@@ -653,7 +653,7 @@ ggplot(data = df.sampling_distribution_means,
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling9-1.png" width="672" />
+<img src="09-modeling_data_files/figure-html/modeling-19-1.png" width="672" />
 
 ## Hypothesis testing: "One-sample t-test" 
 
@@ -860,8 +860,8 @@ ggplot(data = tibble(x = c(0, 10)),
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/testing4-1.png" alt="The F distribution" width="672" />
-<p class="caption">(\#fig:testing4)The F distribution</p>
+<img src="09-modeling_data_files/figure-html/modeling-23-1.png" alt="The F distribution" width="672" />
+<p class="caption">(\#fig:modeling-23)The F distribution</p>
 </div>
 
 We've implemented a one sample t-test (compare the p-value here to the one I computed above using PRE and the F statistic).

@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-15">
+<meta name="date" content="2019-03-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -607,6 +607,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;kableExtra&quot;</span>)
 <span class="kw">library</span>(<span class="st">&quot;MASS&quot;</span>)
 <span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)
+<span class="kw">library</span>(<span class="st">&quot;extrafont&quot;</span>)
 <span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
@@ -685,7 +686,7 @@ for “<strong>random</strong>”, a random variable having the specified distri
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)),
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>)</code></pre>
-<p><img src="07-simulation1_files/figure-html/plotting-normal-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-05-1.png" width="672" /></p>
 <p>Note that the data frame I created with <code>tibble()</code> only needs to have the minimum and the maximum value of the x-range that we are interested in. Here, I chose <code>-5</code> and <code>5</code> as the minimum and maximum, respectively.</p>
 <p>The <code>stat_function()</code> is very flexible. We can define our own functions and plot these like here:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the breakpoint function </span>
@@ -700,7 +701,7 @@ fun.breakpoint =<span class="st"> </span><span class="cf">function</span>(x, bre
 <span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;fun.breakpoint&quot;</span>,
                 <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">breakpoint =</span> <span class="dv">2</span>)
                 )</code></pre>
-<p><img src="07-simulation1_files/figure-html/plotting-function-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-06-1.png" width="672" /></p>
 <p>Here, I defined a breakpoint function. If the value of <code>x</code> is below the breakpoint, <code>y</code> equals the value of the breakpoint. If the value of <code>x</code> is greater than the breakpoint, then <code>y</code> equals <code>x</code>.</p>
 <p>Note how I used the <code>args =</code> argument in the <code>stat_function()</code> to supply the breakpoint parameter that my <code>fun.breakpoint()</code> wants. Make sure to put these parameters into a <code>list()</code> as shown above.</p>
 <p>Let’s play around with the parameters of the normal distribution. The normal distribution takes two parameters, the mean and standard deviation. Again, I’m going to use the <code>args =</code> argument to supply these parameters.</p>
@@ -712,7 +713,7 @@ tmp.sd =<span class="st"> </span><span class="dv">2</span>
 <span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;dnorm&quot;</span>,
                 <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> tmp.mean,
                             <span class="dt">sd =</span> tmp.sd))</code></pre>
-<p><img src="07-simulation1_files/figure-html/plotting-normal2-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-07-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
 <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_subset</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
 <p>To keep my environment clean, I’ve named the parameters <code>tmp.mean</code> and <code>tmp.sd</code> and then, at the end of the code chunk, I removed all variables from the environment that have “tmp.” in their name using the <code>ls()</code> function (which prints out all variables in the environment as a vector), and the <code>str_subset()</code> function which filters out only those variables that contain the specified pattern.</p>
@@ -740,7 +741,7 @@ df.plot =<span class="st"> </span><span class="kw">tibble</span>(
                  <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">expand =</span> T)</code></pre>
-<p><img src="07-simulation1_files/figure-html/sampling-distributions1-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-08-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
 <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_subset</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
 <p>Let’s see how many samples it takes to closely approximate the shape of the normal distribution with our histogram of samples.</p>
@@ -785,7 +786,7 @@ fun.dnorm =<span class="st"> </span><span class="cf">function</span>(x, mean, sd
            <span class="dt">family =</span> <span class="st">&quot;Courier New&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>, <span class="dt">labels =</span> <span class="dv">-4</span><span class="op">:</span><span class="dv">4</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="dt">expand =</span> F)</code></pre>
-<p><img src="07-simulation1_files/figure-html/sampling-distributions2-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-09-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
 <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_subset</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
 <p>With 10,000 samples, our histogram of samples already closely resembles the theoretical shape of the normal distribution.</p>
@@ -797,7 +798,7 @@ fun.dnorm =<span class="st"> </span><span class="cf">function</span>(x, mean, sd
 <span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;pnorm&quot;</span>,
                 <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>,
                             <span class="dt">sd =</span> <span class="dv">1</span>))</code></pre>
-<p><img src="07-simulation1_files/figure-html/cumulative1-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-10-1.png" width="672" /></p>
 <p>Let’s find the cumulative probability of a particular value.</p>
 <pre class="sourceCode r"><code class="sourceCode r">tmp.x =<span class="st"> </span><span class="dv">1</span>
 tmp.y =<span class="st"> </span><span class="kw">pnorm</span>(tmp.x, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
@@ -831,7 +832,7 @@ tmp.y =<span class="st"> </span><span class="kw">pnorm</span>(tmp.x, <span class
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>),
                   <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>),
                   <span class="dt">expand =</span> F)</code></pre>
-<p><img src="07-simulation1_files/figure-html/cumulative2-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-11-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
 <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">str_subset</span>(<span class="dt">string =</span> <span class="kw">ls</span>(), <span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
 <p>Let’s illustrate what this would look like using a normal density plot.</p>
@@ -848,7 +849,7 @@ tmp.y =<span class="st"> </span><span class="kw">pnorm</span>(tmp.x, <span class
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-5</span><span class="op">:</span><span class="dv">5</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">mult =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))) </code></pre>
-<p><img src="07-simulation1_files/figure-html/cumulative3-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-12-1.png" width="672" /></p>
 </div>
 <div id="inverse-cumulative-distribution" class="section level3">
 <h3><span class="header-section-number">7.2.4</span> Inverse cumulative distribution</h3>
@@ -857,7 +858,7 @@ tmp.y =<span class="st"> </span><span class="kw">pnorm</span>(tmp.x, <span class
 <span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="st">&quot;qnorm&quot;</span>,
                 <span class="dt">args =</span> <span class="kw">list</span>(<span class="dt">mean =</span> <span class="dv">0</span>,
                             <span class="dt">sd =</span> <span class="dv">1</span>))</code></pre>
-<p><img src="07-simulation1_files/figure-html/inverse1-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-13-1.png" width="672" /></p>
 <p>And let’s compute the inverse cumulative probability for a particular value.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># tmp.x = 0.841</span>
 tmp.x =<span class="st"> </span><span class="fl">0.975</span>
@@ -892,7 +893,7 @@ tmp.y =<span class="st"> </span><span class="kw">qnorm</span>(tmp.x, <span class
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>),
                   <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>),
                   <span class="dt">expand =</span> F)</code></pre>
-<p><img src="07-simulation1_files/figure-html/inverse2-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-14-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
 <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">str_subset</span>(<span class="dt">string =</span> <span class="kw">ls</span>(), <span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
 </div>
@@ -938,7 +939,7 @@ tmp.prob =<span class="st"> </span><span class="kw">pnorm</span>(tmp.upper) <spa
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-5</span><span class="op">:</span><span class="dv">5</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">mult =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))) </code></pre>
-<p><img src="07-simulation1_files/figure-html/computing1-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-15-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
 <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">str_subset</span>(<span class="dt">string =</span> <span class="kw">ls</span>(), <span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
 <p>We find that 95% of the density in the normal distribution is between -1.96 and 1.96.</p>
@@ -989,7 +990,7 @@ tmp.prob =<span class="st"> </span>df.samples <span class="op">%&gt;%</span><spa
            <span class="dt">y =</span> <span class="dv">200</span>,
            <span class="dt">hjust =</span> <span class="fl">0.5</span>,
            <span class="dt">size =</span> <span class="dv">10</span>)</code></pre>
-<p><img src="07-simulation1_files/figure-html/sampling1-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-16-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># remove all variables with tmp in their name </span>
 <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">str_subset</span>(<span class="dt">string =</span> <span class="kw">ls</span>(), <span class="dt">pattern =</span> <span class="st">&quot;tmp.&quot;</span>))</code></pre>
 </div>
@@ -1206,7 +1207,7 @@ y
              <span class="dt">size =</span> <span class="dv">3</span>)</code></pre>
 <pre><code>## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
 ## This warning is displayed once per session.</code></pre>
-<p><img src="07-simulation1_files/figure-html/density2-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-23-1.png" width="672" /></p>
 <p>This density shows the sum of the densities of normal distributions that are centered at the observations with the specified bandwidth.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add densities for the individual normal distributions</span>
 <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(observations)){
@@ -1441,7 +1442,7 @@ p =<span class="st"> </span>p <span class="op">+</span>
             <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
             <span class="dt">linetype =</span> <span class="dv">2</span>)
 p <span class="co"># print the figure</span></code></pre>
-<p><img src="07-simulation1_files/figure-html/density4-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-25-1.png" width="672" /></p>
 <p>Here are the same results when specifying a different bandwidth:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate density</span>
 observations =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">1.2</span>, <span class="fl">1.5</span>, <span class="dv">2</span>, <span class="dv">3</span>)
@@ -1487,7 +1488,7 @@ p =<span class="st"> </span>p <span class="op">+</span>
             <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
             <span class="dt">linetype =</span> <span class="dv">2</span>)
 p</code></pre>
-<p><img src="07-simulation1_files/figure-html/density5-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-26-1.png" width="672" /></p>
 </div>
 <div id="the-quantile-function" class="section level3">
 <h3><span class="header-section-number">7.4.2</span> The <code>quantile()</code> function</h3>
@@ -1605,7 +1606,7 @@ value
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.quantile,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_boxplot</span>()</code></pre>
-<p><img src="07-simulation1_files/figure-html/quantile2-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-28-1.png" width="672" /></p>
 <p>Here is a reminder of what boxplots show from the help file of <code>geom_boxplot()</code>:</p>
 <blockquote>
 <p>The lower and upper hinges correspond to the first and third quartiles (the 25th and 75th percentiles). This differs slightly from the method used by the boxplot() function, and may be apparent with small samples. See boxplot.stats() for for more information on how hinge positions are calculated for boxplot().</p>
@@ -1670,7 +1671,7 @@ value
            <span class="dt">vjust =</span> <span class="fl">0.5</span>,
            <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">1.2</span>, <span class="fl">0.5</span>))</code></pre>
-<p><img src="07-simulation1_files/figure-html/quantile4-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-30-1.png" width="672" /></p>
 <p>Neat! Now we know how boxplots are made.</p>
 <p>We can also use the quantile function to create an inverse cumulative probability plot (i.e. the equivalent of what we get from <code>qnorm()</code> for the normal distribution).</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.quantile<span class="op">$</span>value <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1682,7 +1683,7 @@ value
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="07-simulation1_files/figure-html/quantile5-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-31-1.png" width="672" /></p>
 <p>And we can calculate quantiles by hand in the following way:</p>
 <pre class="sourceCode r"><code class="sourceCode r">tmp.samples =<span class="st"> </span><span class="dv">1000</span>
 
@@ -1728,8 +1729,8 @@ params =<span class="st"> </span><span class="kw">as.list</span>(MASS<span class
 <span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;green&quot;</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;theoretical&quot;</span>, <span class="st">&quot;empirical&quot;</span>))<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
         <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.9</span>, <span class="fl">0.9</span>))</code></pre>
-<div class="figure"><span id="fig:comparing1"></span>
-<img src="07-simulation1_files/figure-html/comparing1-1.png" alt="Empirical distribution of residuals, and theoretical distribution." width="672" />
+<div class="figure"><span id="fig:simulation1-34"></span>
+<img src="07-simulation1_files/figure-html/simulation1-34-1.png" alt="Empirical distribution of residuals, and theoretical distribution." width="672" />
 <p class="caption">
 Figure 7.1: Empirical distribution of residuals, and theoretical distribution.
 </p>
@@ -1739,9 +1740,9 @@ Figure 7.1: Empirical distribution of residuals, and theoretical distribution.
 <span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_qq</span>(<span class="dt">distribution =</span> <span class="st">&quot;qnorm&quot;</span>, <span class="dt">dparams =</span> params) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">40</span>, <span class="dv">40</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">40</span>, <span class="dv">40</span>))</code></pre>
-<p><img src="07-simulation1_files/figure-html/comparing2-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-35-1.png" width="672" /></p>
 <p>Note that the QQ plot is sensitive to the general shape of the distribution.</p>
-<p>I’ve used the <code>geom_qq()</code> and <code>geom_qq_line()</code> functions that are part of <code>ggplot</code>. By default, these functions assume a normal distribution as the theoretical distribution. This plot is just another way of showing the information in Figure <a href="#fig:empirical-theoretical-distribution"><strong>??</strong></a>. Intuitively, a QQ plot is built in the following way: imagine going with your finger from left to right along the x-axis on Figure <a href="#fig:empirical-theoretical-distribution"><strong>??</strong></a>, and then add a point on the QQ plot which captures the cumulative density for each distribution.</p>
+<p>I’ve used the <code>geom_qq()</code> and <code>geom_qq_line()</code> functions that are part of <code>ggplot</code>. By default, these functions assume a normal distribution as the theoretical distribution. This plot is just another way of showing the information in Figure <a href="#fig:simulation1-36"><strong>??</strong></a>. Intuitively, a QQ plot is built in the following way: imagine going with your finger from left to right along the x-axis on Figure <a href="#fig:simulation1-37"><strong>??</strong></a>, and then add a point on the QQ plot which captures the cumulative density for each distribution.</p>
 <p>Here are some more examples for what these plots would look like when comparing different theoretical distributions to the same empirical distribution.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data frame with parameters saved in a list column </span>
 df.parameters =<span class="st"> </span><span class="kw">tibble</span>(
@@ -1787,7 +1788,7 @@ l.plots[[<span class="dv">8</span>]] <span class="op">+</span>
 ## adjust the group aesthetic?
 ## geom_path: Each group consists of only one observation. Do you need to
 ## adjust the group aesthetic?</code></pre>
-<p><img src="07-simulation1_files/figure-html/comparing3-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-38-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ggsave(&quot;figures/qqplots_normal.pdf&quot;, width = 10, height = 6)</span></code></pre>
 <p>The line changes, but it’s still a line. So the QQ plot helps us detect what kind of distribution the data follows.</p>
 <p>Now, let’s see what happens if distributions don’t have the same shape.</p>
@@ -1837,9 +1838,9 @@ l.plots[[<span class="dv">7</span>]] <span class="op">+</span>
 l.plots[[<span class="dv">8</span>]] <span class="op">+</span>
 <span class="st">  </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">4</span>, <span class="dt">byrow =</span> F) <span class="op">&amp;</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">16</span>))</code></pre>
-<p><img src="07-simulation1_files/figure-html/comparing4-1.png" width="672" /></p>
+<p><img src="07-simulation1_files/figure-html/simulation1-39-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/qqplots_beta.pdf&quot;</span>, <span class="dt">width =</span> <span class="dv">10</span>, <span class="dt">height =</span> <span class="dv">6</span>)</code></pre>
-<div class="figure"><span id="fig:qqplots"></span>
+<div class="figure"><span id="fig:simulation1-40"></span>
 <img src="figures/qqplots.png" alt="QQ plots indicating different deviations from normality." width="90%" />
 <p class="caption">
 Figure 7.2: QQ plots indicating different deviations from normality.
@@ -1898,12 +1899,15 @@ gitbook.start({
 "family": "sans",
 "size": 2
 },
-"edit": null,
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/07-simulation1.Rmd",
+"text": "Edit"
+},
 "history": {
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["psych252.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

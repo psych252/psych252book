@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-15">
+<meta name="date" content="2019-03-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -630,14 +630,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="mediation" class="section level2">
 <h2><span class="header-section-number">24.3</span> Mediation</h2>
-<div class="figure"><span id="fig:mediation"></span>
+<div class="figure"><span id="fig:mediation-04"></span>
 <img src="figures/mediation.png" alt="__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y." width="75%" />
 <p class="caption">
 Figure 24.1: <strong>Basic mediation model</strong>. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y.
 </p>
 </div>
 <p>Mediation tests whether the effects of <strong>X</strong> (the independent variable) on <strong>Y</strong> (the dependent variable) operate through a third variable, <strong>M</strong> (the mediator). In this way, mediators explain the causal relationship between two variables or “how” the relationship works, making it a very popular method in psychological research.</p>
-<p>Figure <a href="mediation-moderation.html#fig:mediation">24.1</a> shows the standard mediation model. Perfect mediation occurs when the effect of <strong>X</strong> on <strong>Y</strong> decreases to 0 with <strong>M</strong> in the model. Partial mediation occurs when the effect of <strong>X</strong> on <strong>Y</strong> decreases by a nontrivial amount (the actual amount is up for debate) with <strong>M</strong> in the model.</p>
+<p>Figure <a href="mediation-moderation.html#fig:mediation-04">24.1</a> shows the standard mediation model. Perfect mediation occurs when the effect of <strong>X</strong> on <strong>Y</strong> decreases to 0 with <strong>M</strong> in the model. Partial mediation occurs when the effect of <strong>X</strong> on <strong>Y</strong> decreases by a nontrivial amount (the actual amount is up for debate) with <strong>M</strong> in the model.</p>
 <p><strong>Important</strong>: Both mediation and moderation assume that the DV <strong>did not CAUSE the mediator/moderator</strong>.</p>
 <div id="generate-data" class="section level3">
 <h3><span class="header-section-number">24.3.1</span> Generate data</h3>
@@ -826,7 +826,7 @@ fit.mediation <span class="op">%&gt;%</span><span class="st"> </span><span class
 </ul>
 <p>Plot the results:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.mediation <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">plot</span>()</code></pre>
-<p><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="24-mediation_moderation_files/figure-html/mediation-12-1.png" width="672" /></p>
 <div id="interpretation-1" class="section level4">
 <h4><span class="header-section-number">24.3.4.1</span> Interpretation</h4>
 <p>The <code>mediate()</code> function gives us our Average Causal Mediation Effects (ACME), our Average Direct Effects (ADE), our combined indirect and direct effects (Total Effect), and the ratio of these estimates (Prop. Mediated). The ACME here is the indirect effect of M (total effect - direct effect) and thus this value tells us if our mediation effect is significant.</p>
@@ -876,7 +876,7 @@ fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span><span c
 <p><code>set_rescor(FALSE)</code> makes it such that the residual correlation between the response variables is not modeled.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check inference </span>
 fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">plot</span>()</code></pre>
-<p><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p><img src="24-mediation_moderation_files/figure-html/mediation-14-1.png" width="672" /><img src="24-mediation_moderation_files/figure-html/mediation-14-2.png" width="672" /></p>
 <p>Looks pretty solid!</p>
 <p>Let’s get the posterior samples</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.samples =<span class="st"> </span>fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span>
@@ -890,7 +890,7 @@ fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span><span c
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> effect, <span class="dt">x =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_halfeyeh</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">1.5</span>, <span class="fl">2.3</span>))</code></pre>
-<p><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="24-mediation_moderation_files/figure-html/mediation-16-1.png" width="672" /></p>
 <p>Let’s also get some summaries of the posterior (MAP with highest density intervals).</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.samples <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(ab, total) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -907,7 +907,7 @@ fit.brm_mediation <span class="op">%&gt;%</span><span class="st"> </span><span c
 </div>
 <div id="moderation" class="section level2">
 <h2><span class="header-section-number">24.4</span> Moderation</h2>
-<div class="figure"><span id="fig:moderation"></span>
+<div class="figure"><span id="fig:mediation-18"></span>
 <img src="figures/moderation.png" alt="__Basic moderation model__." width="75%" />
 <p class="caption">
 Figure 24.2: <strong>Basic moderation model</strong>.
@@ -992,7 +992,7 @@ df.moderation <span class="op">%&gt;%</span><span class="st"> </span>
        <span class="dt">y =</span> <span class="st">&quot;attention paid&quot;</span>,
        <span class="dt">color =</span> <span class="st">&quot;coffee consumed&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)</code></pre>
-<p><img src="24-mediation_moderation_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="24-mediation_moderation_files/figure-html/mediation-21-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">df.prediction <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">head</span>(<span class="dv">9</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1198,12 +1198,15 @@ gitbook.start({
 "family": "sans",
 "size": 2
 },
-"edit": null,
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/24-mediation_moderation.Rmd",
+"text": "Edit"
+},
 "history": {
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["psych252.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

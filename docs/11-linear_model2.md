@@ -122,7 +122,7 @@ ggplot(data = tibble(x = c(0, tmp.max)),
                   expand = F)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-3-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-06-1.png" width="672" />
 
 And here is the density plot for a beta distribution:
 
@@ -149,7 +149,7 @@ ggplot(data = tibble(x = c(0, 1)),
                   expand = F)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-4-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-07-1.png" width="672" />
 
 ## Multiple continuous variables 
 
@@ -212,8 +212,8 @@ df.credit %>%
 ```
 
 <div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-7-1.png" alt="Bar plot illustrating how strongly different variables correlate with income." width="672" />
-<p class="caption">(\#fig:linear-model2-7)Bar plot illustrating how strongly different variables correlate with income.</p>
+<img src="11-linear_model2_files/figure-html/linear-model2-10-1.png" alt="Bar plot illustrating how strongly different variables correlate with income." width="672" />
+<p class="caption">(\#fig:linear-model2-10)Bar plot illustrating how strongly different variables correlate with income.</p>
 </div>
 
 ##### All pairwise correlations
@@ -230,7 +230,7 @@ tmp = df.credit %>%
   corrplot()
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-8-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-11-1.png" width="672" />
 
 
 ```r
@@ -240,8 +240,8 @@ df.ads %>%
 ```
 
 <div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-9-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal." width="672" />
-<p class="caption">(\#fig:linear-model2-9)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal.</p>
+<img src="11-linear_model2_files/figure-html/linear-model2-12-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal." width="672" />
+<p class="caption">(\#fig:linear-model2-12)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal.</p>
 </div>
 
 With some customization: 
@@ -257,8 +257,8 @@ df.ads %>%
 ```
 
 <div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-10-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized)." width="672" />
-<p class="caption">(\#fig:linear-model2-10)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized).</p>
+<img src="11-linear_model2_files/figure-html/linear-model2-13-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized)." width="672" />
+<p class="caption">(\#fig:linear-model2-13)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized).</p>
 </div>
 
 ### Multipe regression
@@ -297,7 +297,7 @@ ggplot(df.ads,
   theme(text = element_text(size = 30))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-11-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-14-1.png" width="672" />
 
 TV ads and radio ads aren't correlated. Yay! 
 
@@ -346,7 +346,7 @@ ggplot(df.plot,
   geom_point()
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-13-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-16-1.png" width="672" />
 
 ```r
 # density of residuals 
@@ -355,7 +355,7 @@ ggplot(df.plot,
   stat_density(geom = "line")
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-13-2.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-16-2.png" width="672" />
 
 ```r
 # QQ plot 
@@ -365,7 +365,7 @@ ggplot(df.plot,
   geom_qq_line() 
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-13-3.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-16-3.png" width="672" />
 
 There is a slight non-linear trend in the residuals. We can also see that the residuals aren't perfectly normally distributed. We'll see later what we can do about this ... 
 
@@ -434,7 +434,7 @@ ggplot(df.plot, aes(x = radio, y = sales, color = tv)) +
   theme(legend.position = c(0.1, 0.8))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-15-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-18-1.png" width="672" />
 
 We used color here to encode TV ads (and the x-axis for the radio ads). 
 
@@ -461,7 +461,7 @@ ggplot(df.plot, aes(x = radio, y = sales, color = tv)) +
   theme(legend.position = c(0.1, 0.8))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-16-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-19-1.png" width="672" />
 
 #### Interpreting the model fits
 
@@ -675,7 +675,7 @@ annotate(geom = "text",
            )
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-19-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-22-1.png" width="672" />
 
 Scaling a variable leaves the distribution intact, but changes the mean to 0 and the SD to 1. 
 
@@ -750,7 +750,7 @@ ggplot(df.credit,
   geom_point(alpha = 0.5) 
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-21-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-24-1.png" width="672" />
 
 It just predicts the mean (the horizontal black line). The vertical lines from each data point to the mean illustrate the residuals. 
 
@@ -789,7 +789,7 @@ ggplot(df.credit,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-22-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-25-1.png" width="672" />
 
 Note that this model predicts two horizontal lines. One for students, and one for non-students. 
 
@@ -809,7 +809,7 @@ ggplot(data = df.credit,
   scale_fill_brewer(palette = "Set1")
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-23-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-26-1.png" width="672" />
 
 And let's double check that we also get a signifcant result when we run a t-test instead of our model comparison procedure: 
 
@@ -931,7 +931,7 @@ ggplot(df.plot,
                size = 4)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-26-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-29-1.png" width="672" />
 
 And then report the means and standard deviations together with the result of our signifance test: 
 
@@ -1000,7 +1000,7 @@ ggplot(df.augment,
   geom_point(alpha = 0.3)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-29-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-32-1.png" width="672" />
 
 This time, the compact model still predicts just one line (like above) but note that this line is not horizontal anymore. 
 
@@ -1045,7 +1045,7 @@ ggplot(df.augment,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-30-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-33-1.png" width="672" />
 
 The augmented model predicts two lines again, each with the same slope (but the intercept differs).
 
@@ -1071,7 +1071,7 @@ ggplot(data = df.credit,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-31-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/linear-model2-34-1.png" width="672" />
 
 Note that we just specified here that we want to have a linear model (via `geom_smooth(method = "lm")`). By default, `ggplot2` assumes that we want a model that includes interactions. We can see this by the fact that two fitted lines are not parallel. 
 

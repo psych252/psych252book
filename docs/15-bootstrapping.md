@@ -57,17 +57,17 @@ ggplot(parametric_plotting_data, aes(x=value, color=distribution)) +
 ```
 
 ```
-## Warning: Removed 10 rows containing non-finite values (stat_density).
+## Warning: Removed 11 rows containing non-finite values (stat_density).
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-05-1.png" width="672" />
 
 ```r
 ggsave("figures/log_normal_dists.png", width=5, height=3)
 ```
 
 ```
-## Warning: Removed 10 rows containing non-finite values (stat_density).
+## Warning: Removed 11 rows containing non-finite values (stat_density).
 ```
 
 
@@ -132,7 +132,7 @@ ggplot(parametric_issues_d, aes(x=type, fill=is_significant)) +
   labs(title="Parametric t-test")
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-09-1.png" width="672" />
 
 That's a non-trivial reduction in power from a misspecified model! (~80% to ~54%).
 
@@ -300,7 +300,7 @@ ggplot(perm_results %>%
                      labels = paste(c(0, 80, 100), "%", sep=""))
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-15-1.png" width="672" />
 
 ```r
 ggsave("figures/perm_test.png", width=5, height=3)
@@ -359,7 +359,7 @@ ggplot(parametric_ci_data,
   guides(color=F)
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-19-1.png" width="672" />
 
 ```r
 ggsave("figures/error_dist_non_null.png", width=5, height=3)
@@ -529,7 +529,7 @@ ggplot(parametric_ci_data,
   guides(color=F)
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-28-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-28-1.png" width="672" />
 
 
 ```r
@@ -587,7 +587,7 @@ ggplot(noise_dist_simulation_results, aes(x = CI_type, fill = significant)) +
   geom_hline(yintercept = 0.05 * num_simulations, linetype = 2)
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-32-1.png" width="672" />
 
 
 ```r
@@ -639,7 +639,7 @@ ggplot(density_similarity_conceptual_plot_data,
   guides(color = F)
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-36-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-36-1.png" width="672" />
 
 
 ```r
@@ -675,7 +675,7 @@ p = ggplot(parametric_ci_data,
 p
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-39-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-39-1.png" width="672" />
 
 
 ```r
@@ -706,7 +706,7 @@ p +
              aes(color=NA), color="red", alpha=0.5) 
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-42-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-42-1.png" width="672" />
 
 
 ```r
@@ -723,7 +723,7 @@ p +
               size=1.5) 
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-44-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-44-1.png" width="672" />
 
 
 ```r
@@ -737,7 +737,7 @@ p +
              aes(color=NA), color="red", alpha=0.5) 
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-46-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-46-1.png" width="672" />
 
 
 ```r
@@ -755,7 +755,7 @@ p +
               size=1.5) 
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-48-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-48-1.png" width="672" />
 
 
 ```r
@@ -772,7 +772,7 @@ p +
               color="red")
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-50-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-50-1.png" width="672" />
 
 
 ```r
@@ -893,7 +893,7 @@ ggplot(test_summary_data %>%
 ## Warning: position_dodge requires non-overlapping x intervals
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-55-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-55-1.png" width="672" />
 
 
 ```r
@@ -923,7 +923,7 @@ ggplot(test_summary_data, aes(x = score)) +
 ## Warning: position_dodge requires non-overlapping x intervals
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-57-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-57-1.png" width="672" />
 
 ```r
 ggsave("figures/bootstrap_CI_1.png", width = 5, height = 3)
@@ -1025,7 +1025,7 @@ flip_boot_plot
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-61-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-61-1.png" width="672" />
 
 
 ```r
@@ -1037,7 +1037,7 @@ flip_data_plot + flip_boot_plot +
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-62-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-62-1.png" width="672" />
 
 ```r
 ggsave("figures/bootstrap_test.png", width = 5, height = 2.5)
@@ -1097,7 +1097,7 @@ flip_boot_plot
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-63-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-63-1.png" width="672" />
 
 
 ```r
@@ -1109,7 +1109,7 @@ flip_data_plot + flip_boot_plot +
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="15-bootstrapping_files/figure-html/unnamed-chunk-64-1.png" width="672" />
+<img src="15-bootstrapping_files/figure-html/bootstrapping-64-1.png" width="672" />
 
 ```r
 ggsave("figures/bootstrap_test_999.png", width=5, height=2.5)

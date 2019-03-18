@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-15">
+<meta name="date" content="2019-03-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -650,7 +650,7 @@ df.population =<span class="st"> </span><span class="kw">tibble</span>(
                      <span class="dt">labels =</span> df.population<span class="op">$</span>numbers,
                      <span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">6.9</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F)</code></pre>
-<p><img src="08-simulation2_files/figure-html/clt2-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-05-1.png" width="672" /></p>
 <p>Here are the true mean and standard deviation of our population distribution:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mean and standard deviation (see: https://nzmaths.co.nz/category/glossary/standard-deviation-discrete-random-variable)</span>
 
@@ -707,7 +707,7 @@ df.sample =<span class="st"> </span><span class="kw">sample</span>(df.population
                  <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">min</span>(df.sample<span class="op">$</span>number)<span class="op">:</span><span class="kw">max</span>(df.sample<span class="op">$</span>number)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">mult =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>)))</code></pre>
-<p><img src="08-simulation2_files/figure-html/clt4-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-07-1.png" width="672" /></p>
 <p>Here are the sample mean and standard deviation:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print out sample mean and standard deviation </span>
 df.sample <span class="op">%&gt;%</span><span class="st"> </span>
@@ -793,7 +793,7 @@ df.sampling_distribution_means =<span class="st"> </span>df.sampling_distributio
                <span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>
                ) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">mult =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>)))</code></pre>
-<p><img src="08-simulation2_files/figure-html/clt7-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-10-1.png" width="672" /></p>
 <p>That’s the central limit theorem in action! Even though our population distribution was far from normal (and much more heavy-metal like), the means of that distribution are normally distributed.</p>
 <p>And here are the mean and standard deviation of the sampling distribution:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print out sampling distribution mean and standard deviation </span>
@@ -1097,7 +1097,7 @@ df.bootstrap =<span class="st"> </span><span class="kw">tibble</span>(
                <span class="dt">bw =</span> <span class="fl">0.1</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;mean&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">mult =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>)))</code></pre>
-<p><img src="08-simulation2_files/figure-html/boot2-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-14-1.png" width="672" /></p>
 <p>And let’s calculate the mean and standard deviation:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># print out sampling distribution mean and standard deviation </span>
 df.sampling_distribution_means <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1168,7 +1168,7 @@ bootstrapped_distribution_sd
                 <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Women&#39;s height&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F, <span class="dt">clip =</span> <span class="st">&quot;off&quot;</span>)</code></pre>
-<p><img src="08-simulation2_files/figure-html/height2-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-17-1.png" width="672" /></p>
 <p>Women’s height in the <code>NHANES</code> data set is approximately normally distributed.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.nhanes <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">drop_na</span>(height) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># remove missing values</span>
@@ -1191,7 +1191,7 @@ bootstrapped_distribution_sd
                 <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Men&#39;s height&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F, <span class="dt">clip =</span> <span class="st">&quot;off&quot;</span>)</code></pre>
-<p><img src="08-simulation2_files/figure-html/height3-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-18-1.png" width="672" /></p>
 <p>The same is true for men’s height.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.nhanes <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">drop_na</span>(height) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># remove missing values</span>
@@ -1213,7 +1213,7 @@ bootstrapped_distribution_sd
                 <span class="dt">size =</span> <span class="dv">2</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Adults&#39; height&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F, <span class="dt">clip =</span> <span class="st">&quot;off&quot;</span>)</code></pre>
-<p><img src="08-simulation2_files/figure-html/height4-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-19-1.png" width="672" /></p>
 <p>However, adults’ height is not quite normally distributed. Note that the distribution is too flat in the middle.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.nhanes <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">drop_na</span>(height) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># remove missing values</span>
@@ -1242,7 +1242,7 @@ bootstrapped_distribution_sd
                 <span class="dt">size =</span> <span class="dv">2</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Adults&#39; height (separated by gender)&quot;</span>)<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.9</span>, <span class="fl">0.8</span>))</code></pre>
-<p><img src="08-simulation2_files/figure-html/height5-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-20-1.png" width="672" /></p>
 <p>The fact that adults’ height overall is not normally distributed is because there is a single factor (gender) that accounts for much of the variation.</p>
 </div>
 <div id="testing-the-limits" class="section level4">
@@ -1289,7 +1289,7 @@ bootstrapped_distribution_sd
            <span class="dt">hjust =</span> <span class="dv">0</span>,
            <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>,
            <span class="dt">size =</span> <span class="dv">6</span>)</code></pre>
-<p><img src="08-simulation2_files/figure-html/limits1-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-21-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Parameters for the simulation</span>
 n_samples =<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">10000</span>)
 sample_size =<span class="st"> </span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">100</span>)
@@ -1351,7 +1351,7 @@ df.plot =<span class="st"> </span>df.central_limit <span class="op">%&gt;%</span
     <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,
     <span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)
     )</code></pre>
-<p><img src="08-simulation2_files/figure-html/limits2-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-22-1.png" width="672" /></p>
 <p>No matter where we start, as long as we draw samples that are independent and identically distributed, and these samples combine in an additive way, we end up with a normal distribution (note that this takes considerably longer when we start with an exponential distribution – shown in blue – compared to the other population distributions).</p>
 </div>
 </div>
@@ -1445,7 +1445,7 @@ sd
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span>,
                      <span class="dt">labels =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span>,
                      <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</code></pre>
-<p><img src="08-simulation2_files/figure-html/permuation3-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-25-1.png" width="672" /></p>
 <p>We are interested in the difference in the mean performance between the two groups:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># calculate the difference between conditions</span>
 difference_actual =<span class="st"> </span>df.permutation <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1478,7 +1478,7 @@ df.permutation <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span>,
                      <span class="dt">labels =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span>,
                      <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</code></pre>
-<p><img src="08-simulation2_files/figure-html/permuation6-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-28-1.png" width="672" /></p>
 <p>The idea is now that, similar to bootstrapping above, we can get a sampling distribution of the difference in the means between the two conditions (assuming that the null hypothesis were true), by randomly shuffling the labels and calculating the difference in means (and doing this many times). What we get is a distribution of the differences we would expect, if there was no effect of condition.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 
@@ -1516,7 +1516,7 @@ df.permutations =<span class="st"> </span><span class="kw">tibble</span>(
                      <span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F, <span class="dt">clip =</span> <span class="st">&quot;off&quot;</span>)</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
-<p><img src="08-simulation2_files/figure-html/permuation7-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-29-1.png" width="672" /></p>
 <p>And we can then simply calculate the p-value by using some basic data wrangling (i.e. finding the proportion of differences that were as or more extreme than the one we observed).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#calculate p-value of our observed result</span>
 df.permutations <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1589,7 +1589,7 @@ df.confidence =<span class="st"> </span>df.confidence <span class="op">%&gt;%</s
 <span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;inside&quot;</span>, <span class="st">&quot;outside&quot;</span>))<span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
         <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre>
-<p><img src="08-simulation2_files/figure-html/confidence1-1.png" width="672" /></p>
+<p><img src="08-simulation2_files/figure-html/simulation2-31-1.png" width="672" /></p>
 <p>So, out of the 20 samples that we drew the 95% confidence interval of 1 sample did not contain the true mean. That makes sense!</p>
 <p>Feel free to play around with the code above. For example, change the sample size, the number of samples, the confidence level.</p>
 </div>
@@ -1639,12 +1639,15 @@ gitbook.start({
 "family": "sans",
 "size": 2
 },
-"edit": null,
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-simulation2.Rmd",
+"text": "Edit"
+},
 "history": {
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["psych252.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

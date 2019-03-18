@@ -64,7 +64,7 @@ plots = map2(success, failure, ~ fun.plot_beta(.x, .y))
 plot_grid(plotlist = plots)
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-1-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-04-1.png" width="672" />
 
 ### Coin flip example 
 
@@ -126,7 +126,7 @@ df.coins %>%
         axis.line = element_blank())
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-3-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-06-1.png" width="672" />
 
 ### Bayesian inference by discretization
 
@@ -182,8 +182,8 @@ df.prior_effect %>%
 ```
 
 <div class="figure">
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-4-1.png" alt="Illustration of how the prior affects the posterior." width="672" />
-<p class="caption">(\#fig:bda2-4)Illustration of how the prior affects the posterior.</p>
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-07-1.png" alt="Illustration of how the prior affects the posterior." width="672" />
+<p class="caption">(\#fig:bda2-07)Illustration of how the prior affects the posterior.</p>
 </div>
 
 ### Effect of the likelihood 
@@ -232,8 +232,8 @@ df.likelihood_effect %>%
 ```
 
 <div class="figure">
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-5-1.png" alt="Illustration of how the likelihood of the data affects the posterior." width="672" />
-<p class="caption">(\#fig:bda2-5)Illustration of how the likelihood of the data affects the posterior.</p>
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-08-1.png" alt="Illustration of how the likelihood of the data affects the posterior." width="672" />
+<p class="caption">(\#fig:bda2-08)Illustration of how the likelihood of the data affects the posterior.</p>
 </div>
 
 ### Effect of the sample size  
@@ -280,7 +280,7 @@ df.sample_size_effect %>%
         axis.line = element_blank())
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-6-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-09-1.png" width="672" />
 
 ## Distributions 
 
@@ -300,8 +300,8 @@ tibble(x = c(-5, 5)) %>%
 ```
 
 <div class="figure">
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-7-1.png" alt="Comparison between the normal distribution and the student-t distribution." width="672" />
-<p class="caption">(\#fig:bda2-7)Comparison between the normal distribution and the student-t distribution.</p>
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-10-1.png" alt="Comparison between the normal distribution and the student-t distribution." width="672" />
+<p class="caption">(\#fig:bda2-10)Comparison between the normal distribution and the student-t distribution.</p>
 </div>
 
 ### Beta distributions
@@ -336,8 +336,8 @@ plot_grid(plotlist = p.list)
 ```
 
 <div class="figure">
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-8-1.png" alt="Beta distributions with different parameter settings." width="672" />
-<p class="caption">(\#fig:bda2-8)Beta distributions with different parameter settings.</p>
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-11-1.png" alt="Beta distributions with different parameter settings." width="672" />
+<p class="caption">(\#fig:bda2-11)Beta distributions with different parameter settings.</p>
 </div>
 
 ### Normal distributions 
@@ -357,8 +357,8 @@ tibble(x = c(-10, 10)) %>%
 ```
 
 <div class="figure">
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-9-1.png" alt="Normal distributions with different standard deviation." width="672" />
-<p class="caption">(\#fig:bda2-9)Normal distributions with different standard deviation.</p>
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-12-1.png" alt="Normal distributions with different standard deviation." width="672" />
+<p class="caption">(\#fig:bda2-12)Normal distributions with different standard deviation.</p>
 </div>
 
 ### Distributions for non-negative parameters 
@@ -379,8 +379,8 @@ tibble(x = c(0, 10)) %>%
 ```
 
 <div class="figure">
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-10-1.png" alt="Cauchy and Gamma distribution." width="672" />
-<p class="caption">(\#fig:bda2-10)Cauchy and Gamma distribution.</p>
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-13-1.png" alt="Cauchy and Gamma distribution." width="672" />
+<p class="caption">(\#fig:bda2-13)Cauchy and Gamma distribution.</p>
 </div>
 
 
@@ -405,7 +405,7 @@ ggplot(data = df.samples,
                 linetype = 2)
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-11-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-14-1.png" width="672" />
 
 ```r
 # calculate probability based on samples 
@@ -417,7 +417,7 @@ df.samples %>%
 ## # A tibble: 1 x 1
 ##    prob
 ##   <dbl>
-## 1 0.626
+## 1 0.623
 ```
 
 ```r
@@ -451,7 +451,7 @@ ggplot(data = df.attitude,
   geom_point()
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-13-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-16-1.png" width="672" />
 
 ### Frequentist analysis 
 
@@ -498,7 +498,7 @@ ggplot(data = df.attitude,
   geom_point()
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-15-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-18-1.png" width="672" />
 
 ### Bayesian regression
 
@@ -529,8 +529,8 @@ Visualize the model as graph:
 plot(m)
 ```
 
-<!--html_preserve--><div id="htmlwidget-bdf72f24b78d264c340a" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bdf72f24b78d264c340a">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       rankdir = \"LR\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"b0\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"2\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"3\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"4\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"5\" [label = \"mu\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"6\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"7\" [label = \"sd\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"8\" [label = \"cauchy\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"9\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"10\" [label = \"3\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"11\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"12\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"13\" [label = \"b1\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"14\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"15\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"16\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"17\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n\"1\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"2\"->\"1\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"3\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"4\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"5\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"6\"->\"11\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"7\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"8\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"9\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"location\", style = \"solid\"] \n\"10\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"scale\", style = \"solid\"] \n\"12\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"13\"->\"12\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"14\"->\"13\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"15\"->\"14\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"16\"->\"14\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"17\"->\"12\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-42171fd5506c9ad2e950" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-42171fd5506c9ad2e950">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       rankdir = \"LR\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"b0\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"2\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"3\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"4\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"5\" [label = \"mu\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"6\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"7\" [label = \"sd\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"8\" [label = \"cauchy\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"9\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"10\" [label = \"3\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"11\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"12\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"13\" [label = \"b1\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"14\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"15\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"16\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"17\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n\"1\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"2\"->\"1\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"3\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"4\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"5\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"6\"->\"11\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"7\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"8\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"9\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"location\", style = \"solid\"] \n\"10\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"scale\", style = \"solid\"] \n\"12\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"13\"->\"12\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"14\"->\"13\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"15\"->\"14\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"16\"->\"14\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"17\"->\"12\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 Draw samples from the posterior distribution: 
 
@@ -558,7 +558,7 @@ ggplot(tibble(x = c(-30, 30)),
                 args = list(sd = 10))
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-19-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-22-1.png" width="672" />
 
 ```r
 # Cauchy
@@ -570,7 +570,7 @@ ggplot(tibble(x = c(0, 30)),
                             scale = 3))
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-19-2.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-22-2.png" width="672" />
 
 #### Visualize the posteriors
 
@@ -599,7 +599,7 @@ df.draws %>%
         strip.text.x = element_blank())
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-20-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-23-1.png" width="672" />
 
 #### Visualize model predictions 
 
@@ -619,7 +619,7 @@ ggplot(data = df.attitude,
   geom_point() 
 ```
 
-<img src="22-bayesian_data_analysis2_files/figure-html/bda2-21-1.png" width="672" />
+<img src="22-bayesian_data_analysis2_files/figure-html/bda2-24-1.png" width="672" />
 
 #### Posterior predictive check 
 
@@ -647,7 +647,7 @@ p = df.draws %>%
 animate(p, nframes = 60, width = 800, height = 600, res = 96, type = "cairo")
 ```
 
-![](22-bayesian_data_analysis2_files/figure-html/bda2-22-1.gif)<!-- -->
+![](22-bayesian_data_analysis2_files/figure-html/bda2-25-1.gif)<!-- -->
 
 ```r
 # anim_save("posterior_predictive.gif")
@@ -683,7 +683,7 @@ p = tibble(
 animate(p, nframes = 60, width = 800, height = 600, res = 96, type = "cairo")
 ```
 
-![](22-bayesian_data_analysis2_files/figure-html/bda2-23-1.gif)<!-- -->
+![](22-bayesian_data_analysis2_files/figure-html/bda2-26-1.gif)<!-- -->
 
 ```r
 # anim_save("prior_predictive.gif")

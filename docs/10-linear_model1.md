@@ -88,7 +88,7 @@ ggplot(data = df.samples,
   stat_density(geom = "line")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model2-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model03-1.png" width="672" />
 
 ```r
 # calculate the p-value for our sample 
@@ -268,7 +268,7 @@ ggplot(data = df.correlation,
        y = "happiness")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model4-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model05-1.png" width="672" />
 
 #### Variance 
 
@@ -304,7 +304,7 @@ ggplot(data = df.variance,
         )
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model5-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model06-1.png" width="672" />
 
 #### Covariance 
 
@@ -332,7 +332,7 @@ ggplot(df.covariance,
         axis.ticks = element_blank())
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model6-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model07-1.png" width="672" />
 
 Add lines for $\overline X$ and $\overline Y$ to the data:
 
@@ -352,7 +352,7 @@ ggplot(df.covariance,
         axis.ticks = element_blank())
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model7-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model08-1.png" width="672" />
 
 Illustrate how covariance is computed by drawing the distance to $\overline X$ and $\overline Y$ for three data points:
 
@@ -426,7 +426,7 @@ ggplot(df.plot,
         legend.position = "none")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model8-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model09-1.png" width="672" />
 
 #### Spearman's rank order correlation
 
@@ -461,7 +461,7 @@ ggplot(df.ranking,
                   ylim = c(0, 4))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model9-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model10-1.png" width="672" />
 
 Show that Spearman's $\rho$ is equivalent to Pearson's $r$ applied to ranked data.
 
@@ -496,7 +496,7 @@ ggplot(df.spearman,
   theme(axis.text = element_text(size = 10))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model10-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model11-1.png" width="672" />
 
 ```r
 # show some of the data and ranks 
@@ -615,7 +615,7 @@ ggplot(df.example,
   theme(axis.text = element_text(size = 10))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model11-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model12-1.png" width="672" />
 
 Another example
 
@@ -655,7 +655,7 @@ ggplot(df.example2,
   theme(axis.text = element_text(size = 10))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model12-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model13-1.png" width="672" />
 
 ## Regression 
 
@@ -680,7 +680,7 @@ ggplot(data = df.regression,
   geom_point(size = 3)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model13-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model14-1.png" width="672" />
 
 ### Define and fit the models
 
@@ -704,7 +704,7 @@ ggplot(data = df.regression,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model14-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model15-1.png" width="672" />
 
 Define and fit the augmented model (Model A): $Y_i = \beta_0 + \beta_1 X_{1i} + \epsilon_i$
 
@@ -727,7 +727,7 @@ ggplot(data = df.regression,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model15-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model16-1.png" width="672" />
 
 ### Calculate the sum of squared errors of each model
 
@@ -765,7 +765,7 @@ ggplot(data = df.compact_model,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model16-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model17-1.png" width="672" />
 
 ```r
 # calculate the sum of squared errors
@@ -815,7 +815,7 @@ ggplot(data = df.augmented_model,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model17-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model18-1.png" width="672" />
 
 ```r
 # calculate the sum of squared errors
@@ -877,7 +877,7 @@ ggplot(data = tibble(x = c(0, 10)),
              size = 1)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model19-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model20-1.png" width="672" />
 
 The short version of doing what we did above :) 
 
@@ -999,7 +999,7 @@ ggplot(data = df.credit,
   coord_cartesian(xlim = c(0, max(df.credit$income)))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model23-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model24-1.png" width="672" />
 
 To make the model intercept interpretable, we can center the predictor variable by subtracting the mean from each value.
 
@@ -1024,7 +1024,7 @@ ggplot(data = df.plot,
   scale_color_manual(values = c("black", "red"))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model24-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model25-1.png" width="672" />
 
 ```r
   # coord_cartesian(xlim = c(0, max(df.plot$income_centered)))
@@ -1100,7 +1100,7 @@ fit %>%
   geom_point(alpha = 0.3)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model27-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model28-1.png" width="672" />
 
 We can use the `glance()` function from the `broom` package to print out model statistics. 
 
@@ -1250,7 +1250,7 @@ ggplot(data = df.credit,
   coord_cartesian(xlim = c(0, max(df.credit$income)))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model32-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model33-1.png" width="672" />
 
 
 Finally, let's take a look at how the residuals are distributed. 
@@ -1268,7 +1268,7 @@ ggplot(df.plot, aes(sample = resid)) +
   geom_qq()
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model33-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model34-1.png" width="672" />
 
 ```r
 # and a density of the residuals
@@ -1276,7 +1276,7 @@ ggplot(df.plot, aes(x = resid)) +
   stat_density(geom = "line")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model33-2.png" width="672" />
+<img src="10-linear_model1_files/figure-html/linear-model34-2.png" width="672" />
 
 Not quite as normally distributed as we would hope. We learn what to do if some of the assumptions of the linear model are violated later in class. 
 

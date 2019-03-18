@@ -278,7 +278,7 @@ ggplot(data = df.titanic,
   labs(y = "survived")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm5-1.png" width="672" />
+<img src="20-generalized_linear_model_files/figure-html/glm-08-1.png" width="672" />
 
 This doesn't look good! The model predicts intermediate values of `survived` (which doesn't make sense given that a person either survived or didn't survive). Furthermore, the model predicts values greater than 1 for fares greather than ~ 300.  
 
@@ -332,7 +332,7 @@ ggplot(data = df.titanic,
   labs(y = "p(survived)")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm7-1.png" width="672" />
+<img src="20-generalized_linear_model_files/figure-html/glm-10-1.png" width="672" />
 
 Much better! Note that we've changed the interpretation of our dependent variable. We are now predicting the _probability that a person survived_ based on their fare. The model now only predicts values between 0 and 1. To achieve this, we apply a logit transform to the outcome variable like so: 
 
@@ -457,7 +457,7 @@ df.titanic %>%
   labs(x = "", fill = "", y = "probability")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm11-1.png" width="672" />
+<img src="20-generalized_linear_model_files/figure-html/glm-14-1.png" width="672" />
 
 And let's interpret the parameters by applying the inverse logit transform. To get the prediction for female passengers we get 
 
@@ -675,7 +675,7 @@ df.titanic %>%
   scale_color_brewer(palette = "Set1")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm17-1.png" width="672" />
+<img src="20-generalized_linear_model_files/figure-html/glm-20-1.png" width="672" />
 
 We notice that there is one outlier who was male and paid a $500 fare (or maybe this is a mistake in the data entry?!). Let's remove this outlier and see what happens: 
 
@@ -697,7 +697,7 @@ df.titanic %>%
   scale_color_brewer(palette = "Set1")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm18-1.png" width="672" />
+<img src="20-generalized_linear_model_files/figure-html/glm-21-1.png" width="672" />
 
 There is still a clear difference between female and male passengers, but the prediction for male passengers has changed a bit. Let's look at a concrete example: 
 
@@ -826,7 +826,7 @@ ggplot(data = df.data,
   labs(y = "p(response)")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm22-1.png" width="672" />
+<img src="20-generalized_linear_model_files/figure-html/glm-25-1.png" width="672" />
 
 #### Calculate the model's likelihood 
 

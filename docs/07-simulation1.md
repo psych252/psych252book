@@ -10,6 +10,7 @@ library("knitr")
 library("kableExtra")
 library("MASS")
 library("patchwork")
+library("extrafont")
 library("tidyverse")
 ```
 
@@ -73,7 +74,7 @@ ggplot(data = tibble(x = c(-5, 5)),
   stat_function(fun = "dnorm")
 ```
 
-<img src="07-simulation1_files/figure-html/plotting-normal-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-05-1.png" width="672" />
 
 Note that the data frame I created with `tibble()` only needs to have the minimum and the maximum value of the x-range that we are interested in. Here, I chose `-5` and `5` as the minimum and maximum, respectively. 
 
@@ -95,7 +96,7 @@ ggplot(data = tibble(x = c(-5, 5)),
                 )
 ```
 
-<img src="07-simulation1_files/figure-html/plotting-function-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-06-1.png" width="672" />
 
 Here, I defined a breakpoint function. If the value of `x` is below the breakpoint, `y` equals the value of the breakpoint. If the value of `x` is greater than the breakpoint, then `y` equals `x`. 
 
@@ -115,7 +116,7 @@ ggplot(data = tibble(x = c(140, 220)),
                             sd = tmp.sd))
 ```
 
-<img src="07-simulation1_files/figure-html/plotting-normal2-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-07-1.png" width="672" />
 
 ```r
 # remove all variables with tmp in their name 
@@ -153,7 +154,7 @@ ggplot(data = df.plot,
   coord_cartesian(xlim = c(-4, 4), expand = T)
 ```
 
-<img src="07-simulation1_files/figure-html/sampling-distributions1-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-08-1.png" width="672" />
 
 ```r
 # remove all variables with tmp in their name 
@@ -207,7 +208,7 @@ ggplot(data = df.plot,
   coord_cartesian(xlim = c(-4, 4), expand = F)
 ```
 
-<img src="07-simulation1_files/figure-html/sampling-distributions2-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-09-1.png" width="672" />
 
 ```r
 # remove all variables with tmp in their name 
@@ -227,7 +228,7 @@ ggplot(data = tibble(x = c(-5, 5)),
                             sd = 1))
 ```
 
-<img src="07-simulation1_files/figure-html/cumulative1-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-10-1.png" width="672" />
 
 Let's find the cumulative probability of a particular value. 
 
@@ -273,7 +274,7 @@ ggplot(data = tibble(x = c(-5, 5)),
                   expand = F)
 ```
 
-<img src="07-simulation1_files/figure-html/cumulative2-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-11-1.png" width="672" />
 
 ```r
 # remove all variables with tmp in their name 
@@ -299,7 +300,7 @@ ggplot(data = tibble(x = c(-5, 5)),
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.1))) 
 ```
 
-<img src="07-simulation1_files/figure-html/cumulative3-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-12-1.png" width="672" />
 
 ### Inverse cumulative distribution 
 
@@ -312,7 +313,7 @@ ggplot(data = tibble(x = c(0, 1)),
                             sd = 1))
 ```
 
-<img src="07-simulation1_files/figure-html/inverse1-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-13-1.png" width="672" />
 
 And let's compute the inverse cumulative probability for a particular value. 
 
@@ -359,7 +360,7 @@ ggplot(data = tibble(x = c(0, 1)),
                   expand = F)
 ```
 
-<img src="07-simulation1_files/figure-html/inverse2-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-14-1.png" width="672" />
 
 ```r
 # remove all variables with tmp in their name 
@@ -413,7 +414,7 @@ ggplot(data = tibble(x = c(-5, 5)),
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.1))) 
 ```
 
-<img src="07-simulation1_files/figure-html/computing1-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-15-1.png" width="672" />
 
 ```r
 # remove all variables with tmp in their name 
@@ -473,7 +474,7 @@ ggplot(data = df.samples,
            size = 10)
 ```
 
-<img src="07-simulation1_files/figure-html/sampling1-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-16-1.png" width="672" />
 
 ```r
 # remove all variables with tmp in their name 
@@ -715,7 +716,7 @@ ggplot(data = df.density, aes(x = x, y = y)) +
 ## This warning is displayed once per session.
 ```
 
-<img src="07-simulation1_files/figure-html/density2-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-23-1.png" width="672" />
 
 This density shows the sum of the densities of normal distributions that are centered at the observations with the specified bandwidth. 
 
@@ -850,7 +851,7 @@ p = p +
 p # print the figure
 ```
 
-<img src="07-simulation1_files/figure-html/density4-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-25-1.png" width="672" />
 
 Here are the same results when specifying a different bandwidth: 
 
@@ -902,7 +903,7 @@ p = p +
 p
 ```
 
-<img src="07-simulation1_files/figure-html/density5-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-26-1.png" width="672" />
 
 ### The `quantile()` function
 
@@ -987,7 +988,7 @@ ggplot(data = df.quantile,
   geom_boxplot()
 ```
 
-<img src="07-simulation1_files/figure-html/quantile2-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-28-1.png" width="672" />
 
 Here is a reminder of what boxplots show from the help file of `geom_boxplot()`:
 
@@ -1062,7 +1063,7 @@ ggplot(data = df.quantile,
   coord_cartesian(xlim = c(-1.2, 0.5))
 ```
 
-<img src="07-simulation1_files/figure-html/quantile4-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-30-1.png" width="672" />
 
 Neat! Now we know how boxplots are made. 
 
@@ -1087,7 +1088,7 @@ ggplot(data = df.plot,
   geom_line()
 ```
 
-<img src="07-simulation1_files/figure-html/quantile5-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-31-1.png" width="672" />
 
 And we can calculate quantiles by hand in the following way: 
 
@@ -1159,8 +1160,8 @@ ggplot(data = df.residuals, aes(x = residual))+
 ```
 
 <div class="figure">
-<img src="07-simulation1_files/figure-html/comparing1-1.png" alt="Empirical distribution of residuals, and theoretical distribution." width="672" />
-<p class="caption">(\#fig:comparing1)Empirical distribution of residuals, and theoretical distribution.</p>
+<img src="07-simulation1_files/figure-html/simulation1-34-1.png" alt="Empirical distribution of residuals, and theoretical distribution." width="672" />
+<p class="caption">(\#fig:simulation1-34)Empirical distribution of residuals, and theoretical distribution.</p>
 </div>
 
 Here, the empirical distribution of the errors and the theoretical normal distribution with a mean of 0 and a SD of 2 correspond very closely. Let's take a look at the corresponding QQ plot. 
@@ -1173,11 +1174,11 @@ ggplot(data = df.residuals, aes(sample = residual)) +
   coord_cartesian(xlim = c(-40, 40), ylim = c(-40, 40))
 ```
 
-<img src="07-simulation1_files/figure-html/comparing2-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-35-1.png" width="672" />
 
 Note that the QQ plot is sensitive to the general shape of the distribution. 
 
-I've used the `geom_qq()` and `geom_qq_line()` functions that are part of `ggplot`. By default, these functions assume a normal distribution as the theoretical distribution. This plot is just another way of showing the information in Figure \@ref(fig:empirical-theoretical-distribution). Intuitively, a QQ plot is built in the following way: imagine going with your finger from left to right along the x-axis on Figure \@ref(fig:empirical-theoretical-distribution), and then add a point on the QQ plot which captures the cumulative density for each distribution. 
+I've used the `geom_qq()` and `geom_qq_line()` functions that are part of `ggplot`. By default, these functions assume a normal distribution as the theoretical distribution. This plot is just another way of showing the information in Figure \@ref(fig:simulation1-36). Intuitively, a QQ plot is built in the following way: imagine going with your finger from left to right along the x-axis on Figure \@ref(fig:simulation1-37), and then add a point on the QQ plot which captures the cumulative density for each distribution. 
 
 Here are some more examples for what these plots would look like when comparing different theoretical distributions to the same empirical distribution. 
 
@@ -1232,7 +1233,7 @@ l.plots[[8]] +
 ## adjust the group aesthetic?
 ```
 
-<img src="07-simulation1_files/figure-html/comparing3-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-38-1.png" width="672" />
 
 ```r
 # ggsave("figures/qqplots_normal.pdf", width = 10, height = 6)
@@ -1292,7 +1293,7 @@ l.plots[[8]] +
   theme(text = element_text(size = 16))
 ```
 
-<img src="07-simulation1_files/figure-html/comparing4-1.png" width="672" />
+<img src="07-simulation1_files/figure-html/simulation1-39-1.png" width="672" />
 
 ```r
 ggsave("figures/qqplots_beta.pdf", width = 10, height = 6)
@@ -1300,7 +1301,7 @@ ggsave("figures/qqplots_beta.pdf", width = 10, height = 6)
 
 <div class="figure">
 <img src="figures/qqplots.png" alt="QQ plots indicating different deviations from normality." width="90%" />
-<p class="caption">(\#fig:qqplots)QQ plots indicating different deviations from normality.</p>
+<p class="caption">(\#fig:simulation1-40)QQ plots indicating different deviations from normality.</p>
 </div>
 
 ## Additional resources 

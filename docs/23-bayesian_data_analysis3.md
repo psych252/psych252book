@@ -86,7 +86,7 @@ df.poker %>%
   theme(legend.position = "none")
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-2-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-05-1.png" width="672" />
 
 ### Linear model 
 
@@ -175,7 +175,7 @@ fit.brm1 %>%
   geom_halfeyeh()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-5-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-08-1.png" width="672" />
 
 And let's look at how the samples from the posterior are correlated with each other: 
 
@@ -190,7 +190,7 @@ fit.brm1 %>%
         text = element_text(size = 12))
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-6-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-09-1.png" width="672" />
 
 #### Compute highest density intervals 
 
@@ -259,7 +259,7 @@ To check whether the model did a good job capturing the data, we can simulate wh
 pp_check(fit.brm1, nsamples = 100)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-8-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-11-1.png" width="672" />
 
 This looks good! The predicted shaped of the data based on samples from the posterior distribution looks very similar to the shape of the actual data.  
 
@@ -305,7 +305,7 @@ p = df.predictive_samples %>%
 animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
 ```
 
-![](23-bayesian_data_analysis3_files/figure-html/bda3-9-1.gif)<!-- -->
+![](23-bayesian_data_analysis3_files/figure-html/bda3-12-1.gif)<!-- -->
 
 ```r
 # anim_save("poker_posterior_predictive.gif")
@@ -330,7 +330,7 @@ fit.brm1 %>%
              color = "red")
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-10-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-13-1.png" width="672" />
 
 We see that the posterior is definitely greater than 0. 
 
@@ -466,7 +466,7 @@ bayes_factor(fit.brm3, fit.brm2)
 ```
 
 ```
-## Estimated Bayes factor in favor of bridge1 over bridge2: 3.81054
+## Estimated Bayes factor in favor of bridge1 over bridge2: 3.79463
 ```
 
 #### Full specification
@@ -628,7 +628,7 @@ So far, we've assumed that the inference has worked out. We can check this by ru
 plot(fit.brm1)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-19-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-25-1.png" width="672" />
 
 Let's make our own version of a trace plot for one parameter in the model:
 
@@ -642,7 +642,7 @@ fit.brm1 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-20-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-26-1.png" width="672" />
 
 We can also take a look at the auto-correlation plot. Ideally, we want to generate independent samples from the posterior. So we don't want subsequent samples to be strongly correlated with each other. Let's take a look: 
 
@@ -656,7 +656,7 @@ fit.brm1 %>%
            lags = 4)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-21-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-27-1.png" width="672" />
 
 Looking good! The autocorrelation should become very small as the lag increases (indicating that we are getting independent samples from the posterior). 
 
@@ -731,7 +731,7 @@ Let's visualize the trace plots:
 plot(fit.brm5)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-24-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-30-1.png" width="672" />
 
 
 ```r
@@ -746,7 +746,7 @@ fit.brm5 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-25-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-31-1.png" width="672" />
 
 Given that we have so little data in this case, we need to help the model a little bit by providing some slighlty more specific priors. 
 
@@ -810,7 +810,7 @@ Let's visualize the trace plots:
 plot(fit.brm6)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-28-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-34-1.png" width="672" />
 
 
 ```r
@@ -822,7 +822,7 @@ fit.brm6 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-29-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-35-1.png" width="672" />
 
 Looking mostly good -- except for one hiccup on sigma ... 
 
@@ -847,7 +847,7 @@ df.variance %>%
               alpha = 0.7)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-30-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-36-1.png" width="672" />
 
 While frequentist models (such as a linear regression) assume equality of variance, Baysian models afford us with the flexibility of inferring both the parameter estimates of the groups (i.e. the means and differences between the means), as well as the variances. 
 
@@ -908,7 +908,7 @@ df.variance %>%
   facet_grid(cols = vars(index))
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-33-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-39-1.png" width="672" />
 
 This plot shows what the posterior looks like for both mu (the inferred means), and for sigma (the inferred variances) for the different groups. 
 
@@ -983,7 +983,7 @@ plot_grid(ncol = 1, align = "v",
 )
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-37-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-43-1.png" width="672" />
 
 Posterior predictive check: 
 
@@ -1018,7 +1018,7 @@ df.cars %>%
     segment.color = "gray35")
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-38-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-44-1.png" width="672" />
 
 
 ## Additional resources 

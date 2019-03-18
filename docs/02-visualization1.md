@@ -166,6 +166,10 @@ Here are some more resources with tips for how to write nice code in R:
 There are three simple ways to get help in R. You can either put a `?` in front of the function you'd like to learn more about, or use the `help()` function.
 
 
+```r
+?print
+help("print")
+```
 
 >__Tip__: To see the help file, hover over a function (or dataset) with the mouse (or select the text) and then press `F1`.
 

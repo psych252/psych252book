@@ -41,7 +41,7 @@ replicate(n = 4, fun.normal_means(n = 20, mean = 1, sd = 0.5))
 ```
 
 ```
-## [1] 0.9457959 0.9939978 0.9977807 0.9325283
+## [1] 1.021479 1.132758 1.001009 1.072784
 ```
 
 ```r
@@ -50,7 +50,7 @@ map_dbl(.x = c(20, 20, 20, 20), ~ fun.normal_means(n = .x, mean = 1, sd = 0.5))
 ```
 
 ```
-## [1] 1.0153530 0.9805029 1.0288655 1.1276102
+## [1] 1.0813721 0.8877639 1.0108873 1.0401081
 ```
 
 ```r
@@ -59,7 +59,7 @@ map_dbl(.x = c(1, 1, 10, 10), ~ fun.normal_means(n = 20, mean = .x, sd = 0.5))
 ```
 
 ```
-## [1]  0.7730499  0.9457895 10.0803328  9.8966848
+## [1]  0.9655795  0.8907218 10.1239343  9.9443870
 ```
 
 ## Simulating a linear mixed effects model 
@@ -150,7 +150,7 @@ fit.mixed %>%
              color = "red")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-4-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-06-1.png" width="672" />
 
 Let's simulate some data from this fitted model: 
 
@@ -168,7 +168,7 @@ fit.mixed %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-5-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-07-1.png" width="672" />
 
 Even though we only fitted random intercepts in this model, when we simulate from the model, we get different slopes since, when simulating new data, the model takes our uncertainty in the residuals into account as well. 
 
@@ -276,7 +276,7 @@ fit.outlier %>%
              color = "red")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-9-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-11-1.png" width="672" />
 
 The model is still able to capture the participants quite well. But note what its simulated data looks like now: 
 
@@ -294,7 +294,7 @@ fit.outlier %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-10-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-12-1.png" width="672" />
 
 The simulated data doesn't look like our original data. This is because one normal distribution is used to model the variance in the intercepts between participants. 
 
@@ -415,7 +415,7 @@ ggplot(data = df.simpson,
               color = "black")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-15-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-17-1.png" width="672" />
 
 As we see, overall, there is a positive relationship between `x` and `y`.
 
@@ -464,7 +464,7 @@ ggplot(data = df.simpson,
   theme(legend.position = "none")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-17-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-19-1.png" width="672" />
 
 And let's fit a different regression for each participant:
 
@@ -482,7 +482,7 @@ ggplot(data = df.simpson,
   theme(legend.position = "none")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-18-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-20-1.png" width="672" />
 
 What this plot shows, is that for almost all individual participants, the relationship between `x` and `y` is negative. The different participants where along the `x` spectrum they are. 
 
@@ -543,7 +543,7 @@ fit.lmer %>%
   theme(legend.position = "none")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-20-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/lmer2-22-1.png" width="672" />
 
 Lesson learned: taking dependence into account is critical for drawing correct inferences! 
 

@@ -84,7 +84,7 @@ tibble(x = c(-4, 4)) %>%
   coord_cartesian(expand = F)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-06-1.png" width="672" />
 
 #### F distribution
 
@@ -107,7 +107,7 @@ tibble(x = c(0, 5)) %>%
   coord_cartesian(expand = F)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-07-1.png" width="672" />
 
 ### Mixtures of participants 
 
@@ -200,7 +200,7 @@ fit.mixed %>%
              color = "red")
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-10-1.png" width="672" />
 
 
 And let's simulate some data from the fitted model: 
@@ -219,7 +219,7 @@ fit.mixed %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-11-1.png" width="672" />
 
 As we can see, the simulated data doesn't look like the data that was used to fit the model.  
 
@@ -286,7 +286,7 @@ fit.grouped %>%
              color = "red")
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-13-1.png" width="672" />
 
 And simulate some data from the model: 
 
@@ -304,7 +304,7 @@ fit.grouped %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-14-1.png" width="672" />
 
 This time, the simulated data looks much more like the data that was used to fit the model. Yay! 
 
@@ -402,7 +402,7 @@ fit.variance %>%
              color = "red")
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-17-1.png" width="672" />
 
 And the simulated data: 
 
@@ -420,7 +420,7 @@ fit.mixed %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-18-1.png" width="672" />
 
 The lmer() fails here. It uses one normal distribution to model the variance between participants. It cannot account for the fact that the answers of one groups of participants vary more than the answers from another groups of participants. Again, the simulated data doesn't look the original data, even though we did take the grouping into account. 
 
@@ -444,7 +444,7 @@ ggplot(data = df.sleep,
         axis.text.y = element_text(size = 12))
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-19-1.png" width="672" />
 
 The plot shows the effect of the number of days of sleep deprivation on the average reaction time (presumably in an experiment). Note that for participant 373 and 374 we only have one and two data points respectively. 
 
@@ -502,7 +502,7 @@ ggplot(data = df.sleep,
         axis.text.y = element_text(size = 12))
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-21-1.png" width="672" />
 
 And here is what the model's predictions look like separated by participant.
 
@@ -523,7 +523,7 @@ ggplot(data = df.sleep,
         axis.text.y = element_text(size = 12))
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-22-1.png" width="672" />
 
 The model predicts the same relationship between sleep deprivation and reaction time for each participant (not surprising since we didn't even tell the model that this data is based on different participants). 
 
@@ -567,7 +567,7 @@ ggplot(data = df.sleep,
         axis.text.y = element_text(size = 12))
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-24-1.png" width="672" />
 
 When we fit separate regression, no information is shared between participants. 
 
@@ -615,7 +615,7 @@ ggplot(data = .,
 ## adjust the group aesthetic?
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-26-1.png" width="672" />
 
 As we can see, the lines for each participant are different. We've allowed for the intercept as well as the relationship between sleep deprivation and reaction time to be different between participants. 
 
@@ -655,7 +655,7 @@ ggplot(data = .,
 ## adjust the group aesthetic?
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-28-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-28-1.png" width="672" />
 
 Now, all the lines are parallel but the intercept differs between participants. 
 
@@ -695,7 +695,7 @@ ggplot(data = .,
 ## adjust the group aesthetic?
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-30-1.png" width="672" />
 
 Here, all the lines have the same starting point (i.e. the same intercept) but the slopes are different. 
 
@@ -781,7 +781,7 @@ ggplot(data = df.pooling,
 ## Warning: Removed 4 rows containing missing values (geom_point).
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-32-1.png" width="672" />
 
 To better see the differences between the approaches, let's focus on the predictions for the participants with incomplete data: 
 
@@ -817,7 +817,7 @@ ggplot(data = df.pooling %>%
 ## Warning: Removed 4 rows containing missing values (geom_point).
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-33-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-33-1.png" width="672" />
 
 ### Coefficients 
 
@@ -983,7 +983,7 @@ ggplot(data = df.plot,
 ## Warning: Removed 1 rows containing non-finite values (stat_density).
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-38-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-38-1.png" width="672" />
 
 ## Bootstrapping 
 
@@ -1031,7 +1031,7 @@ ggplot(data = df.sleep,
   geom_point(alpha = 0.3)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-40-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-40-1.png" width="672" />
 
 And let's compare this with the different regression lines that we get out of our bootstrapped samples:
 
@@ -1047,7 +1047,7 @@ ggplot(data = df.sleep,
   geom_point(alpha = 0.3)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-41-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-41-1.png" width="672" />
 
 #### bootmer() function
 
@@ -1097,7 +1097,7 @@ boot.lmer$t %>%
   coord_cartesian(expand = F)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-42-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-42-1.png" width="672" />
 
 ## Getting p-values 
 

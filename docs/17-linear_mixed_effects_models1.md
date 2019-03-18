@@ -96,7 +96,7 @@ df.data %>%
   geom_point()
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-2-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-05-1.png" width="672" />
 
 #### Global F-test 
 
@@ -258,7 +258,7 @@ p2 = ggplot(data = df.plot %>% filter(condition != "2"),
 p1 + p2 
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-7-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-10-1.png" width="672" />
 
 Let's save the two original and shuffled data set as two separate data sets.
 
@@ -459,7 +459,7 @@ fit.independent %>%
             color = "red")
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-14-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-17-1.png" width="672" />
 
 And this is what the residuals look like: 
 
@@ -494,7 +494,7 @@ fit.independent %>%
   theme(legend.position = "none")
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-15-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-18-1.png" width="672" />
 
 It's clear from this residual plot, that fitting two separate lines (or points) is not much better than just fitting one line (or point). 
 
@@ -518,7 +518,7 @@ fit.dependent %>%
             color = "red")
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-16-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-19-1.png" width="672" />
 
 Let's compare the residuals of the linear model with that of the linear mixed effects model: 
 
@@ -547,7 +547,7 @@ p2 = fit.dependent %>%
 p1 + p2
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-17-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-20-1.png" width="672" />
 
 The residuals of the linear mixed effects model are much smaller. Let's test whether taking the individual variation into account is worth it (statistically speaking). 
 

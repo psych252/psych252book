@@ -67,7 +67,7 @@ ggplot(data = df.population,
   coord_cartesian(expand = F)
 ```
 
-<img src="08-simulation2_files/figure-html/clt2-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-05-1.png" width="672" />
 
 Here are the true mean and standard deviation of our population distribution: 
 
@@ -127,7 +127,7 @@ ggplot(data = df.sample,
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/clt4-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-07-1.png" width="672" />
 
 Here are the sample mean and standard deviation:
 
@@ -227,7 +227,7 @@ ggplot(data = df.sampling_distribution_means %>%
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/clt7-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-10-1.png" width="672" />
 
 That's the central limit theorem in action! Even though our population distribution was far from normal (and much more heavy-metal like), the means of that distribution are normally distributed. 
 
@@ -416,7 +416,7 @@ ggplot(data = df.bootstrap, aes(x = average)) +
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/boot2-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-14-1.png" width="672" />
 
 And let's calculate the mean and standard deviation: 
 
@@ -496,7 +496,7 @@ ggplot(data = df.plot,
   coord_cartesian(expand = F, clip = "off")
 ```
 
-<img src="08-simulation2_files/figure-html/height2-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-17-1.png" width="672" />
 
 Women's height in the `NHANES` data set is approximately normally distributed. 
 
@@ -525,7 +525,7 @@ ggplot(data = df.plot,
   coord_cartesian(expand = F, clip = "off")
 ```
 
-<img src="08-simulation2_files/figure-html/height3-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-18-1.png" width="672" />
 
 The same is true for men's height.
 
@@ -553,7 +553,7 @@ ggplot(data = df.plot,
   coord_cartesian(expand = F, clip = "off")
 ```
 
-<img src="08-simulation2_files/figure-html/height4-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-19-1.png" width="672" />
 
 However, adults' height is not quite normally distributed. Note that the distribution is too flat in the middle.  
 
@@ -588,7 +588,7 @@ ggplot(data = df.plot, aes(x = height, group = gender, fill = gender))+
   theme(legend.position = c(0.9, 0.8))
 ```
 
-<img src="08-simulation2_files/figure-html/height5-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-20-1.png" width="672" />
 
 The fact that adults' height overall is not normally distributed is because there is a single factor (gender) that accounts for much of the variation. 
 
@@ -640,7 +640,7 @@ ggplot(data = tibble(x = c(0, 20)), aes(x = x)) +
            size = 6)
 ```
 
-<img src="08-simulation2_files/figure-html/limits1-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-21-1.png" width="672" />
 
 
 
@@ -708,7 +708,7 @@ ggplot(df.plot, aes(x = mean_value, color = distribution))+
     )
 ```
 
-<img src="08-simulation2_files/figure-html/limits2-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-22-1.png" width="672" />
 
 No matter where we start, as long as we draw samples that are independent and identically distributed, and these samples combine in an additive way, we end up with a normal distribution (note that this takes considerably longer when we start with an exponential distribution -- shown in blue -- compared to the other population distributions).
 
@@ -801,7 +801,7 @@ ggplot(data = df.permutation,
                      limits = c(0, 10))
 ```
 
-<img src="08-simulation2_files/figure-html/permuation3-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-25-1.png" width="672" />
 
 We are interested in the difference in the mean performance between the two groups: 
 
@@ -855,7 +855,7 @@ ggplot(data = df.permutation, aes(x = permutation, y = performance))+
                      limits = c(0, 10))
 ```
 
-<img src="08-simulation2_files/figure-html/permuation6-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-28-1.png" width="672" />
 
 The idea is now that, similar to bootstrapping above, we can get a sampling distribution of the difference in the means between the two conditions (assuming that the null hypothesis were true), by randomly shuffling the labels and calculating the difference in means (and doing this many times). What we get is a distribution of the differences we would expect, if there was no effect of condition. 
 
@@ -902,7 +902,7 @@ ggplot(data = df.permutations, aes(x = mean_difference)) +
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="08-simulation2_files/figure-html/permuation7-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-29-1.png" width="672" />
 
 And we can then simply calculate the p-value by using some basic data wrangling (i.e. finding the proportion of differences that were as or more extreme than the one we observed).
 
@@ -990,7 +990,7 @@ ggplot(data = df.confidence, aes(x = sample, y = mean, color = conf_index))+
         legend.position = "none")
 ```
 
-<img src="08-simulation2_files/figure-html/confidence1-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/simulation2-31-1.png" width="672" />
 
 So, out of the 20 samples that we drew the 95% confidence interval of 1 sample did not contain the true mean. That makes sense! 
 

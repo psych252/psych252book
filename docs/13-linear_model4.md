@@ -142,7 +142,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-4-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/linear-model4-07-1.png" width="672" />
 
 #### Model variance
 
@@ -206,7 +206,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-5-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/linear-model4-08-1.png" width="672" />
 
 #### Residual variance 
 
@@ -286,7 +286,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-6-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/linear-model4-09-1.png" width="672" />
 
 ## Two-way ANOVA (linear model)
 
@@ -393,7 +393,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-9-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/linear-model4-12-1.png" width="672" />
 
 ## ANOVA with unbalanced design
 
@@ -671,7 +671,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-16-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/linear-model4-19-1.png" width="672" />
 
 ### Hypothetical data 
 
@@ -776,7 +776,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-19-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/linear-model4-22-1.png" width="672" />
 
 With contrast
 
@@ -843,7 +843,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-20-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/linear-model4-23-1.png" width="672" />
 
 Results figure
 
@@ -856,7 +856,7 @@ df.contrast %>%
   stat_summary(fun.y = "mean", geom = "point", shape = 21, fill = "white", size = 3)
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-21-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/linear-model4-24-1.png" width="672" />
 
 ### Constrasts 
 
