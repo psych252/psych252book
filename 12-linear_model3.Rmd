@@ -1,12 +1,12 @@
 # Linear model 3
 
-```{r, include=FALSE, eval=FALSE}
+```{r linear-model3-01, include=FALSE, eval=FALSE}
 install.packages(c("afex", "car"))
 ```
 
 ## Load packages and set plotting theme  
 
-```{r, message=FALSE}
+```{r linear-model3-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -17,7 +17,7 @@ library("emmeans")    # for calculating constrasts
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
 
-```{r}
+```{r linear-model3-03}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -26,7 +26,7 @@ theme_set(
 
 ## Load data sets 
 
-```{r, message=F, warning=FALSE}
+```{r linear-model3-04, message=F, warning=FALSE}
 df.poker = read_csv("data/poker.csv") %>% 
   mutate(skill = factor(skill,
                         levels = 1:2,
@@ -44,7 +44,7 @@ df.poker = read_csv("data/poker.csv") %>%
 
 Selection of the data: 
 
-```{r}
+```{r linear-model3-05}
 df.poker %>% 
   group_by(skill, hand, limit) %>% 
   filter(row_number() < 3) %>% 
@@ -59,7 +59,7 @@ df.poker %>%
 
 #### Visualization 
 
-```{r}
+```{r linear-model3-06}
 df.poker %>% 
   ggplot(mapping = aes(x = hand,
                        y = balance,
@@ -82,7 +82,7 @@ df.poker %>%
 
 We pass the result of the `lm()` function to `anova()` to calculate an analysis of variance like so: 
 
-```{r}
+```{r linear-model3-07}
 lm(formula = balance ~ hand, 
    data = df.poker) %>% 
   anova()
@@ -92,7 +92,7 @@ lm(formula = balance ~ hand,
 
 The F-test reported by the ANOVA compares the fitted model with a compact model that only predicts the grand mean: 
 
-```{r}
+```{r linear-model3-08}
 # fit the models 
 fit_c = lm(formula = balance ~ 1, data = df.poker)
 fit_a = lm(formula = balance ~ hand, data = df.poker)
@@ -105,7 +105,7 @@ anova(fit_c, fit_a)
 
 Here is the model prediction of the compact model:
 
-```{r}
+```{r linear-model3-09}
 set.seed(1)
 
 df.plot = df.poker %>% 
@@ -137,7 +137,7 @@ ggplot(data = df.plot,
 
 And here is the prediction of the augmented model (which predicts different means for each group).
 
-```{r}
+```{r linear-model3-10}
 set.seed(1)
 
 
@@ -200,7 +200,7 @@ The vertical lines illustrate the residual sum of squares.
 
 We can illustrate the model sum of squares like so: 
 
-```{r}
+```{r linear-model3-11}
 set.seed(1)
 
 df.plot = df.poker %>% 
@@ -264,7 +264,7 @@ This captures the variance in the data that is accounted for by the `hand` varia
 
 Just for kicks, let's calculate our cherished proportion of reduction in error PRE:
 
-```{r}
+```{r linear-model3-12}
 df.c = fit_c %>% 
   augment() %>% 
   clean_names() %>% 
@@ -280,7 +280,7 @@ print(pre %>% round(2))
 ```
 Note that this is the same as the $R^2$ for the augmented model: 
 
-```{r}
+```{r linear-model3-13}
 fit_a %>% 
   summary()
 ```
@@ -289,7 +289,7 @@ fit_a %>%
 
 Let's check that we understand how dummy-coding works for a variable with more than 2 levels: 
 
-```{r}
+```{r linear-model3-14}
 # dummy code the hand variable
 df.poker = df.poker %>% 
   mutate(hand_neutral = ifelse(hand == "neutral", 1, 0),
@@ -321,7 +321,7 @@ Here are some follow up questions we may ask about the data.
 
 Are bad hands different from neutral hands? 
 
-```{r}
+```{r linear-model3-15}
 df.poker %>% 
   filter(hand %in% c("bad", "neutral")) %>% 
   lm(formula = balance ~ hand, 
@@ -331,7 +331,7 @@ df.poker %>%
 
 Are neutral hands different from good hands? 
 
-```{r}
+```{r linear-model3-16}
 df.poker %>% 
   filter(hand %in% c("neutral", "good")) %>% 
   lm(formula = balance ~ hand, 
@@ -341,7 +341,7 @@ df.poker %>%
 
 Doing the same thing by recoding our hand factor and taking "neutral" to be the reference category:
 
-```{r}
+```{r linear-model3-17}
 df.poker %>% 
   mutate(hand = fct_relevel(hand, "neutral")) %>% 
   lm(formula = balance ~ hand,
@@ -357,7 +357,7 @@ Now let's take a look at a case where we have multiple categorical predictors.
 
 Let's look at the overall effect of skill: 
 
-```{r}
+```{r linear-model3-18}
 ggplot(data = df.poker,
        mapping = aes(x = skill,
                      y = balance)) +
@@ -382,7 +382,7 @@ ggplot(data = df.poker,
 
 And now let's take a look at the means for the full the 3 (hand) x 2 (skill) design:
 
-```{r}
+```{r linear-model3-19}
 ggplot(data = df.poker,
        mapping = aes(x = hand,
                      y = balance,
@@ -412,7 +412,7 @@ ggplot(data = df.poker,
 
 For N-way ANOVAs, we need to be careful about what sums of squares we are using. The standard (based on the SPSS output) is to use type III sums of squares. We set this up in the following way: 
 
-```{r}
+```{r linear-model3-20}
 lm(formula = balance ~ hand * skill,
    data = df.poker,
    contrasts = list(hand = "contr.sum",
@@ -424,7 +424,7 @@ So, we fit our linear model, but set the contrasts to "contr.sum" (which yields 
 
 Alternatively, we could use the `afex` package and specify the ANOVA like so: 
 
-```{r}
+```{r linear-model3-21}
 aov_ez(id = "participant",
        dv = "balance",
        data = df.poker,
@@ -438,7 +438,7 @@ The `afex` package uses effect coding and type 3 sums of squares by default.
 
 Code I've used to generate the different plots in the competition: 
 
-```{r}
+```{r linear-model3-22}
 set.seed(1)
 
 b0 = 15
@@ -495,7 +495,7 @@ ggplot(df.data,
 
 And here is one specific example. Let's generate the data first: 
 
-```{r}
+```{r linear-model3-23}
 # make example reproducible 
 set.seed(1)
 
@@ -522,7 +522,7 @@ df.data = tibble(
 
 Show part of the generated data frame: 
 
-```{r}
+```{r linear-model3-24}
 # show data frame
 df.data %>% 
   group_by(condition, treatment) %>% 
@@ -536,7 +536,7 @@ df.data %>%
 
 Plot the data:
 
-```{r}
+```{r linear-model3-25}
 # plot data
 ggplot(df.data,
        aes(x = condition,
@@ -556,7 +556,7 @@ ggplot(df.data,
 
 And check whether we can successfully infer the parameters that we used to generate the data: 
 
-```{r}
+```{r linear-model3-26}
 # infer parameters
 lm(formula = rating ~ 1 + condition + treatment + condition:treatment,
    data = df.data) %>% 

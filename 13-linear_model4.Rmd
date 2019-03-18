@@ -1,12 +1,12 @@
 # Linear model 4
 
-```{r, include=FALSE, eval=FALSE}
+```{r linear-model4-01, include=FALSE, eval=FALSE}
 install.packages("afex")
 ```
 
 ## Load packages and set plotting theme  
 
-```{r, message=FALSE}
+```{r linear-model4-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -17,7 +17,7 @@ library("car")        # for calculating ANOVAs
 library("tidyverse")  # for wrangling, plotting, etc.
 ```
 
-```{r}
+```{r linear-model4-03}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -28,7 +28,7 @@ theme_set(
 
 Read in the data:
 
-```{r linear-model4-1}
+```{r linear-model4-04}
 df.poker = read_csv("data/poker.csv") %>% 
   mutate(skill = factor(skill,
                         levels = 1:2,
@@ -51,7 +51,7 @@ df.poker.unbalanced = df.poker %>%
 
 Let's first run the model 
 
-```{r linear-model4-2}
+```{r linear-model4-05}
 fit = lm(formula = balance ~ hand, 
          data = df.poker)
 
@@ -63,7 +63,7 @@ fit %>%
 
 And then let's make sure that we understand how the variance is broken down:  
 
-```{r linear-model4-3}
+```{r linear-model4-06}
 df.poker %>% 
   mutate(mean_grand = mean(balance)) %>% 
   group_by(hand) %>% 
@@ -78,7 +78,7 @@ df.poker %>%
 
 #### Total variance
 
-```{r linear-model4-4}
+```{r linear-model4-07}
 set.seed(1)
 
 fit_c = lm(formula = balance ~ 1,
@@ -111,7 +111,7 @@ ggplot(data = df.plot,
 
 #### Model variance
 
-```{r linear-model4-5}
+```{r linear-model4-08}
 set.seed(1)
 
 df.plot = df.poker %>% 
@@ -173,7 +173,7 @@ ggplot(data = df.plot,
 
 #### Residual variance 
 
-```{r linear-model4-6}
+```{r linear-model4-09}
 set.seed(1)
 
 fit_a = lm(formula = balance ~ hand,
@@ -238,7 +238,7 @@ ggplot(data = df.plot,
 
 Let's fit the model first:
 
-```{r linear-model4-7}
+```{r linear-model4-10}
 fit = lm(formula = balance ~ hand + skill, 
          data = df.poker)
 
@@ -249,7 +249,7 @@ fit %>%
 
 ### Calculate sums of squares
 
-```{r linear-model4-8}
+```{r linear-model4-11}
 df.poker %>% 
   mutate(mean_grand = mean(balance)) %>% 
   group_by(skill) %>% 
@@ -267,7 +267,7 @@ df.poker %>%
 
 #### `Skill` factor
 
-```{r linear-model4-9}
+```{r linear-model4-12}
 set.seed(1)
 
 df.plot = df.poker %>% 
@@ -323,7 +323,7 @@ ggplot(data = df.plot,
 
 For the standard `anova()` function, the order of the independent predictors matters when the design is unbalanced. 
 
-```{r linear-model4-10}
+```{r linear-model4-13}
 # one order 
 lm(formula = balance ~ skill + hand, 
          data = df.poker.unbalanced) %>% 
@@ -337,7 +337,7 @@ lm(formula = balance ~ hand + skill,
 
 For unbalanced designs, we should compute an ANOVA with type 3 sums of squares. 
 
-```{r linear-model4-11}
+```{r linear-model4-14}
 # one order
 lm(formula = balance ~ hand + skill,
    data = df.poker,
@@ -357,7 +357,7 @@ Now, the order of the independent variables doesn't matter anymore.
 
 We can also use the `aov_ez()` function from the `afex` package. 
 
-```{r linear-model4-12}
+```{r linear-model4-15}
 fit = aov_ez(id = "participant",
              dv = "balance",
              data = df.poker,
@@ -369,7 +369,7 @@ fit$Anova
 
 Let's firt a two-way ANOVA with the interaction term. 
 
-```{r linear-model4-13}
+```{r linear-model4-16}
 fit = lm(formula = balance ~ hand * skill, data = df.poker)
 fit %>% 
   anova()
@@ -377,7 +377,7 @@ fit %>%
 
 And let's compute how the the sums of squares are decomposed:
 
-```{r linear-model4-14}
+```{r linear-model4-17}
 df.poker %>% 
   mutate(mean_grand = mean(balance)) %>% 
   group_by(skill) %>% 
@@ -400,7 +400,7 @@ df.poker %>%
 
 Here is a planned contrast that assumes that there is a linear relationship between the quality of one's hand, and the final balance.  
 
-```{r linear-model4-15}
+```{r linear-model4-18}
 df.poker = df.poker %>% 
   mutate(hand_contrast = factor(hand,
                                 levels = c("bad", "neutral", "good"),
@@ -415,7 +415,7 @@ fit.contrast %>% summary()
 
 Here is a visualization of the model prediction together with the residuals. 
 
-```{r linear-model4-16}
+```{r linear-model4-19}
 df.plot = df.poker %>% 
   mutate(hand_jitter = hand %>% as.numeric(),
          hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4))
@@ -475,7 +475,7 @@ ggplot(data = df.plot,
 
 Here is some code to generate a hypothetical developmental data set. 
 
-```{r linear-model4-17}
+```{r linear-model4-20}
 # make example reproducible 
 set.seed(1)
 
@@ -516,7 +516,7 @@ df.contrast = tibble(
 
 Let's define a linear contrast, and test whether it's significant. 
 
-```{r linear-model4-18}
+```{r linear-model4-21}
 fit = lm(formula = performance ~ group,
    data = df.contrast)
 
@@ -536,7 +536,7 @@ contrast(leastsquare,
 
 Total variance: 
 
-```{r linear-model4-19}
+```{r linear-model4-22}
 set.seed(1)
 
 fit_c = lm(formula = performance ~ 1,
@@ -569,7 +569,7 @@ ggplot(data = df.plot,
 
 With contrast
 
-```{r linear-model4-20}
+```{r linear-model4-23}
 # make example reproducible 
 set.seed(1)
 
@@ -633,7 +633,7 @@ ggplot(data = df.plot,
 
 Results figure
 
-```{r linear-model4-21}
+```{r linear-model4-24}
 df.contrast %>% 
   ggplot(aes(x = group, y = performance)) + 
   geom_point(alpha = 0.3, position = position_jitter(width = 0.1, height = 0)) +
@@ -645,7 +645,7 @@ df.contrast %>%
 
 Estimated marginal means: 
 
-```{r linear-model4-22}
+```{r linear-model4-25}
 df.development = df.contrast
 
 fit = lm(formula = performance ~ group,
@@ -671,7 +671,7 @@ contrast(leastsquare,
 
 Post-hoc tests for a single predictor:
 
-```{r linear-model4-23}
+```{r linear-model4-26}
 fit = lm(formula = performance ~ group,
          data = df.development)
 
@@ -683,7 +683,7 @@ pairs(leastsquare,
 
 Post-hoc tests for two predictors:
 
-```{r linear-model4-24}
+```{r linear-model4-27}
 # fit the model
 fit = lm(formula = balance ~ hand + skill,
          data = df.poker)

@@ -1,12 +1,12 @@
 # Power analysis
 
-```{r, include=FALSE, eval=FALSE}
+```{r power-analysis-01, include=FALSE, eval=FALSE}
 install.packages(c("lsr", "pwr"))
 ```
 
 ## Load packages and set plotting theme  
 
-```{r, message=FALSE}
+```{r power-analysis-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -17,7 +17,7 @@ library("pwr")        # for power calculations
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
 
-```{r}
+```{r power-analysis-03}
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -26,7 +26,7 @@ theme_set(
 
 ## Load data sets 
 
-```{r}
+```{r power-analysis-04}
 df.poker = read_csv("data/poker.csv")
 
 df.credit = read_csv("data/credit.csv") %>% 
@@ -38,7 +38,7 @@ df.credit = read_csv("data/credit.csv") %>%
 
 Figures to illustrate power: 
 
-```{r}
+```{r power-analysis-05}
 mu0 = 10
 mu1 = 18
 # mu0 = 8
@@ -92,7 +92,7 @@ ggplot(data = tibble(x = c(0, 30)),
 
 One-way ANOVA: 
 
-```{r}
+```{r power-analysis-06}
 fit = lm(formula = balance ~ hand, 
          data = df.poker)
 
@@ -110,7 +110,7 @@ fit %>%
 
 Two-way ANOVA: 
 
-```{r}
+```{r power-analysis-07}
 fit = lm(formula = balance ~ hand * skill, 
          data = df.poker)
 
@@ -152,7 +152,7 @@ s_p = \sqrt\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}
 $$
 
 
-```{r}
+```{r power-analysis-08}
 # use function from "lsr" package
 cohensD(x = balance ~ student,
         data = df.credit)
@@ -183,14 +183,14 @@ print(d)
 
 ### `pwr` package
 
-```{r}
+```{r power-analysis-09}
 pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50), 
            sig.level = 0.05, 
            power = 0.80, 
            alternative = "greater")
 ```
 
-```{r}
+```{r power-analysis-10}
 pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50), 
            sig.level = 0.05, 
            power = 0.80, 
@@ -201,7 +201,7 @@ pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
 
 ### Simulation
 
-```{r}
+```{r power-analysis-11}
 # make reproducible 
 set.seed(1)
 
