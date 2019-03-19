@@ -1,0 +1,832 @@
+--- 
+title: "Psych 252: Statistical Methods for Behavioral and Social Sciences"
+author: "Tobias Gerstenberg"
+date: "`r Sys.Date()`"
+book_filename: "psych252"
+language:
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: true
+output_dir: "docs"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: psych252/psych252book
+description: "Course notes for Psych 252."
+---
+
+# Preface {-}
+
+Placeholder
+
+
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction
+
+## Thanks 
+
+Various people have helped in the process of putting together these materials (either knowingly, or unknowingly). Big thanks go to: 
+
+- Alexandra Chouldechova
+- Ben Baumer
+- Benoit Monin
+- Datacamp
+- David Lagnado
+- Ewart Thomas
+- Henrik Singmann
+- Julian Jara-Ettinger
+- Kevin Smith
+- Maarten Speekenbrink
+- Matthew Kay
+- Matthew Salganik
+- Mika Braginsky 
+- Mike Frank 
+- Mine Çetinkaya-Rundel
+- Patrick Mair
+- Peter Cushner Mohanty
+- Richard McElreath
+- Russ Poldrack 
+- Stephen Dewitt
+- Tom Hardwicke
+- Tristan Mahr
+
+Special thanks also to my teaching assistants: 
+
+- Andrew Lampinen
+- Mona Rosenke 
+- Shao-Fang (Pam) Wang
+
+## List of R packages used in this book 
+
+```{r, eval=FALSE, message=FALSE}
+# RMarkdown 
+library("knitr")        # markdown things 
+library("kableExtra")   # for nicely formatted tables
+
+# Datasets 
+library("gapminder")    # data available from Gapminder.org 
+library("NHANES")       # data set 
+library("titanic")      # titanic dataset
+
+# Data manipulation
+library("arrangements") # fast generators and iterators for permutations, combinations and partitions
+library("magrittr")     # for wrangling
+library("tidyverse")    # everything else
+
+# Visualization
+library("patchwork")    # making figure panels
+library("cowplot")      # making figure panels
+library("ggpol")        # for making fancy boxplots
+library("ggridges")     # for making joyplots 
+library("gganimate")    # for making animations
+library("GGally")       # for pairs plot
+library("ggrepel")      # for labels in ggplots
+library("corrr")        # for calculating correlations between many variables
+library("corrplot")     # for plotting correlations
+library("DiagrammeR")   # for drawing diagrams
+
+# Modeling 
+library("afex")         # also for running ANOVAs
+library("lme4")         # mixed effects models 
+library("emmeans")      # comparing estimated marginal means 
+library("broom")        # getting tidy model summaries
+library("broom.mixed")  # getting tidy mixed model summaries
+library("janitor")      # cleaning variable names 
+library("car")          # for running ANOVAs
+library("rstanarm")     # for Bayesian models
+library("greta")        # Bayesian models
+library("tidybayes")    # tidying up results from Bayesian models
+library("boot")         # bootstrapping
+library("modelr")       # cross-validation and bootstrapping
+library("mediation")    # for mediation and moderation analysis 
+library("multilevel")   # Sobel test
+library("extraDistr")   # additional probability distributions
+library("effects")      # for showing effects in linear, generalized linear, and other models
+library("brms")         # Bayesian regression
+
+# Misc 
+library("tictoc")       # timing things
+library("MASS")         # various useful functions (e.g. bootstrapped confidence intervals)
+library("lsr")          # for computing effect size measures
+library("extrafont")    # additional fonts
+library("pwr")          # for power calculations
+```
+
+
+```{r}
+library("knitr")      # for knitting RMarkdown 
+library("kableExtra") # for making nice tables
+library("janitor")    # for cleaning column names
+library("greta")      # for writing Bayesian models
+library("tidybayes")  # tidying up results from Bayesian models
+library("cowplot")    # for making figure panels
+library("ggrepel")    # for labels in ggplots 
+library("gganimate")  # for animations
+library("extraDistr") # additional probability distributions
+library("tidyverse")  # for wrangling, plotting, etc. 
+
+df.poker = read_csv("data/poker.csv") %>% 
+  mutate(skill = factor(skill,
+                        levels = 1:2,
+                        labels = c("expert", "average")),
+         skill = fct_relevel(skill, "average", "expert"),
+         hand = factor(hand,
+                       levels = 1:3,
+                       labels = c("bad", "neutral", "good")),
+         limit = factor(limit,
+                        levels = 1:2,
+                        labels = c("fixed", "none")),
+         participant = 1:n()) %>% 
+  select(participant, everything())
+
+
+fit.brm1 = brm(formula = balance ~ 1 + hand,
+               data = df.poker,
+               file = "cache/brm1")
+
+fit.brm1 %>% summary()
+
+# generate predictive samples 
+df.predictive_samples = fit.brm1 %>% 
+  posterior_samples() %>% 
+  clean_names() %>% 
+  select(contains("b_"), sigma) %>% 
+  sample_n(size = 20) %>% 
+  mutate(sample = 1:n()) %>% 
+  group_by(sample) %>% 
+  nest() %>% 
+  mutate(bad = map(data, ~ .$b_intercept + rnorm(100, sd = .$sigma)),
+         neutral = map(data, ~ .$b_intercept + .$b_handneutral + rnorm(100, sd = .$sigma)),
+         good = map(data, ~ .$b_intercept + .$b_handgood + rnorm(100, sd = .$sigma))) %>% 
+  unnest(bad, neutral, good)
+
+# plot the results as an animation
+df.predictive_samples %>% 
+  gather("hand", "balance", -sample) %>% 
+  mutate(hand = factor(hand, levels = c("bad", "neutral", "good"))) %>% 
+  ggplot(mapping = aes(x = hand,
+                       y = balance,
+                       fill = hand)) + 
+  geom_point(alpha = 0.2,
+             position = position_jitter(height = 0, width = 0.1)) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "linerange",
+               size = 1) + 
+  stat_summary(fun.y = "mean",
+               geom = "point",
+               shape = 21,
+               size = 4) +
+  labs(y = "final balance (in Euros)") + 
+  scale_fill_manual(values = c("red", "orange", "green")) +
+  theme(legend.position = "none") + 
+  transition_manual(sample)
+
+```
+
+
+<!--chapter:end:01-introduction.Rmd-->
+
+
+# Visualization 1
+
+Placeholder
+
+
+## Learning objectives 
+## Load packages
+## Why visualize data?
+### How _not_ to visualize data
+### How to make it better
+## Setting up RStudio
+## Getting help
+## Data visualization using `ggplot2`
+### Setting up a plot
+### Setting the default plot theme
+### Scatter plot
+#### Practice plot 1
+### Line plot
+### Adding error bars
+#### Order matters
+#### Practice plot 2
+### Grouping data
+#### Practice plot 3
+### Making facets
+#### Practice plot 4
+### Global, local, and setting `aes()`
+## Additional resources
+### Cheatsheets
+### Data camp courses
+### Books and chapters
+### Misc
+
+<!--chapter:end:02-visualization1.Rmd-->
+
+
+# Visualization 2
+
+Placeholder
+
+
+## Learning objectives 
+## Install and load packages, load data, set theme
+## Overview of different plot types for different things 
+### Proportions 
+#### Stacked bar charts 
+#### Pie charts 
+### Comparisons 
+#### Boxplots
+#### Violin plots
+#### Joy plots
+#### Practice plot
+### Relationships 
+#### Scatter plots
+#### Raster plots 
+### Temporal data 
+## Customizing plots 
+### Changing the order of things
+### Dealing with legends 
+### Choosing good colors
+### Customizing themes 
+## Saving plots 
+## Creating figure panels 
+## Peeking behind the scenes 
+## Making animations 
+## Shiny apps 
+## Defining snippets 
+## Additional resources 
+### Cheatsheets 
+### Data camp courses 
+### Books and chapters
+### Misc
+
+<!--chapter:end:03-visualization2.Rmd-->
+
+
+# Data wrangling 1 
+
+Placeholder
+
+
+## Learning objectives 
+## Install packages 
+## Load packages 
+## Some R basics 
+### Modes 
+### Data types
+#### Vectors 
+#### Matrix 
+#### Array 
+#### Data frame 
+#### Lists 
+### Operators
+### Control flow 
+#### if-then {#if-else}
+#### for loop
+#### while loop 
+### Functions 
+#### Some often used functions 
+### The pipe operator `%>%` 
+#### Practice 1 
+## Looking at data
+### `head()`
+### `glimpse()`
+### `distinct()`
+### `count()`
+### `datatable()`
+### Other tools for taking a quick look at data 
+#### `vis_dat()`
+#### `skim()`
+#### `dfSummary()`
+### A quick note on naming things 
+## Wrangling data 
+### filter() 
+### rename() 
+### select() 
+### mutate() 
+#### mutate_at()
+#### mutate_all()
+#### mutate_if()
+### arrange() 
+### Practice 2 
+## Additional resources 
+### Cheatsheets 
+### Data camp courses
+### Books and chapters
+
+<!--chapter:end:04-data_wrangling1.Rmd-->
+
+
+# Data wrangling 2 
+
+Placeholder
+
+
+## Learning objectives 
+## Load packages 
+## Wrangling data (continued)
+### Summarizing data 
+#### Practice 1 
+### Reshaping data 
+#### Practice 2 
+### Joining multiple data frames 
+#### Practice 3
+### Dealing with missing data 
+## Reading in data 
+### csv
+### RData 
+## Saving data 
+### csv 
+### RData 
+## Additional resources 
+### Cheatsheets 
+### Data camp courses 
+### Books and chapters
+### Tutorials 
+
+<!--chapter:end:05-data_wrangling2.Rmd-->
+
+
+# Probability and causality
+
+Placeholder
+
+
+## Load packages 
+## Counting 
+## Flipping a coin many times 
+## Clue guide to probability 
+### Conditional probability 
+### Law of total probability
+## Probability operations 
+## Bayesian reasoning example
+## Bayesian networks 
+### Sprinkler example
+## Additional resources 
+### Cheatsheets 
+### Books and chapters
+### Misc 
+
+<!--chapter:end:06-probability.Rmd-->
+
+
+# Simulation 1 
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Working with distributions 
+### Plotting distributions 
+### Sampling from distributions 
+### Cumulative probability distribution
+### Inverse cumulative distribution 
+### Computing probabilities 
+#### Via probability distributions
+#### Via sampling 
+## Bayesian inference with the normal distribution
+## Working with samples
+### Understanding `density()`
+### The `quantile()` function
+## Comparing probability distributions 
+## Additional resources 
+### Cheatsheets 
+### Datacamp 
+
+<!--chapter:end:07-simulation1.Rmd-->
+
+
+# Simulation 2 
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## The central limit theorem 
+### Population distribution 
+### Distribution of a single sample 
+### The sampling distribution
+#### Bootstrapping a sampling distribution
+### Exploring the CLT 
+#### Distribution of height 
+#### Testing the limits 
+## Understanding p-values 
+### Permutation test 
+## Confidence intervals 
+## Additional resources 
+### Datacamp 
+
+<!--chapter:end:08-simulation2.Rmd-->
+
+
+# Modeling data
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Things that came up in class 
+### Calculating RMSE using `magrittr` verbs
+### Relationship between probability and likelihood 
+## Modeling data 
+### Simplicity vs. accuracy trade-off 
+### Error definitions and best estimators
+### Sampling distributions for median and mean 
+## Hypothesis testing: "One-sample t-test" 
+## Additional resources 
+### Reading 
+### Datacamp 
+
+<!--chapter:end:09-modeling_data.Rmd-->
+
+
+# Linear model 1
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Things that came up in class 
+### Building a sampling distribution of PRE 
+### Correlation 
+#### Variance 
+#### Covariance 
+#### Spearman's rank order correlation
+## Regression 
+### Define and fit the models
+### Calculate the sum of squared errors of each model
+## Credit example
+## Additional resources 
+### Datacamp 
+### Misc 
+
+<!--chapter:end:10-linear_model1.Rmd-->
+
+
+# Linear model 2
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Load data sets 
+## Things that came up in class
+## Multiple continuous variables 
+### Explore correlations 
+#### Visualize correlations
+##### Correlations with the dependent variable
+##### All pairwise correlations
+### Multipe regression
+#### Visualization
+#### Fitting, hypothesis testing, evaluation
+#### Visualizing the model fits 
+#### Interpreting the model fits
+#### Standardizing the predictors
+## One categorical variable
+### Visualization of the model predictions
+### Dummy coding 
+### Reporting the results
+## One continuous and one categorical variable
+### Visualization of the model predictions
+## Interactions
+### Visualization
+### Hypothesis test 
+## Additional resources 
+### Datacamp 
+### Misc 
+
+<!--chapter:end:11-linear_model2.Rmd-->
+
+
+# Linear model 3
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Load data sets 
+### One-way ANOVA
+#### Visualization 
+#### Model fitting 
+#### Hypothesis test 
+#### Visualize the model's predictions 
+#### Dummy coding
+#### Follow up questions
+## Two-way ANOVA 
+### Visualization
+### Model fitting
+### Interpreting interactions 
+## Additional resources 
+### Datacamp 
+### Misc 
+
+<!--chapter:end:12-linear_model3.Rmd-->
+
+
+# Linear model 4
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Load data sets
+## Variance decomposition in one-way ANOVA
+### Calculate sums of squares
+### Visualize model predictions 
+#### Total variance
+#### Model variance
+#### Residual variance 
+## Two-way ANOVA (linear model)
+### Calculate sums of squares
+### Visualize model predictions
+#### `Skill` factor
+## ANOVA with unbalanced design
+## Two-way ANOVA (with interaction)
+## Planned contrasts 
+### Hypothetical data 
+### Visualization
+### Constrasts 
+### Post-hoc tests
+
+<!--chapter:end:13-linear_model4.Rmd-->
+
+
+# Power analysis
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Load data sets 
+## Decision-making 
+## Effect sizes
+### eta-squared and partial eta-squared
+### Cohen's d
+## Determining sample size 
+### `pwr` package
+### Simulation
+## Additional resources 
+
+<!--chapter:end:14-power_analysis.Rmd-->
+
+
+# Bootstrapping
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## What's wrong with parametric tests?
+### T-tests on non-normal distributions
+### Non-IID noise and linear models
+### Density estimate conceptual plot
+## Bootstrap resampling
+### Demo
+## Applications
+### Bootstrap confidence intervals
+### Bootstrap (& permutation) hypothesis tests
+
+<!--chapter:end:15-bootstrapping.Rmd-->
+
+
+# Model comparison
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Determining sample size 
+### `pwr` package
+### `map()`
+### via simulation
+#### simple example 
+#### more advanced example
+## Model comparison 
+### Fitting vs. predicting
+### F-test 
+### Cross-validation 
+#### Leave-one-out cross-validation 
+#### k-fold cross-validation 
+#### Monte Carlo cross-validation 
+### Bootstrap 
+### AIC and BIC 
+#### log() is your friend 
+## Additional resources 
+### Cheatsheet 
+### Datacamp course
+### Reading 
+### Misc 
+
+<!--chapter:end:16-model_comparison.Rmd-->
+
+
+# Linear mixed effects models 1
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Things that came up in class 
+### Comparing t-test with F-test in `lm()`
+#### Global F-test 
+#### Test for individual predictors
+## Dependence 
+## Additional resources 
+### Readings 
+
+<!--chapter:end:17-linear_mixed_effects_models1.Rmd-->
+
+
+# Linear mixed effects models 2
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Things that came up in class 
+### Difference between `replicate()` and `map()`
+## Simulating a linear mixed effects model 
+## The effect of outliers 
+## Different slopes 
+## Simpson's paradox 
+## Additional resources 
+### Readings 
+
+<!--chapter:end:18-linear_mixed_effects_models2.Rmd-->
+
+
+# Linear mixed effects models 3
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Load data set 
+## Things that came up in class 
+### One-tailed vs. two-tailed tests
+#### t distribution
+#### F distribution
+### Mixtures of participants 
+#### Ignoring mixture
+#### Modeling mixture
+#### Heterogeneity in variance
+## Pooling and shrinkage 
+### Complete pooling 
+### No pooling 
+### Partial pooling 
+#### Random intercept and random slope
+#### Only random intercepts 
+#### Only random slopes 
+### Compare results 
+### Coefficients 
+### Shrinkage 
+## Bootstrapping 
+### Linear model 
+#### bootmer() function
+## Getting p-values 
+## Understanding the lmer() syntax 
+
+<!--chapter:end:19-linear_mixed_effects_models3.Rmd-->
+
+
+# Generalized linear model 
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Load data set 
+## Logistic regression 
+### Interpreting the parameters 
+#### Binary predictor
+#### Continuous predictor
+#### Several predictors 
+#### Using the "effects" package 
+## Simulate a logistic regression
+#### Calculate the model's likelihood 
+## Testing hypotheses
+## Logistic mixed effects model 
+## Additional information 
+### Datacamp 
+
+<!--chapter:end:20-generalized_linear_model.Rmd-->
+
+
+# Bayesian data analysis 1
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Things that came up 
+### Bias in Cosyne 2019 conference admission? 
+
+<!--chapter:end:21-bayesian_data_analysis1.Rmd-->
+
+
+# Bayesian data analysis 2
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Doing Bayesian inference "by hand"
+### Sequential updating based on the Beta distribution 
+### Coin flip example 
+### Bayesian inference by discretization
+### Effect of the prior 
+### Effect of the likelihood 
+### Effect of the sample size  
+## Distributions 
+### Normal vs Student-t distribution
+### Beta distributions
+### Normal distributions 
+### Distributions for non-negative parameters 
+## Inference via sampling 
+## Greta 
+### Attitude data set 
+### Frequentist analysis 
+### Bayesian regression
+#### Fit the model
+#### Visualize the priors
+#### Visualize the posteriors
+#### Visualize model predictions 
+#### Posterior predictive check 
+#### Prior predictive check 
+
+<!--chapter:end:22-bayesian_data_analysis2.Rmd-->
+
+
+# Bayesian data analysis 3
+
+Placeholder
+
+
+## Load packages and set plotting theme  
+## Load data set 
+## Poker 
+### Visualization
+### Linear model 
+### Bayesian model 
+#### Visualize the posteriors 
+#### Compute highest density intervals 
+#### Posterior predictive check 
+#### Test hypothesis
+#### Bayes factor 
+#### Full specification
+##### Getting the priors
+#### Inference diagnostics
+##### When things go wrong 
+## Dealing with heteroscedasticity 
+## Ordinal regression 
+## Additional resources 
+
+<!--chapter:end:23-bayesian_data_analysis3.Rmd-->
+
+
+# Mediation & Moderation
+
+Placeholder
+
+
+## Recommended reading 
+## Load packages and set plotting theme  
+## Mediation 
+### Generate data 
+### Method 1: Baron & Kenny’s (1986) indirect effect method
+#### Total effect 
+#### Path a 
+#### Path b and c'
+#### Interpretation
+### Method 2: Sobel Test 
+### Method 3: Bootstrapping
+#### Interpretation 
+### Method 4: Bayesian approach 
+## Moderation 
+### Generate data 
+### Moderation analysis 
+#### Visualize result 
+## Additional resources 
+### Books 
+### Tutorials
+
+<!--chapter:end:24-mediation_moderation.Rmd-->
+
+
+# Cheatsheets
+
+Placeholder
+
+
+## Statistics 
+## R 
+
+<!--chapter:end:25-cheatsheets.Rmd-->
+
+`r if (knitr::is_html_output()) '# References {-}'`
+
+<!--chapter:end:26-references.Rmd-->
+
