@@ -116,8 +116,8 @@ This chapter contains a selection of useful cheatsheets.
 </div>
 
 <div class="figure" style="text-align: center">
-<img src="figures/cheatsheets/visualization-principles.pdf" alt="visualization-principles"  />
-<p class="caption">(\#fig:cheatsheets-22)visualization-principles</p>
+<img src="figures/cheatsheets/visualization-principles.pdf" alt="visualization principles"  />
+<p class="caption">(\#fig:cheatsheets-22)visualization principles</p>
 </div>
 
 

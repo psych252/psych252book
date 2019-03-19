@@ -29,9 +29,13 @@ Let's see some examples! One common non-normal distribution is the *log-normal* 
 
 ```r
 num_points = 1e4
-parametric_plotting_data = data.frame(distribution = rep(c("Normal", "Log-normal"), each = num_points),
-                                      value = c(rnorm(num_points, 0, 1), # normal
-                                                exp(rnorm(num_points, 0, 1)) - exp(1 / 2))) %>%
+parametric_plotting_data = tibble(
+  distribution = rep(c("Normal", "Log-normal"), each = num_points),
+  value = c(
+    rnorm(num_points, 0, 1), # normal
+    exp(rnorm(num_points, 0, 1)) - exp(1 / 2)
+  )
+) %>%
   mutate(distribution = factor(distribution, levels = c("Normal", "Log-normal")))
 ```
 
@@ -43,17 +47,19 @@ Invalid: comparing two log-normally distributed populations with equal means but
 
 
 ```r
-ggplot(parametric_plotting_data, aes(x=value, color=distribution)) +
-  geom_density(bw=0.5, size=1) +
-  geom_vline(data=parametric_plotting_data %>%
-               group_by(distribution) %>%
-               summarize(mean_value = mean(value), sd_value = sd(value)),
-             aes(xintercept=mean_value, color=distribution), 
-             linetype=2, size=1) +
+ggplot(parametric_plotting_data, aes(x = value, color = distribution)) +
+  geom_density(bw = 0.5, size = 1) +
+  geom_vline(
+    data = parametric_plotting_data %>%
+      group_by(distribution) %>%
+      summarize(mean_value = mean(value), sd_value = sd(value)),
+    aes(xintercept = mean_value, color = distribution),
+    linetype = 2, size = 1
+  ) +
   xlim(-5, 20) +
-  facet_grid(~ distribution, scales="free") +
-  guides(color=F) +
-  scale_color_brewer(palette="Accent")
+  facet_grid(~distribution, scales = "free") +
+  guides(color = F) +
+  scale_color_brewer(palette = "Accent")
 ```
 
 ```
@@ -61,6 +67,7 @@ ggplot(parametric_plotting_data, aes(x=value, color=distribution)) +
 ```
 
 ![](15-bootstrapping_files/figure-latex/bootstrapping-05-1.pdf)<!-- --> 
+
 
 ```r
 ggsave("figures/log_normal_dists.png", width=5, height=3)
@@ -73,17 +80,17 @@ ggsave("figures/log_normal_dists.png", width=5, height=3)
 
 ```r
 gen_data_and_test = function(num_observations_per) {
-x = rnorm(num_observations_per, 0, 1.1)
-y = rnorm(num_observations_per, 0, 1.1)
+  x = rnorm(num_observations_per, 0, 1.1)
+  y = rnorm(num_observations_per, 0, 1.1)
 
-pnormal = t.test(x, y, var.equal=T)$p.value
+  pnormal = t.test(x, y, var.equal = T)$p.value
 
-# what if the data are log-normally distributed?
-x = exp(rnorm(num_observations_per, 0, 1.1))
-y = exp(rnorm(num_observations_per, 0, 1.1))
+  # what if the data are log-normally distributed?
+  x = exp(rnorm(num_observations_per, 0, 1.1))
+  y = exp(rnorm(num_observations_per, 0, 1.1))
 
-pnotnormal = t.test(x, y, var.equal=T)$p.value 
-return(c(pnormal, pnotnormal))
+  pnotnormal = t.test(x, y, var.equal = T)$p.value
+  return(c(pnormal, pnotnormal))
 }
 
 parametric_issues_demo = function(num_tests, num_observations_per) {
@@ -160,6 +167,7 @@ boot_mean_diff_test = function(x, y) {
 
 (Omitted because with these small sample sizes bootstrapping is problematic -- permutations are better)
 
+
 ```r
 # gen_data_and_boot_test = function(num_observations_per) {
 # x = rnorm(num_observations_per, 0, 1.1)
@@ -182,7 +190,6 @@ boot_mean_diff_test = function(x, y) {
 
 While the bootstrap **actually loses power** relative to a perfectly specified model, it is much more **robust** to changes in the assumptions of that model, and so it **retains more power when assumptions are violated**.
  
-
 
 
 ```r
@@ -285,22 +292,29 @@ perm_results = perm_results %>%
 
 ```r
 ggplot(perm_results %>%
-         filter(null_true == "Alternative True"), aes(x=test_type, fill=significant)) +
-  geom_bar(stat="count", color="black") +
-  scale_fill_brewer(palette="Set1") +
-  facet_grid(null_true ~ distribution) + 
-  geom_hline(data=data.frame(null_true="Alternative True", 
-                        alpha=num_tests*0.8),
-             mapping=aes(yintercept=alpha),
-             linetype=2,
-             size=1,
-             alpha=0.5) +
+  filter(null_true == "Alternative True"), aes(x = test_type, fill = significant)) +
+  geom_bar(stat = "count", color = "black") +
+  scale_fill_brewer(palette = "Set1") +
+  facet_grid(null_true ~ distribution) +
+  geom_hline(
+    data = data.frame(
+      null_true = "Alternative True",
+      alpha = num_tests * 0.8
+    ),
+    mapping = aes(yintercept = alpha),
+    linetype = 2,
+    size = 1,
+    alpha = 0.5
+  ) +
   labs(x = "Test type", y = "Percent") +
-  scale_y_continuous(breaks = c(0, 0.8, 1)*num_tests,
-                     labels = paste(c(0, 80, 100), "%", sep=""))
+  scale_y_continuous(
+    breaks = c(0, 0.8, 1) * num_tests,
+    labels = paste(c(0, 80, 100), "%", sep = "")
+  )
 ```
 
 ![](15-bootstrapping_files/figure-latex/bootstrapping-15-1.pdf)<!-- --> 
+
 
 ```r
 ggsave("figures/perm_test.png", width=5, height=3)
@@ -328,7 +342,6 @@ perm_results %>%
 ## 8 permutation Log-normal   Null True                   0.03
 ```
 
-
 ### Non-IID noise and linear models
 
 
@@ -348,18 +361,23 @@ parametric_ci_data = data.frame(IV = rep(runif(num_points,  -1, 1), 2),
 
 
 ```r
-ggplot(parametric_ci_data,
-       aes(x=IV, y=DV, color=type)) +
-  geom_point(alpha=0.5) +
-  geom_smooth(method="lm", se=T, color="black", 
-              size=1.5, level=0.9999) + # inflating the confidence bands a bit
-                                       # to show their distribution is similar
-  scale_color_brewer(palette="Accent") +
+ggplot(
+  parametric_ci_data,
+  aes(x = IV, y = DV, color = type)
+) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(
+    method = "lm", se = T, color = "black",
+    size = 1.5, level = 0.9999
+  ) + # inflating the confidence bands a bit
+  # to show their distribution is similar
+  scale_color_brewer(palette = "Accent") +
   facet_wrap(~type) +
-  guides(color=F)
+  guides(color = F)
 ```
 
 ![](15-bootstrapping_files/figure-latex/bootstrapping-19-1.pdf)<!-- --> 
+
 
 ```r
 ggsave("figures/error_dist_non_null.png", width=5, height=3)
@@ -420,28 +438,34 @@ summary(lm(DV ~ IV, parametric_ci_data %>% filter(type=="Non-IID Error")))
 ## F-statistic: 196.7 on 1 and 498 DF,  p-value: < 2.2e-16
 ```
 
+
 ```r
-ex2_lm_bootstrap_CIs = function(data, R=1000) {
-  lm_results = summary(lm(DV ~ IV, data=data))$coefficients
+ex2_lm_bootstrap_CIs = function(data, R = 1000) {
+  lm_results = summary(lm(DV ~ IV, data = data))$coefficients
   bootstrap_coefficients = function(data, indices) {
-    linear_model = lm(DV ~ IV, 
-                      data=data[indices,]) # will select a bootstrap sample of the data
+    linear_model = lm(DV ~ IV,
+      data = data[indices, ]
+    ) # will select a bootstrap sample of the data
     return(linear_model$coefficients)
   }
 
-  boot_results = boot(data=data,
-                      statistic=bootstrap_coefficients,
-                      R=R)
-  boot_intercept_CI = boot.ci(boot_results, index=1, type="bca")
-  boot_slope_CI = boot.ci(boot_results, index=2, type="bca")
-  return(data.frame(intercept_estimate=lm_results[1, 1],
-                    intercept_SE=lm_results[1,2],
-                    slope_estimate=lm_results[2, 1],
-                    slope_SE=lm_results[2,2],
-                    intercept_boot_CI_low=boot_intercept_CI$bca[4],
-                    intercept_boot_CI_hi=boot_intercept_CI$bca[5],
-                    slope_boot_CI_low=boot_slope_CI$bca[4],
-                    slope_boot_CI_hi=boot_slope_CI$bca[5]))
+  boot_results = boot(
+    data = data,
+    statistic = bootstrap_coefficients,
+    R = R
+  )
+  boot_intercept_CI = boot.ci(boot_results, index = 1, type = "bca")
+  boot_slope_CI = boot.ci(boot_results, index = 2, type = "bca")
+  return(data.frame(
+    intercept_estimate = lm_results[1, 1],
+    intercept_SE = lm_results[1, 2],
+    slope_estimate = lm_results[2, 1],
+    slope_SE = lm_results[2, 2],
+    intercept_boot_CI_low = boot_intercept_CI$bca[4],
+    intercept_boot_CI_hi = boot_intercept_CI$bca[5],
+    slope_boot_CI_low = boot_slope_CI$bca[4],
+    slope_boot_CI_hi = boot_slope_CI$bca[5]
+  ))
 }
 ```
 
@@ -458,41 +482,48 @@ coefficient_CI_data = parametric_ci_data %>%
 ```r
 coefficient_CI_data = coefficient_CI_data %>%
   gather(variable, value, -type) %>%
-  separate(variable, c("parameter", "measurement"), extra="merge") %>%
+  separate(variable, c("parameter", "measurement"), extra = "merge") %>%
   spread(measurement, value) %>%
-  mutate(parametric_CI_low=estimate-1.96*SE,
-         parametric_CI_hi=estimate+1.96*SE) %>%
+  mutate(
+    parametric_CI_low = estimate - 1.96 * SE,
+    parametric_CI_hi = estimate + 1.96 * SE
+  ) %>%
   gather(CI_type, value, contains("CI")) %>%
-  separate(CI_type, c("CI_type", "high_or_low"), extra="merge") %>%
+  separate(CI_type, c("CI_type", "high_or_low"), extra = "merge") %>%
   spread(high_or_low, value) %>%
   mutate(CI_type = factor(CI_type))
 ```
 
 
 ```r
-plot_coefficient_CI_data = function(coefficient_CI_data, errorbar_width=0.5) {
-  p = ggplot(data=coefficient_CI_data, aes(x=parameter, color=CI_type, y=estimate, ymin=CI_low, ymax=CI_hi)) +
-    geom_hline(data=data.frame(parameter=c("intercept", "slope"),
-                               estimate=c(true_intercept, true_slope)), 
-               mapping=aes(yintercept=estimate),
-               linetype=3) +
-    geom_point(size=2, position=position_dodge(width=0.2)) +
-    geom_errorbar(position=position_dodge(width=0.2), width=errorbar_width) +
-    facet_grid(~type) + 
-    scale_y_continuous(breaks=c(0, 0.5, 1), limits=c(-0.2, 1.5)) +
-    scale_color_brewer(palette="Dark2", drop=F)
+plot_coefficient_CI_data = function(coefficient_CI_data, errorbar_width = 0.5) {
+  p = ggplot(data = coefficient_CI_data, aes(x = parameter, color = CI_type, y = estimate, ymin = CI_low, ymax = CI_hi)) +
+    geom_hline(
+      data = data.frame(
+        parameter = c("intercept", "slope"),
+        estimate = c(true_intercept, true_slope)
+      ),
+      mapping = aes(yintercept = estimate),
+      linetype = 3
+    ) +
+    geom_point(size = 2, position = position_dodge(width = 0.2)) +
+    geom_errorbar(position = position_dodge(width = 0.2), width = errorbar_width) +
+    facet_grid(~type) +
+    scale_y_continuous(breaks = c(0, 0.5, 1), limits = c(-0.2, 1.5)) +
+    scale_color_brewer(palette = "Dark2", drop = F)
 }
 ```
 
 
 ```r
 plot_coefficient_CI_data(coefficient_CI_data)
-ggsave("figures/error_dist_CI_example.png", width=5, height=3)
+ggsave("figures/error_dist_CI_example.png", width = 5, height = 3)
 
-plot_coefficient_CI_data(coefficient_CI_data %>% 
-                           filter(CI_type=="parametric"),
-                         0.25)
-ggsave("figures/error_dist_CI_example_parametric_only.png", width=5, height=3)
+plot_coefficient_CI_data(
+  coefficient_CI_data %>%
+    filter(CI_type == "parametric"), 0.25)
+
+ggsave("figures/error_dist_CI_example_parametric_only.png", width = 5, height = 3)
 ```
 
 Challenge Q: Why isn't the error on the intercept changed in the scaling error case?
@@ -518,15 +549,19 @@ parametric_ci_data = data.frame(IV = rep(runif(num_points,  -1, 1), 2),
 
 
 ```r
-ggplot(parametric_ci_data,
-       aes(x=IV, y=DV, color=type)) +
-  geom_point(alpha=0.5) +
-  geom_smooth(method="lm", se=T, color="black", 
-              size=1.5, level=0.9999) + # inflating the confidence bands a bit
-                                       # to show their distribution is similar
-  scale_color_brewer(palette="Accent") +
+ggplot(
+  parametric_ci_data,
+  aes(x = IV, y = DV, color = type)
+) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(
+    method = "lm", se = T, color = "black",
+    size = 1.5, level = 0.9999
+  ) + # inflating the confidence bands a bit
+  # to show their distribution is similar
+  scale_color_brewer(palette = "Accent") +
   facet_wrap(~type) +
-  guides(color=F)
+  guides(color = F)
 ```
 
 ![](15-bootstrapping_files/figure-latex/bootstrapping-28-1.pdf)<!-- --> 
@@ -535,7 +570,6 @@ ggplot(parametric_ci_data,
 ```r
 ggsave("figures/error_dist_null.png", width=5, height=3)
 ```
-
 
 
 ```r
@@ -548,7 +582,7 @@ error_dist_null_sample = function(num_points) {
     mutate(DV = true_slope * IV + 2 * abs(IV) * error) # error increases proportional to distance from 0 on the IV
   
   coefficient_CI_data = ex2_lm_bootstrap_CIs(this_data,
-                                             R = 500) # take fewer bootstrap samples, to speed things up
+                                             R = 200) # take fewer bootstrap samples, to speed things up
   
   coefficient_CI_data = coefficient_CI_data %>%
     gather(variable, value) %>%
@@ -567,7 +601,7 @@ error_dist_null_sample = function(num_points) {
 
 
 ```r
-num_simulations = 500
+num_simulations = 100
 num_points = 200
 set.seed(0)
 noise_dist_simulation_results = replicate(num_simulations, error_dist_null_sample(num_points)) %>%
@@ -605,14 +639,14 @@ noise_dist_simulation_results %>%
 ## # A tibble: 8 x 5
 ##   parameter CI_type    significant     n  prop
 ##   <chr>     <chr>      <lgl>       <int> <dbl>
-## 1 intercept boot       FALSE         471 0.942
-## 2 intercept boot       TRUE           29 0.058
-## 3 intercept parametric FALSE         473 0.946
-## 4 intercept parametric TRUE           27 0.054
-## 5 slope     boot       FALSE         481 0.962
-## 6 slope     boot       TRUE           19 0.038
-## 7 slope     parametric FALSE         428 0.856
-## 8 slope     parametric TRUE           72 0.144
+## 1 intercept boot       FALSE          97  0.97
+## 2 intercept boot       TRUE            3  0.03
+## 3 intercept parametric FALSE          97  0.97
+## 4 intercept parametric TRUE            3  0.03
+## 5 slope     boot       FALSE          98  0.98
+## 6 slope     boot       TRUE            2  0.02
+## 7 slope     parametric FALSE          88  0.88
+## 8 slope     parametric TRUE           12  0.12
 ```
 
 False positive rate nearly triples for the parametric model!
@@ -621,17 +655,23 @@ False positive rate nearly triples for the parametric model!
 
 
 ```r
-density_similarity_conceptual_plot_data = expand.grid(x = seq(0, 4, 0.01),
-                                                      y = seq(0, 4, 0.01)) %>%
-  mutate(population_1 = exp(-((x - 2)^2 + (y - 3)^2) / 8) * exp(-((x - 2 / y)^2 + (y - 1 / x)^2) / 2), # These are definitely not proper distributions
-         population_2 = exp(-((x)^2 + (y)^2) / 8) * exp(-((x / 2)^2 + (y / 2 - 1 / x)^2) / 2)) %>%
+density_similarity_conceptual_plot_data = expand.grid(
+  x = seq(0, 4, 0.01),
+  y = seq(0, 4, 0.01)
+) %>%
+  mutate(
+    population_1 = exp(-((x - 2)^2 + (y - 3)^2) / 8) * exp(-((x - 2 / y)^2 + (y - 1 / x)^2) / 2), # These are definitely not proper distributions
+    population_2 = exp(-((x)^2 + (y)^2) / 8) * exp(-((x / 2)^2 + (y / 2 - 1 / x)^2) / 2)
+  ) %>%
   gather(population, value, contains("population"))
 ```
 
 
 ```r
-ggplot(density_similarity_conceptual_plot_data,
-       aes(x = x, y = y, z = value, color = population)) +
+ggplot(
+  density_similarity_conceptual_plot_data,
+  aes(x = x, y = y, z = value, color = population)
+) +
   geom_contour(size = 1, bins = 8) +
   scale_color_brewer(palette = "Dark2") +
   facet_wrap(~population) +
@@ -655,13 +695,16 @@ num_points = 100
 true_intercept = 0
 true_slope = 1.
 set.seed(2) # I p-hacked the shit out of this demo to make the ideas more clear
-parametric_ci_data = data.frame(IV = rep(runif(num_points, -1, 1), 2),
-                                type = rep(c("IID Error", "Scaling Error"), each = num_points),
-                                error = rep(rnorm(num_points, 0, 1), 2)) %>%
+parametric_ci_data = data.frame(
+  IV = rep(runif(num_points, -1, 1), 2),
+  type = rep(c("IID Error", "Scaling Error"), each = num_points),
+  error = rep(rnorm(num_points, 0, 1), 2)
+) %>%
   mutate(DV = ifelse(
     type == "IID Error",
     true_slope * IV + error,
-    true_slope * IV + 2 * abs(IV) * error)) # error increases proportional to distance from 0 on the IV
+    true_slope * IV + 2 * abs(IV) * error
+  )) # error increases proportional to distance from 0 on the IV
 ```
 
 
@@ -687,23 +730,28 @@ ggsave("figures/bootstrap_demo_0.png", width=5, height=3)
 set.seed(15) # See above RE: p-hacking
 samp_1_indices = sample(2:num_points, num_points, replace = T)
 samp_1 = parametric_ci_data[c(samp_1_indices, samp_1_indices + num_points), ] # take the same rows from each type of data
+
 set.seed(2) # See above RE: p-hacking
 samp_2_indices = sample(1:num_points, num_points, replace = T)
 samp_2 = parametric_ci_data[c(samp_2_indices, samp_2_indices + num_points), ]
 
 many_samples_indices = sample(1:num_points, 8 * num_points, replace = T)
-many_samples = bind_rows(samp_1 %>%
-                           mutate(sample = 1),
-                         samp_2 %>% mutate(sample = 2),
-                         parametric_ci_data[c(many_samples_indices, many_samples_indices + num_points), ] %>%
-                           mutate(sample = rep(rep(3:10, each = num_points), 2)))
+many_samples = bind_rows(
+  samp_1 %>%
+    mutate(sample = 1),
+  samp_2 %>% mutate(sample = 2),
+  parametric_ci_data[c(many_samples_indices, many_samples_indices + num_points), ] %>%
+    mutate(sample = rep(rep(3:10, each = num_points), 2))
+)
 ```
 
 
 ```r
-p + 
-  geom_point(data=samp_1,
-             aes(color=NA), color="red", alpha=0.5) 
+p +
+  geom_point(
+    data = samp_1,
+    aes(color = NA), color = "red", alpha = 0.5
+  )
 ```
 
 ![](15-bootstrapping_files/figure-latex/bootstrapping-42-1.pdf)<!-- --> 
@@ -715,12 +763,16 @@ ggsave("figures/bootstrap_demo_1.png", width=5, height=3)
 
 
 ```r
-p + 
-  geom_point(data=samp_1,
-             aes(color=NA), color="red", alpha=0.5) +
-  geom_smooth(data=samp_1,
-              method="lm", se=F, color="red", 
-              size=1.5) 
+p +
+  geom_point(
+    data = samp_1,
+    aes(color = NA), color = "red", alpha = 0.5
+  ) +
+  geom_smooth(
+    data = samp_1,
+    method = "lm", se = F, color = "red",
+    size = 1.5
+  )
 ```
 
 ![](15-bootstrapping_files/figure-latex/bootstrapping-44-1.pdf)<!-- --> 
@@ -747,12 +799,16 @@ ggsave("figures/bootstrap_demo_3.png", width=5, height=3)
 
 
 ```r
-p + 
-  geom_point(data=samp_2,
-             aes(color=NA), color="red", alpha=0.5) +
-  geom_smooth(data=samp_2,
-              method="lm", se=F, color="red", 
-              size=1.5) 
+p +
+  geom_point(
+    data = samp_2,
+    aes(color = NA), color = "red", alpha = 0.5
+  ) +
+  geom_smooth(
+    data = samp_2,
+    method = "lm", se = F, color = "red",
+    size = 1.5
+  )
 ```
 
 ![](15-bootstrapping_files/figure-latex/bootstrapping-48-1.pdf)<!-- --> 
@@ -764,12 +820,14 @@ ggsave("figures/bootstrap_demo_4.png", width=5, height=3)
 
 
 ```r
-p +  
-  geom_smooth(data=many_samples,
-              aes(group=sample),
-              method="lm", se=F, 
-              size=1.5,
-              color="red")
+p +
+  geom_smooth(
+    data = many_samples,
+    aes(group = sample),
+    method = "lm", se = F,
+    size = 1.5,
+    color = "red"
+  )
 ```
 
 ![](15-bootstrapping_files/figure-latex/bootstrapping-50-1.pdf)<!-- --> 
@@ -791,7 +849,9 @@ num_outlier_points = 2
 max_score = 100
 set.seed(0)
 test_score_data = data.frame(
-  score = c(rbinom(num_top_points, max_score, 0.9999), rbinom(num_mid_points, max_score, 0.97), sample(0:max_score, num_outlier_points, replace = T)),
+  score = c(rbinom(num_top_points, max_score, 0.9999),
+            rbinom(num_mid_points, max_score, 0.97),
+            sample(0:max_score, num_outlier_points, replace = T)),
   type = "Observed sample"
 )
 ```
@@ -802,7 +862,7 @@ get_mean_score = function(data, indices) {
   return(mean(data[indices,]$score))
 }
 
-bootstrap_results = boot(test_score_data, get_mean_score, R=1000)
+bootstrap_results = boot(test_score_data, get_mean_score, R=100)
 bootstrap_CIs = boot.ci(bootstrap_results)
 ```
 
@@ -811,34 +871,44 @@ bootstrap_CIs = boot.ci(bootstrap_results)
 ## studentized intervals
 ```
 
+```
+## Warning in norm.inter(t, adj.alpha): extreme order statistics used as
+## endpoints
+```
+
 ```r
 bootstrap_CIs
 ```
 
 ```
 ## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 1000 bootstrap replicates
+## Based on 100 bootstrap replicates
 ## 
 ## CALL : 
 ## boot.ci(boot.out = bootstrap_results)
 ## 
 ## Intervals : 
 ## Level      Normal              Basic         
-## 95%   ( 86.53, 101.70 )   ( 88.38, 103.00 )  
+## 95%   ( 86.52, 102.43 )   ( 88.40, 103.45 )  
 ## 
 ## Level     Percentile            BCa          
-## 95%   (85.21, 99.83 )   (80.66, 99.59 )  
+## 95%   (84.75, 99.81 )   (84.00, 99.68 )  
 ## Calculations and Intervals on Original Scale
+## Some basic intervals may be unstable
+## Some percentile intervals may be unstable
+## Warning : BCa Intervals used Extreme Quantiles
 ## Some BCa intervals may be unstable
 ```
 
 
 ```r
 test_summary_data = test_score_data %>%
-  summarise(mean = mean(score),
-            se = sd(score) / sqrt(n()),
-            parametric_CI_low = mean - 1.96 * se,
-            parametric_CI_high = mean + 1.96 * se)
+  summarise(
+    mean = mean(score),
+    se = sd(score) / sqrt(n()),
+    parametric_CI_low = mean - 1.96 * se,
+    parametric_CI_high = mean + 1.96 * se
+  )
 
 test_score_data = test_score_data %>%
   bind_rows(
@@ -861,29 +931,39 @@ test_score_data = test_score_data %>%
 
 ```r
 test_summary_data = test_summary_data %>%
-  mutate(type = factor("Boot. sampling dist.", levels = levels(test_score_data$type)),
-         percentile_CI_low = bootstrap_CIs$percent[4],
-         percentile_CI_high = bootstrap_CIs$percent[5],
-         bca_CI_low = bootstrap_CIs$bca[4],
-         bca_CI_high = bootstrap_CIs$bca[5]) %>%
+  mutate(
+    type = factor("Boot. sampling dist.", levels = levels(test_score_data$type)),
+    percentile_CI_low = bootstrap_CIs$percent[4],
+    percentile_CI_high = bootstrap_CIs$percent[5],
+    bca_CI_low = bootstrap_CIs$bca[4],
+    bca_CI_high = bootstrap_CIs$bca[5]
+  ) %>%
   gather(CI_type, value, contains("CI")) %>%
   separate(CI_type, c("CI_type", "endpoint"), extra = "merge") %>%
   spread(endpoint, value) %>%
-  mutate(y = c(170, 210, 190),
-         CI_type = factor(CI_type, levels = c("parametric", "percentile", "bca"), labels = c("Normal", "Boot: %", "Boot: BCA")))
+  mutate(
+    y = c(170, 210, 190),
+    CI_type = factor(CI_type, levels = c("parametric", "percentile", "bca"), labels = c("Normal", "Boot: %", "Boot: BCA"))
+  )
 ```
 
 
 ```r
 ggplot(test_summary_data %>%
-         filter(CI_type != "Boot: BCA"), aes(x = score)) +
-  geom_histogram(data = test_score_data,
-                 binwidth = 1) +
-  geom_point(mapping = aes(x = mean, y = y, color = CI_type),
-             size = 2) +
-  geom_errorbarh(mapping = aes(y = y, color = CI_type, xmin = CI_low, x = NULL, xmax = CI_high),
-                 size = 1,
-                 position = position_dodge()) +
+  filter(CI_type != "Boot: BCA"), aes(x = score)) +
+  geom_histogram(
+    data = test_score_data,
+    binwidth = 1
+  ) +
+  geom_point(
+    mapping = aes(x = mean, y = y, color = CI_type),
+    size = 2
+  ) +
+  geom_errorbarh(
+    mapping = aes(y = y, color = CI_type, xmin = CI_low, x = NULL, xmax = CI_high),
+    size = 1,
+    position = position_dodge()
+  ) +
   facet_grid(type ~ ., scales = "free_y") +
   scale_color_brewer(palette = "Dark2") +
   guides(color = guide_legend(title = "CI"))
@@ -907,13 +987,19 @@ ggsave("figures/bootstrap_CI_0.png", width=5, height=3)
 
 ```r
 ggplot(test_summary_data, aes(x = score)) +
-  geom_histogram(data = test_score_data,
-                 binwidth = 1) +
-  geom_point(mapping = aes(x = mean, y = y, color = CI_type),
-             size = 2) +
-  geom_errorbarh(mapping = aes(y = y, color = CI_type, xmin = CI_low, x = NULL, xmax = CI_high),
-                 size = 1,
-                 position = position_dodge()) +
+  geom_histogram(
+    data = test_score_data,
+    binwidth = 1
+  ) +
+  geom_point(
+    mapping = aes(x = mean, y = y, color = CI_type),
+    size = 2
+  ) +
+  geom_errorbarh(
+    mapping = aes(y = y, color = CI_type, xmin = CI_low, x = NULL, xmax = CI_high),
+    size = 1,
+    position = position_dodge()
+  ) +
   facet_grid(type ~ ., scales = "free_y") +
   scale_color_brewer(palette = "Dark2") +
   guides(color = guide_legend(title = "CI"))
@@ -941,17 +1027,19 @@ num_flips = 20
 true_heads_prob = 0.9
 set.seed(2)
 flips = rbinom(num_flips, 1, true_heads_prob)
-flip_data = data.frame(flip_result = factor(flips, labels=c("Tails", "Heads")))
+flip_data = data.frame(flip_result = factor(flips, labels = c("Tails", "Heads")))
 ```
 
 
 ```r
 flip_data_plot = ggplot(data = flip_data, aes(x = flips, fill = flips)) +
-  geom_dotplot(binwidth=0.03) +
-  scale_x_continuous(breaks = c(0, 1),
-                     labels = c("tails", "heads")) +
-  scale_y_continuous(breaks=c()) +
-  labs(x="Flip result", y="")
+  geom_dotplot(binwidth = 0.03) +
+  scale_x_continuous(
+    breaks = c(0, 1),
+    labels = c("tails", "heads")
+  ) +
+  scale_y_continuous(breaks = c()) +
+  labs(x = "Flip result", y = "")
 ```
 
 
@@ -961,7 +1049,7 @@ get_mean_heads = function(data, indices) {
 }
 
 set.seed(0)
-bootstrap_results = boot(flip_data, get_mean_heads, R=20000)
+bootstrap_results = boot(flip_data, get_mean_heads, R = 20000)
 bootstrap_CIs = boot.ci(bootstrap_results)
 ```
 
@@ -992,30 +1080,39 @@ bootstrap_CIs
 
 
 ```r
-flip_boot_plot = ggplot(data = data.frame(mean_flips = bootstrap_results$t),
-                        aes(x = mean_flips)) +
+flip_boot_plot = ggplot(
+  data = data.frame(mean_flips = bootstrap_results$t),
+  aes(x = mean_flips)
+) +
   geom_histogram(binwidth = 0.05) +
   xlim(0, 1) +
-  geom_vline(xintercept = 0.5,
-             color = "red",
-             size = 1.1) +
+  geom_vline(
+    xintercept = 0.5,
+    color = "red",
+    size = 1.1
+  ) +
   annotate("text",
-           label = "Null value",
-           color = "red",
-           x = 0.43, y = 2500,
-           angle = 90,
-           size = 4) +
+    label = "Null value",
+    color = "red",
+    x = 0.43, y = 2500,
+    angle = 90,
+    size = 4
+  ) +
   annotate("text",
-           label = "95% CI",
-           color = "blue",
-           x = 0.75, y = 5400,
-           size = 4) +
-  geom_errorbarh(aes(xmin = bootstrap_CIs$bca[4],
-                     xmax = bootstrap_CIs$bca[5],
-                     y = 5100),
-                 color = "blue",
-                 size = 1.1,
-                 height = 200) +
+    label = "95% CI",
+    color = "blue",
+    x = 0.75, y = 5400,
+    size = 4
+  ) +
+  geom_errorbarh(aes(
+    xmin = bootstrap_CIs$bca[4],
+    xmax = bootstrap_CIs$bca[5],
+    y = 5100
+  ),
+  color = "blue",
+  size = 1.1,
+  height = 200
+  ) +
   labs(x = "Boot. sampling dist.")
 
 flip_boot_plot
@@ -1029,7 +1126,8 @@ flip_boot_plot
 
 
 ```r
-flip_data_plot + flip_boot_plot +
+flip_data_plot + 
+  flip_boot_plot +
   plot_layout()
 ```
 
@@ -1049,8 +1147,7 @@ ggsave("figures/bootstrap_test.png", width = 5, height = 2.5)
 
 
 ```r
-bootstrap_CIs = boot.ci(bootstrap_results,
-                        conf = 0.999)
+bootstrap_CIs = boot.ci(bootstrap_results, conf = 0.999)
 ```
 
 ```
@@ -1064,30 +1161,39 @@ bootstrap_CIs = boot.ci(bootstrap_results,
 ```
 
 ```r
-flip_boot_plot = ggplot(data = data.frame(mean_flips = bootstrap_results$t),
-                        aes(x = mean_flips)) +
+flip_boot_plot = ggplot(
+  data = data.frame(mean_flips = bootstrap_results$t),
+  aes(x = mean_flips)
+) +
   geom_histogram(binwidth = 0.05) +
   xlim(0, 1) +
-  geom_vline(xintercept = 0.5,
-             color = "red",
-             size = 1.1) +
+  geom_vline(
+    xintercept = 0.5,
+    color = "red",
+    size = 1.1
+  ) +
   annotate("text",
-           label = "Null value",
-           color = "red",
-           x = 0.43, y = 2500,
-           angle = 90,
-           size = 4) +
+    label = "Null value",
+    color = "red",
+    x = 0.43, y = 2500,
+    angle = 90,
+    size = 4
+  ) +
   annotate("text",
-           label = "99.9% CI",
-           color = "blue",
-           x = 0.75, y = 5400,
-           size = 4) +
-  geom_errorbarh(aes(xmin = bootstrap_CIs$bca[4],
-                     xmax = bootstrap_CIs$bca[5],
-                     y = 5100),
-                 color = "blue",
-                 size = 1.1,
-                 height = 200) +
+    label = "99.9% CI",
+    color = "blue",
+    x = 0.75, y = 5400,
+    size = 4
+  ) +
+  geom_errorbarh(aes(
+    xmin = bootstrap_CIs$bca[4],
+    xmax = bootstrap_CIs$bca[5],
+    y = 5100
+  ),
+  color = "blue",
+  size = 1.1,
+  height = 200
+  ) +
   labs(x = "Boot. sampling dist.")
 
 flip_boot_plot

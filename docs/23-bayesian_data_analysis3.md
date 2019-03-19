@@ -305,7 +305,7 @@ p = df.predictive_samples %>%
 animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
 ```
 
-![](23-bayesian_data_analysis3_files/figure-html/bda3-12-1.gif)<!-- -->
+<video controls loop><source src="23-bayesian_data_analysis3_files/figure-html/bda3-12.webm" /></video>
 
 ```r
 # anim_save("poker_posterior_predictive.gif")
@@ -466,7 +466,7 @@ bayes_factor(fit.brm3, fit.brm2)
 ```
 
 ```
-## Estimated Bayes factor in favor of bridge1 over bridge2: 3.79463
+## Estimated Bayes factor in favor of bridge1 over bridge2: 3.81834
 ```
 
 #### Full specification

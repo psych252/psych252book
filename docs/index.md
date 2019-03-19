@@ -1,7 +1,7 @@
 --- 
 title: "Psych 252: Statistical Methods for Behavioral and Social Sciences"
 author: "Tobias Gerstenberg"
-date: "2019-03-17"
+date: "2019-03-19"
 book_filename: "psych252"
 language:
   ui:
@@ -9,24 +9,6 @@ language:
 delete_merged_file: true
 output_dir: "docs"
 site: bookdown::bookdown_site
-output:
-  bookdown::gitbook:
-    config:
-      search: no
-      sharing:
-        facebook: yes
-        twitter: yes
-        google: no
-        linkedin: no
-        weibo: no
-        instapaper: no
-        vk: no
-        all: ['facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper']
-      toc:
-        collapse: section
-        scroll_highlight: yes
-      toc_depth: 3
-      download: [pdf]
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike

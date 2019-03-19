@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-17">
+<meta name="date" content="2019-03-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -643,18 +643,18 @@ Figure 2.1: Anscombe’s quartet.
 Figure 2.2: The Pearson’s <span class="math inline">\(r\)</span> correlation coefficient is the same for all of these datasets. Source: <a href="http://socviz.co/lookatdata.html#lookatdata">Data Visualization – A practical introduction by Kieran Healy</a>
 </p>
 </div>
-<p>All the datasets in Figure <a href="visualization-1.html#fig:visualization1-02">2.1</a> share the same correlation coefficient. However, again, they are very different from each other.</p>
+<p>All the datasets in Figure <a href="visualization-1.html#fig:visualization1-03">2.2</a> share the same correlation coefficient. However, again, they are very different from each other.</p>
 <div class="figure"><span id="fig:visualization1-04"></span>
 <img src="figures/datasaurus_dozen.png" alt="__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation)." width="2474" />
 <p class="caption">
 Figure 2.3: <strong>The Datasaurus Dozen</strong>. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson’s correlation).
 </p>
 </div>
-<p>The data sets in Figure <a href="visualization-1.html#fig:visualization1-03">2.2</a> all share the same summary statistics. Clearly, the data sets are not the same though.</p>
+<p>The data sets in Figure <a href="visualization-1.html#fig:visualization1-04">2.3</a> all share the same summary statistics. Clearly, the data sets are not the same though.</p>
 <blockquote>
 <p><strong>Tip</strong>: Always plot the data first!</p>
 </blockquote>
-<p><a href="https://www.autodeskresearch.com/publications/samestats">Here</a> is the paper from which I took Figure <a href="#fig:visualization1-01"><strong>??</strong></a> and <a href="visualization-1.html#fig:visualization1-03">2.2</a>. It explains how the figures were generated and shows more examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what’s going on in the data.</p>
+<p><a href="https://www.autodeskresearch.com/publications/samestats">Here</a> is the paper from which I took Figure <a href="visualization-1.html#fig:visualization1-02">2.1</a> and <a href="visualization-1.html#fig:visualization1-04">2.3</a>. It explains how the figures were generated and shows more examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what’s going on in the data.</p>
 <div class="figure"><span id="fig:visualization1-05"></span>
 <img src="figures/data_dino.gif" alt="Animation showing different data sets that all share the same summary statistics."  />
 <p class="caption">
@@ -874,7 +874,7 @@ Figure 2.15: Scatterplot.
 </p>
 </div>
 <p>Cool! That looks sensible. Diamonds with a higher <code>carat</code> value tend to have a higher <code>price</code>. Our dataset has 53940 rows. So the plot actually shows 53940 circles even though we can’t see all of them since they overlap.</p>
-<p>Let’s make some progress on trying to figure out why the diamonds with the better color weren’t the most expensive ones on average. We’ll add some color to the scatter plot in Figure <a href="#fig:visualization-29"><strong>??</strong></a>. We color each of the points based on the diamond’s color. To do so, we pass another argument to the aesthetics of the plot via <code>aes()</code>.</p>
+<p>Let’s make some progress on trying to figure out why the diamonds with the better color weren’t the most expensive ones on average. We’ll add some color to the scatter plot in Figure <a href="#fig:visualization-31"><strong>??</strong></a>. We color each of the points based on the diamond’s color. To do so, we pass another argument to the aesthetics of the plot via <code>aes()</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.diamonds,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> carat,
                      <span class="dt">y =</span> price,
@@ -942,8 +942,13 @@ Figure 2.18: Relationship between diamond clarity and price. Error bars indicate
                <span class="dt">fun.args =</span> <span class="kw">list</span>(<span class="dt">conf.int =</span> <span class="fl">.999</span>, <span class="dt">B =</span> <span class="dv">2000</span>)) <span class="op">+</span><span class="st"> </span><span class="co"># plot bootstrapped error bars first</span>
 <span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y =</span> <span class="st">&quot;mean&quot;</span>,
                <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>) <span class="co"># add points with means</span></code></pre>
-<p><img src="02-visualization1_files/figure-html/visualization1-39-1.png" width="672" /></p>
-<p>Note how the error bars are larger now compared to Figure <a href="#fig:visualization-37"><strong>??</strong></a>
+<div class="figure"><span id="fig:visualization1-39"></span>
+<img src="02-visualization1_files/figure-html/visualization1-39-1.png" alt="Relationship between diamond clarity and price. Error bars indicate 99% bootstrapped confidence intervals." width="672" />
+<p class="caption">
+Figure 2.19: Relationship between diamond clarity and price. Error bars indicate 99% bootstrapped confidence intervals.
+</p>
+</div>
+<p>Note how the error bars are larger now in Figure Figure <a href="#fig:visualization-39"><strong>??</strong></a> compared to Figure <a href="#fig:visualization-37"><strong>??</strong></a>
 . Note the somewhat peculiar way in which we supplied the parameters to the <code>mean_cl_boot</code> function. The <code>fun.args</code> argument takes in a list of arguments that it then passes on to the function <code>mean_cl_boot</code>.</p>
 <div id="order-matters" class="section level4">
 <h4><span class="header-section-number">2.6.5.1</span> Order matters</h4>
@@ -954,7 +959,7 @@ Figure 2.18: Relationship between diamond clarity and price. Error bars indicate
 <div class="figure"><span id="fig:visualization1-40"></span>
 <img src="02-visualization1_files/figure-html/visualization1-40-1.png" alt="This figure looks good. Error bars and means are drawn in the correct order." width="672" />
 <p class="caption">
-Figure 2.19: This figure looks good. Error bars and means are drawn in the correct order.
+Figure 2.20: This figure looks good. Error bars and means are drawn in the correct order.
 </p>
 </div>
 <p>Figure <a href="#fig:visualization-38"><strong>??</strong></a> looks good.</p>
@@ -965,7 +970,7 @@ Figure 2.19: This figure looks good. Error bars and means are drawn in the corre
 <div class="figure"><span id="fig:visualization1-41"></span>
 <img src="02-visualization1_files/figure-html/visualization1-41-1.png" alt="This figure looks good. Error bars and means are drawn in the correct order." width="672" />
 <p class="caption">
-Figure 2.20: This figure looks good. Error bars and means are drawn in the correct order.
+Figure 2.21: This figure looks good. Error bars and means are drawn in the correct order.
 </p>
 </div>
 <p>Figure <a href="#fig:visualization-39"><strong>??</strong></a> doesn’t look good. The error bars are on top of the points that represent the means.</p>
@@ -981,7 +986,7 @@ Figure 2.20: This figure looks good. Error bars and means are drawn in the corre
 <div class="figure" style="text-align: center"><span id="fig:visualization1-43"></span>
 <img src="figures/practice_plot2.png" alt="Practice plot 2." width="90%" />
 <p class="caption">
-Figure 2.21: Practice plot 2.
+Figure 2.22: Practice plot 2.
 </p>
 </div>
 </div>
@@ -1054,7 +1059,7 @@ Figure 2.21: Practice plot 2.
 <div class="figure" style="text-align: center"><span id="fig:visualization1-50"></span>
 <img src="figures/practice_plot3.png" alt="Practice plot 3." width="90%" />
 <p class="caption">
-Figure 2.22: Practice plot 3.
+Figure 2.23: Practice plot 3.
 </p>
 </div>
 </div>
@@ -1134,7 +1139,7 @@ Figure 2.22: Practice plot 3.
 <div class="figure"><span id="fig:visualization1-59"></span>
 <img src="02-visualization1_files/figure-html/visualization1-59-1.png" alt="A figure that is stretching it in terms of information." width="672" />
 <p class="caption">
-Figure 2.23: A figure that is stretching it in terms of information.
+Figure 2.24: A figure that is stretching it in terms of information.
 </p>
 </div>
 <p>Figure <a href="#fig:visualization-57"><strong>??</strong></a> is stretching it in terms of how much information it presents. But it gives you a sense for how to combine the differnet bits and pieces we’ve learned so far.</p>
@@ -1159,7 +1164,7 @@ Figure 2.23: A figure that is stretching it in terms of information.
 <div class="figure" style="text-align: center"><span id="fig:visualization1-61"></span>
 <img src="figures/practice_plot4.png" alt="Practice plot 4." width="90%" />
 <p class="caption">
-Figure 2.24: Practice plot 4.
+Figure 2.25: Practice plot 4.
 </p>
 </div>
 </div>
@@ -1290,7 +1295,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-visualization1.Rmd",
+"link": "https://github.com/psych252/psych252book/edit/master/02-visualization1.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1302,8 +1307,8 @@ gitbook.start({
 "collapse": "section",
 "scroll_highlight": true
 },
-"search": false,
-"toc_depth": 3
+"toc_depth": 3,
+"search": false
 });
 });
 </script>

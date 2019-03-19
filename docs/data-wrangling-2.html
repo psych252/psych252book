@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-17">
+<meta name="date" content="2019-03-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -686,21 +686,21 @@ df.summarize =<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 15 x 2
 ##    participant judgment
 ##          &lt;int&gt;    &lt;int&gt;
-##  1           1      100
-##  2           1       31
-##  3           1       14
-##  4           1       25
-##  5           1       27
-##  6           2       74
-##  7           2        0
-##  8           2       10
-##  9           2       88
-## 10           2       62
-## 11           3      100
-## 12           3       34
-## 13           3       82
-## 14           3       76
-## 15           3       40</code></pre>
+##  1           1       22
+##  2           1       39
+##  3           1        6
+##  4           1       94
+##  5           1       16
+##  6           2       98
+##  7           2       52
+##  8           2       54
+##  9           2       93
+## 10           2       11
+## 11           3       88
+## 12           3       55
+## 13           3       48
+## 14           3       65
+## 15           3       72</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.summarize <span class="op">%&gt;%</span><span class="st">   </span>
 <span class="st">  </span><span class="kw">group_by</span>(participant) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group by participants</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">judgment_zscored =</span> <span class="kw">scale</span>(judgment)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># z-score data on individual participant level </span>
@@ -709,16 +709,16 @@ df.summarize =<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 10 x 3
 ##    participant judgment judgment_zscored
 ##          &lt;int&gt;    &lt;int&gt;            &lt;dbl&gt;
-##  1           1      100            1.76 
-##  2           1       31           -0.244
-##  3           1       14           -0.737
-##  4           1       25           -0.418
-##  5           1       27           -0.360
-##  6           2       74            0.690
-##  7           2        0           -1.19 
-##  8           2       10           -0.934
-##  9           2       88            1.05 
-## 10           2       62            0.386</code></pre>
+##  1           1       22           -0.384
+##  2           1       39            0.103
+##  3           1        6           -0.843
+##  4           1       94            1.68 
+##  5           1       16           -0.556
+##  6           2       98            1.03 
+##  7           2       52           -0.271
+##  8           2       54           -0.215
+##  9           2       93            0.886
+## 10           2       11           -1.43</code></pre>
 <p>First, I’ve generated some random data using the repeat function <code>rep()</code> for making a <code>participant</code> column, and the <code>sample()</code> function to randomly choose values from a range between 0 and 100 with replacement. (We will learn more about these functions later when we look into how to simulate data.) I’ve then grouped the data by participant, and used the scale function to z-score the data.</p>
 <blockquote>
 <p><strong>TIP</strong>: Don’t forget to <code>ungroup()</code> your data frame. Otherwise, any subsequent operations are applied per group.</p>
@@ -1421,7 +1421,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/05-data_wrangling2.Rmd",
+"link": "https://github.com/psych252/psych252book/edit/master/05-data_wrangling2.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1433,8 +1433,8 @@ gitbook.start({
 "collapse": "section",
 "scroll_highlight": true
 },
-"search": false,
-"toc_depth": 3
+"toc_depth": 3,
+"search": false
 });
 });
 </script>

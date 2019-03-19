@@ -84,17 +84,9 @@ combinations(balls, ndraws)
 
 I've generated the figures below using the `DiagrammeR` package. It's a powerful package for drawing diagrams in R. See information on how to use the DiagrammeR package [here](http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html). 
 
-<div class="figure">
-<!--html_preserve--><div id="htmlwidget-f6f75dd2b5809860fffc" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f6f75dd2b5809860fffc">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
-<p class="caption">(\#fig:probability-3)Drawing two marbles out of an urn __with__ replacement.</p>
-</div>
+![(\#fig:probability-3)Drawing two marbles out of an urn __with__ replacement.](06-probability_files/figure-latex/probability-3-1.pdf) 
 
-<div class="figure">
-<!--html_preserve--><div id="htmlwidget-a625aef2b3ae75a1bb01" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a625aef2b3ae75a1bb01">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
-<p class="caption">(\#fig:probability-4)Drawing two marbles out of an urn __without__ replacement.</p>
-</div>
+![(\#fig:probability-4)Drawing two marbles out of an urn __without__ replacement.](06-probability_files/figure-latex/probability-4-1.pdf) 
 
 ## Flipping a coin many times 
 
@@ -126,10 +118,7 @@ ggplot(data = df.samples,
   theme(text = element_text(size = 20))
 ```
 
-<div class="figure">
-<img src="06-probability_files/figure-html/probability-5-1.png" alt="A demonstration of the law of large numbers." width="672" />
-<p class="caption">(\#fig:probability-5)A demonstration of the law of large numbers.</p>
-</div>
+![(\#fig:probability-5)A demonstration of the law of large numbers.](06-probability_files/figure-latex/probability-5-1.pdf) 
 
 ## Clue guide to probability 
 
@@ -165,40 +154,26 @@ df.suspects %>%
   kable_styling("striped", full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> who </th>
-   <th style="text-align:left;"> gender </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> col_mustard </td>
-   <td style="text-align:left;"> male </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> mr_green </td>
-   <td style="text-align:left;"> male </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> prof_plum </td>
-   <td style="text-align:left;"> male </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ms_scarlet </td>
-   <td style="text-align:left;"> female </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> mrs_white </td>
-   <td style="text-align:left;"> female </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> mrs_peacock </td>
-   <td style="text-align:left;"> female </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l}
+\hline
+who & gender\\
+\hline
+col\_mustard & male\\
+\hline
+mr\_green & male\\
+\hline
+prof\_plum & male\\
+\hline
+ms\_scarlet & female\\
+\hline
+mrs\_white & female\\
+\hline
+mrs\_peacock & female\\
+\hline
+\end{tabular}
+\end{table}
 
 ### Conditional probability 
 
@@ -236,8 +211,7 @@ df.suspects %>%
 
 ### Law of total probability
 
-<!--html_preserve--><div id="htmlwidget-efb7a46cab77a9237fc4" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-efb7a46cab77a9237fc4">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+![](06-probability_files/figure-latex/probability-10-1.pdf)<!-- --> 
 
 ## Probability operations 
 
@@ -283,15 +257,13 @@ df.cards %>%
 
 ## Bayesian reasoning example
 
-<!--html_preserve--><div id="htmlwidget-a016653f623e7d094d1f" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a016653f623e7d094d1f">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+![](06-probability_files/figure-latex/probability-14-1.pdf)<!-- --> 
 
 ## Bayesian networks 
 
 ### Sprinkler example
 
-<!--html_preserve--><div id="htmlwidget-3cf3dbb0d9b30946e735" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3cf3dbb0d9b30946e735">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"\"]\n  1 -> 3 [label = \"\"]\n  2 -> 4 [label = \"\"] \n  3 -> 4 [label = \"\"]\n  \n  # labels for each node\n  1 [label = \"Cloudy\"]\n  2 [label = \"Sprinkler\"]\n  3 [label = \"Rain\"]\n  4 [label = \"Wet grass\"]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+![](06-probability_files/figure-latex/probability-15-1.pdf)<!-- --> 
 
 
 ```r
@@ -307,18 +279,18 @@ df.cloudy %>%
                 font_size = 20)
 ```
 
-<table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> p(C) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.5 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering\begingroup\fontsize{20}{22}\selectfont
+
+\begin{tabular}{r}
+\hline
+p(C)\\
+\hline
+0.5\\
+\hline
+\end{tabular}
+\endgroup{}
+\end{table}
 
 ```r
 # sprinkler given cloudy 
@@ -334,24 +306,20 @@ df.sprinkler_given_cloudy %>%
                 font_size = 20)
 ```
 
-<table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> C </th>
-   <th style="text-align:right;"> p(S) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 0.5 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 0.1 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering\begingroup\fontsize{20}{22}\selectfont
+
+\begin{tabular}{l|r}
+\hline
+C & p(S)\\
+\hline
+F & 0.5\\
+\hline
+T & 0.1\\
+\hline
+\end{tabular}
+\endgroup{}
+\end{table}
 
 ```r
 # rain given cloudy 
@@ -367,24 +335,20 @@ df.rain_given_cloudy %>%
                 font_size = 20)
 ```
 
-<table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> C </th>
-   <th style="text-align:right;"> p(R) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 0.2 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 0.8 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering\begingroup\fontsize{20}{22}\selectfont
+
+\begin{tabular}{l|r}
+\hline
+C & p(R)\\
+\hline
+F & 0.2\\
+\hline
+T & 0.8\\
+\hline
+\end{tabular}
+\endgroup{}
+\end{table}
 
 ```r
 # wet given sprinkler and rain  
@@ -401,37 +365,24 @@ df.rain_given_sprinkler_and_rain %>%
                 font_size = 20)
 ```
 
-<table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> S </th>
-   <th style="text-align:left;"> R </th>
-   <th style="text-align:right;"> p(W) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 0.90 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 0.90 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 0.99 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering\begingroup\fontsize{20}{22}\selectfont
+
+\begin{tabular}{l|l|r}
+\hline
+S & R & p(W)\\
+\hline
+F & F & 0.00\\
+\hline
+T & F & 0.90\\
+\hline
+F & T & 0.90\\
+\hline
+T & T & 0.99\\
+\hline
+\end{tabular}
+\endgroup{}
+\end{table}
 
 ## Additional resources 
 

@@ -64,7 +64,7 @@ ggplot(data = df.diamonds, aes(x = cut, y = stat(count), fill = color)) +
   geom_bar(color = "black")
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-05-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-05-1.pdf)<!-- --> 
 
 This bar chart shows for the different cuts (x-axis), the number of diamonds of different color. To get these counts, I've used the `stat(count)` construction. 
 
@@ -72,10 +72,14 @@ Stacked bar charts give a good general impression of the data. However, it's dif
 
 #### Pie charts 
 
-<div class="figure" style="text-align: center">
-<img src="figures/pie_chart.jpg" alt="Finally a pie chart that makes sense." width="90%" />
-<p class="caption">(\#fig:visualization2-06)Finally a pie chart that makes sense.</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.9\linewidth]{figures/pie_chart} 
+
+}
+
+\caption{Finally a pie chart that makes sense.}(\#fig:visualization2-06)
+\end{figure}
 
 Pie charts have a bad reputation. And there are indeed a number of problems with pie charts: 
 
@@ -90,7 +94,7 @@ ggplot(data = df.diamonds, mapping = aes(x = 1, y = stat(count / sum(count)), fi
   theme_void()
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-07-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-07-1.pdf)<!-- --> 
 
 We can create a pie chart with `ggplot2` by changing the coordinate system using `coord_polar()`. To get the frequency of the different categories, I used the `stat()` function. 
 
@@ -123,20 +127,14 @@ ggplot(data = df.diamonds[1:150, ], mapping = aes(x = color, y = price)) +
                size = 4) 
 ```
 
-<div class="figure">
-<img src="03-visualization2_files/figure-html/visualization2-08-1.png" alt="Price of differently colored diamonds. Red circles are means, black circles are individual data poins, and the error bars are 95% bootstrapped confidence intervals." width="672" />
-<p class="caption">(\#fig:visualization2-08)Price of differently colored diamonds. Red circles are means, black circles are individual data poins, and the error bars are 95% bootstrapped confidence intervals.</p>
-</div>
+![(\#fig:visualization2-08)Price of differently colored diamonds. Red circles are means, black circles are individual data poins, and the error bars are 95% bootstrapped confidence intervals.](03-visualization2_files/figure-latex/visualization2-08-1.pdf) 
 
 This plot shows means, bootstrapped confidence intervals, and individual data points. I've used two tricks to make the individual data points easier to see. 
 1. I've set the `alpha` attribute to make the points somewhat transparent.
 2. I've used the `position_jitter()` function to jitter the points horizontally.
 3. I've used `shape = 21` for displaying the mean. For this circle shape, we can set a `color` and `fill` (see Figure \@ref(fig:visualization2-09))
 
-<div class="figure">
-<img src="03-visualization2_files/figure-html/visualization2-09-1.png" alt="Different shapes that can be used for plotting." width="672" />
-<p class="caption">(\#fig:visualization2-09)Different shapes that can be used for plotting.</p>
-</div>
+![(\#fig:visualization2-09)Different shapes that can be used for plotting.](03-visualization2_files/figure-latex/visualization2-09-1.pdf) 
 
 Note that I'm only plotting the first 150 entries of the data here by setting `data = df.diamonds[1:150,]` in `gpplot()`. 
 
@@ -150,7 +148,7 @@ ggplot(data = df.diamonds[1:500,], mapping = aes(x = color, y = price)) +
   geom_boxplot()
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-10-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-10-1.pdf)<!-- --> 
 
 What do boxplots show? Here adapted from `help(geom_boxplot())`:  
 
@@ -158,19 +156,13 @@ What do boxplots show? Here adapted from `help(geom_boxplot())`:
 
 Personally, I'm not a big fan of boxplots. Many data sets are consistent with the same boxplot. 
 
-<div class="figure">
-<img src="figures/boxplots.gif" alt="Box plot distributions. Source: https://www.autodeskresearch.com/publications/samestats"  />
-<p class="caption">(\#fig:visualization2-11)Box plot distributions. Source: https://www.autodeskresearch.com/publications/samestats</p>
-</div>
+![(\#fig:visualization2-11)Box plot distributions. Source: https://www.autodeskresearch.com/publications/samestats](figures/boxplots.gif) 
 
 Figure \@ref(fig:visualization2-11) shows three different distributions that each correspond to the same boxplot. 
 
 If there is not too much data, I recommend to plot jittered individual data points instead. If you do have a lot of data points, then violin plots can be helpful. 
 
-<div class="figure">
-<img src="figures/box_violin.gif" alt="Boxplot distributions. Source: https://www.autodeskresearch.com/publications/samestats"  />
-<p class="caption">(\#fig:visualization2-12, boxplot-violin)Boxplot distributions. Source: https://www.autodeskresearch.com/publications/samestats</p>
-</div>
+![(\#fig:visualization2-12, boxplot-violin)Boxplot distributions. Source: https://www.autodeskresearch.com/publications/samestats](figures/box_violin.gif) 
 
 Figure \@ref(fig:visualization2-12) shows the same raw data represented as jittered dots, boxplots, and violin plots.  
 
@@ -190,7 +182,7 @@ ggplot(data = df.diamonds %>% sample_n(1000), mapping = aes(x = color, y = price
   stat_summary(fun.y = "mean", geom = "point", shape = 21, color = "black", fill = "yellow", size = 4)
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-13-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-13-1.pdf)<!-- --> 
 
 #### Violin plots
 
@@ -202,7 +194,7 @@ ggplot(data = df.diamonds, mapping = aes(x = color, y = price)) +
   geom_violin()
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-14-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-14-1.pdf)<!-- --> 
 
 Violin plots are good for detecting bimodal distributions. They work well when: 
 
@@ -221,7 +213,7 @@ ggplot(data = data, mapping = aes(x = "Likert", y = rating)) +
   stat_summary(fun.y = "mean", geom = "point", shape = 21, fill = "blue", size = 5)
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-15-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-15-1.pdf)<!-- --> 
 
 This represents a vase much better than it represents the data.
 
@@ -239,7 +231,7 @@ ggplot(data = df.diamonds, mapping = aes(x = price, y = color)) +
 ## Picking joint bandwidth of 535
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-16-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-16-1.pdf)<!-- --> 
 
 #### Practice plot
 
@@ -254,10 +246,9 @@ Try to make the plot shown in Figure \@ref(fig:practice-plot5). Here are some ti
 # make the plot here 
 ```
 
-<div class="figure">
-<img src="figures/practice_plot5.png" alt="Practice plot 5." width="1200" />
-<p class="caption">(\#fig:visualization2-18, practice-plot5)Practice plot 5.</p>
-</div>
+\begin{figure}
+\includegraphics[width=33.33in]{figures/practice_plot5} \caption{Practice plot 5.}(\#fig:visualization2-18, practice-plot5)
+\end{figure}
 
 ### Relationships 
 
@@ -271,7 +262,7 @@ ggplot(data = df.diamonds, mapping = aes(x = carat, y = price, color = color)) +
   geom_point()
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-19-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-19-1.pdf)<!-- --> 
 
 #### Raster plots 
 
@@ -283,7 +274,7 @@ ggplot(data = df.diamonds, mapping = aes(x = color, y = clarity, z = carat)) +
   stat_summary_2d(fun = "mean", geom = "tile")
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-20-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-20-1.pdf)<!-- --> 
 
 Not too bad. Let's add a few tweaks to make it look nicer. 
 
@@ -295,7 +286,7 @@ ggplot(data = df.diamonds, mapping = aes(x = color, y = clarity, z = carat)) +
   labs(fill = "carat")
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-21-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-21-1.pdf)<!-- --> 
 
 I've added some outlines to the tiles by specifying `color = "black"` in `geom_tile()` and I've changed the scale for the fill gradient. I've defined the color for the low value to be "white", and for the high value to be "black." Finally, I've changed the lower and upper limit of the scale via the `limits` argument. Looks much better now! We see that diamonds with clarity `I1` and color `J` tend to have the highest `carat` values on average. 
 
@@ -316,7 +307,7 @@ ggplot(data = df.plot, mapping = aes(x = year, y = median, color = city, fill = 
   stat_summary(fun.y = "mean", geom = "point") 
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-22-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-22-1.pdf)<!-- --> 
 
 Ignore the top part where I'm defining `df.plot` for now (we'll look into this in the next class). The other part is fairly straightforward. I've used `stat_summary()` three times: First, to define the confidence interval as a `geom = "ribbon"`. Second, to show the lines connecting the means, and third to put the means as data points points on top of the lines. 
 
@@ -378,7 +369,7 @@ ggplot(
         plot.margin = margin(r = 1, unit = "in"))
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-23-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-23-1.pdf)<!-- --> 
 
 ## Customizing plots 
 
@@ -393,7 +384,7 @@ ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
   stat_summary(fun.data = "mean_cl_boot", geom = "linerange")
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-24-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-24-1.pdf)<!-- --> 
 
 This plot shows the average price for diamonds with a different quality of the cut, as well as the bootstrapped confidence intervals. Here are some things we can do to make it look nicer. 
 
@@ -440,7 +431,7 @@ ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
   )
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-25-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-25-1.pdf)<!-- --> 
 
 I've tweaked quite a few things here (and I've added comments to explain what's happening). Take a quick look at the `theme()` function to see all the things you can change. 
 
@@ -462,7 +453,7 @@ ggplot(data = df.diamonds, mapping = aes(x = reorder(cut, price), y = price)) +
   labs(x = "cut")
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-26-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-26-1.pdf)<!-- --> 
 
 The `reorder()` function helps us to do just that. Now, the results are ordered according to price. To show the results in descending order, I would simply need to write `reorder(cut, -price)` instead.
 
@@ -482,7 +473,7 @@ ggplot(data = df.diamonds, mapping = aes(x = color, y = price, color = clarity))
   stat_summary(fun.y = "mean", geom = "point")
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-27-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-27-1.pdf)<!-- --> 
 
 Let's move the legend to the bottom of the plot: 
 
@@ -493,7 +484,7 @@ ggplot(data = df.diamonds, mapping = aes(x = color, y = price, color = clarity))
   theme(legend.position = "bottom")
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-28-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-28-1.pdf)<!-- --> 
 
 Let's change a few more things in the legend using the `guides()` function: 
 
@@ -515,7 +506,7 @@ ggplot(data = df.diamonds, mapping = aes(x = color, y = price, color = clarity))
   )
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-29-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-29-1.pdf)<!-- --> 
 
 ### Choosing good colors
 
@@ -550,7 +541,7 @@ p1 = ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
 print(p1)
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-31-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-31-1.pdf)<!-- --> 
 
 ```r
 p2 = ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
@@ -606,7 +597,7 @@ p1 + (p2 + p3) +
   theme(plot.tag = element_text(face = "bold", size = 20))
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-32-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-32-1.pdf)<!-- --> 
 
 ```r
 # ggsave("figures/combined_plot.pdf", width = 10, height = 6)
@@ -635,7 +626,7 @@ p = ggplot(data = df.diamonds, mapping = aes(x = color, y = clarity, z = carat))
 print(p)
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-33-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-33-1.pdf)<!-- --> 
 
 ```r
 build = ggplot_build(p)
@@ -659,7 +650,7 @@ p = ggplot(data = df.diamonds, mapping = aes(x = color, y = clarity, fill = cara
 print(p)
 ```
 
-<img src="03-visualization2_files/figure-html/visualization2-34-1.png" width="672" />
+![](03-visualization2_files/figure-latex/visualization2-34-1.pdf)<!-- --> 
 
 ```r
 build = ggplot_build(p)
@@ -700,71 +691,383 @@ ggplot(gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size = pop, colour =
   ease_aes("linear")
 ```
 
+![](03-visualization2_files/figure-latex/visualization2-35-1.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-2.pdf)<!-- --> 
+
 ```
-## Rendering [---------------------------------------] at 4.8 fps ~ eta: 21s
-## Rendering [>--------------------------------------] at 4.2 fps ~ eta: 23s
-## Rendering [>--------------------------------------] at 4.3 fps ~ eta: 23s
-## Rendering [=>-------------------------------------] at 4.4 fps ~ eta: 22s
-## Rendering [=>-------------------------------------] at 4.4 fps ~ eta: 21s
-## Rendering [==>------------------------------------] at 4.5 fps ~ eta: 21s
-## Rendering [===>-----------------------------------] at 4.5 fps ~ eta: 20s
-## Rendering [====>----------------------------------] at 4.5 fps ~ eta: 19s
-## Rendering [=====>---------------------------------] at 4.6 fps ~ eta: 19s
-## Rendering [=====>---------------------------------] at 4.6 fps ~ eta: 18s
-## Rendering [======>--------------------------------] at 4.6 fps ~ eta: 18s
-## Rendering [=======>-------------------------------] at 4.6 fps ~ eta: 17s
-## Rendering [========>------------------------------] at 4.6 fps ~ eta: 17s
-## Rendering [=========>-----------------------------] at 4.6 fps ~ eta: 16s
-## Rendering [==========>----------------------------] at 4.6 fps ~ eta: 16s
-## Rendering [==========>----------------------------] at 4.6 fps ~ eta: 15s
-## Rendering [===========>---------------------------] at 4.6 fps ~ eta: 15s
-## Rendering [============>--------------------------] at 4.6 fps ~ eta: 15s
-## Rendering [============>--------------------------] at 4.6 fps ~ eta: 14s
-## Rendering [=============>-------------------------] at 4.6 fps ~ eta: 14s
-## Rendering [==============>------------------------] at 4.6 fps ~ eta: 14s
-## Rendering [==============>------------------------] at 4.6 fps ~ eta: 13s
-## Rendering [===============>-----------------------] at 4.6 fps ~ eta: 13s
-## Rendering [================>----------------------] at 4.6 fps ~ eta: 12s
-## Rendering [=================>---------------------] at 4.6 fps ~ eta: 12s
-## Rendering [==================>--------------------] at 4.6 fps ~ eta: 11s
-## Rendering [===================>-------------------] at 4.6 fps ~ eta: 11s
-## Rendering [====================>------------------] at 4.6 fps ~ eta: 10s
-## Rendering [====================>------------------] at 4.5 fps ~ eta: 10s
-## Rendering [=====================>-----------------] at 4.5 fps ~ eta: 10s
-## Rendering [=====================>-----------------] at 4.5 fps ~ eta: 9s
-## Rendering [======================>----------------] at 4.5 fps ~ eta: 9s
-## Rendering [=======================>---------------] at 4.5 fps ~ eta: 9s
-## Rendering [=======================>---------------] at 4.5 fps ~ eta: 8s
-## Rendering [========================>--------------] at 4.5 fps ~ eta: 8s
-## Rendering [=========================>-------------] at 4.5 fps ~ eta: 8s
-## Rendering [=========================>-------------] at 4.5 fps ~ eta: 7s
-## Rendering [==========================>------------] at 4.5 fps ~ eta: 7s
-## Rendering [===========================>-----------] at 4.5 fps ~ eta: 6s
-## Rendering [============================>----------] at 4.5 fps ~ eta: 6s
-## Rendering [=============================>---------] at 4.5 fps ~ eta: 5s
-## Rendering [==============================>--------] at 4.5 fps ~ eta: 5s
-## Rendering [==============================>--------] at 4.5 fps ~ eta: 4s
-## Rendering [===============================>-------] at 4.5 fps ~ eta: 4s
-## Rendering [================================>------] at 4.5 fps ~ eta: 4s
-## Rendering [================================>------] at 4.5 fps ~ eta: 3s
-## Rendering [=================================>-----] at 4.5 fps ~ eta: 3s
-## Rendering [=================================>-----] at 4.4 fps ~ eta: 3s
-## Rendering [==================================>----] at 4.4 fps ~ eta: 3s
-## Rendering [==================================>----] at 4.4 fps ~ eta: 2s
-## Rendering [===================================>---] at 4.4 fps ~ eta: 2s
-## Rendering [===================================>---] at 4.3 fps ~ eta: 2s
-## Rendering [====================================>--] at 4.3 fps ~ eta: 1s
-## Rendering [=====================================>-] at 4.3 fps ~ eta: 1s
-## Rendering [=====================================>-] at 4.3 fps ~ eta: 0s
-## Rendering [======================================>] at 4.3 fps ~ eta: 0s
-## Rendering [=======================================] at 4.3 fps ~ eta: 0s
+## Rendering [>--------------------------------------] at 9.8 fps ~ eta: 10s
 ```
+
+![](03-visualization2_files/figure-latex/visualization2-35-3.pdf)<!-- --> 
+
+```
+## Rendering [=>-------------------------------------] at 9.6 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-4.pdf)<!-- --> 
+
+```
+## Rendering [=>-------------------------------------] at 8.9 fps ~ eta: 11s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-5.pdf)<!-- --> 
+
+```
+## Rendering [=>-------------------------------------] at 9.1 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-6.pdf)<!-- --> 
+
+```
+## Rendering [==>--------------------------------------] at 9 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-7.pdf)<!-- --> 
+
+```
+## Rendering [==>------------------------------------] at 8.8 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-8.pdf)<!-- --> 
+
+```
+## Rendering [===>-----------------------------------] at 8.7 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-9.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-10.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-11.pdf)<!-- --> 
+
+```
+## Rendering [====>----------------------------------] at 8.6 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-12.pdf)<!-- --> 
+
+```
+## Rendering [====>----------------------------------] at 8.4 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-13.pdf)<!-- --> 
+
+```
+## Rendering [====>----------------------------------] at 8.5 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-14.pdf)<!-- --> 
+
+```
+## Rendering [=====>---------------------------------] at 8.4 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-15.pdf)<!-- --> 
+
+```
+## Rendering [=====>---------------------------------] at 8.5 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-16.pdf)<!-- --> 
+
+```
+## Rendering [======>--------------------------------] at 8.4 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-17.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-18.pdf)<!-- --> 
+
+```
+## Rendering [======>--------------------------------] at 8.5 fps ~ eta: 10s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-19.pdf)<!-- --> 
+
+```
+## Rendering [=======>-------------------------------] at 8.6 fps ~ eta: 9s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-20.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-21.pdf)<!-- --> 
+
+```
+## Rendering [========>------------------------------] at 8.7 fps ~ eta: 9s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-22.pdf)<!-- --> 
+
+```
+## Rendering [========>------------------------------] at 8.8 fps ~ eta: 9s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-23.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-24.pdf)<!-- --> 
+
+```
+## Rendering [=========>-----------------------------] at 8.9 fps ~ eta: 8s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-25.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-26.pdf)<!-- --> 
+
+```
+## Rendering [==========>------------------------------] at 9 fps ~ eta: 8s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-27.pdf)<!-- --> 
+
+```
+## Rendering [==========>----------------------------] at 9.1 fps ~ eta: 8s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-28.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-29.pdf)<!-- --> 
+
+```
+## Rendering [===========>---------------------------] at 9.2 fps ~ eta: 8s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-30.pdf)<!-- --> 
+
+```
+## Rendering [===========>---------------------------] at 9.2 fps ~ eta: 7s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-31.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-32.pdf)<!-- --> 
+
+```
+## Rendering [============>--------------------------] at 9.3 fps ~ eta: 7s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-33.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-34.pdf)<!-- --> 
+
+```
+## Rendering [=============>-------------------------] at 9.3 fps ~ eta: 7s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-35.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-36.pdf)<!-- --> 
+
+```
+## Rendering [=============>-------------------------] at 9.4 fps ~ eta: 7s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-37.pdf)<!-- --> 
+
+```
+## Rendering [==============>------------------------] at 9.4 fps ~ eta: 7s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-38.pdf)<!-- --> 
+
+```
+## Rendering [===============>-------------------------] at 9 fps ~ eta: 7s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-39.pdf)<!-- --> 
+
+```
+## Rendering [===============>-----------------------] at 9.1 fps ~ eta: 7s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-40.pdf)<!-- --> 
+
+```
+## Rendering [===============>-----------------------] at 9.1 fps ~ eta: 6s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-41.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-42.pdf)<!-- --> 
+
+```
+## Rendering [================>----------------------] at 9.2 fps ~ eta: 6s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-43.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-44.pdf)<!-- --> 
+
+```
+## Rendering [=================>---------------------] at 9.2 fps ~ eta: 6s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-45.pdf)<!-- --> 
+
+```
+## Rendering [=================>---------------------] at 9.3 fps ~ eta: 6s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-46.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-47.pdf)<!-- --> 
+
+```
+## Rendering [==================>--------------------] at 9.3 fps ~ eta: 6s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-48.pdf)<!-- --> 
+
+```
+## Rendering [==================>--------------------] at 9.4 fps ~ eta: 5s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-49.pdf)<!-- --> 
+
+```
+## Rendering [===================>-------------------] at 9.4 fps ~ eta: 5s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-50.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-51.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-52.pdf)<!-- --> 
+
+```
+## Rendering [====================>------------------] at 9.5 fps ~ eta: 5s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-53.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-54.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-55.pdf)<!-- --> 
+
+```
+## Rendering [=====================>-----------------] at 9.5 fps ~ eta: 5s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-56.pdf)<!-- --> 
+
+```
+## Rendering [=====================>-----------------] at 9.6 fps ~ eta: 4s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-57.pdf)<!-- --> 
+
+```
+## Rendering [======================>----------------] at 9.6 fps ~ eta: 4s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-58.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-59.pdf)<!-- --> 
+
+```
+## Rendering [======================>----------------] at 9.7 fps ~ eta: 4s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-60.pdf)<!-- --> 
+
+```
+## Rendering [=======================>---------------] at 9.7 fps ~ eta: 4s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-61.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-62.pdf)<!-- --> 
+
+```
+## Rendering [========================>--------------] at 9.7 fps ~ eta: 4s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-63.pdf)<!-- --> 
+
+```
+## Rendering [========================>--------------] at 9.8 fps ~ eta: 4s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-64.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-65.pdf)<!-- --> 
+
+```
+## Rendering [=========================>-------------] at 9.8 fps ~ eta: 3s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-66.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-67.pdf)<!-- --> 
+
+```
+## Rendering [==========================>------------] at 9.9 fps ~ eta: 3s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-68.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-69.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-70.pdf)<!-- --> 
+
+```
+## Rendering [===========================>-----------] at 9.9 fps ~ eta: 3s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-71.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-72.pdf)<!-- --> 
+
+```
+## Rendering [============================>-----------] at 10 fps ~ eta: 3s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-73.pdf)<!-- --> 
+
+```
+## Rendering [=============================>----------] at 10 fps ~ eta: 3s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-74.pdf)<!-- --> 
+
+```
+## Rendering [=============================>----------] at 10 fps ~ eta: 2s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-75.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-76.pdf)<!-- --> 
+
+```
+## Rendering [==============================>---------] at 10 fps ~ eta: 2s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-77.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-78.pdf)<!-- --> 
+
+```
+## Rendering [===============================>--------] at 10 fps ~ eta: 2s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-79.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-80.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-81.pdf)<!-- --> 
+
+```
+## Rendering [================================>-------] at 10 fps ~ eta: 2s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-82.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-83.pdf)<!-- --> 
+
+```
+## Rendering [=================================>------] at 10 fps ~ eta: 2s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-84.pdf)<!-- --> 
+
+```
+## Rendering [=================================>------] at 10 fps ~ eta: 1s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-85.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-86.pdf)<!-- --> 
+
+```
+## Rendering [==================================>-----] at 10 fps ~ eta: 1s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-87.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-88.pdf)<!-- --> 
+
+```
+## Rendering [===================================>----] at 10 fps ~ eta: 1s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-89.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-90.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-91.pdf)<!-- --> 
+
+```
+## Rendering [====================================>---] at 10 fps ~ eta: 1s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-92.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-93.pdf)<!-- --> 
+
+```
+## Rendering [=====================================>--] at 10 fps ~ eta: 1s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-94.pdf)<!-- --> 
+
+```
+## Rendering [=====================================>--] at 10 fps ~ eta: 0s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-95.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-96.pdf)<!-- --> 
+
+```
+## Rendering [======================================>-] at 10 fps ~ eta: 0s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-97.pdf)<!-- --> ![](03-visualization2_files/figure-latex/visualization2-35-98.pdf)<!-- --> 
+
+```
+## Rendering [=======================================>] at 10 fps ~ eta: 0s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-99.pdf)<!-- --> 
+
+```
+## Rendering [========================================] at 10 fps ~ eta: 0s
+```
+
+![](03-visualization2_files/figure-latex/visualization2-35-100.pdf)<!-- --> 
 
 ```r
 # anim_save(filename = "figures/life_gdp_animation.gif") # to save the animation
 ```
-
-![](03-visualization2_files/figure-html/visualization2-35-1.gif)<!-- -->
 
 This takes a while to run but it's worth the wait. The plot shows the relationship between GDP per capita (on the x-axis) and life expectancy (on the y-axis) changes across different years for the countries of different continents. The size of each dot represents the population size of the respective country. And different countries are shown in different colors. This animation is not super useful yet in that we don't know which continents and countries the different dots represent. I've added a label to the United States, China, and India. 
 
@@ -807,10 +1110,9 @@ In RStudio, you can change and add snippets by going to Tools --> Global Options
 include_graphics("figures/snippets.png")
 ```
 
-<div class="figure">
-<img src="figures/snippets.png" alt="Enable code snippets." width="591" />
-<p class="caption">(\#fig:visualization2-37)Enable code snippets.</p>
-</div>
+\begin{figure}
+\includegraphics[width=16.42in]{figures/snippets} \caption{Enable code snippets.}(\#fig:visualization2-37)
+\end{figure}
 
 To edit code snippets faster, run this command from the `usethis` package. Make sure to install the package first if you don't have it yet. 
 
