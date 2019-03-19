@@ -30,21 +30,24 @@ The `tidyverse` is a collection of packages that includes `ggplot2`.
 
 > ...make __both__ calculations __and__ graphs. Both sorts of output should be studied; each will contribute to understanding. [@anscombe1973american]
 
-\begin{figure}
-\includegraphics[width=36.56in]{figures/anscombe} \caption{Anscombe's quartet.}(\#fig:visualization1-02)
-\end{figure}
+<div class="figure">
+<img src="figures/anscombe.png" alt="Anscombe's quartet." width="1316" />
+<p class="caption">(\#fig:visualization1-02)Anscombe's quartet.</p>
+</div>
 
 Anscombe's quartet in Figure \@ref(fig:visualization1-01) (left side) illustrates the importance of visualizing data. Even though the datasets I-IV have the same summary statistics (mean, standard deviation, correlation), they are importantly different from each other. On the right side, we have four data sets with the same summary statistics that are very similar to each other.
 
-\begin{figure}
-\includegraphics[width=29.33in]{figures/correlations} \caption{The Pearson's $r$ correlation coefficient is the same for all of these datasets. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)}(\#fig:visualization1-03)
-\end{figure}
+<div class="figure">
+<img src="figures/correlations.png" alt="The Pearson's $r$ correlation coefficient is the same for all of these datasets. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)" width="1056" />
+<p class="caption">(\#fig:visualization1-03)The Pearson's $r$ correlation coefficient is the same for all of these datasets. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)</p>
+</div>
 
 All the datasets in Figure \@ref(fig:visualization1-03) share the same correlation coefficient. However, again, they are very different from each other.
 
-\begin{figure}
-\includegraphics[width=68.71in]{figures/datasaurus_dozen} \caption{__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation).}(\#fig:visualization1-04)
-\end{figure}
+<div class="figure">
+<img src="figures/datasaurus_dozen.png" alt="__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation)." width="2474" />
+<p class="caption">(\#fig:visualization1-04)__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation).</p>
+</div>
 
 The data sets in Figure \@ref(fig:visualization1-04) all share the same summary statistics. Clearly, the data sets are not the same though.
 
@@ -52,65 +55,44 @@ The data sets in Figure \@ref(fig:visualization1-04) all share the same summary 
 
 [Here](https://www.autodeskresearch.com/publications/samestats) is the paper from which I took Figure \@ref(fig:visualization1-02) and \@ref(fig:visualization1-04). It explains how the figures were generated and shows more examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what's going on in the data.
 
-![(\#fig:visualization1-05)Animation showing different data sets that all share the same summary statistics.](figures/data_dino.gif) 
+<div class="figure">
+<img src="figures/data_dino.gif" alt="Animation showing different data sets that all share the same summary statistics."  />
+<p class="caption">(\#fig:visualization1-05)Animation showing different data sets that all share the same summary statistics.</p>
+</div>
 
 ### How _not_ to visualize data
 
 Below are some examples of visualizations that could be improved. How would you make them better?
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="figures/bad_plot1.png" alt="Example of a bad plot. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)" width="90%" />
+<p class="caption">(\#fig:visualization1-06)Example of a bad plot. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)</p>
+</div>
 
-{\centering \includegraphics[width=0.9\linewidth]{figures/bad_plot1} 
+<div class="figure" style="text-align: center">
+<img src="figures/bad_plot2.png" alt="Another bad plot. Source: Google image search for 'bad graphs'" width="90%" />
+<p class="caption">(\#fig:visualization1-07)Another bad plot. Source: Google image search for 'bad graphs'</p>
+</div>
 
-}
+<div class="figure" style="text-align: center">
+<img src="figures/bad_plot3.png" alt="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)" width="90%" />
+<p class="caption">(\#fig:visualization1-08)And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)</p>
+</div>
 
-\caption{Example of a bad plot. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)}(\#fig:visualization1-06)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="figures/bad_plot4.png" alt="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)" width="90%" />
+<p class="caption">(\#fig:visualization1-09)And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)</p>
+</div>
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="figures/bad_plot5.png" alt="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)" width="90%" />
+<p class="caption">(\#fig:visualization1-10)And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)</p>
+</div>
 
-{\centering \includegraphics[width=0.9\linewidth]{figures/bad_plot2} 
-
-}
-
-\caption{Another bad plot. Source: Google image search for 'bad graphs'}(\#fig:visualization1-07)
-\end{figure}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{figures/bad_plot3} 
-
-}
-
-\caption{And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)}(\#fig:visualization1-08)
-\end{figure}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{figures/bad_plot4} 
-
-}
-
-\caption{And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)}(\#fig:visualization1-09)
-\end{figure}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{figures/bad_plot5} 
-
-}
-
-\caption{And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)}(\#fig:visualization1-10)
-\end{figure}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{figures/bad_plot6} 
-
-}
-
-\caption{The last one for now. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)}(\#fig:visualization1-11)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="figures/bad_plot6.png" alt="The last one for now. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)" width="90%" />
+<p class="caption">(\#fig:visualization1-11)The last one for now. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)</p>
+</div>
 
 ### How to make it better
 
@@ -120,18 +102,20 @@ Instead of learning rigid rules for what makes for a good figure, you will learn
 
 ## Setting up RStudio
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{figures/r_preferences_general} \caption{General preferences.}(\#fig:visualization1-12)
-\end{figure}
+<div class="figure">
+<img src="figures/r_preferences_general.png" alt="General preferences." width="100%" />
+<p class="caption">(\#fig:visualization1-12)General preferences.</p>
+</div>
 
 __Make sure that__:
 
 - Restore .RData into workspace at startup is _unselected_
 - Save workspace to .RData on exit is set to _Never_
 
-\begin{figure}
-\includegraphics[width=1\linewidth]{figures/r_preferences_code} \caption{Code window preferences.}(\#fig:visualization1-13)
-\end{figure}
+<div class="figure">
+<img src="figures/r_preferences_code.png" alt="Code window preferences." width="100%" />
+<p class="caption">(\#fig:visualization1-13)Code window preferences.</p>
+</div>
 
 __Make sure that__:
 
@@ -215,15 +199,19 @@ __Examples__: Worked examples of real R code that you can paste into your consol
 
 Here is the help file for the `print()` function:
 
-\begin{figure}
-\includegraphics[width=42.22in]{figures/help_print} \caption{Help file for the print() function.}(\#fig:visualization1-17)
-\end{figure}
+<div class="figure">
+<img src="figures/help_print.png" alt="Help file for the print() function." width="1520" />
+<p class="caption">(\#fig:visualization1-17)Help file for the print() function.</p>
+</div>
 
 ## Data visualization using `ggplot2`
 
 We will use the `ggplot2` package to visualize data. By the end of next class, you'll be able to make a figure like this:
 
-![(\#fig:visualization1-18)What a nice figure!](figures/combined_plot.pdf) 
+<div class="figure">
+<img src="figures/combined_plot.pdf" alt="What a nice figure!"  />
+<p class="caption">(\#fig:visualization1-18)What a nice figure!</p>
+</div>
 
 Now let's figure out how to get there.
 
@@ -257,7 +245,7 @@ We start by setting up the plot. To do so, we pass a data frame to the function 
 ggplot(data = df.diamonds)
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-21-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-21-1.png" width="672" />
 
 This, by itself, won't do anything yet. We also need to specify what to plot.
 
@@ -271,7 +259,7 @@ ggplot(data = df.diamonds,
        mapping = aes(x = color, y = price))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-22-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-22-1.png" width="672" />
 
 Here, we specified that we want to plot `color` on the x-axis, and `price` on the y-axis. As you can see, `ggplot2` has already figured out how to label the axes. However, we still need to specify _how_ to plot it. Let's make a __bar graph__:
 
@@ -282,7 +270,7 @@ ggplot(data = df.diamonds,
   stat_summary(fun.y = "mean", geom = "bar")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-23-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-23-1.png" width="672" />
 
 Neat! Three lines of code produce an almost-publication-ready plot (to be published in the _Proceedings of Unnecessary Diamonds_)! Note how we used a `+` at the end of the first line of code to specify that there will be more. This is a very powerful idea underlying `ggplot2`. We can start simple and keep adding things to the plot step by step.
 
@@ -306,7 +294,7 @@ ggplot(data = df.diamonds, mapping = aes(x = color, y = price)) +
   stat_summary(fun.y = "median", geom = "bar")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-25-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-25-1.png" width="672" />
 
 And instead of making a bar plot, we could plot some points.
 
@@ -316,7 +304,7 @@ ggplot(df.diamonds, aes(x = color, y = price)) +
   stat_summary(fun.y = "mean", geom = "point")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-26-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-26-1.png" width="672" />
 
 >__Tip__: Take a look [here](https://ggplot2.tidyverse.org/reference/#section-layer-geoms) to see what other geoms ggplot2 supports.
 
@@ -338,7 +326,7 @@ ggplot(mapping = aes(x = color, y = price), data = df.diamonds) +
   stat_summary(fun.y = "mean", geom = "point")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-28-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-28-1.png" width="672" />
 
 In general, it's good practice to include the specifiers -- particularly for functions that are not used all the time. If the same function is used multiple times throughout the script, I would suggest to use the specifiers first, and then it's ok to drop them later.
 
@@ -366,7 +354,10 @@ ggplot(data = df.diamonds, mapping = aes(x = carat, y = price)) +
   geom_point()
 ```
 
-![(\#fig:visualization1-30)Scatterplot.](02-visualization1_files/figure-latex/visualization1-30-1.pdf) 
+<div class="figure">
+<img src="02-visualization1_files/figure-html/visualization1-30-1.png" alt="Scatterplot." width="672" />
+<p class="caption">(\#fig:visualization1-30)Scatterplot.</p>
+</div>
 
 Cool! That looks sensible. Diamonds with a higher `carat` value tend to have a higher `price`. Our dataset has 53940 rows. So the plot actually shows 53940 circles even though we can't see all of them since they overlap.
 
@@ -381,7 +372,10 @@ ggplot(data = df.diamonds,
   geom_point()
 ```
 
-![(\#fig:visualization1-31)Scatterplot with color.](02-visualization1_files/figure-latex/visualization1-31-1.pdf) 
+<div class="figure">
+<img src="02-visualization1_files/figure-html/visualization1-31-1.png" alt="Scatterplot with color." width="672" />
+<p class="caption">(\#fig:visualization1-31)Scatterplot with color.</p>
+</div>
 
 Aha! Now we've got some color. Notice how in Figure \@ref(fig:visualization-30) `ggplot2` added a legend for us, thanks! We'll see later how to play around with legends. Form just eye-balling the plot, it looks like the diamonds with the best `color` (D) tended to have a lower `carat` value, and the ones with the worst `color` (J), tended to have the highest carat values.
 
@@ -408,14 +402,10 @@ Make a scatter plot that shows the relationship between the variables `depth` (o
 include_graphics("figures/practice_plot1.png")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{figures/practice_plot1} 
-
-}
-
-\caption{Practice plot 1.}(\#fig:visualization1-34)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="figures/practice_plot1.png" alt="Practice plot 1." width="90%" />
+<p class="caption">(\#fig:visualization1-34)Practice plot 1.</p>
+</div>
 
 ### Line plot
 
@@ -432,7 +422,7 @@ ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
 ## adjust the group aesthetic?
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-35-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-35-1.png" width="672" />
 
 Oops! All we did is that we replaced `x = color` with `x = cut`, and `geom = "bar"` with `geom = "line"`. However, the plot doesn't look like expected (i.e. there is no real plot). What happened here? The reason is that the line plot needs to know what points to connect. The error message tells us that each group consists of only one observation. Let's adjust the group asthetic to fix this.
 
@@ -442,7 +432,7 @@ ggplot(data = df.diamonds, mapping = aes(x = cut, y = price, group = 1)) +
   stat_summary(fun.y = "mean", geom = "line")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-36-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-36-1.png" width="672" />
 
 By adding the parameter `group = 1` to `mapping = aes()`, we specify that we would like all the levels in `x = cut` to be treated as coming from the same group. The reason for this is that `cut` (our x-axis variable) is a factor (and not a numeric variable), so, by default, `ggplot2` tries to draw a separate line for each factor level. We'll learn more about grouping below (and about factors later).
 
@@ -462,7 +452,10 @@ ggplot(data = df.diamonds,
                geom = "point") # add points with means
 ```
 
-![(\#fig:visualization1-37)Relationship between diamond clarity and price. Error bars indicate 95% bootstrapped confidence intervals.](02-visualization1_files/figure-latex/visualization1-37-1.pdf) 
+<div class="figure">
+<img src="02-visualization1_files/figure-html/visualization1-37-1.png" alt="Relationship between diamond clarity and price. Error bars indicate 95% bootstrapped confidence intervals." width="672" />
+<p class="caption">(\#fig:visualization1-37)Relationship between diamond clarity and price. Error bars indicate 95% bootstrapped confidence intervals.</p>
+</div>
 
 Here we have it. The average price of our diamonds for different levels of `clarity` together with bootstrapped 95% confidence intervals. How do we know that we have 95% confidence intervals? That's what `mean_cl_boot()` computes as a default. Let's take a look at that function:
 
@@ -483,7 +476,10 @@ ggplot(data = df.diamonds, mapping = aes(x = clarity, y = price)) +
                geom = "point") # add points with means
 ```
 
-![(\#fig:visualization1-39)Relationship between diamond clarity and price. Error bars indicate 99% bootstrapped confidence intervals.](02-visualization1_files/figure-latex/visualization1-39-1.pdf) 
+<div class="figure">
+<img src="02-visualization1_files/figure-html/visualization1-39-1.png" alt="Relationship between diamond clarity and price. Error bars indicate 99% bootstrapped confidence intervals." width="672" />
+<p class="caption">(\#fig:visualization1-39)Relationship between diamond clarity and price. Error bars indicate 99% bootstrapped confidence intervals.</p>
+</div>
 
 Note how the error bars are larger now in Figure Figure \@ref(fig:visualization-39) compared to Figure \@ref(fig:visualization-37)
 . Note the somewhat peculiar way in which we supplied the parameters to the `mean_cl_boot` function. The `fun.args` argument takes in a list of arguments that it then passes on to the function `mean_cl_boot`.
@@ -499,7 +495,10 @@ ggplot(df.diamonds, aes(x = clarity, y = price)) +
   stat_summary(fun.y = "mean", geom = "point", color = "red")
 ```
 
-![(\#fig:visualization1-40)This figure looks good. Error bars and means are drawn in the correct order.](02-visualization1_files/figure-latex/visualization1-40-1.pdf) 
+<div class="figure">
+<img src="02-visualization1_files/figure-html/visualization1-40-1.png" alt="This figure looks good. Error bars and means are drawn in the correct order." width="672" />
+<p class="caption">(\#fig:visualization1-40)This figure looks good. Error bars and means are drawn in the correct order.</p>
+</div>
 
 Figure \@ref(fig:visualization-38) looks good.
 
@@ -511,7 +510,10 @@ ggplot(df.diamonds, aes(x = clarity, y = price)) +
   stat_summary(fun.data = "mean_cl_boot", geom = "linerange")
 ```
 
-![(\#fig:visualization1-41)This figure looks good. Error bars and means are drawn in the correct order.](02-visualization1_files/figure-latex/visualization1-41-1.pdf) 
+<div class="figure">
+<img src="02-visualization1_files/figure-html/visualization1-41-1.png" alt="This figure looks good. Error bars and means are drawn in the correct order." width="672" />
+<p class="caption">(\#fig:visualization1-41)This figure looks good. Error bars and means are drawn in the correct order.</p>
+</div>
 
 Figure \@ref(fig:visualization-39) doesn't look good. The error bars are on top of the points that represent the means.
 
@@ -535,14 +537,10 @@ Make a bar plot that shows the average `price` of diamonds (on the y-axis) as a 
 include_graphics("figures/practice_plot2.png")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{figures/practice_plot2} 
-
-}
-
-\caption{Practice plot 2.}(\#fig:visualization1-43)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="figures/practice_plot2.png" alt="Practice plot 2." width="90%" />
+<p class="caption">(\#fig:visualization1-43)Practice plot 2.</p>
+</div>
 
 ### Grouping data
 
@@ -559,7 +557,7 @@ ggplot(data = df.diamonds,
   stat_summary(fun.y = "mean", geom = "line")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-44-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-44-1.png" width="672" />
 
 Well, we got some separate lines here but we don't know which line corresponds to which cut. Let's add some color!
 
@@ -575,7 +573,7 @@ ggplot(data = df.diamonds,
                size = 2)
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-45-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-45-1.png" width="672" />
 
 Nice! In addition to adding color, I've made the lines a little thicker here by setting the `size` argument to 2.
 
@@ -591,7 +589,7 @@ ggplot(data = df.diamonds,
   stat_summary(fun.y = "mean", geom = "bar")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-46-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-46-1.png" width="672" />
 
 That's a fail! Several things went wrong here. All the bars are gray and only their outline is colored differently. Instead we want the bars to have a different color. For that we need to specify the `fill` argument rather than the `color` argument! But things are worse. The bars currently are shown on top of each other. Instead, we'd like to put them next to each other. Here is how we can do that:
 
@@ -608,7 +606,7 @@ ggplot(data = df.diamonds,
   scale_fill_manual(values = c("lightblue", "blue", "orangered", "red", "black"))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-47-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-47-1.png" width="672" />
 
 Neato! We've changed the `color` argument to `fill`, and have added the `position = position_dodge()` argument to the `stat_summary()` call. This argument makes it such that the bars are nicely dodged next to each other. Let's add some error bars just for kicks.
 
@@ -628,7 +626,7 @@ ggplot(data = df.diamonds,
                position = position_dodge(width = 0.9))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-48-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-48-1.png" width="672" />
 
 Voila! Now with error bars. Note that we've added the `width = 0.9` argument to `position_dodge()`. Somehow R was complaining when this was not defined for geom "linerange". I've also added some outline to the bars by including the argument `color = "black"`. I think it looks nicer this way.
 
@@ -646,7 +644,7 @@ ggplot(diamonds, aes(x = color, y = price, group = clarity, color = clarity))+
   stat_summary(fun.y = "mean", geom = "line", size = 2)
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-49-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-49-1.png" width="672" />
 
 
 
@@ -654,14 +652,10 @@ ggplot(diamonds, aes(x = color, y = price, group = clarity, color = clarity))+
 include_graphics("figures/practice_plot3.png")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{figures/practice_plot3} 
-
-}
-
-\caption{Practice plot 3.}(\#fig:visualization1-50)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="figures/practice_plot3.png" alt="Practice plot 3." width="90%" />
+<p class="caption">(\#fig:visualization1-50)Practice plot 3.</p>
+</div>
 
 ### Making facets
 
@@ -680,7 +674,7 @@ ggplot(data = df.diamonds,
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-51-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-51-1.png" width="672" />
 
 That looks bad! Let's pick a different value for the width of the bins in the histogram.
 
@@ -690,7 +684,7 @@ ggplot(data = df.diamonds, mapping = aes(x = y)) +
   geom_histogram(binwidth = 0.1)
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-52-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-52-1.png" width="672" />
 
 Still bad. There seems to be an outlier diamond that happens to be almost 60 mm wide, while most of the rest is much narrower. One option would be to remove the outlier from the data before plotting it. But generally, we don't want to make new data frames. Instead, let's just limit what data we want to show in the plot.
 
@@ -701,7 +695,7 @@ ggplot(data = df.diamonds, mapping = aes(x = y)) +
   coord_cartesian(xlim = c(3, 10))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-53-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-53-1.png" width="672" />
 
 I've used the `coord_cartesian()` function to restrict the range of data to show by passing a minimum and maximum to the `xlim` argument. This looks better now.
 
@@ -714,7 +708,7 @@ ggplot(data = df.diamonds, mapping = aes(x = y)) +
   coord_cartesian(xlim = c(3, 10))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-54-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-54-1.png" width="672" />
 
 Looks pretty similar to our histogram above! Just like we can play around with the binwidth of the histogram, we can change the smoothing bandwidth of the kernel that is used to create the histogram. Here is a histogram with a much wider bandwidth:
 
@@ -725,7 +719,7 @@ ggplot(data = df.diamonds, mapping = aes(x = y)) +
   coord_cartesian(xlim = c(3, 10))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-55-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-55-1.png" width="672" />
 
 We'll learn more about how these densities are determined later in class.
 
@@ -741,7 +735,7 @@ ggplot(data = df.diamonds,
   coord_cartesian(xlim = c(3, 10))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-56-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-56-1.png" width="672" />
 
 OK! That's a little tricky to tell apart. Notice that I've specified the `alpha` argument in the `geom_density()` function so that the densities in the front don't completely hide the densities in the back. But this plot still looks too busy. Instead of grouping, let's put the densities for the different colors, in separate panels. That's what facetting allows you to do.
 
@@ -754,7 +748,7 @@ ggplot(data = df.diamonds,
   coord_cartesian(xlim = c(3, 10))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-57-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-57-1.png" width="672" />
 
 Now we have the densities next to each other in separate panels. I've removed the `alpha` argument since the densities aren't overlapping anymore. To make the different panels, I used the `facet_grid()` function and specified that I want separate columns for the different colors (`cols = vars(color)`). What's the deal with `vars()`? Why couldn't we just write `facet_grid(cols = color)` instead? The short answer is: that's what the function wants. The long answer is: long. (We'll learn more about this later in the course.)
 
@@ -768,7 +762,7 @@ ggplot(data = df.diamonds, mapping = aes(x = y, fill = color)) +
   coord_cartesian(xlim = c(3, 10))
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-58-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-58-1.png" width="672" />
 
 Several aspects about this plot should be improved:
 
@@ -799,7 +793,10 @@ ggplot(data = df.diamonds,
 ## Warning: Removed 5 rows containing missing values (geom_linerange).
 ```
 
-![(\#fig:visualization1-59)A figure that is stretching it in terms of information.](02-visualization1_files/figure-latex/visualization1-59-1.pdf) 
+<div class="figure">
+<img src="02-visualization1_files/figure-html/visualization1-59-1.png" alt="A figure that is stretching it in terms of information." width="672" />
+<p class="caption">(\#fig:visualization1-59)A figure that is stretching it in terms of information.</p>
+</div>
 
 Figure \@ref(fig:visualization-57) is stretching it in terms of how much information it presents. But it gives you a sense for how to combine the differnet bits and pieces we've learned so far.
 
@@ -827,7 +824,7 @@ ggplot(diamonds, aes(x = color, y = price, fill = cut))+
 ## Warning: Removed 5 rows containing missing values (geom_linerange).
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-60-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-60-1.png" width="672" />
 
 
 
@@ -835,14 +832,10 @@ ggplot(diamonds, aes(x = color, y = price, fill = cut))+
 include_graphics("figures/practice_plot4.png")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.9\linewidth]{figures/practice_plot4} 
-
-}
-
-\caption{Practice plot 4.}(\#fig:visualization1-61)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="figures/practice_plot4.png" alt="Practice plot 4." width="90%" />
+<p class="caption">(\#fig:visualization1-61)Practice plot 4.</p>
+</div>
 
 ### Global, local, and setting `aes()`
 
@@ -858,7 +851,7 @@ ggplot(data = df.diamonds,
   geom_smooth(method = "lm", se = F)
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-62-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-62-1.png" width="672" />
 
 Here, I've drawn a scatter plot of the relationship between `carat` and `price`, and I have added the best-fitting regression lines via the `geom_smooth(method = "lm")` call. (We will learn more about what these regression lines mean later in class.)
 
@@ -873,7 +866,7 @@ ggplot(data = df.diamonds, mapping = aes(x = carat, y = price)) +
   geom_smooth(method = "lm")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-63-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-63-1.png" width="672" />
 
 Here, I've moved the color aesthetic into the `geom_point()` function call. Now, the `x` and `y` aesthetics still apply to both the `geom_point()` and the `geom_smooth()` function call (they are __global__), but the `color` aesthetic applies only to `geom_point()` (it is __local__). Alternatively, we can simply overwrite global aesthetics within local function calls.
 
@@ -884,7 +877,7 @@ ggplot(data = df.diamonds, aes(x = carat, y = price, color = color)) +
   geom_smooth(method = "lm", color = "black")
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-64-1.pdf)<!-- --> 
+<img src="02-visualization1_files/figure-html/visualization1-64-1.png" width="672" />
 
 Here, I've set `color = 'black'` within the `geom_smooth()` function, and now only one overall regression line is displayed since the global color aesthetic was overwritten in the local function call.
 

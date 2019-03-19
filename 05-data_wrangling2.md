@@ -72,7 +72,7 @@ df.starwars %>%
 ##  8 Dug               112
 ##  9 Ewok               88
 ## 10 Geonosian         183
-## # ... with 28 more rows
+## # … with 28 more rows
 ```
 
 I've first used `group_by()` to group our data frame by the different species, and then used `summarize()` to calculate the mean height of each species.
@@ -102,7 +102,7 @@ df.starwars %>%
 ##  8 Wookiee         231           2
 ##  9 Zabrak          173           2
 ## 10 Aleena           79           1
-## # ... with 28 more rows
+## # … with 28 more rows
 ```
 
 Here, I've used the `n()` function to get the number of observations in each group, and then I've arranged the data frame according to group size in descending order. 
@@ -127,21 +127,21 @@ df.summarize = tibble(
 ## # A tibble: 15 x 2
 ##    participant judgment
 ##          <int>    <int>
-##  1           1       55
-##  2           1       80
-##  3           1       49
-##  4           1       54
-##  5           1      100
-##  6           2       39
-##  7           2       84
-##  8           2       41
-##  9           2       85
-## 10           2       37
-## 11           3       74
-## 12           3       64
-## 13           3       81
-## 14           3       17
-## 15           3       66
+##  1           1       22
+##  2           1       39
+##  3           1        6
+##  4           1       94
+##  5           1       16
+##  6           2       98
+##  7           2       52
+##  8           2       54
+##  9           2       93
+## 10           2       11
+## 11           3       88
+## 12           3       55
+## 13           3       48
+## 14           3       65
+## 15           3       72
 ```
 
 
@@ -157,16 +157,16 @@ df.summarize %>%
 ## # A tibble: 10 x 3
 ##    participant judgment judgment_zscored
 ##          <int>    <int>            <dbl>
-##  1           1       55           -0.579
-##  2           1       80            0.570
-##  3           1       49           -0.855
-##  4           1       54           -0.625
-##  5           1      100            1.49 
-##  6           2       39           -0.729
-##  7           2       84            1.07 
-##  8           2       41           -0.649
-##  9           2       85            1.11 
-## 10           2       37           -0.809
+##  1           1       22           -0.384
+##  2           1       39            0.103
+##  3           1        6           -0.843
+##  4           1       94            1.68 
+##  5           1       16           -0.556
+##  6           2       98            1.03 
+##  7           2       52           -0.271
+##  8           2       54           -0.215
+##  9           2       93            0.886
+## 10           2       11           -1.43
 ```
 
 First, I've generated some random data using the repeat function `rep()` for making a `participant` column, and the `sample()` function to randomly choose values from a range between 0 and 100 with replacement. (We will learn more about these functions later when we look into how to simulate data.) I've then grouped the data by participant, and used the scale function to z-score the data. 
@@ -198,7 +198,7 @@ df.starwars %>%
 ##  8 R5-D4                  97    32             142.
 ##  9 Biggs Darklighter     183    84             142.
 ## 10 Obi-Wan Kenobi        182    77             142.
-## # ... with 77 more rows
+## # … with 77 more rows
 ```
 
 Note that all the values are the same. The value shown here is just the mean of all the values in `height` and `mass`.
@@ -238,7 +238,7 @@ df.starwars %>%
 ##  8 R5-D4                  97    32             64.5
 ##  9 Biggs Darklighter     183    84            134. 
 ## 10 Obi-Wan Kenobi        182    77            130. 
-## # ... with 77 more rows
+## # … with 77 more rows
 ```
 
 or use the `rowwise()` helper function which is like `group_by()` but treats each row like a group: 
@@ -266,7 +266,7 @@ df.starwars %>%
 ##  8 R5-D4                  97    32             64.5
 ##  9 Biggs Darklighter     183    84            134. 
 ## 10 Obi-Wan Kenobi        182    77            130. 
-## # ... with 77 more rows
+## # … with 77 more rows
 ```
 
 #### Practice 1 
@@ -395,7 +395,7 @@ df.reshape2 = tibble(
 ##         <dbl> <chr>              <dbl> <chr>              <dbl> <chr>     
 ## 1           1 flower                10 house                100 car       
 ## 2           2 car                   25 flower                63 house     
-## # ... with 1 more variable: observation_3 <dbl>
+## # … with 1 more variable: observation_3 <dbl>
 ```
 
 Now, the data frame contains in each row, which stimuli a participant saw, and what rating she gave. Each of the two participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of `gather()`, `separate()`, and `spread()` to turn this into a data frame in long format. 
@@ -951,21 +951,13 @@ This specifies that we would like to replace any `NA` in the `return` column wit
 So far, we've used data sets that already came with the packages we've loaded. In the visualization chapters, we used the `diamonds` data set from the `ggplot2` package, and in the data wrangling chapters, we used the `starwars` data set from the `dplyr` package. 
 
 
-\begin{tabular}{r|l|l}
-\hline
-file type & platform & description\\
-\hline
-`csv` & general & medium-size data frames\\
-\hline
-`RData` & R & saving the results of intensive computations\\
-\hline
-`xls` & excel & people who use excel\\
-\hline
-`json` & general & more complex data structures\\
-\hline
-`feather` & python \& R & fast interaction between R and python\\
-\hline
-\end{tabular}
+ file type  platform     description                                  
+----------  -----------  ---------------------------------------------
+     `csv`  general      medium-size data frames                      
+   `RData`  R            saving the results of intensive computations 
+     `xls`  excel        people who use excel                         
+    `json`  general      more complex data structures                 
+ `feather`  python & R   fast interaction between R and python        
 
 
 The `foreign` [package](https://cran.r-project.org/web/packages/foreign/index.html) helps with importing data that was saved in SPSS, Stata, or Minitab. 
@@ -1010,17 +1002,17 @@ df.csv %>% glimpse()
 ```
 ## Observations: 2,961
 ## Variables: 11
-## $ title               <chr> "Over the Hill to the Poorhouse", "The Bro...
-## $ genre               <chr> "Crime", "Musical", "Comedy", "Comedy", "C...
-## $ director            <chr> "Harry F. Millarde", "Harry Beaumont", "Ll...
-## $ year                <dbl> 1920, 1929, 1933, 1935, 1936, 1937, 1939, ...
-## $ duration            <dbl> 110, 100, 89, 81, 87, 83, 102, 226, 88, 14...
-## $ gross               <dbl> 3000000, 2808000, 2300000, 3000000, 163245...
-## $ budget              <dbl> 100000, 379000, 439000, 609000, 1500000, 2...
-## $ cast_facebook_likes <dbl> 4, 109, 995, 824, 352, 229, 2509, 1862, 11...
-## $ votes               <dbl> 5, 4546, 7921, 13269, 143086, 133348, 2918...
-## $ reviews             <dbl> 2, 107, 162, 164, 331, 349, 746, 863, 252,...
-## $ rating              <dbl> 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7....
+## $ title               <chr> "Over the Hill to the Poorhouse", "The Broad…
+## $ genre               <chr> "Crime", "Musical", "Comedy", "Comedy", "Com…
+## $ director            <chr> "Harry F. Millarde", "Harry Beaumont", "Lloy…
+## $ year                <dbl> 1920, 1929, 1933, 1935, 1936, 1937, 1939, 19…
+## $ duration            <dbl> 110, 100, 89, 81, 87, 83, 102, 226, 88, 144,…
+## $ gross               <dbl> 3000000, 2808000, 2300000, 3000000, 163245, …
+## $ budget              <dbl> 100000, 379000, 439000, 609000, 1500000, 200…
+## $ cast_facebook_likes <dbl> 4, 109, 995, 824, 352, 229, 2509, 1862, 1178…
+## $ votes               <dbl> 5, 4546, 7921, 13269, 143086, 133348, 291875…
+## $ reviews             <dbl> 2, 107, 162, 164, 331, 349, 746, 863, 252, 1…
+## $ rating              <dbl> 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5,…
 ```
 
 The data frame contains a bunch of movies with information about their genre, director, rating, etc. 
