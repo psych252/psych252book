@@ -26,37 +26,22 @@ theme_set(
 
 Every distribution that R handles has four functions. There is a root name, for example, the root name for the normal distribution is `norm`. This root is prefixed by one of the letters here:
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> letter </th>
-   <th style="text-align:left;"> description </th>
-   <th style="text-align:left;"> example </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> `d` </td>
-   <td style="text-align:left;"> for "__density__", the density function (probability function (for _discrete_ variables) or probability density function (for _continuous_ variables)) </td>
-   <td style="text-align:left;"> `dnorm()` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `p` </td>
-   <td style="text-align:left;"> for "__probability__", the cumulative distribution function </td>
-   <td style="text-align:left;"> `pnorm()` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `q` </td>
-   <td style="text-align:left;"> for "__quantile__", the inverse cumulative distribution function </td>
-   <td style="text-align:left;"> `qnorm()` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `r` </td>
-   <td style="text-align:left;"> for "__random__", a random variable having the specified distribution </td>
-   <td style="text-align:left;"> `rnorm()` </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l|l}
+\hline
+letter & description & example\\
+\hline
+`d` & for "\_\_density\_\_", the density function (probability function (for \_discrete\_ variables) or probability density function (for \_continuous\_ variables)) & `dnorm()`\\
+\hline
+`p` & for "\_\_probability\_\_", the cumulative distribution function & `pnorm()`\\
+\hline
+`q` & for "\_\_quantile\_\_", the inverse cumulative distribution function & `qnorm()`\\
+\hline
+`r` & for "\_\_random\_\_", a random variable having the specified distribution & `rnorm()`\\
+\hline
+\end{tabular}
+\end{table}
 
 
 For the normal distribution, these functions are `dnorm`, `pnorm`, `qnorm`, and `rnorm`. For the binomial distribution, these functions are `dbinom`, `pbinom`, `qbinom`, and `rbinom`. And so forth.
@@ -74,7 +59,7 @@ ggplot(data = tibble(x = c(-5, 5)),
   stat_function(fun = "dnorm")
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-05-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-05-1.pdf)<!-- --> 
 
 Note that the data frame I created with `tibble()` only needs to have the minimum and the maximum value of the x-range that we are interested in. Here, I chose `-5` and `5` as the minimum and maximum, respectively. 
 
@@ -96,7 +81,7 @@ ggplot(data = tibble(x = c(-5, 5)),
                 )
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-06-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-06-1.pdf)<!-- --> 
 
 Here, I defined a breakpoint function. If the value of `x` is below the breakpoint, `y` equals the value of the breakpoint. If the value of `x` is greater than the breakpoint, then `y` equals `x`. 
 
@@ -116,7 +101,7 @@ ggplot(data = tibble(x = c(140, 220)),
                             sd = tmp.sd))
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-07-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-07-1.pdf)<!-- --> 
 
 ```r
 # remove all variables with tmp in their name 
@@ -154,7 +139,7 @@ ggplot(data = df.plot,
   coord_cartesian(xlim = c(-4, 4), expand = T)
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-08-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-08-1.pdf)<!-- --> 
 
 ```r
 # remove all variables with tmp in their name 
@@ -208,7 +193,7 @@ ggplot(data = df.plot,
   coord_cartesian(xlim = c(-4, 4), expand = F)
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-09-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-09-1.pdf)<!-- --> 
 
 ```r
 # remove all variables with tmp in their name 
@@ -228,7 +213,7 @@ ggplot(data = tibble(x = c(-5, 5)),
                             sd = 1))
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-10-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-10-1.pdf)<!-- --> 
 
 Let's find the cumulative probability of a particular value. 
 
@@ -274,7 +259,7 @@ ggplot(data = tibble(x = c(-5, 5)),
                   expand = F)
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-11-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-11-1.pdf)<!-- --> 
 
 ```r
 # remove all variables with tmp in their name 
@@ -300,7 +285,7 @@ ggplot(data = tibble(x = c(-5, 5)),
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.1))) 
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-12-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-12-1.pdf)<!-- --> 
 
 ### Inverse cumulative distribution 
 
@@ -313,7 +298,7 @@ ggplot(data = tibble(x = c(0, 1)),
                             sd = 1))
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-13-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-13-1.pdf)<!-- --> 
 
 And let's compute the inverse cumulative probability for a particular value. 
 
@@ -360,7 +345,7 @@ ggplot(data = tibble(x = c(0, 1)),
                   expand = F)
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-14-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-14-1.pdf)<!-- --> 
 
 ```r
 # remove all variables with tmp in their name 
@@ -414,7 +399,7 @@ ggplot(data = tibble(x = c(-5, 5)),
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.1))) 
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-15-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-15-1.pdf)<!-- --> 
 
 ```r
 # remove all variables with tmp in their name 
@@ -474,7 +459,7 @@ ggplot(data = df.samples,
            size = 10)
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-16-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-16-1.pdf)<!-- --> 
 
 ```r
 # remove all variables with tmp in their name 
@@ -569,7 +554,7 @@ df.camp %>% print()
 ##  8     8 basketball   193.
 ##  9     9 basketball   172.
 ## 10    10 basketball   177.
-## # … with 9,990 more rows
+## # ... with 9,990 more rows
 ```
 
 Now we have a data frame with kids whose height was randomly sampled depending on which sport they do. I've used the `sample()` function to assign a sport to each kid first using the `prob = ` argument to make sure that a kid is more likely to be assigned the sport "basketball" than "chess". 
@@ -665,40 +650,26 @@ df.density %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> x </th>
-   <th style="text-align:right;"> y </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.250 </td>
-   <td style="text-align:right;"> 0.004 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.257 </td>
-   <td style="text-align:right;"> 0.004 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.264 </td>
-   <td style="text-align:right;"> 0.005 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.271 </td>
-   <td style="text-align:right;"> 0.005 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.277 </td>
-   <td style="text-align:right;"> 0.005 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.284 </td>
-   <td style="text-align:right;"> 0.006 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r}
+\hline
+x & y\\
+\hline
+0.250 & 0.004\\
+\hline
+0.257 & 0.004\\
+\hline
+0.264 & 0.005\\
+\hline
+0.271 & 0.005\\
+\hline
+0.277 & 0.005\\
+\hline
+0.284 & 0.006\\
+\hline
+\end{tabular}
+\end{table}
 
 Now, let's plot the density. 
 
@@ -716,7 +687,7 @@ ggplot(data = df.density, aes(x = x, y = y)) +
 ## This warning is displayed once per session.
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-23-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-23-1.pdf)<!-- --> 
 
 This density shows the sum of the densities of normal distributions that are centered at the observations with the specified bandwidth. 
 
@@ -739,82 +710,26 @@ df.density %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> x </th>
-   <th style="text-align:right;"> y </th>
-   <th style="text-align:right;"> observation_1 </th>
-   <th style="text-align:right;"> observation_2 </th>
-   <th style="text-align:right;"> observation_3 </th>
-   <th style="text-align:right;"> observation_4 </th>
-   <th style="text-align:right;"> observation_5 </th>
-   <th style="text-align:right;"> sum_norm </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.250 </td>
-   <td style="text-align:right;"> 0.019 </td>
-   <td style="text-align:right;"> 0.018 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.019 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.257 </td>
-   <td style="text-align:right;"> 0.021 </td>
-   <td style="text-align:right;"> 0.019 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.021 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.264 </td>
-   <td style="text-align:right;"> 0.023 </td>
-   <td style="text-align:right;"> 0.021 </td>
-   <td style="text-align:right;"> 0.001 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.022 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.271 </td>
-   <td style="text-align:right;"> 0.024 </td>
-   <td style="text-align:right;"> 0.023 </td>
-   <td style="text-align:right;"> 0.002 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.024 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.277 </td>
-   <td style="text-align:right;"> 0.027 </td>
-   <td style="text-align:right;"> 0.024 </td>
-   <td style="text-align:right;"> 0.002 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.026 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.284 </td>
-   <td style="text-align:right;"> 0.029 </td>
-   <td style="text-align:right;"> 0.026 </td>
-   <td style="text-align:right;"> 0.002 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.028 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r|r|r|r|r}
+\hline
+x & y & observation\_1 & observation\_2 & observation\_3 & observation\_4 & observation\_5 & sum\_norm\\
+\hline
+0.250 & 0.019 & 0.018 & 0.001 & 0 & 0 & 0 & 0.019\\
+\hline
+0.257 & 0.021 & 0.019 & 0.001 & 0 & 0 & 0 & 0.021\\
+\hline
+0.264 & 0.023 & 0.021 & 0.001 & 0 & 0 & 0 & 0.022\\
+\hline
+0.271 & 0.024 & 0.023 & 0.002 & 0 & 0 & 0 & 0.024\\
+\hline
+0.277 & 0.027 & 0.024 & 0.002 & 0 & 0 & 0 & 0.026\\
+\hline
+0.284 & 0.029 & 0.026 & 0.002 & 0 & 0 & 0 & 0.028\\
+\hline
+\end{tabular}
+\end{table}
 
 Now, let's plot the individual densities as well as the overall density.
 
@@ -851,7 +766,7 @@ p = p +
 p # print the figure
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-25-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-25-1.pdf)<!-- --> 
 
 Here are the same results when specifying a different bandwidth: 
 
@@ -903,7 +818,7 @@ p = p +
 p
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-26-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-26-1.pdf)<!-- --> 
 
 ### The `quantile()` function
 
@@ -928,56 +843,34 @@ kable_styling(bootstrap_options = "striped",
               full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> sample </th>
-   <th style="text-align:right;"> value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> -0.63 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.18 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> -0.84 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 1.60 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.33 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> -0.82 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 0.49 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 0.74 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 0.58 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> -0.31 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r}
+\hline
+sample & value\\
+\hline
+1 & -0.63\\
+\hline
+2 & 0.18\\
+\hline
+3 & -0.84\\
+\hline
+4 & 1.60\\
+\hline
+5 & 0.33\\
+\hline
+6 & -0.82\\
+\hline
+7 & 0.49\\
+\hline
+8 & 0.74\\
+\hline
+9 & 0.58\\
+\hline
+10 & -0.31\\
+\hline
+\end{tabular}
+\end{table}
 
 Let's draw a boxplot using ggplot. 
 
@@ -988,7 +881,7 @@ ggplot(data = df.quantile,
   geom_boxplot()
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-28-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-28-1.pdf)<!-- --> 
 
 Here is a reminder of what boxplots show from the help file of `geom_boxplot()`:
 
@@ -1063,7 +956,7 @@ ggplot(data = df.quantile,
   coord_cartesian(xlim = c(-1.2, 0.5))
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-30-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-30-1.pdf)<!-- --> 
 
 Neat! Now we know how boxplots are made. 
 
@@ -1088,7 +981,7 @@ ggplot(data = df.plot,
   geom_line()
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-31-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-31-1.pdf)<!-- --> 
 
 And we can calculate quantiles by hand in the following way: 
 
@@ -1159,10 +1052,7 @@ ggplot(data = df.residuals, aes(x = residual))+
         legend.position = c(0.9, 0.9))
 ```
 
-<div class="figure">
-<img src="07-simulation1_files/figure-html/simulation1-34-1.png" alt="Empirical distribution of residuals, and theoretical distribution." width="672" />
-<p class="caption">(\#fig:simulation1-34)Empirical distribution of residuals, and theoretical distribution.</p>
-</div>
+![(\#fig:simulation1-34)Empirical distribution of residuals, and theoretical distribution.](07-simulation1_files/figure-latex/simulation1-34-1.pdf) 
 
 Here, the empirical distribution of the errors and the theoretical normal distribution with a mean of 0 and a SD of 2 correspond very closely. Let's take a look at the corresponding QQ plot. 
 
@@ -1174,7 +1064,7 @@ ggplot(data = df.residuals, aes(sample = residual)) +
   coord_cartesian(xlim = c(-40, 40), ylim = c(-40, 40))
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-35-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-35-1.pdf)<!-- --> 
 
 Note that the QQ plot is sensitive to the general shape of the distribution. 
 
@@ -1233,7 +1123,7 @@ l.plots[[8]] +
 ## adjust the group aesthetic?
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-38-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-38-1.pdf)<!-- --> 
 
 ```r
 # ggsave("figures/qqplots_normal.pdf", width = 10, height = 6)
@@ -1293,16 +1183,15 @@ l.plots[[8]] +
   theme(text = element_text(size = 16))
 ```
 
-<img src="07-simulation1_files/figure-html/simulation1-39-1.png" width="672" />
+![](07-simulation1_files/figure-latex/simulation1-39-1.pdf)<!-- --> 
 
 ```r
 ggsave("figures/qqplots_beta.pdf", width = 10, height = 6)
 ```
 
-<div class="figure">
-<img src="figures/qqplots.png" alt="QQ plots indicating different deviations from normality." width="90%" />
-<p class="caption">(\#fig:simulation1-40)QQ plots indicating different deviations from normality.</p>
-</div>
+\begin{figure}
+\includegraphics[width=0.9\linewidth]{figures/qqplots} \caption{QQ plots indicating different deviations from normality.}(\#fig:simulation1-40)
+\end{figure}
 
 ## Additional resources 
 

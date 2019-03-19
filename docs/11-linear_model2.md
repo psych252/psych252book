@@ -41,60 +41,36 @@ df.ads = read_csv("data/advertising.csv") %>%
   rename(index = x1)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> variable </th>
-   <th style="text-align:left;"> description </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> income </td>
-   <td style="text-align:left;"> in thousand dollars </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> limit </td>
-   <td style="text-align:left;"> credit limit </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> rating </td>
-   <td style="text-align:left;"> credit rating </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> cards </td>
-   <td style="text-align:left;"> number of credit cards </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> age </td>
-   <td style="text-align:left;"> in years </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> education </td>
-   <td style="text-align:left;"> years of education </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gender </td>
-   <td style="text-align:left;"> male or female </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> student </td>
-   <td style="text-align:left;"> student or not </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> married </td>
-   <td style="text-align:left;"> married or not </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ethnicity </td>
-   <td style="text-align:left;"> African American, Asian, Caucasian </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> balance </td>
-   <td style="text-align:left;"> average credit card debt </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l}
+\hline
+variable & description\\
+\hline
+income & in thousand dollars\\
+\hline
+limit & credit limit\\
+\hline
+rating & credit rating\\
+\hline
+cards & number of credit cards\\
+\hline
+age & in years\\
+\hline
+education & years of education\\
+\hline
+gender & male or female\\
+\hline
+student & student or not\\
+\hline
+married & married or not\\
+\hline
+ethnicity & African American, Asian, Caucasian\\
+\hline
+balance & average credit card debt\\
+\hline
+\end{tabular}
+\end{table}
 
 ## Things that came up in class
 
@@ -122,7 +98,7 @@ ggplot(data = tibble(x = c(0, tmp.max)),
                   expand = F)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-06-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-06-1.pdf)<!-- --> 
 
 And here is the density plot for a beta distribution:
 
@@ -149,7 +125,7 @@ ggplot(data = tibble(x = c(0, 1)),
                   expand = F)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-07-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-07-1.pdf)<!-- --> 
 
 ## Multiple continuous variables 
 
@@ -211,10 +187,7 @@ df.credit %>%
   theme(axis.title.y = element_blank())
 ```
 
-<div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-10-1.png" alt="Bar plot illustrating how strongly different variables correlate with income." width="672" />
-<p class="caption">(\#fig:linear-model2-10)Bar plot illustrating how strongly different variables correlate with income.</p>
-</div>
+![(\#fig:linear-model2-10)Bar plot illustrating how strongly different variables correlate with income.](11-linear_model2_files/figure-latex/linear-model2-10-1.pdf) 
 
 ##### All pairwise correlations
 
@@ -230,7 +203,7 @@ tmp = df.credit %>%
   corrplot()
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-11-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-11-1.pdf)<!-- --> 
 
 
 ```r
@@ -239,10 +212,7 @@ df.ads %>%
   ggpairs()
 ```
 
-<div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-12-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal." width="672" />
-<p class="caption">(\#fig:linear-model2-12)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal.</p>
-</div>
+![(\#fig:linear-model2-12)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal.](11-linear_model2_files/figure-latex/linear-model2-12-1.pdf) 
 
 With some customization: 
 
@@ -256,10 +226,7 @@ df.ads %>%
   theme(panel.grid.major = element_blank())
 ```
 
-<div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-13-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized)." width="672" />
-<p class="caption">(\#fig:linear-model2-13)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized).</p>
-</div>
+![(\#fig:linear-model2-13)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized).](11-linear_model2_files/figure-latex/linear-model2-13-1.pdf) 
 
 ### Multipe regression
 
@@ -297,7 +264,7 @@ ggplot(df.ads,
   theme(text = element_text(size = 30))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-14-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-14-1.pdf)<!-- --> 
 
 TV ads and radio ads aren't correlated. Yay! 
 
@@ -346,7 +313,7 @@ ggplot(df.plot,
   geom_point()
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-16-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-16-1.pdf)<!-- --> 
 
 ```r
 # density of residuals 
@@ -355,7 +322,7 @@ ggplot(df.plot,
   stat_density(geom = "line")
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-16-2.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-16-2.pdf)<!-- --> 
 
 ```r
 # QQ plot 
@@ -365,7 +332,7 @@ ggplot(df.plot,
   geom_qq_line() 
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-16-3.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-16-3.pdf)<!-- --> 
 
 There is a slight non-linear trend in the residuals. We can also see that the residuals aren't perfectly normally distributed. We'll see later what we can do about this ... 
 
@@ -380,38 +347,16 @@ fit_a %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> r.squared </th>
-   <th style="text-align:right;"> adj.r.squared </th>
-   <th style="text-align:right;"> sigma </th>
-   <th style="text-align:right;"> statistic </th>
-   <th style="text-align:right;"> p.value </th>
-   <th style="text-align:right;"> df </th>
-   <th style="text-align:right;"> logLik </th>
-   <th style="text-align:right;"> AIC </th>
-   <th style="text-align:right;"> BIC </th>
-   <th style="text-align:right;"> deviance </th>
-   <th style="text-align:right;"> df.residual </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.897 </td>
-   <td style="text-align:right;"> 0.896 </td>
-   <td style="text-align:right;"> 1.681 </td>
-   <td style="text-align:right;"> 859.618 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> -386.197 </td>
-   <td style="text-align:right;"> 780.394 </td>
-   <td style="text-align:right;"> 793.587 </td>
-   <td style="text-align:right;"> 556.914 </td>
-   <td style="text-align:right;"> 197 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r|r|r|r|r|r|r|r}
+\hline
+r.squared & adj.r.squared & sigma & statistic & p.value & df & logLik & AIC & BIC & deviance & df.residual\\
+\hline
+0.897 & 0.896 & 1.681 & 859.618 & 0 & 3 & -386.197 & 780.394 & 793.587 & 556.914 & 197\\
+\hline
+\end{tabular}
+\end{table}
 
 As we can see, the model almost explains 90% of the variance. That's very decent! 
 
@@ -434,7 +379,7 @@ ggplot(df.plot, aes(x = radio, y = sales, color = tv)) +
   theme(legend.position = c(0.1, 0.8))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-18-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-18-1.pdf)<!-- --> 
 
 We used color here to encode TV ads (and the x-axis for the radio ads). 
 
@@ -461,7 +406,7 @@ ggplot(df.plot, aes(x = radio, y = sales, color = tv)) +
   theme(legend.position = c(0.1, 0.8))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-19-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-19-1.pdf)<!-- --> 
 
 #### Interpreting the model fits
 
@@ -477,48 +422,20 @@ fit_a %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:right;"> estimate </th>
-   <th style="text-align:right;"> std.error </th>
-   <th style="text-align:right;"> statistic </th>
-   <th style="text-align:right;"> p.value </th>
-   <th style="text-align:right;"> conf.low </th>
-   <th style="text-align:right;"> conf.high </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 2.92 </td>
-   <td style="text-align:right;"> 0.29 </td>
-   <td style="text-align:right;"> 9.92 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 2.34 </td>
-   <td style="text-align:right;"> 3.50 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tv </td>
-   <td style="text-align:right;"> 0.05 </td>
-   <td style="text-align:right;"> 0.00 </td>
-   <td style="text-align:right;"> 32.91 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.04 </td>
-   <td style="text-align:right;"> 0.05 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> radio </td>
-   <td style="text-align:right;"> 0.19 </td>
-   <td style="text-align:right;"> 0.01 </td>
-   <td style="text-align:right;"> 23.38 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.17 </td>
-   <td style="text-align:right;"> 0.20 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|r|r|r|r|r|r}
+\hline
+term & estimate & std.error & statistic & p.value & conf.low & conf.high\\
+\hline
+(Intercept) & 2.92 & 0.29 & 9.92 & 0 & 2.34 & 3.50\\
+\hline
+tv & 0.05 & 0.00 & 32.91 & 0 & 0.04 & 0.05\\
+\hline
+radio & 0.19 & 0.01 & 23.38 & 0 & 0.17 & 0.20\\
+\hline
+\end{tabular}
+\end{table}
 
 #### Standardizing the predictors
 
@@ -551,100 +468,34 @@ df.ads %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> index </th>
-   <th style="text-align:right;"> tv </th>
-   <th style="text-align:right;"> radio </th>
-   <th style="text-align:right;"> sales </th>
-   <th style="text-align:right;"> tv_scaled </th>
-   <th style="text-align:right;"> radio_scaled </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 230.1 </td>
-   <td style="text-align:right;"> 37.8 </td>
-   <td style="text-align:right;"> 22.1 </td>
-   <td style="text-align:right;"> 0.97 </td>
-   <td style="text-align:right;"> 0.98 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 44.5 </td>
-   <td style="text-align:right;"> 39.3 </td>
-   <td style="text-align:right;"> 10.4 </td>
-   <td style="text-align:right;"> -1.19 </td>
-   <td style="text-align:right;"> 1.08 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 17.2 </td>
-   <td style="text-align:right;"> 45.9 </td>
-   <td style="text-align:right;"> 9.3 </td>
-   <td style="text-align:right;"> -1.51 </td>
-   <td style="text-align:right;"> 1.52 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 151.5 </td>
-   <td style="text-align:right;"> 41.3 </td>
-   <td style="text-align:right;"> 18.5 </td>
-   <td style="text-align:right;"> 0.05 </td>
-   <td style="text-align:right;"> 1.21 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 180.8 </td>
-   <td style="text-align:right;"> 10.8 </td>
-   <td style="text-align:right;"> 12.9 </td>
-   <td style="text-align:right;"> 0.39 </td>
-   <td style="text-align:right;"> -0.84 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 8.7 </td>
-   <td style="text-align:right;"> 48.9 </td>
-   <td style="text-align:right;"> 7.2 </td>
-   <td style="text-align:right;"> -1.61 </td>
-   <td style="text-align:right;"> 1.73 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 57.5 </td>
-   <td style="text-align:right;"> 32.8 </td>
-   <td style="text-align:right;"> 11.8 </td>
-   <td style="text-align:right;"> -1.04 </td>
-   <td style="text-align:right;"> 0.64 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 120.2 </td>
-   <td style="text-align:right;"> 19.6 </td>
-   <td style="text-align:right;"> 13.2 </td>
-   <td style="text-align:right;"> -0.31 </td>
-   <td style="text-align:right;"> -0.25 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 8.6 </td>
-   <td style="text-align:right;"> 2.1 </td>
-   <td style="text-align:right;"> 4.8 </td>
-   <td style="text-align:right;"> -1.61 </td>
-   <td style="text-align:right;"> -1.43 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 199.8 </td>
-   <td style="text-align:right;"> 2.6 </td>
-   <td style="text-align:right;"> 10.6 </td>
-   <td style="text-align:right;"> 0.61 </td>
-   <td style="text-align:right;"> -1.39 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r|r|r}
+\hline
+index & tv & radio & sales & tv\_scaled & radio\_scaled\\
+\hline
+1 & 230.1 & 37.8 & 22.1 & 0.97 & 0.98\\
+\hline
+2 & 44.5 & 39.3 & 10.4 & -1.19 & 1.08\\
+\hline
+3 & 17.2 & 45.9 & 9.3 & -1.51 & 1.52\\
+\hline
+4 & 151.5 & 41.3 & 18.5 & 0.05 & 1.21\\
+\hline
+5 & 180.8 & 10.8 & 12.9 & 0.39 & -0.84\\
+\hline
+6 & 8.7 & 48.9 & 7.2 & -1.61 & 1.73\\
+\hline
+7 & 57.5 & 32.8 & 11.8 & -1.04 & 0.64\\
+\hline
+8 & 120.2 & 19.6 & 13.2 & -0.31 & -0.25\\
+\hline
+9 & 8.6 & 2.1 & 4.8 & -1.61 & -1.43\\
+\hline
+10 & 199.8 & 2.6 & 10.6 & 0.61 & -1.39\\
+\hline
+\end{tabular}
+\end{table}
 
 We can standardize (z-score) variables using the `scale()` function.
 
@@ -675,7 +526,7 @@ annotate(geom = "text",
            )
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-22-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-22-1.pdf)<!-- --> 
 
 Scaling a variable leaves the distribution intact, but changes the mean to 0 and the SD to 1. 
 
@@ -750,7 +601,7 @@ ggplot(df.credit,
   geom_point(alpha = 0.5) 
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-24-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-24-1.pdf)<!-- --> 
 
 It just predicts the mean (the horizontal black line). The vertical lines from each data point to the mean illustrate the residuals. 
 
@@ -789,7 +640,7 @@ ggplot(df.credit,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-25-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-25-1.pdf)<!-- --> 
 
 Note that this model predicts two horizontal lines. One for students, and one for non-students. 
 
@@ -809,7 +660,7 @@ ggplot(data = df.credit,
   scale_fill_brewer(palette = "Set1")
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-26-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-26-1.pdf)<!-- --> 
 
 And let's double check that we also get a signifcant result when we run a t-test instead of our model comparison procedure: 
 
@@ -848,67 +699,34 @@ df.credit %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> income </th>
-   <th style="text-align:left;"> student </th>
-   <th style="text-align:right;"> student_dummy </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 14.89 </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 106.03 </td>
-   <td style="text-align:left;"> Yes </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 104.59 </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 148.92 </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 55.88 </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 80.18 </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 21.00 </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 71.41 </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 15.12 </td>
-   <td style="text-align:left;"> No </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 71.06 </td>
-   <td style="text-align:left;"> Yes </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|l|r}
+\hline
+income & student & student\_dummy\\
+\hline
+14.89 & No & 0\\
+\hline
+106.03 & Yes & 1\\
+\hline
+104.59 & No & 0\\
+\hline
+148.92 & No & 0\\
+\hline
+55.88 & No & 0\\
+\hline
+80.18 & No & 0\\
+\hline
+21.00 & No & 0\\
+\hline
+71.41 & No & 0\\
+\hline
+15.12 & No & 0\\
+\hline
+71.06 & Yes & 1\\
+\hline
+\end{tabular}
+\end{table}
 
 ### Reporting the results
 
@@ -931,7 +749,7 @@ ggplot(df.plot,
                size = 4)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-29-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-29-1.pdf)<!-- --> 
 
 And then report the means and standard deviations together with the result of our signifance test: 
 
@@ -1000,7 +818,7 @@ ggplot(df.augment,
   geom_point(alpha = 0.3)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-32-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-32-1.pdf)<!-- --> 
 
 This time, the compact model still predicts just one line (like above) but note that this line is not horizontal anymore. 
 
@@ -1045,7 +863,7 @@ ggplot(df.augment,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-33-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-33-1.pdf)<!-- --> 
 
 The augmented model predicts two lines again, each with the same slope (but the intercept differs).
 
@@ -1071,7 +889,7 @@ ggplot(data = df.credit,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-34-1.png" width="672" />
+![](11-linear_model2_files/figure-latex/linear-model2-34-1.pdf)<!-- --> 
 
 Note that we just specified here that we want to have a linear model (via `geom_smooth(method = "lm")`). By default, `ggplot2` assumes that we want a model that includes interactions. We can see this by the fact that two fitted lines are not parallel. 
 

@@ -142,7 +142,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-07-1.png" width="672" />
+![](13-linear_model4_files/figure-latex/linear-model4-07-1.pdf)<!-- --> 
 
 #### Model variance
 
@@ -206,7 +206,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-08-1.png" width="672" />
+![](13-linear_model4_files/figure-latex/linear-model4-08-1.pdf)<!-- --> 
 
 #### Residual variance 
 
@@ -286,7 +286,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-09-1.png" width="672" />
+![](13-linear_model4_files/figure-latex/linear-model4-09-1.pdf)<!-- --> 
 
 ## Two-way ANOVA (linear model)
 
@@ -393,7 +393,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-12-1.png" width="672" />
+![](13-linear_model4_files/figure-latex/linear-model4-12-1.pdf)<!-- --> 
 
 ## ANOVA with unbalanced design
 
@@ -566,10 +566,10 @@ df.poker %>%
 
 ```
 ## # A tibble: 1 x 5
-##   variance_total variance_skill variance_hand variance_hand_s…
+##   variance_total variance_skill variance_hand variance_hand_s~
 ##            <dbl>          <dbl>         <dbl>            <dbl>
 ## 1          7580.           39.3         2559.             229.
-## # … with 1 more variable: variance_residual <dbl>
+## # ... with 1 more variable: variance_residual <dbl>
 ```
 
 
@@ -671,7 +671,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-19-1.png" width="672" />
+![](13-linear_model4_files/figure-latex/linear-model4-19-1.pdf)<!-- --> 
 
 ### Hypothetical data 
 
@@ -776,7 +776,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-22-1.png" width="672" />
+![](13-linear_model4_files/figure-latex/linear-model4-22-1.pdf)<!-- --> 
 
 With contrast
 
@@ -843,7 +843,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-23-1.png" width="672" />
+![](13-linear_model4_files/figure-latex/linear-model4-23-1.pdf)<!-- --> 
 
 Results figure
 
@@ -856,7 +856,7 @@ df.contrast %>%
   stat_summary(fun.y = "mean", geom = "point", shape = 21, fill = "white", size = 3)
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-24-1.png" width="672" />
+![](13-linear_model4_files/figure-latex/linear-model4-24-1.pdf)<!-- --> 
 
 ### Constrasts 
 

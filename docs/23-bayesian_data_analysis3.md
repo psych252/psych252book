@@ -86,7 +86,7 @@ df.poker %>%
   theme(legend.position = "none")
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-05-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-05-1.pdf)<!-- --> 
 
 ### Linear model 
 
@@ -175,7 +175,7 @@ fit.brm1 %>%
   geom_halfeyeh()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-08-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-08-1.pdf)<!-- --> 
 
 And let's look at how the samples from the posterior are correlated with each other: 
 
@@ -190,7 +190,7 @@ fit.brm1 %>%
         text = element_text(size = 12))
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-09-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-09-1.pdf)<!-- --> 
 
 #### Compute highest density intervals 
 
@@ -213,42 +213,22 @@ fit.brm1 %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> parameter </th>
-   <th style="text-align:right;"> lower </th>
-   <th style="text-align:right;"> mode </th>
-   <th style="text-align:right;"> upper </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> b_handgood </td>
-   <td style="text-align:right;"> 5.93 </td>
-   <td style="text-align:right;"> 7.10 </td>
-   <td style="text-align:right;"> 8.20 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> b_handneutral </td>
-   <td style="text-align:right;"> 3.19 </td>
-   <td style="text-align:right;"> 4.42 </td>
-   <td style="text-align:right;"> 5.47 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> b_intercept </td>
-   <td style="text-align:right;"> 5.11 </td>
-   <td style="text-align:right;"> 6.02 </td>
-   <td style="text-align:right;"> 6.78 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> sigma </td>
-   <td style="text-align:right;"> 3.81 </td>
-   <td style="text-align:right;"> 4.10 </td>
-   <td style="text-align:right;"> 4.46 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|r|r|r}
+\hline
+parameter & lower & mode & upper\\
+\hline
+b\_handgood & 5.93 & 7.10 & 8.20\\
+\hline
+b\_handneutral & 3.19 & 4.42 & 5.47\\
+\hline
+b\_intercept & 5.11 & 6.02 & 6.78\\
+\hline
+sigma & 3.81 & 4.10 & 4.46\\
+\hline
+\end{tabular}
+\end{table}
 
 #### Posterior predictive check 
 
@@ -259,7 +239,7 @@ To check whether the model did a good job capturing the data, we can simulate wh
 pp_check(fit.brm1, nsamples = 100)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-11-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-11-1.pdf)<!-- --> 
 
 This looks good! The predicted shaped of the data based on samples from the posterior distribution looks very similar to the shape of the actual data.  
 
@@ -282,7 +262,7 @@ df.predictive_samples = fit.brm1 %>%
   unnest(bad, neutral, good)
 
 # plot the results as an animation
-p = df.predictive_samples %>% 
+df.predictive_samples %>% 
   gather("hand", "balance", -sample) %>% 
   mutate(hand = factor(hand, levels = c("bad", "neutral", "good"))) %>% 
   ggplot(mapping = aes(x = hand,
@@ -301,13 +281,14 @@ p = df.predictive_samples %>%
   scale_fill_manual(values = c("red", "orange", "green")) +
   theme(legend.position = "none") + 
   transition_manual(sample)
-
-animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
 ```
 
-<video controls loop><source src="23-bayesian_data_analysis3_files/figure-html/bda3-12.webm" /></video>
+
+\animategraphics[,controls,loop]{120}{23-bayesian_data_analysis3_files/figure-latex/bda3-12-}{1}{20}
 
 ```r
+# animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
+
 # anim_save("poker_posterior_predictive.gif")
 ```
 
@@ -330,7 +311,7 @@ fit.brm1 %>%
              color = "red")
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-13-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-13-1.pdf)<!-- --> 
 
 We see that the posterior is definitely greater than 0. 
 
@@ -458,15 +439,15 @@ bayes_factor(fit.brm3, fit.brm2)
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
+## Iteration: 5
 ## Iteration: 1
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
-## Iteration: 5
 ```
 
 ```
-## Estimated Bayes factor in favor of bridge1 over bridge2: 3.81834
+## Estimated Bayes factor in favor of bridge1 over bridge2: 3.82212
 ```
 
 #### Full specification
@@ -628,7 +609,7 @@ So far, we've assumed that the inference has worked out. We can check this by ru
 plot(fit.brm1)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-25-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-25-1.pdf)<!-- --> 
 
 Let's make our own version of a trace plot for one parameter in the model:
 
@@ -642,7 +623,7 @@ fit.brm1 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-26-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-26-1.pdf)<!-- --> 
 
 We can also take a look at the auto-correlation plot. Ideally, we want to generate independent samples from the posterior. So we don't want subsequent samples to be strongly correlated with each other. Let's take a look: 
 
@@ -656,7 +637,7 @@ fit.brm1 %>%
            lags = 4)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-27-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-27-1.pdf)<!-- --> 
 
 Looking good! The autocorrelation should become very small as the lag increases (indicating that we are getting independent samples from the posterior). 
 
@@ -731,7 +712,7 @@ Let's visualize the trace plots:
 plot(fit.brm5)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-30-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-30-1.pdf)<!-- --> 
 
 
 ```r
@@ -746,7 +727,7 @@ fit.brm5 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-31-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-31-1.pdf)<!-- --> 
 
 Given that we have so little data in this case, we need to help the model a little bit by providing some slighlty more specific priors. 
 
@@ -810,7 +791,7 @@ Let's visualize the trace plots:
 plot(fit.brm6)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-34-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-34-1.pdf)<!-- --> 
 
 
 ```r
@@ -822,7 +803,7 @@ fit.brm6 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-35-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-35-1.pdf)<!-- --> 
 
 Looking mostly good -- except for one hiccup on sigma ... 
 
@@ -847,7 +828,7 @@ df.variance %>%
               alpha = 0.7)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-36-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-36-1.pdf)<!-- --> 
 
 While frequentist models (such as a linear regression) assume equality of variance, Baysian models afford us with the flexibility of inferring both the parameter estimates of the groups (i.e. the means and differences between the means), as well as the variances. 
 
@@ -908,7 +889,7 @@ df.variance %>%
   facet_grid(cols = vars(index))
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-39-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-39-1.pdf)<!-- --> 
 
 This plot shows what the posterior looks like for both mu (the inferred means), and for sigma (the inferred variances) for the different groups. 
 
@@ -983,7 +964,7 @@ plot_grid(ncol = 1, align = "v",
 )
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-43-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-43-1.pdf)<!-- --> 
 
 Posterior predictive check: 
 
@@ -1018,7 +999,7 @@ df.cars %>%
     segment.color = "gray35")
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-44-1.png" width="672" />
+![](23-bayesian_data_analysis3_files/figure-latex/bda3-44-1.pdf)<!-- --> 
 
 
 ## Additional resources 

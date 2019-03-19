@@ -63,10 +63,10 @@ ggplot(parametric_plotting_data, aes(x = value, color = distribution)) +
 ```
 
 ```
-## Warning: Removed 11 rows containing non-finite values (stat_density).
+## Warning: Removed 7 rows containing non-finite values (stat_density).
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-05-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-05-1.pdf)<!-- --> 
 
 
 ```r
@@ -74,7 +74,7 @@ ggsave("figures/log_normal_dists.png", width=5, height=3)
 ```
 
 ```
-## Warning: Removed 11 rows containing non-finite values (stat_density).
+## Warning: Removed 7 rows containing non-finite values (stat_density).
 ```
 
 
@@ -139,7 +139,7 @@ ggplot(parametric_issues_d, aes(x=type, fill=is_significant)) +
   labs(title="Parametric t-test")
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-09-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-09-1.pdf)<!-- --> 
 
 That's a non-trivial reduction in power from a misspecified model! (~80% to ~54%).
 
@@ -313,7 +313,7 @@ ggplot(perm_results %>%
   )
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-15-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-15-1.pdf)<!-- --> 
 
 
 ```r
@@ -376,7 +376,7 @@ ggplot(
   guides(color = F)
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-19-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-19-1.pdf)<!-- --> 
 
 
 ```r
@@ -564,7 +564,7 @@ ggplot(
   guides(color = F)
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-28-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-28-1.pdf)<!-- --> 
 
 
 ```r
@@ -621,7 +621,7 @@ ggplot(noise_dist_simulation_results, aes(x = CI_type, fill = significant)) +
   geom_hline(yintercept = 0.05 * num_simulations, linetype = 2)
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-32-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-32-1.pdf)<!-- --> 
 
 
 ```r
@@ -679,7 +679,7 @@ ggplot(
   guides(color = F)
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-36-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-36-1.pdf)<!-- --> 
 
 
 ```r
@@ -718,7 +718,7 @@ p = ggplot(parametric_ci_data,
 p
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-39-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-39-1.pdf)<!-- --> 
 
 
 ```r
@@ -754,7 +754,7 @@ p +
   )
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-42-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-42-1.pdf)<!-- --> 
 
 
 ```r
@@ -775,7 +775,7 @@ p +
   )
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-44-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-44-1.pdf)<!-- --> 
 
 
 ```r
@@ -789,7 +789,7 @@ p +
              aes(color=NA), color="red", alpha=0.5) 
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-46-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-46-1.pdf)<!-- --> 
 
 
 ```r
@@ -811,7 +811,7 @@ p +
   )
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-48-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-48-1.pdf)<!-- --> 
 
 
 ```r
@@ -830,7 +830,7 @@ p +
   )
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-50-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-50-1.pdf)<!-- --> 
 
 
 ```r
@@ -973,7 +973,7 @@ ggplot(test_summary_data %>%
 ## Warning: position_dodge requires non-overlapping x intervals
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-55-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-55-1.pdf)<!-- --> 
 
 
 ```r
@@ -1009,7 +1009,7 @@ ggplot(test_summary_data, aes(x = score)) +
 ## Warning: position_dodge requires non-overlapping x intervals
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-57-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-57-1.pdf)<!-- --> 
 
 ```r
 ggsave("figures/bootstrap_CI_1.png", width = 5, height = 3)
@@ -1122,7 +1122,7 @@ flip_boot_plot
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-61-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-61-1.pdf)<!-- --> 
 
 
 ```r
@@ -1135,7 +1135,7 @@ flip_data_plot +
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-62-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-62-1.pdf)<!-- --> 
 
 ```r
 ggsave("figures/bootstrap_test.png", width = 5, height = 2.5)
@@ -1203,7 +1203,7 @@ flip_boot_plot
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-63-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-63-1.pdf)<!-- --> 
 
 
 ```r
@@ -1215,7 +1215,7 @@ flip_data_plot + flip_boot_plot +
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="15-bootstrapping_files/figure-html/bootstrapping-64-1.png" width="672" />
+![](15-bootstrapping_files/figure-latex/bootstrapping-64-1.pdf)<!-- --> 
 
 ```r
 ggsave("figures/bootstrap_test_999.png", width=5, height=2.5)

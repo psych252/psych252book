@@ -66,10 +66,7 @@ ggplot(data = tibble(x = c(-3, 3)),
   scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-04-likelihood1-1.png" alt="Probability is the area under the curve of the density" width="672" />
-<p class="caption">(\#fig:modeling-04-likelihood1)Probability is the area under the curve of the density</p>
-</div>
+![(\#fig:modeling-04-likelihood1)Probability is the area under the curve of the density](09-modeling_data_files/figure-latex/modeling-04-likelihood1-1.pdf) 
 
 
 
@@ -110,10 +107,7 @@ ggplot(data = tibble(x = c(-3, 3)),
   scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-05-likelihood2-1.png" alt="Likelihood is a particular value." width="672" />
-<p class="caption">(\#fig:modeling-05-likelihood2)Likelihood is a particular value.</p>
-</div>
+![(\#fig:modeling-05-likelihood2)Likelihood is a particular value.](09-modeling_data_files/figure-latex/modeling-05-likelihood2-1.pdf) 
 
 
 ```r
@@ -163,10 +157,7 @@ p1 + p2 +
   plot_layout(ncol = 1)
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-06-likelihood3-1.png" alt="Relationship between density and cumulative probability distribution." width="672" />
-<p class="caption">(\#fig:modeling-06-likelihood3)Relationship between density and cumulative probability distribution.</p>
-</div>
+![(\#fig:modeling-06-likelihood3)Relationship between density and cumulative probability distribution.](09-modeling_data_files/figure-latex/modeling-06-likelihood3-1.pdf) 
 
 
 ```r
@@ -215,10 +206,7 @@ p1 + p2 +
   plot_layout(ncol = 1)
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-07-likelihood4-1.png" alt="The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution." width="672" />
-<p class="caption">(\#fig:modeling-07-likelihood4)The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution.</p>
-</div>
+![(\#fig:modeling-07-likelihood4)The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution.](09-modeling_data_files/figure-latex/modeling-07-likelihood4-1.pdf) 
 
 
 ```r
@@ -268,10 +256,7 @@ ggplot(data = tibble(x = c(-3, 3)),
   scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-08-likelihood5-1.png" alt="The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0." width="672" />
-<p class="caption">(\#fig:modeling-08-likelihood5)The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0.</p>
-</div>
+![(\#fig:modeling-08-likelihood5)The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0.](09-modeling_data_files/figure-latex/modeling-08-likelihood5-1.pdf) 
 
 ```r
 (pnorm(point_red + margin) - pnorm(point_red - margin)) / 
@@ -321,10 +306,7 @@ ggplot(data = df.data,
         axis.text = element_blank())
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-09-1.png" alt="Tradeoff between fit and model simplicity." width="672" />
-<p class="caption">(\#fig:modeling-09)Tradeoff between fit and model simplicity.</p>
-</div>
+![(\#fig:modeling-09)Tradeoff between fit and model simplicity.](09-modeling_data_files/figure-latex/modeling-09-1.pdf) 
 
 
 ```r
@@ -351,10 +333,7 @@ ggplot(data = df.pre,
         axis.text = element_blank())
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-10-1.png" alt="Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive." width="672" />
-<p class="caption">(\#fig:modeling-10)Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive.</p>
-</div>
+![(\#fig:modeling-10)Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive.](09-modeling_data_files/figure-latex/modeling-10-1.pdf) 
 
 ### Error definitions and best estimators
 
@@ -384,7 +363,7 @@ ggplot(data = df.data,
         text = element_text(size = 24))
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling-12-1.png" width="672" />
+![](09-modeling_data_files/figure-latex/modeling-12-1.pdf)<!-- --> 
 
 This is what the sum of absolute errors looks like for a given `value_predicted`. 
 
@@ -445,10 +424,7 @@ ggplot(data = df.data,
         text = element_text(size = 24))
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-13-1.png" alt="Sum of absolute errors." width="672" />
-<p class="caption">(\#fig:modeling-13)Sum of absolute errors.</p>
-</div>
+![(\#fig:modeling-13)Sum of absolute errors.](09-modeling_data_files/figure-latex/modeling-13-1.pdf) 
 
 Play around with the code below to see how using (1) the sum of absolute errors, or (2) the sum of squared errors affects what estimate minimizes the error. 
 
@@ -491,30 +467,22 @@ ggplot(data = df.model,
   labs(y = "Sum of squared errors")
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling-14-1.png" width="672" />
+![](09-modeling_data_files/figure-latex/modeling-14-1.pdf)<!-- --> 
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Error definition </th>
-   <th style="text-align:left;"> Best estimator </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Count of errors </td>
-   <td style="text-align:left;"> Mode = most frequent value </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Sum of absolute errors </td>
-   <td style="text-align:left;"> Median = middle observation of all values </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Sum of squared errors </td>
-   <td style="text-align:left;"> Mean = average of all values </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l}
+\hline
+Error definition & Best estimator\\
+\hline
+Count of errors & Mode = most frequent value\\
+\hline
+Sum of absolute errors & Median = middle observation of all values\\
+\hline
+Sum of squared errors & Mean = average of all values\\
+\hline
+\end{tabular}
+\end{table}
 
 
 ```r
@@ -553,10 +521,7 @@ ggplot(data = tibble(x = c(-3, 3)),
   scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-16-1.png" alt="Mean, median, and mode on the normal distribution." width="672" />
-<p class="caption">(\#fig:modeling-16)Mean, median, and mode on the normal distribution.</p>
-</div>
+![(\#fig:modeling-16)Mean, median, and mode on the normal distribution.](09-modeling_data_files/figure-latex/modeling-16-1.pdf) 
 
 
 ```r
@@ -594,10 +559,7 @@ ggplot(data = tibble(x = c(-0.1, 3)),
   scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-17-1.png" alt="Mean, median, and mode on the exponential distribution." width="672" />
-<p class="caption">(\#fig:modeling-17)Mean, median, and mode on the exponential distribution.</p>
-</div>
+![(\#fig:modeling-17)Mean, median, and mode on the exponential distribution.](09-modeling_data_files/figure-latex/modeling-17-1.pdf) 
 
 ### Sampling distributions for median and mean 
 
@@ -653,7 +615,7 @@ ggplot(data = df.sampling_distribution_means,
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling-19-1.png" width="672" />
+![](09-modeling_data_files/figure-latex/modeling-19-1.pdf)<!-- --> 
 
 ## Hypothesis testing: "One-sample t-test" 
 
@@ -685,100 +647,34 @@ df.internet %>%
               full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> i </th>
-   <th style="text-align:right;"> internet </th>
-   <th style="text-align:left;"> state </th>
-   <th style="text-align:right;"> college </th>
-   <th style="text-align:right;"> auto </th>
-   <th style="text-align:right;"> density </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 79.0 </td>
-   <td style="text-align:left;"> AK </td>
-   <td style="text-align:right;"> 28.0 </td>
-   <td style="text-align:right;"> 1.2 </td>
-   <td style="text-align:right;"> 1.2 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 63.5 </td>
-   <td style="text-align:left;"> AL </td>
-   <td style="text-align:right;"> 23.5 </td>
-   <td style="text-align:right;"> 1.3 </td>
-   <td style="text-align:right;"> 94.4 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 60.9 </td>
-   <td style="text-align:left;"> AR </td>
-   <td style="text-align:right;"> 20.6 </td>
-   <td style="text-align:right;"> 1.7 </td>
-   <td style="text-align:right;"> 56.0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 73.9 </td>
-   <td style="text-align:left;"> AZ </td>
-   <td style="text-align:right;"> 27.4 </td>
-   <td style="text-align:right;"> 1.3 </td>
-   <td style="text-align:right;"> 56.3 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 77.9 </td>
-   <td style="text-align:left;"> CA </td>
-   <td style="text-align:right;"> 31.0 </td>
-   <td style="text-align:right;"> 0.8 </td>
-   <td style="text-align:right;"> 239.1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 79.4 </td>
-   <td style="text-align:left;"> CO </td>
-   <td style="text-align:right;"> 37.8 </td>
-   <td style="text-align:right;"> 1.0 </td>
-   <td style="text-align:right;"> 48.5 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 77.5 </td>
-   <td style="text-align:left;"> CT </td>
-   <td style="text-align:right;"> 37.2 </td>
-   <td style="text-align:right;"> 1.0 </td>
-   <td style="text-align:right;"> 738.1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 74.5 </td>
-   <td style="text-align:left;"> DE </td>
-   <td style="text-align:right;"> 29.8 </td>
-   <td style="text-align:right;"> 1.1 </td>
-   <td style="text-align:right;"> 460.8 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 74.3 </td>
-   <td style="text-align:left;"> FL </td>
-   <td style="text-align:right;"> 27.2 </td>
-   <td style="text-align:right;"> 1.2 </td>
-   <td style="text-align:right;"> 350.6 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 72.2 </td>
-   <td style="text-align:left;"> GA </td>
-   <td style="text-align:right;"> 28.3 </td>
-   <td style="text-align:right;"> 1.1 </td>
-   <td style="text-align:right;"> 168.4 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|l|r|r|r}
+\hline
+i & internet & state & college & auto & density\\
+\hline
+1 & 79.0 & AK & 28.0 & 1.2 & 1.2\\
+\hline
+2 & 63.5 & AL & 23.5 & 1.3 & 94.4\\
+\hline
+3 & 60.9 & AR & 20.6 & 1.7 & 56.0\\
+\hline
+4 & 73.9 & AZ & 27.4 & 1.3 & 56.3\\
+\hline
+5 & 77.9 & CA & 31.0 & 0.8 & 239.1\\
+\hline
+6 & 79.4 & CO & 37.8 & 1.0 & 48.5\\
+\hline
+7 & 77.5 & CT & 37.2 & 1.0 & 738.1\\
+\hline
+8 & 74.5 & DE & 29.8 & 1.1 & 460.8\\
+\hline
+9 & 74.3 & FL & 27.2 & 1.2 & 350.6\\
+\hline
+10 & 72.2 & GA & 28.3 & 1.1 & 168.4\\
+\hline
+\end{tabular}
+\end{table}
 
 
 
@@ -809,30 +705,16 @@ df.model %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> augmented_sse </th>
-   <th style="text-align:right;"> compact_sse </th>
-   <th style="text-align:right;"> pre </th>
-   <th style="text-align:right;"> f </th>
-   <th style="text-align:right;"> p_value </th>
-   <th style="text-align:right;"> mean </th>
-   <th style="text-align:right;"> sd </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1355.028 </td>
-   <td style="text-align:right;"> 1595.71 </td>
-   <td style="text-align:right;"> 0.1508305 </td>
-   <td style="text-align:right;"> 8.703441 </td>
-   <td style="text-align:right;"> 0.0048592 </td>
-   <td style="text-align:right;"> 72.806 </td>
-   <td style="text-align:right;"> 5.258673 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r|r|r|r}
+\hline
+augmented\_sse & compact\_sse & pre & f & p\_value & mean & sd\\
+\hline
+1355.028 & 1595.71 & 0.1508305 & 8.703441 & 0.0048592 & 72.806 & 5.258673\\
+\hline
+\end{tabular}
+\end{table}
 
 
 
@@ -859,10 +741,7 @@ ggplot(data = tibble(x = c(0, 10)),
   labs(y = "density")
 ```
 
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-23-1.png" alt="The F distribution" width="672" />
-<p class="caption">(\#fig:modeling-23)The F distribution</p>
-</div>
+![(\#fig:modeling-23)The F distribution](09-modeling_data_files/figure-latex/modeling-23-1.pdf) 
 
 We've implemented a one sample t-test (compare the p-value here to the one I computed above using PRE and the F statistic).
 

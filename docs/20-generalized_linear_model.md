@@ -44,18 +44,18 @@ df.titanic %>% glimpse()
 ```
 ## Observations: 891
 ## Variables: 12
-## $ passenger_id <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, …
-## $ survived     <int> 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, …
-## $ pclass       <int> 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, …
-## $ name         <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Brad…
-## $ sex          <fct> male, female, female, female, male, male, male, mal…
-## $ age          <dbl> 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 3…
-## $ sib_sp       <int> 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, …
-## $ parch        <int> 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, …
-## $ ticket       <chr> "A/5 21171", "PC 17599", "STON/O2. 3101282", "11380…
-## $ fare         <dbl> 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 5…
-## $ cabin        <chr> "", "C85", "", "C123", "", "", "E46", "", "", "", "…
-## $ embarked     <chr> "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "…
+## $ passenger_id <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15...
+## $ survived     <int> 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0...
+## $ pclass       <int> 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3...
+## $ name         <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Br...
+## $ sex          <fct> male, female, female, female, male, male, male, m...
+## $ age          <dbl> 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20,...
+## $ sib_sp       <int> 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4...
+## $ parch        <int> 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1...
+## $ ticket       <chr> "A/5 21171", "PC 17599", "STON/O2. 3101282", "113...
+## $ fare         <dbl> 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583,...
+## $ cabin        <chr> "", "C85", "", "C123", "", "", "E46", "", "", "",...
+## $ embarked     <chr> "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C",...
 ```
 
 
@@ -68,166 +68,34 @@ df.titanic %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> passenger_id </th>
-   <th style="text-align:right;"> survived </th>
-   <th style="text-align:right;"> pclass </th>
-   <th style="text-align:left;"> name </th>
-   <th style="text-align:left;"> sex </th>
-   <th style="text-align:right;"> age </th>
-   <th style="text-align:right;"> sib_sp </th>
-   <th style="text-align:right;"> parch </th>
-   <th style="text-align:left;"> ticket </th>
-   <th style="text-align:right;"> fare </th>
-   <th style="text-align:left;"> cabin </th>
-   <th style="text-align:left;"> embarked </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> Braund, Mr. Owen Harris </td>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:right;"> 22 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> A/5 21171 </td>
-   <td style="text-align:right;"> 7.25 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> S </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> Cumings, Mrs. John Bradley (Florence Briggs Thayer) </td>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:right;"> 38 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> PC 17599 </td>
-   <td style="text-align:right;"> 71.28 </td>
-   <td style="text-align:left;"> C85 </td>
-   <td style="text-align:left;"> C </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> Heikkinen, Miss. Laina </td>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:right;"> 26 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> STON/O2. 3101282 </td>
-   <td style="text-align:right;"> 7.92 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> S </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> Futrelle, Mrs. Jacques Heath (Lily May Peel) </td>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:right;"> 35 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> 113803 </td>
-   <td style="text-align:right;"> 53.10 </td>
-   <td style="text-align:left;"> C123 </td>
-   <td style="text-align:left;"> S </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> Allen, Mr. William Henry </td>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:right;"> 35 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> 373450 </td>
-   <td style="text-align:right;"> 8.05 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> S </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> Moran, Mr. James </td>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> 330877 </td>
-   <td style="text-align:right;"> 8.46 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> Q </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> McCarthy, Mr. Timothy J </td>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:right;"> 54 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> 17463 </td>
-   <td style="text-align:right;"> 51.86 </td>
-   <td style="text-align:left;"> E46 </td>
-   <td style="text-align:left;"> S </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> Palsson, Master. Gosta Leonard </td>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> 349909 </td>
-   <td style="text-align:right;"> 21.07 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> S </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:left;"> Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg) </td>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:right;"> 27 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> 347742 </td>
-   <td style="text-align:right;"> 11.13 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> S </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> Nasser, Mrs. Nicholas (Adele Achem) </td>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:right;"> 14 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> 237736 </td>
-   <td style="text-align:right;"> 30.07 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> C </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|l|l|r|r|r|l|r|l|l}
+\hline
+passenger\_id & survived & pclass & name & sex & age & sib\_sp & parch & ticket & fare & cabin & embarked\\
+\hline
+1 & 0 & 3 & Braund, Mr. Owen Harris & male & 22 & 1 & 0 & A/5 21171 & 7.25 &  & S\\
+\hline
+2 & 1 & 1 & Cumings, Mrs. John Bradley (Florence Briggs Thayer) & female & 38 & 1 & 0 & PC 17599 & 71.28 & C85 & C\\
+\hline
+3 & 1 & 3 & Heikkinen, Miss. Laina & female & 26 & 0 & 0 & STON/O2. 3101282 & 7.92 &  & S\\
+\hline
+4 & 1 & 1 & Futrelle, Mrs. Jacques Heath (Lily May Peel) & female & 35 & 1 & 0 & 113803 & 53.10 & C123 & S\\
+\hline
+5 & 0 & 3 & Allen, Mr. William Henry & male & 35 & 0 & 0 & 373450 & 8.05 &  & S\\
+\hline
+6 & 0 & 3 & Moran, Mr. James & male & NA & 0 & 0 & 330877 & 8.46 &  & Q\\
+\hline
+7 & 0 & 1 & McCarthy, Mr. Timothy J & male & 54 & 0 & 0 & 17463 & 51.86 & E46 & S\\
+\hline
+8 & 0 & 3 & Palsson, Master. Gosta Leonard & male & 2 & 3 & 1 & 349909 & 21.07 &  & S\\
+\hline
+9 & 1 & 3 & Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg) & female & 27 & 0 & 2 & 347742 & 11.13 &  & S\\
+\hline
+10 & 1 & 2 & Nasser, Mrs. Nicholas (Adele Achem) & female & 14 & 1 & 0 & 237736 & 30.07 &  & C\\
+\hline
+\end{tabular}
+\end{table}
 
 ## Logistic regression 
 
@@ -278,7 +146,7 @@ ggplot(data = df.titanic,
   labs(y = "survived")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm-08-1.png" width="672" />
+![](20-generalized_linear_model_files/figure-latex/glm-08-1.pdf)<!-- --> 
 
 This doesn't look good! The model predicts intermediate values of `survived` (which doesn't make sense given that a person either survived or didn't survive). Furthermore, the model predicts values greater than 1 for fares greather than ~ 300.  
 
@@ -332,7 +200,7 @@ ggplot(data = df.titanic,
   labs(y = "p(survived)")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm-10-1.png" width="672" />
+![](20-generalized_linear_model_files/figure-latex/glm-10-1.pdf)<!-- --> 
 
 Much better! Note that we've changed the interpretation of our dependent variable. We are now predicting the _probability that a person survived_ based on their fare. The model now only predicts values between 0 and 1. To achieve this, we apply a logit transform to the outcome variable like so: 
 
@@ -457,7 +325,7 @@ df.titanic %>%
   labs(x = "", fill = "", y = "probability")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm-14-1.png" width="672" />
+![](20-generalized_linear_model_files/figure-latex/glm-14-1.pdf)<!-- --> 
 
 And let's interpret the parameters by applying the inverse logit transform. To get the prediction for female passengers we get 
 
@@ -519,47 +387,22 @@ df.titanic %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> sex </th>
-   <th style="text-align:right;"> survived </th>
-   <th style="text-align:right;"> n </th>
-   <th style="text-align:right;"> p </th>
-   <th style="text-align:right;"> p(survived|sex) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 81 </td>
-   <td style="text-align:right;"> 0.09 </td>
-   <td style="text-align:right;"> 0.26 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> female </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 233 </td>
-   <td style="text-align:right;"> 0.26 </td>
-   <td style="text-align:right;"> 0.74 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 468 </td>
-   <td style="text-align:right;"> 0.53 </td>
-   <td style="text-align:right;"> 0.81 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> male </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 109 </td>
-   <td style="text-align:right;"> 0.12 </td>
-   <td style="text-align:right;"> 0.19 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|r|r|r|r}
+\hline
+sex & survived & n & p & p(survived|sex)\\
+\hline
+female & 0 & 81 & 0.09 & 0.26\\
+\hline
+female & 1 & 233 & 0.26 & 0.74\\
+\hline
+male & 0 & 468 & 0.53 & 0.81\\
+\hline
+male & 1 & 109 & 0.12 & 0.19\\
+\hline
+\end{tabular}
+\end{table}
 
 #### Continuous predictor
 
@@ -578,42 +421,24 @@ fit.glm %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> fare </th>
-   <th style="text-align:right;"> prediction </th>
-   <th style="text-align:right;"> p(survival) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> -0.94 </td>
-   <td style="text-align:right;"> 0.28 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> -0.79 </td>
-   <td style="text-align:right;"> 0.31 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 50 </td>
-   <td style="text-align:right;"> -0.18 </td>
-   <td style="text-align:right;"> 0.45 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 100 </td>
-   <td style="text-align:right;"> 0.58 </td>
-   <td style="text-align:right;"> 0.64 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 500 </td>
-   <td style="text-align:right;"> 6.66 </td>
-   <td style="text-align:right;"> 1.00 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r}
+\hline
+fare & prediction & p(survival)\\
+\hline
+0 & -0.94 & 0.28\\
+\hline
+10 & -0.79 & 0.31\\
+\hline
+50 & -0.18 & 0.45\\
+\hline
+100 & 0.58 & 0.64\\
+\hline
+500 & 6.66 & 1.00\\
+\hline
+\end{tabular}
+\end{table}
 
 #### Several predictors 
 
@@ -675,7 +500,7 @@ df.titanic %>%
   scale_color_brewer(palette = "Set1")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm-20-1.png" width="672" />
+![](20-generalized_linear_model_files/figure-latex/glm-20-1.pdf)<!-- --> 
 
 We notice that there is one outlier who was male and paid a $500 fare (or maybe this is a mistake in the data entry?!). Let's remove this outlier and see what happens: 
 
@@ -697,7 +522,7 @@ df.titanic %>%
   scale_color_brewer(palette = "Set1")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm-21-1.png" width="672" />
+![](20-generalized_linear_model_files/figure-latex/glm-21-1.pdf)<!-- --> 
 
 There is still a clear difference between female and male passengers, but the prediction for male passengers has changed a bit. Let's look at a concrete example: 
 
@@ -826,7 +651,7 @@ ggplot(data = df.data,
   labs(y = "p(response)")
 ```
 
-<img src="20-generalized_linear_model_files/figure-html/glm-25-1.png" width="672" />
+![](20-generalized_linear_model_files/figure-latex/glm-25-1.pdf)<!-- --> 
 
 #### Calculate the model's likelihood 
 
@@ -852,78 +677,34 @@ fit %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> response </th>
-   <th style="text-align:right;"> p(Y = 1) </th>
-   <th style="text-align:right;"> p(Y = response) </th>
-   <th style="text-align:right;"> log(p(Y = response)) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.34 </td>
-   <td style="text-align:right;"> 0.34 </td>
-   <td style="text-align:right;"> -1.07 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.53 </td>
-   <td style="text-align:right;"> 0.47 </td>
-   <td style="text-align:right;"> -0.75 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.30 </td>
-   <td style="text-align:right;"> 0.30 </td>
-   <td style="text-align:right;"> -1.20 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.81 </td>
-   <td style="text-align:right;"> 0.81 </td>
-   <td style="text-align:right;"> -0.22 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.56 </td>
-   <td style="text-align:right;"> 0.56 </td>
-   <td style="text-align:right;"> -0.58 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.30 </td>
-   <td style="text-align:right;"> 0.70 </td>
-   <td style="text-align:right;"> -0.36 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.60 </td>
-   <td style="text-align:right;"> 0.60 </td>
-   <td style="text-align:right;"> -0.52 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.65 </td>
-   <td style="text-align:right;"> 0.65 </td>
-   <td style="text-align:right;"> -0.43 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.62 </td>
-   <td style="text-align:right;"> 0.62 </td>
-   <td style="text-align:right;"> -0.48 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.41 </td>
-   <td style="text-align:right;"> 0.59 </td>
-   <td style="text-align:right;"> -0.54 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r}
+\hline
+response & p(Y = 1) & p(Y = response) & log(p(Y = response))\\
+\hline
+1 & 0.34 & 0.34 & -1.07\\
+\hline
+0 & 0.53 & 0.47 & -0.75\\
+\hline
+1 & 0.30 & 0.30 & -1.20\\
+\hline
+1 & 0.81 & 0.81 & -0.22\\
+\hline
+1 & 0.56 & 0.56 & -0.58\\
+\hline
+0 & 0.30 & 0.70 & -0.36\\
+\hline
+1 & 0.60 & 0.60 & -0.52\\
+\hline
+1 & 0.65 & 0.65 & -0.43\\
+\hline
+1 & 0.62 & 0.62 & -0.48\\
+\hline
+0 & 0.41 & 0.59 & -0.54\\
+\hline
+\end{tabular}
+\end{table}
 
 Let's calculate the log-likelihood by hand:
 
@@ -956,22 +737,16 @@ fit %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> logLik </th>
-   <th style="text-align:right;"> AIC </th>
-   <th style="text-align:right;"> BIC </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> -604.82 </td>
-   <td style="text-align:right;"> 1213.64 </td>
-   <td style="text-align:right;"> 1223.45 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r}
+\hline
+logLik & AIC & BIC\\
+\hline
+-604.82 & 1213.64 & 1223.45\\
+\hline
+\end{tabular}
+\end{table}
 
 We're getting the same result -- neat! Now we know how the likelihood of the data is calculated for a logistic regression model. 
 

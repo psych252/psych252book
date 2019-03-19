@@ -88,7 +88,7 @@ ggplot(data = df.samples,
   stat_density(geom = "line")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-03-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-03-1.pdf)<!-- --> 
 
 ```r
 # calculate the p-value for our sample 
@@ -125,124 +125,44 @@ samples %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> sample </th>
-   <th style="text-align:right;"> index </th>
-   <th style="text-align:right;"> value </th>
-   <th style="text-align:right;"> compact </th>
-   <th style="text-align:right;"> augmented </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 76.99 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 71.94 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 76.71 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 69.35 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 82.17 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 71.90 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 75.21 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 70.45 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 75.79 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 71.73 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 77.25 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 74.91 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 73.41 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 70.35 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 67.56 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r|r}
+\hline
+sample & index & value & compact & augmented\\
+\hline
+1 & 1 & 76.99 & 75 & 75.59\\
+\hline
+1 & 2 & 71.94 & 75 & 75.59\\
+\hline
+1 & 3 & 76.71 & 75 & 75.59\\
+\hline
+1 & 4 & 69.35 & 75 & 75.59\\
+\hline
+1 & 5 & 82.17 & 75 & 75.59\\
+\hline
+2 & 1 & 71.90 & 75 & 74.24\\
+\hline
+2 & 2 & 75.21 & 75 & 74.24\\
+\hline
+2 & 3 & 70.45 & 75 & 74.24\\
+\hline
+2 & 4 & 75.79 & 75 & 74.24\\
+\hline
+2 & 5 & 71.73 & 75 & 74.24\\
+\hline
+3 & 1 & 77.25 & 75 & 75.38\\
+\hline
+3 & 2 & 74.91 & 75 & 75.38\\
+\hline
+3 & 3 & 73.41 & 75 & 75.38\\
+\hline
+3 & 4 & 70.35 & 75 & 75.38\\
+\hline
+3 & 5 & 67.56 & 75 & 75.38\\
+\hline
+\end{tabular}
+\end{table}
 
 ### Correlation 
 
@@ -268,7 +188,7 @@ ggplot(data = df.correlation,
        y = "happiness")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-05-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-05-1.pdf)<!-- --> 
 
 #### Variance 
 
@@ -304,7 +224,7 @@ ggplot(data = df.variance,
         )
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-06-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-06-1.pdf)<!-- --> 
 
 #### Covariance 
 
@@ -332,7 +252,7 @@ ggplot(df.covariance,
         axis.ticks = element_blank())
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-07-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-07-1.pdf)<!-- --> 
 
 Add lines for $\overline X$ and $\overline Y$ to the data:
 
@@ -352,7 +272,7 @@ ggplot(df.covariance,
         axis.ticks = element_blank())
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-08-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-08-1.pdf)<!-- --> 
 
 Illustrate how covariance is computed by drawing the distance to $\overline X$ and $\overline Y$ for three data points:
 
@@ -426,7 +346,7 @@ ggplot(df.plot,
         legend.position = "none")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-09-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-09-1.pdf)<!-- --> 
 
 #### Spearman's rank order correlation
 
@@ -461,7 +381,7 @@ ggplot(df.ranking,
                   ylim = c(0, 4))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-10-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-10-1.pdf)<!-- --> 
 
 Show that Spearman's $\rho$ is equivalent to Pearson's $r$ applied to ranked data.
 
@@ -496,7 +416,7 @@ ggplot(df.spearman,
   theme(axis.text = element_text(size = 10))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-11-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-11-1.pdf)<!-- --> 
 
 ```r
 # show some of the data and ranks 
@@ -507,78 +427,34 @@ df.spearman %>%
               full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> x </th>
-   <th style="text-align:right;"> y </th>
-   <th style="text-align:right;"> x_rank </th>
-   <th style="text-align:right;"> y_rank </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 26.55 </td>
-   <td style="text-align:right;"> 49.23 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 10 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 37.21 </td>
-   <td style="text-align:right;"> 43.06 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 7 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 57.29 </td>
-   <td style="text-align:right;"> 47.97 </td>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 8 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 90.82 </td>
-   <td style="text-align:right;"> 57.60 </td>
-   <td style="text-align:right;"> 18 </td>
-   <td style="text-align:right;"> 11 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 20.17 </td>
-   <td style="text-align:right;"> 37.04 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 6 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 89.84 </td>
-   <td style="text-align:right;"> 89.16 </td>
-   <td style="text-align:right;"> 17 </td>
-   <td style="text-align:right;"> 19 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 94.47 </td>
-   <td style="text-align:right;"> 94.22 </td>
-   <td style="text-align:right;"> 19 </td>
-   <td style="text-align:right;"> 20 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 66.08 </td>
-   <td style="text-align:right;"> 80.24 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 16 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 62.91 </td>
-   <td style="text-align:right;"> 75.23 </td>
-   <td style="text-align:right;"> 11 </td>
-   <td style="text-align:right;"> 14 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 6.18 </td>
-   <td style="text-align:right;"> 15.09 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r}
+\hline
+x & y & x\_rank & y\_rank\\
+\hline
+26.55 & 49.23 & 5 & 10\\
+\hline
+37.21 & 43.06 & 6 & 7\\
+\hline
+57.29 & 47.97 & 10 & 8\\
+\hline
+90.82 & 57.60 & 18 & 11\\
+\hline
+20.17 & 37.04 & 3 & 6\\
+\hline
+89.84 & 89.16 & 17 & 19\\
+\hline
+94.47 & 94.22 & 19 & 20\\
+\hline
+66.08 & 80.24 & 12 & 16\\
+\hline
+62.91 & 75.23 & 11 & 14\\
+\hline
+6.18 & 15.09 & 1 & 2\\
+\hline
+\end{tabular}
+\end{table}
 
 Comparison between $r$ and $\rho$ for a given data set: 
 
@@ -615,7 +491,7 @@ ggplot(df.example,
   theme(axis.text = element_text(size = 10))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-12-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-12-1.pdf)<!-- --> 
 
 Another example
 
@@ -655,7 +531,7 @@ ggplot(df.example2,
   theme(axis.text = element_text(size = 10))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-13-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-13-1.pdf)<!-- --> 
 
 ## Regression 
 
@@ -680,7 +556,7 @@ ggplot(data = df.regression,
   geom_point(size = 3)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-14-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-14-1.pdf)<!-- --> 
 
 ### Define and fit the models
 
@@ -704,7 +580,7 @@ ggplot(data = df.regression,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-15-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-15-1.pdf)<!-- --> 
 
 Define and fit the augmented model (Model A): $Y_i = \beta_0 + \beta_1 X_{1i} + \epsilon_i$
 
@@ -727,7 +603,7 @@ ggplot(data = df.regression,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-16-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-16-1.pdf)<!-- --> 
 
 ### Calculate the sum of squared errors of each model
 
@@ -765,7 +641,7 @@ ggplot(data = df.compact_model,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-17-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-17-1.pdf)<!-- --> 
 
 ```r
 # calculate the sum of squared errors
@@ -815,7 +691,7 @@ ggplot(data = df.augmented_model,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-18-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-18-1.pdf)<!-- --> 
 
 ```r
 # calculate the sum of squared errors
@@ -877,7 +753,7 @@ ggplot(data = tibble(x = c(0, 10)),
              size = 1)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-20-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-20-1.pdf)<!-- --> 
 
 The short version of doing what we did above :) 
 
@@ -933,60 +809,36 @@ df.credit = read_csv("data/credit.csv") %>%
 
 Here is a short description of the variables:
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> variable </th>
-   <th style="text-align:left;"> description </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> income </td>
-   <td style="text-align:left;"> in thousand dollars </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> limit </td>
-   <td style="text-align:left;"> credit limit </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> rating </td>
-   <td style="text-align:left;"> credit rating </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> cards </td>
-   <td style="text-align:left;"> number of credit cards </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> age </td>
-   <td style="text-align:left;"> in years </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> education </td>
-   <td style="text-align:left;"> years of education </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gender </td>
-   <td style="text-align:left;"> male or female </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> student </td>
-   <td style="text-align:left;"> student or not </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> married </td>
-   <td style="text-align:left;"> married or not </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ethnicity </td>
-   <td style="text-align:left;"> African American, Asian, Caucasian </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> balance </td>
-   <td style="text-align:left;"> average credit card debt </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l}
+\hline
+variable & description\\
+\hline
+income & in thousand dollars\\
+\hline
+limit & credit limit\\
+\hline
+rating & credit rating\\
+\hline
+cards & number of credit cards\\
+\hline
+age & in years\\
+\hline
+education & years of education\\
+\hline
+gender & male or female\\
+\hline
+student & student or not\\
+\hline
+married & married or not\\
+\hline
+ethnicity & African American, Asian, Caucasian\\
+\hline
+balance & average credit card debt\\
+\hline
+\end{tabular}
+\end{table}
 
 Scatterplot of the relationship between `income` and `balance`.
 
@@ -999,7 +851,7 @@ ggplot(data = df.credit,
   coord_cartesian(xlim = c(0, max(df.credit$income)))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-24-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-24-1.pdf)<!-- --> 
 
 To make the model intercept interpretable, we can center the predictor variable by subtracting the mean from each value.
 
@@ -1024,7 +876,7 @@ ggplot(data = df.plot,
   scale_color_manual(values = c("black", "red"))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-25-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-25-1.pdf)<!-- --> 
 
 ```r
   # coord_cartesian(xlim = c(0, max(df.plot$income_centered)))
@@ -1100,7 +952,7 @@ fit %>%
   geom_point(alpha = 0.3)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-28-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-28-1.pdf)<!-- --> 
 
 We can use the `glance()` function from the `broom` package to print out model statistics. 
 
@@ -1113,38 +965,16 @@ fit %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> r.squared </th>
-   <th style="text-align:right;"> adj.r.squared </th>
-   <th style="text-align:right;"> sigma </th>
-   <th style="text-align:right;"> statistic </th>
-   <th style="text-align:right;"> p.value </th>
-   <th style="text-align:right;"> df </th>
-   <th style="text-align:right;"> logLik </th>
-   <th style="text-align:right;"> AIC </th>
-   <th style="text-align:right;"> BIC </th>
-   <th style="text-align:right;"> deviance </th>
-   <th style="text-align:right;"> df.residual </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.21 </td>
-   <td style="text-align:right;"> 0.21 </td>
-   <td style="text-align:right;"> 407.86 </td>
-   <td style="text-align:right;"> 108.99 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> -2970.95 </td>
-   <td style="text-align:right;"> 5947.89 </td>
-   <td style="text-align:right;"> 5959.87 </td>
-   <td style="text-align:right;"> 66208745 </td>
-   <td style="text-align:right;"> 398 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r|r|r|r|r|r|r|r}
+\hline
+r.squared & adj.r.squared & sigma & statistic & p.value & df & logLik & AIC & BIC & deviance & df.residual\\
+\hline
+0.21 & 0.21 & 407.86 & 108.99 & 0 & 2 & -2970.95 & 5947.89 & 5959.87 & 66208745 & 398\\
+\hline
+\end{tabular}
+\end{table}
 
 Let's test whether income is a significant predictor of balance in the credit data set. 
 
@@ -1185,39 +1015,18 @@ fit_a %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:right;"> estimate </th>
-   <th style="text-align:right;"> std.error </th>
-   <th style="text-align:right;"> statistic </th>
-   <th style="text-align:right;"> p.value </th>
-   <th style="text-align:right;"> conf.low </th>
-   <th style="text-align:right;"> conf.high </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 246.51 </td>
-   <td style="text-align:right;"> 33.20 </td>
-   <td style="text-align:right;"> 7.43 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 181.25 </td>
-   <td style="text-align:right;"> 311.78 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> income </td>
-   <td style="text-align:right;"> 6.05 </td>
-   <td style="text-align:right;"> 0.58 </td>
-   <td style="text-align:right;"> 10.44 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 4.91 </td>
-   <td style="text-align:right;"> 7.19 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|r|r|r|r|r|r}
+\hline
+term & estimate & std.error & statistic & p.value & conf.low & conf.high\\
+\hline
+(Intercept) & 246.51 & 33.20 & 7.43 & 0 & 181.25 & 311.78\\
+\hline
+income & 6.05 & 0.58 & 10.44 & 0 & 4.91 & 7.19\\
+\hline
+\end{tabular}
+\end{table}
 
 We can use `augment()` with the `newdata = ` argument to get predictions about new data from our fitted model: 
 
@@ -1250,7 +1059,7 @@ ggplot(data = df.credit,
   coord_cartesian(xlim = c(0, max(df.credit$income)))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-33-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-33-1.pdf)<!-- --> 
 
 
 Finally, let's take a look at how the residuals are distributed. 
@@ -1268,7 +1077,7 @@ ggplot(df.plot, aes(sample = resid)) +
   geom_qq()
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-34-1.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-34-1.pdf)<!-- --> 
 
 ```r
 # and a density of the residuals
@@ -1276,7 +1085,7 @@ ggplot(df.plot, aes(x = resid)) +
   stat_density(geom = "line")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-34-2.png" width="672" />
+![](10-linear_model1_files/figure-latex/linear-model1-34-2.pdf)<!-- --> 
 
 Not quite as normally distributed as we would hope. We learn what to do if some of the assumptions of the linear model are violated later in class. 
 

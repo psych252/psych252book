@@ -173,7 +173,7 @@ df.predictive_samples = fit.brm1 %>%
   unnest(bad, neutral, good)
 
 # plot the results as an animation
-p = df.predictive_samples %>% 
+df.predictive_samples %>% 
   gather("hand", "balance", -sample) %>% 
   mutate(hand = factor(hand, levels = c("bad", "neutral", "good"))) %>% 
   ggplot(mapping = aes(x = hand,
@@ -193,7 +193,7 @@ p = df.predictive_samples %>%
   theme(legend.position = "none") + 
   transition_manual(sample)
 
-animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
+# animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
 
 # anim_save("poker_posterior_predictive.gif")
 ```

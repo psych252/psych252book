@@ -63,7 +63,7 @@ pwr.p.test(h = ES.h(p1 = 0.75, p2 = 0.50),
   theme(title = element_text(size = 16))
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-05-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-05-1.pdf)<!-- --> 
 
 ### `map()`
 
@@ -198,7 +198,7 @@ ggplot(data = df.plot,
   geom_smooth(method = "loess")
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-09-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-09-1.pdf)<!-- --> 
 
 ```r
 # find optimal n based on simulations
@@ -316,7 +316,7 @@ plot_grid(plotlist = l.p, ncol = 3)
 ## prediction from a rank-deficient fit may be misleading
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-11-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-11-1.pdf)<!-- --> 
 
 As we can see, RMSE becomes smaller and smaller the more parameters the model has to fit the data. But how does the RMSE look like for new data that is generated from the same underlying ground truth? 
 
@@ -410,7 +410,7 @@ plot_grid(plotlist = l.p, ncol = 3)
 ## prediction from a rank-deficient fit may be misleading
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-12-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-12-1.pdf)<!-- --> 
 
 The RMSE in black shows the root mean squared error for the data that the model was fit on. The RMSE in red shows the RMSE on the new data. As you can see, the complex models do really poorly. They overfit the noise in the original data which leads to make poor predictions for new data. The simplest model (with two parameters) doesn't do particularly well either since it misses out on the quadratic trend in the data. Both the model with the quadratic term (top middle) and a model that includes a cubic term (top right) provide a good balance -- their RMSE on the new data is lowest. 
 
@@ -448,7 +448,7 @@ ggplot(data = df.data,
   geom_point()
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-14-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-14-1.pdf)<!-- --> 
 
 ### F-test 
 
@@ -579,7 +579,7 @@ l.plots = map(1:9, fun.cv_plot)
 plot_grid(plotlist = l.plots, ncol = 3)
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-16-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-16-1.pdf)<!-- --> 
 
 As you can see, the regression line changes quite a bit depending on which data point is in the test set. 
 
@@ -785,7 +785,7 @@ fit %>%
 ##   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
 ##       <dbl>         <dbl> <dbl>     <dbl>   <dbl> <int>  <dbl> <dbl> <dbl>
 ## 1     0.255         0.214  1.45      6.16  0.0232     2  -34.7  75.5  78.5
-## # … with 2 more variables: deviance <dbl>, df.residual <int>
+## # ... with 2 more variables: deviance <dbl>, df.residual <int>
 ```
 
 Both AIC and BIC take the number of parameters and the model's likelihood into account. BIC additionally considers the number of observations. But how is the likelihood of a linear model determined? 
@@ -801,7 +801,7 @@ ggplot(df.example,
   geom_smooth(method = "lm", color = "black")
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-23-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-23-1.pdf)<!-- --> 
 
 Now, let's take a look at the residuals by plotting the fitted values on the x axis, and the residuals on the y axis. 
 
@@ -818,7 +818,7 @@ ggplot(df.plot,
   geom_point(size = 2)
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-24-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-24-1.pdf)<!-- --> 
 
 Remember that the linear model makes the assumption that the residuals are normally distributed with mean 0 (which is always the case if we fit a linear model) and some fitted standard deviation. In fact, the standard deviation of the normal distribution is fitted such that the overall likelihood of the data is maximized. 
 
@@ -841,7 +841,7 @@ df.plot %>%
             size = 2)
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-25-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-25-1.pdf)<!-- --> 
 
 To determine the likelihood of the data given the model $\hat L$, we now calculate the likelihood of each point (with the `dnorm()` function), and then multiply the likelihood of each data point to get the overall likelihood. We can simply multiply the data points since we also assume that the data points are independent. 
 Instead of multiplying likelihoods, we often sum the log likelihoods instead. This is because if we multiply many small values, the overall value gets to close to 0 so that computers get confused. By taking logs instead, we avoid these nasty precision errors. 
@@ -911,7 +911,7 @@ ggplot(data = tibble(x = c(0, 1)),
         axis.title = element_text(size = 26))
 ```
 
-<img src="16-model_comparison_files/figure-html/model-comparison-28-1.png" width="672" />
+![](16-model_comparison_files/figure-latex/model-comparison-28-1.pdf)<!-- --> 
 
 
 ## Additional resources 

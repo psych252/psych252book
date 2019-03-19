@@ -67,7 +67,7 @@ ggplot(data = df.population,
   coord_cartesian(expand = F)
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-05-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-05-1.pdf)<!-- --> 
 
 Here are the true mean and standard deviation of our population distribution: 
 
@@ -83,20 +83,16 @@ df.population %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> population_mean </th>
-   <th style="text-align:right;"> population_sd </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 3.5 </td>
-   <td style="text-align:right;"> 2.06 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r}
+\hline
+population\_mean & population\_sd\\
+\hline
+3.5 & 2.06\\
+\hline
+\end{tabular}
+\end{table}
 
 ### Distribution of a single sample 
 
@@ -127,7 +123,7 @@ ggplot(data = df.sample,
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-07-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-07-1.pdf)<!-- --> 
 
 Here are the sample mean and standard deviation:
 
@@ -142,20 +138,16 @@ df.sample %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> sample_mean </th>
-   <th style="text-align:right;"> sample_sd </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 3.73 </td>
-   <td style="text-align:right;"> 2.05 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r}
+\hline
+sample\_mean & sample\_sd\\
+\hline
+3.73 & 2.05\\
+\hline
+\end{tabular}
+\end{table}
 
 ### The sampling distribution
 
@@ -227,7 +219,7 @@ ggplot(data = df.sampling_distribution_means %>%
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-10-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-10-1.pdf)<!-- --> 
 
 That's the central limit theorem in action! Even though our population distribution was far from normal (and much more heavy-metal like), the means of that distribution are normally distributed. 
 
@@ -244,20 +236,16 @@ df.sampling_distribution_means %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> sampling_distribution_mean </th>
-   <th style="text-align:right;"> sampling_distribution_sd </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 3.5 </td>
-   <td style="text-align:right;"> 0.33 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r}
+\hline
+sampling\_distribution\_mean & sampling\_distribution\_sd\\
+\hline
+3.5 & 0.33\\
+\hline
+\end{tabular}
+\end{table}
 
 Here is a data frame that I've used for illustrating the idea behind how a sampling distribution is constructed from the population distribution. 
 
@@ -275,100 +263,34 @@ df.sampling_distribution %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> sample </th>
-   <th style="text-align:right;"> draw_1 </th>
-   <th style="text-align:right;"> draw_2 </th>
-   <th style="text-align:right;"> draw_3 </th>
-   <th style="text-align:right;"> draw_4 </th>
-   <th style="text-align:right;"> sample_mean </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 4.25 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 4.50 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4.25 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 3.50 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2.25 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 3.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 4.25 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 4.25 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1.75 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|r|r|r|r}
+\hline
+sample & draw\_1 & draw\_2 & draw\_3 & draw\_4 & sample\_mean\\
+\hline
+1 & 1 & 6 & 6 & 4 & 4.25\\
+\hline
+2 & 3 & 6 & 3 & 6 & 4.50\\
+\hline
+3 & 6 & 3 & 6 & 1 & 4.00\\
+\hline
+4 & 4 & 6 & 6 & 1 & 4.25\\
+\hline
+5 & 1 & 4 & 6 & 3 & 3.50\\
+\hline
+6 & 1 & 1 & 6 & 1 & 2.25\\
+\hline
+7 & 1 & 6 & 4 & 1 & 3.00\\
+\hline
+8 & 1 & 6 & 4 & 6 & 4.25\\
+\hline
+9 & 6 & 1 & 6 & 4 & 4.25\\
+\hline
+10 & 1 & 1 & 4 & 1 & 1.75\\
+\hline
+\end{tabular}
+\end{table}
 
 #### Bootstrapping a sampling distribution
 
@@ -416,7 +338,7 @@ ggplot(data = df.bootstrap, aes(x = average)) +
   scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-14-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-14-1.pdf)<!-- --> 
 
 And let's calculate the mean and standard deviation: 
 
@@ -431,20 +353,16 @@ df.sampling_distribution_means %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> bootstrapped_distribution_mean </th>
-   <th style="text-align:right;"> bootstrapped_distribution_sd </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 3.5 </td>
-   <td style="text-align:right;"> 0.33 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r}
+\hline
+bootstrapped\_distribution\_mean & bootstrapped\_distribution\_sd\\
+\hline
+3.5 & 0.33\\
+\hline
+\end{tabular}
+\end{table}
 
 Neat, as we can see, the mean and standard deviation of the bootstrapped sampling distribution are very close to the sampling distribution that we generated from the population distribution. 
 
@@ -496,7 +414,7 @@ ggplot(data = df.plot,
   coord_cartesian(expand = F, clip = "off")
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-17-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-17-1.pdf)<!-- --> 
 
 Women's height in the `NHANES` data set is approximately normally distributed. 
 
@@ -525,7 +443,7 @@ ggplot(data = df.plot,
   coord_cartesian(expand = F, clip = "off")
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-18-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-18-1.pdf)<!-- --> 
 
 The same is true for men's height.
 
@@ -553,7 +471,7 @@ ggplot(data = df.plot,
   coord_cartesian(expand = F, clip = "off")
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-19-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-19-1.pdf)<!-- --> 
 
 However, adults' height is not quite normally distributed. Note that the distribution is too flat in the middle.  
 
@@ -588,7 +506,7 @@ ggplot(data = df.plot, aes(x = height, group = gender, fill = gender))+
   theme(legend.position = c(0.9, 0.8))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-20-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-20-1.pdf)<!-- --> 
 
 The fact that adults' height overall is not normally distributed is because there is a single factor (gender) that accounts for much of the variation. 
 
@@ -640,7 +558,7 @@ ggplot(data = tibble(x = c(0, 20)), aes(x = x)) +
            size = 6)
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-21-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-21-1.pdf)<!-- --> 
 
 
 
@@ -708,7 +626,7 @@ ggplot(df.plot, aes(x = mean_value, color = distribution))+
     )
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-22-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-22-1.pdf)<!-- --> 
 
 No matter where we start, as long as we draw samples that are independent and identically distributed, and these samples combine in an additive way, we end up with a normal distribution (note that this takes considerably longer when we start with an exponential distribution -- shown in blue -- compared to the other population distributions).
 
@@ -757,27 +675,18 @@ df.permutation %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> statistic </th>
-   <th style="text-align:right;"> control </th>
-   <th style="text-align:right;"> experimental </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> mean </td>
-   <td style="text-align:right;"> 5.84 </td>
-   <td style="text-align:right;"> 4.55 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> sd </td>
-   <td style="text-align:right;"> 1.90 </td>
-   <td style="text-align:right;"> 1.06 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|r|r}
+\hline
+statistic & control & experimental\\
+\hline
+mean & 5.84 & 4.55\\
+\hline
+sd & 1.90 & 1.06\\
+\hline
+\end{tabular}
+\end{table}
 
 Let's plot the results: 
 
@@ -801,7 +710,7 @@ ggplot(data = df.permutation,
                      limits = c(0, 10))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-25-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-25-1.pdf)<!-- --> 
 
 We are interested in the difference in the mean performance between the two groups: 
 
@@ -840,7 +749,7 @@ df.permutation %>%
 ## 1 -0.0223
 ```
 
-Here, the difference between the two conditions is 0.0223078.
+Here, the difference between the two conditions is 0.0223078224988722.
 
 After randomly shuffling the condition labels, this is how the results would look like: 
 
@@ -855,7 +764,7 @@ ggplot(data = df.permutation, aes(x = permutation, y = performance))+
                      limits = c(0, 10))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-28-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-28-1.pdf)<!-- --> 
 
 The idea is now that, similar to bootstrapping above, we can get a sampling distribution of the difference in the means between the two conditions (assuming that the null hypothesis were true), by randomly shuffling the labels and calculating the difference in means (and doing this many times). What we get is a distribution of the differences we would expect, if there was no effect of condition. 
 
@@ -902,7 +811,7 @@ ggplot(data = df.permutations, aes(x = mean_difference)) +
 ## Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-29-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-29-1.pdf)<!-- --> 
 
 And we can then simply calculate the p-value by using some basic data wrangling (i.e. finding the proportion of differences that were as or more extreme than the one we observed).
 
@@ -990,7 +899,7 @@ ggplot(data = df.confidence, aes(x = sample, y = mean, color = conf_index))+
         legend.position = "none")
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-31-1.png" width="672" />
+![](08-simulation2_files/figure-latex/simulation2-31-1.pdf)<!-- --> 
 
 So, out of the 20 samples that we drew the 95% confidence interval of 1 sample did not contain the true mean. That makes sense! 
 

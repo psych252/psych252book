@@ -56,89 +56,34 @@ df.poker %>%
               full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> participant </th>
-   <th style="text-align:left;"> skill </th>
-   <th style="text-align:left;"> hand </th>
-   <th style="text-align:left;"> limit </th>
-   <th style="text-align:right;"> balance </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> bad </td>
-   <td style="text-align:left;"> fixed </td>
-   <td style="text-align:right;"> 4.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> bad </td>
-   <td style="text-align:left;"> fixed </td>
-   <td style="text-align:right;"> 5.55 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 26 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> bad </td>
-   <td style="text-align:left;"> none </td>
-   <td style="text-align:right;"> 5.52 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 27 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> bad </td>
-   <td style="text-align:left;"> none </td>
-   <td style="text-align:right;"> 8.28 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 51 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> neutral </td>
-   <td style="text-align:left;"> fixed </td>
-   <td style="text-align:right;"> 11.74 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 52 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> neutral </td>
-   <td style="text-align:left;"> fixed </td>
-   <td style="text-align:right;"> 10.04 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 76 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> neutral </td>
-   <td style="text-align:left;"> none </td>
-   <td style="text-align:right;"> 21.55 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 77 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> neutral </td>
-   <td style="text-align:left;"> none </td>
-   <td style="text-align:right;"> 3.12 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 101 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> good </td>
-   <td style="text-align:left;"> fixed </td>
-   <td style="text-align:right;"> 10.86 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 102 </td>
-   <td style="text-align:left;"> expert </td>
-   <td style="text-align:left;"> good </td>
-   <td style="text-align:left;"> fixed </td>
-   <td style="text-align:right;"> 8.68 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|l|l|l|r}
+\hline
+participant & skill & hand & limit & balance\\
+\hline
+1 & expert & bad & fixed & 4.00\\
+\hline
+2 & expert & bad & fixed & 5.55\\
+\hline
+26 & expert & bad & none & 5.52\\
+\hline
+27 & expert & bad & none & 8.28\\
+\hline
+51 & expert & neutral & fixed & 11.74\\
+\hline
+52 & expert & neutral & fixed & 10.04\\
+\hline
+76 & expert & neutral & none & 21.55\\
+\hline
+77 & expert & neutral & none & 3.12\\
+\hline
+101 & expert & good & fixed & 10.86\\
+\hline
+102 & expert & good & fixed & 8.68\\
+\hline
+\end{tabular}
+\end{table}
 
 ### One-way ANOVA
 
@@ -164,7 +109,7 @@ df.poker %>%
   theme(legend.position = "none")
 ```
 
-<img src="12-linear_model3_files/figure-html/linear-model3-06-1.png" width="672" />
+![](12-linear_model3_files/figure-latex/linear-model3-06-1.pdf)<!-- --> 
 
 #### Model fitting 
 
@@ -246,7 +191,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="12-linear_model3_files/figure-html/linear-model3-09-1.png" width="672" />
+![](12-linear_model3_files/figure-latex/linear-model3-09-1.pdf)<!-- --> 
 
 > Note that since we have a categorical variable here, we don't really have a continuous x-axis. I've just jittered the values so it's easier to show the residuals. 
 
@@ -326,7 +271,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="12-linear_model3_files/figure-html/linear-model3-10-1.png" width="672" />
+![](12-linear_model3_files/figure-latex/linear-model3-10-1.pdf)<!-- --> 
 
 The vertical lines illustrate the residual sum of squares. 
 
@@ -392,7 +337,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="12-linear_model3_files/figure-html/linear-model3-11-1.png" width="672" />
+![](12-linear_model3_files/figure-latex/linear-model3-11-1.pdf)<!-- --> 
 
 This captures the variance in the data that is accounted for by the `hand` variable. 
 
@@ -473,82 +418,32 @@ df.poker %>%
 ## Selecting by balance
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> participant </th>
-   <th style="text-align:left;"> hand </th>
-   <th style="text-align:right;"> hand_neutral </th>
-   <th style="text-align:right;"> hand_good </th>
-   <th style="text-align:right;"> balance </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 31 </td>
-   <td style="text-align:left;"> bad </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 12.22 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 46 </td>
-   <td style="text-align:left;"> bad </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 12.06 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 50 </td>
-   <td style="text-align:left;"> bad </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 16.68 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 76 </td>
-   <td style="text-align:left;"> neutral </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 21.55 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 87 </td>
-   <td style="text-align:left;"> neutral </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 20.89 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 89 </td>
-   <td style="text-align:left;"> neutral </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 25.63 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 127 </td>
-   <td style="text-align:left;"> good </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 26.99 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 129 </td>
-   <td style="text-align:left;"> good </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 21.36 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 283 </td>
-   <td style="text-align:left;"> good </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 22.48 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|l|r|r|r}
+\hline
+participant & hand & hand\_neutral & hand\_good & balance\\
+\hline
+31 & bad & 0 & 0 & 12.22\\
+\hline
+46 & bad & 0 & 0 & 12.06\\
+\hline
+50 & bad & 0 & 0 & 16.68\\
+\hline
+76 & neutral & 1 & 0 & 21.55\\
+\hline
+87 & neutral & 1 & 0 & 20.89\\
+\hline
+89 & neutral & 1 & 0 & 25.63\\
+\hline
+127 & good & 0 & 1 & 26.99\\
+\hline
+129 & good & 0 & 1 & 21.36\\
+\hline
+283 & good & 0 & 1 & 22.48\\
+\hline
+\end{tabular}
+\end{table}
 
 ```r
 # fit the model
@@ -714,7 +609,7 @@ ggplot(data = df.poker,
   guides(shape = F)
 ```
 
-<img src="12-linear_model3_files/figure-html/linear-model3-18-1.png" width="672" />
+![](12-linear_model3_files/figure-latex/linear-model3-18-1.pdf)<!-- --> 
 
 And now let's take a look at the means for the full the 3 (hand) x 2 (skill) design:
 
@@ -744,7 +639,7 @@ ggplot(data = df.poker,
   guides(fill = F)
 ```
 
-<img src="12-linear_model3_files/figure-html/linear-model3-19-1.png" width="672" />
+![](12-linear_model3_files/figure-latex/linear-model3-19-1.pdf)<!-- --> 
 
 ### Model fitting
 
@@ -864,7 +759,7 @@ ggplot(df.data,
   scale_fill_brewer(palette = "Set1")
 ```
 
-<img src="12-linear_model3_files/figure-html/linear-model3-22-1.png" width="672" />
+![](12-linear_model3_files/figure-latex/linear-model3-22-1.pdf)<!-- --> 
 
 And here is one specific example. Let's generate the data first: 
 
@@ -908,57 +803,30 @@ df.data %>%
                 full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> condition </th>
-   <th style="text-align:left;"> treatment </th>
-   <th style="text-align:right;"> rating </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 11.87 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:left;"> 2 </td>
-   <td style="text-align:right;"> 15.92 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 10.82 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> A </td>
-   <td style="text-align:left;"> 2 </td>
-   <td style="text-align:right;"> 22.98 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 21.87 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:left;"> 2 </td>
-   <td style="text-align:right;"> 5.92 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 20.82 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:left;"> 2 </td>
-   <td style="text-align:right;"> 12.98 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l|r}
+\hline
+condition & treatment & rating\\
+\hline
+A & 1 & 11.87\\
+\hline
+A & 2 & 15.92\\
+\hline
+A & 1 & 10.82\\
+\hline
+A & 2 & 22.98\\
+\hline
+B & 1 & 21.87\\
+\hline
+B & 2 & 5.92\\
+\hline
+B & 1 & 20.82\\
+\hline
+B & 2 & 12.98\\
+\hline
+\end{tabular}
+\end{table}
 
 Plot the data:
 
@@ -981,7 +849,7 @@ ggplot(df.data,
   scale_fill_brewer(palette = "Set1")
 ```
 
-<img src="12-linear_model3_files/figure-html/linear-model3-25-1.png" width="672" />
+![](12-linear_model3_files/figure-latex/linear-model3-25-1.pdf)<!-- --> 
 
 And check whether we can successfully infer the parameters that we used to generate the data: 
 

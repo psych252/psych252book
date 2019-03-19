@@ -37,10 +37,9 @@ theme_set(
 
 ## Mediation 
 
-<div class="figure">
-<img src="figures/mediation.png" alt="__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y." width="75%" />
-<p class="caption">(\#fig:mediation-04)__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y.</p>
-</div>
+\begin{figure}
+\includegraphics[width=0.75\linewidth]{figures/mediation} \caption{__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y.}(\#fig:mediation-04)
+\end{figure}
 
 Mediation tests whether the effects of __X__ (the independent variable) on __Y__ (the dependent variable) operate through a third variable, __M__ (the mediator). In this way, mediators explain the causal relationship between two variables or "how" the relationship works, making it a very popular method in psychological research.
 
@@ -291,7 +290,7 @@ Plot the results:
 fit.mediation %>% plot()
 ```
 
-<img src="24-mediation_moderation_files/figure-html/mediation-12-1.png" width="672" />
+![](24-mediation_moderation_files/figure-latex/mediation-12-1.pdf)<!-- --> 
 
 #### Interpretation 
 
@@ -353,7 +352,7 @@ fit.brm_mediation %>% summary()
 fit.brm_mediation %>% plot()
 ```
 
-<img src="24-mediation_moderation_files/figure-html/mediation-14-1.png" width="672" /><img src="24-mediation_moderation_files/figure-html/mediation-14-2.png" width="672" />
+![](24-mediation_moderation_files/figure-latex/mediation-14-1.pdf)<!-- --> ![](24-mediation_moderation_files/figure-latex/mediation-14-2.pdf)<!-- --> 
 
 Looks pretty solid! 
 
@@ -380,7 +379,7 @@ df.samples %>%
   coord_cartesian(ylim = c(1.5, 2.3))
 ```
 
-<img src="24-mediation_moderation_files/figure-html/mediation-16-1.png" width="672" />
+![](24-mediation_moderation_files/figure-latex/mediation-16-1.pdf)<!-- --> 
 
 Let's also get some summaries of the posterior (MAP with highest density intervals).
 
@@ -404,10 +403,9 @@ df.samples %>%
 
 ## Moderation 
 
-<div class="figure">
-<img src="figures/moderation.png" alt="__Basic moderation model__." width="75%" />
-<p class="caption">(\#fig:mediation-18)__Basic moderation model__.</p>
-</div>
+\begin{figure}
+\includegraphics[width=0.75\linewidth]{figures/moderation} \caption{__Basic moderation model__.}(\#fig:mediation-18)
+\end{figure}
 
 Moderation can be tested by looking for significant interactions between the moderating variable (Z) and the IV (X). Notably, it is important to mean center both your moderator and your IV to reduce multicolinearity and make interpretation easier.
 
@@ -503,7 +501,7 @@ df.moderation %>%
   scale_color_brewer(palette = "Set1")
 ```
 
-<img src="24-mediation_moderation_files/figure-html/mediation-21-1.png" width="672" />
+![](24-mediation_moderation_files/figure-latex/mediation-21-1.pdf)<!-- --> 
 
 
 ```r
@@ -514,61 +512,26 @@ df.prediction %>%
               full_width = F)
 ```
 
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> x </th>
-   <th style="text-align:right;"> z </th>
-   <th style="text-align:left;"> moderator </th>
-   <th style="text-align:right;"> .fitted </th>
-   <th style="text-align:right;"> .se.fit </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> -1.83 </td>
-   <td style="text-align:right;"> -1 </td>
-   <td style="text-align:left;"> low </td>
-   <td style="text-align:right;"> 18.58 </td>
-   <td style="text-align:right;"> 3.75 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> -1.83 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> average </td>
-   <td style="text-align:right;"> 15.80 </td>
-   <td style="text-align:right;"> 2.51 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> -1.83 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> high </td>
-   <td style="text-align:right;"> 13.02 </td>
-   <td style="text-align:right;"> 2.99 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2.41 </td>
-   <td style="text-align:right;"> -1 </td>
-   <td style="text-align:left;"> low </td>
-   <td style="text-align:right;"> 68.52 </td>
-   <td style="text-align:right;"> 4.32 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2.41 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:left;"> average </td>
-   <td style="text-align:right;"> 91.60 </td>
-   <td style="text-align:right;"> 3.09 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2.41 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:left;"> high </td>
-   <td style="text-align:right;"> 114.68 </td>
-   <td style="text-align:right;"> 4.12 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[H]
+\centering
+\begin{tabular}{r|r|l|r|r}
+\hline
+x & z & moderator & .fitted & .se.fit\\
+\hline
+-1.83 & -1 & low & 18.58 & 3.75\\
+\hline
+-1.83 & 0 & average & 15.80 & 2.51\\
+\hline
+-1.83 & 1 & high & 13.02 & 2.99\\
+\hline
+2.41 & -1 & low & 68.52 & 4.32\\
+\hline
+2.41 & 0 & average & 91.60 & 3.09\\
+\hline
+2.41 & 1 & high & 114.68 & 4.12\\
+\hline
+\end{tabular}
+\end{table}
 
 ## Additional resources 
 

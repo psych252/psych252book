@@ -50,7 +50,7 @@ df.conference %>%
   guides(fill = guide_legend(reverse = T))
 ```
 
-<img src="21-bayesian_data_analysis1_files/figure-html/bda1-04-1.png" width="672" />
+![](21-bayesian_data_analysis1_files/figure-latex/bda1-04-1.pdf)<!-- --> 
 
 Run a logistic regression with one binary predictor (Binomial test):
 
@@ -148,4 +148,4 @@ df.permutation %>%
               size = 1)
 ```
 
-<img src="21-bayesian_data_analysis1_files/figure-html/bda1-08-1.png" width="672" />
+![](21-bayesian_data_analysis1_files/figure-latex/bda1-08-1.pdf)<!-- --> 

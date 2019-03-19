@@ -860,7 +860,7 @@ df.predictive_samples =<span class="st"> </span>fit.brm1 <span class="op">%&gt;%
 <span class="st">  </span><span class="kw">unnest</span>(bad, neutral, good)
 
 <span class="co"># plot the results as an animation</span>
-p =<span class="st"> </span>df.predictive_samples <span class="op">%&gt;%</span><span class="st"> </span>
+df.predictive_samples <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;hand&quot;</span>, <span class="st">&quot;balance&quot;</span>, <span class="op">-</span>sample) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hand =</span> <span class="kw">factor</span>(hand, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> hand,
@@ -878,13 +878,13 @@ p =<span class="st"> </span>df.predictive_samples <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;final balance (in Euros)&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">transition_manual</span>(sample)
-
-<span class="kw">animate</span>(p, <span class="dt">nframes =</span> <span class="dv">120</span>, <span class="dt">width =</span> <span class="dv">800</span>, <span class="dt">height =</span> <span class="dv">600</span>, <span class="dt">res =</span> <span class="dv">96</span>, <span class="dt">type =</span> <span class="st">&quot;cairo&quot;</span>)</code></pre>
+<span class="st">  </span><span class="kw">transition_manual</span>(sample)</code></pre>
 <video controls loop>
 <source src="23-bayesian_data_analysis3_files/figure-html/bda3-12.webm" />
 </video>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># anim_save(&quot;poker_posterior_predictive.gif&quot;)</span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># animate(p, nframes = 120, width = 800, height = 600, res = 96, type = &quot;cairo&quot;)</span>
+
+<span class="co"># anim_save(&quot;poker_posterior_predictive.gif&quot;)</span></code></pre>
 </div>
 <div id="test-hypothesis" class="section level4">
 <h4><span class="header-section-number">23.3.3.4</span> Test hypothesis</h4>
@@ -978,12 +978,13 @@ fit.brm3 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
+## Iteration: 5
 ## Iteration: 1
 ## Iteration: 2
 ## Iteration: 3
 ## Iteration: 4
 ## Iteration: 5</code></pre>
-<pre><code>## Estimated Bayes factor in favor of bridge1 over bridge2: 3.81834</code></pre>
+<pre><code>## Estimated Bayes factor in favor of bridge1 over bridge2: 3.83873</code></pre>
 </div>
 <div id="full-specification" class="section level4">
 <h4><span class="header-section-number">23.3.3.6</span> Full specification</h4>
