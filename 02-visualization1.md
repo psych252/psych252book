@@ -40,17 +40,17 @@ Anscombe's quartet in Figure \@ref(fig:visualization1-01) (left side) illustrate
 \includegraphics[width=29.33in]{figures/correlations} \caption{The Pearson's $r$ correlation coefficient is the same for all of these datasets. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)}(\#fig:visualization1-03)
 \end{figure}
 
-All the datasets in Figure \@ref(fig:visualization1-02) share the same correlation coefficient. However, again, they are very different from each other.
+All the datasets in Figure \@ref(fig:visualization1-03) share the same correlation coefficient. However, again, they are very different from each other.
 
 \begin{figure}
 \includegraphics[width=68.71in]{figures/datasaurus_dozen} \caption{__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation).}(\#fig:visualization1-04)
 \end{figure}
 
-The data sets in Figure \@ref(fig:visualization1-03) all share the same summary statistics. Clearly, the data sets are not the same though.
+The data sets in Figure \@ref(fig:visualization1-04) all share the same summary statistics. Clearly, the data sets are not the same though.
 
 > __Tip__: Always plot the data first!
 
-[Here](https://www.autodeskresearch.com/publications/samestats) is the paper from which I took Figure \@ref(fig:visualization1-01) and \@ref(fig:visualization1-03). It explains how the figures were generated and shows more examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what's going on in the data.
+[Here](https://www.autodeskresearch.com/publications/samestats) is the paper from which I took Figure \@ref(fig:visualization1-02) and \@ref(fig:visualization1-04). It explains how the figures were generated and shows more examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what's going on in the data.
 
 ![(\#fig:visualization1-05)Animation showing different data sets that all share the same summary statistics.](figures/data_dino.gif) 
 
@@ -370,7 +370,7 @@ ggplot(data = df.diamonds, mapping = aes(x = carat, y = price)) +
 
 Cool! That looks sensible. Diamonds with a higher `carat` value tend to have a higher `price`. Our dataset has 53940 rows. So the plot actually shows 53940 circles even though we can't see all of them since they overlap.
 
-Let's make some progress on trying to figure out why the diamonds with the better color weren't the most expensive ones on average. We'll add some color to the scatter plot in Figure \@ref(fig:visualization-29). We color each of the points based on the diamond's color. To do so, we pass another argument to the aesthetics of the plot via `aes()`.
+Let's make some progress on trying to figure out why the diamonds with the better color weren't the most expensive ones on average. We'll add some color to the scatter plot in Figure \@ref(fig:visualization-31). We color each of the points based on the diamond's color. To do so, we pass another argument to the aesthetics of the plot via `aes()`.
 
 
 ```r
@@ -483,9 +483,9 @@ ggplot(data = df.diamonds, mapping = aes(x = clarity, y = price)) +
                geom = "point") # add points with means
 ```
 
-![](02-visualization1_files/figure-latex/visualization1-39-1.pdf)<!-- --> 
+![(\#fig:visualization1-39)Relationship between diamond clarity and price. Error bars indicate 99% bootstrapped confidence intervals.](02-visualization1_files/figure-latex/visualization1-39-1.pdf) 
 
-Note how the error bars are larger now compared to Figure \@ref(fig:visualization-37)
+Note how the error bars are larger now in Figure Figure \@ref(fig:visualization-39) compared to Figure \@ref(fig:visualization-37)
 . Note the somewhat peculiar way in which we supplied the parameters to the `mean_cl_boot` function. The `fun.args` argument takes in a list of arguments that it then passes on to the function `mean_cl_boot`.
 
 #### Order matters
