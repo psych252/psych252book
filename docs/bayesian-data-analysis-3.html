@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -615,7 +615,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;gganimate&quot;</span>)  <span class="co"># for animations</span>
 <span class="kw">library</span>(<span class="st">&quot;GGally&quot;</span>)     <span class="co"># for pairs plot</span>
 <span class="kw">library</span>(<span class="st">&quot;bayesplot&quot;</span>)  <span class="co"># for visualization of Bayesian model fits </span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -637,13 +643,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                         <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;fixed&quot;</span>, <span class="st">&quot;none&quot;</span>)),
          <span class="dt">participant =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(participant, <span class="kw">everything</span>())</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   skill = col_double(),
-##   hand = col_double(),
-##   limit = col_double(),
-##   balance = col_double()
-## )</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  skill = col_double(),
+  hand = col_double(),
+  limit = col_double(),
+  balance = col_double()
+)</code></pre>
 </div>
 <div id="poker" class="section level2">
 <h2><span class="header-section-number">23.3</span> Poker</h2>
@@ -675,25 +681,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <span class="dt">data =</span> df.poker)
 
 fit.lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = balance ~ 1 + hand, data = df.poker)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -12.9264  -2.5902  -0.0115   2.6573  15.2834 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   5.9415     0.4111  14.451  &lt; 2e-16 ***
-## handneutral   4.4051     0.5815   7.576 4.55e-13 ***
-## handgood      7.0849     0.5815  12.185  &lt; 2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.111 on 297 degrees of freedom
-## Multiple R-squared:  0.3377, Adjusted R-squared:  0.3332 
-## F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = balance ~ 1 + hand, data = df.poker)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.9264  -2.5902  -0.0115   2.6573  15.2834 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   5.9415     0.4111  14.451  &lt; 2e-16 ***
+handneutral   4.4051     0.5815   7.576 4.55e-13 ***
+handgood      7.0849     0.5815  12.185  &lt; 2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.111 on 297 degrees of freedom
+Multiple R-squared:  0.3377,    Adjusted R-squared:  0.3332 
+F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="bayesian-model" class="section level3">
 <h3><span class="header-section-number">23.3.3</span> Bayesian model</h3>
@@ -703,26 +709,26 @@ fit.lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">s
                <span class="dt">file =</span> <span class="st">&quot;cache/brm1&quot;</span>)
 
 fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: balance ~ 1 + hand 
-##    Data: df.poker (Number of observations: 300) 
-## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 4000
-## 
-## Population-Level Effects: 
-##             Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept       5.95      0.42     5.12     6.79       3609 1.00
-## handneutral     4.38      0.59     3.24     5.56       3489 1.00
-## handgood        7.07      0.59     5.94     8.22       3553 1.00
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma     4.13      0.17     3.81     4.47       3578 1.00
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-## is a crude measure of effective sample size, and Rhat is the potential 
-## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: balance ~ 1 + hand 
+   Data: df.poker (Number of observations: 300) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Population-Level Effects: 
+            Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+Intercept       5.95      0.42     5.12     6.79       3609 1.00
+handneutral     4.38      0.59     3.24     5.56       3489 1.00
+handgood        7.07      0.59     5.94     8.22       3553 1.00
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+sigma     4.13      0.17     3.81     4.47       3578 1.00
+
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>I use the <code>file =</code> argument to save the model’s results so that when I run this code chunk again, the model doesn’t need to be fit again (fitting Bayesian models takes a while …).</p>
 <div id="visualize-the-posteriors-1" class="section level4">
 <h4><span class="header-section-number">23.3.3.1</span> Visualize the posteriors</h4>
@@ -878,13 +884,14 @@ df.predictive_samples <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;final balance (in Euros)&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">transition_manual</span>(sample)</code></pre>
+<span class="st">  </span><span class="kw">transition_manual</span>(sample)
+
+<span class="co"># animate(p, nframes = 120, width = 800, height = 600, res = 96, type = &quot;cairo&quot;)</span>
+
+<span class="co"># anim_save(&quot;poker_posterior_predictive.gif&quot;)</span></code></pre>
 <video controls loop>
 <source src="23-bayesian_data_analysis3_files/figure-html/bda3-12.webm" />
 </video>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># animate(p, nframes = 120, width = 800, height = 600, res = 96, type = &quot;cairo&quot;)</span>
-
-<span class="co"># anim_save(&quot;poker_posterior_predictive.gif&quot;)</span></code></pre>
 </div>
 <div id="test-hypothesis" class="section level4">
 <h4><span class="header-section-number">23.3.3.4</span> Test hypothesis</h4>
@@ -905,47 +912,47 @@ df.predictive_samples <span class="op">%&gt;%</span><span class="st"> </span>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the probability that the posterior for handneutral is less than 0</span>
 <span class="kw">hypothesis</span>(fit.brm1,
            <span class="dt">hypothesis =</span> <span class="st">&quot;handneutral &lt; 0&quot;</span>)</code></pre>
-<pre><code>## Hypothesis Tests for class b:
-##          Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-## 1 (handneutral) &lt; 0     4.38      0.59     -Inf     5.36          0
-##   Post.Prob Star
-## 1         0     
-## ---
-## &#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
-## Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
+<pre><code>Hypothesis Tests for class b:
+         Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
+1 (handneutral) &lt; 0     4.38      0.59     -Inf     5.36          0
+  Post.Prob Star
+1         0     
+---
+&#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
+Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the probability that the posterior for handneutral is greater than 4</span>
 <span class="kw">hypothesis</span>(fit.brm1,
            <span class="dt">hypothesis =</span> <span class="st">&quot;handneutral &gt; 4&quot;</span>)</code></pre>
-<pre><code>## Hypothesis Tests for class b:
-##              Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-## 1 (handneutral)-(4) &gt; 0     0.38      0.59    -0.56      Inf       2.89
-##   Post.Prob Star
-## 1      0.74     
-## ---
-## &#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
-## Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
+<pre><code>Hypothesis Tests for class b:
+             Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
+1 (handneutral)-(4) &gt; 0     0.38      0.59    -0.56      Inf       2.89
+  Post.Prob Star
+1      0.74     
+---
+&#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
+Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the probability that good hands make twice as much as bad hands</span>
 <span class="kw">hypothesis</span>(fit.brm1,
            <span class="dt">hypothesis =</span> <span class="st">&quot;Intercept + handgood &gt; 2 * Intercept&quot;</span>)</code></pre>
-<pre><code>## Hypothesis Tests for class b:
-##                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-## 1 (Intercept+handgo... &gt; 0     1.12      0.94    -0.42      Inf        7.6
-##   Post.Prob Star
-## 1      0.88     
-## ---
-## &#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
-## Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
+<pre><code>Hypothesis Tests for class b:
+                Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
+1 (Intercept+handgo... &gt; 0     1.12      0.94    -0.42      Inf        7.6
+  Post.Prob Star
+1      0.88     
+---
+&#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
+Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the probability that neutral hands make less than the average of bad and good hands</span>
 <span class="kw">hypothesis</span>(fit.brm1,
            <span class="dt">hypothesis =</span> <span class="st">&quot;Intercept + handneutral &lt; (Intercept + Intercept + handgood) / 2&quot;</span>)</code></pre>
-<pre><code>## Hypothesis Tests for class b:
-##                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-## 1 (Intercept+handne... &lt; 0     0.85      0.49     -Inf     1.66       0.04
-##   Post.Prob Star
-## 1      0.04     
-## ---
-## &#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
-## Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
+<pre><code>Hypothesis Tests for class b:
+                Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
+1 (Intercept+handne... &lt; 0     0.85      0.49     -Inf     1.66       0.04
+  Post.Prob Star
+1      0.04     
+---
+&#39;*&#39;: The expected value under the hypothesis lies outside the 95%-CI.
+Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 <p>Let’s double check one example, and calculate the result directly based on the posterior samples:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.hypothesis =<span class="st"> </span>fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">posterior_samples</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -957,8 +964,8 @@ df.predictive_samples <span class="op">%&gt;%</span><span class="st"> </span>
 
 df.hypothesis <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p =</span> <span class="kw">sum</span>(hypothesis)<span class="op">/</span><span class="kw">n</span>())</code></pre>
-<pre><code>##         p
-## 1 0.04175</code></pre>
+<pre><code>        p
+1 0.04175</code></pre>
 </div>
 <div id="bayes-factor" class="section level4">
 <h4><span class="header-section-number">23.3.3.5</span> Bayes factor</h4>
@@ -974,16 +981,17 @@ fit.brm3 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">
                <span class="dt">file =</span> <span class="st">&quot;cache/brm3&quot;</span>)</code></pre>
 <p>And then compare the models useing the <code>bayes_factor()</code> function:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bayes_factor</span>(fit.brm3, fit.brm2)</code></pre>
-<pre><code>## Iteration: 1
-## Iteration: 2
-## Iteration: 3
-## Iteration: 4
-## Iteration: 1
-## Iteration: 2
-## Iteration: 3
-## Iteration: 4
-## Iteration: 5</code></pre>
-<pre><code>## Estimated Bayes factor in favor of bridge1 over bridge2: 3.80928</code></pre>
+<pre><code>Iteration: 1
+Iteration: 2
+Iteration: 3
+Iteration: 4
+Iteration: 5
+Iteration: 1
+Iteration: 2
+Iteration: 3
+Iteration: 4
+Iteration: 5
+Estimated Bayes factor in favor of bridge1 over bridge2: 3.81129</code></pre>
 </div>
 <div id="full-specification" class="section level4">
 <h4><span class="header-section-number">23.3.3.6</span> Full specification</h4>
@@ -993,22 +1001,22 @@ fit.brm3 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">
 <p>Notice that we didn’t specify any priors in the model. By default, “brms” assigns weakly informative priors to the parameters in the model. We can see what these are by running the following command:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">prior_summary</span>()</code></pre>
-<pre><code>##                  prior     class        coef group resp dpar nlpar bound
-## 1                              b                                        
-## 2                              b    handgood                            
-## 3                              b handneutral                            
-## 4 student_t(3, 10, 10) Intercept                                        
-## 5  student_t(3, 0, 10)     sigma</code></pre>
+<pre><code>                 prior     class        coef group resp dpar nlpar bound
+1                              b                                        
+2                              b    handgood                            
+3                              b handneutral                            
+4 student_t(3, 10, 10) Intercept                                        
+5  student_t(3, 0, 10)     sigma                                        </code></pre>
 <p>We can also get information about which priors need to be specified before fitting a model:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_prior</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>hand,
           <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>,
           <span class="dt">data =</span> df.poker)</code></pre>
-<pre><code>##                  prior     class        coef group resp dpar nlpar bound
-## 1                              b                                        
-## 2                              b    handgood                            
-## 3                              b handneutral                            
-## 4 student_t(3, 10, 10) Intercept                                        
-## 5  student_t(3, 0, 10)     sigma</code></pre>
+<pre><code>                 prior     class        coef group resp dpar nlpar bound
+1                              b                                        
+2                              b    handgood                            
+3                              b handneutral                            
+4 student_t(3, 10, 10) Intercept                                        
+5  student_t(3, 0, 10)     sigma                                        </code></pre>
 <p>Here is an example for what a more complete model specification could look like:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm4 =<span class="st"> </span><span class="kw">brm</span>(
   <span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>hand,
@@ -1034,71 +1042,71 @@ fit.brm3 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">
 )
 
 fit.brm4 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: balance ~ 1 + hand 
-##    Data: df.poker (Number of observations: 300) 
-## Samples: 4 chains, each with iter = 4000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 12000
-## 
-## Population-Level Effects: 
-##             Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept       5.96      0.41     5.15     6.76       9191 1.00
-## handneutral     4.37      0.58     3.23     5.53       9629 1.00
-## handgood        7.05      0.58     5.93     8.19       9778 1.00
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma     4.13      0.17     3.81     4.49      12855 1.00
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-## is a crude measure of effective sample size, and Rhat is the potential 
-## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: balance ~ 1 + hand 
+   Data: df.poker (Number of observations: 300) 
+Samples: 4 chains, each with iter = 4000; warmup = 1000; thin = 1;
+         total post-warmup samples = 12000
+
+Population-Level Effects: 
+            Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+Intercept       5.96      0.41     5.15     6.76       9191 1.00
+handneutral     4.37      0.58     3.23     5.53       9629 1.00
+handgood        7.05      0.58     5.93     8.19       9778 1.00
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+sigma     4.13      0.17     3.81     4.49      12855 1.00
+
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>We can also take a look at the Stan code that the <code>brm()</code> function creates:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm4 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">stancode</span>()</code></pre>
-<pre><code>## // generated with brms 2.7.0
-## functions { 
-## } 
-## data { 
-##   int&lt;lower=1&gt; N;  // total number of observations 
-##   vector[N] Y;  // response variable 
-##   int&lt;lower=1&gt; K;  // number of population-level effects 
-##   matrix[N, K] X;  // population-level design matrix 
-##   int prior_only;  // should the likelihood be ignored? 
-## } 
-## transformed data { 
-##   int Kc = K - 1; 
-##   matrix[N, K - 1] Xc;  // centered version of X 
-##   vector[K - 1] means_X;  // column means of X before centering 
-##   for (i in 2:K) { 
-##     means_X[i - 1] = mean(X[, i]); 
-##     Xc[, i - 1] = X[, i] - means_X[i - 1]; 
-##   } 
-## } 
-## parameters { 
-##   vector[Kc] b;  // population-level effects 
-##   real temp_Intercept;  // temporary intercept 
-##   real&lt;lower=0&gt; sigma;  // residual SD 
-## } 
-## transformed parameters { 
-## } 
-## model { 
-##   vector[N] mu = temp_Intercept + Xc * b;
-##   // priors including all constants 
-##   target += normal_lpdf(b[1] | 0, 10); 
-##   target += normal_lpdf(b[2] | 0, 10); 
-##   target += student_t_lpdf(temp_Intercept | 3, 3, 10); 
-##   target += student_t_lpdf(sigma | 3, 0, 10)
-##     - 1 * student_t_lccdf(0 | 3, 0, 10); 
-##   // likelihood including all constants 
-##   if (!prior_only) { 
-##     target += normal_lpdf(Y | mu, sigma);
-##   } 
-## } 
-## generated quantities { 
-##   // actual population-level intercept 
-##   real b_Intercept = temp_Intercept - dot_product(means_X, b); 
-## }</code></pre>
+<pre><code>// generated with brms 2.7.0
+functions { 
+} 
+data { 
+  int&lt;lower=1&gt; N;  // total number of observations 
+  vector[N] Y;  // response variable 
+  int&lt;lower=1&gt; K;  // number of population-level effects 
+  matrix[N, K] X;  // population-level design matrix 
+  int prior_only;  // should the likelihood be ignored? 
+} 
+transformed data { 
+  int Kc = K - 1; 
+  matrix[N, K - 1] Xc;  // centered version of X 
+  vector[K - 1] means_X;  // column means of X before centering 
+  for (i in 2:K) { 
+    means_X[i - 1] = mean(X[, i]); 
+    Xc[, i - 1] = X[, i] - means_X[i - 1]; 
+  } 
+} 
+parameters { 
+  vector[Kc] b;  // population-level effects 
+  real temp_Intercept;  // temporary intercept 
+  real&lt;lower=0&gt; sigma;  // residual SD 
+} 
+transformed parameters { 
+} 
+model { 
+  vector[N] mu = temp_Intercept + Xc * b;
+  // priors including all constants 
+  target += normal_lpdf(b[1] | 0, 10); 
+  target += normal_lpdf(b[2] | 0, 10); 
+  target += student_t_lpdf(temp_Intercept | 3, 3, 10); 
+  target += student_t_lpdf(sigma | 3, 0, 10)
+    - 1 * student_t_lccdf(0 | 3, 0, 10); 
+  // likelihood including all constants 
+  if (!prior_only) { 
+    target += normal_lpdf(Y | mu, sigma);
+  } 
+} 
+generated quantities { 
+  // actual population-level intercept 
+  real b_Intercept = temp_Intercept - dot_product(means_X, b); 
+} </code></pre>
 <p>One thing worth noticing: by default, “brms” centers the predictors which makes it easier to assign a default prior over the intercept.</p>
 </div>
 </div>
@@ -1148,28 +1156,28 @@ fit.brm5 =<span class="st"> </span><span class="kw">brm</span>(
 )</code></pre>
 <p>Let’s take a look at the posterior distributions of the model parameters:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.brm5)</code></pre>
-<pre><code>## Warning: There were 225 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help.
-## See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</code></pre>
-<pre><code>##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: y ~ 1 
-##    Data: df.data (Number of observations: 2) 
-## Samples: 2 chains, each with iter = 4000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 6000
-## 
-## Population-Level Effects: 
-##               Estimate    Est.Error       l-95% CI     u-95% CI Eff.Sample
-## Intercept -51502175.28 484211604.68 -1258318917.93 524975203.26        103
-##           Rhat
-## Intercept 1.04
-## 
-## Family Specific Parameters: 
-##           Estimate     Est.Error l-95% CI      u-95% CI Eff.Sample Rhat
-## sigma 398611802.92 1217973385.49   852.93 4284866883.47         13 1.07
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-## is a crude measure of effective sample size, and Rhat is the potential 
-## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<pre><code>Warning: There were 225 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help.
+See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</code></pre>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: y ~ 1 
+   Data: df.data (Number of observations: 2) 
+Samples: 2 chains, each with iter = 4000; warmup = 1000; thin = 1;
+         total post-warmup samples = 6000
+
+Population-Level Effects: 
+              Estimate    Est.Error       l-95% CI     u-95% CI Eff.Sample
+Intercept -51502175.28 484211604.68 -1258318917.93 524975203.26        103
+          Rhat
+Intercept 1.04
+
+Family Specific Parameters: 
+          Estimate     Est.Error l-95% CI      u-95% CI Eff.Sample Rhat
+sigma 398611802.92 1217973385.49   852.93 4284866883.47         13 1.07
+
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>Not looking good – The estimates and credible intervals are off the charts. And the effective samples sizes in the chains are very small.</p>
 <p>Let’s visualize the trace plots:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.brm5)</code></pre>
@@ -1201,26 +1209,26 @@ fit.brm5 =<span class="st"> </span><span class="kw">brm</span>(
 )</code></pre>
 <p>Let’s take a look at the posterior distributions of the model parameters:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.brm6)</code></pre>
-<pre><code>## Warning: There were 3 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help.
-## See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</code></pre>
-<pre><code>##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: y ~ 1 
-##    Data: df.data (Number of observations: 2) 
-## Samples: 2 chains, each with iter = 4000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 6000
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept    -0.13      1.69    -4.10     3.06        881 1.00
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## sigma     2.04      1.88     0.61     6.95       1152 1.00
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-## is a crude measure of effective sample size, and Rhat is the potential 
-## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<pre><code>Warning: There were 3 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help.
+See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</code></pre>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: y ~ 1 
+   Data: df.data (Number of observations: 2) 
+Samples: 2 chains, each with iter = 4000; warmup = 1000; thin = 1;
+         total post-warmup samples = 6000
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+Intercept    -0.13      1.69    -4.10     3.06        881 1.00
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+sigma     2.04      1.88     0.61     6.95       1152 1.00
+
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>This looks much better. There is still quite a bit of uncertainty in our paremeter estimates, but it has reduced dramatically.</p>
 <p>Let’s visualize the trace plots:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.brm6)</code></pre>
@@ -1264,26 +1272,26 @@ df.variance <span class="op">%&gt;%</span>
 )</code></pre>
 <p>Let’s take a look at the model output:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit.brm7)</code></pre>
-<pre><code>##  Family: gaussian 
-##   Links: mu = identity; sigma = log 
-## Formula: response ~ group 
-##          sigma ~ group
-##    Data: df.variance (Number of observations: 60) 
-## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 4000
-## 
-## Population-Level Effects: 
-##                   Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-## Intercept             0.00      0.72    -1.38     1.45       1273 1.00
-## sigma_Intercept       1.15      0.17     0.85     1.51       2033 1.00
-## group5yo              5.16      0.77     3.60     6.62       1424 1.00
-## groupadults           7.96      0.72     6.49     9.37       1276 1.00
-## sigma_group5yo       -1.05      0.23    -1.51    -0.59       2355 1.00
-## sigma_groupadults    -2.19      0.23    -2.65    -1.74       2231 1.00
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
-## is a crude measure of effective sample size, and Rhat is the potential 
-## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = log 
+Formula: response ~ group 
+         sigma ~ group
+   Data: df.variance (Number of observations: 60) 
+Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup samples = 4000
+
+Population-Level Effects: 
+                  Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+Intercept             0.00      0.72    -1.38     1.45       1273 1.00
+sigma_Intercept       1.15      0.17     0.85     1.51       2033 1.00
+group5yo              5.16      0.77     3.60     6.62       1424 1.00
+groupadults           7.96      0.72     6.49     9.37       1276 1.00
+sigma_group5yo       -1.05      0.23    -1.51    -0.59       2355 1.00
+sigma_groupadults    -2.19      0.23    -2.65    -1.74       2231 1.00
+
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>And let’s visualize the results:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.variance <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">expand</span>(group) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1306,18 +1314,18 @@ df.variance <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cyl =</span> <span class="kw">ordered</span>(cyl)) <span class="co"># creates an ordered factor</span></code></pre>
 <p>Let’s check that the cylinders are indeed ordered now:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.cars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()</code></pre>
-<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
-##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
-##  $ cyl : Ord.factor w/ 3 levels &quot;4&quot;&lt;&quot;6&quot;&lt;&quot;8&quot;: 2 2 1 2 3 2 3 1 1 2 ...
-##  $ disp: num  160 160 108 258 360 ...
-##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
-##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
-##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
-##  $ qsec: num  16.5 17 18.6 19.4 17 ...
-##  $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
-##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
-##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
-##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
+<pre><code>&#39;data.frame&#39;:   32 obs. of  11 variables:
+ $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+ $ cyl : Ord.factor w/ 3 levels &quot;4&quot;&lt;&quot;6&quot;&lt;&quot;8&quot;: 2 2 1 2 3 2 3 1 1 2 ...
+ $ disp: num  160 160 108 258 360 ...
+ $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+ $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+ $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+ $ qsec: num  16.5 17 18.6 19.4 17 ...
+ $ vs  : num  0 0 1 1 0 1 0 1 1 1 ...
+ $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
+ $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
+ $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm8 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> cyl <span class="op">~</span><span class="st"> </span>mpg,
                <span class="dt">data =</span> df.cars,
                <span class="dt">family =</span> <span class="st">&quot;cumulative&quot;</span>,

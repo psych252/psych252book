@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -608,62 +608,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;kableExtra&quot;</span>)   <span class="co"># for nicely formatted tables</span>
 <span class="kw">library</span>(<span class="st">&quot;arrangements&quot;</span>) <span class="co"># fast generators and iterators for permutations, combinations and partitions</span>
 <span class="kw">library</span>(<span class="st">&quot;DiagrammeR&quot;</span>)   <span class="co"># for drawing diagrams</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)    <span class="co"># for data wrangling </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)    <span class="co"># for data wrangling </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 </div>
 <div id="counting" class="section level2">
 <h2><span class="header-section-number">6.2</span> Counting</h2>
 <p>Imagine that there are three balls in an urn. The balls are labeled 1, 2, and 3. Let’s consider a few possible situations.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;arrangements&quot;</span>) <span class="co"># fast generators and iterators for permutations, combinations and partitions</span>
-balls =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span> <span class="co"># number of balls in urn </span>
+<pre class="sourceCode r"><code class="sourceCode r">balls =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span> <span class="co"># number of balls in urn </span>
 ndraws =<span class="st"> </span><span class="dv">2</span> <span class="co"># number of draws</span>
 
 <span class="co"># order matters, without replacement</span>
-<span class="kw">permutations</span>(balls, ndraws)</code></pre>
-<pre><code>##      [,1] [,2]
-## [1,]    1    2
-## [2,]    1    3
-## [3,]    2    1
-## [4,]    2    3
-## [5,]    3    1
-## [6,]    3    2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># order matters, with replacement</span>
-<span class="kw">permutations</span>(balls, ndraws, <span class="dt">replace =</span> T)</code></pre>
-<pre><code>##       [,1] [,2]
-##  [1,]    1    1
-##  [2,]    1    2
-##  [3,]    1    3
-##  [4,]    2    1
-##  [5,]    2    2
-##  [6,]    2    3
-##  [7,]    3    1
-##  [8,]    3    2
-##  [9,]    3    3</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># order doesn&#39;t matter, with replacement </span>
-<span class="kw">combinations</span>(balls, ndraws, <span class="dt">replace =</span> T)</code></pre>
-<pre><code>##      [,1] [,2]
-## [1,]    1    1
-## [2,]    1    2
-## [3,]    1    3
-## [4,]    2    2
-## [5,]    2    3
-## [6,]    3    3</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># order doesn&#39;t matter, without replacement </span>
+<span class="kw">permutations</span>(balls, ndraws)
+
+<span class="co"># order matters, with replacement</span>
+<span class="kw">permutations</span>(balls, ndraws, <span class="dt">replace =</span> T)
+
+<span class="co"># order doesn&#39;t matter, with replacement </span>
+<span class="kw">combinations</span>(balls, ndraws, <span class="dt">replace =</span> T)
+
+<span class="co"># order doesn&#39;t matter, without replacement </span>
 <span class="kw">combinations</span>(balls, ndraws)</code></pre>
-<pre><code>##      [,1] [,2]
-## [1,]    1    2
-## [2,]    1    3
-## [3,]    2    3</code></pre>
+<pre><code>     [,1] [,2]
+[1,]    1    2
+[2,]    1    3
+[3,]    2    1
+[4,]    2    3
+[5,]    3    1
+[6,]    3    2
+      [,1] [,2]
+ [1,]    1    1
+ [2,]    1    2
+ [3,]    1    3
+ [4,]    2    1
+ [5,]    2    2
+ [6,]    2    3
+ [7,]    3    1
+ [8,]    3    2
+ [9,]    3    3
+     [,1] [,2]
+[1,]    1    1
+[2,]    1    2
+[3,]    1    3
+[4,]    2    2
+[5,]    2    3
+[6,]    3    3
+     [,1] [,2]
+[1,]    1    2
+[2,]    1    3
+[3,]    2    3</code></pre>
 <p>I’ve generated the figures below using the <code>DiagrammeR</code> package. It’s a powerful package for drawing diagrams in R. See information on how to use the DiagrammeR package <a href="http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html">here</a>.</p>
 <div class="figure"><span id="fig:probability-3"></span>
-<div id="htmlwidget-325ab304e8bc41af1b4b" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-325ab304e8bc41af1b4b">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5e3531d012f642737480" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5e3531d012f642737480">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 6.1: Drawing two marbles out of an urn <strong>with</strong> replacement.
 </p>
 </div>
 <div class="figure"><span id="fig:probability-4"></span>
-<div id="htmlwidget-d29a499a8be58b8d99d0" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d29a499a8be58b8d99d0">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fd1a625d9b6decb255f9" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fd1a625d9b6decb255f9">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
 Figure 6.2: Drawing two marbles out of an urn <strong>without</strong> replacement.
 </p>
@@ -797,25 +805,25 @@ df.suspects <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p_prof_plum_given_male =</span> 
               <span class="kw">sum</span>(gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span>who <span class="op">==</span><span class="st"> &quot;prof_plum&quot;</span>) <span class="op">/</span>
 <span class="st">              </span><span class="kw">sum</span>(gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>))</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   p_prof_plum_given_male
-##                    &lt;dbl&gt;
-## 1                  0.333</code></pre>
+<pre><code># A tibble: 1 x 1
+  p_prof_plum_given_male
+                   &lt;dbl&gt;
+1                  0.333</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># conditional probability (via rejection)</span>
 df.suspects <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p_prof_plum_given_male =</span> 
               <span class="kw">sum</span>(who <span class="op">==</span><span class="st"> &quot;prof_plum&quot;</span>) <span class="op">/</span>
 <span class="st">              </span><span class="kw">n</span>())</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   p_prof_plum_given_male
-##                    &lt;dbl&gt;
-## 1                  0.333</code></pre>
+<pre><code># A tibble: 1 x 1
+  p_prof_plum_given_male
+                   &lt;dbl&gt;
+1                  0.333</code></pre>
 </div>
 <div id="law-of-total-probability" class="section level3">
 <h3><span class="header-section-number">6.4.2</span> Law of total probability</h3>
-<div id="htmlwidget-05b99817d8b18b33601d" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-05b99817d8b18b33601d">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bcd18d8a013c7f51a181" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bcd18d8a013c7f51a181">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="probability-operations" class="section level2">
@@ -830,36 +838,73 @@ df.cards <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p_hearts_given_queen =</span> 
               <span class="kw">sum</span>(suit <span class="op">==</span><span class="st"> &quot;Hearts&quot;</span> <span class="op">&amp;</span><span class="st"> </span>value <span class="op">==</span><span class="st"> &quot;Queen&quot;</span>) <span class="op">/</span><span class="st"> </span>
 <span class="st">              </span><span class="kw">sum</span>(value <span class="op">==</span><span class="st"> &quot;Queen&quot;</span>))</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   p_hearts_given_queen
-##                  &lt;dbl&gt;
-## 1                 0.25</code></pre>
+<pre><code># A tibble: 1 x 1
+  p_hearts_given_queen
+                 &lt;dbl&gt;
+1                 0.25</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># conditional probability: p(Hearts | Queen) (via rejection)</span>
 df.cards <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(value <span class="op">==</span><span class="st"> &quot;Queen&quot;</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p_hearts_given_queen =</span> <span class="kw">sum</span>(suit <span class="op">==</span><span class="st"> &quot;Hearts&quot;</span>)<span class="op">/</span><span class="kw">n</span>())</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   p_hearts_given_queen
-##                  &lt;dbl&gt;
-## 1                 0.25</code></pre>
+<pre><code># A tibble: 1 x 1
+  p_hearts_given_queen
+                 &lt;dbl&gt;
+1                 0.25</code></pre>
 </div>
 <div id="bayesian-reasoning-example" class="section level2">
 <h2><span class="header-section-number">6.6</span> Bayesian reasoning example</h2>
-<div id="htmlwidget-d20f20e2eca599920460" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d20f20e2eca599920460">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ec9b49172922c609daf2" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ec9b49172922c609daf2">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="bayesian-networks" class="section level2">
 <h2><span class="header-section-number">6.7</span> Bayesian networks</h2>
 <div id="sprinkler-example" class="section level3">
 <h3><span class="header-section-number">6.7.1</span> Sprinkler example</h3>
-<div id="htmlwidget-b6df2759b6efc7935577" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b6df2759b6efc7935577">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"\"]\n  1 -> 3 [label = \"\"]\n  2 -> 4 [label = \"\"] \n  3 -> 4 [label = \"\"]\n  \n  # labels for each node\n  1 [label = \"Cloudy\"]\n  2 [label = \"Sprinkler\"]\n  3 [label = \"Rain\"]\n  4 [label = \"Wet grass\"]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6e66f71e8ba2e2ca6590" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6e66f71e8ba2e2ca6590">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"\"]\n  1 -> 3 [label = \"\"]\n  2 -> 4 [label = \"\"] \n  3 -> 4 [label = \"\"]\n  \n  # labels for each node\n  1 [label = \"Cloudy\"]\n  2 [label = \"Sprinkler\"]\n  3 [label = \"Rain\"]\n  4 [label = \"Wet grass\"]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cloudy </span>
 df.cloudy =<span class="st"> </span><span class="kw">tibble</span>(
   <span class="st">`</span><span class="dt">p(C)</span><span class="st">`</span> =<span class="st"> </span><span class="fl">0.5</span>
 )
 
 df.cloudy <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
+                <span class="dt">full_width =</span> F,
+                <span class="dt">font_size =</span> <span class="dv">20</span>)
+
+<span class="co"># sprinkler given cloudy </span>
+df.sprinkler_given_cloudy =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">C =</span> <span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>),
+  <span class="st">`</span><span class="dt">p(S)</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>)
+)
+
+df.sprinkler_given_cloudy <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
+                <span class="dt">full_width =</span> F,
+                <span class="dt">font_size =</span> <span class="dv">20</span>)
+
+<span class="co"># rain given cloudy </span>
+df.rain_given_cloudy =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">C =</span> <span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>),
+  <span class="st">`</span><span class="dt">p(R)</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>)
+)
+
+df.rain_given_cloudy <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
+                <span class="dt">full_width =</span> F,
+                <span class="dt">font_size =</span> <span class="dv">20</span>)
+
+<span class="co"># wet given sprinkler and rain  </span>
+df.rain_given_sprinkler_and_rain =<span class="st"> </span><span class="kw">tibble</span>(
+  <span class="dt">S =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="dv">2</span>),
+  <span class="dt">R =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="dt">each =</span> <span class="dv">2</span>),
+  <span class="st">`</span><span class="dt">p(W)</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="fl">0.99</span>)
+)
+
+df.rain_given_sprinkler_and_rain <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
                 <span class="dt">full_width =</span> F,
@@ -880,17 +925,6 @@ p(C)
 </tr>
 </tbody>
 </table>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># sprinkler given cloudy </span>
-df.sprinkler_given_cloudy =<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">C =</span> <span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>),
-  <span class="st">`</span><span class="dt">p(S)</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.1</span>)
-)
-
-df.sprinkler_given_cloudy <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
-                <span class="dt">full_width =</span> F,
-                <span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre>
 <table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -921,17 +955,6 @@ T
 </tr>
 </tbody>
 </table>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># rain given cloudy </span>
-df.rain_given_cloudy =<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">C =</span> <span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>),
-  <span class="st">`</span><span class="dt">p(R)</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>)
-)
-
-df.rain_given_cloudy <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
-                <span class="dt">full_width =</span> F,
-                <span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre>
 <table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -962,18 +985,6 @@ T
 </tr>
 </tbody>
 </table>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># wet given sprinkler and rain  </span>
-df.rain_given_sprinkler_and_rain =<span class="st"> </span><span class="kw">tibble</span>(
-  <span class="dt">S =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="dv">2</span>),
-  <span class="dt">R =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;T&quot;</span>), <span class="dt">each =</span> <span class="dv">2</span>),
-  <span class="st">`</span><span class="dt">p(W)</span><span class="st">`</span>=<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="fl">0.99</span>)
-)
-
-df.rain_given_sprinkler_and_rain <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
-                <span class="dt">full_width =</span> F,
-                <span class="dt">font_size =</span> <span class="dv">20</span>)</code></pre>
 <table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>

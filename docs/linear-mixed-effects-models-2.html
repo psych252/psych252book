@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -609,7 +609,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)    <span class="co"># for tidying up linear models </span>
 <span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)    <span class="co"># for making figure panels</span>
 <span class="kw">library</span>(<span class="st">&quot;lme4&quot;</span>)    <span class="co"># for linear mixed effects models</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -627,14 +633,16 @@ fun.normal_means =<span class="st"> </span><span class="cf">function</span>(n, m
 }
 
 <span class="co"># execute the function 4 times</span>
-<span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">4</span>, <span class="kw">fun.normal_means</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.5</span>))</code></pre>
-<pre><code>## [1] 0.8866330 0.9807577 1.1527933 1.0389494</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># same same but different </span>
-<span class="kw">map_dbl</span>(<span class="dt">.x =</span> <span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>), <span class="op">~</span><span class="st"> </span><span class="kw">fun.normal_means</span>(<span class="dt">n =</span> .x, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.5</span>))</code></pre>
-<pre><code>## [1] 1.110097 1.069433 1.274215 1.061214</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># and more flexible</span>
+<span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">4</span>, <span class="kw">fun.normal_means</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.5</span>))
+
+<span class="co"># same same but different </span>
+<span class="kw">map_dbl</span>(<span class="dt">.x =</span> <span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>), <span class="op">~</span><span class="st"> </span><span class="kw">fun.normal_means</span>(<span class="dt">n =</span> .x, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.5</span>))
+
+<span class="co"># and more flexible</span>
 <span class="kw">map_dbl</span>(<span class="dt">.x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">10</span>), <span class="op">~</span><span class="st"> </span><span class="kw">fun.normal_means</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">mean =</span> .x, <span class="dt">sd =</span> <span class="fl">0.5</span>))</code></pre>
-<pre><code>## [1]  1.106152  1.101218 10.037689 10.039455</code></pre>
+<pre><code>[1] 0.9845811 0.9759065 1.1565992 0.9851831
+[1] 1.1686956 1.1061253 1.0672354 0.9384917
+[1] 1.1245742 0.7831972 9.9914880 9.9171075</code></pre>
 </div>
 </div>
 <div id="simulating-a-linear-mixed-effects-model" class="section level2">
@@ -669,30 +677,30 @@ fit.mixed =<span class="st"> </span><span class="kw">lmer</span>(<span class="dt
 
 fit.mixed <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
-## Formula: value ~ 1 + condition + (1 | participant)
-##    Data: df.mixed
-## 
-## REML criterion at convergence: 606
-## 
-## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -2.53710 -0.62295 -0.04364  0.67035  2.19899 
-## 
-## Random effects:
-##  Groups      Name        Variance Std.Dev.
-##  participant (Intercept) 0.1607   0.4009  
-##  Residual                1.0427   1.0211  
-## Number of obs: 200, groups:  participant, 100
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)   1.0166     0.1097   9.267
-## condition1    2.0675     0.1444  14.317
-## 
-## Correlation of Fixed Effects:
-##            (Intr)
-## condition1 -0.658</code></pre>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: value ~ 1 + condition + (1 | participant)
+   Data: df.mixed
+
+REML criterion at convergence: 606
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.53710 -0.62295 -0.04364  0.67035  2.19899 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 0.1607   0.4009  
+ Residual                1.0427   1.0211  
+Number of obs: 200, groups:  participant, 100
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   1.0166     0.1097   9.267
+condition1    2.0675     0.1444  14.317
+
+Correlation of Fixed Effects:
+           (Intr)
+condition1 -0.658</code></pre>
 <p>Let’s visualize the model’s predictions:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.mixed <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
@@ -730,14 +738,14 @@ fit.augmented =<span class="st"> </span><span class="kw">lmer</span>(<span class
                 <span class="dt">data =</span> df.mixed)
 
 <span class="kw">anova</span>(fit.augmented, fit.compact)</code></pre>
-<pre><code>## refitting model(s) with ML (instead of REML)</code></pre>
-<pre><code>## Data: df.mixed
-## Models:
-## fit.compact: value ~ 1 + condition
-## fit.augmented: value ~ 1 + condition + (1 | participant)
-##               Df   AIC    BIC logLik deviance  Chisq Chi Df Pr(&gt;Chisq)
-## fit.compact    3 608.6 618.49 -301.3    602.6                         
-## fit.augmented  4 608.8 621.99 -300.4    600.8 1.7999      1     0.1797</code></pre>
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+<pre><code>Data: df.mixed
+Models:
+fit.compact: value ~ 1 + condition
+fit.augmented: value ~ 1 + condition + (1 | participant)
+              Df   AIC    BIC logLik deviance  Chisq Chi Df Pr(&gt;Chisq)
+fit.compact    3 608.6 618.49 -301.3    602.6                         
+fit.augmented  4 608.8 621.99 -300.4    600.8 1.7999      1     0.1797</code></pre>
 <p>Nope, it’s not worth it in this case. That said, even though having random intercepts does not increase the likelihood of the data given the model significantly, we should still include random intercepts to capture the dependence in the data.</p>
 </div>
 <div id="the-effect-of-outliers" class="section level2">
@@ -756,30 +764,30 @@ fit.outlier =<span class="st"> </span><span class="kw">lmer</span>(<span class="
 
 fit.outlier <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
-## Formula: value ~ 1 + condition + (1 | participant)
-##    Data: df.outlier
-## 
-## REML criterion at convergence: 192
-## 
-## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -1.44598 -0.48367  0.03043  0.44689  1.41232 
-## 
-## Random effects:
-##  Groups      Name        Variance Std.Dev.
-##  participant (Intercept) 45.1359  6.7183  
-##  Residual                 0.6738  0.8209  
-## Number of obs: 40, groups:  participant, 20
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)   2.7091     1.5134   1.790
-## condition1    2.1512     0.2596   8.287
-## 
-## Correlation of Fixed Effects:
-##            (Intr)
-## condition1 -0.086</code></pre>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: value ~ 1 + condition + (1 | participant)
+   Data: df.outlier
+
+REML criterion at convergence: 192
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.44598 -0.48367  0.03043  0.44689  1.41232 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 45.1359  6.7183  
+ Residual                 0.6738  0.8209  
+Number of obs: 40, groups:  participant, 20
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   2.7091     1.5134   1.790
+condition1    2.1512     0.2596   8.287
+
+Correlation of Fixed Effects:
+           (Intr)
+condition1 -0.086</code></pre>
 <p>The variance for the participants’ intercepts has increased dramatically!</p>
 <p>Let’s visualize the data together with the model’s predictions:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.outlier <span class="op">%&gt;%</span>
@@ -829,34 +837,34 @@ df.slopes =<span class="st"> </span><span class="kw">tibble</span>(
 <p>Let’s fit a model with random intercepts.</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.slopes =<span class="st"> </span><span class="kw">lmer</span>(<span class="dt">formula =</span> value <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>participant),
                 <span class="dt">data =</span> df.slopes)</code></pre>
-<pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
+<pre><code>boundary (singular) fit: see ?isSingular</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">fit.slopes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
-## Formula: value ~ 1 + condition + (1 | participant)
-##    Data: df.slopes
-## 
-## REML criterion at convergence: 83.6
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -3.5808 -0.3184  0.0130  0.4551  2.0913 
-## 
-## Random effects:
-##  Groups      Name        Variance Std.Dev.
-##  participant (Intercept) 0.0000   0.0000  
-##  Residual                0.4512   0.6717  
-## Number of obs: 40, groups:  participant, 20
-## 
-## Fixed effects:
-##              Estimate Std. Error t value
-## (Intercept)  0.190524   0.150197   1.268
-## condition2  -0.001941   0.212411  -0.009
-## 
-## Correlation of Fixed Effects:
-##            (Intr)
-## condition2 -0.707
-## convergence code: 0
-## boundary (singular) fit: see ?isSingular</code></pre>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: value ~ 1 + condition + (1 | participant)
+   Data: df.slopes
+
+REML criterion at convergence: 83.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.5808 -0.3184  0.0130  0.4551  2.0913 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 0.0000   0.0000  
+ Residual                0.4512   0.6717  
+Number of obs: 40, groups:  participant, 20
+
+Fixed effects:
+             Estimate Std. Error t value
+(Intercept)  0.190524   0.150197   1.268
+condition2  -0.001941   0.212411  -0.009
+
+Correlation of Fixed Effects:
+           (Intr)
+condition2 -0.707
+convergence code: 0
+boundary (singular) fit: see ?isSingular</code></pre>
 <p>Note how the summary says “singular fit”, and how the variance for random intercepts is 0. Here, fitting random intercepts did not help the model fit at all, so the lmer gave up …</p>
 <p>How about fitting random slopes?</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit model</span>
@@ -896,24 +904,24 @@ df.simpson =<span class="st"> </span><span class="kw">tibble</span>(<span class=
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x,
    <span class="dt">data =</span> df.simpson) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = y ~ x, data = df.simpson)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -5.8731 -0.6362  0.2272  1.0051  2.6410 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  -7.1151     0.2107  -33.76   &lt;2e-16 ***
-## x             6.3671     0.3631   17.54   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 1.55 on 198 degrees of freedom
-## Multiple R-squared:  0.6083, Adjusted R-squared:  0.6064 
-## F-statistic: 307.5 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = y ~ x, data = df.simpson)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.8731 -0.6362  0.2272  1.0051  2.6410 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -7.1151     0.2107  -33.76   &lt;2e-16 ***
+x             6.3671     0.3631   17.54   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 1.55 on 198 degrees of freedom
+Multiple R-squared:  0.6083,    Adjusted R-squared:  0.6064 
+F-statistic: 307.5 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>And this relationship is significant.</p>
 <p>Let’s take another look at the data use different colors for the different participants.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># effect by participant </span>
@@ -945,30 +953,30 @@ df.simpson =<span class="st"> </span><span class="kw">tibble</span>(<span class=
 
 fit.lmer <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
-## Formula: y ~ 1 + x + (1 | participant)
-##    Data: df.simpson
-## 
-## REML criterion at convergence: 345.1
-## 
-## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -2.43394 -0.59687  0.04493  0.62694  2.68828 
-## 
-## Random effects:
-##  Groups      Name        Variance Std.Dev.
-##  participant (Intercept) 21.4898  4.6357  
-##  Residual                 0.1661  0.4075  
-## Number of obs: 200, groups:  participant, 20
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)  -0.1577     1.3230  -0.119
-## x            -7.6678     1.6572  -4.627
-## 
-## Correlation of Fixed Effects:
-##   (Intr)
-## x -0.621</code></pre>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: y ~ 1 + x + (1 | participant)
+   Data: df.simpson
+
+REML criterion at convergence: 345.1
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.43394 -0.59687  0.04493  0.62694  2.68828 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 21.4898  4.6357  
+ Residual                 0.1661  0.4075  
+Number of obs: 200, groups:  participant, 20
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  -0.1577     1.3230  -0.119
+x            -7.6678     1.6572  -4.627
+
+Correlation of Fixed Effects:
+  (Intr)
+x -0.621</code></pre>
 <p>As we can see, the fixed effect for <code>x</code> is now negative!</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.lmer <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span>

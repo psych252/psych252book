@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -604,9 +604,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This chapter was written by Andrew Lampinen.</p>
 <div id="load-packages-and-set-plotting-theme-8" class="section level2">
 <h2><span class="header-section-number">15.1</span> Load packages and set plotting theme</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;boot&quot;</span>)      <span class="co"># for bootstrapping</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>)     <span class="co"># for knitting RMarkdown </span>
+<span class="kw">library</span>(<span class="st">&quot;boot&quot;</span>)      <span class="co"># for bootstrapping</span>
 <span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>) <span class="co"># for making figure panels</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># for data wrangling etc.</span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># for data wrangling etc.</span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="co">#set the theme </span>
 )</code></pre>
@@ -641,10 +648,10 @@ parametric_plotting_data =<span class="st"> </span><span class="kw">tibble</span
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span>distribution, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> F) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Accent&quot;</span>)</code></pre>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>Warning: Removed 6 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="15-bootstrapping_files/figure-html/bootstrapping-05-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/log_normal_dists.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
-<pre><code>## Warning: Removed 5 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>Warning: Removed 6 rows containing non-finite values (stat_density).</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">gen_data_and_test =<span class="st"> </span><span class="cf">function</span>(num_observations_per) {
   x =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
   y =<span class="st"> </span><span class="kw">rnorm</span>(num_observations_per, <span class="dv">0</span>, <span class="fl">1.1</span>)
@@ -677,11 +684,12 @@ parametric_issues_d =<span class="st"> </span><span class="kw">data.frame</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">is_significant =</span> p_value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)
 
 <span class="co"># Number significant results with normally distributed data</span>
-<span class="kw">sum</span>(parametric_issues_results[<span class="dv">1</span>,] <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre>
-<pre><code>## [1] 41</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># number of significant results with log-normally distributed data</span>
+<span class="kw">sum</span>(parametric_issues_results[<span class="dv">1</span>,] <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)
+
+<span class="co"># number of significant results with log-normally distributed data</span>
 <span class="kw">sum</span>(parametric_issues_results[<span class="dv">2</span>,] <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</code></pre>
-<pre><code>## [1] 25</code></pre>
+<pre><code>[1] 41
+[1] 25</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(parametric_issues_d, <span class="kw">aes</span>(<span class="dt">x=</span>type, <span class="dt">fill=</span>is_significant)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;count&quot;</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette=</span><span class="st">&quot;Set1&quot;</span>) <span class="op">+</span>
@@ -836,18 +844,18 @@ perm_results =<span class="st"> </span><span class="kw">replicate</span>(num_tes
 <pre class="sourceCode r"><code class="sourceCode r">perm_results <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(test_type, distribution, null_true) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">pct_significant =</span> <span class="kw">sum</span>(significant)<span class="op">/</span><span class="kw">n</span>())</code></pre>
-<pre><code>## # A tibble: 8 x 4
-## # Groups:   test_type, distribution [4]
-##   test_type   distribution null_true        pct_significant
-##   &lt;chr&gt;       &lt;fct&gt;        &lt;chr&gt;                      &lt;dbl&gt;
-## 1 parametric  Normal       Alternative True            0.75
-## 2 parametric  Normal       Null True                   0.07
-## 3 parametric  Log-normal   Alternative True            0.53
-## 4 parametric  Log-normal   Null True                   0.02
-## 5 permutation Normal       Alternative True            0.76
-## 6 permutation Normal       Null True                   0.07
-## 7 permutation Log-normal   Alternative True            0.68
-## 8 permutation Log-normal   Null True                   0.03</code></pre>
+<pre><code># A tibble: 8 x 4
+# Groups:   test_type, distribution [4]
+  test_type   distribution null_true        pct_significant
+  &lt;chr&gt;       &lt;fct&gt;        &lt;chr&gt;                      &lt;dbl&gt;
+1 parametric  Normal       Alternative True            0.75
+2 parametric  Normal       Null True                   0.07
+3 parametric  Log-normal   Alternative True            0.53
+4 parametric  Log-normal   Null True                   0.02
+5 permutation Normal       Alternative True            0.76
+6 permutation Normal       Null True                   0.07
+7 permutation Log-normal   Alternative True            0.68
+8 permutation Log-normal   Null True                   0.03</code></pre>
 </div>
 <div id="non-iid-noise-and-linear-models" class="section level3">
 <h3><span class="header-section-number">15.2.2</span> Non-IID noise and linear models</h3>
@@ -878,46 +886,47 @@ parametric_ci_data =<span class="st"> </span><span class="kw">data.frame</span>(
 <p><img src="15-bootstrapping_files/figure-html/bootstrapping-19-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/error_dist_non_null.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
 <p>C.f. Anscombe’s quartet, etc.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, parametric_ci_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(type<span class="op">==</span><span class="st">&quot;IID Error&quot;</span>)))</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = DV ~ IV, data = parametric_ci_data %&gt;% filter(type == 
-##     &quot;IID Error&quot;))
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2.7575 -0.6600 -0.0231  0.6768  3.2956 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -0.03103    0.04379  -0.709    0.479    
-## IV           1.11977    0.07739  14.470   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 0.9791 on 498 degrees of freedom
-## Multiple R-squared:  0.296,  Adjusted R-squared:  0.2946 
-## F-statistic: 209.4 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, parametric_ci_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(type<span class="op">==</span><span class="st">&quot;Non-IID Error&quot;</span>)))</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = DV ~ IV, data = parametric_ci_data %&gt;% filter(type == 
-##     &quot;Non-IID Error&quot;))
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.0872 -0.4030  0.0441  0.5100  3.4718 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -0.05623    0.04928  -1.141    0.254    
-## IV           1.22127    0.08708  14.024   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 1.102 on 498 degrees of freedom
-## Multiple R-squared:  0.2831, Adjusted R-squared:  0.2817 
-## F-statistic: 196.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, parametric_ci_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(type<span class="op">==</span><span class="st">&quot;IID Error&quot;</span>)))
+<span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, parametric_ci_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(type<span class="op">==</span><span class="st">&quot;Non-IID Error&quot;</span>)))</code></pre>
+<pre><code>
+Call:
+lm(formula = DV ~ IV, data = parametric_ci_data %&gt;% filter(type == 
+    &quot;IID Error&quot;))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.7575 -0.6600 -0.0231  0.6768  3.2956 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.03103    0.04379  -0.709    0.479    
+IV           1.11977    0.07739  14.470   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.9791 on 498 degrees of freedom
+Multiple R-squared:  0.296, Adjusted R-squared:  0.2946 
+F-statistic: 209.4 on 1 and 498 DF,  p-value: &lt; 2.2e-16
+
+
+Call:
+lm(formula = DV ~ IV, data = parametric_ci_data %&gt;% filter(type == 
+    &quot;Non-IID Error&quot;))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.0872 -0.4030  0.0441  0.5100  3.4718 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.05623    0.04928  -1.141    0.254    
+IV           1.22127    0.08708  14.024   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 1.102 on 498 degrees of freedom
+Multiple R-squared:  0.2831,    Adjusted R-squared:  0.2817 
+F-statistic: 196.7 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">ex2_lm_bootstrap_CIs =<span class="st"> </span><span class="cf">function</span>(data, <span class="dt">R =</span> <span class="dv">1000</span>) {
   lm_results =<span class="st"> </span><span class="kw">summary</span>(<span class="kw">lm</span>(DV <span class="op">~</span><span class="st"> </span>IV, <span class="dt">data =</span> data))<span class="op">$</span>coefficients
   bootstrap_coefficients =<span class="st"> </span><span class="cf">function</span>(data, indices) {
@@ -1058,17 +1067,17 @@ noise_dist_simulation_results =<span class="st"> </span><span class="kw">replica
 <pre class="sourceCode r"><code class="sourceCode r">noise_dist_simulation_results <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">count</span>(parameter, CI_type, significant) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop=</span>n<span class="op">/</span>num_simulations)</code></pre>
-<pre><code>## # A tibble: 8 x 5
-##   parameter CI_type    significant     n  prop
-##   &lt;chr&gt;     &lt;chr&gt;      &lt;lgl&gt;       &lt;int&gt; &lt;dbl&gt;
-## 1 intercept boot       FALSE          97  0.97
-## 2 intercept boot       TRUE            3  0.03
-## 3 intercept parametric FALSE          97  0.97
-## 4 intercept parametric TRUE            3  0.03
-## 5 slope     boot       FALSE          98  0.98
-## 6 slope     boot       TRUE            2  0.02
-## 7 slope     parametric FALSE          88  0.88
-## 8 slope     parametric TRUE           12  0.12</code></pre>
+<pre><code># A tibble: 8 x 5
+  parameter CI_type    significant     n  prop
+  &lt;chr&gt;     &lt;chr&gt;      &lt;lgl&gt;       &lt;int&gt; &lt;dbl&gt;
+1 intercept boot       FALSE          97  0.97
+2 intercept boot       TRUE            3  0.03
+3 intercept parametric FALSE          97  0.97
+4 intercept parametric TRUE            3  0.03
+5 slope     boot       FALSE          98  0.98
+6 slope     boot       TRUE            2  0.02
+7 slope     parametric FALSE          88  0.88
+8 slope     parametric TRUE           12  0.12</code></pre>
 <p>False positive rate nearly triples for the parametric model!</p>
 </div>
 <div id="density-estimate-conceptual-plot" class="section level3">
@@ -1207,28 +1216,28 @@ test_score_data =<span class="st"> </span><span class="kw">data.frame</span>(
 
 bootstrap_results =<span class="st"> </span><span class="kw">boot</span>(test_score_data, get_mean_score, <span class="dt">R=</span><span class="dv">100</span>)
 bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstrap_results)</code></pre>
-<pre><code>## Warning in boot.ci(bootstrap_results): bootstrap variances needed for
-## studentized intervals</code></pre>
-<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order statistics used as
-## endpoints</code></pre>
+<pre><code>Warning in boot.ci(bootstrap_results): bootstrap variances needed for
+studentized intervals</code></pre>
+<pre><code>Warning in norm.inter(t, adj.alpha): extreme order statistics used as
+endpoints</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">bootstrap_CIs</code></pre>
-<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 100 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = bootstrap_results)
-## 
-## Intervals : 
-## Level      Normal              Basic         
-## 95%   ( 86.52, 102.43 )   ( 88.40, 103.45 )  
-## 
-## Level     Percentile            BCa          
-## 95%   (84.75, 99.81 )   (84.00, 99.68 )  
-## Calculations and Intervals on Original Scale
-## Some basic intervals may be unstable
-## Some percentile intervals may be unstable
-## Warning : BCa Intervals used Extreme Quantiles
-## Some BCa intervals may be unstable</code></pre>
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 100 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = bootstrap_results)
+
+Intervals : 
+Level      Normal              Basic         
+95%   ( 86.52, 102.43 )   ( 88.40, 103.45 )  
+
+Level     Percentile            BCa          
+95%   (84.75, 99.81 )   (84.00, 99.68 )  
+Calculations and Intervals on Original Scale
+Some basic intervals may be unstable
+Some percentile intervals may be unstable
+Warning : BCa Intervals used Extreme Quantiles
+Some BCa intervals may be unstable</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">test_summary_data =<span class="st"> </span>test_score_data <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>(
     <span class="dt">mean =</span> <span class="kw">mean</span>(score),
@@ -1242,12 +1251,12 @@ test_score_data =<span class="st"> </span>test_score_data <span class="op">%&gt;
     <span class="kw">data.frame</span>(<span class="dt">score =</span> bootstrap_results<span class="op">$</span>t, <span class="dt">type =</span> <span class="st">&quot;Boot. sampling dist.&quot;</span>)
   ) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">factor</span>(type, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Observed sample&quot;</span>, <span class="st">&quot;Boot. sampling dist.&quot;</span>)))</code></pre>
-<pre><code>## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</code></pre>
-<pre><code>## Warning in bind_rows_(x, .id): binding character and factor vector,
-## coercing into character vector
+<pre><code>Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</code></pre>
+<pre><code>Warning in bind_rows_(x, .id): binding character and factor vector,
+coercing into character vector
 
-## Warning in bind_rows_(x, .id): binding character and factor vector,
-## coercing into character vector</code></pre>
+Warning in bind_rows_(x, .id): binding character and factor vector,
+coercing into character vector</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">test_summary_data =<span class="st"> </span>test_summary_data <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(
     <span class="dt">type =</span> <span class="kw">factor</span>(<span class="st">&quot;Boot. sampling dist.&quot;</span>, <span class="dt">levels =</span> <span class="kw">levels</span>(test_score_data<span class="op">$</span>type)),
@@ -1281,10 +1290,10 @@ test_score_data =<span class="st"> </span>test_score_data <span class="op">%&gt;
 <span class="st">  </span><span class="kw">facet_grid</span>(type <span class="op">~</span><span class="st"> </span>., <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;CI&quot;</span>))</code></pre>
-<pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <p><img src="15-bootstrapping_files/figure-html/bootstrapping-55-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_CI_0.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="dv">3</span>)</code></pre>
-<pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(test_summary_data, <span class="kw">aes</span>(<span class="dt">x =</span> score)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_histogram</span>(
     <span class="dt">data =</span> test_score_data,
@@ -1302,10 +1311,10 @@ test_score_data =<span class="st"> </span>test_score_data <span class="op">%&gt;
 <span class="st">  </span><span class="kw">facet_grid</span>(type <span class="op">~</span><span class="st"> </span>., <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;CI&quot;</span>))</code></pre>
-<pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/bootstrapping-57-1.png" width="672" /></p>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_CI_1.png&quot;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height =</span> <span class="dv">3</span>)</code></pre>
-<pre><code>## Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<pre><code>Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-57-1.png" width="672" /></p>
 </div>
 <div id="bootstrap-permutation-hypothesis-tests" class="section level3">
 <h3><span class="header-section-number">15.4.2</span> Bootstrap (&amp; permutation) hypothesis tests</h3>
@@ -1329,22 +1338,22 @@ flip_data =<span class="st"> </span><span class="kw">data.frame</span>(<span cla
 <span class="kw">set.seed</span>(<span class="dv">0</span>)
 bootstrap_results =<span class="st"> </span><span class="kw">boot</span>(flip_data, get_mean_heads, <span class="dt">R =</span> <span class="dv">20000</span>)
 bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstrap_results)</code></pre>
-<pre><code>## Warning in boot.ci(bootstrap_results): bootstrap variances needed for
-## studentized intervals</code></pre>
+<pre><code>Warning in boot.ci(bootstrap_results): bootstrap variances needed for
+studentized intervals</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">bootstrap_CIs</code></pre>
-<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 20000 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = bootstrap_results)
-## 
-## Intervals : 
-## Level      Normal              Basic         
-## 95%   ( 0.6940,  1.0061 )   ( 0.7000,  1.0000 )  
-## 
-## Level     Percentile            BCa          
-## 95%   ( 0.70,  1.00 )   ( 0.55,  0.95 )  
-## Calculations and Intervals on Original Scale</code></pre>
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 20000 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = bootstrap_results)
+
+Intervals : 
+Level      Normal              Basic         
+95%   ( 0.6940,  1.0061 )   ( 0.7000,  1.0000 )  
+
+Level     Percentile            BCa          
+95%   ( 0.70,  1.00 )   ( 0.55,  0.95 )  
+Calculations and Intervals on Original Scale</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">flip_boot_plot =<span class="st"> </span><span class="kw">ggplot</span>(
   <span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">mean_flips =</span> bootstrap_results<span class="op">$</span>t),
   <span class="kw">aes</span>(<span class="dt">x =</span> mean_flips)
@@ -1381,20 +1390,20 @@ bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstra
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Boot. sampling dist.&quot;</span>)
 
 flip_boot_plot</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
 <p><img src="15-bootstrapping_files/figure-html/bootstrapping-61-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">flip_data_plot <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span>flip_boot_plot <span class="op">+</span>
 <span class="st">  </span><span class="kw">plot_layout</span>()</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/bootstrapping-62-1.png" width="672" /></p>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_test.png&quot;</span>, <span class="dt">width =</span> <span class="dv">5</span>, <span class="dt">height =</span> <span class="fl">2.5</span>)</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-62-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">bootstrap_CIs =<span class="st"> </span><span class="kw">boot.ci</span>(bootstrap_results, <span class="dt">conf =</span> <span class="fl">0.999</span>)</code></pre>
-<pre><code>## Warning in boot.ci(bootstrap_results, conf = 0.999): bootstrap variances
-## needed for studentized intervals</code></pre>
-<pre><code>## Warning in norm.inter(t, adj.alpha): extreme order statistics used as
-## endpoints</code></pre>
+<pre><code>Warning in boot.ci(bootstrap_results, conf = 0.999): bootstrap variances
+needed for studentized intervals</code></pre>
+<pre><code>Warning in norm.inter(t, adj.alpha): extreme order statistics used as
+endpoints</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">flip_boot_plot =<span class="st"> </span><span class="kw">ggplot</span>(
   <span class="dt">data =</span> <span class="kw">data.frame</span>(<span class="dt">mean_flips =</span> bootstrap_results<span class="op">$</span>t),
   <span class="kw">aes</span>(<span class="dt">x =</span> mean_flips)
@@ -1431,14 +1440,14 @@ flip_boot_plot</code></pre>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Boot. sampling dist.&quot;</span>)
 
 flip_boot_plot</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
 <p><img src="15-bootstrapping_files/figure-html/bootstrapping-63-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">flip_data_plot <span class="op">+</span><span class="st"> </span>flip_boot_plot <span class="op">+</span>
 <span class="st">  </span><span class="kw">plot_layout</span>()</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
-<p><img src="15-bootstrapping_files/figure-html/bootstrapping-64-1.png" width="672" /></p>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggsave</span>(<span class="st">&quot;figures/bootstrap_test_999.png&quot;</span>, <span class="dt">width=</span><span class="dv">5</span>, <span class="dt">height=</span><span class="fl">2.5</span>)</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<p><img src="15-bootstrapping_files/figure-html/bootstrapping-64-1.png" width="672" /></p>
 
 </div>
 </div>

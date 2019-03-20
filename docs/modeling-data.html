@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -608,7 +608,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span>
 <span class="kw">library</span>(<span class="st">&quot;magrittr&quot;</span>)   <span class="co"># for wrangling</span>
 <span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)  <span class="co"># for making figure panels</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -629,7 +635,7 @@ rmse =<span class="st"> </span>prediction <span class="op">%&gt;%</span><span cl
 <span class="st">  </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">print</span>() </code></pre>
-<pre><code>## [1] 1.183216</code></pre>
+<pre><code>[1] 1.183216</code></pre>
 </div>
 <div id="relationship-between-probability-and-likelihood" class="section level3">
 <h3><span class="header-section-number">9.2.2</span> Relationship between probability and likelihood</h3>
@@ -649,8 +655,8 @@ point =<span class="st"> </span><span class="dv">0</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-2</span><span class="op">:</span><span class="dv">2</span>,
                      <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">add =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>)))</code></pre>
-<div class="figure"><span id="fig:modeling-04-likelihood1"></span>
-<img src="09-modeling_data_files/figure-html/modeling-04-likelihood1-1.png" alt="Probability is the area under the curve of the density" width="672" />
+<div class="figure"><span id="fig:modeling-04"></span>
+<img src="09-modeling_data_files/figure-html/modeling-04-1.png" alt="Probability is the area under the curve of the density" width="672" />
 <p class="caption">
 Figure 9.1: Probability is the area under the curve of the density
 </p>
@@ -689,8 +695,8 @@ param_sd =<span class="st"> </span><span class="dv">1</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-2</span><span class="op">:</span><span class="dv">2</span>,
                      <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">add =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>)))</code></pre>
-<div class="figure"><span id="fig:modeling-05-likelihood2"></span>
-<img src="09-modeling_data_files/figure-html/modeling-05-likelihood2-1.png" alt="Likelihood is a particular value." width="672" />
+<div class="figure"><span id="fig:modeling-05"></span>
+<img src="09-modeling_data_files/figure-html/modeling-05-1.png" alt="Likelihood is a particular value." width="672" />
 <p class="caption">
 Figure 9.2: Likelihood is a particular value.
 </p>
@@ -739,8 +745,8 @@ p2 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">dat
 
 p1 <span class="op">+</span><span class="st"> </span>p2 <span class="op">+</span>
 <span class="st">  </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre>
-<div class="figure"><span id="fig:modeling-06-likelihood3"></span>
-<img src="09-modeling_data_files/figure-html/modeling-06-likelihood3-1.png" alt="Relationship between density and cumulative probability distribution." width="672" />
+<div class="figure"><span id="fig:modeling-06"></span>
+<img src="09-modeling_data_files/figure-html/modeling-06-1.png" alt="Relationship between density and cumulative probability distribution." width="672" />
 <p class="caption">
 Figure 9.3: Relationship between density and cumulative probability distribution.
 </p>
@@ -788,8 +794,8 @@ p2 =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">dat
 
 p1 <span class="op">+</span><span class="st"> </span>p2 <span class="op">+</span>
 <span class="st">  </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">1</span>)</code></pre>
-<div class="figure"><span id="fig:modeling-07-likelihood4"></span>
-<img src="09-modeling_data_files/figure-html/modeling-07-likelihood4-1.png" alt="The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution." width="672" />
+<div class="figure"><span id="fig:modeling-07"></span>
+<img src="09-modeling_data_files/figure-html/modeling-07-1.png" alt="The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution." width="672" />
 <p class="caption">
 Figure 9.4: The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution.
 </p>
@@ -837,18 +843,20 @@ point_red =<span class="st"> </span><span class="dv">0</span>
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;density&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">-2</span><span class="op">:</span><span class="dv">2</span>,
                      <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">add =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>)))</code></pre>
-<div class="figure"><span id="fig:modeling-08-likelihood5"></span>
-<img src="09-modeling_data_files/figure-html/modeling-08-likelihood5-1.png" alt="The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0." width="672" />
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">expand =</span> <span class="kw">expand_scale</span>(<span class="dt">add =</span> <span class="kw">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>)))
+
+(<span class="kw">pnorm</span>(point_red <span class="op">+</span><span class="st"> </span>margin) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(point_red <span class="op">-</span><span class="st"> </span>margin)) <span class="op">/</span><span class="st"> </span>
+<span class="st">  </span>(<span class="kw">pnorm</span>(point_blue <span class="op">+</span><span class="st"> </span>margin) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(point_blue <span class="op">-</span><span class="st"> </span>margin)) 
+
+<span class="kw">dnorm</span>(point_red) <span class="op">/</span><span class="st"> </span><span class="kw">dnorm</span>(point_blue)</code></pre>
+<pre><code>[1] 1.64598
+[1] 1.648721</code></pre>
+<div class="figure"><span id="fig:modeling-08"></span>
+<img src="09-modeling_data_files/figure-html/modeling-08-1.png" alt="The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0." width="672" />
 <p class="caption">
 Figure 9.5: The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0.
 </p>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r">(<span class="kw">pnorm</span>(point_red <span class="op">+</span><span class="st"> </span>margin) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(point_red <span class="op">-</span><span class="st"> </span>margin)) <span class="op">/</span><span class="st"> </span>
-<span class="st">  </span>(<span class="kw">pnorm</span>(point_blue <span class="op">+</span><span class="st"> </span>margin) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(point_blue <span class="op">-</span><span class="st"> </span>margin)) </code></pre>
-<pre><code>## [1] 1.64598</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dnorm</span>(point_red) <span class="op">/</span><span class="st"> </span><span class="kw">dnorm</span>(point_blue)</code></pre>
-<pre><code>## [1] 1.648721</code></pre>
 </div>
 </div>
 <div id="modeling-data-1" class="section level2">
@@ -1196,14 +1204,14 @@ df.sampling_distribution_means =<span class="st"> </span>df.sampling_distributio
 <h2><span class="header-section-number">9.4</span> Hypothesis testing: “One-sample t-test”</h2>
 <pre class="sourceCode r"><code class="sourceCode r">df.internet =<span class="st"> </span><span class="kw">read_table2</span>(<span class="dt">file =</span> <span class="st">&quot;data/internet_access.txt&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">clean_names</span>()</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   State = col_character(),
-##   Internet = col_double(),
-##   College = col_double(),
-##   Auto = col_double(),
-##   Density = col_double()
-## )</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  State = col_character(),
+  Internet = col_double(),
+  College = col_double(),
+  Auto = col_double(),
+  Density = col_double()
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.internet <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">i =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(i, internet, <span class="kw">everything</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1541,17 +1549,17 @@ Figure 9.11: The F distribution
 </div>
 <p>We’ve implemented a one sample t-test (compare the p-value here to the one I computed above using PRE and the F statistic).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(df.internet<span class="op">$</span>internet, <span class="dt">mu =</span> <span class="dv">75</span>)</code></pre>
-<pre><code>## 
-##  One Sample t-test
-## 
-## data:  df.internet$internet
-## t = -2.9502, df = 49, p-value = 0.004859
-## alternative hypothesis: true mean is not equal to 75
-## 95 percent confidence interval:
-##  71.3115 74.3005
-## sample estimates:
-## mean of x 
-##    72.806</code></pre>
+<pre><code>
+    One Sample t-test
+
+data:  df.internet$internet
+t = -2.9502, df = 49, p-value = 0.004859
+alternative hypothesis: true mean is not equal to 75
+95 percent confidence interval:
+ 71.3115 74.3005
+sample estimates:
+mean of x 
+   72.806 </code></pre>
 </div>
 <div id="additional-resources-7" class="section level2">
 <h2><span class="header-section-number">9.5</span> Additional resources</h2>

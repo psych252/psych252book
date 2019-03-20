@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -607,7 +607,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span>
 <span class="kw">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span>
 <span class="kw">library</span>(<span class="st">&quot;modelr&quot;</span>)     <span class="co"># for permutation test </span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -643,28 +649,28 @@ fit.glm =<span class="st"> </span><span class="kw">glm</span>(<span class="dt">f
 <span class="co"># model summary </span>
 fit.glm <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## glm(formula = accepted ~ 1 + sex, family = &quot;binomial&quot;, data = df.conference)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -0.9723  -0.9723  -0.8689   1.3974   1.5213  
-## 
-## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -0.7797     0.1326  -5.881 4.07e-09 ***
-## sexmale       0.2759     0.1545   1.786   0.0741 .  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 1228.9  on 940  degrees of freedom
-## Residual deviance: 1225.6  on 939  degrees of freedom
-## AIC: 1229.6
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
+<pre><code>
+Call:
+glm(formula = accepted ~ 1 + sex, family = &quot;binomial&quot;, data = df.conference)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.9723  -0.9723  -0.8689   1.3974   1.5213  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  -0.7797     0.1326  -5.881 4.07e-09 ***
+sexmale       0.2759     0.1545   1.786   0.0741 .  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1228.9  on 940  degrees of freedom
+Residual deviance: 1225.6  on 939  degrees of freedom
+AIC: 1229.6
+
+Number of Fisher Scoring iterations: 4</code></pre>
 <p>The results of the logistic regression are not quite significant (at least when considering a two-tailed test) with <span class="math inline">\(p = .0741\)</span>.</p>
 <p>Let’s run a permutation test (as suggested by the tweet I showed in class):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make example reproducible </span>
@@ -694,7 +700,7 @@ df.permutation =<span class="st"> </span>df.conference <span class="op">%&gt;%</
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">difference =</span> <span class="kw">map_dbl</span>(perm, <span class="op">~</span><span class="st"> </span><span class="kw">fun.difference</span>(.)))</code></pre>
 <p>Let’s calculate the p-value based on the permutation test:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(df.permutation<span class="op">$</span>difference <span class="op">&gt;</span><span class="st"> </span>difference) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(df.permutation)</code></pre>
-<pre><code>## [1] 0.026</code></pre>
+<pre><code>[1] 0.026</code></pre>
 <p>And let’s visualize the result (showing our observed value and comparing it to the sampling distribution under the null hypothesis):</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.permutation <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .,

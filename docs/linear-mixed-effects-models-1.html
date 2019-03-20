@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -609,7 +609,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)    <span class="co"># for tidying up linear models </span>
 <span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)    <span class="co"># for making figure panels</span>
 <span class="kw">library</span>(<span class="st">&quot;lme4&quot;</span>)    <span class="co"># for linear mixed effects models</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -646,25 +652,25 @@ fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formul
 
 <span class="co"># print model summary </span>
 fit <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = y ~ 1 + x1 + x2, data = df.data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -0.9290 -0.3084 -0.0716  0.2676  1.1659 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   0.9953     0.1395   7.133 1.77e-10 ***
-## x1            0.4654     0.1817   2.561  0.01198 *  
-## x2            0.5072     0.1789   2.835  0.00558 ** 
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 0.4838 on 97 degrees of freedom
-## Multiple R-squared:  0.1327, Adjusted R-squared:  0.1149 
-## F-statistic: 7.424 on 2 and 97 DF,  p-value: 0.001</code></pre>
+<pre><code>
+Call:
+lm(formula = y ~ 1 + x1 + x2, data = df.data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.9290 -0.3084 -0.0716  0.2676  1.1659 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   0.9953     0.1395   7.133 1.77e-10 ***
+x1            0.4654     0.1817   2.561  0.01198 *  
+x2            0.5072     0.1789   2.835  0.00558 ** 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.4838 on 97 degrees of freedom
+Multiple R-squared:  0.1327,    Adjusted R-squared:  0.1149 
+F-statistic: 7.424 on 2 and 97 DF,  p-value: 0.001</code></pre>
 <p>Let’s visualize the data:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.data <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .,
@@ -687,15 +693,15 @@ model_augmented =<span class="st"> </span><span class="kw">lm</span>(<span class
 
 <span class="co"># compare models using the F-test</span>
 <span class="kw">anova</span>(model_compact, model_augmented)</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: y ~ 1
-## Model 2: y ~ 1 + x1 + x2
-##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)   
-## 1     99 26.175                              
-## 2     97 22.700  2    3.4746 7.4236  0.001 **
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Model 1: y ~ 1
+Model 2: y ~ 1 + x1 + x2
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)   
+1     99 26.175                              
+2     97 22.700  2    3.4746 7.4236  0.001 **
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Note how the result of the F-test using the <code>anova()</code> function which compares the two models is identical to the F-statistic reported at the end of the <code>summary</code> function.</p>
 </div>
 <div id="test-for-individual-predictors" class="section level4">
@@ -710,15 +716,15 @@ model_augmented =<span class="st"> </span><span class="kw">lm</span>(<span class
 
 <span class="co"># compare models using the F-test</span>
 <span class="kw">anova</span>(model_compact, model_augmented)</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: y ~ 1 + x2
-## Model 2: y ~ 1 + x1 + x2
-##   Res.Df    RSS Df Sum of Sq     F  Pr(&gt;F)  
-## 1     98 24.235                             
-## 2     97 22.700  1    1.5347 6.558 0.01198 *
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Model 1: y ~ 1 + x2
+Model 2: y ~ 1 + x1 + x2
+  Res.Df    RSS Df Sum of Sq     F  Pr(&gt;F)  
+1     98 24.235                             
+2     97 22.700  1    1.5347 6.558 0.01198 *
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Note how the p-value that we get from the F-test is equivalent to the one that we get from the t-test reported in the <code>summary()</code> function. The F-test statistic (in the <code>anova()</code> result) and the t-value (in the <code>summary()</code> of the linear model) are deterministically related. In fact, the relationship is just:</p>
 <p><span class="math display">\[
 t = \sqrt{F}
@@ -739,11 +745,12 @@ f_value =<span class="st"> </span><span class="kw">anova</span>(model_compact, m
 <span class="st">  </span>.[<span class="dv">2</span>]
 
 <span class="co"># t-value </span>
-<span class="kw">print</span>(<span class="kw">str_c</span>(<span class="st">&quot;t_value: &quot;</span>, t_value))</code></pre>
-<pre><code>## [1] &quot;t_value: 2.56085255904998&quot;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># square root of f_value </span>
+<span class="kw">print</span>(<span class="kw">str_c</span>(<span class="st">&quot;t_value: &quot;</span>, t_value))
+
+<span class="co"># square root of f_value </span>
 <span class="kw">print</span>(<span class="kw">str_c</span>(<span class="st">&quot;sqrt of f_value: &quot;</span>, <span class="kw">sqrt</span>(f_value)))</code></pre>
-<pre><code>## [1] &quot;sqrt of f_value: 2.56085255904998&quot;</code></pre>
+<pre><code>[1] &quot;t_value: 2.56085255904998&quot;
+[1] &quot;sqrt of f_value: 2.56085255904998&quot;</code></pre>
 <p>Yip, they are the same.</p>
 </div>
 </div>
@@ -760,8 +767,8 @@ df.dependence =<span class="st"> </span><span class="kw">data_frame</span>(
   <span class="dt">condition2 =</span> condition1 <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="fl">0.2</span>, <span class="dt">sd =</span> <span class="fl">0.1</span>)
 ) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">condition2shuffled =</span> <span class="kw">sample</span>(condition2)) <span class="co"># shuffles the condition label</span></code></pre>
-<pre><code>## Warning: `data_frame()` is deprecated, use `tibble()`.
-## This warning is displayed once per session.</code></pre>
+<pre><code>Warning: `data_frame()` is deprecated, use `tibble()`.
+This warning is displayed once per session.</code></pre>
 <p>Let’s visualize the original and shuffled data set:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.dependence <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="st">&quot;condition&quot;</span>, <span class="st">&quot;value&quot;</span>, <span class="op">-</span>participant) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -808,69 +815,71 @@ df.shuffled =<span class="st"> </span>df.dependence <span class="op">%&gt;%</spa
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># linear model (assuming independent samples)</span>
 <span class="kw">lm</span>(<span class="dt">formula =</span> value <span class="op">~</span><span class="st"> </span>condition,
    <span class="dt">data =</span> df.original) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summary</span>() </code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = value ~ condition, data = df.original)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2.4100 -0.5530  0.1945  0.5685  1.4578 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)
-## (Intercept)   0.1905     0.2025   0.941    0.353
-## condition2    0.1994     0.2864   0.696    0.491
-## 
-## Residual standard error: 0.9058 on 38 degrees of freedom
-## Multiple R-squared:  0.01259,    Adjusted R-squared:  -0.0134 
-## F-statistic: 0.4843 on 1 and 38 DF,  p-value: 0.4907</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(df.original<span class="op">$</span>value[df.original<span class="op">$</span>condition <span class="op">==</span><span class="st"> &quot;1&quot;</span>],
+<span class="st">  </span><span class="kw">summary</span>() 
+
+<span class="kw">t.test</span>(df.original<span class="op">$</span>value[df.original<span class="op">$</span>condition <span class="op">==</span><span class="st"> &quot;1&quot;</span>],
        df.original<span class="op">$</span>value[df.original<span class="op">$</span>condition <span class="op">==</span><span class="st"> &quot;2&quot;</span>],
        <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,
        <span class="dt">paired =</span> F
 )</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  df.original$value[df.original$condition == &quot;1&quot;] and df.original$value[df.original$condition == &quot;2&quot;]
-## t = -0.69595, df = 37.99, p-value = 0.4907
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -0.7792396  0.3805339
-## sample estimates:
-## mean of x mean of y 
-## 0.1905239 0.3898767</code></pre>
+<pre><code>
+Call:
+lm(formula = value ~ condition, data = df.original)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.4100 -0.5530  0.1945  0.5685  1.4578 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)   0.1905     0.2025   0.941    0.353
+condition2    0.1994     0.2864   0.696    0.491
+
+Residual standard error: 0.9058 on 38 degrees of freedom
+Multiple R-squared:  0.01259,   Adjusted R-squared:  -0.0134 
+F-statistic: 0.4843 on 1 and 38 DF,  p-value: 0.4907
+
+
+    Welch Two Sample t-test
+
+data:  df.original$value[df.original$condition == &quot;1&quot;] and df.original$value[df.original$condition == &quot;2&quot;]
+t = -0.69595, df = 37.99, p-value = 0.4907
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.7792396  0.3805339
+sample estimates:
+mean of x mean of y 
+0.1905239 0.3898767 </code></pre>
 <p>The mean difference between the conditions is extremely small, and non-significant (if we ignore the dependence in the data).</p>
 <p>Let’s fit a linear mixed effects model with a random intercept for each participant:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit a linear mixed effects model </span>
 <span class="kw">lmer</span>(<span class="dt">formula =</span> value <span class="op">~</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>participant),
      <span class="dt">data =</span> df.original) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
-## Formula: value ~ condition + (1 | participant)
-##    Data: df.original
-## 
-## REML criterion at convergence: 17.3
-## 
-## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -1.55996 -0.36399 -0.03341  0.34400  1.65823 
-## 
-## Random effects:
-##  Groups      Name        Variance Std.Dev.
-##  participant (Intercept) 0.816722 0.90373 
-##  Residual                0.003796 0.06161 
-## Number of obs: 40, groups:  participant, 20
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)  0.19052    0.20255   0.941
-## condition2   0.19935    0.01948  10.231
-## 
-## Correlation of Fixed Effects:
-##            (Intr)
-## condition2 -0.048</code></pre>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: value ~ condition + (1 | participant)
+   Data: df.original
+
+REML criterion at convergence: 17.3
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.55996 -0.36399 -0.03341  0.34400  1.65823 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 0.816722 0.90373 
+ Residual                0.003796 0.06161 
+Number of obs: 40, groups:  participant, 20
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  0.19052    0.20255   0.941
+condition2   0.19935    0.01948  10.231
+
+Correlation of Fixed Effects:
+           (Intr)
+condition2 -0.048</code></pre>
 <p>To test for whether condition is a significant predictor, we need to use our model comparison approach:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit models</span>
 fit.compact =<span class="st"> </span><span class="kw">lmer</span>(<span class="dt">formula =</span> value <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>participant),
@@ -880,35 +889,35 @@ fit.augmented =<span class="st"> </span><span class="kw">lmer</span>(<span class
 
 <span class="co"># compare via Chisq-test</span>
 <span class="kw">anova</span>(fit.compact, fit.augmented)</code></pre>
-<pre><code>## refitting model(s) with ML (instead of REML)</code></pre>
-<pre><code>## Data: df.original
-## Models:
-## fit.compact: value ~ 1 + (1 | participant)
-## fit.augmented: value ~ condition + (1 | participant)
-##               Df    AIC    BIC   logLik deviance  Chisq Chi Df Pr(&gt;Chisq)
-## fit.compact    3 53.315 58.382 -23.6575   47.315                         
-## fit.augmented  4 17.849 24.605  -4.9247    9.849 37.466      1  9.304e-10
-##                  
-## fit.compact      
-## fit.augmented ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+<pre><code>Data: df.original
+Models:
+fit.compact: value ~ 1 + (1 | participant)
+fit.augmented: value ~ condition + (1 | participant)
+              Df    AIC    BIC   logLik deviance  Chisq Chi Df Pr(&gt;Chisq)
+fit.compact    3 53.315 58.382 -23.6575   47.315                         
+fit.augmented  4 17.849 24.605  -4.9247    9.849 37.466      1  9.304e-10
+                 
+fit.compact      
+fit.augmented ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This result is identical to running a paired samples t-test:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(df.original<span class="op">$</span>value[df.original<span class="op">$</span>condition <span class="op">==</span><span class="st"> &quot;1&quot;</span>],
        df.original<span class="op">$</span>value[df.original<span class="op">$</span>condition <span class="op">==</span><span class="st"> &quot;2&quot;</span>],
        <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,
        <span class="dt">paired =</span> T)</code></pre>
-<pre><code>## 
-##  Paired t-test
-## 
-## data:  df.original$value[df.original$condition == &quot;1&quot;] and df.original$value[df.original$condition == &quot;2&quot;]
-## t = -10.231, df = 19, p-value = 3.636e-09
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -0.2401340 -0.1585717
-## sample estimates:
-## mean of the differences 
-##              -0.1993528</code></pre>
+<pre><code>
+    Paired t-test
+
+data:  df.original$value[df.original$condition == &quot;1&quot;] and df.original$value[df.original$condition == &quot;2&quot;]
+t = -10.231, df = 19, p-value = 3.636e-09
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.2401340 -0.1585717
+sample estimates:
+mean of the differences 
+             -0.1993528 </code></pre>
 <p>But, unlike in the paired samples t-test, the linear mixed effects model explicitly models the variation between participants, and it’s a much more flexible approach for modeling dependence in data.</p>
 <p>Let’s fit a linear model and a linear mixed effects model to the original (non-shuffled) data.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># model assuming independence</span>
@@ -1015,19 +1024,19 @@ fit.augmented =<span class="st"> </span><span class="kw">lmer</span>(<span class
 <span class="co"># compare models</span>
 <span class="co"># note: the lmer model has to be supplied first </span>
 <span class="kw">anova</span>(fit.augmented, fit.compact) </code></pre>
-<pre><code>## refitting model(s) with ML (instead of REML)</code></pre>
-<pre><code>## Data: df.original
-## Models:
-## fit.compact: value ~ 1 + condition
-## fit.augmented: value ~ 1 + condition + (1 | participant)
-##               Df     AIC     BIC  logLik deviance  Chisq Chi Df Pr(&gt;Chisq)
-## fit.compact    3 109.551 114.617 -51.775  103.551                         
-## fit.augmented  4  17.849  24.605  -4.925    9.849 93.701      1  &lt; 2.2e-16
-##                  
-## fit.compact      
-## fit.augmented ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+<pre><code>Data: df.original
+Models:
+fit.compact: value ~ 1 + condition
+fit.augmented: value ~ 1 + condition + (1 | participant)
+              Df     AIC     BIC  logLik deviance  Chisq Chi Df Pr(&gt;Chisq)
+fit.compact    3 109.551 114.617 -51.775  103.551                         
+fit.augmented  4  17.849  24.605  -4.925    9.849 93.701      1  &lt; 2.2e-16
+                 
+fit.compact      
+fit.augmented ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Yes, the likelihood of the data given the linear mixed effects model is significantly higher compared to its likelihood given the linear model.</p>
 </div>
 <div id="additional-resources-13" class="section level2">

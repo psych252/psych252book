@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -614,7 +614,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;NHANES&quot;</span>)     <span class="co"># data set </span>
 <span class="kw">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span>
 <span class="kw">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -772,8 +778,8 @@ df.sampling_distribution =<span class="st"> </span><span class="kw">matrix</span
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">draw =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(sample, draw, number) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ungroup</span>()</code></pre>
-<pre><code>## Warning: `as_tibble.matrix()` requires a matrix with column names or a `.name_repair` argument. Using compatibility `.name_repair`.
-## This warning is displayed once per session.</code></pre>
+<pre><code>Warning: `as_tibble.matrix()` requires a matrix with column names or a `.name_repair` argument. Using compatibility `.name_repair`.
+This warning is displayed once per session.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># turn the data frame into long format and calculate the means of each sample</span>
 df.sampling_distribution_means =<span class="st"> </span>df.sampling_distribution <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(sample) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1465,10 +1471,10 @@ df.permutation <span class="op">%&gt;%</span><span class="st"> </span>
             <span class="dt">sd =</span> <span class="kw">sd</span>(performance)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">diff =</span> <span class="kw">diff</span>(mean))</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##      diff
-##     &lt;dbl&gt;
-## 1 -0.0223</code></pre>
+<pre><code># A tibble: 1 x 1
+     diff
+    &lt;dbl&gt;
+1 -0.0223</code></pre>
 <p>Here, the difference between the two conditions is 0.0223078.</p>
 <p>After randomly shuffling the condition labels, this is how the results would look like:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.permutation, <span class="kw">aes</span>(<span class="dt">x =</span> permutation, <span class="dt">y =</span> performance))<span class="op">+</span>
@@ -1515,16 +1521,16 @@ df.permutations =<span class="st"> </span><span class="kw">tibble</span>(
                      <span class="dt">labels =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="fl">0.5</span>),
                      <span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F, <span class="dt">clip =</span> <span class="st">&quot;off&quot;</span>)</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (geom_bar).</code></pre>
 <p><img src="08-simulation2_files/figure-html/simulation2-29-1.png" width="672" /></p>
 <p>And we can then simply calculate the p-value by using some basic data wrangling (i.e. finding the proportion of differences that were as or more extreme than the one we observed).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#calculate p-value of our observed result</span>
 df.permutations <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p_value =</span> <span class="kw">sum</span>(mean_difference <span class="op">&lt;=</span><span class="st"> </span>difference_actual)<span class="op">/</span><span class="kw">n</span>())</code></pre>
-<pre><code>## # A tibble: 1 x 1
-##   p_value
-##     &lt;dbl&gt;
-## 1   0.006</code></pre>
+<pre><code># A tibble: 1 x 1
+  p_value
+    &lt;dbl&gt;
+1   0.006</code></pre>
 </div>
 </div>
 <div id="confidence-intervals" class="section level2">

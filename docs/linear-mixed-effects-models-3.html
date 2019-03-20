@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -606,12 +606,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span>
 <span class="kw">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span>
 <span class="kw">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span>
-<span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)    <span class="co"># for tidying up linear models </span>
-<span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)    <span class="co"># for making figure panels</span>
-<span class="kw">library</span>(<span class="st">&quot;lme4&quot;</span>)    <span class="co"># for linear mixed effects models</span>
-<span class="kw">library</span>(<span class="st">&quot;modelr&quot;</span>)    <span class="co"># for bootstrapping</span>
-<span class="kw">library</span>(<span class="st">&quot;boot&quot;</span>)    <span class="co"># also for bootstrapping</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># for tidying up linear models </span>
+<span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)  <span class="co"># for making figure panels</span>
+<span class="kw">library</span>(<span class="st">&quot;lme4&quot;</span>)       <span class="co"># for linear mixed effects models</span>
+<span class="kw">library</span>(<span class="st">&quot;modelr&quot;</span>)     <span class="co"># for bootstrapping</span>
+<span class="kw">library</span>(<span class="st">&quot;boot&quot;</span>)       <span class="co"># also for bootstrapping</span>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -720,30 +726,30 @@ fit.mixed =<span class="st"> </span><span class="kw">lmer</span>(<span class="dt
                 <span class="dt">data =</span> df.mixed)
 
 fit.mixed <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
-## Formula: value ~ 1 + condition + (1 | participant)
-##    Data: df.mixed
-## 
-## REML criterion at convergence: 165.6
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -1.6437 -0.4510 -0.0246  0.4987  1.5265 
-## 
-## Random effects:
-##  Groups      Name        Variance Std.Dev.
-##  participant (Intercept) 21.5142  4.6383  
-##  Residual                 0.3521  0.5934  
-## Number of obs: 40, groups:  participant, 20
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)   7.2229     1.0456   6.908
-## condition1    1.6652     0.1876   8.875
-## 
-## Correlation of Fixed Effects:
-##            (Intr)
-## condition1 -0.090</code></pre>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: value ~ 1 + condition + (1 | participant)
+   Data: df.mixed
+
+REML criterion at convergence: 165.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.6437 -0.4510 -0.0246  0.4987  1.5265 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 21.5142  4.6383  
+ Residual                 0.3521  0.5934  
+Number of obs: 40, groups:  participant, 20
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   7.2229     1.0456   6.908
+condition1    1.6652     0.1876   8.875
+
+Correlation of Fixed Effects:
+           (Intr)
+condition1 -0.090</code></pre>
 <p>Let’s look at the model’s predictions:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.mixed <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
@@ -781,32 +787,32 @@ fit.grouped =<span class="st"> </span><span class="kw">lmer</span>(<span class="
                 <span class="dt">data =</span> df.mixed)
 
 fit.grouped <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
-## Formula: value ~ 1 + group + condition + (1 | participant)
-##    Data: df.mixed
-## 
-## REML criterion at convergence: 83.7
-## 
-## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -1.56168 -0.69876  0.05887  0.50419  2.30259 
-## 
-## Random effects:
-##  Groups      Name        Variance Std.Dev.
-##  participant (Intercept) 0.1147   0.3387  
-##  Residual                0.3521   0.5934  
-## Number of obs: 40, groups:  participant, 20
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)  -6.8299     0.4055 -16.842
-## group         9.0663     0.2424  37.409
-## condition1    1.6652     0.1876   8.875
-## 
-## Correlation of Fixed Effects:
-##            (Intr) group 
-## group      -0.926       
-## condition1 -0.231  0.000</code></pre>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: value ~ 1 + group + condition + (1 | participant)
+   Data: df.mixed
+
+REML criterion at convergence: 83.7
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.56168 -0.69876  0.05887  0.50419  2.30259 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 0.1147   0.3387  
+ Residual                0.3521   0.5934  
+Number of obs: 40, groups:  participant, 20
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  -6.8299     0.4055 -16.842
+group         9.0663     0.2424  37.409
+condition1    1.6652     0.1876   8.875
+
+Correlation of Fixed Effects:
+           (Intr) group 
+group      -0.926       
+condition1 -0.231  0.000</code></pre>
 <p>Note how the variance of the random intercepts is much smaller now that we’ve taken the group structure in the data into account.</p>
 <p>Let’s visualize the model’s predictions:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.grouped <span class="op">%&gt;%</span>
@@ -872,32 +878,32 @@ fit.variance =<span class="st"> </span><span class="kw">lmer</span>(<span class=
                 <span class="dt">data =</span> df.variance)
 
 fit.variance <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
-## Formula: value ~ 1 + group + condition + (1 | participant)
-##    Data: df.variance
-## 
-## REML criterion at convergence: 250
-## 
-## Scaled residuals: 
-##      Min       1Q   Median       3Q      Max 
-## -2.70344 -0.21278  0.07355  0.43873  1.39493 
-## 
-## Random effects:
-##  Groups      Name        Variance Std.Dev.
-##  participant (Intercept) 17.60    4.196   
-##  Residual                26.72    5.169   
-## Number of obs: 40, groups:  participant, 20
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept) -26.5805     4.1525  -6.401
-## group        29.6200     2.5010  11.843
-## condition1    0.1853     1.6346   0.113
-## 
-## Correlation of Fixed Effects:
-##            (Intr) group 
-## group      -0.934       
-## condition1 -0.197  0.000</code></pre>
+<pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
+Formula: value ~ 1 + group + condition + (1 | participant)
+   Data: df.variance
+
+REML criterion at convergence: 250
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.70344 -0.21278  0.07355  0.43873  1.39493 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 17.60    4.196   
+ Residual                26.72    5.169   
+Number of obs: 40, groups:  participant, 20
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) -26.5805     4.1525  -6.401
+group        29.6200     2.5010  11.843
+condition1    0.1853     1.6346   0.113
+
+Correlation of Fixed Effects:
+           (Intr) group 
+group      -0.934       
+condition1 -0.197  0.000</code></pre>
 <p>Look at the data and model predictions:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.variance <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
@@ -955,24 +961,24 @@ fit.params =<span class="st"> </span><span class="kw">tidy</span>(fit.complete)
 
 fit.complete <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = reaction ~ days, data = df.sleep)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -110.646  -27.951    1.829   26.388  139.875 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  252.321      6.406  39.389  &lt; 2e-16 ***
-## days          10.328      1.210   8.537 5.48e-15 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 47.43 on 181 degrees of freedom
-## Multiple R-squared:  0.2871, Adjusted R-squared:  0.2831 
-## F-statistic: 72.88 on 1 and 181 DF,  p-value: 5.484e-15</code></pre>
+<pre><code>
+Call:
+lm(formula = reaction ~ days, data = df.sleep)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-110.646  -27.951    1.829   26.388  139.875 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  252.321      6.406  39.389  &lt; 2e-16 ***
+days          10.328      1.210   8.537 5.48e-15 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 47.43 on 181 degrees of freedom
+Multiple R-squared:  0.2871,    Adjusted R-squared:  0.2831 
+F-statistic: 72.88 on 1 and 181 DF,  p-value: 5.484e-15</code></pre>
 <p>And let’s visualize the predictions of this model.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualization (aggregate) </span>
 <span class="kw">ggplot</span>(<span class="dt">data =</span> df.sleep,
@@ -1063,8 +1069,8 @@ df.no_pooling =<span class="st"> </span>df.sleep <span class="op">%&gt;%</span><
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
         <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>))</code></pre>
-<pre><code>## geom_path: Each group consists of only one observation. Do you need to
-## adjust the group aesthetic?</code></pre>
+<pre><code>geom_path: Each group consists of only one observation. Do you need to
+adjust the group aesthetic?</code></pre>
 <p><img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-26-1.png" width="672" /></p>
 <p>As we can see, the lines for each participant are different. We’ve allowed for the intercept as well as the relationship between sleep deprivation and reaction time to be different between participants.</p>
 </div>
@@ -1089,8 +1095,8 @@ df.no_pooling =<span class="st"> </span>df.sleep <span class="op">%&gt;%</span><
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
         <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>))</code></pre>
-<pre><code>## geom_path: Each group consists of only one observation. Do you need to
-## adjust the group aesthetic?</code></pre>
+<pre><code>geom_path: Each group consists of only one observation. Do you need to
+adjust the group aesthetic?</code></pre>
 <p><img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-28-1.png" width="672" /></p>
 <p>Now, all the lines are parallel but the intercept differs between participants.</p>
 </div>
@@ -1115,8 +1121,8 @@ df.no_pooling =<span class="st"> </span>df.sleep <span class="op">%&gt;%</span><
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
         <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>))</code></pre>
-<pre><code>## geom_path: Each group consists of only one observation. Do you need to
-## adjust the group aesthetic?</code></pre>
+<pre><code>geom_path: Each group consists of only one observation. Do you need to
+adjust the group aesthetic?</code></pre>
 <p><img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-30-1.png" width="672" /></p>
 <p>Here, all the lines have the same starting point (i.e. the same intercept) but the slopes are different.</p>
 </div>
@@ -1185,8 +1191,8 @@ df.pooling =<span class="st"> </span>df.partial_pooling <span class="op">%&gt;%<
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
         <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>))</code></pre>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
+<pre><code>Warning: Removed 4 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
 <p><img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-32-1.png" width="672" /></p>
 <p>To better see the differences between the approaches, let’s focus on the predictions for the participants with incomplete data:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># subselection</span>
@@ -1209,8 +1215,8 @@ df.pooling =<span class="st"> </span>df.partial_pooling <span class="op">%&gt;%<
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>),
         <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>))</code></pre>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
+<pre><code>Warning: Removed 4 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
 <p><img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-33-1.png" width="672" /></p>
 </div>
 <div id="coefficients" class="section level3">
@@ -1218,89 +1224,89 @@ df.pooling =<span class="st"> </span>df.partial_pooling <span class="op">%&gt;%<
 <p>One good way to get a sense for what the different models are doing is by taking a look at the coefficients:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.complete_pooling <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">coef</span>()</code></pre>
-<pre><code>## (Intercept)        days 
-##   252.32070    10.32766</code></pre>
+<pre><code>(Intercept)        days 
+  252.32070    10.32766 </code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">fit.random_intercept <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">coef</span>()</code></pre>
-<pre><code>## $subject
-##     (Intercept)     days
-## 308    292.2749 10.43191
-## 309    174.0559 10.43191
-## 310    188.7454 10.43191
-## 330    256.0247 10.43191
-## 331    261.8141 10.43191
-## 332    259.8262 10.43191
-## 333    268.0765 10.43191
-## 334    248.6471 10.43191
-## 335    206.5096 10.43191
-## 337    323.5643 10.43191
-## 349    230.5114 10.43191
-## 350    265.6957 10.43191
-## 351    243.7988 10.43191
-## 352    287.8850 10.43191
-## 369    258.6454 10.43191
-## 370    245.2931 10.43191
-## 371    248.3508 10.43191
-## 372    269.6861 10.43191
-## 373    248.2086 10.43191
-## 374    273.9400 10.43191
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;coef.mer&quot;</code></pre>
+<pre><code>$subject
+    (Intercept)     days
+308    292.2749 10.43191
+309    174.0559 10.43191
+310    188.7454 10.43191
+330    256.0247 10.43191
+331    261.8141 10.43191
+332    259.8262 10.43191
+333    268.0765 10.43191
+334    248.6471 10.43191
+335    206.5096 10.43191
+337    323.5643 10.43191
+349    230.5114 10.43191
+350    265.6957 10.43191
+351    243.7988 10.43191
+352    287.8850 10.43191
+369    258.6454 10.43191
+370    245.2931 10.43191
+371    248.3508 10.43191
+372    269.6861 10.43191
+373    248.2086 10.43191
+374    273.9400 10.43191
+
+attr(,&quot;class&quot;)
+[1] &quot;coef.mer&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">fit.random_slope <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">coef</span>()</code></pre>
-<pre><code>## $subject
-##     (Intercept)       days
-## 308    252.2965 19.9526801
-## 309    252.2965 -4.3719650
-## 310    252.2965 -0.9574726
-## 330    252.2965  8.9909957
-## 331    252.2965 10.5394285
-## 332    252.2965 11.3994289
-## 333    252.2965 12.6074020
-## 334    252.2965 10.3413879
-## 335    252.2965 -0.5722073
-## 337    252.2965 24.2246485
-## 349    252.2965  7.7702676
-## 350    252.2965 15.0661415
-## 351    252.2965  7.9675415
-## 352    252.2965 17.0002999
-## 369    252.2965 11.6982767
-## 370    252.2965 11.3939807
-## 371    252.2965  9.4535879
-## 372    252.2965 13.4569059
-## 373    252.2965 10.4142695
-## 374    252.2965 11.9097917
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;coef.mer&quot;</code></pre>
+<pre><code>$subject
+    (Intercept)       days
+308    252.2965 19.9526801
+309    252.2965 -4.3719650
+310    252.2965 -0.9574726
+330    252.2965  8.9909957
+331    252.2965 10.5394285
+332    252.2965 11.3994289
+333    252.2965 12.6074020
+334    252.2965 10.3413879
+335    252.2965 -0.5722073
+337    252.2965 24.2246485
+349    252.2965  7.7702676
+350    252.2965 15.0661415
+351    252.2965  7.9675415
+352    252.2965 17.0002999
+369    252.2965 11.6982767
+370    252.2965 11.3939807
+371    252.2965  9.4535879
+372    252.2965 13.4569059
+373    252.2965 10.4142695
+374    252.2965 11.9097917
+
+attr(,&quot;class&quot;)
+[1] &quot;coef.mer&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">fit.random_intercept_slope <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">coef</span>()</code></pre>
-<pre><code>## $subject
-##     (Intercept)       days
-## 308    253.9479 19.6264139
-## 309    211.7328  1.7319567
-## 310    213.1579  4.9061843
-## 330    275.1425  5.6435987
-## 331    273.7286  7.3862680
-## 332    260.6504 10.1632535
-## 333    268.3684 10.2245979
-## 334    244.5523 11.4837825
-## 335    251.3700 -0.3355554
-## 337    286.2321 19.1090061
-## 349    226.7662 11.5531963
-## 350    238.7807 17.0156766
-## 351    256.2344  7.4119501
-## 352    272.3512 13.9920698
-## 369    254.9484 11.2985741
-## 370    226.3701 15.2027922
-## 371    252.5051  9.4335432
-## 372    263.8916 11.7253342
-## 373    248.9752 10.3915245
-## 374    271.1451 11.0782697
-## 
-## attr(,&quot;class&quot;)
-## [1] &quot;coef.mer&quot;</code></pre>
+<pre><code>$subject
+    (Intercept)       days
+308    253.9479 19.6264139
+309    211.7328  1.7319567
+310    213.1579  4.9061843
+330    275.1425  5.6435987
+331    273.7286  7.3862680
+332    260.6504 10.1632535
+333    268.3684 10.2245979
+334    244.5523 11.4837825
+335    251.3700 -0.3355554
+337    286.2321 19.1090061
+349    226.7662 11.5531963
+350    238.7807 17.0156766
+351    256.2344  7.4119501
+352    272.3512 13.9920698
+369    254.9484 11.2985741
+370    226.3701 15.2027922
+371    252.5051  9.4335432
+372    263.8916 11.7253342
+373    248.9752 10.3915245
+374    271.1451 11.0782697
+
+attr(,&quot;class&quot;)
+[1] &quot;coef.mer&quot;</code></pre>
 </div>
 <div id="shrinkage" class="section level3">
 <h3><span class="header-section-number">19.4.6</span> Shrinkage</h3>
@@ -1340,7 +1346,7 @@ df.plot =<span class="st"> </span>df.sleep <span class="op">%&gt;%</span><span c
                <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(index),
              <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</code></pre>
-<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>Warning: Removed 1 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-38-1.png" width="672" /></p>
 </div>
 </div>
@@ -1355,10 +1361,9 @@ fit.lm =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">for
             <span class="dt">data =</span> df.sleep)
 
 <span class="co"># coefficients</span>
-fit.lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">coef</span>()</code></pre>
-<pre><code>## (Intercept)        days 
-##   252.32070    10.32766</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># bootstrapping </span>
+fit.lm <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">coef</span>()
+
+<span class="co"># bootstrapping </span>
 df.boot =<span class="st"> </span>df.sleep <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">bootstrap</span>(<span class="dt">n =</span> <span class="dv">100</span>,
             <span class="dt">id =</span> <span class="st">&quot;id&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1368,6 +1373,8 @@ df.boot =<span class="st"> </span>df.sleep <span class="op">%&gt;%</span><span c
 <span class="st">  </span><span class="kw">select</span>(id, term, estimate) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(term, estimate) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">clean_names</span>() </code></pre>
+<pre><code>(Intercept)        days 
+  252.32070    10.32766 </code></pre>
 <p>Let’s illustrate the linear model with a confidence interval (making parametric assumptions using the t-distribution).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.sleep,
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> days, <span class="dt">y =</span> reaction)) <span class="op">+</span><span class="st"> </span>
@@ -1397,19 +1404,9 @@ boot.lmer =<span class="st"> </span><span class="kw">bootMer</span>(fit.lmer,
                     <span class="dt">nsim =</span> <span class="dv">100</span>)
 
 <span class="co"># compute confidence interval </span>
-<span class="kw">boot.ci</span>(boot.lmer, <span class="dt">index =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;perc&quot;</span>)</code></pre>
-<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-## Based on 100 bootstrap replicates
-## 
-## CALL : 
-## boot.ci(boot.out = boot.lmer, type = &quot;perc&quot;, index = 2)
-## 
-## Intervals : 
-## Level     Percentile     
-## 95%   ( 7.36, 13.52 )  
-## Calculations and Intervals on Original Scale
-## Some percentile intervals may be unstable</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot estimates </span>
+<span class="kw">boot.ci</span>(boot.lmer, <span class="dt">index =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;perc&quot;</span>)
+
+<span class="co"># plot estimates </span>
 boot.lmer<span class="op">$</span>t <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1421,6 +1418,17 @@ boot.lmer<span class="op">$</span>t <span class="op">%&gt;%</span><span class="s
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(index),
              <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">expand =</span> F)</code></pre>
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 100 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = boot.lmer, type = &quot;perc&quot;, index = 2)
+
+Intervals : 
+Level     Percentile     
+95%   ( 7.36, 13.52 )  
+Calculations and Intervals on Original Scale
+Some percentile intervals may be unstable</code></pre>
 <p><img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-42-1.png" width="672" /></p>
 </div>
 </div>
@@ -1431,34 +1439,34 @@ boot.lmer<span class="op">$</span>t <span class="op">%&gt;%</span><span class="s
 <pre class="sourceCode r"><code class="sourceCode r">lmerTest<span class="op">::</span><span class="kw">lmer</span>(<span class="dt">formula =</span> reaction <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>days <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>days <span class="op">|</span><span class="st"> </span>subject),
                 <span class="dt">data =</span> df.sleep) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
-## lmerModLmerTest]
-## Formula: reaction ~ 1 + days + (1 + days | subject)
-##    Data: df.sleep
-## 
-## REML criterion at convergence: 1771.4
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -3.9707 -0.4703  0.0276  0.4594  5.2009 
-## 
-## Random effects:
-##  Groups   Name        Variance Std.Dev. Corr
-##  subject  (Intercept) 582.73   24.140       
-##           days         35.03    5.919   0.07
-##  Residual             649.36   25.483       
-## Number of obs: 183, groups:  subject, 20
-## 
-## Fixed effects:
-##             Estimate Std. Error      df t value Pr(&gt;|t|)    
-## (Intercept)  252.543      6.433  19.294  39.256  &lt; 2e-16 ***
-## days          10.452      1.542  17.163   6.778 3.06e-06 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Correlation of Fixed Effects:
-##      (Intr)
-## days -0.137</code></pre>
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
+lmerModLmerTest]
+Formula: reaction ~ 1 + days + (1 + days | subject)
+   Data: df.sleep
+
+REML criterion at convergence: 1771.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9707 -0.4703  0.0276  0.4594  5.2009 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr
+ subject  (Intercept) 582.73   24.140       
+          days         35.03    5.919   0.07
+ Residual             649.36   25.483       
+Number of obs: 183, groups:  subject, 20
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)  252.543      6.433  19.294  39.256  &lt; 2e-16 ***
+days          10.452      1.542  17.163   6.778 3.06e-06 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Correlation of Fixed Effects:
+     (Intr)
+days -0.137</code></pre>
 </div>
 <div id="understanding-the-lmer-syntax" class="section level2">
 <h2><span class="header-section-number">19.7</span> Understanding the lmer() syntax</h2>

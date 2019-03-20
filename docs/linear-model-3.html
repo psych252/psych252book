@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -610,7 +610,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;car&quot;</span>)        <span class="co"># for running ANOVAs</span>
 <span class="kw">library</span>(<span class="st">&quot;afex&quot;</span>)       <span class="co"># also for running ANOVAs</span>
 <span class="kw">library</span>(<span class="st">&quot;emmeans&quot;</span>)    <span class="co"># for calculating constrasts</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -860,14 +866,14 @@ fixed
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand, 
    <span class="dt">data =</span> df.poker) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">anova</span>()</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Response: balance
-##            Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-## hand        2 2559.4  1279.7  75.703 &lt; 2.2e-16 ***
-## Residuals 297 5020.6    16.9                      
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Response: balance
+           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+hand        2 2559.4  1279.7  75.703 &lt; 2.2e-16 ***
+Residuals 297 5020.6    16.9                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 <div id="hypothesis-test-1" class="section level4">
 <h4><span class="header-section-number">12.2.1.3</span> Hypothesis test</h4>
@@ -878,15 +884,15 @@ fit_a =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">form
 
 <span class="co"># compare via F-test</span>
 <span class="kw">anova</span>(fit_c, fit_a)</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: balance ~ 1
-## Model 2: balance ~ hand
-##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1    299 7580.0                                  
-## 2    297 5020.6  2    2559.4 75.703 &lt; 2.2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Model 1: balance ~ 1
+Model 2: balance ~ hand
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    299 7580.0                                  
+2    297 5020.6  2    2559.4 75.703 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 <div id="visualize-the-models-predictions" class="section level4">
 <h4><span class="header-section-number">12.2.1.4</span> Visualize the model’s predictions</h4>
@@ -931,15 +937,15 @@ df.tidy =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span clas
 <span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select_if</span>(is.numeric) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate_all</span>(<span class="kw">funs</span>(round, <span class="dt">.args =</span> <span class="kw">list</span>(<span class="dt">digits =</span> <span class="dv">2</span>)))</code></pre>
-<pre><code>## Warning: funs() is soft deprecated as of dplyr 0.8.0
-## please use list() instead
-## 
-## # Before:
-## funs(name = f(.)
-## 
-## # After: 
-## list(name = ~f(.))
-## This warning is displayed once per session.</code></pre>
+<pre><code>Warning: funs() is soft deprecated as of dplyr 0.8.0
+please use list() instead
+
+# Before:
+funs(name = f(.)
+
+# After: 
+list(name = ~f(.))
+This warning is displayed once per session.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.augment =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1058,29 +1064,29 @@ df.a =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span class="
 
 pre =<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>df.a<span class="op">$</span>sse<span class="op">/</span>df.c<span class="op">$</span>sse
 <span class="kw">print</span>(pre <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dv">2</span>))</code></pre>
-<pre><code>## [1] 0.34</code></pre>
+<pre><code>[1] 0.34</code></pre>
 <p>Note that this is the same as the <span class="math inline">\(R^2\)</span> for the augmented model:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit_a <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = balance ~ hand, data = df.poker)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -12.9264  -2.5902  -0.0115   2.6573  15.2834 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   5.9415     0.4111  14.451  &lt; 2e-16 ***
-## handneutral   4.4051     0.5815   7.576 4.55e-13 ***
-## handgood      7.0849     0.5815  12.185  &lt; 2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.111 on 297 degrees of freedom
-## Multiple R-squared:  0.3377, Adjusted R-squared:  0.3332 
-## F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = balance ~ hand, data = df.poker)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.9264  -2.5902  -0.0115   2.6573  15.2834 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   5.9415     0.4111  14.451  &lt; 2e-16 ***
+handneutral   4.4051     0.5815   7.576 4.55e-13 ***
+handgood      7.0849     0.5815  12.185  &lt; 2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.111 on 297 degrees of freedom
+Multiple R-squared:  0.3377,    Adjusted R-squared:  0.3332 
+F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div id="dummy-coding-1" class="section level4">
 <h4><span class="header-section-number">12.2.1.5</span> Dummy coding</h4>
@@ -1099,7 +1105,13 @@ df.poker <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">kable_styling</span>(<span class="dt">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,
               <span class="dt">full_width =</span> F)</code></pre>
-<pre><code>## Selecting by balance</code></pre>
+<pre><code>Selecting by balance</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit the model</span>
+fit.tmp =<span class="st"> </span><span class="kw">lm</span>(balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>hand_neutral <span class="op">+</span><span class="st"> </span>hand_good, df.poker)
+
+<span class="co"># show the model summary </span>
+fit.tmp <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summary</span>()</code></pre>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1276,31 +1288,25 @@ good
 </tr>
 </tbody>
 </table>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit the model</span>
-fit.tmp =<span class="st"> </span><span class="kw">lm</span>(balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>hand_neutral <span class="op">+</span><span class="st"> </span>hand_good, df.poker)
+<pre><code>
+Call:
+lm(formula = balance ~ 1 + hand_neutral + hand_good, data = df.poker)
 
-<span class="co"># show the model summary </span>
-fit.tmp <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = balance ~ 1 + hand_neutral + hand_good, data = df.poker)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -12.9264  -2.5902  -0.0115   2.6573  15.2834 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)    5.9415     0.4111  14.451  &lt; 2e-16 ***
-## hand_neutral   4.4051     0.5815   7.576 4.55e-13 ***
-## hand_good      7.0849     0.5815  12.185  &lt; 2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.111 on 297 degrees of freedom
-## Multiple R-squared:  0.3377, Adjusted R-squared:  0.3332 
-## F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.9264  -2.5902  -0.0115   2.6573  15.2834 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    5.9415     0.4111  14.451  &lt; 2e-16 ***
+hand_neutral   4.4051     0.5815   7.576 4.55e-13 ***
+hand_good      7.0849     0.5815  12.185  &lt; 2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.111 on 297 degrees of freedom
+Multiple R-squared:  0.3377,    Adjusted R-squared:  0.3332 
+F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here, I’ve directly put the dummy-coded variables as predictors into the <code>lm()</code>. We get the same model as if we used the <code>hand</code> variable instead.</p>
 </div>
 <div id="follow-up-questions" class="section level4">
@@ -1312,73 +1318,73 @@ fit.tmp <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand, 
      <span class="dt">data =</span> .) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = balance ~ hand, data = .)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -9.9566 -2.5078 -0.2365  2.4410 15.2834 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   5.9415     0.3816  15.570  &lt; 2e-16 ***
-## handneutral   4.4051     0.5397   8.163 3.76e-14 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 3.816 on 198 degrees of freedom
-## Multiple R-squared:  0.2518, Adjusted R-squared:  0.248 
-## F-statistic: 66.63 on 1 and 198 DF,  p-value: 3.758e-14</code></pre>
+<pre><code>
+Call:
+lm(formula = balance ~ hand, data = .)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.9566 -2.5078 -0.2365  2.4410 15.2834 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   5.9415     0.3816  15.570  &lt; 2e-16 ***
+handneutral   4.4051     0.5397   8.163 3.76e-14 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 3.816 on 198 degrees of freedom
+Multiple R-squared:  0.2518,    Adjusted R-squared:  0.248 
+F-statistic: 66.63 on 1 and 198 DF,  p-value: 3.758e-14</code></pre>
 <p>Are neutral hands different from good hands?</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.poker <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(hand <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand, 
      <span class="dt">data =</span> .) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = balance ~ hand, data = .)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -12.9264  -2.7141   0.2585   2.7184  15.2834 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  10.3466     0.4448   23.26  &lt; 2e-16 ***
-## handgood      2.6798     0.6291    4.26 3.16e-05 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.448 on 198 degrees of freedom
-## Multiple R-squared:  0.08396,    Adjusted R-squared:  0.07933 
-## F-statistic: 18.15 on 1 and 198 DF,  p-value: 3.158e-05</code></pre>
+<pre><code>
+Call:
+lm(formula = balance ~ hand, data = .)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.9264  -2.7141   0.2585   2.7184  15.2834 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  10.3466     0.4448   23.26  &lt; 2e-16 ***
+handgood      2.6798     0.6291    4.26 3.16e-05 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.448 on 198 degrees of freedom
+Multiple R-squared:  0.08396,   Adjusted R-squared:  0.07933 
+F-statistic: 18.15 on 1 and 198 DF,  p-value: 3.158e-05</code></pre>
 <p>Doing the same thing by recoding our hand factor and taking “neutral” to be the reference category:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.poker <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hand =</span> <span class="kw">fct_relevel</span>(hand, <span class="st">&quot;neutral&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand,
      <span class="dt">data =</span> .) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = balance ~ hand, data = .)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -12.9264  -2.5902  -0.0115   2.6573  15.2834 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  10.3466     0.4111  25.165  &lt; 2e-16 ***
-## handbad      -4.4051     0.5815  -7.576 4.55e-13 ***
-## handgood      2.6798     0.5815   4.609 6.02e-06 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.111 on 297 degrees of freedom
-## Multiple R-squared:  0.3377, Adjusted R-squared:  0.3332 
-## F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = balance ~ hand, data = .)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.9264  -2.5902  -0.0115   2.6573  15.2834 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  10.3466     0.4111  25.165  &lt; 2e-16 ***
+handbad      -4.4051     0.5815  -7.576 4.55e-13 ***
+handgood      2.6798     0.5815   4.609 6.02e-06 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.111 on 297 degrees of freedom
+Multiple R-squared:  0.3377,    Adjusted R-squared:  0.3332 
+F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </div>
@@ -1441,17 +1447,17 @@ fit.tmp <span class="op">%&gt;%</span><span class="st"> </span>
    <span class="dt">contrasts =</span> <span class="kw">list</span>(<span class="dt">hand =</span> <span class="st">&quot;contr.sum&quot;</span>,
                     <span class="dt">skill =</span> <span class="st">&quot;contr.sum&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">Anova</span>(<span class="dt">type =</span> <span class="dv">3</span>)</code></pre>
-<pre><code>## Anova Table (Type III tests)
-## 
-## Response: balance
-##              Sum Sq  Df   F value    Pr(&gt;F)    
-## (Intercept) 28644.7   1 1772.1137 &lt; 2.2e-16 ***
-## hand         2559.4   2   79.1692 &lt; 2.2e-16 ***
-## skill          39.3   1    2.4344 0.1197776    
-## hand:skill    229.0   2    7.0830 0.0009901 ***
-## Residuals    4752.3 294                        
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Anova Table (Type III tests)
+
+Response: balance
+             Sum Sq  Df   F value    Pr(&gt;F)    
+(Intercept) 28644.7   1 1772.1137 &lt; 2.2e-16 ***
+hand         2559.4   2   79.1692 &lt; 2.2e-16 ***
+skill          39.3   1    2.4344 0.1197776    
+hand:skill    229.0   2    7.0830 0.0009901 ***
+Residuals    4752.3 294                        
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>So, we fit our linear model, but set the contrasts to “contr.sum” (which yields effect coding instead of dummy coding), and then specify the desired type of sums of squares in the <code>Anova()</code> function call.</p>
 <p>Alternatively, we could use the <code>afex</code> package and specify the ANOVA like so:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aov_ez</span>(<span class="dt">id =</span> <span class="st">&quot;participant&quot;</span>,
@@ -1459,16 +1465,16 @@ fit.tmp <span class="op">%&gt;%</span><span class="st"> </span>
        <span class="dt">data =</span> df.poker,
        <span class="dt">between =</span> <span class="kw">c</span>(<span class="st">&quot;hand&quot;</span>, <span class="st">&quot;skill&quot;</span>)
 )</code></pre>
-<pre><code>## Contrasts set to contr.sum for the following variables: hand, skill</code></pre>
-<pre><code>## Anova Table (Type 3 tests)
-## 
-## Response: balance
-##       Effect     df   MSE         F  ges p.value
-## 1       hand 2, 294 16.16 79.17 ***  .35  &lt;.0001
-## 2      skill 1, 294 16.16      2.43 .008     .12
-## 3 hand:skill 2, 294 16.16  7.08 ***  .05   .0010
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Contrasts set to contr.sum for the following variables: hand, skill</code></pre>
+<pre><code>Anova Table (Type 3 tests)
+
+Response: balance
+      Effect     df   MSE         F  ges p.value
+1       hand 2, 294 16.16 79.17 ***  .35  &lt;.0001
+2      skill 1, 294 16.16      2.43 .008     .12
+3 hand:skill 2, 294 16.16  7.08 ***  .05   .0010
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>The <code>afex</code> package uses effect coding and type 3 sums of squares by default.</p>
 </div>
 <div id="interpreting-interactions" class="section level3">
@@ -1686,27 +1692,27 @@ B
 <span class="kw">lm</span>(<span class="dt">formula =</span> rating <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>condition <span class="op">+</span><span class="st"> </span>treatment <span class="op">+</span><span class="st"> </span>condition<span class="op">:</span>treatment,
    <span class="dt">data =</span> df.data) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = rating ~ 1 + condition + treatment + condition:treatment, 
-##     data = df.data)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -10.6546  -3.6343   0.7988   3.3514   8.3953 
-## 
-## Coefficients:
-##                       Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)             16.244      1.194  13.608  &lt; 2e-16 ***
-## conditionB              10.000      1.688   5.924 2.02e-07 ***
-## treatment2              -1.662      1.688  -0.985    0.329    
-## conditionB:treatment2  -20.000      2.387  -8.378 1.86e-11 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.623 on 56 degrees of freedom
-## Multiple R-squared:  0.7473, Adjusted R-squared:  0.7338 
-## F-statistic: 55.21 on 3 and 56 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = rating ~ 1 + condition + treatment + condition:treatment, 
+    data = df.data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.6546  -3.6343   0.7988   3.3514   8.3953 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)             16.244      1.194  13.608  &lt; 2e-16 ***
+conditionB              10.000      1.688   5.924 2.02e-07 ***
+treatment2              -1.662      1.688  -0.985    0.329    
+conditionB:treatment2  -20.000      2.387  -8.378 1.86e-11 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.623 on 56 degrees of freedom
+Multiple R-squared:  0.7473,    Adjusted R-squared:  0.7338 
+F-statistic: 55.21 on 3 and 56 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div id="additional-resources-10" class="section level2">

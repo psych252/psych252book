@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -610,7 +610,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;magrittr&quot;</span>)   <span class="co"># for going all in with the pipe</span>
 <span class="kw">library</span>(<span class="st">&quot;lsr&quot;</span>)        <span class="co"># for computing effect size measures</span>
 <span class="kw">library</span>(<span class="st">&quot;pwr&quot;</span>)        <span class="co"># for power calculations</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -619,32 +625,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="load-data-sets-3" class="section level2">
 <h2><span class="header-section-number">14.2</span> Load data sets</h2>
 <pre class="sourceCode r"><code class="sourceCode r">df.poker =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/poker.csv&quot;</span>)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   skill = col_double(),
-##   hand = col_double(),
-##   limit = col_double(),
-##   balance = col_double()
-## )</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  skill = col_double(),
+  hand = col_double(),
+  limit = col_double(),
+  balance = col_double()
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.credit =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">rename</span>(<span class="dt">index =</span> X1) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">clean_names</span>()</code></pre>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   X1 = col_double(),
-##   Income = col_double(),
-##   Limit = col_double(),
-##   Rating = col_double(),
-##   Cards = col_double(),
-##   Age = col_double(),
-##   Education = col_double(),
-##   Gender = col_character(),
-##   Student = col_character(),
-##   Married = col_character(),
-##   Ethnicity = col_character(),
-##   Balance = col_double()
-## )</code></pre>
+<pre><code>Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  X1 = col_double(),
+  Income = col_double(),
+  Limit = col_double(),
+  Rating = col_double(),
+  Cards = col_double(),
+  Age = col_double(),
+  Education = col_double(),
+  Gender = col_character(),
+  Student = col_character(),
+  Married = col_character(),
+  Ethnicity = col_character(),
+  Balance = col_double()
+)</code></pre>
 </div>
 <div id="decision-making" class="section level2">
 <h2><span class="header-section-number">14.3</span> Decision-making</h2>
@@ -704,28 +710,26 @@ alpha =<span class="st"> </span><span class="fl">0.05</span>
          <span class="dt">data =</span> df.poker)
 
 <span class="co"># use function</span>
-<span class="kw">etaSquared</span>(fit)</code></pre>
-<pre><code>##         eta.sq eta.sq.part
-## hand 0.3311076   0.3311076</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute by hand </span>
+<span class="kw">etaSquared</span>(fit)
+
+<span class="co"># compute by hand </span>
 fit <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>anova <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">pull</span>(sumsq) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">divide_by</span>(<span class="kw">sum</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>magrittr<span class="op">::</span><span class="kw">extract</span>(<span class="dv">1</span>)</code></pre>
-<pre><code>## [1] 0.3311076</code></pre>
+<pre><code>        eta.sq eta.sq.part
+hand 0.3311076   0.3311076
+[1] 0.3311076</code></pre>
 <p>Two-way ANOVA:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand <span class="op">*</span><span class="st"> </span>skill, 
          <span class="dt">data =</span> df.poker)
 
 <span class="co"># use function</span>
-<span class="kw">etaSquared</span>(fit)</code></pre>
-<pre><code>##                 eta.sq eta.sq.part
-## hand       0.331107585 0.343119717
-## skill      0.005191225 0.008123029
-## hand:skill 0.029817351 0.044925866</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute by hand </span>
+<span class="kw">etaSquared</span>(fit)
+
+<span class="co"># compute by hand </span>
 eta_squared =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span>anova <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -742,6 +746,10 @@ eta_partial_squared =<span class="st"> </span>fit <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">spread</span>(term, sumsq) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">eta_partial_squared =</span> hand <span class="op">/</span><span class="st"> </span>(hand <span class="op">+</span><span class="st"> </span>Residuals)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">pull</span>(eta_partial_squared)</code></pre>
+<pre><code>                eta.sq eta.sq.part
+hand       0.331107585 0.343119717
+skill      0.005191225 0.008123029
+hand:skill 0.029817351 0.044925866</code></pre>
 </div>
 <div id="cohens-d" class="section level3">
 <h3><span class="header-section-number">14.4.2</span> Cohen’s d</h3>
@@ -755,9 +763,9 @@ s_p = \sqrt\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}
 \]</span></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use function from &quot;lsr&quot; package</span>
 <span class="kw">cohensD</span>(<span class="dt">x =</span> balance <span class="op">~</span><span class="st"> </span>student,
-        <span class="dt">data =</span> df.credit)</code></pre>
-<pre><code>## [1] 0.8916607</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute by hand</span>
+        <span class="dt">data =</span> df.credit)
+
+<span class="co"># compute by hand</span>
 df.cohen =<span class="st"> </span>df.credit <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(student) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(balance),
@@ -776,7 +784,8 @@ sp =<span class="st"> </span><span class="kw">sqrt</span>(((n1 <span class="op">
 
 d =<span class="st"> </span><span class="kw">abs</span>(mean1 <span class="op">-</span><span class="st"> </span>mean2) <span class="op">/</span><span class="st"> </span>sp
 <span class="kw">print</span>(d)</code></pre>
-<pre><code>## [1] 0.8916607</code></pre>
+<pre><code>[1] 0.8916607
+[1] 0.8916607</code></pre>
 </div>
 </div>
 <div id="determining-sample-size" class="section level2">
@@ -787,14 +796,14 @@ d =<span class="st"> </span><span class="kw">abs</span>(mean1 <span class="op">-
            <span class="dt">sig.level =</span> <span class="fl">0.05</span>, 
            <span class="dt">power =</span> <span class="fl">0.80</span>, 
            <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</code></pre>
-<pre><code>## 
-##      proportion power calculation for binomial distribution (arcsine transformation) 
-## 
-##               h = 0.5235988
-##               n = 22.55126
-##       sig.level = 0.05
-##           power = 0.8
-##     alternative = greater</code></pre>
+<pre><code>
+     proportion power calculation for binomial distribution (arcsine transformation) 
+
+              h = 0.5235988
+              n = 22.55126
+      sig.level = 0.05
+          power = 0.8
+    alternative = greater</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pwr.p.test</span>(<span class="dt">h =</span> <span class="kw">ES.h</span>(<span class="dt">p1 =</span> <span class="fl">0.75</span>, <span class="dt">p2 =</span> <span class="fl">0.50</span>), 
            <span class="dt">sig.level =</span> <span class="fl">0.05</span>, 
            <span class="dt">power =</span> <span class="fl">0.80</span>, 
@@ -839,25 +848,28 @@ df.plot =<span class="st"> </span>df.power <span class="op">%&gt;%</span><span c
 <span class="co"># plot data </span>
 <span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot, 
        <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> n, <span class="dt">y =</span> power, <span class="dt">color =</span> p, <span class="dt">group =</span> p)) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>)</code></pre>
-<p><img src="14-power_analysis_files/figure-html/power-analysis-11-1.png" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># based on simulations</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>)
+
+<span class="co"># based on simulations</span>
 df.plot <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">filter</span>(p <span class="op">==</span><span class="st"> </span><span class="fl">0.75</span>, <span class="kw">near</span>(power, <span class="fl">0.8</span>, <span class="dt">tol =</span> <span class="fl">0.02</span>))</code></pre>
-<pre><code>## # A tibble: 0 x 3
-## # … with 3 variables: n &lt;dbl&gt;, p &lt;fct&gt;, power &lt;dbl&gt;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># analytic solution</span>
+<span class="st">  </span><span class="kw">filter</span>(p <span class="op">==</span><span class="st"> </span><span class="fl">0.75</span>, <span class="kw">near</span>(power, <span class="fl">0.8</span>, <span class="dt">tol =</span> <span class="fl">0.02</span>))
+  
+ 
+<span class="co"># analytic solution</span>
 <span class="kw">pwr.p.test</span>(<span class="dt">h =</span> <span class="kw">ES.h</span>(<span class="fl">0.5</span>, <span class="fl">0.75</span>),
            <span class="dt">power =</span> <span class="fl">0.8</span>,
            <span class="dt">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</code></pre>
-<pre><code>## 
-##      proportion power calculation for binomial distribution (arcsine transformation) 
-## 
-##               h = 0.5235988
-##               n = 28.62923
-##       sig.level = 0.05
-##           power = 0.8
-##     alternative = two.sided</code></pre>
+<pre><code># A tibble: 0 x 3
+# … with 3 variables: n &lt;dbl&gt;, p &lt;fct&gt;, power &lt;dbl&gt;
+
+     proportion power calculation for binomial distribution (arcsine transformation) 
+
+              h = 0.5235988
+              n = 28.62923
+      sig.level = 0.05
+          power = 0.8
+    alternative = two.sided</code></pre>
+<p><img src="14-power_analysis_files/figure-html/power-analysis-11-1.png" width="672" /></p>
 </div>
 </div>
 <div id="additional-resources-11" class="section level2">

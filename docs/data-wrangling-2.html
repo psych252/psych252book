@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -616,7 +616,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.2</span> Load packages</h2>
 <p>Let’s first load the packages that we need for this chapter.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>) <span class="co"># for rendering the RMarkdown file</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># for data wrangling </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># for data wrangling </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 </div>
 <div id="wrangling-data-continued" class="section level2">
 <h2><span class="header-section-number">5.3</span> Wrangling data (continued)</h2>
@@ -629,29 +635,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">height_mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T),
             <span class="dt">height_max =</span> <span class="kw">max</span>(height, <span class="dt">na.rm =</span> T),
             <span class="dt">n =</span> <span class="kw">n</span>())</code></pre>
-<pre><code>## # A tibble: 1 x 3
-##   height_mean height_max     n
-##         &lt;dbl&gt;      &lt;int&gt; &lt;int&gt;
-## 1        174.        264    87</code></pre>
+<pre><code># A tibble: 1 x 3
+  height_mean height_max     n
+        &lt;dbl&gt;      &lt;int&gt; &lt;int&gt;
+1        174.        264    87</code></pre>
 <p>Here, I computed the mean height, the maximum height, and the total number of observations (using the function <code>n()</code>).
 Let’s say we wanted to get a quick sense for how tall starwars characters from different species are. To do that, we combine grouping with summarizing:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.starwars <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">height_mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T))</code></pre>
-<pre><code>## # A tibble: 38 x 2
-##    species   height_mean
-##    &lt;chr&gt;           &lt;dbl&gt;
-##  1 &lt;NA&gt;              160
-##  2 Aleena             79
-##  3 Besalisk          198
-##  4 Cerean            198
-##  5 Chagrian          196
-##  6 Clawdite          168
-##  7 Droid             140
-##  8 Dug               112
-##  9 Ewok               88
-## 10 Geonosian         183
-## # … with 28 more rows</code></pre>
+<pre><code># A tibble: 38 x 2
+   species   height_mean
+   &lt;chr&gt;           &lt;dbl&gt;
+ 1 &lt;NA&gt;              160
+ 2 Aleena             79
+ 3 Besalisk          198
+ 4 Cerean            198
+ 5 Chagrian          196
+ 6 Clawdite          168
+ 7 Droid             140
+ 8 Dug               112
+ 9 Ewok               88
+10 Geonosian         183
+# … with 28 more rows</code></pre>
 <p>I’ve first used <code>group_by()</code> to group our data frame by the different species, and then used <code>summarize()</code> to calculate the mean height of each species.</p>
 <p>It would also be useful to know how many observations there are in each group.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.starwars <span class="op">%&gt;%</span><span class="st"> </span>
@@ -659,20 +665,20 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">height_mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T), 
             <span class="dt">group_size =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(group_size)) </code></pre>
-<pre><code>## # A tibble: 38 x 3
-##    species  height_mean group_size
-##    &lt;chr&gt;          &lt;dbl&gt;      &lt;int&gt;
-##  1 Human           177.         35
-##  2 &lt;NA&gt;            160           5
-##  3 Droid           140           5
-##  4 Gungan          209.          3
-##  5 Kaminoan        221           2
-##  6 Mirialan        168           2
-##  7 Twi&#39;lek         179           2
-##  8 Wookiee         231           2
-##  9 Zabrak          173           2
-## 10 Aleena           79           1
-## # … with 28 more rows</code></pre>
+<pre><code># A tibble: 38 x 3
+   species  height_mean group_size
+   &lt;chr&gt;          &lt;dbl&gt;      &lt;int&gt;
+ 1 Human           177.         35
+ 2 &lt;NA&gt;            160           5
+ 3 Droid           140           5
+ 4 Gungan          209.          3
+ 5 Kaminoan        221           2
+ 6 Mirialan        168           2
+ 7 Twi&#39;lek         179           2
+ 8 Wookiee         231           2
+ 9 Zabrak          173           2
+10 Aleena           79           1
+# … with 28 more rows</code></pre>
 <p>Here, I’ve used the <code>n()</code> function to get the number of observations in each group, and then I’ve arranged the data frame according to group size in descending order.</p>
 <p>Note that <code>n()</code> always yields the number of observations in each group. If we don’t group the data, then we get the overall number of observations in our data frame (i.e. the number of rows).</p>
 <p>So, Humans are the largest group in our data frame, followed by Droids (who are considerably smaller) and Gungans (who would make for good Basketball players).</p>
@@ -683,42 +689,42 @@ df.summarize =<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">judgment =</span> <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 ) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">print</span>()</code></pre>
-<pre><code>## # A tibble: 15 x 2
-##    participant judgment
-##          &lt;int&gt;    &lt;int&gt;
-##  1           1       10
-##  2           1       95
-##  3           1        4
-##  4           1       27
-##  5           1       73
-##  6           2       37
-##  7           2       18
-##  8           2       47
-##  9           2       15
-## 10           2        9
-## 11           3       87
-## 12           3       62
-## 13           3       84
-## 14           3        6
-## 15           3       22</code></pre>
+<pre><code># A tibble: 15 x 2
+   participant judgment
+         &lt;int&gt;    &lt;int&gt;
+ 1           1       58
+ 2           1      100
+ 3           1       48
+ 4           1       61
+ 5           1        4
+ 6           2       63
+ 7           2       13
+ 8           2       11
+ 9           2       68
+10           2       13
+11           3       78
+12           3       55
+13           3       91
+14           3       77
+15           3       16</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.summarize <span class="op">%&gt;%</span><span class="st">   </span>
 <span class="st">  </span><span class="kw">group_by</span>(participant) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group by participants</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">judgment_zscored =</span> <span class="kw">scale</span>(judgment)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># z-score data on individual participant level </span>
 <span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ungroup the data frame</span>
 <span class="st">  </span><span class="kw">head</span>(<span class="dt">n =</span> <span class="dv">10</span>) <span class="co"># print the top 10 rows </span></code></pre>
-<pre><code>## # A tibble: 10 x 3
-##    participant judgment judgment_zscored
-##          &lt;int&gt;    &lt;int&gt;            &lt;dbl&gt;
-##  1           1       10           -0.791
-##  2           1       95            1.32 
-##  3           1        4           -0.940
-##  4           1       27           -0.368
-##  5           1       73            0.776
-##  6           2       37            0.734
-##  7           2       18           -0.448
-##  8           2       47            1.36 
-##  9           2       15           -0.635
-## 10           2        9           -1.01</code></pre>
+<pre><code># A tibble: 10 x 3
+   participant judgment judgment_zscored
+         &lt;int&gt;    &lt;int&gt;            &lt;dbl&gt;
+ 1           1       58            0.111
+ 2           1      100            1.33 
+ 3           1       48           -0.181
+ 4           1       61            0.198
+ 5           1        4           -1.46 
+ 6           2       63            1.01 
+ 7           2       13           -0.706
+ 8           2       11           -0.774
+ 9           2       68            1.18 
+10           2       13           -0.706</code></pre>
 <p>First, I’ve generated some random data using the repeat function <code>rep()</code> for making a <code>participant</code> column, and the <code>sample()</code> function to randomly choose values from a range between 0 and 100 with replacement. (We will learn more about these functions later when we look into how to simulate data.) I’ve then grouped the data by participant, and used the scale function to z-score the data.</p>
 <blockquote>
 <p><strong>TIP</strong>: Don’t forget to <code>ungroup()</code> your data frame. Otherwise, any subsequent operations are applied per group.</p>
@@ -728,64 +734,64 @@ df.summarize =<span class="st"> </span><span class="kw">tibble</span>(
 <pre class="sourceCode r"><code class="sourceCode r">df.starwars <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_height_mass =</span> <span class="kw">mean</span>(<span class="kw">c</span>(height, mass), <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(name, height, mass, mean_height_mass)</code></pre>
-<pre><code>## # A tibble: 87 x 4
-##    name               height  mass mean_height_mass
-##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
-##  1 Luke Skywalker        172    77             142.
-##  2 C-3PO                 167    75             142.
-##  3 R2-D2                  96    32             142.
-##  4 Darth Vader           202   136             142.
-##  5 Leia Organa           150    49             142.
-##  6 Owen Lars             178   120             142.
-##  7 Beru Whitesun lars    165    75             142.
-##  8 R5-D4                  97    32             142.
-##  9 Biggs Darklighter     183    84             142.
-## 10 Obi-Wan Kenobi        182    77             142.
-## # … with 77 more rows</code></pre>
+<pre><code># A tibble: 87 x 4
+   name               height  mass mean_height_mass
+   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
+ 1 Luke Skywalker        172    77             142.
+ 2 C-3PO                 167    75             142.
+ 3 R2-D2                  96    32             142.
+ 4 Darth Vader           202   136             142.
+ 5 Leia Organa           150    49             142.
+ 6 Owen Lars             178   120             142.
+ 7 Beru Whitesun lars    165    75             142.
+ 8 R5-D4                  97    32             142.
+ 9 Biggs Darklighter     183    84             142.
+10 Obi-Wan Kenobi        182    77             142.
+# … with 77 more rows</code></pre>
 <p>Note that all the values are the same. The value shown here is just the mean of all the values in <code>height</code> and <code>mass</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.starwars <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(height, mass) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># turns the data frame into a vector</span>
 <span class="st">  </span><span class="kw">mean</span>(<span class="dt">na.rm =</span> T) </code></pre>
-<pre><code>## [1] 141.8886</code></pre>
+<pre><code>[1] 141.8886</code></pre>
 <p>To get the mean by row, we can either spell out the arithmetic</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.starwars <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_height_mass =</span> (height <span class="op">+</span><span class="st"> </span>mass) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># here, I&#39;ve replaced the mean() function  </span>
 <span class="st">  </span><span class="kw">select</span>(name, height, mass, mean_height_mass)</code></pre>
-<pre><code>## # A tibble: 87 x 4
-##    name               height  mass mean_height_mass
-##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
-##  1 Luke Skywalker        172    77            124. 
-##  2 C-3PO                 167    75            121  
-##  3 R2-D2                  96    32             64  
-##  4 Darth Vader           202   136            169  
-##  5 Leia Organa           150    49             99.5
-##  6 Owen Lars             178   120            149  
-##  7 Beru Whitesun lars    165    75            120  
-##  8 R5-D4                  97    32             64.5
-##  9 Biggs Darklighter     183    84            134. 
-## 10 Obi-Wan Kenobi        182    77            130. 
-## # … with 77 more rows</code></pre>
+<pre><code># A tibble: 87 x 4
+   name               height  mass mean_height_mass
+   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
+ 1 Luke Skywalker        172    77            124. 
+ 2 C-3PO                 167    75            121  
+ 3 R2-D2                  96    32             64  
+ 4 Darth Vader           202   136            169  
+ 5 Leia Organa           150    49             99.5
+ 6 Owen Lars             178   120            149  
+ 7 Beru Whitesun lars    165    75            120  
+ 8 R5-D4                  97    32             64.5
+ 9 Biggs Darklighter     183    84            134. 
+10 Obi-Wan Kenobi        182    77            130. 
+# … with 77 more rows</code></pre>
 <p>or use the <code>rowwise()</code> helper function which is like <code>group_by()</code> but treats each row like a group:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.starwars <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># now, each row is treated like a separate group </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_height_mass =</span> <span class="kw">mean</span>(<span class="kw">c</span>(height, mass), <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(name, height, mass, mean_height_mass)</code></pre>
-<pre><code>## # A tibble: 87 x 4
-##    name               height  mass mean_height_mass
-##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
-##  1 Luke Skywalker        172    77            124. 
-##  2 C-3PO                 167    75            121  
-##  3 R2-D2                  96    32             64  
-##  4 Darth Vader           202   136            169  
-##  5 Leia Organa           150    49             99.5
-##  6 Owen Lars             178   120            149  
-##  7 Beru Whitesun lars    165    75            120  
-##  8 R5-D4                  97    32             64.5
-##  9 Biggs Darklighter     183    84            134. 
-## 10 Obi-Wan Kenobi        182    77            130. 
-## # … with 77 more rows</code></pre>
+<pre><code># A tibble: 87 x 4
+   name               height  mass mean_height_mass
+   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
+ 1 Luke Skywalker        172    77            124. 
+ 2 C-3PO                 167    75            121  
+ 3 R2-D2                  96    32             64  
+ 4 Darth Vader           202   136            169  
+ 5 Leia Organa           150    49             99.5
+ 6 Owen Lars             178   120            149  
+ 7 Beru Whitesun lars    165    75            120  
+ 8 R5-D4                  97    32             64.5
+ 9 Biggs Darklighter     183    84            134. 
+10 Obi-Wan Kenobi        182    77            130. 
+# … with 77 more rows</code></pre>
 <div id="practice-1-1" class="section level4">
 <h4><span class="header-section-number">5.3.1.1</span> Practice 1</h4>
 <p>Find out what the average <code>height</code> and <code>mass</code> (as well as the standard deviation) is from different <code>species</code> in different <code>homeworld</code>s. Why is the standard deviation <code>NA</code> for many groups?</p>
@@ -817,26 +823,26 @@ df.reshape =<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">observation_2 =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),
   <span class="dt">observation_3 =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">print</span>()</code></pre>
-<pre><code>## # A tibble: 2 x 4
-##   participant observation_1 observation_2 observation_3
-##         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-## 1           1            10           100            24
-## 2           2            25            63            45</code></pre>
+<pre><code># A tibble: 2 x 4
+  participant observation_1 observation_2 observation_3
+        &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1           1            10           100            24
+2           2            25            63            45</code></pre>
 <p>Here, I’ve generated data from two participants with three observations. This data frame is not tidy since each row contains more than a single observation. Data frames that have one row per participant but many observations are called <em>wide</em> data frames.</p>
 <p>We can make it tidy using the <code>gather()</code> function.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.reshape.long =<span class="st"> </span>df.reshape <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;index&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;rating&quot;</span>, <span class="op">-</span>participant) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(participant) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">print</span>()</code></pre>
-<pre><code>## # A tibble: 6 x 3
-##   participant index         rating
-##         &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
-## 1           1 observation_1     10
-## 2           1 observation_2    100
-## 3           1 observation_3     24
-## 4           2 observation_1     25
-## 5           2 observation_2     63
-## 6           2 observation_3     45</code></pre>
+<pre><code># A tibble: 6 x 3
+  participant index         rating
+        &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
+1           1 observation_1     10
+2           1 observation_2    100
+3           1 observation_3     24
+4           2 observation_1     25
+5           2 observation_2     63
+6           2 observation_3     45</code></pre>
 <p><code>df.reshape.long</code> now contains one observation in each row. Data frames with one row per observation are called <em>long</em> data frames.</p>
 <p>The <code>gather()</code> function takes four arguments:</p>
 <ol style="list-style-type: decimal">
@@ -849,11 +855,11 @@ df.reshape =<span class="st"> </span><span class="kw">tibble</span>(
 <pre class="sourceCode r"><code class="sourceCode r">df.reshape.wide =<span class="st"> </span>df.reshape.long <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> index, <span class="dt">value =</span> rating) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">print</span>()</code></pre>
-<pre><code>## # A tibble: 2 x 4
-##   participant observation_1 observation_2 observation_3
-##         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-## 1           1            10           100            24
-## 2           2            25            63            45</code></pre>
+<pre><code># A tibble: 2 x 4
+  participant observation_1 observation_2 observation_3
+        &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+1           1            10           100            24
+2           2            25            63            45</code></pre>
 <p>For my data, I often have a wide data frame that contains demographic information about participants, and a long data frame that contains participants’ responses in the experiment. In Section <a href="data-wrangling-2.html#joining-multiple-data-frames">5.3.3</a>, we will learn how to combine information from multiple data frames (with potentially different formats).</p>
 <p>Here is a slightly more advanced example that involves reshaping a data frame. Let’s consider that we have the following data frame to start with:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># construct data frame </span>
@@ -867,12 +873,12 @@ df.reshape2 =<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">observation_3 =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)
 ) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">print</span>()</code></pre>
-<pre><code>## # A tibble: 2 x 7
-##   participant stimulus_1 observation_1 stimulus_2 observation_2 stimulus_3
-##         &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;     
-## 1           1 flower                10 house                100 car       
-## 2           2 car                   25 flower                63 house     
-## # … with 1 more variable: observation_3 &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 2 x 7
+  participant stimulus_1 observation_1 stimulus_2 observation_2 stimulus_3
+        &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;     
+1           1 flower                10 house                100 car       
+2           2 car                   25 flower                63 house     
+# … with 1 more variable: observation_3 &lt;dbl&gt;</code></pre>
 <p>Now, the data frame contains in each row, which stimuli a participant saw, and what rating she gave. Each of the two participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of <code>gather()</code>, <code>separate()</code>, and <code>spread()</code> to turn this into a data frame in long format.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;index&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>participant) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -880,53 +886,53 @@ df.reshape2 =<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">spread</span>(<span class="dt">key =</span> index, <span class="dt">value =</span> value) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(order, observation), <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(participant, order, stimulus, <span class="dt">rating =</span> observation)</code></pre>
-<pre><code>## # A tibble: 6 x 4
-##   participant order stimulus rating
-##         &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-## 1           1     1 flower       10
-## 2           1     2 house       100
-## 3           1     3 car          24
-## 4           2     1 car          25
-## 5           2     2 flower       63
-## 6           2     3 house        45</code></pre>
+<pre><code># A tibble: 6 x 4
+  participant order stimulus rating
+        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+1           1     1 flower       10
+2           1     2 house       100
+3           1     3 car          24
+4           2     1 car          25
+5           2     2 flower       63
+6           2     3 house        45</code></pre>
 <p>Voilà! Getting the desired data frame involved a few new tricks. Let’s take it step by step.</p>
 <p>First, I use <code>gather()</code> to make a long table.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;index&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>participant)</code></pre>
-<pre><code>## # A tibble: 12 x 3
-##    participant index         value 
-##          &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; 
-##  1           1 stimulus_1    flower
-##  2           2 stimulus_1    car   
-##  3           1 observation_1 10    
-##  4           2 observation_1 25    
-##  5           1 stimulus_2    house 
-##  6           2 stimulus_2    flower
-##  7           1 observation_2 100   
-##  8           2 observation_2 63    
-##  9           1 stimulus_3    car   
-## 10           2 stimulus_3    house 
-## 11           1 observation_3 24    
-## 12           2 observation_3 45</code></pre>
+<pre><code># A tibble: 12 x 3
+   participant index         value 
+         &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt; 
+ 1           1 stimulus_1    flower
+ 2           2 stimulus_1    car   
+ 3           1 observation_1 10    
+ 4           2 observation_1 25    
+ 5           1 stimulus_2    house 
+ 6           2 stimulus_2    flower
+ 7           1 observation_2 100   
+ 8           2 observation_2 63    
+ 9           1 stimulus_3    car   
+10           2 stimulus_3    house 
+11           1 observation_3 24    
+12           2 observation_3 45    </code></pre>
 <p>However, I want to have the information about the stimulus and the observation in the same row. That is, I want to see what rating a participant gave to the flower stimulus, for example. To get there, I separate the <code>index</code> column into two separate columns using the <code>separate()</code> function.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;index&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>participant) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">separate</span>(<span class="dt">col =</span> index, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</code></pre>
-<pre><code>## # A tibble: 12 x 4
-##    participant index       order value 
-##          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
-##  1           1 stimulus    1     flower
-##  2           2 stimulus    1     car   
-##  3           1 observation 1     10    
-##  4           2 observation 1     25    
-##  5           1 stimulus    2     house 
-##  6           2 stimulus    2     flower
-##  7           1 observation 2     100   
-##  8           2 observation 2     63    
-##  9           1 stimulus    3     car   
-## 10           2 stimulus    3     house 
-## 11           1 observation 3     24    
-## 12           2 observation 3     45</code></pre>
+<pre><code># A tibble: 12 x 4
+   participant index       order value 
+         &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
+ 1           1 stimulus    1     flower
+ 2           2 stimulus    1     car   
+ 3           1 observation 1     10    
+ 4           2 observation 1     25    
+ 5           1 stimulus    2     house 
+ 6           2 stimulus    2     flower
+ 7           1 observation 2     100   
+ 8           2 observation 2     63    
+ 9           1 stimulus    3     car   
+10           2 stimulus    3     house 
+11           1 observation 3     24    
+12           2 observation 3     45    </code></pre>
 <p>The <code>separate()</code> function takes four arguments:</p>
 <ol style="list-style-type: decimal">
 <li>the data which I’ve passed to it via the pipe <code>%&gt;%</code></li>
@@ -940,15 +946,15 @@ df.reshape2 =<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;index&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>participant) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">separate</span>(index, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread</span>(index, value)</code></pre>
-<pre><code>## # A tibble: 6 x 4
-##   participant order observation stimulus
-##         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   
-## 1           1 1     10          flower  
-## 2           1 2     100         house   
-## 3           1 3     24          car     
-## 4           2 1     25          car     
-## 5           2 2     63          flower  
-## 6           2 3     45          house</code></pre>
+<pre><code># A tibble: 6 x 4
+  participant order observation stimulus
+        &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   
+1           1 1     10          flower  
+2           1 2     100         house   
+3           1 3     24          car     
+4           2 1     25          car     
+5           2 2     63          flower  
+6           2 3     45          house   </code></pre>
 <p>That’s pretty much it. Now, each row contains information about the order in which a stimulus was presented, what the stimulus was, and the judgment that a participant made in this trial.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&quot;index&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;value&quot;</span>, <span class="op">-</span>participant) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -956,15 +962,15 @@ df.reshape2 =<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">spread</span>(index,value) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(order, observation), <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(participant, order, stimulus, <span class="dt">rating =</span> observation)</code></pre>
-<pre><code>## # A tibble: 6 x 4
-##   participant order stimulus rating
-##         &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-## 1           1     1 flower       10
-## 2           1     2 house       100
-## 3           1     3 car          24
-## 4           2     1 car          25
-## 5           2     2 flower       63
-## 6           2     3 house        45</code></pre>
+<pre><code># A tibble: 6 x 4
+  participant order stimulus rating
+        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+1           1     1 flower       10
+2           1     2 house       100
+3           1     3 car          24
+4           2     1 car          25
+5           2     2 flower       63
+6           2     3 house        45</code></pre>
 <p>The rest is familiar. I’ve used <code>mutate_at()</code> to turn <code>order</code> and <code>observation</code> into numeric columns, <code>select()</code> to change the order of the columns (and renamed the <code>observation</code> column to <code>rating</code> along the way), and <code>arrange()</code> to sort the data frame by <code>participant</code> and <code>order</code>.</p>
 <p>Sometimes, we may have a data frame where data is recorded in a long string.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.reshape3 =<span class="st"> </span><span class="kw">tibble</span>(
@@ -972,24 +978,24 @@ df.reshape2 =<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">judgments =</span> <span class="kw">c</span>(<span class="st">&quot;10, 4, 12, 15&quot;</span>, <span class="st">&quot;3, 4&quot;</span>)
 ) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">print</span>()</code></pre>
-<pre><code>## # A tibble: 2 x 2
-##   participant judgments    
-##         &lt;int&gt; &lt;chr&gt;        
-## 1           1 10, 4, 12, 15
-## 2           2 3, 4</code></pre>
+<pre><code># A tibble: 2 x 2
+  participant judgments    
+        &lt;int&gt; &lt;chr&gt;        
+1           1 10, 4, 12, 15
+2           2 3, 4         </code></pre>
 <p>Here, I’ve created a data frame with data from two participants. For whatever reason, we have four judgments from participant 1 and only two judgments from participant 2 (data is often messy in real life, too!).</p>
 <p>We can use the <code>separate_rows()</code> function to turn this into a tidy data frame in long format.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.reshape3 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">separate_rows</span>(judgments)</code></pre>
-<pre><code>## # A tibble: 6 x 2
-##   participant judgments
-##         &lt;int&gt; &lt;chr&gt;    
-## 1           1 10       
-## 2           1 4        
-## 3           1 12       
-## 4           1 15       
-## 5           2 3        
-## 6           2 4</code></pre>
+<pre><code># A tibble: 6 x 2
+  participant judgments
+        &lt;int&gt; &lt;chr&gt;    
+1           1 10       
+2           1 4        
+3           1 12       
+4           1 15       
+5           2 3        
+6           2 4        </code></pre>
 <p>Getting familiar with <code>gather()</code> and <code>spread()</code> takes some time plus trial and error. So don’t be discouraged if you don’t get what you want straight away. Once you’ve mastered these functions, they will make it much easier to get your data frames into shape.</p>
 <p>After having done some transformations like this, it’s worth checking that nothing went wrong. I often compare a few values in the transformed and original data frame to make sure everything is legit.</p>
 <div id="practice-2-1" class="section level4">
@@ -1025,40 +1031,41 @@ df.stimuli =<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">n_dots =</span> <span class="kw">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">7</span>),
   <span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)
 ) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">print</span>()</code></pre>
-<pre><code>## # A tibble: 5 x 5
-##   index height width n_dots color
-##   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
-## 1     1      2     4     12 green
-## 2     2      3     5     15 blue 
-## 3     3      1     2      5 white
-## 4     4      4     3     13 red  
-## 5     5      5     1      7 black</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># data frame with participants&#39; responses </span>
+<span class="st">  </span><span class="kw">print</span>()
+
+<span class="co"># data frame with participants&#39; responses </span>
 df.responses =<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">participant =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each =</span> <span class="dv">5</span>),
   <span class="dt">index =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">3</span>), 
   <span class="dt">response =</span> <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>) <span class="co"># randomly sample 15 values from 0 to 100</span>
 ) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">print</span>()</code></pre>
-<pre><code>## # A tibble: 15 x 3
-##    participant index response
-##          &lt;int&gt; &lt;int&gt;    &lt;int&gt;
-##  1           1     1       26
-##  2           1     2       37
-##  3           1     3       57
-##  4           1     4       91
-##  5           1     5       20
-##  6           2     1       90
-##  7           2     2       95
-##  8           2     3       66
-##  9           2     4       63
-## 10           2     5        6
-## 11           3     1       20
-## 12           3     2       17
-## 13           3     3       69
-## 14           3     4       38
-## 15           3     5       77</code></pre>
+<pre><code># A tibble: 5 x 5
+  index height width n_dots color
+  &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
+1     1      2     4     12 green
+2     2      3     5     15 blue 
+3     3      1     2      5 white
+4     4      4     3     13 red  
+5     5      5     1      7 black
+# A tibble: 15 x 3
+   participant index response
+         &lt;int&gt; &lt;int&gt;    &lt;int&gt;
+ 1           1     1       26
+ 2           1     2       37
+ 3           1     3       57
+ 4           1     4       91
+ 5           1     5       20
+ 6           2     1       90
+ 7           2     2       95
+ 8           2     3       66
+ 9           2     4       63
+10           2     5        6
+11           3     1       20
+12           3     2       17
+13           3     3       69
+14           3     4       38
+15           3     5       77</code></pre>
 <p>The <code>df.stimuli</code> data frame contains an <code>index</code>, information about the <code>height</code>, and <code>width</code>, as well as the number of <code>dots</code>, and their <code>color</code>. Let’s imagine that participants had to judge how much they liked each image from a scale of 0 (“not liking this dot pattern at all”) to 100 (“super thrilled about this dot pattern”).</p>
 <p>Let’s say that I now wanted to know what participants’ average response for the differently colored dot patterns are. Here is how I would do this:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.responses <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1067,37 +1074,37 @@ df.responses =<span class="st"> </span><span class="kw">tibble</span>(
             <span class="dt">by =</span> <span class="st">&quot;index&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">response_mean =</span> <span class="kw">mean</span>(response))</code></pre>
-<pre><code>## # A tibble: 5 x 2
-##   color response_mean
-##   &lt;chr&gt;         &lt;dbl&gt;
-## 1 black          34.3
-## 2 blue           49.7
-## 3 green          45.3
-## 4 red            64  
-## 5 white          64</code></pre>
+<pre><code># A tibble: 5 x 2
+  color response_mean
+  &lt;chr&gt;         &lt;dbl&gt;
+1 black          34.3
+2 blue           49.7
+3 green          45.3
+4 red            64  
+5 white          64  </code></pre>
 <p>Let’s take it step by step. The key here is to add the information from the <code>df.stimuli</code> data frame to the <code>df.responses</code> data frame.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.responses <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">left_join</span>(df.stimuli <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">              </span><span class="kw">select</span>(index, color),
             <span class="dt">by =</span> <span class="st">&quot;index&quot;</span>)</code></pre>
-<pre><code>## # A tibble: 15 x 4
-##    participant index response color
-##          &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
-##  1           1     1       26 green
-##  2           1     2       37 blue 
-##  3           1     3       57 white
-##  4           1     4       91 red  
-##  5           1     5       20 black
-##  6           2     1       90 green
-##  7           2     2       95 blue 
-##  8           2     3       66 white
-##  9           2     4       63 red  
-## 10           2     5        6 black
-## 11           3     1       20 green
-## 12           3     2       17 blue 
-## 13           3     3       69 white
-## 14           3     4       38 red  
-## 15           3     5       77 black</code></pre>
+<pre><code># A tibble: 15 x 4
+   participant index response color
+         &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
+ 1           1     1       26 green
+ 2           1     2       37 blue 
+ 3           1     3       57 white
+ 4           1     4       91 red  
+ 5           1     5       20 black
+ 6           2     1       90 green
+ 7           2     2       95 blue 
+ 8           2     3       66 white
+ 9           2     4       63 red  
+10           2     5        6 black
+11           3     1       20 green
+12           3     2       17 blue 
+13           3     3       69 white
+14           3     4       38 red  
+15           3     5       77 black</code></pre>
 <p>I’ve joined the <code>df.stimuli</code> table in which I’ve only selected the <code>index</code> and <code>color</code> column, with the <code>df.responses</code> table, and specified the <code>index</code> column as the one by which the tables should be joined. This is the only column that both of the data frames have in common.</p>
 <p>To specify multiple columns by which we would like to join tables, we specify the <code>by</code> argument as follows: <code>by = c("one_column", "another_column")</code>.</p>
 <p>Sometimes, the tables I want to join don’t have any column names in common. In that case, we can tell the <code>left_join()</code> function which column pair(s) should be used for joining.</p>
@@ -1106,24 +1113,24 @@ df.responses =<span class="st"> </span><span class="kw">tibble</span>(
 <span class="st">  </span><span class="kw">left_join</span>(df.stimuli <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">              </span><span class="kw">select</span>(index, color),
             <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;stimuli&quot;</span> =<span class="st"> &quot;index&quot;</span>)) </code></pre>
-<pre><code>## # A tibble: 15 x 4
-##    participant stimuli response color
-##          &lt;int&gt;   &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
-##  1           1       1       26 green
-##  2           1       2       37 blue 
-##  3           1       3       57 white
-##  4           1       4       91 red  
-##  5           1       5       20 black
-##  6           2       1       90 green
-##  7           2       2       95 blue 
-##  8           2       3       66 white
-##  9           2       4       63 red  
-## 10           2       5        6 black
-## 11           3       1       20 green
-## 12           3       2       17 blue 
-## 13           3       3       69 white
-## 14           3       4       38 red  
-## 15           3       5       77 black</code></pre>
+<pre><code># A tibble: 15 x 4
+   participant stimuli response color
+         &lt;int&gt;   &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
+ 1           1       1       26 green
+ 2           1       2       37 blue 
+ 3           1       3       57 white
+ 4           1       4       91 red  
+ 5           1       5       20 black
+ 6           2       1       90 green
+ 7           2       2       95 blue 
+ 8           2       3       66 white
+ 9           2       4       63 red  
+10           2       5        6 black
+11           3       1       20 green
+12           3       2       17 blue 
+13           3       3       69 white
+14           3       4       38 red  
+15           3       5       77 black</code></pre>
 <p>Here, I’ve first renamed the index column (to create the problem) and then used the <code>by = c("stimuli" = "index")</code> construction (to solve the problem).</p>
 <p>In my experience, it often takes a little bit of playing around to make sure that the data frames were joined as intended. One very good indicator is the row number of the initial data frame, and the joined one. For a <code>left_join()</code>, most of the time, we want the row number of the original data frame (“the one on the left”) and the joined data frame to be the same. If the row number changed, something probably went wrong.</p>
 <p>Take a look at the <code>join</code> help file to see other operations for combining two or more data frames into one (make sure to look at the one from the <code>dplyr</code> package).</p>
@@ -1156,43 +1163,43 @@ df.information =<span class="st"> </span><span class="kw">tibble</span>(
 <p>We can check for explicit missing values using the <code>is.na()</code> function like so:</p>
 <pre class="sourceCode r"><code class="sourceCode r">tmp.na =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">3</span>)
 <span class="kw">is.na</span>(tmp.na)</code></pre>
-<pre><code>## [1] FALSE FALSE  TRUE FALSE</code></pre>
+<pre><code>[1] FALSE FALSE  TRUE FALSE</code></pre>
 <p>I’ve first created a vector <code>tmp.na</code> with a missing value at index 3. Calling the <code>is.na()</code> function on this vector yields a logical vector with <code>FALSE</code> for each value that is not missing, and <code>TRUE</code> for each missing value.</p>
 <p>Let’s say that we have a data frame with missing values and that we want to replace those missing values with something else. Let’s first create a data frame with missing values.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.missing =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>),
                  <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;b&quot;</span>))
 <span class="kw">print</span>(df.missing)</code></pre>
-<pre><code>## # A tibble: 3 x 2
-##       x y    
-##   &lt;dbl&gt; &lt;chr&gt;
-## 1     1 a    
-## 2     2 &lt;NA&gt; 
-## 3    NA b</code></pre>
+<pre><code># A tibble: 3 x 2
+      x y    
+  &lt;dbl&gt; &lt;chr&gt;
+1     1 a    
+2     2 &lt;NA&gt; 
+3    NA b    </code></pre>
 <p>We can use the <code>replace_na()</code> function to replace the missing values with something else.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.missing <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">replace_na</span>(x, <span class="dt">replace =</span> <span class="dv">0</span>),
          <span class="dt">y =</span> <span class="kw">replace_na</span>(y, <span class="dt">replace =</span> <span class="st">&quot;unknown&quot;</span>))</code></pre>
-<pre><code>## # A tibble: 3 x 2
-##       x y      
-##   &lt;dbl&gt; &lt;chr&gt;  
-## 1     1 a      
-## 2     2 unknown
-## 3     0 b</code></pre>
+<pre><code># A tibble: 3 x 2
+      x y      
+  &lt;dbl&gt; &lt;chr&gt;  
+1     1 a      
+2     2 unknown
+3     0 b      </code></pre>
 <p>We can also remove rows with missing values using the <code>drop_na()</code> function.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.missing <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">drop_na</span>()</code></pre>
-<pre><code>## # A tibble: 1 x 2
-##       x y    
-##   &lt;dbl&gt; &lt;chr&gt;
-## 1     1 a</code></pre>
+<pre><code># A tibble: 1 x 2
+      x y    
+  &lt;dbl&gt; &lt;chr&gt;
+1     1 a    </code></pre>
 <p>If we only want to drop values from specific columns, we can specify these columns within the <code>drop_na()</code> function call. So, if we only want to drop rows that have missing values in the <code>x</code> column, we can write:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.missing <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">drop_na</span>(x)</code></pre>
-<pre><code>## # A tibble: 2 x 2
-##       x y    
-##   &lt;dbl&gt; &lt;chr&gt;
-## 1     1 a    
-## 2     2 &lt;NA&gt;</code></pre>
+<pre><code># A tibble: 2 x 2
+      x y    
+  &lt;dbl&gt; &lt;chr&gt;
+1     1 a    
+2     2 &lt;NA&gt; </code></pre>
 <p>To make the distinction between implicit and explicit missing values more concrete, let’s consider the following example (taken from <a href="https://r4ds.had.co.nz/tidy-data.html#missing-values-3">here</a>):</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.stocks =<span class="st"> </span><span class="kw">tibble</span>(
   <span class="dt">year   =</span> <span class="kw">c</span>(<span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2016</span>, <span class="dv">2016</span>),
@@ -1207,32 +1214,32 @@ df.information =<span class="st"> </span><span class="kw">tibble</span>(
 <p>We can use the <code>complete()</code> function to turn implicit missing values explicit:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.stocks <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">complete</span>(year, qtr)</code></pre>
-<pre><code>## # A tibble: 8 x 3
-##    year   qtr return
-##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-## 1  2015     1   1.88
-## 2  2015     2   0.59
-## 3  2015     3   0.35
-## 4  2015     4  NA   
-## 5  2016     1  NA   
-## 6  2016     2   0.92
-## 7  2016     3   0.17
-## 8  2016     4   2.66</code></pre>
+<pre><code># A tibble: 8 x 3
+   year   qtr return
+  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1  2015     1   1.88
+2  2015     2   0.59
+3  2015     3   0.35
+4  2015     4  NA   
+5  2016     1  NA   
+6  2016     2   0.92
+7  2016     3   0.17
+8  2016     4   2.66</code></pre>
 <p>Note how now, the data frame contains an additional row in which <code>year = 2016</code>, <code>qtr = 1</code> and <code>return = NA</code> even though we didn’t originally specify this.</p>
 <p>We can also directly tell the <code>complete()</code> function to replace the <code>NA</code> values via passing a list to its <code>fill</code> argument like so:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.stocks <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">complete</span>(year, qtr, <span class="dt">fill =</span> <span class="kw">list</span>(<span class="dt">return =</span> <span class="dv">0</span>))</code></pre>
-<pre><code>## # A tibble: 8 x 3
-##    year   qtr return
-##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-## 1  2015     1   1.88
-## 2  2015     2   0.59
-## 3  2015     3   0.35
-## 4  2015     4   0   
-## 5  2016     1   0   
-## 6  2016     2   0.92
-## 7  2016     3   0.17
-## 8  2016     4   2.66</code></pre>
+<pre><code># A tibble: 8 x 3
+   year   qtr return
+  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1  2015     1   1.88
+2  2015     2   0.59
+3  2015     3   0.35
+4  2015     4   0   
+5  2016     1   0   
+6  2016     2   0.92
+7  2016     3   0.17
+8  2016     4   2.66</code></pre>
 <p>This specifies that we would like to replace any <code>NA</code> in the <code>return</code> column with <code>0</code>. Again, if we had multiple columns with <code>NA</code>s, we could speficy for each column separately how to replace it.</p>
 </div>
 </div>
@@ -1281,36 +1288,36 @@ df.information =<span class="st"> </span><span class="kw">tibble</span>(
 <h3><span class="header-section-number">5.4.1</span> csv</h3>
 <p>I’ve stored some data files in the <code>data/</code> subfolder. Let’s first read a csv (= <strong>c</strong>omma-<strong>s</strong>eparated-<strong>v</strong>alue) file.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.csv =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/movies.csv&quot;</span>)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   title = col_character(),
-##   genre = col_character(),
-##   director = col_character(),
-##   year = col_double(),
-##   duration = col_double(),
-##   gross = col_double(),
-##   budget = col_double(),
-##   cast_facebook_likes = col_double(),
-##   votes = col_double(),
-##   reviews = col_double(),
-##   rating = col_double()
-## )</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  title = col_character(),
+  genre = col_character(),
+  director = col_character(),
+  year = col_double(),
+  duration = col_double(),
+  gross = col_double(),
+  budget = col_double(),
+  cast_facebook_likes = col_double(),
+  votes = col_double(),
+  reviews = col_double(),
+  rating = col_double()
+)</code></pre>
 <p>The <code>read_csv()</code> function gives us information about how each column was parsed. Here, we have some columns that are characters (such as <code>title</code> and <code>genre</code>), and some columns that are numeric (such as <code>year</code> and <code>duration</code>). Note that it says <code>double()</code> in the specification but double and numeric are identical.</p>
 <p>And let’s take a quick peek at the data:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.csv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glimpse</span>()</code></pre>
-<pre><code>## Observations: 2,961
-## Variables: 11
-## $ title               &lt;chr&gt; &quot;Over the Hill to the Poorhouse&quot;, &quot;The Broad…
-## $ genre               &lt;chr&gt; &quot;Crime&quot;, &quot;Musical&quot;, &quot;Comedy&quot;, &quot;Comedy&quot;, &quot;Com…
-## $ director            &lt;chr&gt; &quot;Harry F. Millarde&quot;, &quot;Harry Beaumont&quot;, &quot;Lloy…
-## $ year                &lt;dbl&gt; 1920, 1929, 1933, 1935, 1936, 1937, 1939, 19…
-## $ duration            &lt;dbl&gt; 110, 100, 89, 81, 87, 83, 102, 226, 88, 144,…
-## $ gross               &lt;dbl&gt; 3000000, 2808000, 2300000, 3000000, 163245, …
-## $ budget              &lt;dbl&gt; 100000, 379000, 439000, 609000, 1500000, 200…
-## $ cast_facebook_likes &lt;dbl&gt; 4, 109, 995, 824, 352, 229, 2509, 1862, 1178…
-## $ votes               &lt;dbl&gt; 5, 4546, 7921, 13269, 143086, 133348, 291875…
-## $ reviews             &lt;dbl&gt; 2, 107, 162, 164, 331, 349, 746, 863, 252, 1…
-## $ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5,…</code></pre>
+<pre><code>Observations: 2,961
+Variables: 11
+$ title               &lt;chr&gt; &quot;Over the Hill to the Poorhouse&quot;, &quot;The Broad…
+$ genre               &lt;chr&gt; &quot;Crime&quot;, &quot;Musical&quot;, &quot;Comedy&quot;, &quot;Comedy&quot;, &quot;Com…
+$ director            &lt;chr&gt; &quot;Harry F. Millarde&quot;, &quot;Harry Beaumont&quot;, &quot;Lloy…
+$ year                &lt;dbl&gt; 1920, 1929, 1933, 1935, 1936, 1937, 1939, 19…
+$ duration            &lt;dbl&gt; 110, 100, 89, 81, 87, 83, 102, 226, 88, 144,…
+$ gross               &lt;dbl&gt; 3000000, 2808000, 2300000, 3000000, 163245, …
+$ budget              &lt;dbl&gt; 100000, 379000, 439000, 609000, 1500000, 200…
+$ cast_facebook_likes &lt;dbl&gt; 4, 109, 995, 824, 352, 229, 2509, 1862, 1178…
+$ votes               &lt;dbl&gt; 5, 4546, 7921, 13269, 143086, 133348, 291875…
+$ reviews             &lt;dbl&gt; 2, 107, 162, 164, 331, 349, 746, 863, 252, 1…
+$ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5,…</code></pre>
 <p>The data frame contains a bunch of movies with information about their genre, director, rating, etc.</p>
 <p>The <code>readr</code> package (which contains the <code>read_csv()</code> function) has a number of other functions for reading data. Just type <code>read_</code> in the console below and take a look at the suggestions that autocomplete offers.</p>
 </div>
@@ -1319,8 +1326,8 @@ df.information =<span class="st"> </span><span class="kw">tibble</span>(
 <p>RData is a data format native to R. Since this format can only be read by R, it’s not a good format for sharing data. However, it’s a useful format that allows us to flexibly save and load R objects. For example, consider that we always start our script by reading in and structuring data, and that this takes quite a while. One thing we can do is to save the output of intermediate steps as an RData object, and then simply load this object (instead of re-running the whole routine every time).</p>
 <p>We read (or load) an RData file in the following way:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&quot;data/test.RData&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## Loading objects:
-##   df.test</code></pre>
+<pre><code>Loading objects:
+  df.test</code></pre>
 <p>I’ve set the <code>verbose =</code> argument to <code>TRUE</code> here so that the <code>load()</code> function tells me what objects it added to the environment. This is useful for checking whether existing objects were overwritten.</p>
 </div>
 </div>

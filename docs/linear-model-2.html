@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -610,7 +610,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;corrr&quot;</span>)      <span class="co"># for calculating correlations between many variables</span>
 <span class="kw">library</span>(<span class="st">&quot;corrplot&quot;</span>)   <span class="co"># for plotting correlations</span>
 <span class="kw">library</span>(<span class="st">&quot;GGally&quot;</span>)     <span class="co"># for running ggpairs() function</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -789,12 +795,12 @@ tmp.shape2 =<span class="st"> </span><span class="dv">2</span>
 <span class="st">  </span><span class="kw">correlate</span>(<span class="dt">quiet =</span> T) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">shave</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">fashion</span>()</code></pre>
-<pre><code>##     rowname index   tv radio newspaper sales
-## 1     index                                 
-## 2        tv   .02                           
-## 3     radio  -.11  .05                      
-## 4 newspaper  -.15  .06   .35                
-## 5     sales  -.05  .78   .58       .23</code></pre>
+<pre><code>    rowname index   tv radio newspaper sales
+1     index                                 
+2        tv   .02                           
+3     radio  -.11  .05                      
+4 newspaper  -.15  .06   .35                
+5     sales  -.05  .78   .58       .23      </code></pre>
 <div id="visualize-correlations" class="section level4">
 <h4><span class="header-section-number">11.4.1.1</span> Visualize correlations</h4>
 <div id="correlations-with-the-dependent-variable" class="section level5">
@@ -902,15 +908,15 @@ fit_a =<span class="st"> </span><span class="kw">lm</span>(sales <span class="op
 
 <span class="co"># do the F test</span>
 <span class="kw">anova</span>(fit_c, fit_a)</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: sales ~ 1 + tv
-## Model 2: sales ~ 1 + tv + radio
-##   Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1    198 2102.53                                  
-## 2    197  556.91  1    1545.6 546.74 &lt; 2.2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Model 1: sales ~ 1 + tv
+Model 2: sales ~ 1 + tv + radio
+  Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    198 2102.53                                  
+2    197  556.91  1    1545.6 546.74 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>It’s worth it!</p>
 <p>Let’s evaluate how well the model actually does. We do this by taking a look at the residual plot, and check whether the residuals are normally distributed.</p>
 <pre class="sourceCode r"><code class="sourceCode r">tmp.fit =<span class="st"> </span><span class="kw">lm</span>(sales <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>tv <span class="op">+</span><span class="st"> </span>radio, <span class="dt">data =</span> df.ads)
@@ -923,19 +929,19 @@ df.plot =<span class="st"> </span>tmp.fit <span class="op">%&gt;%</span><span cl
 <span class="kw">ggplot</span>(df.plot, 
        <span class="kw">aes</span>(<span class="dt">x =</span> fitted, 
            <span class="dt">y =</span> resid)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_point</span>()</code></pre>
-<p><img src="11-linear_model2_files/figure-html/linear-model2-16-1.png" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># density of residuals </span>
+<span class="st">  </span><span class="kw">geom_point</span>()
+
+<span class="co"># density of residuals </span>
 <span class="kw">ggplot</span>(df.plot, 
        <span class="kw">aes</span>(<span class="dt">x =</span> resid)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)</code></pre>
-<p><img src="11-linear_model2_files/figure-html/linear-model2-16-2.png" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># QQ plot </span>
+<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>)
+
+<span class="co"># QQ plot </span>
 <span class="kw">ggplot</span>(df.plot,
        <span class="kw">aes</span>(<span class="dt">sample =</span> resid)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_qq</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_qq_line</span>() </code></pre>
-<p><img src="11-linear_model2_files/figure-html/linear-model2-16-3.png" width="672" /></p>
+<p><img src="11-linear_model2_files/figure-html/linear-model2-16-1.png" width="672" /><img src="11-linear_model2_files/figure-html/linear-model2-16-2.png" width="672" /><img src="11-linear_model2_files/figure-html/linear-model2-16-3.png" width="672" /></p>
 <p>There is a slight non-linear trend in the residuals. We can also see that the residuals aren’t perfectly normally distributed. We’ll see later what we can do about this …</p>
 <p>Let’s see how well the model does overall:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit_a <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1170,15 +1176,15 @@ radio
 <p>One thing we can do to make different predictors more comparable is to standardize them.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.ads =<span class="st"> </span>df.ads <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(tv, radio), <span class="kw">funs</span>(<span class="dt">scaled =</span> <span class="kw">scale</span>(.)[,]))</code></pre>
-<pre><code>## Warning: funs() is soft deprecated as of dplyr 0.8.0
-## please use list() instead
-## 
-## # Before:
-## funs(name = f(.)
-## 
-## # After: 
-## list(name = ~f(.))
-## This warning is displayed once per session.</code></pre>
+<pre><code>Warning: funs() is soft deprecated as of dplyr 0.8.0
+please use list() instead
+
+# Before:
+funs(name = f(.)
+
+# After: 
+list(name = ~f(.))
+This warning is displayed once per session.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.ads <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>newspaper) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1448,36 +1454,37 @@ fit_c =<span class="st"> </span><span class="kw">lm</span>(balance <span class="
 fit_a =<span class="st"> </span><span class="kw">lm</span>(balance <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>student, <span class="dt">data =</span> df.credit)
 
 <span class="co"># run the F test </span>
-<span class="kw">anova</span>(fit_c, fit_a)</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: balance ~ 1
-## Model 2: balance ~ 1 + student
-##   Res.Df      RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1    399 84339912                                  
-## 2    398 78681540  1   5658372 28.622 1.488e-07 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">fit_a <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="kw">anova</span>(fit_c, fit_a)
+
+fit_a <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = balance ~ 1 + student, data = df.credit)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -876.82 -458.82  -40.87  341.88 1518.63 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   480.37      23.43   20.50  &lt; 2e-16 ***
-## studentYes    396.46      74.10    5.35 1.49e-07 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 444.6 on 398 degrees of freedom
-## Multiple R-squared:  0.06709,    Adjusted R-squared:  0.06475 
-## F-statistic: 28.62 on 1 and 398 DF,  p-value: 1.488e-07</code></pre>
+<pre><code>Analysis of Variance Table
+
+Model 1: balance ~ 1
+Model 2: balance ~ 1 + student
+  Res.Df      RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    399 84339912                                  
+2    398 78681540  1   5658372 28.622 1.488e-07 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Call:
+lm(formula = balance ~ 1 + student, data = df.credit)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-876.82 -458.82  -40.87  341.88 1518.63 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   480.37      23.43   20.50  &lt; 2e-16 ***
+studentYes    396.46      74.10    5.35 1.49e-07 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 444.6 on 398 degrees of freedom
+Multiple R-squared:  0.06709,   Adjusted R-squared:  0.06475 
+F-statistic: 28.62 on 1 and 398 DF,  p-value: 1.488e-07</code></pre>
 <p>The <code>summary()</code> shows that it’s worth it: the augmented model explains a signifcant amount of the variance (i.e. it significantly reduces the proportion in error PRE).</p>
 <div id="visualization-of-the-model-predictions" class="section level3">
 <h3><span class="header-section-number">11.5.1</span> Visualization of the model predictions</h3>
@@ -1540,17 +1547,17 @@ fit_a =<span class="st"> </span><span class="kw">lm</span>(balance <span class="
 <p>And let’s double check that we also get a signifcant result when we run a t-test instead of our model comparison procedure:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">x =</span> df.credit<span class="op">$</span>balance[df.credit<span class="op">$</span>student <span class="op">==</span><span class="st"> &quot;No&quot;</span>],
        <span class="dt">y =</span> df.credit<span class="op">$</span>balance[df.credit<span class="op">$</span>student <span class="op">==</span><span class="st"> &quot;Yes&quot;</span>])</code></pre>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  df.credit$balance[df.credit$student == &quot;No&quot;] and df.credit$balance[df.credit$student == &quot;Yes&quot;]
-## t = -4.9028, df = 46.241, p-value = 1.205e-05
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -559.2023 -233.7088
-## sample estimates:
-## mean of x mean of y 
-##  480.3694  876.8250</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  df.credit$balance[df.credit$student == &quot;No&quot;] and df.credit$balance[df.credit$student == &quot;Yes&quot;]
+t = -4.9028, df = 46.241, p-value = 1.205e-05
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -559.2023 -233.7088
+sample estimates:
+mean of x mean of y 
+ 480.3694  876.8250 </code></pre>
 </div>
 <div id="dummy-coding" class="section level3">
 <h3><span class="header-section-number">11.5.2</span> Dummy coding</h3>
@@ -1713,11 +1720,11 @@ Yes
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(balance),
             <span class="dt">sd =</span> <span class="kw">sd</span>(balance)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="kw">funs</span>(<span class="kw">round</span>(., <span class="dv">2</span>)))</code></pre>
-<pre><code>## # A tibble: 2 x 3
-##   student  mean    sd
-##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
-## 1 No       480.  439.
-## 2 Yes      877.  490</code></pre>
+<pre><code># A tibble: 2 x 3
+  student  mean    sd
+  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 No       480.  439.
+2 Yes      877.  490 </code></pre>
 </div>
 </div>
 <div id="one-continuous-and-one-categorical-variable" class="section level2">
@@ -1729,15 +1736,15 @@ fit_a =<span class="st"> </span><span class="kw">lm</span>(balance <span class="
 
 <span class="co"># run the F test </span>
 <span class="kw">anova</span>(fit_c, fit_a)</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: balance ~ 1 + income
-## Model 2: balance ~ 1 + income + student
-##   Res.Df      RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1    398 66208745                                  
-## 2    397 60939054  1   5269691 34.331 9.776e-09 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Model 1: balance ~ 1 + income
+Model 2: balance ~ 1 + income + student
+  Res.Df      RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    398 66208745                                  
+2    397 60939054  1   5269691 34.331 9.776e-09 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>We see again that it’s worth it. The augmented model explains significantly more variance than the compact model.</p>
 <div id="visualization-of-the-model-predictions-1" class="section level3">
 <h3><span class="header-section-number">11.6.1</span> Visualization of the model predictions</h3>
@@ -1826,13 +1833,13 @@ fit_a =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">form
 
 <span class="co"># F-test </span>
 <span class="kw">anova</span>(fit_c, fit_a)</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Model 1: balance ~ income + student
-## Model 2: balance ~ income * student
-##   Res.Df      RSS Df Sum of Sq      F Pr(&gt;F)
-## 1    397 60939054                           
-## 2    396 60734545  1    204509 1.3334 0.2489</code></pre>
+<pre><code>Analysis of Variance Table
+
+Model 1: balance ~ income + student
+Model 2: balance ~ income * student
+  Res.Df      RSS Df Sum of Sq      F Pr(&gt;F)
+1    397 60939054                           
+2    396 60734545  1    204509 1.3334 0.2489</code></pre>
 <p>Nope, not worth it! The F-test comes out non-significant.</p>
 </div>
 </div>

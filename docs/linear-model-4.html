@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-19">
+<meta name="date" content="2019-03-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -610,7 +610,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="kw">library</span>(<span class="st">&quot;afex&quot;</span>)       <span class="co"># for running ANOVAs</span>
 <span class="kw">library</span>(<span class="st">&quot;emmeans&quot;</span>)    <span class="co"># for calculating constrasts</span>
 <span class="kw">library</span>(<span class="st">&quot;car&quot;</span>)        <span class="co"># for calculating ANOVAs</span>
-<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc.</span></code></pre>
+<span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc.</span>
+
+opts_chunk<span class="op">$</span><span class="kw">set</span>(
+  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,
+  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span>
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_set</span>(
   <span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span>
@@ -632,13 +638,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
                         <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;fixed&quot;</span>, <span class="st">&quot;none&quot;</span>)),
          <span class="dt">participant =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(participant, <span class="kw">everything</span>())</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   skill = col_double(),
-##   hand = col_double(),
-##   limit = col_double(),
-##   balance = col_double()
-## )</code></pre>
+<pre><code>Parsed with column specification:
+cols(
+  skill = col_double(),
+  hand = col_double(),
+  limit = col_double(),
+  balance = col_double()
+)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.poker.unbalanced =<span class="st"> </span>df.poker <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>participant <span class="op">%in%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</code></pre>
 </div>
@@ -650,14 +656,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 fit <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">anova</span>()</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Response: balance
-##            Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-## hand        2 2559.4  1279.7  75.703 &lt; 2.2e-16 ***
-## Residuals 297 5020.6    16.9                      
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Response: balance
+           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+hand        2 2559.4  1279.7  75.703 &lt; 2.2e-16 ***
+Residuals 297 5020.6    16.9                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div id="calculate-sums-of-squares" class="section level3">
 <h3><span class="header-section-number">13.3.1</span> Calculate sums of squares</h3>
 <p>And then let’s make sure that we understand how the variance is broken down:</p>
@@ -669,10 +675,10 @@ fit <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">variance_total =</span> <span class="kw">sum</span>((balance <span class="op">-</span><span class="st"> </span>mean_grand)<span class="op">^</span><span class="dv">2</span>),
             <span class="dt">variance_model =</span> <span class="kw">sum</span>((mean_group <span class="op">-</span><span class="st"> </span>mean_grand)<span class="op">^</span><span class="dv">2</span>),
             <span class="dt">variance_residual =</span> variance_total <span class="op">-</span><span class="st"> </span>variance_model)</code></pre>
-<pre><code>## # A tibble: 1 x 3
-##   variance_total variance_model variance_residual
-##            &lt;dbl&gt;          &lt;dbl&gt;             &lt;dbl&gt;
-## 1          7580.          2559.             5021.</code></pre>
+<pre><code># A tibble: 1 x 3
+  variance_total variance_model variance_residual
+           &lt;dbl&gt;          &lt;dbl&gt;             &lt;dbl&gt;
+1          7580.          2559.             5021.</code></pre>
 </div>
 <div id="visualize-model-predictions" class="section level3">
 <h3><span class="header-section-number">13.3.2</span> Visualize model predictions</h3>
@@ -782,15 +788,15 @@ df.tidy =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span clas
 <span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select_if</span>(is.numeric) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate_all</span>(<span class="kw">funs</span>(round, <span class="dt">.args =</span> <span class="kw">list</span>(<span class="dt">digits =</span> <span class="dv">2</span>)))</code></pre>
-<pre><code>## Warning: funs() is soft deprecated as of dplyr 0.8.0
-## please use list() instead
-## 
-## # Before:
-## funs(name = f(.)
-## 
-## # After: 
-## list(name = ~f(.))
-## This warning is displayed once per session.</code></pre>
+<pre><code>Warning: funs() is soft deprecated as of dplyr 0.8.0
+please use list() instead
+
+# Before:
+funs(name = f(.)
+
+# After: 
+list(name = ~f(.))
+This warning is displayed once per session.</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.augment =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -847,15 +853,15 @@ df.tidy =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span clas
 
 fit <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">anova</span>()</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Response: balance
-##            Df Sum Sq Mean Sq F value Pr(&gt;F)    
-## hand        2 2559.4 1279.70 76.0437 &lt;2e-16 ***
-## skill       1   39.3   39.35  2.3383 0.1273    
-## Residuals 296 4981.2   16.83                   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Response: balance
+           Df Sum Sq Mean Sq F value Pr(&gt;F)    
+hand        2 2559.4 1279.70 76.0437 &lt;2e-16 ***
+skill       1   39.3   39.35  2.3383 0.1273    
+Residuals 296 4981.2   16.83                   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div id="calculate-sums-of-squares-1" class="section level3">
 <h3><span class="header-section-number">13.4.1</span> Calculate sums of squares</h3>
 <pre class="sourceCode r"><code class="sourceCode r">df.poker <span class="op">%&gt;%</span><span class="st"> </span>
@@ -869,10 +875,10 @@ fit <span class="op">%&gt;%</span>
             <span class="dt">variance_skill =</span> <span class="kw">sum</span>((mean_skill <span class="op">-</span><span class="st"> </span>mean_grand)<span class="op">^</span><span class="dv">2</span>),
             <span class="dt">variance_hand =</span> <span class="kw">sum</span>((mean_hand <span class="op">-</span><span class="st"> </span>mean_grand)<span class="op">^</span><span class="dv">2</span>),
             <span class="dt">variance_residual =</span> variance_total <span class="op">-</span><span class="st"> </span>variance_skill <span class="op">-</span><span class="st"> </span>variance_hand)</code></pre>
-<pre><code>## # A tibble: 1 x 4
-##   variance_total variance_skill variance_hand variance_residual
-##            &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
-## 1          7580.           39.3         2559.             4981.</code></pre>
+<pre><code># A tibble: 1 x 4
+  variance_total variance_skill variance_hand variance_residual
+           &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+1          7580.           39.3         2559.             4981.</code></pre>
 </div>
 <div id="visualize-model-predictions-1" class="section level3">
 <h3><span class="header-section-number">13.4.2</span> Visualize model predictions</h3>
@@ -936,81 +942,83 @@ df.means =<span class="st"> </span>df.poker <span class="op">%&gt;%</span><span 
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># one order </span>
 <span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>skill <span class="op">+</span><span class="st"> </span>hand, 
          <span class="dt">data =</span> df.poker.unbalanced) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">anova</span>()</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Response: balance
-##            Df Sum Sq Mean Sq F value  Pr(&gt;F)    
-## skill       1   74.3   74.28  4.2904 0.03922 *  
-## hand        2 2385.1 1192.57 68.8827 &lt; 2e-16 ***
-## Residuals 286 4951.5   17.31                    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># another order </span>
+<span class="st">  </span><span class="kw">anova</span>()
+
+<span class="co"># another order </span>
 <span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand <span class="op">+</span><span class="st"> </span>skill, 
          <span class="dt">data =</span> df.poker.unbalanced) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">anova</span>()</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Response: balance
-##            Df Sum Sq Mean Sq F value Pr(&gt;F)    
-## hand        2 2419.8 1209.92 69.8845 &lt;2e-16 ***
-## skill       1   39.6   39.59  2.2867 0.1316    
-## Residuals 286 4951.5   17.31                   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Response: balance
+           Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+skill       1   74.3   74.28  4.2904 0.03922 *  
+hand        2 2385.1 1192.57 68.8827 &lt; 2e-16 ***
+Residuals 286 4951.5   17.31                    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Analysis of Variance Table
+
+Response: balance
+           Df Sum Sq Mean Sq F value Pr(&gt;F)    
+hand        2 2419.8 1209.92 69.8845 &lt;2e-16 ***
+skill       1   39.6   39.59  2.2867 0.1316    
+Residuals 286 4951.5   17.31                   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>For unbalanced designs, we should compute an ANOVA with type 3 sums of squares.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># one order</span>
 <span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand <span class="op">+</span><span class="st"> </span>skill,
    <span class="dt">data =</span> df.poker,
    <span class="dt">contrasts =</span> <span class="kw">list</span>(<span class="dt">hand =</span> <span class="st">&quot;contr.sum&quot;</span>, 
                     <span class="dt">skill =</span> <span class="st">&quot;contr.sum&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">Anova</span>(<span class="dt">type =</span> <span class="st">&quot;3&quot;</span>)</code></pre>
-<pre><code>## Anova Table (Type III tests)
-## 
-## Response: balance
-##              Sum Sq  Df   F value Pr(&gt;F)    
-## (Intercept) 28644.7   1 1702.1527 &lt;2e-16 ***
-## hand         2559.4   2   76.0437 &lt;2e-16 ***
-## skill          39.3   1    2.3383 0.1273    
-## Residuals    4981.2 296                     
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># another order</span>
+<span class="st">  </span><span class="kw">Anova</span>(<span class="dt">type =</span> <span class="st">&quot;3&quot;</span>)
+
+<span class="co"># another order</span>
 <span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>skill <span class="op">+</span><span class="st"> </span>hand,
    <span class="dt">data =</span> df.poker,
    <span class="dt">contrasts =</span> <span class="kw">list</span>(<span class="dt">hand =</span> <span class="st">&quot;contr.sum&quot;</span>, 
                     <span class="dt">skill =</span> <span class="st">&quot;contr.sum&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">Anova</span>(<span class="dt">type =</span> <span class="st">&quot;3&quot;</span>)</code></pre>
-<pre><code>## Anova Table (Type III tests)
-## 
-## Response: balance
-##              Sum Sq  Df   F value Pr(&gt;F)    
-## (Intercept) 28644.7   1 1702.1527 &lt;2e-16 ***
-## skill          39.3   1    2.3383 0.1273    
-## hand         2559.4   2   76.0437 &lt;2e-16 ***
-## Residuals    4981.2 296                     
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Anova Table (Type III tests)
+
+Response: balance
+             Sum Sq  Df   F value Pr(&gt;F)    
+(Intercept) 28644.7   1 1702.1527 &lt;2e-16 ***
+hand         2559.4   2   76.0437 &lt;2e-16 ***
+skill          39.3   1    2.3383 0.1273    
+Residuals    4981.2 296                     
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Anova Table (Type III tests)
+
+Response: balance
+             Sum Sq  Df   F value Pr(&gt;F)    
+(Intercept) 28644.7   1 1702.1527 &lt;2e-16 ***
+skill          39.3   1    2.3383 0.1273    
+hand         2559.4   2   76.0437 &lt;2e-16 ***
+Residuals    4981.2 296                     
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now, the order of the independent variables doesn’t matter anymore.</p>
 <p>We can also use the <code>aov_ez()</code> function from the <code>afex</code> package.</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit =<span class="st"> </span><span class="kw">aov_ez</span>(<span class="dt">id =</span> <span class="st">&quot;participant&quot;</span>,
              <span class="dt">dv =</span> <span class="st">&quot;balance&quot;</span>,
              <span class="dt">data =</span> df.poker,
              <span class="dt">between =</span> <span class="kw">c</span>(<span class="st">&quot;hand&quot;</span>, <span class="st">&quot;skill&quot;</span>))</code></pre>
-<pre><code>## Contrasts set to contr.sum for the following variables: hand, skill</code></pre>
+<pre><code>Contrasts set to contr.sum for the following variables: hand, skill</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">fit<span class="op">$</span>Anova</code></pre>
-<pre><code>## Anova Table (Type III tests)
-## 
-## Response: dv
-##              Sum Sq  Df   F value    Pr(&gt;F)    
-## (Intercept) 28644.7   1 1772.1137 &lt; 2.2e-16 ***
-## hand         2559.4   2   79.1692 &lt; 2.2e-16 ***
-## skill          39.3   1    2.4344 0.1197776    
-## hand:skill    229.0   2    7.0830 0.0009901 ***
-## Residuals    4752.3 294                        
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Anova Table (Type III tests)
+
+Response: dv
+             Sum Sq  Df   F value    Pr(&gt;F)    
+(Intercept) 28644.7   1 1772.1137 &lt; 2.2e-16 ***
+hand         2559.4   2   79.1692 &lt; 2.2e-16 ***
+skill          39.3   1    2.4344 0.1197776    
+hand:skill    229.0   2    7.0830 0.0009901 ***
+Residuals    4752.3 294                        
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 <div id="two-way-anova-with-interaction" class="section level2">
 <h2><span class="header-section-number">13.6</span> Two-way ANOVA (with interaction)</h2>
@@ -1018,16 +1026,16 @@ df.means =<span class="st"> </span>df.poker <span class="op">%&gt;%</span><span 
 <pre class="sourceCode r"><code class="sourceCode r">fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand <span class="op">*</span><span class="st"> </span>skill, <span class="dt">data =</span> df.poker)
 fit <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">anova</span>()</code></pre>
-<pre><code>## Analysis of Variance Table
-## 
-## Response: balance
-##             Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-## hand         2 2559.4 1279.70 79.1692 &lt; 2.2e-16 ***
-## skill        1   39.3   39.35  2.4344 0.1197776    
-## hand:skill   2  229.0  114.49  7.0830 0.0009901 ***
-## Residuals  294 4752.3   16.16                      
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre><code>Analysis of Variance Table
+
+Response: balance
+            Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+hand         2 2559.4 1279.70 79.1692 &lt; 2.2e-16 ***
+skill        1   39.3   39.35  2.4344 0.1197776    
+hand:skill   2  229.0  114.49  7.0830 0.0009901 ***
+Residuals  294 4752.3   16.16                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>And let’s compute how the the sums of squares are decomposed:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.poker <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_grand =</span> <span class="kw">mean</span>(balance)) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1044,11 +1052,11 @@ fit <span class="op">%&gt;%</span><span class="st"> </span>
             <span class="dt">variance_hand_skill =</span> <span class="kw">sum</span>((mean_hand_skill <span class="op">-</span><span class="st"> </span>mean_skill <span class="op">-</span><span class="st"> </span>mean_hand <span class="op">+</span><span class="st"> </span>mean_grand)<span class="op">^</span><span class="dv">2</span>),
             <span class="dt">variance_residual =</span> variance_total <span class="op">-</span><span class="st"> </span>variance_skill <span class="op">-</span><span class="st"> </span>variance_hand <span class="op">-</span><span class="st"> </span>variance_hand_skill
             )</code></pre>
-<pre><code>## # A tibble: 1 x 5
-##   variance_total variance_skill variance_hand variance_hand_s…
-##            &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;
-## 1          7580.           39.3         2559.             229.
-## # … with 1 more variable: variance_residual &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 1 x 5
+  variance_total variance_skill variance_hand variance_hand_s…
+           &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+1          7580.           39.3         2559.             229.
+# … with 1 more variable: variance_residual &lt;dbl&gt;</code></pre>
 </div>
 <div id="planned-contrasts" class="section level2">
 <h2><span class="header-section-number">13.7</span> Planned contrasts</h2>
@@ -1063,24 +1071,24 @@ fit.contrast =<span class="st"> </span><span class="kw">lm</span>(<span class="d
          <span class="dt">data =</span> df.poker)
 
 fit.contrast <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summary</span>()</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = balance ~ hand_contrast, data = df.poker)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -13.214  -2.684  -0.019   2.444  15.858 
-## 
-## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)     9.7715     0.2381   41.03   &lt;2e-16 ***
-## hand_contrast   3.5424     0.2917   12.14   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 4.125 on 298 degrees of freedom
-## Multiple R-squared:  0.3311, Adjusted R-squared:  0.3289 
-## F-statistic: 147.5 on 1 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre><code>
+Call:
+lm(formula = balance ~ hand_contrast, data = df.poker)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-13.214  -2.684  -0.019   2.444  15.858 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     9.7715     0.2381   41.03   &lt;2e-16 ***
+hand_contrast   3.5424     0.2917   12.14   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 4.125 on 298 degrees of freedom
+Multiple R-squared:  0.3311,    Adjusted R-squared:  0.3289 
+F-statistic: 147.5 on 1 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here is a visualization of the model prediction together with the residuals.</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.plot =<span class="st"> </span>df.poker <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hand_jitter =</span> hand <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(),
@@ -1189,8 +1197,8 @@ leastsquare =<span class="st"> </span><span class="kw">emmeans</span>(fit, <span
 <span class="kw">contrast</span>(leastsquare,
          contrasts,
          <span class="dt">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>)</code></pre>
-<pre><code>##  contrast estimate    SE df t.ratio p.value
-##  linear       16.9 0.548 57 30.856  &lt;.0001</code></pre>
+<pre><code> contrast estimate    SE df t.ratio p.value
+ linear       16.9 0.548 57 30.856  &lt;.0001 </code></pre>
 </div>
 <div id="visualization-6" class="section level3">
 <h3><span class="header-section-number">13.7.2</span> Visualization</h3>
@@ -1301,9 +1309,9 @@ fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formul
          <span class="dt">data =</span> df.development)
 
 <span class="co"># check factor levels </span>
-<span class="kw">levels</span>(df.development<span class="op">$</span>group)</code></pre>
-<pre><code>## [1] &quot;3-4&quot; &quot;5-6&quot; &quot;7-8&quot;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define the contrasts of interest </span>
+<span class="kw">levels</span>(df.development<span class="op">$</span>group)
+
+<span class="co"># define the contrasts of interest </span>
 contrasts =<span class="st"> </span><span class="kw">list</span>(<span class="dt">young_vs_old =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="fl">-0.5</span>, <span class="dv">1</span>),
                  <span class="dt">three_vs_five =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))
 
@@ -1314,11 +1322,12 @@ leastsquare =<span class="st"> </span><span class="kw">emmeans</span>(fit, <span
 <span class="kw">contrast</span>(leastsquare,
          contrasts,
          <span class="dt">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>)</code></pre>
-<pre><code>##  contrast      estimate    SE df t.ratio p.value
-##  young_vs_old     16.09 0.474 57 33.936  &lt;.0001 
-##  three_vs_five     1.61 0.548 57  2.933  0.0097 
-## 
-## P value adjustment: bonferroni method for 2 tests</code></pre>
+<pre><code>[1] &quot;3-4&quot; &quot;5-6&quot; &quot;7-8&quot;
+ contrast      estimate    SE df t.ratio p.value
+ young_vs_old     16.09 0.474 57 33.936  &lt;.0001 
+ three_vs_five     1.61 0.548 57  2.933  0.0097 
+
+P value adjustment: bonferroni method for 2 tests </code></pre>
 </div>
 <div id="post-hoc-tests" class="section level3">
 <h3><span class="header-section-number">13.7.4</span> Post-hoc tests</h3>
@@ -1330,12 +1339,12 @@ leastsquare =<span class="st"> </span><span class="kw">emmeans</span>(fit, <span
 leastsquare =<span class="st"> </span><span class="kw">emmeans</span>(fit, <span class="st">&quot;group&quot;</span>)
 <span class="kw">pairs</span>(leastsquare,
       <span class="dt">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>)</code></pre>
-<pre><code>##  contrast  estimate    SE df t.ratio p.value
-##  3-4 - 5-6    -1.61 0.548 57  -2.933 0.0145 
-##  3-4 - 7-8   -16.90 0.548 57 -30.856 &lt;.0001 
-##  5-6 - 7-8   -15.29 0.548 57 -27.923 &lt;.0001 
-## 
-## P value adjustment: bonferroni method for 3 tests</code></pre>
+<pre><code> contrast  estimate    SE df t.ratio p.value
+ 3-4 - 5-6    -1.61 0.548 57  -2.933 0.0145 
+ 3-4 - 7-8   -16.90 0.548 57 -30.856 &lt;.0001 
+ 5-6 - 7-8   -15.29 0.548 57 -27.923 &lt;.0001 
+
+P value adjustment: bonferroni method for 3 tests </code></pre>
 <p>Post-hoc tests for two predictors:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fit the model</span>
 fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>hand <span class="op">+</span><span class="st"> </span>skill,
@@ -1345,24 +1354,24 @@ fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formul
 leastsquare =<span class="st"> </span><span class="kw">emmeans</span>(fit, <span class="kw">c</span>(<span class="st">&quot;hand&quot;</span>, <span class="st">&quot;skill&quot;</span>))
 <span class="kw">pairs</span>(leastsquare,
       <span class="dt">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>)</code></pre>
-<pre><code>##  contrast                         estimate    SE  df t.ratio p.value
-##  bad,average - neutral,average      -4.405 0.580 296  -7.593 &lt;.0001 
-##  bad,average - good,average         -7.085 0.580 296 -12.212 &lt;.0001 
-##  bad,average - bad,expert           -0.724 0.474 296  -1.529 1.0000 
-##  bad,average - neutral,expert       -5.129 0.749 296  -6.849 &lt;.0001 
-##  bad,average - good,expert          -7.809 0.749 296 -10.427 &lt;.0001 
-##  neutral,average - good,average     -2.680 0.580 296  -4.619 0.0001 
-##  neutral,average - bad,expert        3.681 0.749 296   4.914 &lt;.0001 
-##  neutral,average - neutral,expert   -0.724 0.474 296  -1.529 1.0000 
-##  neutral,average - good,expert      -3.404 0.749 296  -4.545 0.0001 
-##  good,average - bad,expert           6.361 0.749 296   8.492 &lt;.0001 
-##  good,average - neutral,expert       1.955 0.749 296   2.611 0.1424 
-##  good,average - good,expert         -0.724 0.474 296  -1.529 1.0000 
-##  bad,expert - neutral,expert        -4.405 0.580 296  -7.593 &lt;.0001 
-##  bad,expert - good,expert           -7.085 0.580 296 -12.212 &lt;.0001 
-##  neutral,expert - good,expert       -2.680 0.580 296  -4.619 0.0001 
-## 
-## P value adjustment: bonferroni method for 15 tests</code></pre>
+<pre><code> contrast                         estimate    SE  df t.ratio p.value
+ bad,average - neutral,average      -4.405 0.580 296  -7.593 &lt;.0001 
+ bad,average - good,average         -7.085 0.580 296 -12.212 &lt;.0001 
+ bad,average - bad,expert           -0.724 0.474 296  -1.529 1.0000 
+ bad,average - neutral,expert       -5.129 0.749 296  -6.849 &lt;.0001 
+ bad,average - good,expert          -7.809 0.749 296 -10.427 &lt;.0001 
+ neutral,average - good,average     -2.680 0.580 296  -4.619 0.0001 
+ neutral,average - bad,expert        3.681 0.749 296   4.914 &lt;.0001 
+ neutral,average - neutral,expert   -0.724 0.474 296  -1.529 1.0000 
+ neutral,average - good,expert      -3.404 0.749 296  -4.545 0.0001 
+ good,average - bad,expert           6.361 0.749 296   8.492 &lt;.0001 
+ good,average - neutral,expert       1.955 0.749 296   2.611 0.1424 
+ good,average - good,expert         -0.724 0.474 296  -1.529 1.0000 
+ bad,expert - neutral,expert        -4.405 0.580 296  -7.593 &lt;.0001 
+ bad,expert - good,expert           -7.085 0.580 296 -12.212 &lt;.0001 
+ neutral,expert - good,expert       -2.680 0.580 296  -4.619 0.0001 
+
+P value adjustment: bonferroni method for 15 tests </code></pre>
 
 </div>
 </div>
