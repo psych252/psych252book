@@ -686,21 +686,21 @@ df.summarize =<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 15 x 2
 ##    participant judgment
 ##          &lt;int&gt;    &lt;int&gt;
-##  1           1       83
-##  2           1       31
-##  3           1        2
-##  4           1        2
-##  5           1       49
-##  6           2       72
-##  7           2       58
-##  8           2        6
-##  9           2       20
-## 10           2       27
-## 11           3       44
-## 12           3       70
-## 13           3       11
-## 14           3       23
-## 15           3       63</code></pre>
+##  1           1       10
+##  2           1       95
+##  3           1        4
+##  4           1       27
+##  5           1       73
+##  6           2       37
+##  7           2       18
+##  8           2       47
+##  9           2       15
+## 10           2        9
+## 11           3       87
+## 12           3       62
+## 13           3       84
+## 14           3        6
+## 15           3       22</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df.summarize <span class="op">%&gt;%</span><span class="st">   </span>
 <span class="st">  </span><span class="kw">group_by</span>(participant) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group by participants</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">judgment_zscored =</span> <span class="kw">scale</span>(judgment)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># z-score data on individual participant level </span>
@@ -709,16 +709,16 @@ df.summarize =<span class="st"> </span><span class="kw">tibble</span>(
 <pre><code>## # A tibble: 10 x 3
 ##    participant judgment judgment_zscored
 ##          &lt;int&gt;    &lt;int&gt;            &lt;dbl&gt;
-##  1           1       83           1.45  
-##  2           1       31          -0.0702
-##  3           1        2          -0.918 
-##  4           1        2          -0.918 
-##  5           1       49           0.456 
-##  6           2       72           1.29  
-##  7           2       58           0.779 
-##  8           2        6          -1.11  
-##  9           2       20          -0.605 
-## 10           2       27          -0.350</code></pre>
+##  1           1       10           -0.791
+##  2           1       95            1.32 
+##  3           1        4           -0.940
+##  4           1       27           -0.368
+##  5           1       73            0.776
+##  6           2       37            0.734
+##  7           2       18           -0.448
+##  8           2       47            1.36 
+##  9           2       15           -0.635
+## 10           2        9           -1.01</code></pre>
 <p>First, I’ve generated some random data using the repeat function <code>rep()</code> for making a <code>participant</code> column, and the <code>sample()</code> function to randomly choose values from a range between 0 and 100 with replacement. (We will learn more about these functions later when we look into how to simulate data.) I’ve then grouped the data by participant, and used the scale function to z-score the data.</p>
 <blockquote>
 <p><strong>TIP</strong>: Don’t forget to <code>ungroup()</code> your data frame. Otherwise, any subsequent operations are applied per group.</p>
@@ -1428,7 +1428,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["psych252.pdf"],
+"download": null,
 "toc": {
 "collapse": "section",
 "scroll_highlight": true

@@ -1,0 +1,25 @@
+#!/bin/bash
+convert 'tidyeval.pdf[0]' tidyeval.png
+convert 'advancedr.pdf[0]' advancedr.png
+convert 'base-r.pdf[0]' base-r.png
+convert 'bayesplot.pdf[0]' bayesplot.png
+convert 'ceteris-paribus-cheatsheet.pdf[0]' ceteris-paribus-cheatsheet.png
+convert 'data-import.pdf[0]' data-import.png
+convert 'data-transformation.pdf[0]' data-transformation.png
+convert 'data-visualization.pdf[0]' data-visualization.png
+convert 'data-wrangling.pdf[0]' data-wrangling.png
+convert 'how-big-is-your-graph.pdf[0]' how-big-is-your-graph.png
+convert 'latexsheet.pdf[0]' latexsheet.png
+convert 'leaflet.pdf[0]' leaflet.png
+convert 'lubridate.pdf[0]' lubridate.png
+convert 'mosaic.pdf[0]' mosaic.png
+convert 'probability.pdf[0]' probability.png
+convert 'purrr.pdf[0]' purrr.png
+convert 'regexcheatsheet.pdf[0]' regexcheatsheet.png
+convert 'rmarkdown-reference.pdf[0]' rmarkdown-reference.png
+convert 'rmarkdown.pdf[0]' rmarkdown.png
+convert 'rstudio-ide.pdf[0]' rstudio-ide.png
+convert 'shiny.pdf[0]' shiny.png
+convert 'stats-help.jpg[0]' stats-help.png
+convert 'strings.pdf[0]' strings.png
+convert 'syntax.pdf[0]' syntax.png
