@@ -17,6 +17,13 @@ Let's first load the packages that we need for this chapter.
 ```{r visualization1-01, message=FALSE}
 library("knitr")     # for rendering the RMarkdown file
 library("tidyverse") # for plotting (and many more cool things we'll discover later)
+
+# don't worry about this part below, it just affects how things are displayed
+opts_chunk$set(
+  comment = "",
+  results = "hold",
+  fig.show = "hold"
+)
 ```
 
 The `tidyverse` is a collection of packages that includes `ggplot2`.
@@ -29,19 +36,19 @@ The `tidyverse` is a collection of packages that includes `ggplot2`.
 
 > ...make __both__ calculations __and__ graphs. Both sorts of output should be studied; each will contribute to understanding. [@anscombe1973american]
 
-```{r visualization1-02, echo=FALSE, fig.cap="Anscombe's quartet."}
+```{r visualization1-02, echo=FALSE, fig.cap="Anscombe's quartet.", out.width="95%"}
 include_graphics("figures/anscombe.png")
 ```
 
 Anscombe's quartet in Figure \@ref(fig:visualization1-01) (left side) illustrates the importance of visualizing data. Even though the datasets I-IV have the same summary statistics (mean, standard deviation, correlation), they are importantly different from each other. On the right side, we have four data sets with the same summary statistics that are very similar to each other.
 
-```{r visualization1-03, echo=FALSE, fig.cap= "The Pearson's $r$ correlation coefficient is the same for all of these datasets. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)"}
+```{r visualization1-03, echo=FALSE, fig.cap= "The Pearson's $r$ correlation coefficient is the same for all of these datasets. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)", out.width="95%"}
 include_graphics("figures/correlations.png")
 ```
 
 All the datasets in Figure \@ref(fig:visualization1-03) share the same correlation coefficient. However, again, they are very different from each other.
 
-```{r visualization1-04, echo=FALSE, fig.cap="__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation)."}
+```{r visualization1-04, echo=FALSE, fig.cap="__The Datasaurus Dozen__. While different in appearance, each dataset has the same summary statistics to two decimal places (mean, standard deviation, and Pearson's correlation).", out.width="95%"}
 include_graphics("figures/datasaurus_dozen.png")
 ```
 
@@ -51,7 +58,7 @@ The data sets in Figure \@ref(fig:visualization1-04) all share the same summary 
 
 [Here](https://www.autodeskresearch.com/publications/samestats) is the paper from which I took Figure \@ref(fig:visualization1-02) and \@ref(fig:visualization1-04). It explains how the figures were generated and shows more examples for how summary statistics and some kinds of plots are insufficient to get a good sense for what's going on in the data.
 
-```{r visualization1-05, echo=FALSE, fig.cap="Animation showing different data sets that all share the same summary statistics."}
+```{r visualization1-05, echo=FALSE, fig.cap="Animation showing different data sets that all share the same summary statistics.", out.width="95%"}
 include_graphics("figures/data_dino.gif")
 ```
 
@@ -59,27 +66,27 @@ include_graphics("figures/data_dino.gif")
 
 Below are some examples of visualizations that could be improved. How would you make them better?
 
-```{r visualization1-06, echo=FALSE, out.width='90%', fig.align='center', fig.cap="Example of a bad plot. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)"}
+```{r visualization1-06, echo=FALSE, out.width='90%', fig.align='center', fig.cap="Example of a bad plot. Source: [Data Visualization -- A practical introduction by Kieran Healy](http://socviz.co/lookatdata.html#lookatdata)", out.width="95%"}
   include_graphics("figures/bad_plot1.png")
 ```
 
-```{r visualization1-07, echo=FALSE, out.width='90%', fig.align='center', fig.cap="Another bad plot. Source: Google image search for 'bad graphs'"}
+```{r visualization1-07, echo=FALSE, out.width='90%', fig.align='center', fig.cap="Another bad plot. Source: Google image search for 'bad graphs'", out.width="95%"}
   include_graphics("figures/bad_plot2.png")
 ```
 
-```{r visualization1-08, echo=FALSE, out.width='90%', fig.align='center', fig.cap="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)"}
+```{r visualization1-08, echo=FALSE, out.width='90%', fig.align='center', fig.cap="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)", out.width="95%"}
   include_graphics("figures/bad_plot3.png")
 ```
 
-```{r visualization1-09, echo=FALSE, out.width='90%', fig.align='center', fig.cap="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)"}
+```{r visualization1-09, echo=FALSE, out.width='90%', fig.align='center', fig.cap="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)", out.width="95%"}
   include_graphics("figures/bad_plot4.png")
 ```
 
-```{r visualization1-10, echo=FALSE, out.width='90%', fig.align='center', fig.cap="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)"}
+```{r visualization1-10, echo=FALSE, out.width='90%', fig.align='center', fig.cap="And another one. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)", out.width="95%"}
   include_graphics("figures/bad_plot5.png")
 ```
 
-```{r visualization1-11, echo=FALSE, out.width='90%', fig.align='center', fig.cap="The last one for now. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)"}
+```{r visualization1-11, echo=FALSE, out.width='90%', fig.align='center', fig.cap="The last one for now. Source: [Bad graph wall of shame](http://bcuchta.com/wall_of_shame/)", out.width="95%"}
   include_graphics("figures/bad_plot6.png")
 ```
 
@@ -91,7 +98,7 @@ Instead of learning rigid rules for what makes for a good figure, you will learn
 
 ## Setting up RStudio
 
-```{r visualization1-12, out.width='100%', echo=FALSE, fig.cap="General preferences."}
+```{r visualization1-12, out.width='100%', echo=FALSE, fig.cap="General preferences.", out.width="95%"}
   include_graphics("figures/r_preferences_general.png")
 ```
 
@@ -100,7 +107,7 @@ __Make sure that__:
 - Restore .RData into workspace at startup is _unselected_
 - Save workspace to .RData on exit is set to _Never_
 
-```{r visualization1-13, out.width='100%', echo=FALSE, fig.cap="Code window preferences."}
+```{r visualization1-13, out.width='100%', echo=FALSE, fig.cap="Code window preferences.", out.width="95%"}
   include_graphics("figures/r_preferences_code.png")
 ```
 
@@ -183,7 +190,7 @@ __Examples__: Worked examples of real R code that you can paste into your consol
 
 Here is the help file for the `print()` function:
 
-```{r visualization1-17, echo=FALSE, fig.cap="Help file for the print() function."}
+```{r visualization1-17, echo=FALSE, fig.cap="Help file for the print() function.", out.width="95%"}
   include_graphics("figures/help_print.png")
 ```
 
@@ -191,7 +198,7 @@ Here is the help file for the `print()` function:
 
 We will use the `ggplot2` package to visualize data. By the end of next class, you'll be able to make a figure like this:
 
-```{r visualization1-18, echo=FALSE, fig.cap="What a nice figure!"}
+```{r visualization1-18, echo=FALSE, fig.cap="What a nice figure!", out.width="95%"}
   include_graphics("figures/combined_plot.pdf")
 ```
 
@@ -342,7 +349,7 @@ Make a scatter plot that shows the relationship between the variables `depth` (o
 # make practice plot 1 here
 ```
 
-```{r visualization1-34, out.width="90%", fig.align="center", fig.cap="Practice plot 1."}
+```{r visualization1-34, out.width="90%", fig.align="center", fig.cap="Practice plot 1.", out.width="95%"}
 include_graphics("figures/practice_plot1.png")
 ```
 
@@ -434,7 +441,7 @@ Make a bar plot that shows the average `price` of diamonds (on the y-axis) as a 
 # make practice plot 2 here
 ```
 
-```{r visualization1-43, out.width="90%", fig.align="center", fig.cap="Practice plot 2."}
+```{r visualization1-43, out.width="90%", fig.align="center", fig.cap="Practice plot 2.", out.width="95%"}
 include_graphics("figures/practice_plot2.png")
 ```
 
@@ -525,7 +532,7 @@ ggplot(diamonds, aes(x = color, y = price, group = clarity, color = clarity))+
 ```
 
 
-```{r visualization1-50, out.width="90%", fig.align="center", fig.cap="Practice plot 3."}
+```{r visualization1-50, out.width="90%", fig.align="center", fig.cap="Practice plot 3.", out.width="95%"}
 include_graphics("figures/practice_plot3.png")
 ```
 
@@ -654,7 +661,7 @@ ggplot(diamonds, aes(x = color, y = price, fill = cut))+
 ```
 
 
-```{r visualization1-61, out.width="90%", fig.align="center", fig.cap="Practice plot 4."}
+```{r visualization1-61, out.width="90%", fig.align="center", fig.cap="Practice plot 4.", out.width="95%"}
 include_graphics("figures/practice_plot4.png")
 ```
 

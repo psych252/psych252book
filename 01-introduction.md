@@ -1,0 +1,93 @@
+# Introduction
+
+## Thanks 
+
+Various people have helped in the process of putting together these materials (either knowingly, or unknowingly). Big thanks go to: 
+
+- Alexandra Chouldechova
+- Ben Baumer
+- Benoit Monin
+- Datacamp
+- David Lagnado
+- Ewart Thomas
+- Henrik Singmann
+- Julian Jara-Ettinger
+- Kevin Smith
+- Maarten Speekenbrink
+- Matthew Kay
+- Matthew Salganik
+- Mika Braginsky 
+- Mike Frank 
+- Mine Çetinkaya-Rundel
+- Patrick Mair
+- Peter Cushner Mohanty
+- Richard McElreath
+- Russ Poldrack 
+- Stephen Dewitt
+- Tom Hardwicke
+- Tristan Mahr
+
+Special thanks also to my teaching assistants: 
+
+- Andrew Lampinen
+- Mona Rosenke 
+- Shao-Fang (Pam) Wang
+
+## List of R packages used in this book 
+
+
+```r
+# RMarkdown 
+library("knitr")        # markdown things 
+library("kableExtra")   # for nicely formatted tables
+
+# Datasets 
+library("gapminder")    # data available from Gapminder.org 
+library("NHANES")       # data set 
+library("titanic")      # titanic dataset
+
+# Data manipulation
+library("arrangements") # fast generators and iterators for permutations, combinations and partitions
+library("magrittr")     # for wrangling
+library("tidyverse")    # everything else
+
+# Visualization
+library("patchwork")    # making figure panels
+library("cowplot")      # making figure panels
+library("ggpol")        # for making fancy boxplots
+library("ggridges")     # for making joyplots 
+library("gganimate")    # for making animations
+library("GGally")       # for pairs plot
+library("ggrepel")      # for labels in ggplots
+library("corrr")        # for calculating correlations between many variables
+library("corrplot")     # for plotting correlations
+library("DiagrammeR")   # for drawing diagrams
+
+# Modeling 
+library("afex")         # also for running ANOVAs
+library("lme4")         # mixed effects models 
+library("emmeans")      # comparing estimated marginal means 
+library("broom")        # getting tidy model summaries
+library("broom.mixed")  # getting tidy mixed model summaries
+library("janitor")      # cleaning variable names 
+library("car")          # for running ANOVAs
+library("rstanarm")     # for Bayesian models
+library("greta")        # Bayesian models
+library("tidybayes")    # tidying up results from Bayesian models
+library("boot")         # bootstrapping
+library("modelr")       # cross-validation and bootstrapping
+library("mediation")    # for mediation and moderation analysis 
+library("multilevel")   # Sobel test
+library("extraDistr")   # additional probability distributions
+library("effects")      # for showing effects in linear, generalized linear, and other models
+library("brms")         # Bayesian regression
+
+# Misc 
+library("tictoc")       # timing things
+library("MASS")         # various useful functions (e.g. bootstrapped confidence intervals)
+library("lsr")          # for computing effect size measures
+library("extrafont")    # additional fonts
+library("pwr")          # for power calculations
+```
+
+
