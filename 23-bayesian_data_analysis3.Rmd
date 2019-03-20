@@ -265,11 +265,42 @@ df.hypothesis %>%
   summarize(p = sum(hypothesis)/n())
 ```
 
+##### Multiple comparisons
+
+We can also use the `hypothesis()` function to test multiple hypotheses at the same time. 
+
+```{r bda3-19}
+h = c("Intercept + handneutral < (Intercept + Intercept + handgood) / 2", "handneutral > 4")
+hyp = hypothesis(fit.brm1,
+                 hypothesis = h,
+                 alpha = 0.025)
+hyp
+plot(hyp)
+```
+
+Here, I've adjusted the alpha value which affects what credible interval is used to evaluate each hypothesis.
+
+An alternative way of accounting for multiple comparisons within the Baysian framework is by constructing a joint posterior based on the hypotheses of interest, and looking at whether the credible interval of the joint posterior excludes 0 [@gelman2000type]. 
+
+```{r bda3-20}
+fit.brm1 %>%
+  posterior_samples() %>%
+  clean_names() %>%
+  select(starts_with("b_")) %>%
+  mutate(hypothesis_1 = b_intercept > 2,
+         hypothesis_2 = b_handneutral > 3,
+         hypotheses_joint = hypothesis_1 * hypothesis_2
+         ) %>%
+  summarize(hyp1 = sum(hypothesis_1)/n(),
+            hyp2 = sum(hypothesis_2)/n(),
+            hyp_joint = sum(hypotheses_joint)/n())
+```
+
 #### Bayes factor 
 
 Another way of testing hypothesis is via the Bayes factor. Let's fit the two models we are interested in comparing with each other: 
 
-```{r bda3-19, message=FALSE}
+```{r bda3-21, message=FALSE}
 fit.brm2 = brm(formula = balance ~ 1 + hand,
                data = df.poker,
                save_all_pars = T,
@@ -283,7 +314,7 @@ fit.brm3 = brm(formula = balance ~ 1 + hand + skill,
 
 And then compare the models useing the `bayes_factor()` function: 
 
-```{r bda3-20}
+```{r bda3-22}
 bayes_factor(fit.brm3, fit.brm2)
 ```
 
@@ -295,14 +326,14 @@ So far, we have used the defaults that `brm()` comes with and not bothered about
 
 Notice that we didn't specify any priors in the model. By default, "brms" assigns weakly informative priors to the parameters in the model. We can see what these are by running the following command: 
 
-```{r bda3-21}
+```{r bda3-23}
 fit.brm1 %>% 
   prior_summary()
 ```
 
 We can also get information about which priors need to be specified before fitting a model:
 
-```{r bda3-22}
+```{r bda3-24}
 get_prior(formula = balance ~ 1 + hand,
           family = "gaussian",
           data = df.poker)
@@ -310,7 +341,7 @@ get_prior(formula = balance ~ 1 + hand,
 
 Here is an example for what a more complete model specification could look like: 
 
-```{r bda3-23, message=FALSE}
+```{r bda3-25, message=FALSE}
 fit.brm4 = brm(
   formula = balance ~ 1 + hand,
   family = "gaussian",
@@ -339,7 +370,7 @@ fit.brm4 %>% summary()
 
 We can also take a look at the Stan code that the `brm()` function creates: 
 
-```{r bda3-24}
+```{r bda3-26}
 fit.brm4 %>% stancode()
 ```
 
@@ -350,13 +381,13 @@ One thing worth noticing: by default, "brms" centers the predictors which makes 
 
 So far, we've assumed that the inference has worked out. We can check this by running plot() on our brm object:  
 
-```{r bda3-25}
+```{r bda3-27}
 plot(fit.brm1)
 ```
 
 Let's make our own version of a trace plot for one parameter in the model:
 
-```{r bda3-26}
+```{r bda3-28}
 fit.brm1 %>% 
   spread_draws(b_Intercept) %>% 
   clean_names() %>% 
@@ -367,7 +398,7 @@ fit.brm1 %>%
 
 We can also take a look at the auto-correlation plot. Ideally, we want to generate independent samples from the posterior. So we don't want subsequent samples to be strongly correlated with each other. Let's take a look: 
 
-```{r bda3-27}
+```{r bda3-29}
 variables = fit.brm1 %>% get_variables() %>% .[1:4]
 
 fit.brm1 %>% 
@@ -382,7 +413,7 @@ Looking good! The autocorrelation should become very small as the lag increases 
 
 Let's try to fit a model to very little data (just two observations) with extremely uninformative priors: 
 
-```{r bda3-28}
+```{r bda3-30}
 df.data = tibble(y = c(-1, 1))
 
 fit.brm5 = brm(
@@ -406,7 +437,7 @@ fit.brm5 = brm(
 
 Let's take a look at the posterior distributions of the model parameters: 
 
-```{r bda3-29}
+```{r bda3-31}
 summary(fit.brm5)
 ```
 
@@ -414,11 +445,11 @@ Not looking good -- The estimates and credible intervals are off the charts. And
 
 Let's visualize the trace plots:
 
-```{r bda3-30}
+```{r bda3-32}
 plot(fit.brm5)
 ```
 
-```{r bda3-31}
+```{r bda3-33}
 fit.brm5 %>% 
   spread_draws(b_Intercept) %>% 
   clean_names() %>% 
@@ -432,7 +463,7 @@ fit.brm5 %>%
 
 Given that we have so little data in this case, we need to help the model a little bit by providing some slighlty more specific priors. 
 
-```{r bda3-32}
+```{r bda3-34}
 fit.brm6 = brm(
   data = df.data,
   family = gaussian,
@@ -451,7 +482,7 @@ fit.brm6 = brm(
 
 Let's take a look at the posterior distributions of the model parameters: 
 
-```{r bda3-33}
+```{r bda3-35}
 summary(fit.brm6)
 ```
 
@@ -459,11 +490,11 @@ This looks much better. There is still quite a bit of uncertainty in our paremet
 
 Let's visualize the trace plots:
 
-```{r bda3-34}
+```{r bda3-36}
 plot(fit.brm6)
 ```
 
-```{r bda3-35}
+```{r bda3-37}
 fit.brm6 %>% 
   spread_draws(b_Intercept) %>% 
   clean_names() %>% 
@@ -478,7 +509,7 @@ Looking mostly good -- except for one hiccup on sigma ...
 
 Let's generate some fake developmental data where the variance in the data is greatest for young children, smaller for older children, and even smaller for adults:  
 
-```{r bda3-36}
+```{r bda3-38}
 # make example reproducible 
 set.seed(0)
 
@@ -498,7 +529,7 @@ While frequentist models (such as a linear regression) assume equality of varian
 
 We simply define a multivariate model which tries to fit both the `response` as well as the variance `sigma`: 
 
-```{r bda3-37}
+```{r bda3-39}
 fit.brm7 = brm(
   formula = bf(response ~ group,
                sigma ~ group),
@@ -509,13 +540,13 @@ fit.brm7 = brm(
 
 Let's take a look at the model output: 
 
-```{r bda3-38}
+```{r bda3-40}
 summary(fit.brm7)
 ```
 
 And let's visualize the results:
 
-```{r bda3-39}
+```{r bda3-41}
 df.variance %>%
   expand(group) %>% 
   add_fitted_draws(fit.brm7, dpar = TRUE) %>%
@@ -538,18 +569,18 @@ While running an ordinal regression is far from trivial in frequentist world, it
 
 Let's load the cars data and turn the number of cylinders into an ordered factor: 
 
-```{r bda3-40}
+```{r bda3-42}
 df.cars = mtcars %>% 
   mutate(cyl = ordered(cyl)) # creates an ordered factor
 ```
 
 Let's check that the cylinders are indeed ordered now: 
 
-```{r bda3-41}
+```{r bda3-43}
 df.cars %>% str()
 ```
 
-```{r bda3-42}
+```{r bda3-44}
 fit.brm8 = brm(formula = cyl ~ mpg,
                data = df.cars,
                family = "cumulative",
@@ -559,7 +590,7 @@ fit.brm8 = brm(formula = cyl ~ mpg,
 
 Visualize the results:
 
-```{r bda3-43}
+```{r bda3-45}
 data_plot = df.cars %>%
   ggplot(aes(x = mpg, y = cyl, color = cyl)) +
   geom_point() +
@@ -583,7 +614,7 @@ plot_grid(ncol = 1, align = "v",
 
 Posterior predictive check: 
 
-```{r bda3-44}
+```{r bda3-46}
 df.cars %>%
   select(mpg) %>%
   add_predicted_draws(fit.brm8, prediction = "cyl", seed = 1234) %>%

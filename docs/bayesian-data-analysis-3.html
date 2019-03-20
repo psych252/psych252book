@@ -48,17 +48,6 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.5/datatables.js"></script>
-<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<script src="libs/viz-0.3/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.0/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
@@ -186,6 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
 <li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
 <li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
+<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.4</b> Customizing themes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
 <li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
@@ -672,7 +662,7 @@ cols(
 <span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;final balance (in Euros)&quot;</span>) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-05-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-05-1.png" width="672" /></p>
 </div>
 <div id="linear-model-5" class="section level3">
 <h3><span class="header-section-number">23.3.2</span> Linear model</h3>
@@ -740,7 +730,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .,
          <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">y =</span> variable, <span class="dt">x =</span> value)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_halfeyeh</span>()</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-08-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-08-1.png" width="672" /></p>
 <p>And let’s look at how the samples from the posterior are correlated with each other:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">posterior_samples</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -749,7 +739,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
           <span class="dt">upper =</span> <span class="kw">list</span>(<span class="dt">continuous =</span> <span class="kw">wrap</span>(<span class="st">&quot;cor&quot;</span>, <span class="dt">size =</span> <span class="dv">6</span>))) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(),
         <span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>))</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-09-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-09-1.png" width="672" /></p>
 </div>
 <div id="compute-highest-density-intervals" class="section level4">
 <h4><span class="header-section-number">23.3.3.2</span> Compute highest density intervals</h4>
@@ -848,7 +838,7 @@ sigma
 <h4><span class="header-section-number">23.3.3.3</span> Posterior predictive check</h4>
 <p>To check whether the model did a good job capturing the data, we can simulate what future data the Baysian model predicts, now that it has learned from the data we feed into it.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pp_check</span>(fit.brm1, <span class="dt">nsamples =</span> <span class="dv">100</span>)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-11-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-11-1.png" width="672" /></p>
 <p>This looks good! The predicted shaped of the data based on samples from the posterior distribution looks very similar to the shape of the actual data.</p>
 <p>Let’s make a hypothetical outcome plot that shows what concrete data sets the model would predict:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate predictive samples </span>
@@ -890,7 +880,7 @@ df.predictive_samples <span class="op">%&gt;%</span><span class="st"> </span>
 
 <span class="co"># anim_save(&quot;poker_posterior_predictive.gif&quot;)</span></code></pre>
 <video controls loop>
-<source src="23-bayesian_data_analysis3_files/figure-html/bda3-12.webm" />
+<source src="psych252_files/figure-html/bda3-12.webm" />
 </video>
 </div>
 <div id="test-hypothesis" class="section level4">
@@ -906,7 +896,7 @@ df.predictive_samples <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_halfeyeh</span>() <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>,
              <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-13-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-13-1.png" width="672" /></p>
 <p>We see that the posterior is definitely greater than 0.</p>
 <p>We can ask many different kinds of questions about the data by doing basic arithmetic on our posterior samples. The <code>hypothesis()</code> function makes this even easier. Here are some examples:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the probability that the posterior for handneutral is less than 0</span>
@@ -966,6 +956,42 @@ df.hypothesis <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">p =</span> <span class="kw">sum</span>(hypothesis)<span class="op">/</span><span class="kw">n</span>())</code></pre>
 <pre><code>        p
 1 0.04175</code></pre>
+<div id="multiple-comparisons" class="section level5">
+<h5><span class="header-section-number">23.3.3.4.1</span> Multiple comparisons</h5>
+<p>We can also use the <code>hypothesis()</code> function to test multiple hypotheses at the same time.</p>
+<pre class="sourceCode r"><code class="sourceCode r">h =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Intercept + handneutral &lt; (Intercept + Intercept + handgood) / 2&quot;</span>, <span class="st">&quot;handneutral &gt; 4&quot;</span>)
+hyp =<span class="st"> </span><span class="kw">hypothesis</span>(fit.brm1,
+                 <span class="dt">hypothesis =</span> h,
+                 <span class="dt">alpha =</span> <span class="fl">0.025</span>)
+hyp
+<span class="kw">plot</span>(hyp)</code></pre>
+<pre><code>Hypothesis Tests for class b:
+                Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
+1 (Intercept+handne... &lt; 0     0.85      0.49     -Inf     1.82       0.04
+2    (handneutral)-(4) &gt; 0     0.38      0.59    -0.76      Inf       2.89
+  Post.Prob Star
+1      0.04     
+2      0.74     
+---
+&#39;*&#39;: The expected value under the hypothesis lies outside the 97.5%-CI.
+Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
+<p><img src="psych252_files/figure-html/bda3-19-1.png" width="672" /></p>
+<p>Here, I’ve adjusted the alpha value which affects what credible interval is used to evaluate each hypothesis.</p>
+<p>An alternative way of accounting for multiple comparisons within the Baysian framework is by constructing a joint posterior based on the hypotheses of interest, and looking at whether the credible interval of the joint posterior excludes 0 <span class="citation">(Gelman and Tuerlinckx <a href="#ref-gelman2000type" role="doc-biblioref">2000</a>)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">fit.brm1 <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">posterior_samples</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;b_&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hypothesis_1 =</span> b_intercept <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>,
+         <span class="dt">hypothesis_2 =</span> b_handneutral <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>,
+         <span class="dt">hypotheses_joint =</span> hypothesis_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>hypothesis_<span class="dv">2</span>
+         ) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">hyp1 =</span> <span class="kw">sum</span>(hypothesis_<span class="dv">1</span>)<span class="op">/</span><span class="kw">n</span>(),
+            <span class="dt">hyp2 =</span> <span class="kw">sum</span>(hypothesis_<span class="dv">2</span>)<span class="op">/</span><span class="kw">n</span>(),
+            <span class="dt">hyp_joint =</span> <span class="kw">sum</span>(hypotheses_joint)<span class="op">/</span><span class="kw">n</span>())</code></pre>
+<pre><code>  hyp1   hyp2 hyp_joint
+1    1 0.9925    0.9925</code></pre>
+</div>
 </div>
 <div id="bayes-factor" class="section level4">
 <h4><span class="header-section-number">23.3.3.5</span> Bayes factor</h4>
@@ -991,7 +1017,7 @@ Iteration: 2
 Iteration: 3
 Iteration: 4
 Iteration: 5
-Estimated Bayes factor in favor of bridge1 over bridge2: 3.81129</code></pre>
+Estimated Bayes factor in favor of bridge1 over bridge2: 3.81629</code></pre>
 </div>
 <div id="full-specification" class="section level4">
 <h4><span class="header-section-number">23.3.3.6</span> Full specification</h4>
@@ -1114,7 +1140,7 @@ generated quantities {
 <h4><span class="header-section-number">23.3.3.7</span> Inference diagnostics</h4>
 <p>So far, we’ve assumed that the inference has worked out. We can check this by running plot() on our brm object:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.brm1)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-25-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-27-1.png" width="672" /></p>
 <p>Let’s make our own version of a trace plot for one parameter in the model:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread_draws</span>(b_Intercept) <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1122,7 +1148,7 @@ generated quantities {
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">chain =</span> <span class="kw">as.factor</span>(chain)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iteration, <span class="dt">y =</span> b_intercept, <span class="dt">group =</span> chain, <span class="dt">color =</span> chain)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-26-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-28-1.png" width="672" /></p>
 <p>We can also take a look at the auto-correlation plot. Ideally, we want to generate independent samples from the posterior. So we don’t want subsequent samples to be strongly correlated with each other. Let’s take a look:</p>
 <pre class="sourceCode r"><code class="sourceCode r">variables =<span class="st"> </span>fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">get_variables</span>() <span class="op">%&gt;%</span><span class="st"> </span>.[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]
 
@@ -1130,7 +1156,7 @@ fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">posterior_samples</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mcmc_acf</span>(<span class="dt">pars =</span> variables,
            <span class="dt">lags =</span> <span class="dv">4</span>)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-27-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-29-1.png" width="672" /></p>
 <p>Looking good! The autocorrelation should become very small as the lag increases (indicating that we are getting independent samples from the posterior).</p>
 <div id="when-things-go-wrong" class="section level5">
 <h5><span class="header-section-number">23.3.3.7.1</span> When things go wrong</h5>
@@ -1181,7 +1207,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>Not looking good – The estimates and credible intervals are off the charts. And the effective samples sizes in the chains are very small.</p>
 <p>Let’s visualize the trace plots:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.brm5)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-30-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-32-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm5 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread_draws</span>(b_Intercept) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span>
@@ -1191,7 +1217,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
              <span class="dt">group =</span> chain,
              <span class="dt">color =</span> chain)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-31-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-33-1.png" width="672" /></p>
 <p>Given that we have so little data in this case, we need to help the model a little bit by providing some slighlty more specific priors.</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm6 =<span class="st"> </span><span class="kw">brm</span>(
   <span class="dt">data =</span> df.data,
@@ -1232,14 +1258,14 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>This looks much better. There is still quite a bit of uncertainty in our paremeter estimates, but it has reduced dramatically.</p>
 <p>Let’s visualize the trace plots:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.brm6)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-34-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-36-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm6 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">spread_draws</span>(b_Intercept) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">chain =</span> <span class="kw">as.factor</span>(chain)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iteration, <span class="dt">y =</span> b_intercept, <span class="dt">group =</span> chain, <span class="dt">color =</span> chain)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>()</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-35-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-37-1.png" width="672" /></p>
 <p>Looking mostly good – except for one hiccup on sigma …</p>
 </div>
 </div>
@@ -1261,7 +1287,7 @@ df.variance <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>,
               <span class="dt">width =</span> <span class="fl">0.1</span>,
               <span class="dt">alpha =</span> <span class="fl">0.7</span>)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-36-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-38-1.png" width="672" /></p>
 <p>While frequentist models (such as a linear regression) assume equality of variance, Baysian models afford us with the flexibility of inferring both the parameter estimates of the groups (i.e. the means and differences between the means), as well as the variances.</p>
 <p>We simply define a multivariate model which tries to fit both the <code>response</code> as well as the variance <code>sigma</code>:</p>
 <pre class="sourceCode r"><code class="sourceCode r">fit.brm7 =<span class="st"> </span><span class="kw">brm</span>(
@@ -1302,7 +1328,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span class="st">  </span><span class="kw">geom_halfeyeh</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(index))</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-39-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-41-1.png" width="672" /></p>
 <p>This plot shows what the posterior looks like for both mu (the inferred means), and for sigma (the inferred variances) for the different groups.</p>
 </div>
 <div id="ordinal-regression" class="section level2">
@@ -1351,7 +1377,7 @@ fit_plot =<span class="st"> </span>df.cars <span class="op">%&gt;%</span>
           data_plot,
           fit_plot
 )</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-43-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-45-1.png" width="672" /></p>
 <p>Posterior predictive check:</p>
 <pre class="sourceCode r"><code class="sourceCode r">df.cars <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">select</span>(mpg) <span class="op">%&gt;%</span>
@@ -1380,7 +1406,7 @@ fit_plot =<span class="st"> </span>df.cars <span class="op">%&gt;%</span>
     <span class="dt">point.padding =</span> <span class="fl">0.2</span>,
     <span class="dt">label.size =</span> <span class="ot">NA</span>,
     <span class="dt">segment.color =</span> <span class="st">&quot;gray35&quot;</span>)</code></pre>
-<p><img src="23-bayesian_data_analysis3_files/figure-html/bda3-44-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/bda3-46-1.png" width="672" /></p>
 </div>
 <div id="additional-resources-15" class="section level2">
 <h2><span class="header-section-number">23.6</span> Additional resources</h2>
@@ -1391,6 +1417,12 @@ fit_plot =<span class="st"> </span>df.cars <span class="op">%&gt;%</span>
 <li><a href="https://vuorre.netlify.com/post/2019/02/18/analyze-analog-scale-%20ratings-with-zero-one-inflated-beta-models/#zoib-regression">How to model slider data the Baysian way</a></li>
 </ul>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-gelman2000type">
+<p>Gelman, Andrew, and Francis Tuerlinckx. 2000. “Type S Error Rates for Classical and Bayesian Single and Multiple Comparison Procedures.” <em>Computational Statistics</em> 15 (3): 373–90. <a href="https://doi.org/10.1007/s001800000040">https://doi.org/10.1007/s001800000040</a>.</p>
 </div>
 </div>
             </section>
@@ -1447,19 +1479,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
