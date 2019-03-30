@@ -133,21 +133,21 @@ df.summarize = tibble(
 # A tibble: 15 x 2
    participant judgment
          <int>    <int>
- 1           1       58
- 2           1      100
- 3           1       48
- 4           1       61
- 5           1        4
- 6           2       63
- 7           2       13
- 8           2       11
+ 1           1       49
+ 2           1       22
+ 3           1       88
+ 4           1       57
+ 5           1       48
+ 6           2       69
+ 7           2       59
+ 8           2       43
  9           2       68
-10           2       13
-11           3       78
-12           3       55
-13           3       91
-14           3       77
-15           3       16
+10           2       82
+11           3       40
+12           3       72
+13           3       93
+14           3       20
+15           3       44
 ```
 
 
@@ -163,16 +163,16 @@ df.summarize %>%
 # A tibble: 10 x 3
    participant judgment judgment_zscored
          <int>    <int>            <dbl>
- 1           1       58            0.111
- 2           1      100            1.33 
- 3           1       48           -0.181
- 4           1       61            0.198
- 5           1        4           -1.46 
- 6           2       63            1.01 
- 7           2       13           -0.706
- 8           2       11           -0.774
- 9           2       68            1.18 
-10           2       13           -0.706
+ 1           1       49           -0.160
+ 2           1       22           -1.30 
+ 3           1       88            1.49 
+ 4           1       57            0.177
+ 5           1       48           -0.203
+ 6           2       69            0.333
+ 7           2       59           -0.361
+ 8           2       43           -1.47 
+ 9           2       68            0.264
+10           2       82            1.24 
 ```
 
 First, I've generated some random data using the repeat function `rep()` for making a `participant` column, and the `sample()` function to randomly choose values from a range between 0 and 100 with replacement. (We will learn more about these functions later when we look into how to simulate data.) I've then grouped the data by participant, and used the scale function to z-score the data. 

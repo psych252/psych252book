@@ -313,7 +313,7 @@ df.predictive_samples %>%
 # anim_save("poker_posterior_predictive.gif")
 ```
 
-<video controls loop><source src="23-bayesian_data_analysis3_files/figure-html/bda3-12.webm" /></video>
+![](23-bayesian_data_analysis3_files/figure-html/bda3-12-1.gif)<!-- -->
 
 #### Test hypothesis
 
@@ -433,6 +433,59 @@ df.hypothesis %>%
 1 0.04175
 ```
 
+##### Multiple comparisons
+
+We can also use the `hypothesis()` function to test multiple hypotheses at the same time. 
+
+
+```r
+h = c("Intercept + handneutral < (Intercept + Intercept + handgood) / 2", "handneutral > 4")
+hyp = hypothesis(fit.brm1,
+                 hypothesis = h,
+                 alpha = 0.025)
+hyp
+plot(hyp)
+```
+
+```
+Hypothesis Tests for class b:
+                Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
+1 (Intercept+handne... < 0     0.85      0.49     -Inf     1.82       0.04
+2    (handneutral)-(4) > 0     0.38      0.59    -0.76      Inf       2.89
+  Post.Prob Star
+1      0.04     
+2      0.74     
+---
+'*': The expected value under the hypothesis lies outside the 97.5%-CI.
+Posterior probabilities of point hypotheses assume equal prior probabilities.
+```
+
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-19-1.png" width="672" />
+
+Here, I've adjusted the alpha value which affects what credible interval is used to evaluate each hypothesis.
+
+An alternative way of accounting for multiple comparisons within the Baysian framework is by constructing a joint posterior based on the hypotheses of interest, and looking at whether the credible interval of the joint posterior excludes 0 [@gelman2000type]. 
+
+
+```r
+fit.brm1 %>%
+  posterior_samples() %>%
+  clean_names() %>%
+  select(starts_with("b_")) %>%
+  mutate(hypothesis_1 = b_intercept > 2,
+         hypothesis_2 = b_handneutral > 3,
+         hypotheses_joint = hypothesis_1 * hypothesis_2
+         ) %>%
+  summarize(hyp1 = sum(hypothesis_1)/n(),
+            hyp2 = sum(hypothesis_2)/n(),
+            hyp_joint = sum(hypotheses_joint)/n())
+```
+
+```
+  hyp1   hyp2 hyp_joint
+1    1 0.9925    0.9925
+```
+
 #### Bayes factor 
 
 Another way of testing hypothesis is via the Bayes factor. Let's fit the two models we are interested in comparing with each other: 
@@ -462,13 +515,12 @@ Iteration: 1
 Iteration: 2
 Iteration: 3
 Iteration: 4
-Iteration: 5
 Iteration: 1
 Iteration: 2
 Iteration: 3
 Iteration: 4
 Iteration: 5
-Estimated Bayes factor in favor of bridge1 over bridge2: 3.81129
+Estimated Bayes factor in favor of bridge1 over bridge2: 3.82103
 ```
 
 #### Full specification
@@ -630,7 +682,7 @@ So far, we've assumed that the inference has worked out. We can check this by ru
 plot(fit.brm1)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-25-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-27-1.png" width="672" />
 
 Let's make our own version of a trace plot for one parameter in the model:
 
@@ -644,7 +696,7 @@ fit.brm1 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-26-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-28-1.png" width="672" />
 
 We can also take a look at the auto-correlation plot. Ideally, we want to generate independent samples from the posterior. So we don't want subsequent samples to be strongly correlated with each other. Let's take a look: 
 
@@ -658,7 +710,7 @@ fit.brm1 %>%
            lags = 4)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-27-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-29-1.png" width="672" />
 
 Looking good! The autocorrelation should become very small as the lag increases (indicating that we are getting independent samples from the posterior). 
 
@@ -733,7 +785,7 @@ Let's visualize the trace plots:
 plot(fit.brm5)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-30-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-32-1.png" width="672" />
 
 
 ```r
@@ -748,7 +800,7 @@ fit.brm5 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-31-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-33-1.png" width="672" />
 
 Given that we have so little data in this case, we need to help the model a little bit by providing some slighlty more specific priors. 
 
@@ -812,7 +864,7 @@ Let's visualize the trace plots:
 plot(fit.brm6)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-34-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-36-1.png" width="672" />
 
 
 ```r
@@ -824,7 +876,7 @@ fit.brm6 %>%
   geom_line()
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-35-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-37-1.png" width="672" />
 
 Looking mostly good -- except for one hiccup on sigma ... 
 
@@ -849,7 +901,7 @@ df.variance %>%
               alpha = 0.7)
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-36-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-38-1.png" width="672" />
 
 While frequentist models (such as a linear regression) assume equality of variance, Baysian models afford us with the flexibility of inferring both the parameter estimates of the groups (i.e. the means and differences between the means), as well as the variances. 
 
@@ -910,7 +962,7 @@ df.variance %>%
   facet_grid(cols = vars(index))
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-39-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-41-1.png" width="672" />
 
 This plot shows what the posterior looks like for both mu (the inferred means), and for sigma (the inferred variances) for the different groups. 
 
@@ -985,7 +1037,7 @@ plot_grid(ncol = 1, align = "v",
 )
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-43-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-45-1.png" width="672" />
 
 Posterior predictive check: 
 
@@ -1020,7 +1072,7 @@ df.cars %>%
     segment.color = "gray35")
 ```
 
-<img src="23-bayesian_data_analysis3_files/figure-html/bda3-44-1.png" width="672" />
+<img src="23-bayesian_data_analysis3_files/figure-html/bda3-46-1.png" width="672" />
 
 
 ## Additional resources 

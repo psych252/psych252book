@@ -25,7 +25,7 @@
 <meta name="author" content="Tobias Gerstenberg">
 
 
-<meta name="date" content="2019-03-20">
+<meta name="date" content="2019-03-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -574,9 +574,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-1"><i class="fa fa-check"></i><b>24.5.2</b> Tutorials</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>25</b> Cheatsheets</a><ul>
-<li class="chapter" data-level="25.1" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#statistics"><i class="fa fa-check"></i><b>25.1</b> Statistics</a></li>
-<li class="chapter" data-level="25.2" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#r"><i class="fa fa-check"></i><b>25.2</b> R</a></li>
+<li class="chapter" data-level="25" data-path="reporting-statistics.html"><a href="reporting-statistics.html"><i class="fa fa-check"></i><b>25</b> Reporting statistics</a><ul>
+<li class="chapter" data-level="25.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#general-advice"><i class="fa fa-check"></i><b>25.1</b> General advice</a><ul>
+<li class="chapter" data-level="25.1.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#make-good-figures"><i class="fa fa-check"></i><b>25.1.1</b> Make good figures!</a></li>
+<li class="chapter" data-level="25.1.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#illustrate-the-uncertainty-in-your-statistical-inferences."><i class="fa fa-check"></i><b>25.1.2</b> Illustrate the uncertainty in your statistical inferences.</a></li>
+<li class="chapter" data-level="25.1.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#report-effect-sizes."><i class="fa fa-check"></i><b>25.1.3</b> Report effect sizes.</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>26</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="26.1" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#statistics"><i class="fa fa-check"></i><b>26.1</b> Statistics</a></li>
+<li class="chapter" data-level="26.2" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#r"><i class="fa fa-check"></i><b>26.2</b> R</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -928,14 +935,15 @@ df.augment =<span class="st"> </span>fit_c <span class="op">%&gt;%</span><span c
 <p>And here is the prediction of the augmented model (which predicts different means for each group).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
 
+df.plot =<span class="st"> </span>df.poker <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(
+    <span class="dt">hand_jitter =</span> hand <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(),
+    <span class="dt">hand_jitter =</span> hand_jitter <span class="op">+</span><span class="st"> </span><span class="kw">runif</span>(<span class="kw">n</span>(), <span class="dt">min =</span> <span class="fl">-0.4</span>, <span class="dt">max =</span> <span class="fl">0.4</span>)
+  )
 
-df.plot =<span class="st"> </span>df.poker <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hand_jitter =</span> hand <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.numeric</span>(),
-         <span class="dt">hand_jitter =</span> hand_jitter <span class="op">+</span><span class="st"> </span><span class="kw">runif</span>(<span class="kw">n</span>(), <span class="dt">min =</span> <span class="fl">-0.4</span>, <span class="dt">max =</span> <span class="fl">0.4</span>))
-
-df.tidy =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select_if</span>(is.numeric) <span class="op">%&gt;%</span><span class="st"> </span>
+df.tidy =<span class="st"> </span>fit_a <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select_if</span>(is.numeric) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate_all</span>(<span class="kw">funs</span>(round, <span class="dt">.args =</span> <span class="kw">list</span>(<span class="dt">digits =</span> <span class="dv">2</span>)))</code></pre>
 <pre><code>Warning: funs() is soft deprecated as of dplyr 0.8.0
 please use list() instead
@@ -946,50 +954,69 @@ funs(name = f(.)
 # After: 
 list(name = ~f(.))
 This warning is displayed once per session.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">df.augment =<span class="st"> </span>fit_a <span class="op">%&gt;%</span><span class="st"> </span>
+<pre class="sourceCode r"><code class="sourceCode r">df.augment =<span class="st"> </span>fit_a <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">bind_cols</span>(df.plot <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(hand_jitter))
 
-<span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,
-       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> hand_jitter,
-                       <span class="dt">y =</span> balance,
-                       <span class="dt">color =</span> hand)) <span class="op">+</span><span class="st"> </span>
+<span class="kw">ggplot</span>(
+  <span class="dt">data =</span> df.plot,
+  <span class="dt">mapping =</span> <span class="kw">aes</span>(
+    <span class="dt">x =</span> hand_jitter,
+    <span class="dt">y =</span> balance,
+    <span class="dt">color =</span> hand
+  )
+) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> <span class="ot">NULL</span>,
-               <span class="kw">aes</span>(<span class="dt">x =</span> <span class="fl">0.6</span>,
-                   <span class="dt">xend =</span> <span class="fl">1.4</span>,
-                   <span class="dt">y =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>],
-                   <span class="dt">yend =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>]
-                   ),
-               <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
-               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> <span class="ot">NULL</span>,
-               <span class="kw">aes</span>(<span class="dt">x =</span> <span class="fl">1.6</span>,
-                   <span class="dt">xend =</span> <span class="fl">2.4</span>,
-                   <span class="dt">y =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>df.tidy<span class="op">$</span>estimate[<span class="dv">2</span>],
-                   <span class="dt">yend =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>df.tidy<span class="op">$</span>estimate[<span class="dv">2</span>]
-                   ),
-               <span class="dt">color =</span> <span class="st">&quot;orange&quot;</span>,
-               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> <span class="ot">NULL</span>,
-               <span class="kw">aes</span>(<span class="dt">x =</span> <span class="fl">2.6</span>,
-                   <span class="dt">xend =</span> <span class="fl">3.4</span>,
-                   <span class="dt">y =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>df.tidy<span class="op">$</span>estimate[<span class="dv">3</span>],
-                   <span class="dt">yend =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>df.tidy<span class="op">$</span>estimate[<span class="dv">3</span>]
-                   ),
-               <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>,
-               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> df.augment,
-               <span class="kw">aes</span>(<span class="dt">xend =</span> hand_jitter,
-                   <span class="dt">y =</span> balance,
-                   <span class="dt">yend =</span> fitted),
-               <span class="dt">alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;balance&quot;</span>) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,
-        <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>())</code></pre>
+<span class="st">  </span><span class="kw">geom_segment</span>(
+    <span class="dt">data =</span> <span class="ot">NULL</span>,
+    <span class="kw">aes</span>(
+      <span class="dt">x =</span> <span class="fl">0.6</span>,
+      <span class="dt">xend =</span> <span class="fl">1.4</span>,
+      <span class="dt">y =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>],
+      <span class="dt">yend =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>]
+    ),
+    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>,
+    <span class="dt">size =</span> <span class="dv">1</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(
+    <span class="dt">data =</span> <span class="ot">NULL</span>,
+    <span class="kw">aes</span>(
+      <span class="dt">x =</span> <span class="fl">1.6</span>,
+      <span class="dt">xend =</span> <span class="fl">2.4</span>,
+      <span class="dt">y =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>df.tidy<span class="op">$</span>estimate[<span class="dv">2</span>],
+      <span class="dt">yend =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>df.tidy<span class="op">$</span>estimate[<span class="dv">2</span>]
+    ),
+    <span class="dt">color =</span> <span class="st">&quot;orange&quot;</span>,
+    <span class="dt">size =</span> <span class="dv">1</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(
+    <span class="dt">data =</span> <span class="ot">NULL</span>,
+    <span class="kw">aes</span>(
+      <span class="dt">x =</span> <span class="fl">2.6</span>,
+      <span class="dt">xend =</span> <span class="fl">3.4</span>,
+      <span class="dt">y =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>df.tidy<span class="op">$</span>estimate[<span class="dv">3</span>],
+      <span class="dt">yend =</span> df.tidy<span class="op">$</span>estimate[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>df.tidy<span class="op">$</span>estimate[<span class="dv">3</span>]
+    ),
+    <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>,
+    <span class="dt">size =</span> <span class="dv">1</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(
+    <span class="dt">data =</span> df.augment,
+    <span class="kw">aes</span>(
+      <span class="dt">xend =</span> hand_jitter,
+      <span class="dt">y =</span> balance,
+      <span class="dt">yend =</span> fitted
+    ),
+    <span class="dt">alpha =</span> <span class="fl">0.3</span>
+  ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> <span class="st">&quot;balance&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(
+    <span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,
+    <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>()
+  )</code></pre>
 <p><img src="12-linear_model3_files/figure-html/linear-model3-10-1.png" width="672" /></p>
 <p>The vertical lines illustrate the residual sum of squares.</p>
 <p>We can illustrate the model sum of squares like so:</p>

@@ -262,14 +262,15 @@ And here is the prediction of the augmented model (which predicts different mean
 ```r
 set.seed(1)
 
+df.plot = df.poker %>%
+  mutate(
+    hand_jitter = hand %>% as.numeric(),
+    hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4)
+  )
 
-df.plot = df.poker %>% 
-  mutate(hand_jitter = hand %>% as.numeric(),
-         hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4))
-
-df.tidy = fit_a %>% 
-  tidy() %>% 
-  select_if(is.numeric) %>% 
+df.tidy = fit_a %>%
+  tidy() %>%
+  select_if(is.numeric) %>%
   mutate_all(funs(round, .args = list(digits = 2)))
 ```
 
@@ -286,50 +287,69 @@ This warning is displayed once per session.
 ```
 
 ```r
-df.augment = fit_a %>% 
+df.augment = fit_a %>%
   augment() %>%
-  clean_names() %>% 
+  clean_names() %>%
   bind_cols(df.plot %>% select(hand_jitter))
 
-ggplot(data = df.plot,
-       mapping = aes(x = hand_jitter,
-                       y = balance,
-                       color = hand)) + 
+ggplot(
+  data = df.plot,
+  mapping = aes(
+    x = hand_jitter,
+    y = balance,
+    color = hand
+  )
+) +
   geom_point(alpha = 0.8) +
-  geom_segment(data = NULL,
-               aes(x = 0.6,
-                   xend = 1.4,
-                   y = df.tidy$estimate[1],
-                   yend = df.tidy$estimate[1]
-                   ),
-               color = "red",
-               size = 1) +
-  geom_segment(data = NULL,
-               aes(x = 1.6,
-                   xend = 2.4,
-                   y = df.tidy$estimate[1] + df.tidy$estimate[2],
-                   yend = df.tidy$estimate[1] + df.tidy$estimate[2]
-                   ),
-               color = "orange",
-               size = 1) +
-  geom_segment(data = NULL,
-               aes(x = 2.6,
-                   xend = 3.4,
-                   y = df.tidy$estimate[1] + df.tidy$estimate[3],
-                   yend = df.tidy$estimate[1] + df.tidy$estimate[3]
-                   ),
-               color = "green",
-               size = 1) +
-  geom_segment(data = df.augment,
-               aes(xend = hand_jitter,
-                   y = balance,
-                   yend = fitted),
-               alpha = 0.3) +
-  labs(y = "balance") + 
-  scale_color_manual(values = c("red", "orange", "green")) + 
-  scale_x_continuous(breaks = 1:3, labels = c("bad", "neutral", "good")) + 
-  theme(legend.position = "none",
-        axis.title.x = element_blank())
+  geom_segment(
+    data = NULL,
+    aes(
+      x = 0.6,
+      xend = 1.4,
+      y = df.tidy$estimate[1],
+      yend = df.tidy$estimate[1]
+    ),
+    color = "red",
+    size = 1
+  ) +
+  geom_segment(
+    data = NULL,
+    aes(
+      x = 1.6,
+      xend = 2.4,
+      y = df.tidy$estimate[1] + df.tidy$estimate[2],
+      yend = df.tidy$estimate[1] + df.tidy$estimate[2]
+    ),
+    color = "orange",
+    size = 1
+  ) +
+  geom_segment(
+    data = NULL,
+    aes(
+      x = 2.6,
+      xend = 3.4,
+      y = df.tidy$estimate[1] + df.tidy$estimate[3],
+      yend = df.tidy$estimate[1] + df.tidy$estimate[3]
+    ),
+    color = "green",
+    size = 1
+  ) +
+  geom_segment(
+    data = df.augment,
+    aes(
+      xend = hand_jitter,
+      y = balance,
+      yend = fitted
+    ),
+    alpha = 0.3
+  ) +
+  labs(y = "balance") +
+  scale_color_manual(values = c("red", "orange", "green")) +
+  scale_x_continuous(breaks = 1:3, labels = c("bad", "neutral", "good")) +
+  theme(
+    legend.position = "none",
+    axis.title.x = element_blank()
+  )
 ```
 
 <img src="12-linear_model3_files/figure-html/linear-model3-10-1.png" width="672" />

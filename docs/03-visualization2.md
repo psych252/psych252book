@@ -696,67 +696,6 @@ ggplot(gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size = pop, colour =
   labs(title = "Year: {frame_time}", x = "GDP per capita", y = "life expectancy") +
   transition_time(year) +
   ease_aes("linear")
-```
-
-```
-Rendering [>--------------------------------------] at 5.2 fps ~ eta: 19s
-Rendering [>--------------------------------------] at 4.6 fps ~ eta: 21s
-Rendering [=>-------------------------------------] at 4.5 fps ~ eta: 21s
-Rendering [==>------------------------------------] at 4.6 fps ~ eta: 20s
-Rendering [==>------------------------------------] at 4.5 fps ~ eta: 20s
-Rendering [===>-----------------------------------] at 4.5 fps ~ eta: 20s
-Rendering [====>----------------------------------] at 4.5 fps ~ eta: 20s
-Rendering [====>----------------------------------] at 4.5 fps ~ eta: 19s
-Rendering [=====>---------------------------------] at 4.4 fps ~ eta: 19s
-Rendering [======>--------------------------------] at 4.4 fps ~ eta: 19s
-Rendering [======>--------------------------------] at 4.5 fps ~ eta: 18s
-Rendering [=======>-------------------------------] at 4.5 fps ~ eta: 18s
-Rendering [========>------------------------------] at 4.5 fps ~ eta: 17s
-Rendering [=========>-----------------------------] at 4.5 fps ~ eta: 17s
-Rendering [=========>-----------------------------] at 4.5 fps ~ eta: 16s
-Rendering [==========>----------------------------] at 4.5 fps ~ eta: 16s
-Rendering [===========>---------------------------] at 4.6 fps ~ eta: 15s
-Rendering [============>--------------------------] at 4.6 fps ~ eta: 15s
-Rendering [============>--------------------------] at 4.6 fps ~ eta: 14s
-Rendering [=============>-------------------------] at 4.6 fps ~ eta: 14s
-Rendering [==============>------------------------] at 4.6 fps ~ eta: 13s
-Rendering [===============>-----------------------] at 4.6 fps ~ eta: 13s
-Rendering [================>----------------------] at 4.6 fps ~ eta: 12s
-Rendering [=================>---------------------] at 4.6 fps ~ eta: 12s
-Rendering [=================>---------------------] at 4.6 fps ~ eta: 11s
-Rendering [==================>--------------------] at 4.6 fps ~ eta: 11s
-Rendering [===================>-------------------] at 4.6 fps ~ eta: 11s
-Rendering [===================>-------------------] at 4.6 fps ~ eta: 10s
-Rendering [====================>------------------] at 4.6 fps ~ eta: 10s
-Rendering [=====================>-----------------] at 4.6 fps ~ eta: 9s
-Rendering [======================>----------------] at 4.6 fps ~ eta: 9s
-Rendering [======================>----------------] at 4.7 fps ~ eta: 9s
-Rendering [=======================>---------------] at 4.7 fps ~ eta: 8s
-Rendering [=======================>---------------] at 4.6 fps ~ eta: 8s
-Rendering [========================>--------------] at 4.7 fps ~ eta: 8s
-Rendering [=========================>-------------] at 4.6 fps ~ eta: 7s
-Rendering [==========================>------------] at 4.7 fps ~ eta: 7s
-Rendering [==========================>------------] at 4.6 fps ~ eta: 7s
-Rendering [==========================>------------] at 4.7 fps ~ eta: 6s
-Rendering [===========================>-----------] at 4.6 fps ~ eta: 6s
-Rendering [============================>----------] at 4.6 fps ~ eta: 6s
-Rendering [============================>----------] at 4.6 fps ~ eta: 5s
-Rendering [=============================>---------] at 4.6 fps ~ eta: 5s
-Rendering [==============================>--------] at 4.6 fps ~ eta: 5s
-Rendering [==============================>--------] at 4.6 fps ~ eta: 4s
-Rendering [===============================>-------] at 4.6 fps ~ eta: 4s
-Rendering [================================>------] at 4.6 fps ~ eta: 3s
-Rendering [=================================>-----] at 4.6 fps ~ eta: 3s
-Rendering [==================================>----] at 4.6 fps ~ eta: 2s
-Rendering [===================================>---] at 4.6 fps ~ eta: 2s
-Rendering [====================================>--] at 4.6 fps ~ eta: 1s
-Rendering [=====================================>-] at 4.6 fps ~ eta: 1s
-Rendering [=====================================>-] at 4.6 fps ~ eta: 0s
-Rendering [======================================>] at 4.6 fps ~ eta: 0s
-Rendering [=======================================] at 4.5 fps ~ eta: 0s
-```
-
-```r
 # anim_save(filename = "figures/life_gdp_animation.gif") # to save the animation
 ```
 

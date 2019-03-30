@@ -70,7 +70,7 @@ ggplot(parametric_plotting_data, aes(x = value, color = distribution)) +
 ```
 
 ```
-Warning: Removed 6 rows containing non-finite values (stat_density).
+Warning: Removed 12 rows containing non-finite values (stat_density).
 ```
 
 <img src="15-bootstrapping_files/figure-html/bootstrapping-05-1.png" width="672" />
@@ -81,7 +81,7 @@ ggsave("figures/log_normal_dists.png", width=5, height=3)
 ```
 
 ```
-Warning: Removed 6 rows containing non-finite values (stat_density).
+Warning: Removed 12 rows containing non-finite values (stat_density).
 ```
 
 
