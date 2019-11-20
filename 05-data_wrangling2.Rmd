@@ -77,8 +77,7 @@ Sometimes `group_by()` is also useful without summarizing the data. For example,
 # first let's generate some random data 
 df.summarize = tibble(
   participant = rep(1:3, each = 5),
-  judgment = sample(0:100, size = 15, replace = TRUE)
-) %>% 
+  judgment = sample(0:100, size = 15, replace = TRUE)) %>% 
   print()
 ```
 
@@ -161,6 +160,8 @@ For more information on tidy data frames see the [Tidy data](http://r4ds.had.co.
 
 > "Tidy datasets are all alike, but every messy dataset is messy in its own way." –– Hadley Wickham
 
+#### `pivot_longer()` and `pivot_wider()`
+
 Let's first generate a data set that is _not_ tidy. 
 
 ```{r data-wrangling2-14}
@@ -175,35 +176,38 @@ df.reshape = tibble(
 
 Here, I've generated data from two participants with three observations. This data frame is not tidy since each row contains more than a single observation. Data frames that have one row per participant but many observations are called _wide_ data frames. 
 
-We can make it tidy using the `gather()` function. 
+We can make it tidy using the `pivot_longer()` function. 
 
 ```{r data-wrangling2-15}
 df.reshape.long = df.reshape %>% 
-  gather(key = "index", value = "rating", -participant) %>%
+  pivot_longer(names_to = "index",
+               values_to = "rating",
+               cols = -participant) %>%
   arrange(participant) %>% 
   print()
 ```
 
 `df.reshape.long` now contains one observation in each row. Data frames with one row per observation are called _long_ data frames. 
 
-The `gather()` function takes four arguments: 
+The `pivot_longer()` function takes at least four arguments: 
 
 1. the data which I've passed to it via the pipe `%>%` 
-2. a name for the `key` column which will contain the column names of the original data frame
-3. a name for the `value` column which will contain the values that were spread across different columns in the original data frame
+2. a `names_to` argument which specifies the name of the column which will contain the column names of the original data frame
+3. a `values_to` argument which specifies the name of the columh which will contain the values that were spread across different columns in the original data frame
 4. a specification for which columns we want to gather -- here I've specified that we want to gather the values from all columns except the `participant` column
 
-`spread()` is the counterpart of `gather()`. We can use it to go from a data frame that is in _long_ format, to a data frame that's in _wide_ format, like so: 
+`pivot_wider()` is the counterpart of `pivot_longer()`. We can use it to go from a data frame that is in _long_ format, to a data frame in _wide_ format, like so: 
 
 ```{r data-wrangling2-16}
 df.reshape.wide = df.reshape.long %>% 
-  spread(key = index, value = rating) %>% 
+  pivot_wider(names_from = index,
+              values_from = rating) %>% 
   print()
 ```
 
 For my data, I often have a wide data frame that contains demographic information about participants, and a long data frame that contains participants' responses in the experiment. In Section \@ref(joining-multiple-data-frames), we will learn how to combine information from multiple data frames (with potentially different formats).
 
-Here is a slightly more advanced example that involves reshaping a data frame. Let's consider that we have the following data frame to start with: 
+Here is a slightly more advanced example that involves reshaping a data frame. Let's consider the following data frame to start with: 
 
 ```{r data-wrangling2-17}
 # construct data frame 
@@ -219,68 +223,105 @@ df.reshape2 = tibble(
   print()
 ```
 
-Now, the data frame contains in each row, which stimuli a participant saw, and what rating she gave. Each of the two participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of `gather()`, `separate()`, and `spread()` to turn this into a data frame in long format. 
+Now, the data frame contains in each row, which stimuli a participant saw, and what rating she gave. Each of the two participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of `pivot_longer()`, and `pivot_wider()` to turn this into a data frame in long format. 
 
 ```{r data-wrangling2-18}
 df.reshape2 %>% 
-  gather(key = "index", value = "value", -participant) %>% 
-  separate(col = index, into = c("index", "order"), sep = "_") %>% 
-  spread(key = index, value = value) %>% 
-  mutate_at(vars(order, observation), ~ as.numeric(.)) %>% 
+  pivot_longer(names_to = c("index", "order"),
+               names_sep = "_",
+               values_to = "rating",
+               values_ptypes = list(rating = "character"),
+               cols = -participant) %>% 
+  pivot_wider(names_from = "index",
+              values_from = "rating") %>% 
+  mutate_at(.vars = vars(order, observation), .funs = ~ as.numeric(.)) %>% 
   select(participant, order, stimulus, rating = observation)
 ```
 
 Voilà! Getting the desired data frame involved a few new tricks. Let's take it step by step. 
 
-First, I use `gather()` to make a long table. 
+First, I use `pivot_longer()` to make a long table. 
 
 ```{r data-wrangling2-19}
 df.reshape2 %>% 
-  gather(key = "index", value = "value", -participant)
+  pivot_longer(names_to = c("index", "order"),
+               names_sep = "_",
+               values_to = "rating",
+               values_ptypes = list(rating = "character"),
+               cols = -participant)
 ```
 
-However, I want to have the information about the stimulus and the observation in the same row. That is, I want to see what rating a participant gave to the flower stimulus, for example. To get there, I separate the `index` column into two separate columns using the `separate()` function. 
+Notice how I've used a combination of the `names_to = ` and `names_sep = ` arguments to create two columns. Because I'm combining data of two different types ("character" and "numeric"), I needed to specify what I want the resulting data type to be via the `values_ptypes = ` argument. 
+
+However, I want to have the information about the stimulus and the observation in the same row. That is, I want to see what rating a participant gave to the flower stimulus, for example. To get there, I can use the `pivot_wider()` function to make a separate column for each entry in `index` that contains the values in `rating`. 
 
 ```{r data-wrangling2-20}
 df.reshape2 %>% 
-  gather(key = "index", value = "value", -participant) %>%
-  separate(col = index, into = c("index", "order"), sep = "_")
+  pivot_longer(names_to = c("index", "order"),
+               names_sep = "_",
+               values_to = "rating",
+               values_ptypes = list(rating = "character"),
+               cols = -participant) %>% 
+  pivot_wider(names_from = "index",
+              values_from = "rating")
 ```
 
-The `separate()` function takes four arguments: 
+That's pretty much it. Now, each row contains information about the order in which a stimulus was presented, what the stimulus was, and the judgment that a participant made in this trial. 
+
+```{r data-wrangling2-21}
+df.reshape2 %>% 
+  pivot_longer(names_to = c("index", "order"),
+               names_sep = "_",
+               values_to = "rating",
+               values_ptypes = list(rating = "character"),
+               cols = -participant) %>% 
+  pivot_wider(names_from = "index",
+              values_from = "rating") %>% 
+  mutate_at(.vars = vars(order, observation), .funs = ~ as.numeric(.)) %>% 
+  select(participant, order, stimulus, rating = observation)
+```
+
+The rest is familiar. I've used `mutate_at()` to turn `order` and `observation` into numeric columns, `select()` to change the order of the columns (and renamed the `observation` column to `rating` along the way), and `arrange()` to sort the data frame by `participant` and `order`. 
+
+Getting familiar with `pivot_longer()` and `pivot_wider()` takes some time plus trial and error. So don't be discouraged if you don't get what you want straight away. Once you've mastered these functions, they will make it much easier to beat your data frames into shape. 
+
+After having done some transformations like this, it's worth checking that nothing went wrong. I often compare a few values in the transformed and original data frame to make sure everything is legit. 
+
+When reading older code, you will often see `gather()` (instead of `pivot_longer()`), and `spread()` (instead of `pivot_wider()`). `gather` and `spread` are not developed anymore now, and their newer counterparts have additional functionality that comes in handy.  
+
+#### `separate()` and `unite()`
+
+Sometimes, we want to separate one column into multiple columns. For example, we could have achieved the same result we did above slightly differently, like so: 
+
+```{r}
+df.reshape2 %>% 
+  pivot_longer(names_to = "index",
+               values_to = "rating",
+               values_ptypes = list(rating = "numeric"),
+               cols = -participant) %>% 
+  separate(col = index,
+           into = c("index", "order"),
+           sep = "_")
+```
+
+Here, I've used the `separate()` function to separate the original `index` column into two columns. The `separate()` function takes four arguments: 
 
 1. the data which I've passed to it via the pipe `%>%` 
 2. the name of the column `col` which we want to separate
 3. the names of the columns `into` into which we want to separate the original column 
 4. the separator `sep` that we want to use to split the columns. 
 
-Note, like `gather()` and `spread()`, there is a partner for `separate()`, too. It's called `unite()` and it allows you to combine several columns into one. 
+Note, like `pivot_longer()` and `pivot_wider()`, there is a partner for `separate()`, too. It's called `unite()` and it allows you to combine several columns into one, like so:
 
-Now, I can use the `spread()` function to make a separate column for each entry in `index` that contains the values in `value`. 
-
-```{r data-wrangling2-21}
-df.reshape2 %>% 
-  gather(key = "index", value = "value", -participant) %>% 
-  separate(index, into = c("index", "order"), sep = "_") %>% 
-  spread(index, value)
+```{r}
+tibble(index = c("flower", "observation"),
+       order = c(1, 2)) %>% 
+  unite("combined", index, order)
 ```
-
-That's pretty much it. Now, each row contains information about the order in which a stimulus was presented, what the stimulus was, and the judgment that a participant made in this trial. 
-
-```{r data-wrangling2-22}
-df.reshape2 %>% 
-  gather(key = "index", value = "value", -participant) %>% 
-  separate(index, into = c("index", "order"), sep = "_") %>% 
-  spread(index,value) %>% 
-  mutate_at(vars(order, observation), ~ as.numeric(.)) %>% 
-  select(participant, order, stimulus, rating = observation)
-```
-
-The rest is familiar. I've used `mutate_at()` to turn `order` and `observation` into numeric columns, `select()` to change the order of the columns (and renamed the `observation` column to `rating` along the way), and `arrange()` to sort the data frame by `participant` and `order`. 
 
 Sometimes, we may have a data frame where data is recorded in a long string. 
 
-```{r data-wrangling2-23}
+```{r data-wrangling2-22}
 df.reshape3 = tibble(
   participant = 1:2,
   judgments = c("10, 4, 12, 15", "3, 4")
@@ -292,20 +333,16 @@ Here, I've created a data frame with data from two participants. For whatever re
 
 We can use the `separate_rows()` function to turn this into a tidy data frame in long format. 
 
-```{r data-wrangling2-24}
+```{r data-wrangling2-23}
 df.reshape3 %>% 
   separate_rows(judgments)
 ```
-
-Getting familiar with `gather()` and `spread()` takes some time plus trial and error. So don't be discouraged if you don't get what you want straight away. Once you've mastered these functions, they will make it much easier to get your data frames into shape. 
-
-After having done some transformations like this, it's worth checking that nothing went wrong. I often compare a few values in the transformed and original data frame to make sure everything is legit. 
 
 #### Practice 2 
 
 Load this data frame first.
 
-```{r data-wrangling2-25-practice1}
+```{r data-wrangling2-24-practice1}
 df.practice2 = tibble(
   participant = 1:10,
   initial = c("AR", "FA", "IR", "NC", "ER", "PI", "DH", "CN", "WT", "JD"), 
@@ -320,10 +357,12 @@ df.practice2 = tibble(
 - Calculate the mean and standard deviation of each participants' z-scored judgments. 
 - Notice anything interesting? Think about what [z-scoring](https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/z-score/) does ... 
 
-```{r data-wrangling2-26-practice2}
+```{r data-wrangling2-25-practice2}
 # write your code here 
 
 ```
+
+
 
 ### Joining multiple data frames 
 
@@ -331,7 +370,7 @@ It's nice to have all the information we need in a single, tidy data frame. We h
 
 For example, we may have one data frame `df.stimuli` with information about each stimulus, and then have another data frame with participants' responses `df.responses` that only contains a stimulus index but no other infromation about the stimuli. 
 
-```{r data-wrangling2-27}
+```{r data-wrangling2-26}
 set.seed(1) # setting random seed to make this example reproducible
 
 # data frame with stimulus information
@@ -358,7 +397,7 @@ The `df.stimuli` data frame contains an `index`, information about the `height`,
 
 Let's say that I now wanted to know what participants' average response for the differently colored dot patterns are. Here is how I would do this: 
 
-```{r data-wrangling2-28}
+```{r data-wrangling2-27}
 df.responses %>% 
   left_join(df.stimuli %>%
               select(index, color),
@@ -369,7 +408,7 @@ df.responses %>%
 
 Let's take it step by step. The key here is to add the information from the `df.stimuli` data frame to the `df.responses` data frame. 
 
-```{r data-wrangling2-29}
+```{r data-wrangling2-28}
 df.responses %>% 
   left_join(df.stimuli %>% 
               select(index, color),
@@ -382,7 +421,7 @@ To specify multiple columns by which we would like to join tables, we specify th
 
 Sometimes, the tables I want to join don't have any column names in common. In that case, we can tell the `left_join()` function which column pair(s) should be used for joining. 
 
-```{r data-wrangling2-30}
+```{r data-wrangling2-29}
 df.responses %>% 
   rename(stimuli = index) %>% # I've renamed the index column to stimuli
   left_join(df.stimuli %>% 
@@ -400,7 +439,7 @@ Take a look at the `join` help file to see other operations for combining two or
 
 Load these three data frames first: 
 
-```{r data-wrangling2-31-practice1}
+```{r data-wrangling2-30-practice1}
 set.seed(1)
 
 df.judgments = tibble(
@@ -417,7 +456,7 @@ df.information = tibble(
 
 Create a new data frame called `df.join` that combines the information from both `df.judgments` and `df.information`. Note that column with the colors is called `stimulus` in `df.judgments` and `color` in `df.information`. At the end, you want a data frame that contains the following columns: `participant`, `stimulus`, `number`, and `judgment`. 
 
-```{r data-wrangling2-32-practice2}
+```{r data-wrangling2-31-practice2}
 # write your code here
 
 ```
@@ -433,7 +472,7 @@ There are two ways for data to be missing.
 
 We can check for explicit missing values using the `is.na()` function like so: 
 
-```{r data-wrangling2-33}
+```{r data-wrangling2-32}
 tmp.na = c(1, 2, NA, 3)
 is.na(tmp.na)
 ```
@@ -442,7 +481,7 @@ I've first created a vector `tmp.na` with a missing value at index 3. Calling th
 
 Let's say that we have a data frame with missing values and that we want to replace those missing values with something else. Let's first create a data frame with missing values. 
 
-```{r data-wrangling2-34}
+```{r data-wrangling2-33}
 df.missing = tibble(x = c(1, 2, NA),
                  y = c("a", NA, "b"))
 print(df.missing)
@@ -450,7 +489,7 @@ print(df.missing)
 
 We can use the `replace_na()` function to replace the missing values with something else. 
 
-```{r data-wrangling2-35}
+```{r data-wrangling2-34}
 df.missing %>% 
   mutate(x = replace_na(x, replace = 0),
          y = replace_na(y, replace = "unknown"))
@@ -458,21 +497,21 @@ df.missing %>%
 
 We can also remove rows with missing values using the `drop_na()` function. 
 
-```{r data-wrangling2-36}
+```{r data-wrangling2-35}
 df.missing %>% 
   drop_na()
 ```
 
 If we only want to drop values from specific columns, we can specify these columns within the `drop_na()` function call. So, if we only want to drop rows that have missing values in the `x` column, we can write: 
 
-```{r data-wrangling2-37}
+```{r data-wrangling2-36}
 df.missing %>% 
   drop_na(x)
 ```
 
 To make the distinction between implicit and explicit missing values more concrete, let's consider the following example (taken from [here](https://r4ds.had.co.nz/tidy-data.html#missing-values-3)): 
 
-```{r data-wrangling2-38}
+```{r data-wrangling2-37}
 df.stocks = tibble(
   year   = c(2015, 2015, 2015, 2015, 2016, 2016, 2016),
   qtr    = c(   1,    2,    3,    4,    2,    3,    4),
@@ -487,7 +526,7 @@ There are two missing values in this dataset:
 
 We can use the `complete()` function to turn implicit missing values explicit: 
 
-```{r data-wrangling2-39}
+```{r data-wrangling2-38}
 df.stocks %>% 
   complete(year, qtr)
 ```
@@ -496,7 +535,7 @@ Note how now, the data frame contains an additional row in which `year = 2016`, 
 
 We can also directly tell the `complete()` function to replace the `NA` values via passing a list to its `fill` argument like so: 
 
-```{r data-wrangling2-40}
+```{r data-wrangling2-39}
 df.stocks %>% 
   complete(year, qtr, fill = list(return = 0))
 ```
@@ -507,7 +546,7 @@ This specifies that we would like to replace any `NA` in the `return` column wit
 
 So far, we've used data sets that already came with the packages we've loaded. In the visualization chapters, we used the `diamonds` data set from the `ggplot2` package, and in the data wrangling chapters, we used the `starwars` data set from the `dplyr` package. 
 
-```{r data-wrangling2-41, echo=FALSE}
+```{r data-wrangling2-40, echo=FALSE}
 file_type = c("`csv`", "`RData`", "`xls`", "`json`", "`feather`")
 platform = c(
   "general",
@@ -539,7 +578,7 @@ For data in a json format, I highly recommend the `tidyjson` [package](https://g
 
 I've stored some data files in the `data/` subfolder. Let's first read a csv (= **c**omma-**s**eparated-**v**alue) file. 
 
-```{r data-wrangling2-42}
+```{r data-wrangling2-41}
 df.csv = read_csv("data/movies.csv")
 ```
 
@@ -547,7 +586,7 @@ The `read_csv()` function gives us information about how each column was parsed.
 
 And let's take a quick peek at the data: 
 
-```{r data-wrangling2-43}
+```{r data-wrangling2-42}
 df.csv %>% glimpse()
 ```
 
@@ -561,7 +600,7 @@ RData is a data format native to R. Since this format can only be read by R, it'
 
 We read (or load) an RData file in the following way:
 
-```{r data-wrangling2-44}
+```{r data-wrangling2-43}
 load("data/test.RData", verbose = TRUE)
 ```
 
@@ -573,7 +612,7 @@ I've set the `verbose = ` argument to `TRUE` here so that the `load()` function 
 
 To save a data frame as a csv file, we simply write: 
 
-```{r data-wrangling2-45}
+```{r data-wrangling2-44}
 df.test = tibble(
   x = 1:3,
   y = c("test1", "test2", "test3")
@@ -588,13 +627,13 @@ Just like for reading in data, the `readr` package has a number of other functio
 
 To save objects as an RData file, we write: 
 
-```{r data-wrangling2-46}
+```{r data-wrangling2-45}
 save(df.test, file = "data/test.RData")
 ```
 
 We can add multiple objects simply by adding them at the beginning, like so: 
 
-```{r data-wrangling2-47}
+```{r data-wrangling2-46}
 save(df.test, df.starwars, file = "data/test_starwars.RData")
 ```
 
@@ -627,6 +666,6 @@ save(df.test, df.starwars, file = "data/test_starwars.RData")
 
 ## Session info
 
-```{r}
+```{r, echo=F}
 sessionInfo()
 ```

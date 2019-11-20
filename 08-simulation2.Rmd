@@ -155,7 +155,9 @@ samples = replicate(n = sample_n,
 df.sampling_distribution = matrix(samples, ncol = sample_n) %>%
   as_tibble() %>%
   set_names(str_c(1:ncol(.))) %>%
-  gather("sample", "number") %>% 
+  pivot_longer(names_to = "sample",
+               values_to = "number",
+               cols = everything()) %>% 
   mutate(sample = as.numeric(sample)) %>% 
   group_by(sample) %>% 
   mutate(draw = 1:n()) %>% 
@@ -207,7 +209,8 @@ Here is a data frame that I've used for illustrating the idea behind how a sampl
 # data frame for illustration in class 
 df.sampling_distribution %>% 
   filter(sample <= 10, draw <= 4) %>% 
-  spread(draw, number) %>% 
+  pivot_wider(names_from = draw,
+              values_from = number) %>% 
   set_names(c("sample", str_c("draw_", 1:(ncol(.)-1)))) %>% 
   mutate(sample_mean = rowMeans(.[, -1])) %>% 
     head(10) %>% 
@@ -549,10 +552,10 @@ set.seed(1)
 # generate data from two conditions 
 df.permutation = tibble(
   control = rnorm(25, mean = 5.5, sd = 2),
-  experimental = rnorm(25, mean = 4.5, sd = 1.5)
-) %>% 
-  gather("condition", "performance")
-
+  experimental = rnorm(25, mean = 4.5, sd = 1.5)) %>% 
+  pivot_longer(names_to = "condition",
+               values_to = "performance",
+               cols = everything())
 ```
 
 Here is a summary of how each group performed: 
@@ -562,8 +565,11 @@ df.permutation %>%
   group_by(condition) %>%
   summarize(mean = mean(performance),
             sd = sd(performance)) %>%
-  gather("statistic", "value", - condition) %>%
-  spread(condition, value) %>%
+  pivot_longer(names_to = "statistic",
+               values_to = "value", 
+               cols = -condition) %>%
+  pivot_wider(names_from = condition,
+              values_from = value) %>%
   kable(digits = 2) %>% 
   kable_styling(bootstrap_options = "striped",
                 full_width = F)
@@ -766,6 +772,6 @@ Feel free to play around with the code above. For example, change the sample siz
 
 ## Session info
 
-```{r}
+```{r, echo=F}
 sessionInfo()
 ```

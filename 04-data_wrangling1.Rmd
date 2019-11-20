@@ -567,7 +567,7 @@ kable(x = tibble(name, use),
 
 We use the functions in the package `dplyr` to manipulate our data. 
 
-### filter() 
+### `filter()`
 
 `filter()` lets us apply logical (and other) operators (see Table \@ref(tab:data-wrangling1-10)) to subset the data. Here, I've filtered out the male characters. 
 
@@ -596,7 +596,7 @@ df.starwars %>%
 
 The starwars characters that have either a `"dark"` or a `"pale"` skin tone, or whose gender is `"hermaphrodite"`, and whose height is at least `170` cm. The `%in%` operator is useful when there are multiple options. Instead of `skin_color %in% c("dark", "pale")`, I could have also written `skin_color == "dark" | skin_color == "pale"` but this gets cumbersome as the number of options increases. 
 
-### rename() 
+### `rename()` 
 
 `rename()` renames column names.
 
@@ -615,7 +615,7 @@ df.starwars %>%
   set_names(letters[1:ncol(.)])  # renamed all variables to letters: a, b, ...
 ```
 
-### select() 
+### `select()` 
 
 `select()` allows us to select a subset of the columns in the data frame. 
 
@@ -708,7 +708,7 @@ df.starwars %>%
 
 For more details, take a look at the help file for `select()`, and this [this great tutorial](https://suzan.rbind.io/2018/01/dplyr-tutorial-1/) in which I learned about some of the more advanced ways of using `select()`. 
 
-### mutate() 
+### `mutate()` 
 
 `mutate()` is used to change exisitng columns or make new ones. 
 
@@ -725,21 +725,21 @@ A useful helper function for `mutate()` is `ifelse()` which is a shorthand for t
 
 ```{r data-wrangling1-59}
 df.starwars %>% 
-  mutate(height_categorical = ifelse(height > median(height, na.rm = T), 'tall', 'short')) %>% 
+  mutate(height_categorical = ifelse(height > median(height, na.rm = T), "tall", "short")) %>% 
   select(name, contains("height"))
 ```
 
-`ifelse()` works in the following way: we first specify the condition, then what should be returned if the condition is true, and finally what should be returned otherwise. The more verbose version of the statement above would be: `ifelse(test = height > median(height, na.rm = T), yes = 'tall', no = 'short')` 
+`ifelse()` works in the following way: we first specify the condition, then what should be returned if the condition is true, and finally what should be returned otherwise. The more verbose version of the statement above would be: `ifelse(test = height > median(height, na.rm = T), yes = "tall", no = "short")` 
 
 There are a number of variants of the `mutate()` function. Let's take a look at them. 
 
-#### mutate_at()
+#### `mutate_at()`
 
 With `mutate_at()`, we can mutate several columns at the same time. 
 
 ```{r data-wrangling1-60}
 df.starwars %>% 
-  mutate_at(.vars = vars(height, mass, birth_year), .funs = "scale")
+  mutate_at(.vars = vars(height, mass, birth_year), .funs = ~ scale(.))
 ```
 
 In `vars()` I've specified what variables to mutate, I've passed the function name `"scale"` to the `.funs` argument. Here, I've z-scored `height`, `mass`, and `birth_year` using the `scale()` function. Note that I wrote the function without `()`. The `.funs` argument expects a list of functions that can be specified by: 
@@ -748,13 +748,13 @@ In `vars()` I've specified what variables to mutate, I've passed the function na
 - the function itself, `mean`
 - a call to the function with `.` as a dummy argument, `~ mean(.)` (note the `~` before the function call).
 
-Within `vars()`, we can use the same helper functions for selecting columns that we've seen above for `select()`. 
+Personally, I prefer to write down the function using the `~ function(.)` syntax to make it clear that I'm calling a function. Within `vars()`, we can use the same helper functions for selecting columns that we've seen above for `select()`. 
 
 We can also use names to create new columns:
 
 ```{r data-wrangling1-61}
 df.starwars %>% 
-  mutate_at(vars(height, mass, birth_year), .funs = list(z = "scale")) %>% 
+  mutate_at(vars(height, mass, birth_year), .funs = list(z = ~ scale(.))) %>% 
   select(name, contains("height"), contains("mass"), contains("birth_year"))
 ```
 
@@ -765,21 +765,21 @@ And we can apply several functions at the same time.
 ```{r data-wrangling1-62}
 df.starwars %>% 
   mutate_at(vars(height, mass, birth_year),
-            list(z = "scale",
+            list(z = ~ scale(.),
                  centered = ~ scale(., scale = FALSE))) %>% 
   select(name, contains("height"), contains("mass"), contains("birth_year"))
 ```
 
 Here, I've created z-scored and centered (i.e. only subtracted the mean but didn't divide by the standard deviation) versions of the `height`, `mass`, and `birth_year` columns in one go. 
 
-#### mutate_all()
+#### `mutate_all()`
 
 `mutate_all()` is used to mutate all columns in a data frame.  
 
 ```{r data-wrangling1-63}
 df.starwars %>% 
   select(height, mass) %>%
-  mutate_all("as.character") # transform all columns to characters
+  mutate_all(~ as.character(.)) # transform all columns to characters
 ```
 
 Here, I've selected some columns first, and then changed the mode to character in each of them. 
@@ -789,26 +789,26 @@ Like we've seen with `mutate_at()`, you can add a name in the `mutate_all()` fun
 ```{r data-wrangling1-64}
 df.starwars %>% 
   select(height, mass) %>%
-  mutate_all(.funs = list(char = "as.character")) # make new character columns
+  mutate_all(.funs = list(char = ~ as.character(.))) # make new character columns
 ```
 
-#### mutate_if()
+#### `mutate_if()`
 
 `mutate_if()` can sometimes come in handy. For example, the following code changes all the numeric columns to character columns:
 
 ```{r data-wrangling1-65}
 df.starwars %>% 
-  mutate_if(.predicate = is.numeric, .funs = "as.character")
+  mutate_if(.predicate = is.numeric, .funs = ~ as.character(.))
 ```
 
 Or we can round all the numeric columns: 
 
 ```{r data-wrangling1-66}
 df.starwars %>% 
-  mutate_if(.predicate = is.numeric, .funs = "round")
+  mutate_if(.predicate = is.numeric, .funs = ~ round(.))
 ```
 
-### arrange() 
+### `arrange()` 
 
 `arrange()` allows us to sort the values in a data frame by one or more column entries. 
 
@@ -856,6 +856,6 @@ Compute the body mass index for `male` characters who are `human`.
 
 ## Session info
 
-```{r}
+```{r, echo=F}
 sessionInfo()
 ```
