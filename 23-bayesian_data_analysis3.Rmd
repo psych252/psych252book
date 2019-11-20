@@ -1,10 +1,24 @@
 # Bayesian data analysis 3
 
+## Learning goals 
+
+- Building Bayesian models with `brms`.
+	- Model evaluation: 
+		- Visualizing and interpreting results. 
+		- Testing hypotheses. 
+	- Inference evaluation: Did things work out? 
+- Some cool examples: 
+	- Evidence for null results. 
+	- Dealing with unequal variance. 
+	- Zero-one inflated beta binomial model. 
+	- Ordinal logistic regression. 
+	- Regression with strictly positive weights. 
+
+## Load packages and set plotting theme  
+
 ```{r bda3-01, echo=FALSE, eval=FALSE, include=FALSE}
 install.packages(c("brms", "bayesplot", "rstanarm"))
 ```
-
-## Load packages and set plotting theme  
 
 ```{r bda3-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
@@ -176,10 +190,11 @@ df.predictive_samples = fit.brm1 %>%
   mutate(bad = map(data, ~ .$b_intercept + rnorm(100, sd = .$sigma)),
          neutral = map(data, ~ .$b_intercept + .$b_handneutral + rnorm(100, sd = .$sigma)),
          good = map(data, ~ .$b_intercept + .$b_handgood + rnorm(100, sd = .$sigma))) %>% 
-  unnest(bad, neutral, good)
+  unnest(c(bad, neutral, good))
 
 # plot the results as an animation
 df.predictive_samples %>% 
+  select(-data) %>% 
   gather("hand", "balance", -sample) %>% 
   mutate(hand = factor(hand, levels = c("bad", "neutral", "good"))) %>% 
   ggplot(mapping = aes(x = hand,
@@ -654,3 +669,9 @@ df.cars %>%
 ratings-with-zero-one-inflated-beta-models/#zoib-regression)
 - [Tutorial on constrasts in Bayes](https://janhove.github.io/analysis/2018/12/20/contrasts-interactions)
 - [Bayesian regression modeling (for factorial designs):A tutorial](https://psyarxiv.com/cdxv3)
+
+## Session info
+
+```{r}
+sessionInfo()
+```
