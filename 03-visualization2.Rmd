@@ -65,7 +65,10 @@ Different plots works best for different kinds of data. Let's take a look at som
 #### Stacked bar charts 
 
 ```{r visualization2-05} 
-ggplot(data = df.diamonds, aes(x = cut, y = stat(count), fill = color)) +
+ggplot(data = df.diamonds, 
+       mapping = aes(x = cut,
+                     y = stat(count),
+                     fill = color)) +
   geom_bar(color = "black")
 ```
 
@@ -128,16 +131,18 @@ This plot shows means, bootstrapped confidence intervals, and individual data po
 
 ```{r visualization2-09, echo=FALSE, fig.cap="Different shapes that can be used for plotting."}
 # plot showing the different shapes 
-df.plot = tibble(
-  x = rep(1:5, 5),
-  y = rep(seq(5, 1, -1), each = 5),
-  shape = 1:25
-) %>% 
+df.plot = tibble(x = rep(1:5, 5),
+                 y = rep(seq(5, 1, -1), each = 5),
+                 shape = 1:25) %>% 
   mutate(shape = as.factor(shape))
 
 ggplot(data = df.plot, mapping = aes(x = x, y = y, shape = shape)) +
-  geom_point(fill = "red", size = 5, show.legend = F) +
-  geom_text(mapping = aes(label = shape), vjust = -1.3, size = 5) +
+  geom_point(fill = "red",
+             size = 5,
+             show.legend = F) +
+  geom_text(mapping = aes(label = shape),
+            vjust = -1.3,
+            size = 5) +
   scale_shape_manual(values = 1:25) +
   coord_cartesian(clip = "off") + 
   theme_void()+
@@ -195,7 +200,8 @@ ggplot(data = df.diamonds %>% sample_n(1000), mapping = aes(x = color, y = price
 We make violin plots like so: 
 
 ```{r visualization2-14} 
-ggplot(data = df.diamonds, mapping = aes(x = color, y = price)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = color, y = price)) +
   geom_violin()
 ```
 
@@ -208,12 +214,19 @@ Violin plots don't work well for Likert-scale data (e.g. ratings on a discrete s
 
 ```{r visualization2-15} 
 set.seed(1)
-data = data.frame(rating = sample(x = 1:7, prob = c(0.1, 0.4, 0.1, 0.1, 0.2, 0, 0.1), size = 500, replace = T))
+data = tibble(rating = sample(x = 1:7, prob = c(0.1, 0.4, 0.1, 0.1, 0.2, 0, 0.1),
+                              size = 500,
+                              replace = T))
 
-ggplot(data = data, mapping = aes(x = "Likert", y = rating)) +
-  geom_point(position = position_jitter(width = 0.05, height = 0.1), alpha = 0.05)+
-  stat_summary(fun.y = "mean", geom = "point", shape = 21, fill = "blue", size = 5)
-  
+ggplot(data = data,
+       mapping = aes(x = "Likert", y = rating)) +
+  geom_point(position = position_jitter(width = 0.05, height = 0.1),
+             alpha = 0.05)+
+  stat_summary(fun.y = "mean",
+               geom = "point",
+               shape = 21,
+               fill = "blue",
+               size = 5)
 ```
 
 This represents a vase much better than it represents the data.
@@ -223,7 +236,8 @@ This represents a vase much better than it represents the data.
 We can also show the distributions along the x-axis using the `geom_density_ridges()` function from the `ggridges` package. 
 
 ```{r visualization2-16} 
-ggplot(data = df.diamonds, mapping = aes(x = price, y = color)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = price, y = color)) +
   ggridges::geom_density_ridges(scale = 1.5)
 ```
 
@@ -250,7 +264,10 @@ include_graphics("figures/practice_plot5.png")
 Scatter plots are great for looking at the relationship between two continuous variables. 
 
 ```{r visualization2-19} 
-ggplot(data = df.diamonds, mapping = aes(x = carat, y = price, color = color)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = carat,
+                     y = price,
+                     color = color)) +
   geom_point()
 ```
 
@@ -259,15 +276,21 @@ ggplot(data = df.diamonds, mapping = aes(x = carat, y = price, color = color)) +
 These are useful for looking how a variable of interest varies as a function of two other variables. For example, when we are trying to fit a model with two parameters, we might be interested to see how well the model does for different combinations of these two parameters. Here, we'll plot what `carat` values diamonds of different `color` and `clarity` have. 
 
 ```{r visualization2-20} 
-ggplot(data = df.diamonds, mapping = aes(x = color, y = clarity, z = carat)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = color,
+                     y = clarity,
+                     z = carat)) +
   stat_summary_2d(fun = "mean", geom = "tile")
 ```
 
 Not too bad. Let's add a few tweaks to make it look nicer. 
 
 ```{r visualization2-21} 
-ggplot(data = df.diamonds, mapping = aes(x = color, y = clarity, z = carat)) +
-  stat_summary_2d(fun = "mean", geom = "tile", color = "black") +
+ggplot(data = df.diamonds,
+       mapping = aes(x = color, y = clarity, z = carat)) +
+  stat_summary_2d(fun = "mean",
+                  geom = "tile",
+                  color = "black") +
   scale_fill_gradient(low = "white", high = "black") +
   labs(fill = "carat")
 ```
@@ -284,8 +307,15 @@ df.plot = txhousing %>%
   filter(city %in% c("Dallas", "Fort Worth", "San Antonio", "Houston")) %>% 
   mutate(city = factor(city, levels = c("Dallas", "Houston", "San Antonio", "Fort Worth")))
 
-ggplot(data = df.plot, mapping = aes(x = year, y = median, color = city, fill = city)) +
-  stat_summary(fun.data = "mean_cl_boot", geom = "ribbon", alpha = 0.2, linetype = 0) +
+ggplot(data = df.plot,
+       mapping = aes(x = year,
+                     y = median,
+                     color = city,
+                     fill = city)) +
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "ribbon",
+               alpha = 0.2,
+               linetype = 0) +
   stat_summary(fun.y = "mean", geom = "line") +
   stat_summary(fun.y = "mean", geom = "point") 
 ```
@@ -493,16 +523,27 @@ I strongly recommend to use a relative path to specify where the figure should b
 Here is an example for how to save one of the plots that we've created above. 
 
 ```{r,visualization2-31,  results = "hold"}
-p1 = ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
-  stat_summary(fun.y = "mean", geom = "bar", color = "black", fill = "lightblue") +
-  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1)
+p1 = ggplot(data = df.diamonds,
+            mapping = aes(x = cut, y = price)) +
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "pointrange",
+               shape = 21,
+               fill = "lightblue",
+               size = 1)
 print(p1)
 
-p2 = ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
-  stat_summary(fun.y = "mean", geom = "bar", color = "black", fill = "lightblue") +
-  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1)
+p2 = ggplot(data = df.diamonds,
+            mapping = aes(x = cut, y = price)) +
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "pointrange",
+               shape = 21,
+               fill = "red",
+               size = 1)
 
-ggsave(filename = "figures/diamond_plot.pdf", plot = p1, width = 8, height = 6)
+ggsave(filename = "figures/diamond_plot.pdf",
+       plot = p1,
+       width = 8,
+       height = 6)
 ```
 
 Here, I'm saving the plot in the `figures` folder and it's name is `diamond_plot.pdf`. I also specify the width and height as the plot in inches (which is the default unit). 
@@ -569,8 +610,11 @@ If possible, it's __much__ better to do everything in R though so that your plot
 Sometimes it can be helpful for debugging to take a look behind the scenes. Silently, `ggplot()` computes a data frame based on the information you pass to it. We can take a look at the data frame that's underlying the plot. 
 
 ```{r visualization2-33} 
-p = ggplot(data = df.diamonds, mapping = aes(x = color, y = clarity, z = carat)) +
-  stat_summary_2d(fun = "mean", geom = "tile", color = "black") +
+p = ggplot(data = df.diamonds,
+           mapping = aes(x = color, y = clarity, z = carat)) +
+  stat_summary_2d(fun = "mean",
+                  geom = "tile",
+                  color = "black") +
   scale_fill_gradient(low = "white", high = "black")
 print(p)
 
@@ -584,7 +628,10 @@ I've called the `ggplot_build()` function on the ggplot2 object that we saved as
 If a plot looks weird, it's worth taking a look behind the scenes. For example, something we thing we could have tried is the following (in fact, this is what I tried first): 
 
 ```{r visualization2-34} 
-p = ggplot(data = df.diamonds, mapping = aes(x = color, y = clarity, fill = carat)) +
+p = ggplot(data = df.diamonds,
+           mapping = aes(x = color,
+                         y = clarity,
+                         fill = carat)) +
   geom_tile(color = "black") +
   scale_fill_gradient(low = "white", high = "black")
 print(p)
@@ -603,9 +650,14 @@ Animated plots can be a great way to illustrate your data in presentations. The 
 Here is an example showing how to use it. 
 
 ```{r visualization2-35, interval=1/60, results='hold', cache=TRUE, message=FALSE, warning=FALSE}
-ggplot(gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size = pop, colour = country)) +
+ggplot(gapminder,
+       mapping = aes(x = gdpPercap,
+                     y = lifeExp,
+                     size = pop,
+                     colour = country)) +
   geom_point(alpha = 0.7, show.legend = FALSE) +
-  geom_text(data = gapminder %>% filter(country %in% c("United States", "China", "India")), 
+  geom_text(data = gapminder %>% 
+              filter(country %in% c("United States", "China", "India")), 
             mapping = aes(label = country),
             color = "black",
             vjust = -0.75,
@@ -617,7 +669,9 @@ ggplot(gapminder, mapping = aes(x = gdpPercap, y = lifeExp, size = pop, colour =
   theme_classic() +
   theme(text = element_text(size = 23)) +
   # Here come the gganimate specific bits
-  labs(title = "Year: {frame_time}", x = "GDP per capita", y = "life expectancy") +
+  labs(title = "Year: {frame_time}",
+       x = "GDP per capita",
+       y = "life expectancy") +
   transition_time(year) +
   ease_aes("linear")
 # anim_save(filename = "figures/life_gdp_animation.gif") # to save the animation
@@ -640,9 +694,13 @@ Here are some snippets I use:
 
 ```{r visualization2-36, eval=FALSE}
 snippet snbar
-	ggplot(data = ${1:data}, mapping = aes(x = ${2:x}, y = ${3:y})) +
-		stat_summary(fun.y = "mean", geom = "bar", color = "black") +
-		stat_summary(fun.data = "mean_cl_boot", geom = "linerange")
+	ggplot(data = ${1:data},
+	       mapping = aes(x = ${2:x}, y = ${3:y})) +
+		stat_summary(fun.y = "mean",
+		             geom = "bar",
+		             color = "black") +
+		stat_summary(fun.data = "mean_cl_boot",
+		             geom = "linerange")
 		
 snippet sngg
 	ggplot(data = ${1:data}, mapping = aes(${2:aes})) +
@@ -675,7 +733,7 @@ This command opens up a separate tab in RStudio called `r.snippets` so that you 
 
 ### Cheatsheets 
 
-- [shiny](figures/shiny.pdf) --> interactive plots 
+- [shiny](figures/cheatsheets/shiny.pdf) --> interactive plots 
 
 ### Data camp courses 
 

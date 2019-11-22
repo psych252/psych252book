@@ -134,7 +134,7 @@ df.plot = df.poker %>%
 df.means = df.poker %>% 
   group_by(hand) %>% 
   summarize(mean = mean(balance)) %>% 
-  spread(hand, mean)
+  pivot_wider(names_from = hand, values_from = mean)
 
 ggplot(data = df.plot,
        mapping = aes(x = hand_jitter,
@@ -290,7 +290,7 @@ df.plot = df.poker %>%
 df.means = df.poker %>% 
   group_by(skill) %>% 
   summarize(mean = mean(balance)) %>% 
-  spread(skill, mean)
+  pivot_wider(names_from = skill, values_from = mean)
 
 ggplot(data = df.plot,
        mapping = aes(x = skill_jitter,

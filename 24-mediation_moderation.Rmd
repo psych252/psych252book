@@ -248,7 +248,7 @@ And visualize the posterior:
 ```{r mediation-16}
 df.samples %>% 
   select(ab, total) %>%
-  gather("effect", "value") %>% 
+  pivot_longer(names_to = "effect", values_to = "value", cols = everything()) %>% 
   ggplot(aes(y = effect, x = value)) +
   geom_halfeyeh() + 
   coord_cartesian(ylim = c(1.5, 2.3))
@@ -259,7 +259,7 @@ Let's also get some summaries of the posterior (MAP with highest density interva
 ```{r mediation-17}
 df.samples %>% 
   select(ab, total) %>% 
-  gather("effect", "value") %>% 
+  pivot_longer(names_to = "effect", values_to = "value", cols = everything()) %>% 
   group_by(effect) %>% 
   mode_hdi(value) %>% 
   clean_names()

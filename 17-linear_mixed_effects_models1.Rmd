@@ -173,7 +173,7 @@ Let's visualize the original and shuffled data set:
 
 ```{r lmer1-10}
 df.plot = df.dependence %>% 
-  gather("condition", "value", -participant) %>% 
+  pivot_longer(names_to = "condition", values_to = "value", cols = -participant) %>% 
   mutate(condition = str_replace(condition, "condition", ""))
 
 p1 = ggplot(data = df.plot %>% filter(condition != "2shuffled"), 
@@ -208,12 +208,12 @@ Let's save the two original and shuffled data set as two separate data sets.
 ```{r lmer1-11}
 # separate the data sets 
 df.original = df.dependence %>% 
-  gather("condition", "value", -participant) %>% 
+  pivot_longer(names_to = "condition", values_to = "value", cols = -participant) %>% 
   mutate(condition = str_replace(condition, "condition", "")) %>% 
   filter(condition != "2shuffled")
 
 df.shuffled = df.dependence %>% 
-  gather("condition", "value", -participant) %>% 
+  pivot_longer(names_to = "condition", values_to = "value", cols = -participant) %>% 
   mutate(condition = str_replace(condition, "condition", "")) %>% 
   filter(condition != "2")
 ```

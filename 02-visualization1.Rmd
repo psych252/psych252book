@@ -117,7 +117,7 @@ __Make sure that__:
 
 This way you don't have to scroll horizontally. At the same time, avoid writing long single lines of code. For example, instead of writing code like so:
 ```{r visualization1-14, eval=FALSE}
-ggplot(data = diamonds, aes(x = cut, y = price)) +
+ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
   stat_summary(fun.y = "mean", geom = "bar", color = "black", fill = "lightblue", width = 0.85) +
   stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1.5) +
   labs(title = "Price as a function of quality of cut", subtitle = "Note: The price is in US dollars", tag = "A", x = "Quality of the cut", y = "Price")
@@ -126,7 +126,8 @@ ggplot(data = diamonds, aes(x = cut, y = price)) +
 You may want to write it this way instead:
 
 ```{r visualization1-15, eval=FALSE}
-ggplot(data = diamonds, aes(x = cut, y = price)) +
+ggplot(data = diamonds, 
+       mapping = aes(x = cut, y = price)) +
   # display the means
   stat_summary(fun.y = "mean",
                geom = "bar",
@@ -147,11 +148,15 @@ ggplot(data = diamonds, aes(x = cut, y = price)) +
 
 This makes it much easier to see what's going on, and you can easily add comments to individual lines of code.
 
+>__Tip__: If a function has more than two arguments put each argument on a new line.
+
 RStudio makes it easy to write nice code. It figures out where to put the next line of code when you press `ENTER`. And if things ever get messy, just select the code of interest and hit `cmd+i` to re-indent the code.
 
 Here are some more resources with tips for how to write nice code in R:
 
 - [Advanced R style guide](http://adv-r.had.co.nz/Style.html)
+
+>__Tip__: Use a consistent coding style. This makes reading code and debugging much easier! 
 
 ## Getting help
 
@@ -406,14 +411,26 @@ ggplot(data = df.diamonds, mapping = aes(x = clarity, y = price)) +
 Note how the error bars are larger now in Figure Figure \@ref(fig:visualization-39) compared to Figure \@ref(fig:visualization-37)
 . Note the somewhat peculiar way in which we supplied the parameters to the `mean_cl_boot` function. The `fun.args` argument takes in a list of arguments that it then passes on to the function `mean_cl_boot`.
 
+In fact, we can draw points and error bars in one go using the "pointrange" geom like so: 
+
+```{r visualization1-39b}
+ggplot(data = df.diamonds, mapping = aes(x = clarity, y = price)) +
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "pointrange")
+```
+
+
 #### Order matters
 
 The order in which we add geoms to a ggplot matters! Generally, we want to plot error bars before the points that represent the means. To illustrate, let's set the color in which we show the means to "red".
 
 ```{r visualization1-40, fig.cap='This figure looks good. Error bars and means are drawn in the correct order.'}
 ggplot(df.diamonds, aes(x = clarity, y = price)) +
-  stat_summary(fun.data = "mean_cl_boot", geom = "linerange") +
-  stat_summary(fun.y = "mean", geom = "point", color = "red")
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "linerange") +
+  stat_summary(fun.y = "mean",
+               geom = "point",
+               color = "red")
 ```
 
 Figure \@ref(fig:visualization-38) looks good.
@@ -421,8 +438,11 @@ Figure \@ref(fig:visualization-38) looks good.
 ```{r visualization1-41, fig.cap='This figure looks good. Error bars and means are drawn in the correct order.'}
 # I've changed the order in which the means and error bars are drawn.
 ggplot(df.diamonds, aes(x = clarity, y = price)) +
-  stat_summary(fun.y = "mean", geom = "point", color = "red") +
-  stat_summary(fun.data = "mean_cl_boot", geom = "linerange")
+  stat_summary(fun.y = "mean",
+               geom = "point",
+               color = "red") +
+  stat_summary(fun.data = "mean_cl_boot",
+               geom = "linerange")
 ```
 
 Figure \@ref(fig:visualization-39) doesn't look good. The error bars are on top of the points that represent the means.
@@ -456,7 +476,8 @@ ggplot(data = df.diamonds,
        mapping = aes(x = color,
                      y = price,
                      group = cut)) +
-  stat_summary(fun.y = "mean", geom = "line")
+  stat_summary(fun.y = "mean",
+               geom = "line")
 ```
 
 Well, we got some separate lines here but we don't know which line corresponds to which cut. Let's add some color!
@@ -522,13 +543,10 @@ So, still somewhat surprisingly, diamonds with the worst color (J) are more expe
 
 #### Practice plot 3
 
-Recreate the plot shown in Figure \@ref(fig:visualization-48).
+Recreate the plot shown in Figure \@ref(fig:visualization1-48).
 
 ```{r visualization1-49}
 # make practice plot 3 here
-ggplot(diamonds, aes(x = color, y = price, group = clarity, color = clarity))+
-  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1)+
-  stat_summary(fun.y = "mean", geom = "line", size = 2)
 ```
 
 
@@ -609,7 +627,8 @@ Now we have the densities next to each other in separate panels. I've removed th
 To show the facets in different rows instead of columns we simply replace `cols = vars(color)` with `rows = vars(color)`.
 
 ```{r visualization1-58}
-ggplot(data = df.diamonds, mapping = aes(x = y, fill = color)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = y, fill = color)) +
   geom_density(bw = 0.2) +
   facet_grid(rows = vars(color)) +
   coord_cartesian(xlim = c(3, 10))
@@ -647,17 +666,6 @@ Recreate the plot shown in Figure \@ref(fig:visualization-59).
 
 ```{r visualization1-60}
 # make practice plot 4 here
-ggplot(diamonds, aes(x = color, y = price, fill = cut))+
-  stat_summary(fun.y = "mean",
-               geom = "bar",
-               position = position_dodge(width = 0.9),
-               color = "black")+
-  stat_summary(fun.data = "mean_cl_boot",
-               geom = "linerange",
-               position = position_dodge(width = 0.9),
-               color = "black")+
-  facet_grid(rows = vars(clarity)) +
-  theme(axis.text.y = element_text(size = 10))
 ```
 
 
@@ -693,9 +701,13 @@ ggplot(data = df.diamonds, mapping = aes(x = carat, y = price)) +
 Here, I've moved the color aesthetic into the `geom_point()` function call. Now, the `x` and `y` aesthetics still apply to both the `geom_point()` and the `geom_smooth()` function call (they are __global__), but the `color` aesthetic applies only to `geom_point()` (it is __local__). Alternatively, we can simply overwrite global aesthetics within local function calls.
 
 ```{r visualization1-64}
-ggplot(data = df.diamonds, aes(x = carat, y = price, color = color)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = carat,
+                     y = price,
+                     color = color)) +
   geom_point() +
-  geom_smooth(method = "lm", color = "black")
+  geom_smooth(method = "lm",
+              color = "black")
 ```
 
 Here, I've set `color = 'black'` within the `geom_smooth()` function, and now only one overall regression line is displayed since the global color aesthetic was overwritten in the local function call.
@@ -704,20 +716,21 @@ Here, I've set `color = 'black'` within the `geom_smooth()` function, and now on
 
 ### Cheatsheets
 
-- [RStudio IDE](figures/rstudio-ide.pdf) --> information about RStudio
-- [RMarkdown](figures/rmarkdown.pdf) --> information about writing in RMarkdown
-- [RMarkdown reference](figures/rmarkdown-reference.pdf) --> RMarkdown reference sheet
-- [Data visualization](figures/visualization-principles.pdf) --> general principles of effective graphic design
-- [ggplot2](figures/data-visualization.pdf) --> specific information about ggplot
+- [RStudio IDE](figures/cheatsheets/rstudio-ide.pdf) --> information about RStudio
+- [RMarkdown](figures/cheatsheets/rmarkdown.pdf) --> information about writing in RMarkdown
+- [RMarkdown reference](figures/cheatsheets/rmarkdown-reference.pdf) --> RMarkdown reference sheet
+- [Data visualization](figures/cheatsheets/visualization-principles.pdf) --> general principles of effective graphic design
+- [ggplot2](figures/cheatsheets/data-visualization.pdf) --> specific information about ggplot
 
 ### Data camp courses
 
 - [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r)
 - [RStudio IDE 1](https://www.datacamp.com/courses/working-with-the-rstudio-ide-part-1)
 - [RStudio IDE 2](https://www.datacamp.com/courses/working-with-the-rstudio-ide-part-2)
-- [Communicating with data](https://www.datacamp.com/courses/communicating-with-data-in-the-tidyverse)
 - [ggplot2 course 1](https://www.datacamp.com/courses/data-visualization-with-ggplot2-1)
 - [ggplot2 course 2](https://www.datacamp.com/courses/data-visualization-with-ggplot2-2)
+- [Reporting](https://www.datacamp.com/courses/communicating-with-data-in-the-tidyverse)
+- [visualization best practices](https://www.datacamp.com/courses/visualization-best-practices-in-r)
 
 ### Books and chapters
 

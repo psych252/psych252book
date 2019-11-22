@@ -403,7 +403,7 @@ df.no_pooling = df.sleep %>%
   unnest(params) %>% 
   select(subject, term, estimate) %>% 
   complete(subject, term, fill = list(estimate = 0)) %>% 
-  spread(term, estimate) %>% 
+  pivot_wider(names_from = term, values_from = estimate) %>% 
   clean_names()
 ```
 
@@ -671,12 +671,12 @@ df.plot = df.sleep %>%
          tidy = map(fit, tidy)) %>% 
   unnest(tidy) %>% 
   select(subject, term, estimate) %>% 
-  spread(term, estimate) %>% 
+  pivot_wider(names_from = term, values_from = estimate) %>% 
   clean_names() %>% 
   mutate(method = "no pooling") %>% 
   bind_rows(df.partial_pooling %>% 
               mutate(method = "partial pooling")) %>% 
-  gather("index", "value", -c(subject, method)) %>% 
+  pivot_longer(names_to = "index", values_to = "value", cols = -c(subject, method)) %>% 
   mutate(index = factor(index, levels = c("intercept", "days")))
 
   
@@ -717,7 +717,7 @@ df.boot = df.sleep %>%
          tidy = map(fit, tidy)) %>% 
   unnest(tidy) %>% 
   select(id, term, estimate) %>% 
-  spread(term, estimate) %>% 
+  pivot_wider(names_from = term, values_from = estimate) %>% 
   clean_names() 
 ```
 
@@ -765,7 +765,7 @@ boot.lmer$t %>%
   as_tibble() %>% 
   clean_names() %>% 
   mutate(id = 1:n()) %>% 
-  gather("index", "value", - id) %>% 
+  pivot_longer(names_to = "index", values_to = "value", cols = - id) %>% 
   ggplot(data = .,
        mapping = aes(x = value)) + 
   geom_density() + 

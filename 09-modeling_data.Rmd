@@ -552,7 +552,9 @@ samples = replicate(n = sample_n,
 df.sampling_distribution = matrix(samples, ncol = sample_n) %>%
   as_tibble(.name_repair = "minimal") %>%
   set_names(str_c(1:ncol(.))) %>%
-  gather("sample", "number") %>% 
+  pivot_longer(names_to = "sample",
+               values_to = "number",
+               cols = everything()) %>% 
   mutate(sample = as.numeric(sample)) %>% 
   group_by(sample) %>% 
   mutate(draw = 1:n()) %>% 
@@ -565,7 +567,9 @@ df.sampling_distribution_means = df.sampling_distribution %>%
   summarize(mean = mean(number),
             median = median(number)) %>% 
   ungroup() %>% 
-  gather("index", "value", -sample)
+  pivot_longer(names_to = "index",
+               values_to = "value", 
+               cols = -sample)
 
 ```
 

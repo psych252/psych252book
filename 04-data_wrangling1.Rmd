@@ -291,6 +291,37 @@ include_graphics("figures/magrittr.png")
 
 The pipe operator `%>%` is a special operator introduced in the `magrittr` package. It is used heavily in the tidyverse. The basic idea is simple: this operator allows us to "pipe" several functions into one long chain that matches the order in which we want to do stuff.  
 
+Let's consider the following example of making and eating a cake (thanks to https://twitter.com/dmi3k/status/1191824875842879489?s=09). This would be the traditional way of writing some code: 
+
+```{r, eval=F}
+eat(
+  slice(
+    bake(
+      put(
+        pour(
+          mix(ingredients),
+          into = baking_form),
+        into = oven),
+      time = 30),
+    pieces = 6,
+    1)
+)
+```
+
+To see what's going on here, we need to read the code inside out. That is, we have to start in the innermost bracket, and then work our way outward. However, there is a natural causal ordering to these steps and wouldn't it be nice if we could just write code in that order? Thanks to the pipe operator `%>%` we can! Here is the same example using the pipe: 
+
+```{r, eval=F}
+ingredients %>% 
+  mix %>% 
+  pour(into = baking_form) %>% 
+  put(into = oven) %>% 
+  bake(time = 30) %>% 
+  slice(pieces = 6) %>% 
+  eat(1)
+```
+
+This code is much easier to read and write, since it represents the order in which we want to do things! 
+
 Abstractly, the pipe operator does the following: 
 
 > `f(x)` can be rewritten as `x %>% f()`
@@ -836,14 +867,19 @@ Compute the body mass index for `male` characters who are `human`.
 
 ### Cheatsheets 
 
-- [base R](figures/base-r.pdf) --> summary of how to use base R (we will mostly use the tidyverse but it's still important to know how to do things in base R)
-- [data transformation](figures/data-transformation.pdf) --> transforming data using `dplyr`
+- [base R](figures/cheatsheets/base-r.pdf) --> summary of how to use base R (we will mostly use the tidyverse but it's still important to know how to do things in base R)
+- [data transformation](figures/cheatsheets/data-transformation.pdf) --> transforming data using `dplyr`
 
 ### Data camp courses
 
-- [cleaning data](https://www.datacamp.com/courses/importing-cleaning-data-in-r-case-studies)
 - [dplyr](https://www.datacamp.com/courses/dplyr-data-manipulation-r-tutorial)
 - [tidyverse](https://www.datacamp.com/courses/introduction-to-the-tidyverse)
+- [working with data in the tidyverse](https://www.datacamp.com/courses/working-with-data-in-the-tidyverse)
+- [cleaning data](https://www.datacamp.com/courses/importing-cleaning-data-in-r-case-studies)
+- [cleaning data: case studies](https://www.datacamp.com/courses/importing-cleaning-data-in-r-case-studies)
+- [string manipulation in R](https://www.datacamp.com/courses/string-manipulation-in-r-with-stringr)
+- [Intermediate R](https://www.datacamp.com/courses/intermediate-r)
+- [Writing functions in R](https://www.datacamp.com/courses/introduction-to-function-writing-in-r)
 
 ### Books and chapters
 

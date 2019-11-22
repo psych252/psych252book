@@ -91,7 +91,9 @@ samples = n_samples %>%
 df.samples = samples %>% 
   as_tibble(.name_repair = "unique") %>% 
   mutate(sample = 1:n()) %>% 
-  gather("index", "value", -sample) %>% 
+  pivot_longer(names_to = "index",
+               values_to = "value",
+               cols = -sample) %>% 
   mutate(compact = mu) %>% 
   group_by(sample) %>% 
   mutate(augmented = mean(value)) %>% 
@@ -117,7 +119,9 @@ Some code I wrote to show a subset of the samples.
 samples %>% 
   as_tibble(.name_repair = "unique") %>% 
   mutate(sample = 1:n()) %>% 
-  gather("index", "value", -sample) %>% 
+  pivot_longer(names_to = "index",
+               values_to = "value",
+               cols = -sample) %>% 
   mutate(compact = mu) %>% 
   group_by(sample) %>% 
   mutate(augmented = mean(value)) %>% 
@@ -789,7 +793,6 @@ Not quite as normally distributed as we would hope. We learn what to do if some 
 
 ### Datacamp 
 
-- [Statistical modeling 1](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
 - [Statistical modeling 2](https://www.datacamp.com/courses/statistical-modeling-in-r-part-2)
 - [Correlation and regression](https://www.datacamp.com/courses/correlation-and-regression)
 

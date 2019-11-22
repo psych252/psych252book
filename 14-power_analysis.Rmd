@@ -141,7 +141,7 @@ eta_partial_squared = fit %>%
   tidy() %>% 
   filter(term %in% c("hand","Residuals")) %>% 
   select(term, sumsq) %>% 
-  spread(term, sumsq) %>% 
+  pivot_wider(names_from = term, values_from = sumsq) %>% 
   summarize(eta_partial_squared = hand / (hand + Residuals)) %>% 
   pull(eta_partial_squared)
   

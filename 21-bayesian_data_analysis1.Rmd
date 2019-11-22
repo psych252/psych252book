@@ -91,7 +91,7 @@ fun.difference = function(df){
     mutate(proportion = n / sum(n)) %>% 
     filter(accepted == 1) %>% 
     select(sex, proportion) %>% 
-    spread(sex, proportion) %>% 
+    pivot_wider(names_from = sex, values_from = proportion) %>% 
     mutate(difference = male - female) %>% 
     pull(difference)  
 }

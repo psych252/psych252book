@@ -247,7 +247,7 @@ df.plot = df.poker %>%
 df.means = df.poker %>% 
   group_by(hand) %>% 
   summarize(mean = mean(balance)) %>% 
-  spread(hand, mean)
+  pivot_wider(names_from = hand, values_from = mean)
 
 ggplot(data = df.plot,
        mapping = aes(x = hand_jitter,
@@ -600,9 +600,7 @@ lm(formula = rating ~ 1 + condition + treatment + condition:treatment,
 
 ### Datacamp 
 
-- [Statistical modeling 1](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
-- [Statistical modeling 2](https://www.datacamp.com/courses/statistical-modeling-in-r-part-2)
-- [Correlation and regression](https://www.datacamp.com/courses/correlation-and-regression)
+- [modeling](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)
 
 ### Misc 
 

@@ -107,7 +107,7 @@ parametric_issues_results = parametric_issues_demo(num_tests=num_tests,
 parametric_issues_d = data.frame(valid_tests = parametric_issues_results[1,],
                                  invalid_tests = parametric_issues_results[2,],
                                  iteration=1:num_tests) %>%
-  gather(type, p_value, contains("tests")) %>%
+  pivot_longer(names_to = "type", values_to = "p_value", cols = contains("tests")) %>%
   mutate(is_significant = p_value < 0.05)
 
 # Number significant results with normally distributed data
@@ -260,11 +260,14 @@ perm_results = replicate(num_tests, gen_data_and_norm_and_perm_test(num_observat
 
 ```{r bootstrapping-14}
 perm_results = perm_results %>%
-  gather(test_type, significant, parametric, permutation) %>%
-  mutate(distribution=factor(distribution, levels=c("Normal", "Log-normal")),
-         null_true=ifelse(null_true, 
-                          "Null True",
-                          "Alternative True"))
+  pivot_longer(names_to = "test_type",
+    values_to = "significant",
+    cols = c(parametric, permutation)) %>%
+  mutate(distribution = factor(distribution,
+                               levels = c("Normal", "Log-normal")),
+         null_true = ifelse(null_true,
+                            "Null True",
+                            "Alternative True"))
 ```
 
 ```{r bootstrapping-15}
@@ -384,16 +387,16 @@ coefficient_CI_data = parametric_ci_data %>%
 
 ```{r bootstrapping-24}
 coefficient_CI_data = coefficient_CI_data %>%
-  gather(variable, value, -type) %>%
+  pivot_longer(names_to = "variable", values_to = "value", cols = -type) %>%
   separate(variable, c("parameter", "measurement"), extra = "merge") %>%
-  spread(measurement, value) %>%
+  pivot_wider(names_from = measurement, values_from = value) %>%
   mutate(
     parametric_CI_low = estimate - 1.96 * SE,
     parametric_CI_hi = estimate + 1.96 * SE
   ) %>%
-  gather(CI_type, value, contains("CI")) %>%
+  pivot_longer(names_to = "CI_type", values_to = "value", cols = contains("CI")) %>%
   separate(CI_type, c("CI_type", "high_or_low"), extra = "merge") %>%
-  spread(high_or_low, value) %>%
+  pivot_wider(names_from = high_or_low, values_from = value) %>%
   mutate(CI_type = factor(CI_type))
 ```
 
@@ -482,14 +485,14 @@ error_dist_null_sample = function(num_points) {
                                              R = 200) # take fewer bootstrap samples, to speed things up
   
   coefficient_CI_data = coefficient_CI_data %>%
-    gather(variable, value) %>%
+    pivot_longer(names_to = "variable", values_to = "value", cols = everything()) %>%
     separate(variable, c("parameter", "measurement"), extra = "merge") %>%
-    spread(measurement, value) %>%
+    pivot_wider(names_from = measurement, values_from = value) %>%
     mutate(parametric_CI_low = estimate - 1.96 * SE,
            parametric_CI_hi = estimate + 1.96 * SE) %>%
-    gather(CI_type, value, contains("CI")) %>%
+    pivot_longer(names_to = CI_type, values_to = value, cols = contains("CI")) %>%
     separate(CI_type, c("CI_type", "high_or_low"), extra = "merge") %>%
-    spread(high_or_low, value) %>%
+    pivot_wider(names_from = high_or_low, values_from = value) %>%
     mutate(significant = sign(CI_hi) == sign(CI_low)) %>%
     select(parameter, CI_type, significant)
   return(list(coefficient_CI_data))
@@ -539,7 +542,7 @@ density_similarity_conceptual_plot_data = expand.grid(
     population_1 = exp(-((x - 2)^2 + (y - 3)^2) / 8) * exp(-((x - 2 / y)^2 + (y - 1 / x)^2) / 2), # These are definitely not proper distributions
     population_2 = exp(-((x)^2 + (y)^2) / 8) * exp(-((x / 2)^2 + (y / 2 - 1 / x)^2) / 2)
   ) %>%
-  gather(population, value, contains("population"))
+  pivot_longer(names_to = "population", values_to = "value", cols = contains("population"))
 ```
 
 ```{r bootstrapping-36}
@@ -736,9 +739,9 @@ test_summary_data = test_summary_data %>%
     bca_CI_low = bootstrap_CIs$bca[4],
     bca_CI_high = bootstrap_CIs$bca[5]
   ) %>%
-  gather(CI_type, value, contains("CI")) %>%
+  pivot_longer(names_to = "CI_type", values_to = "value", cols = contains("CI")) %>%
   separate(CI_type, c("CI_type", "endpoint"), extra = "merge") %>%
-  spread(endpoint, value) %>%
+  pivot_wider(names_from = endpoint, values_from = value) %>%
   mutate(
     y = c(170, 210, 190),
     CI_type = factor(CI_type, levels = c("parametric", "percentile", "bca"), labels = c("Normal", "Boot: %", "Boot: BCA"))
@@ -917,6 +920,12 @@ flip_data_plot + flip_boot_plot +
 
 ggsave("figures/bootstrap_test_999.png", width=5, height=2.5)
 ```
+
+## Additional resources
+
+### Data camp courses
+
+- [inference for numerical data](https://www.datacamp.com/courses/inference-for-numerical-data)
 
 ## Session info
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2019-11-19" />
+<meta name="date" content="2019-11-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -136,7 +136,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Psych 252</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-description"><i class="fa fa-check"></i>Course description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-homepage"><i class="fa fa-check"></i>Course homepage</a></li>
+</ul></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
@@ -625,6 +628,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.1.5" data-path="reporting-statistics.html"><a href="reporting-statistics.html#frequentist-statistics"><i class="fa fa-check"></i><b>25.1.5</b> Frequentist statistics</a></li>
 <li class="chapter" data-level="25.1.6" data-path="reporting-statistics.html"><a href="reporting-statistics.html#bayesian-statistics"><i class="fa fa-check"></i><b>25.1.6</b> Bayesian statistics –&gt;</a></li>
 </ul></li>
+<li class="chapter" data-level="25.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#session-info-24"><i class="fa fa-check"></i><b>25.2</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="26" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>26</b> Cheatsheets</a><ul>
 <li class="chapter" data-level="26.1" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#statistics"><i class="fa fa-check"></i><b>26.1</b> Statistics</a></li>
@@ -1070,45 +1074,67 @@ Figure 4.2: The <code>magrittr</code> package logo.
 </p>
 </div>
 <p>The pipe operator <code>%&gt;%</code> is a special operator introduced in the <code>magrittr</code> package. It is used heavily in the tidyverse. The basic idea is simple: this operator allows us to “pipe” several functions into one long chain that matches the order in which we want to do stuff.</p>
+<p>Let’s consider the following example of making and eating a cake (thanks to <a href="https://twitter.com/dmi3k/status/1191824875842879489?s=09" class="uri">https://twitter.com/dmi3k/status/1191824875842879489?s=09</a>). This would be the traditional way of writing some code:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">eat</span>(</a>
+<a class="sourceLine" id="cb23-2" title="2">  <span class="kw">slice</span>(</a>
+<a class="sourceLine" id="cb23-3" title="3">    <span class="kw">bake</span>(</a>
+<a class="sourceLine" id="cb23-4" title="4">      <span class="kw">put</span>(</a>
+<a class="sourceLine" id="cb23-5" title="5">        <span class="kw">pour</span>(</a>
+<a class="sourceLine" id="cb23-6" title="6">          <span class="kw">mix</span>(ingredients),</a>
+<a class="sourceLine" id="cb23-7" title="7">          <span class="dt">into =</span> baking_form),</a>
+<a class="sourceLine" id="cb23-8" title="8">        <span class="dt">into =</span> oven),</a>
+<a class="sourceLine" id="cb23-9" title="9">      <span class="dt">time =</span> <span class="dv">30</span>),</a>
+<a class="sourceLine" id="cb23-10" title="10">    <span class="dt">pieces =</span> <span class="dv">6</span>,</a>
+<a class="sourceLine" id="cb23-11" title="11">    <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb23-12" title="12">)</a></code></pre></div>
+<p>To see what’s going on here, we need to read the code inside out. That is, we have to start in the innermost bracket, and then work our way outward. However, there is a natural causal ordering to these steps and wouldn’t it be nice if we could just write code in that order? Thanks to the pipe operator <code>%&gt;%</code> we can! Here is the same example using the pipe:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">ingredients <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span>mix <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span><span class="kw">pour</span>(<span class="dt">into =</span> baking_form) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw">put</span>(<span class="dt">into =</span> oven) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="st">  </span><span class="kw">bake</span>(<span class="dt">time =</span> <span class="dv">30</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-6" title="6"><span class="st">  </span><span class="kw">slice</span>(<span class="dt">pieces =</span> <span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-7" title="7"><span class="st">  </span><span class="kw">eat</span>(<span class="dv">1</span>)</a></code></pre></div>
+<p>This code is much easier to read and write, since it represents the order in which we want to do things!</p>
 <p>Abstractly, the pipe operator does the following:</p>
 <blockquote>
 <p><code>f(x)</code> can be rewritten as <code>x %&gt;% f()</code></p>
 </blockquote>
 <p>For example, in standard R, we would write:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb23-2" title="2"></a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="co"># standard R </span></a>
-<a class="sourceLine" id="cb23-4" title="4"><span class="kw">sum</span>(x)</a></code></pre></div>
-<pre><code>[1] 6</code></pre>
-<p>With the pipe, we can rewrite this as:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
 <a class="sourceLine" id="cb25-2" title="2"></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="co"># with the pipe  </span></a>
-<a class="sourceLine" id="cb25-4" title="4">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb25-3" title="3"><span class="co"># standard R </span></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="kw">sum</span>(x)</a></code></pre></div>
+<pre><code>[1] 6</code></pre>
+<p>With the pipe, we can rewrite this as:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb27-2" title="2"></a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="co"># with the pipe  </span></a>
+<a class="sourceLine" id="cb27-4" title="4">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>()</a></code></pre></div>
 <pre><code>[1] 6</code></pre>
 <p>This doesn’t seem super useful yet, but just hold on a little longer.</p>
 <blockquote>
 <p><code>f(x, y)</code> can be rewritten as <code>x %&gt;% f(y)</code></p>
 </blockquote>
 <p>So, we could rewrite the following standard R code …</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="co"># rounding pi to 6 digits, standard R </span></a>
-<a class="sourceLine" id="cb27-2" title="2"><span class="kw">round</span>(pi, <span class="dt">digits =</span> <span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co"># rounding pi to 6 digits, standard R </span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="kw">round</span>(pi, <span class="dt">digits =</span> <span class="dv">6</span>)</a></code></pre></div>
 <pre><code>[1] 3.141593</code></pre>
 <p>… by using the pipe:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co"># rounding pi to 6 digits, standard R </span></a>
-<a class="sourceLine" id="cb29-2" title="2">pi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">6</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co"># rounding pi to 6 digits, standard R </span></a>
+<a class="sourceLine" id="cb31-2" title="2">pi <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">6</span>)</a></code></pre></div>
 <pre><code>[1] 3.141593</code></pre>
 <p>Here is another example:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">a =<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb31-2" title="2">b =<span class="st"> </span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb31-3" title="3"><span class="kw">sum</span>(a, b) <span class="co"># standard way </span></a>
-<a class="sourceLine" id="cb31-4" title="4">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>(b) <span class="co"># the pipe way </span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">a =<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb33-2" title="2">b =<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="kw">sum</span>(a, b) <span class="co"># standard way </span></a>
+<a class="sourceLine" id="cb33-4" title="4">a <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sum</span>(b) <span class="co"># the pipe way </span></a></code></pre></div>
 <pre><code>[1] 7
 [1] 7</code></pre>
 <p>The pipe operator inserts the result of the previous computation as a first element into the next computation. So, <code>a %&gt;% sum(b)</code> is equivalent to <code>sum(a, b)</code>. We can also specify to insert the result at a different position via the <code>.</code> operator. For example:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">a =<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb33-2" title="2">b =<span class="st"> </span><span class="dv">10</span> </a>
-<a class="sourceLine" id="cb33-3" title="3">b <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> a, <span class="dt">to =</span> .)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">a =<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb35-2" title="2">b =<span class="st"> </span><span class="dv">10</span> </a>
+<a class="sourceLine" id="cb35-3" title="3">b <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> a, <span class="dt">to =</span> .)</a></code></pre></div>
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <p>Here, I used the <code>.</code> operator to specify that I woud like to insert the result of <code>b</code> where I’ve put the <code>.</code> in the <code>seq()</code> function.</p>
 <blockquote>
@@ -1125,22 +1151,22 @@ Figure 4.2: The <code>magrittr</code> package logo.
 \]</span>
 where <span class="math inline">\(\hat{y}_i\)</span> denotes the prediction, and <span class="math inline">\(y_i\)</span> the actually observed value.</p>
 <p>In base R, we would do the following.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">data =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb35-2" title="2">prediction =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb35-3" title="3"></a>
-<a class="sourceLine" id="cb35-4" title="4"><span class="co"># calculate root mean squared error</span></a>
-<a class="sourceLine" id="cb35-5" title="5">rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((prediction<span class="op">-</span>data)<span class="op">^</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb35-6" title="6"><span class="kw">print</span>(rmse)</a></code></pre></div>
-<pre><code>[1] 1.183216</code></pre>
-<p>Using the pipe operator makes the operation more intuitive:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">data =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb37-2" title="2">prediction =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb37-3" title="3"></a>
-<a class="sourceLine" id="cb37-4" title="4"><span class="co"># calculate root mean squared error the pipe way </span></a>
-<a class="sourceLine" id="cb37-5" title="5">rmse =<span class="st"> </span>(prediction<span class="op">-</span>data)<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-6" title="6"><span class="st">  </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-7" title="7"><span class="st">  </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb37-8" title="8"><span class="st">  </span><span class="kw">print</span>() </a></code></pre></div>
+<a class="sourceLine" id="cb37-4" title="4"><span class="co"># calculate root mean squared error</span></a>
+<a class="sourceLine" id="cb37-5" title="5">rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((prediction<span class="op">-</span>data)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb37-6" title="6"><span class="kw">print</span>(rmse)</a></code></pre></div>
+<pre><code>[1] 1.183216</code></pre>
+<p>Using the pipe operator makes the operation more intuitive:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">data =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb39-2" title="2">prediction =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb39-3" title="3"></a>
+<a class="sourceLine" id="cb39-4" title="4"><span class="co"># calculate root mean squared error the pipe way </span></a>
+<a class="sourceLine" id="cb39-5" title="5">rmse =<span class="st"> </span>(prediction<span class="op">-</span>data)<span class="op">^</span><span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-6" title="6"><span class="st">  </span><span class="kw">mean</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-7" title="7"><span class="st">  </span><span class="kw">sqrt</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-8" title="8"><span class="st">  </span><span class="kw">print</span>() </a></code></pre></div>
 <pre><code>[1] 1.183216</code></pre>
 <p>First, we calculate the squared error, then we take the mean, then the square root, and then print the result.</p>
 <p>The pipe operator <code>%&gt;%</code> is similar to the <code>+</code> used in <code>ggplot2</code>. It allows us to take step-by-step actions in a way that fits the causal ordering of how we want to do things.</p>
@@ -1156,17 +1182,17 @@ where <span class="math inline">\(\hat{y}_i\)</span> denotes the prediction, and
 <div id="practice-1" class="section level4">
 <h4><span class="header-section-number">4.4.6.1</span> Practice 1</h4>
 <p>Let’s practice the pipe operator.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="co"># some numbers</span></a>
-<a class="sourceLine" id="cb39-2" title="2">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">5</span>, <span class="dt">by =</span> <span class="dv">1</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># standard way</span></a>
-<a class="sourceLine" id="cb40-2" title="2"><span class="kw">log</span>(x)</a>
-<a class="sourceLine" id="cb40-3" title="3"></a>
-<a class="sourceLine" id="cb40-4" title="4"><span class="co"># the pipe way (write your code underneath)</span></a></code></pre></div>
-<pre><code>[1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="co"># some numbers</span></a>
+<a class="sourceLine" id="cb41-2" title="2">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">5</span>, <span class="dt">by =</span> <span class="dv">1</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="co"># standard way</span></a>
-<a class="sourceLine" id="cb42-2" title="2"><span class="kw">mean</span>(<span class="kw">round</span>(<span class="kw">sqrt</span>(x), <span class="dt">digits =</span> <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb42-2" title="2"><span class="kw">log</span>(x)</a>
 <a class="sourceLine" id="cb42-3" title="3"></a>
 <a class="sourceLine" id="cb42-4" title="4"><span class="co"># the pipe way (write your code underneath)</span></a></code></pre></div>
+<pre><code>[1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="co"># standard way</span></a>
+<a class="sourceLine" id="cb44-2" title="2"><span class="kw">mean</span>(<span class="kw">round</span>(<span class="kw">sqrt</span>(x), <span class="dt">digits =</span> <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb44-3" title="3"></a>
+<a class="sourceLine" id="cb44-4" title="4"><span class="co"># the pipe way (write your code underneath)</span></a></code></pre></div>
 <pre><code>[1] 1.676</code></pre>
 </div>
 </div>
@@ -1174,7 +1200,7 @@ where <span class="math inline">\(\hat{y}_i\)</span> denotes the prediction, and
 <div id="looking-at-data" class="section level2">
 <h2><span class="header-section-number">4.5</span> Looking at data</h2>
 <p>The package <code>dplyr</code> which we loaded as part of the tidyverse, includes a data set with information about starwars characters. Let’s store this as <code>df.starwars</code>.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">df.starwars =<span class="st"> </span>starwars</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">df.starwars =<span class="st"> </span>starwars</a></code></pre></div>
 <blockquote>
 <p>Note: Unlike in other languages (such as Python or Matlab), a <code>.</code> in a variable name has no special meaning and can just be used as part of the name. I’ve used <code>df</code> here to indicate for myself that this variable is a data frame.
 Before visualizing the data, it’s often useful to take a quick direct look at the data.</p>
@@ -1192,7 +1218,7 @@ Before visualizing the data, it’s often useful to take a quick direct look at 
 <div id="head" class="section level3">
 <h3><span class="header-section-number">4.5.1</span> <code>head()</code></h3>
 <p>Without any extra arguments specified, <code>head()</code> shows the top six rows of the data.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">head</span>(df.starwars)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">head</span>(df.starwars)</a></code></pre></div>
 <pre><code># A tibble: 6 x 13
   name  height  mass hair_color skin_color eye_color birth_year gender
   &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
@@ -1208,7 +1234,7 @@ Before visualizing the data, it’s often useful to take a quick direct look at 
 <div id="glimpse" class="section level3">
 <h3><span class="header-section-number">4.5.2</span> <code>glimpse()</code></h3>
 <p><code>glimpse()</code> is helpful when the data frame has many columns. The data is shown in a transposed way with columns as rows.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">glimpse</span>(df.starwars)</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">glimpse</span>(df.starwars)</a></code></pre></div>
 <pre><code>Observations: 87
 Variables: 13
 $ name       &lt;chr&gt; &quot;Luke Skywalker&quot;, &quot;C-3PO&quot;, &quot;R2-D2&quot;, &quot;Darth Vader&quot;, &quot;L…
@@ -1228,8 +1254,8 @@ $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&
 <div id="distinct" class="section level3">
 <h3><span class="header-section-number">4.5.3</span> <code>distinct()</code></h3>
 <p><code>distinct()</code> shows all the distinct values for a character or factor column.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb49-2" title="2"><span class="st">  </span><span class="kw">distinct</span>(name)</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb51-2" title="2"><span class="st">  </span><span class="kw">distinct</span>(name)</a></code></pre></div>
 <pre><code># A tibble: 87 x 1
    name              
    &lt;chr&gt;             
@@ -1248,8 +1274,8 @@ $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&
 <div id="count" class="section level3">
 <h3><span class="header-section-number">4.5.4</span> <code>count()</code></h3>
 <p><code>count()</code> shows a count of all the different distinct values in a column.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-2" title="2"><span class="st">  </span><span class="kw">count</span>(gender)</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-2" title="2"><span class="st">  </span><span class="kw">count</span>(gender)</a></code></pre></div>
 <pre><code># A tibble: 5 x 2
   gender            n
   &lt;chr&gt;         &lt;int&gt;
@@ -1259,9 +1285,9 @@ $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&
 4 none              2
 5 &lt;NA&gt;              3</code></pre>
 <p>It’s possible to do grouped counts by combining several variables.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-2" title="2"><span class="st">  </span><span class="kw">count</span>(species, gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-3" title="3"><span class="st">  </span><span class="kw">head</span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-2" title="2"><span class="st">  </span><span class="kw">count</span>(species, gender) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="st">  </span><span class="kw">head</span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
 <pre><code># A tibble: 10 x 3
    species   gender     n
    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
@@ -1279,17 +1305,17 @@ $ starships  &lt;list&gt; [&lt;&quot;X-wing&quot;, &quot;Imperial shuttle&quot;&
 <div id="datatable" class="section level3">
 <h3><span class="header-section-number">4.5.5</span> <code>datatable()</code></h3>
 <p>For RMardkown files specifically, we can use the <code>datatable()</code> function from the <code>DT</code> package to get an interactive table widget.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-2" title="2"><span class="st">  </span>DT<span class="op">::</span><span class="kw">datatable</span>()</a></code></pre></div>
-<div id="htmlwidget-70cd10210877b4ee0ef8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-70cd10210877b4ee0ef8">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87"],["Luke Skywalker","C-3PO","R2-D2","Darth Vader","Leia Organa","Owen Lars","Beru Whitesun lars","R5-D4","Biggs Darklighter","Obi-Wan Kenobi","Anakin Skywalker","Wilhuff Tarkin","Chewbacca","Han Solo","Greedo","Jabba Desilijic Tiure","Wedge Antilles","Jek Tono Porkins","Yoda","Palpatine","Boba Fett","IG-88","Bossk","Lando Calrissian","Lobot","Ackbar","Mon Mothma","Arvel Crynyd","Wicket Systri Warrick","Nien Nunb","Qui-Gon Jinn","Nute Gunray","Finis Valorum","Jar Jar Binks","Roos Tarpals","Rugor Nass","Ric Olié","Watto","Sebulba","Quarsh Panaka","Shmi Skywalker","Darth Maul","Bib Fortuna","Ayla Secura","Dud Bolt","Gasgano","Ben Quadinaros","Mace Windu","Ki-Adi-Mundi","Kit Fisto","Eeth Koth","Adi Gallia","Saesee Tiin","Yarael Poof","Plo Koon","Mas Amedda","Gregar Typho","Cordé","Cliegg Lars","Poggle the Lesser","Luminara Unduli","Barriss Offee","Dormé","Dooku","Bail Prestor Organa","Jango Fett","Zam Wesell","Dexter Jettster","Lama Su","Taun We","Jocasta Nu","Ratts Tyerell","R4-P17","Wat Tambor","San Hill","Shaak Ti","Grievous","Tarfful","Raymus Antilles","Sly Moore","Tion Medon","Finn","Rey","Poe Dameron","BB8","Captain Phasma","Padmé Amidala"],[172,167,96,202,150,178,165,97,183,182,188,180,228,180,173,175,170,180,66,170,183,200,190,177,175,180,150,null,88,160,193,191,170,196,224,206,183,137,112,183,163,175,180,178,94,122,163,188,198,196,171,184,188,264,188,196,185,157,183,183,170,166,165,193,191,183,168,198,229,213,167,79,96,193,191,178,216,234,188,178,206,null,null,null,null,null,165],[77,75,32,136,49,120,75,32,84,77,84,null,112,80,74,1358,77,110,17,75,78.2,140,113,79,79,83,null,null,20,68,89,90,null,66,82,null,null,null,40,null,null,80,null,55,45,null,65,84,82,87,null,50,null,null,80,null,85,null,null,80,56.2,50,null,80,null,79,55,102,88,null,null,15,null,48,null,57,159,136,79,48,80,null,null,null,null,null,45],["blond",null,null,"none","brown","brown, grey","brown",null,"black","auburn, white","blond","auburn, grey","brown","brown",null,null,"brown","brown","white","grey","black","none","none","black","none","none","auburn","brown","brown","none","brown","none","blond","none","none","none","brown","black","none","black","black","none","none","none","none","none","none","none","white","none","black","none","none","none","none","none","black","brown","brown","none","black","black","brown","white","black","black","blonde","none","none","none","white","none","none","none","none","none","none","brown","brown","none","none","black","brown","brown","none","unknown","brown"],["fair","gold","white, blue","white","light","light","light","white, red","light","fair","fair","fair","unknown","fair","green","green-tan, brown","fair","fair","green","pale","fair","metal","green","dark","light","brown mottle","fair","fair","brown","grey","fair","mottled green","fair","orange","grey","green","fair","blue, grey","grey, red","dark","fair","red","pale","blue","blue, grey","white, blue","grey, green, yellow","dark","pale","green","brown","dark","pale","white","orange","blue","dark","light","fair","green","yellow","yellow","light","fair","tan","tan","fair, green, yellow","brown","grey","grey","fair","grey, blue","silver, red","green, grey","grey","red, blue, white","brown, white","brown","light","pale","grey","dark","light","light","none","unknown","light"],["blue","yellow","red","yellow","brown","blue","blue","red","brown","blue-gray","blue","blue","blue","brown","black","orange","hazel","blue","brown","yellow","brown","red","red","brown","blue","orange","blue","brown","brown","black","blue","red","blue","orange","orange","orange","blue","yellow","orange","brown","brown","yellow","pink","hazel","yellow","black","orange","brown","yellow","black","brown","blue","orange","yellow","black","blue","brown","brown","blue","yellow","blue","blue","brown","brown","brown","brown","yellow","yellow","black","black","blue","unknown","red, blue","unknown","gold","black","green, yellow","blue","brown","white","black","dark","hazel","brown","black","unknown","brown"],[19,112,33,41.9,19,52,47,null,24,57,41.9,64,200,29,44,600,21,null,896,82,31.5,15,53,31,37,41,48,null,8,null,92,null,91,52,null,null,null,null,null,62,72,54,null,48,null,null,null,72,92,null,null,null,null,null,22,null,null,null,82,null,58,40,null,102,67,66,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,46],["male",null,null,"male","female","male","female",null,"male","male","male","male","male","male","male","hermaphrodite","male","male","male","male","male","none","male","male","male","male","female","male","male","male","male","male","male","male","male","male","male","male","male","male","female","male","male","female","male","male","male","male","male","male","male","female","male","male","male","male","male","female","male","male","female","female","female","male","male","male","female","male","male","female","female","male","female","male","male","female","male","male","male","female","male","male","female","male","none","female","female"],["Tatooine","Tatooine","Naboo","Tatooine","Alderaan","Tatooine","Tatooine","Tatooine","Tatooine","Stewjon","Tatooine","Eriadu","Kashyyyk","Corellia","Rodia","Nal Hutta","Corellia","Bestine IV",null,"Naboo","Kamino",null,"Trandosha","Socorro","Bespin","Mon Cala","Chandrila",null,"Endor","Sullust",null,"Cato Neimoidia","Coruscant","Naboo","Naboo","Naboo","Naboo","Toydaria","Malastare","Naboo","Tatooine","Dathomir","Ryloth","Ryloth","Vulpter","Troiken","Tund","Haruun Kal","Cerea","Glee Anselm","Iridonia","Coruscant","Iktotch","Quermia","Dorin","Champala","Naboo","Naboo","Tatooine","Geonosis","Mirial","Mirial","Naboo","Serenno","Alderaan","Concord Dawn","Zolan","Ojom","Kamino","Kamino","Coruscant","Aleen Minor",null,"Skako","Muunilinst","Shili","Kalee","Kashyyyk","Alderaan","Umbara","Utapau",null,null,null,null,null,"Naboo"],["Human","Droid","Droid","Human","Human","Human","Human","Droid","Human","Human","Human","Human","Wookiee","Human","Rodian","Hutt","Human","Human","Yoda's species","Human","Human","Droid","Trandoshan","Human","Human","Mon Calamari","Human","Human","Ewok","Sullustan","Human","Neimodian","Human","Gungan","Gungan","Gungan",null,"Toydarian","Dug",null,"Human","Zabrak","Twi'lek","Twi'lek","Vulptereen","Xexto","Toong","Human","Cerean","Nautolan","Zabrak","Tholothian","Iktotchi","Quermian","Kel Dor","Chagrian","Human","Human","Human","Geonosian","Mirialan","Mirialan","Human","Human","Human","Human","Clawdite","Besalisk","Kaminoan","Kaminoan","Human","Aleena",null,"Skakoan","Muun","Togruta","Kaleesh","Wookiee","Human",null,"Pau'an","Human","Human","Human","Droid",null,"Human"],[["Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],["Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope"],["Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],["Attack of the Clones","Revenge of the Sith","A New Hope"],["Attack of the Clones","Revenge of the Sith","A New Hope"],"A New Hope","A New Hope",["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Revenge of the Sith","A New Hope"],["Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],["Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],"A New Hope",["The Phantom Menace","Return of the Jedi","A New Hope"],["Return of the Jedi","The Empire Strikes Back","A New Hope"],"A New Hope",["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back"],["Attack of the Clones","Return of the Jedi","The Empire Strikes Back"],"The Empire Strikes Back","The Empire Strikes Back",["Return of the Jedi","The Empire Strikes Back"],"The Empire Strikes Back",["Return of the Jedi","The Force Awakens"],"Return of the Jedi","Return of the Jedi","Return of the Jedi","Return of the Jedi","The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],"The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","Return of the Jedi",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],"The Phantom Menace","The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],"The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace"],"Attack of the Clones","Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","The Phantom Menace",["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],"Revenge of the Sith","Revenge of the Sith",["Revenge of the Sith","A New Hope"],["Attack of the Clones","Revenge of the Sith"],"Revenge of the Sith","The Force Awakens","The Force Awakens","The Force Awakens","The Force Awakens","The Force Awakens",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"]],[["Snowspeeder","Imperial Speeder Bike"],[],[],[],"Imperial Speeder Bike",[],[],[],[],"Tribubble bongo",["Zephyr-G swoop bike","XJ-6 airspeeder"],[],"AT-ST",[],[],[],"Snowspeeder",[],[],[],[],[],[],[],[],[],[],[],[],[],"Tribubble bongo",[],[],[],[],[],[],[],[],[],[],"Sith speeder",[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],"Flitknot speeder",[],[],"Koro-2 Exodrive airspeeder",[],[],[],[],[],[],[],[],[],"Tsmeu-6 personal wheel bike",[],[],[],[],[],[],[],[],[],[]],[["X-wing","Imperial shuttle"],[],[],"TIE Advanced x1",[],[],[],[],"X-wing",["Jedi starfighter","Trade Federation cruiser","Naboo star skiff","Jedi Interceptor","Belbullab-22 starfighter"],["Trade Federation cruiser","Jedi Interceptor","Naboo fighter"],[],["Millennium Falcon","Imperial shuttle"],["Millennium Falcon","Imperial shuttle"],[],[],"X-wing","X-wing",[],[],"Slave 1",[],[],"Millennium Falcon",[],[],[],"A-wing",[],"Millennium Falcon",[],[],[],[],[],[],"Naboo Royal Starship",[],[],[],[],"Scimitar",[],[],[],[],[],[],[],[],[],[],[],[],"Jedi starfighter",[],"Naboo fighter",[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],"Belbullab-22 starfighter",[],[],[],[],[],[],"T-70 X-wing fighter",[],[],["H-type Nubian yacht","Naboo star skiff","Naboo fighter"]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>height<\/th>\n      <th>mass<\/th>\n      <th>hair_color<\/th>\n      <th>skin_color<\/th>\n      <th>eye_color<\/th>\n      <th>birth_year<\/th>\n      <th>gender<\/th>\n      <th>homeworld<\/th>\n      <th>species<\/th>\n      <th>films<\/th>\n      <th>vehicles<\/th>\n      <th>starships<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb57-2" title="2"><span class="st">  </span>DT<span class="op">::</span><span class="kw">datatable</span>()</a></code></pre></div>
+<div id="htmlwidget-f52303e38f0cd80516e6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f52303e38f0cd80516e6">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87"],["Luke Skywalker","C-3PO","R2-D2","Darth Vader","Leia Organa","Owen Lars","Beru Whitesun lars","R5-D4","Biggs Darklighter","Obi-Wan Kenobi","Anakin Skywalker","Wilhuff Tarkin","Chewbacca","Han Solo","Greedo","Jabba Desilijic Tiure","Wedge Antilles","Jek Tono Porkins","Yoda","Palpatine","Boba Fett","IG-88","Bossk","Lando Calrissian","Lobot","Ackbar","Mon Mothma","Arvel Crynyd","Wicket Systri Warrick","Nien Nunb","Qui-Gon Jinn","Nute Gunray","Finis Valorum","Jar Jar Binks","Roos Tarpals","Rugor Nass","Ric Olié","Watto","Sebulba","Quarsh Panaka","Shmi Skywalker","Darth Maul","Bib Fortuna","Ayla Secura","Dud Bolt","Gasgano","Ben Quadinaros","Mace Windu","Ki-Adi-Mundi","Kit Fisto","Eeth Koth","Adi Gallia","Saesee Tiin","Yarael Poof","Plo Koon","Mas Amedda","Gregar Typho","Cordé","Cliegg Lars","Poggle the Lesser","Luminara Unduli","Barriss Offee","Dormé","Dooku","Bail Prestor Organa","Jango Fett","Zam Wesell","Dexter Jettster","Lama Su","Taun We","Jocasta Nu","Ratts Tyerell","R4-P17","Wat Tambor","San Hill","Shaak Ti","Grievous","Tarfful","Raymus Antilles","Sly Moore","Tion Medon","Finn","Rey","Poe Dameron","BB8","Captain Phasma","Padmé Amidala"],[172,167,96,202,150,178,165,97,183,182,188,180,228,180,173,175,170,180,66,170,183,200,190,177,175,180,150,null,88,160,193,191,170,196,224,206,183,137,112,183,163,175,180,178,94,122,163,188,198,196,171,184,188,264,188,196,185,157,183,183,170,166,165,193,191,183,168,198,229,213,167,79,96,193,191,178,216,234,188,178,206,null,null,null,null,null,165],[77,75,32,136,49,120,75,32,84,77,84,null,112,80,74,1358,77,110,17,75,78.2,140,113,79,79,83,null,null,20,68,89,90,null,66,82,null,null,null,40,null,null,80,null,55,45,null,65,84,82,87,null,50,null,null,80,null,85,null,null,80,56.2,50,null,80,null,79,55,102,88,null,null,15,null,48,null,57,159,136,79,48,80,null,null,null,null,null,45],["blond",null,null,"none","brown","brown, grey","brown",null,"black","auburn, white","blond","auburn, grey","brown","brown",null,null,"brown","brown","white","grey","black","none","none","black","none","none","auburn","brown","brown","none","brown","none","blond","none","none","none","brown","black","none","black","black","none","none","none","none","none","none","none","white","none","black","none","none","none","none","none","black","brown","brown","none","black","black","brown","white","black","black","blonde","none","none","none","white","none","none","none","none","none","none","brown","brown","none","none","black","brown","brown","none","unknown","brown"],["fair","gold","white, blue","white","light","light","light","white, red","light","fair","fair","fair","unknown","fair","green","green-tan, brown","fair","fair","green","pale","fair","metal","green","dark","light","brown mottle","fair","fair","brown","grey","fair","mottled green","fair","orange","grey","green","fair","blue, grey","grey, red","dark","fair","red","pale","blue","blue, grey","white, blue","grey, green, yellow","dark","pale","green","brown","dark","pale","white","orange","blue","dark","light","fair","green","yellow","yellow","light","fair","tan","tan","fair, green, yellow","brown","grey","grey","fair","grey, blue","silver, red","green, grey","grey","red, blue, white","brown, white","brown","light","pale","grey","dark","light","light","none","unknown","light"],["blue","yellow","red","yellow","brown","blue","blue","red","brown","blue-gray","blue","blue","blue","brown","black","orange","hazel","blue","brown","yellow","brown","red","red","brown","blue","orange","blue","brown","brown","black","blue","red","blue","orange","orange","orange","blue","yellow","orange","brown","brown","yellow","pink","hazel","yellow","black","orange","brown","yellow","black","brown","blue","orange","yellow","black","blue","brown","brown","blue","yellow","blue","blue","brown","brown","brown","brown","yellow","yellow","black","black","blue","unknown","red, blue","unknown","gold","black","green, yellow","blue","brown","white","black","dark","hazel","brown","black","unknown","brown"],[19,112,33,41.9,19,52,47,null,24,57,41.9,64,200,29,44,600,21,null,896,82,31.5,15,53,31,37,41,48,null,8,null,92,null,91,52,null,null,null,null,null,62,72,54,null,48,null,null,null,72,92,null,null,null,null,null,22,null,null,null,82,null,58,40,null,102,67,66,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,46],["male",null,null,"male","female","male","female",null,"male","male","male","male","male","male","male","hermaphrodite","male","male","male","male","male","none","male","male","male","male","female","male","male","male","male","male","male","male","male","male","male","male","male","male","female","male","male","female","male","male","male","male","male","male","male","female","male","male","male","male","male","female","male","male","female","female","female","male","male","male","female","male","male","female","female","male","female","male","male","female","male","male","male","female","male","male","female","male","none","female","female"],["Tatooine","Tatooine","Naboo","Tatooine","Alderaan","Tatooine","Tatooine","Tatooine","Tatooine","Stewjon","Tatooine","Eriadu","Kashyyyk","Corellia","Rodia","Nal Hutta","Corellia","Bestine IV",null,"Naboo","Kamino",null,"Trandosha","Socorro","Bespin","Mon Cala","Chandrila",null,"Endor","Sullust",null,"Cato Neimoidia","Coruscant","Naboo","Naboo","Naboo","Naboo","Toydaria","Malastare","Naboo","Tatooine","Dathomir","Ryloth","Ryloth","Vulpter","Troiken","Tund","Haruun Kal","Cerea","Glee Anselm","Iridonia","Coruscant","Iktotch","Quermia","Dorin","Champala","Naboo","Naboo","Tatooine","Geonosis","Mirial","Mirial","Naboo","Serenno","Alderaan","Concord Dawn","Zolan","Ojom","Kamino","Kamino","Coruscant","Aleen Minor",null,"Skako","Muunilinst","Shili","Kalee","Kashyyyk","Alderaan","Umbara","Utapau",null,null,null,null,null,"Naboo"],["Human","Droid","Droid","Human","Human","Human","Human","Droid","Human","Human","Human","Human","Wookiee","Human","Rodian","Hutt","Human","Human","Yoda's species","Human","Human","Droid","Trandoshan","Human","Human","Mon Calamari","Human","Human","Ewok","Sullustan","Human","Neimodian","Human","Gungan","Gungan","Gungan",null,"Toydarian","Dug",null,"Human","Zabrak","Twi'lek","Twi'lek","Vulptereen","Xexto","Toong","Human","Cerean","Nautolan","Zabrak","Tholothian","Iktotchi","Quermian","Kel Dor","Chagrian","Human","Human","Human","Geonosian","Mirialan","Mirialan","Human","Human","Human","Human","Clawdite","Besalisk","Kaminoan","Kaminoan","Human","Aleena",null,"Skakoan","Muun","Togruta","Kaleesh","Wookiee","Human",null,"Pau'an","Human","Human","Human","Droid",null,"Human"],[["Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],["Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope"],["Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],["Attack of the Clones","Revenge of the Sith","A New Hope"],["Attack of the Clones","Revenge of the Sith","A New Hope"],"A New Hope","A New Hope",["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Revenge of the Sith","A New Hope"],["Revenge of the Sith","Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],["Return of the Jedi","The Empire Strikes Back","A New Hope","The Force Awakens"],"A New Hope",["The Phantom Menace","Return of the Jedi","A New Hope"],["Return of the Jedi","The Empire Strikes Back","A New Hope"],"A New Hope",["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","The Empire Strikes Back"],["Attack of the Clones","Return of the Jedi","The Empire Strikes Back"],"The Empire Strikes Back","The Empire Strikes Back",["Return of the Jedi","The Empire Strikes Back"],"The Empire Strikes Back",["Return of the Jedi","The Force Awakens"],"Return of the Jedi","Return of the Jedi","Return of the Jedi","Return of the Jedi","The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],"The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","Return of the Jedi",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],"The Phantom Menace","The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],"The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace"],"Attack of the Clones","Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","The Phantom Menace",["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],"Revenge of the Sith","Revenge of the Sith",["Revenge of the Sith","A New Hope"],["Attack of the Clones","Revenge of the Sith"],"Revenge of the Sith","The Force Awakens","The Force Awakens","The Force Awakens","The Force Awakens","The Force Awakens",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"]],[["Snowspeeder","Imperial Speeder Bike"],[],[],[],"Imperial Speeder Bike",[],[],[],[],"Tribubble bongo",["Zephyr-G swoop bike","XJ-6 airspeeder"],[],"AT-ST",[],[],[],"Snowspeeder",[],[],[],[],[],[],[],[],[],[],[],[],[],"Tribubble bongo",[],[],[],[],[],[],[],[],[],[],"Sith speeder",[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],"Flitknot speeder",[],[],"Koro-2 Exodrive airspeeder",[],[],[],[],[],[],[],[],[],"Tsmeu-6 personal wheel bike",[],[],[],[],[],[],[],[],[],[]],[["X-wing","Imperial shuttle"],[],[],"TIE Advanced x1",[],[],[],[],"X-wing",["Jedi starfighter","Trade Federation cruiser","Naboo star skiff","Jedi Interceptor","Belbullab-22 starfighter"],["Trade Federation cruiser","Jedi Interceptor","Naboo fighter"],[],["Millennium Falcon","Imperial shuttle"],["Millennium Falcon","Imperial shuttle"],[],[],"X-wing","X-wing",[],[],"Slave 1",[],[],"Millennium Falcon",[],[],[],"A-wing",[],"Millennium Falcon",[],[],[],[],[],[],"Naboo Royal Starship",[],[],[],[],"Scimitar",[],[],[],[],[],[],[],[],[],[],[],[],"Jedi starfighter",[],"Naboo fighter",[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],"Belbullab-22 starfighter",[],[],[],[],[],[],"T-70 X-wing fighter",[],[],["H-type Nubian yacht","Naboo star skiff","Naboo fighter"]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>height<\/th>\n      <th>mass<\/th>\n      <th>hair_color<\/th>\n      <th>skin_color<\/th>\n      <th>eye_color<\/th>\n      <th>birth_year<\/th>\n      <th>gender<\/th>\n      <th>homeworld<\/th>\n      <th>species<\/th>\n      <th>films<\/th>\n      <th>vehicles<\/th>\n      <th>starships<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="other-tools-for-taking-a-quick-look-at-data" class="section level3">
 <h3><span class="header-section-number">4.5.6</span> Other tools for taking a quick look at data</h3>
 <div id="vis_dat" class="section level4">
 <h4><span class="header-section-number">4.5.6.1</span> <code>vis_dat()</code></h4>
 <p>The <code>vis_dat()</code> function from the <code>visdat</code> package, gives a visual summary that makes it easy to see the variable types and whether there are missing values in the data.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">visdat<span class="op">::</span><span class="kw">vis_dat</span>(df.starwars)</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">visdat<span class="op">::</span><span class="kw">vis_dat</span>(df.starwars)</a></code></pre></div>
 <p><img src="psych252_files/figure-html/data-wrangling1-37-1.png" width="672" /></p>
 <div class="info">
 <p>
@@ -1303,13 +1329,13 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="skim" class="section level4">
 <h4><span class="header-section-number">4.5.6.2</span> <code>skim()</code></h4>
 <p>The <code>skim()</code> function from the <code>skimr</code> package provides a nice overview of the data, separated by variable types.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># install.packages(&quot;skimr&quot;)</span></a>
-<a class="sourceLine" id="cb57-2" title="2">skimr<span class="op">::</span><span class="kw">skim</span>(df.starwars)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="co"># install.packages(&quot;skimr&quot;)</span></a>
+<a class="sourceLine" id="cb59-2" title="2">skimr<span class="op">::</span><span class="kw">skim</span>(df.starwars)</a></code></pre></div>
 <pre><code>Skim summary statistics
  n obs: 87 
  n variables: 13 
 
-── Variable type:character ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Variable type:character ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
    variable missing complete  n min max empty n_unique
   eye_color       0       87 87   3  13     0       15
      gender       3       84 87   4  13     0        4
@@ -1319,11 +1345,11 @@ This is why, in general, I recommend to load the tidyverse package last (since i
  skin_color       0       87 87   3  19     0       31
     species       5       82 87   3  14     0       37
 
-── Variable type:integer ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Variable type:integer ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
  variable missing complete  n   mean    sd p0 p25 p50 p75 p100     hist
    height       6       81 87 174.36 34.77 66 167 180 191  264 ▁▁▁▂▇▃▁▁
 
-── Variable type:list ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Variable type:list ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
   variable missing complete  n n_unique min_length median_length
      films       0       87 87       24          1             1
  starships       0       87 87       17          0             0
@@ -1333,7 +1359,7 @@ This is why, in general, I recommend to load the tidyverse package last (since i
           5
           2
 
-── Variable type:numeric ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Variable type:numeric ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
    variable missing complete  n  mean     sd p0  p25 p50  p75 p100
  birth_year      44       43 87 87.57 154.69  8 35    52 72    896
        mass      28       59 87 97.31 169.46 15 55.6  79 84.5 1358
@@ -1344,10 +1370,10 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="dfsummary" class="section level4">
 <h4><span class="header-section-number">4.5.6.3</span> <code>dfSummary()</code></h4>
 <p>The <code>summarytools</code> package is another great package for taking a look at the data. It renders a nice html output for the data frame including a lot of helpful information. You can find out more about this package <a href="https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html">here</a>.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb59-2" title="2"><span class="st">  </span><span class="kw">select_if</span>(<span class="kw">negate</span>(is.list)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># this removes all list columns (we&#39;ll learn about this later)</span></a>
-<a class="sourceLine" id="cb59-3" title="3"><span class="st">  </span>summarytools<span class="op">::</span><span class="kw">dfSummary</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb59-4" title="4"><span class="st">  </span>summarytools<span class="op">::</span><span class="kw">view</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="st">  </span><span class="kw">select_if</span>(<span class="kw">negate</span>(is.list)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># this removes all list columns (we&#39;ll learn about this later)</span></a>
+<a class="sourceLine" id="cb61-3" title="3"><span class="st">  </span>summarytools<span class="op">::</span><span class="kw">dfSummary</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb61-4" title="4"><span class="st">  </span>summarytools<span class="op">::</span><span class="kw">view</span>()</a></code></pre></div>
 <blockquote>
 <p>Note: The summarytools::view() function will not show up here in the html. It generates a summary of the data that is displayed in the Viewer in RStudio.</p>
 </blockquote>
@@ -1392,8 +1418,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="filter" class="section level3">
 <h3><span class="header-section-number">4.6.1</span> <code>filter()</code></h3>
 <p><code>filter()</code> lets us apply logical (and other) operators (see Table <a href="data-wrangling-1.html#tab:data-wrangling1-10">4.3</a>) to subset the data. Here, I’ve filtered out the male characters.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb60-2" title="2"><span class="st">  </span><span class="kw">filter</span>(gender <span class="op">==</span><span class="st"> &#39;male&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb62-2" title="2"><span class="st">  </span><span class="kw">filter</span>(gender <span class="op">==</span><span class="st"> &#39;male&#39;</span>)</a></code></pre></div>
 <pre><code># A tibble: 62 x 13
    name  height  mass hair_color skin_color eye_color birth_year gender
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
@@ -1410,10 +1436,10 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 # … with 52 more rows, and 5 more variables: homeworld &lt;chr&gt;,
 #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 <p>We can combine multiple conditions in the same call. Here, I’ve filtered out male characters, whose height is greater than the median height (i.e. they are in the top 50 percentile), and whose mass was not <code>NA</code>.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb62-2" title="2"><span class="st">  </span><span class="kw">filter</span>(gender <span class="op">==</span><span class="st"> &#39;male&#39;</span>,</a>
-<a class="sourceLine" id="cb62-3" title="3">         height <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(height, <span class="dt">na.rm =</span> T),</a>
-<a class="sourceLine" id="cb62-4" title="4">         <span class="op">!</span><span class="kw">is.na</span>(mass))</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span><span class="kw">filter</span>(gender <span class="op">==</span><span class="st"> &#39;male&#39;</span>,</a>
+<a class="sourceLine" id="cb64-3" title="3">         height <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(height, <span class="dt">na.rm =</span> T),</a>
+<a class="sourceLine" id="cb64-4" title="4">         <span class="op">!</span><span class="kw">is.na</span>(mass))</a></code></pre></div>
 <pre><code># A tibble: 26 x 13
    name  height  mass hair_color skin_color eye_color birth_year gender
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
@@ -1431,8 +1457,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 <p>Many functions like <code>mean()</code>, <code>median()</code>, <code>var()</code>, <code>sd()</code>, <code>sum()</code> have the argument <code>na.rm</code> which is set to <code>FALSE</code> by default. I set the argument to <code>TRUE</code> here (or <code>T</code> for short), which means that the <code>NA</code> values are ignored, and the <code>median()</code> is calculated based on the remaning values.</p>
 <p>You can use <code>,</code> and <code>&amp;</code> interchangeably in <code>filter()</code>. Make sure to use parentheses when combining several logical operators to indicate which logical operation should be performed first:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span><span class="kw">filter</span>((skin_color <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;dark&quot;</span>, <span class="st">&quot;pale&quot;</span>) <span class="op">|</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;hermaphrodite&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>height <span class="op">&gt;</span><span class="st"> </span><span class="dv">170</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span><span class="kw">filter</span>((skin_color <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;dark&quot;</span>, <span class="st">&quot;pale&quot;</span>) <span class="op">|</span><span class="st"> </span>gender <span class="op">==</span><span class="st"> &quot;hermaphrodite&quot;</span>) <span class="op">&amp;</span><span class="st"> </span>height <span class="op">&gt;</span><span class="st"> </span><span class="dv">170</span>)</a></code></pre></div>
 <pre><code># A tibble: 10 x 13
    name  height  mass hair_color skin_color eye_color birth_year gender
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
@@ -1453,9 +1479,9 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="rename" class="section level3">
 <h3><span class="header-section-number">4.6.2</span> <code>rename()</code></h3>
 <p><code>rename()</code> renames column names.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">person =</span> name,</a>
-<a class="sourceLine" id="cb66-3" title="3">         <span class="dt">mass_kg =</span> mass)</a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb68-2" title="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">person =</span> name,</a>
+<a class="sourceLine" id="cb68-3" title="3">         <span class="dt">mass_kg =</span> mass)</a></code></pre></div>
 <pre><code># A tibble: 87 x 13
    person height mass_kg hair_color skin_color eye_color birth_year gender
    &lt;chr&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
@@ -1473,8 +1499,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 <p>The new variable names goes on the LHS of the<code>=</code> sign, and the old name on the RHS.</p>
 <p>To rename all variables at the same time use <code>set_names()</code>:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">df.starwars <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb68-2" title="2"><span class="st">  </span><span class="kw">set_names</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(.)])  <span class="co"># renamed all variables to letters: a, b, ...</span></a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">df.starwars <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb70-2" title="2"><span class="st">  </span><span class="kw">set_names</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(.)])  <span class="co"># renamed all variables to letters: a, b, ...</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 13
    a          b     c d     e     f         g h     i     j     k     l    
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;lis&gt; &lt;lis&gt;
@@ -1493,8 +1519,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="select" class="section level3">
 <h3><span class="header-section-number">4.6.3</span> <code>select()</code></h3>
 <p><code>select()</code> allows us to select a subset of the columns in the data frame.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb70-2" title="2"><span class="st">  </span><span class="kw">select</span>(name, height, mass)</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span><span class="kw">select</span>(name, height, mass)</a></code></pre></div>
 <pre><code># A tibble: 87 x 3
    name               height  mass
    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;
@@ -1510,8 +1536,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 10 Obi-Wan Kenobi        182    77
 # … with 77 more rows</code></pre>
 <p>We can select multiple columns using the <code>(from:to)</code> syntax:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span><span class="kw">select</span>(name<span class="op">:</span>birth_year) <span class="co"># from name to birth_year</span></a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb74-2" title="2"><span class="st">  </span><span class="kw">select</span>(name<span class="op">:</span>birth_year) <span class="co"># from name to birth_year</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 7
    name           height  mass hair_color   skin_color eye_color birth_year
    &lt;chr&gt;           &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;
@@ -1527,10 +1553,10 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 10 Obi-Wan Kenobi    182    77 auburn, whi… fair       blue-gray       57  
 # … with 77 more rows</code></pre>
 <p>Or use a variable for column selection:</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">columns =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;height&quot;</span>, <span class="st">&quot;species&quot;</span>)</a>
-<a class="sourceLine" id="cb74-2" title="2"></a>
-<a class="sourceLine" id="cb74-3" title="3">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-4" title="4"><span class="st">  </span><span class="kw">select</span>(<span class="kw">one_of</span>(columns)) <span class="co"># useful when using a variable for column selection</span></a></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">columns =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;height&quot;</span>, <span class="st">&quot;species&quot;</span>)</a>
+<a class="sourceLine" id="cb76-2" title="2"></a>
+<a class="sourceLine" id="cb76-3" title="3">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb76-4" title="4"><span class="st">  </span><span class="kw">select</span>(<span class="kw">one_of</span>(columns)) <span class="co"># useful when using a variable for column selection</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 3
    name               height species
    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;  
@@ -1546,8 +1572,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 10 Obi-Wan Kenobi        182 Human  
 # … with 77 more rows</code></pre>
 <p>We can also <em>deselect</em> (multiple) columns:</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb76-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>name, <span class="op">-</span>(birth_year<span class="op">:</span>vehicles))</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb78-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>name, <span class="op">-</span>(birth_year<span class="op">:</span>vehicles))</a></code></pre></div>
 <pre><code># A tibble: 87 x 6
    height  mass hair_color    skin_color  eye_color starships
     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;     &lt;list&gt;   
@@ -1563,8 +1589,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 10    182    77 auburn, white fair        blue-gray &lt;chr [5]&gt;
 # … with 77 more rows</code></pre>
 <p>And select columns by partially matching the column name:</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb78-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;_&quot;</span>)) <span class="co"># every column that contains the character &quot;_&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb80-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;_&quot;</span>)) <span class="co"># every column that contains the character &quot;_&quot;</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 4
    hair_color    skin_color  eye_color birth_year
    &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;
@@ -1579,8 +1605,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
  9 black         light       brown           24  
 10 auburn, white fair        blue-gray       57  
 # … with 77 more rows</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb80-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;h&quot;</span>)) <span class="co"># every column that starts with an &quot;h&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb82-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;h&quot;</span>)) <span class="co"># every column that starts with an &quot;h&quot;</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 3
    height hair_color    homeworld
     &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;    
@@ -1596,9 +1622,9 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 10    182 auburn, white Stewjon  
 # … with 77 more rows</code></pre>
 <p>We can also use <code>select()</code> to reorder the columns:</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1"><span class="co"># useful trick for changing the column order, now eye_color is at the beginning</span></a>
-<a class="sourceLine" id="cb82-2" title="2">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb82-3" title="3"><span class="st">  </span><span class="kw">select</span>(eye_color, <span class="kw">everything</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1"><span class="co"># useful trick for changing the column order, now eye_color is at the beginning</span></a>
+<a class="sourceLine" id="cb84-2" title="2">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb84-3" title="3"><span class="st">  </span><span class="kw">select</span>(eye_color, <span class="kw">everything</span>())</a></code></pre></div>
 <pre><code># A tibble: 87 x 13
    eye_color name  height  mass hair_color skin_color birth_year gender
    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt; 
@@ -1615,8 +1641,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 # … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;,
 #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 <p>Here, I’ve moved the <code>eye_color</code> column to the beginning of the data frame. <code>everything()</code> is a helper function which selects all the columns.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb84-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>eye_color, <span class="kw">everything</span>(), eye_color) <span class="co"># move eye_color to the end</span></a></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb86-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>eye_color, <span class="kw">everything</span>(), eye_color) <span class="co"># move eye_color to the end</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 13
    name  height  mass hair_color skin_color birth_year gender homeworld
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    
@@ -1634,8 +1660,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 #   vehicles &lt;list&gt;, starships &lt;list&gt;, eye_color &lt;chr&gt;</code></pre>
 <p>Here, I’ve moved <code>eye_color</code> to the end. Note that I had to deselect it first.</p>
 <p>We can select columns based on their data type using <code>select_if()</code>.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb86-2" title="2"><span class="st">  </span><span class="kw">select_if</span>(is.numeric) <span class="co"># just select numeric columns</span></a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb88-2" title="2"><span class="st">  </span><span class="kw">select_if</span>(is.numeric) <span class="co"># just select numeric columns</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 3
    height  mass birth_year
     &lt;int&gt; &lt;dbl&gt;      &lt;dbl&gt;
@@ -1651,8 +1677,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 10    182    77       57  
 # … with 77 more rows</code></pre>
 <p>The following selects all columns that are not numeric:</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb88-2" title="2"><span class="st">  </span><span class="kw">select_if</span>(<span class="op">~</span><span class="st"> </span><span class="op">!</span><span class="kw">is.numeric</span>(.)) <span class="co"># selects all columns that are not numeric</span></a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-2" title="2"><span class="st">  </span><span class="kw">select_if</span>(<span class="op">~</span><span class="st"> </span><span class="op">!</span><span class="kw">is.numeric</span>(.)) <span class="co"># selects all columns that are not numeric</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 10
    name  hair_color skin_color eye_color gender homeworld species films
    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt;
@@ -1670,8 +1696,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 #   starships &lt;list&gt;</code></pre>
 <p>Note that I used <code>~</code> here to indicate that I’m creating an anonymous function to check whether column type is numeric. A one-sided formula (expression beginning with <code>~</code>) is interpreted as <code>function(x)</code>, and wherever <code>x</code> would go in the function is represented by <code>.</code>.</p>
 <p>So, I could write the same code like so:</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb90-2" title="2"><span class="st">  </span><span class="kw">select_if</span>(<span class="cf">function</span>(x) <span class="op">!</span><span class="kw">is.numeric</span>(x)) <span class="co"># selects all columns that are not numeric</span></a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb92-2" title="2"><span class="st">  </span><span class="kw">select_if</span>(<span class="cf">function</span>(x) <span class="op">!</span><span class="kw">is.numeric</span>(x)) <span class="co"># selects all columns that are not numeric</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 10
    name  hair_color skin_color eye_color gender homeworld species films
    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;   &lt;lis&gt;
@@ -1688,8 +1714,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 # … with 77 more rows, and 2 more variables: vehicles &lt;list&gt;,
 #   starships &lt;list&gt;</code></pre>
 <p>We can rename some of the columns using <code>select()</code> like so:</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb92-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="dt">person =</span> name, height, <span class="dt">mass_kg =</span> mass)</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb94-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="dt">person =</span> name, height, <span class="dt">mass_kg =</span> mass)</a></code></pre></div>
 <pre><code># A tibble: 87 x 3
    person             height mass_kg
    &lt;chr&gt;               &lt;int&gt;   &lt;dbl&gt;
@@ -1709,10 +1735,10 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="mutate" class="section level3">
 <h3><span class="header-section-number">4.6.4</span> <code>mutate()</code></h3>
 <p><code>mutate()</code> is used to change exisitng columns or make new ones.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb94-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height =</span> height <span class="op">/</span><span class="st"> </span><span class="dv">100</span>, <span class="co"># to get height in meters</span></a>
-<a class="sourceLine" id="cb94-3" title="3">         <span class="dt">bmi =</span> mass <span class="op">/</span><span class="st"> </span>(height<span class="op">^</span><span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># bmi = kg / (m^2)</span></a>
-<a class="sourceLine" id="cb94-4" title="4"><span class="st">  </span><span class="kw">select</span>(name, height, mass, bmi)</a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb96-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height =</span> height <span class="op">/</span><span class="st"> </span><span class="dv">100</span>, <span class="co"># to get height in meters</span></a>
+<a class="sourceLine" id="cb96-3" title="3">         <span class="dt">bmi =</span> mass <span class="op">/</span><span class="st"> </span>(height<span class="op">^</span><span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># bmi = kg / (m^2)</span></a>
+<a class="sourceLine" id="cb96-4" title="4"><span class="st">  </span><span class="kw">select</span>(name, height, mass, bmi)</a></code></pre></div>
 <pre><code># A tibble: 87 x 4
    name               height  mass   bmi
    &lt;chr&gt;               &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1729,9 +1755,9 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 # … with 77 more rows</code></pre>
 <p>Here, I’ve calculated the bmi for the different starwars characters. I first mutated the height variable by going from cm to m, and then created the new column “bmi”.</p>
 <p>A useful helper function for <code>mutate()</code> is <code>ifelse()</code> which is a shorthand for the if-else control flow (Section <a href="data-wrangling-1.html#if-else">4.4.4.1</a>). Here is an example:</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb96-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height_categorical =</span> <span class="kw">ifelse</span>(height <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(height, <span class="dt">na.rm =</span> T), <span class="st">&quot;tall&quot;</span>, <span class="st">&quot;short&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb96-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb98-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">height_categorical =</span> <span class="kw">ifelse</span>(height <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(height, <span class="dt">na.rm =</span> T), <span class="st">&quot;tall&quot;</span>, <span class="st">&quot;short&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb98-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>))</a></code></pre></div>
 <pre><code># A tibble: 87 x 3
    name               height height_categorical
    &lt;chr&gt;               &lt;int&gt; &lt;chr&gt;             
@@ -1751,8 +1777,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="mutate_at" class="section level4">
 <h4><span class="header-section-number">4.6.4.1</span> <code>mutate_at()</code></h4>
 <p>With <code>mutate_at()</code>, we can mutate several columns at the same time.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb98-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(height, mass, birth_year), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(.))</a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb100-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(height, mass, birth_year), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(.))</a></code></pre></div>
 <pre><code># A tibble: 87 x 13
    name  height[,1] mass[,1] hair_color skin_color eye_color birth_year[,1]
    &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;              &lt;dbl&gt;
@@ -1777,9 +1803,9 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 </ul>
 <p>Personally, I prefer to write down the function using the <code>~ function(.)</code> syntax to make it clear that I’m calling a function. Within <code>vars()</code>, we can use the same helper functions for selecting columns that we’ve seen above for <code>select()</code>.</p>
 <p>We can also use names to create new columns:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb100-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(height, mass, birth_year), <span class="dt">.funs =</span> <span class="kw">list</span>(<span class="dt">z =</span> <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb100-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;mass&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;birth_year&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(height, mass, birth_year), <span class="dt">.funs =</span> <span class="kw">list</span>(<span class="dt">z =</span> <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;mass&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;birth_year&quot;</span>))</a></code></pre></div>
 <pre><code># A tibble: 87 x 7
    name    height height_z[,1]  mass mass_z[,1] birth_year birth_year_z[,1]
    &lt;chr&gt;    &lt;int&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;
@@ -1796,11 +1822,11 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 # … with 77 more rows</code></pre>
 <p>As we can see, new columns were created with <code>_z</code> added to the end of the column name.</p>
 <p>And we can apply several functions at the same time.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb102-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(height, mass, birth_year),</a>
-<a class="sourceLine" id="cb102-3" title="3">            <span class="kw">list</span>(<span class="dt">z =</span> <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(.),</a>
-<a class="sourceLine" id="cb102-4" title="4">                 <span class="dt">centered =</span> <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(., <span class="dt">scale =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb102-5" title="5"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;mass&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;birth_year&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-2" title="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(height, mass, birth_year),</a>
+<a class="sourceLine" id="cb104-3" title="3">            <span class="kw">list</span>(<span class="dt">z =</span> <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(.),</a>
+<a class="sourceLine" id="cb104-4" title="4">                 <span class="dt">centered =</span> <span class="op">~</span><span class="st"> </span><span class="kw">scale</span>(., <span class="dt">scale =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-5" title="5"><span class="st">  </span><span class="kw">select</span>(name, <span class="kw">contains</span>(<span class="st">&quot;height&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;mass&quot;</span>), <span class="kw">contains</span>(<span class="st">&quot;birth_year&quot;</span>))</a></code></pre></div>
 <pre><code># A tibble: 87 x 10
    name  height height_z[,1] height_centered…  mass mass_z[,1]
    &lt;chr&gt;  &lt;int&gt;        &lt;dbl&gt;            &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
@@ -1822,9 +1848,9 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="mutate_all" class="section level4">
 <h4><span class="header-section-number">4.6.4.2</span> <code>mutate_all()</code></h4>
 <p><code>mutate_all()</code> is used to mutate all columns in a data frame.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb104-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb104-3" title="3"><span class="st">  </span><span class="kw">mutate_all</span>(<span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(.)) <span class="co"># transform all columns to characters</span></a></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb106-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb106-3" title="3"><span class="st">  </span><span class="kw">mutate_all</span>(<span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(.)) <span class="co"># transform all columns to characters</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 2
    height mass 
    &lt;chr&gt;  &lt;chr&gt;
@@ -1841,9 +1867,9 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 # … with 77 more rows</code></pre>
 <p>Here, I’ve selected some columns first, and then changed the mode to character in each of them.</p>
 <p>Like we’ve seen with <code>mutate_at()</code>, you can add a name in the <code>mutate_all()</code> function call to make new columns instead of replacing the existing ones.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb106-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb106-3" title="3"><span class="st">  </span><span class="kw">mutate_all</span>(<span class="dt">.funs =</span> <span class="kw">list</span>(<span class="dt">char =</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(.))) <span class="co"># make new character columns</span></a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb108-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb108-3" title="3"><span class="st">  </span><span class="kw">mutate_all</span>(<span class="dt">.funs =</span> <span class="kw">list</span>(<span class="dt">char =</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(.))) <span class="co"># make new character columns</span></a></code></pre></div>
 <pre><code># A tibble: 87 x 4
    height  mass height_char mass_char
     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    
@@ -1862,8 +1888,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="mutate_if" class="section level4">
 <h4><span class="header-section-number">4.6.4.3</span> <code>mutate_if()</code></h4>
 <p><code>mutate_if()</code> can sometimes come in handy. For example, the following code changes all the numeric columns to character columns:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb108-2" title="2"><span class="st">  </span><span class="kw">mutate_if</span>(<span class="dt">.predicate =</span> is.numeric, <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(.))</a></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb110-2" title="2"><span class="st">  </span><span class="kw">mutate_if</span>(<span class="dt">.predicate =</span> is.numeric, <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(.))</a></code></pre></div>
 <pre><code># A tibble: 87 x 13
    name  height mass  hair_color skin_color eye_color birth_year gender
    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt; 
@@ -1880,8 +1906,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 # … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;,
 #   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 <p>Or we can round all the numeric columns:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb110-2" title="2"><span class="st">  </span><span class="kw">mutate_if</span>(<span class="dt">.predicate =</span> is.numeric, <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">round</span>(.))</a></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb112-2" title="2"><span class="st">  </span><span class="kw">mutate_if</span>(<span class="dt">.predicate =</span> is.numeric, <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">round</span>(.))</a></code></pre></div>
 <pre><code># A tibble: 87 x 13
    name  height  mass hair_color skin_color eye_color birth_year gender
    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
@@ -1902,8 +1928,8 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <div id="arrange" class="section level3">
 <h3><span class="header-section-number">4.6.5</span> <code>arrange()</code></h3>
 <p><code>arrange()</code> allows us to sort the values in a data frame by one or more column entries.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb112-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(hair_color, <span class="kw">desc</span>(height))</a></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb114-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(hair_color, <span class="kw">desc</span>(height))</a></code></pre></div>
 <pre><code># A tibble: 87 x 13
    name  height  mass hair_color skin_color eye_color birth_year gender
    &lt;chr&gt;  &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
@@ -1930,7 +1956,7 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 <li>make the new variable with the body mass index</li>
 <li>arrange the data frame starting with the highest body mass index</li>
 </ul>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1"><span class="co"># write your code here </span></a></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1"><span class="co"># write your code here </span></a></code></pre></div>
 </div>
 </div>
 <div id="additional-resources-2" class="section level2">
@@ -1966,7 +1992,6 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 </div>
 <div id="session-info-3" class="section level2">
 <h2><span class="header-section-number">4.8</span> Session info</h2>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" title="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>R version 3.6.1 (2019-07-05)
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
 Running under: macOS Mojave 10.14.6

@@ -127,7 +127,7 @@ Let's visualize what the posterior for the different parameters looks like. We u
 fit.brm1 %>% 
   posterior_samples() %>% 
   select(-lp__) %>% 
-  gather("variable", "value") %>% 
+  pivot_longer(names_to = "variable", values_to = "value", cols = everything()) %>% 
   ggplot(data = .,
          mapping = aes(y = variable, x = value)) +
   geom_halfeyeh()
@@ -155,11 +155,11 @@ fit.brm1 %>%
   clean_names() %>% 
   select(starts_with("b_"), sigma) %>% 
   mode_hdi() %>% 
-  gather("index", "value", -c(.width:.interval)) %>% 
+  pivot_longer(names_to = "index", values_to = "value", cols = -c(.width:.interval)) %>% 
   select(index, value) %>% 
   mutate(index = ifelse(str_detect(index, fixed(".")), index, str_c(index, ".mode"))) %>% 
   separate(index, into = c("parameter", "type"), sep = "\\.") %>% 
-  spread(type, value) %>% 
+  pivot_wider(names_from = type, values_from = value) %>% 
   kable(digits = 2) %>% 
   kable_styling(bootstrap_options = "striped",
                 full_width = F)
@@ -195,7 +195,7 @@ df.predictive_samples = fit.brm1 %>%
 # plot the results as an animation
 df.predictive_samples %>% 
   select(-data) %>% 
-  gather("hand", "balance", -sample) %>% 
+  pivot_longer(names_to = "hand", values_to = "balance", cols = -sample) %>% 
   mutate(hand = factor(hand, levels = c("bad", "neutral", "good"))) %>% 
   ggplot(mapping = aes(x = hand,
                        y = balance,
@@ -229,7 +229,7 @@ We may ask, for example, what the probability is that the parameter for the diff
 fit.brm1 %>% 
   posterior_samples() %>% 
   select(b_handneutral) %>% 
-  gather("variable", "value") %>% 
+  pivot_longer(names_to = "variable", values_to = "value", cols = everything()) %>% 
   ggplot(data = .,
          mapping = aes(y = variable, x = value)) +
   geom_halfeyeh() + 
@@ -566,7 +566,7 @@ df.variance %>%
   expand(group) %>% 
   add_fitted_draws(fit.brm7, dpar = TRUE) %>%
   select(group, .row, .draw, posterior = .value, mu, sigma) %>% 
-  gather("index", "value", c(mu, sigma)) %>% 
+  pivot_longer(names_to = "index", values_to = "value", cols = c(mu, sigma)) %>% 
   ggplot(aes(x = value, y = group)) +
   geom_halfeyeh() +
   geom_vline(xintercept = 0, linetype = "dashed") +

@@ -119,7 +119,7 @@ Visualize the results:
 
 ```{r bda2-06}
 df.coins %>% 
-  gather("index", "value", -theta) %>% 
+  pivot_longer(names_to = "index", values_to = "value", cols = -theta) %>% 
   mutate(index = factor(index, levels = c("prior", "likelihood", "posterior")),
          theta = factor(theta, labels = c("p = 0.1", "p = 0.5", "p = 0.9"))) %>% 
   ggplot(data = .,
@@ -158,14 +158,14 @@ df.prior_effect = tibble(theta = theta,
                   prior_uniform = dbeta(theta, shape1 = 1, shape2 = 1),
                   prior_normal = dbeta(theta, shape1 = 5, shape2 = 5),
                   prior_biased = dbeta(theta, shape1 = 8, shape2 = 2)) %>% 
-  gather("prior_index", "prior", -theta) %>% 
+  pivot_longer(names_to = "prior_index", values_to = "prior", cols = -theta) %>% 
   mutate(likelihood = dbinom(sum(data == 1),
                              size = length(data),
                              prob = theta)) %>% 
   group_by(prior_index) %>% 
   mutate(posterior = likelihood * prior / sum(likelihood * prior)) %>% 
   ungroup() %>% 
-  gather("index", "value", -c(theta, prior_index))
+  pivot_longer(names_to = "index", values_to = "value", cols = -c(theta, prior_index))
 
 # make the plot
 df.prior_effect %>% 
@@ -205,11 +205,11 @@ df.likelihood_effect = tibble(theta = theta,
                               likelihood_left = dbeta(theta, shape1 = 1, shape2 = 9),
                               likelihood_center = dbeta(theta, shape1 = 5, shape2 = 5),
                               likelihood_right = dbeta(theta, shape1 = 9, shape2 = 1)) %>% 
-  gather("likelihood_index", "likelihood", -c("theta", "prior")) %>% 
+  pivot_longer(names_to = "likelihood_index", values_to = "likelihood", cols = -c("theta", "prior")) %>% 
   group_by(likelihood_index) %>% 
   mutate(posterior = likelihood * prior / sum(likelihood * prior)) %>% 
   ungroup() %>% 
-  gather("index", "value", -c(theta, likelihood_index))
+  pivot_longer(names_to = "index", values_to = "value", cols = -c(theta, likelihood_index))
 
 df.likelihood_effect %>% 
   mutate(index = factor(index, levels = c("prior", "likelihood", "posterior")),
@@ -250,11 +250,11 @@ df.sample_size_effect = tibble(theta = theta,
                                likelihood_low = dbeta(theta, shape1 = 2, shape2 = 8),
                                likelihood_medium = dbeta(theta, shape1 = 10, shape2 = 40),
                                likelihood_high = dbeta(theta, shape1 = 20, shape2 = 80)) %>% 
-  gather("likelihood_index", "likelihood", -c("theta", "prior")) %>% 
+  pivot_longer(names_to = "likelihood_index", values_to = "likelihood", cols = -c("theta", "prior")) %>% 
   group_by(likelihood_index) %>% 
   mutate(posterior = likelihood * prior / sum(likelihood * prior)) %>% 
   ungroup() %>% 
-  gather("index", "value", -c(theta, likelihood_index))
+  pivot_longer(names_to = "index", values_to = "value", cols = -c(theta, likelihood_index))
 
 df.sample_size_effect %>% 
   mutate(index = factor(index, levels = c("prior", "likelihood", "posterior")),
@@ -496,7 +496,7 @@ This is what the posterior looks like for the three parameters in the model:
 ```{r bda2-23}
 df.draws %>% 
   select(draw:sd) %>% 
-  gather("index", "value", -draw) %>% 
+  pivot_longer(names_to = "index", values_to = "value", cols = -draw) %>% 
   ggplot(data = .,
          mapping = aes(x = value)) + 
   stat_density(geom = "line") + 
