@@ -17,19 +17,12 @@ Let's first load the packages that we need for this chapter.
 ```{r visualization1-01, message=FALSE}
 library("knitr")     # for rendering the RMarkdown file
 library("tidyverse") # for plotting (and many more cool things we'll discover later)
-
-# don't worry about this part below, it just affects how things are displayed
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
 ```
 
 The `tidyverse` is a collection of packages that includes `ggplot2`.
 
 ## Why visualize data?
-
+  
 > The greatest value of a picture is when it forces us to notice what we never expected to see. — John Tukey
 
 > There is no single statistical tool that is as powerful as a well‐chosen graph. [@chambers1983graphical]
@@ -116,6 +109,7 @@ __Make sure that__:
 - Soft-wrap R source files is _selected_
 
 This way you don't have to scroll horizontally. At the same time, avoid writing long single lines of code. For example, instead of writing code like so:
+
 ```{r visualization1-14, eval=FALSE}
 ggplot(data = diamonds, mapping = aes(x = cut, y = price)) +
   stat_summary(fun.y = "mean", geom = "bar", color = "black", fill = "lightblue", width = 0.85) +
@@ -150,7 +144,7 @@ This makes it much easier to see what's going on, and you can easily add comment
 
 >__Tip__: If a function has more than two arguments put each argument on a new line.
 
-RStudio makes it easy to write nice code. It figures out where to put the next line of code when you press `ENTER`. And if things ever get messy, just select the code of interest and hit `cmd+i` to re-indent the code.
+RStudio makes it easy to write nice code. It figures out where to put the next line of code when you press `ENTER`. And if things ever get messy, just select the code of interest and hit `cmd + i` to re-indent the code.
 
 Here are some more resources with tips for how to write nice code in R:
 
@@ -204,7 +198,7 @@ Here is the help file for the `print()` function:
 We will use the `ggplot2` package to visualize data. By the end of next class, you'll be able to make a figure like this:
 
 ```{r visualization1-18, echo=FALSE, fig.cap="What a nice figure!", out.width="95%"}
-  include_graphics("figures/combined_plot.pdf")
+  include_graphics("figures/combined_plot.png")
 ```
 
 Now let's figure out how to get there.
@@ -300,17 +294,15 @@ ggplot(mapping = aes(x = color, y = price), data = df.diamonds) +
   stat_summary(fun.y = "mean", geom = "point")
 ```
 
-In general, it's good practice to include the specifiers -- particularly for functions that are not used all the time. If the same function is used multiple times throughout the script, I would suggest to use the specifiers first, and then it's ok to drop them later.
+In general, it's good practice to include the argument specifiers -- particularly for functions that are not used all the time. If the same function is used multiple times throughout the script, I would suggest to use the specifiers first, and then it's ok to drop them later.
 
 ### Setting the default plot theme
 
 Before moving one, let's set a different default theme for our plots. Personally, I'm not a big fan of the gray background and the white grid lines. Also, the default size of the text should be bigger. We can change the default theme using the `theme_set()` function like so:
 
 ```{r visualization1-29}
-theme_set(
-  theme_classic() + # set the theme
-    theme(text = element_text(size = 20)) # set the default text size
-)
+theme_set(theme_classic() + # set the theme
+            theme(text = element_text(size = 20))) # set the default text size
 ```
 
 From now onwards, all our plots will use what's specified in `theme_classic()`, and the default text size will be larger, too. For any individual plot, we can still override these settings.
@@ -408,13 +400,15 @@ ggplot(data = df.diamonds, mapping = aes(x = clarity, y = price)) +
                geom = "point") # add points with means
 ```
 
-Note how the error bars are larger now in Figure Figure \@ref(fig:visualization-39) compared to Figure \@ref(fig:visualization-37)
+Note how the error bars are larger now in Figure Figure \@ref(fig:visualization1-39) compared to Figure \@ref(fig:visualization1-37)
 . Note the somewhat peculiar way in which we supplied the parameters to the `mean_cl_boot` function. The `fun.args` argument takes in a list of arguments that it then passes on to the function `mean_cl_boot`.
 
 In fact, we can draw points and error bars in one go using the "pointrange" geom like so: 
 
 ```{r visualization1-39b}
-ggplot(data = df.diamonds, mapping = aes(x = clarity, y = price)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = clarity,
+                     y = price)) +
   stat_summary(fun.data = "mean_cl_boot",
                geom = "pointrange")
 ```
@@ -425,7 +419,9 @@ ggplot(data = df.diamonds, mapping = aes(x = clarity, y = price)) +
 The order in which we add geoms to a ggplot matters! Generally, we want to plot error bars before the points that represent the means. To illustrate, let's set the color in which we show the means to "red".
 
 ```{r visualization1-40, fig.cap='This figure looks good. Error bars and means are drawn in the correct order.'}
-ggplot(df.diamonds, aes(x = clarity, y = price)) +
+ggplot(df.diamonds,
+       aes(x = clarity,
+           y = price)) +
   stat_summary(fun.data = "mean_cl_boot",
                geom = "linerange") +
   stat_summary(fun.y = "mean",
@@ -433,11 +429,13 @@ ggplot(df.diamonds, aes(x = clarity, y = price)) +
                color = "red")
 ```
 
-Figure \@ref(fig:visualization-38) looks good.
+Figure \@ref(fig:visualization1-40) looks good.
 
-```{r visualization1-41, fig.cap='This figure looks good. Error bars and means are drawn in the correct order.'}
+```{r visualization1-41, fig.cap='This figure looks bad Error bars and means are drawn in the incorrect order.'}
 # I've changed the order in which the means and error bars are drawn.
-ggplot(df.diamonds, aes(x = clarity, y = price)) +
+ggplot(df.diamonds,
+       aes(x = clarity,
+           y = price)) +
   stat_summary(fun.y = "mean",
                geom = "point",
                color = "red") +
@@ -445,7 +443,7 @@ ggplot(df.diamonds, aes(x = clarity, y = price)) +
                geom = "linerange")
 ```
 
-Figure \@ref(fig:visualization-39) doesn't look good. The error bars are on top of the points that represent the means.
+Figure \@ref(fig:visualization1-41) doesn't look good. The error bars are on top of the points that represent the means.
 
 One cool feature about using `stat_summary()` is that we did not have to change anything about the data frame that we used to make the plots. We directly used our raw data instead of having to make separate data frames that contain the relevant information (such as the means and the confidence intervals).
 
@@ -455,7 +453,7 @@ Let's take a look at two more principles for plotting data that are extremely he
 
 #### Practice plot 2
 
-Make a bar plot that shows the average `price` of diamonds (on the y-axis) as a function of their `clarity` (on the x-axis). Also add error bars. Your plot should look like the one shown in Figure \@ref(fig:visualization-41).
+Make a bar plot that shows the average `price` of diamonds (on the y-axis) as a function of their `clarity` (on the x-axis). Also add error bars. Your plot should look like the one shown in Figure \@ref(fig:visualization1-41).
 
 ```{r visualization1-42}
 # make practice plot 2 here
@@ -543,7 +541,7 @@ So, still somewhat surprisingly, diamonds with the worst color (J) are more expe
 
 #### Practice plot 3
 
-Recreate the plot shown in Figure \@ref(fig:visualization1-48).
+Recreate the plot shown in Figure \@ref(fig:visualization1-50).
 
 ```{r visualization1-49}
 # make practice plot 3 here
@@ -662,7 +660,7 @@ Figure \@ref(fig:visualization-57) is stretching it in terms of how much informa
 
 #### Practice plot 4
 
-Recreate the plot shown in Figure \@ref(fig:visualization-59).
+Recreate the plot shown in Figure \@ref(fig:visualization1-61).
 
 ```{r visualization1-60}
 # make practice plot 4 here
@@ -693,7 +691,9 @@ Because I have defined all the aesthetics at the top level (i.e. directly within
 But what if we only wanted to show one regression line instead that applies to all the data? Here is one way of doing so:
 
 ```{r visualization1-63}
-ggplot(data = df.diamonds, mapping = aes(x = carat, y = price)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = carat,
+                     y = price)) +
   geom_point(mapping = aes(color = color)) +
   geom_smooth(method = "lm")
 ```
@@ -710,7 +710,7 @@ ggplot(data = df.diamonds,
               color = "black")
 ```
 
-Here, I've set `color = 'black'` within the `geom_smooth()` function, and now only one overall regression line is displayed since the global color aesthetic was overwritten in the local function call.
+Here, I've set `color = "black"` within the `geom_smooth()` function, and now only one overall regression line is displayed since the global color aesthetic was overwritten in the local function call.
 
 ## Additional resources
 
@@ -722,7 +722,7 @@ Here, I've set `color = 'black'` within the `geom_smooth()` function, and now on
 - [Data visualization](figures/cheatsheets/visualization-principles.pdf) --> general principles of effective graphic design
 - [ggplot2](figures/cheatsheets/data-visualization.pdf) --> specific information about ggplot
 
-### Data camp courses
+### Datacamp courses
 
 - [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r)
 - [RStudio IDE 1](https://www.datacamp.com/courses/working-with-the-rstudio-ide-part-1)
