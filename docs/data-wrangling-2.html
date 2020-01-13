@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Data wrangling 2 | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
   <meta name="description" content="Course notes for Psych 252." />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Data wrangling 2 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2019-11-19" />
+<meta name="date" content="2020-01-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -128,7 +131,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Psych 252</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-description"><i class="fa fa-check"></i>Course description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-homepage"><i class="fa fa-check"></i>Course homepage</a></li>
+</ul></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
@@ -155,14 +161,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2.7" data-path="visualization-1.html"><a href="visualization-1.html#additional-resources"><i class="fa fa-check"></i><b>2.7</b> Additional resources</a><ul>
 <li class="chapter" data-level="2.7.1" data-path="visualization-1.html"><a href="visualization-1.html#cheatsheets"><i class="fa fa-check"></i><b>2.7.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="2.7.2" data-path="visualization-1.html"><a href="visualization-1.html#data-camp-courses"><i class="fa fa-check"></i><b>2.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="2.7.2" data-path="visualization-1.html"><a href="visualization-1.html#datacamp-courses"><i class="fa fa-check"></i><b>2.7.2</b> Datacamp courses</a></li>
 <li class="chapter" data-level="2.7.3" data-path="visualization-1.html"><a href="visualization-1.html#books-and-chapters"><i class="fa fa-check"></i><b>2.7.3</b> Books and chapters</a></li>
 <li class="chapter" data-level="2.7.4" data-path="visualization-1.html"><a href="visualization-1.html#misc"><i class="fa fa-check"></i><b>2.7.4</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="2.8" data-path="visualization-1.html"><a href="visualization-1.html#session-info-1"><i class="fa fa-check"></i><b>2.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="visualization-2.html"><a href="visualization-2.html"><i class="fa fa-check"></i><b>3</b> Visualization 2</a><ul>
-<li class="chapter" data-level="3.1" data-path="visualization-2.html"><a href="visualization-2.html#learning-goals-1"><i class="fa fa-check"></i><b>3.1</b> Learning goals</a></li>
+<li class="chapter" data-level="3.1" data-path="visualization-2.html"><a href="visualization-2.html#learning-objectives"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="3.2" data-path="visualization-2.html"><a href="visualization-2.html#install-and-load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>3.2</b> Install and load packages, load data, set theme</a></li>
 <li class="chapter" data-level="3.3" data-path="visualization-2.html"><a href="visualization-2.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>3.3</b> Overview of different plot types for different things</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="visualization-2.html"><a href="visualization-2.html#proportions"><i class="fa fa-check"></i><b>3.3.1</b> Proportions</a></li>
@@ -171,10 +177,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.4" data-path="visualization-2.html"><a href="visualization-2.html#temporal-data"><i class="fa fa-check"></i><b>3.3.4</b> Temporal data</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-plots"><i class="fa fa-check"></i><b>3.4</b> Customizing plots</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.1</b> Changing the order of things</a></li>
-<li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.2</b> Dealing with legends</a></li>
-<li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.3</b> Choosing good colors</a></li>
-<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.4</b> Customizing themes</a></li>
+<li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#anatomy-of-a-ggplot"><i class="fa fa-check"></i><b>3.4.1</b> Anatomy of a <code>ggplot</code></a></li>
+<li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.2</b> Changing the order of things</a></li>
+<li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.3</b> Dealing with legends</a></li>
+<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.4</b> Choosing good colors</a></li>
+<li class="chapter" data-level="3.4.5" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.5</b> Customizing themes</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
 <li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
@@ -184,14 +191,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.10" data-path="visualization-2.html"><a href="visualization-2.html#defining-snippets"><i class="fa fa-check"></i><b>3.10</b> Defining snippets</a></li>
 <li class="chapter" data-level="3.11" data-path="visualization-2.html"><a href="visualization-2.html#additional-resources-1"><i class="fa fa-check"></i><b>3.11</b> Additional resources</a><ul>
 <li class="chapter" data-level="3.11.1" data-path="visualization-2.html"><a href="visualization-2.html#cheatsheets-1"><i class="fa fa-check"></i><b>3.11.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="3.11.2" data-path="visualization-2.html"><a href="visualization-2.html#data-camp-courses-1"><i class="fa fa-check"></i><b>3.11.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="3.11.2" data-path="visualization-2.html"><a href="visualization-2.html#data-camp-courses"><i class="fa fa-check"></i><b>3.11.2</b> Data camp courses</a></li>
 <li class="chapter" data-level="3.11.3" data-path="visualization-2.html"><a href="visualization-2.html#books-and-chapters-1"><i class="fa fa-check"></i><b>3.11.3</b> Books and chapters</a></li>
 <li class="chapter" data-level="3.11.4" data-path="visualization-2.html"><a href="visualization-2.html#misc-1"><i class="fa fa-check"></i><b>3.11.4</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="3.12" data-path="visualization-2.html"><a href="visualization-2.html#session-info-2"><i class="fa fa-check"></i><b>3.12</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html"><i class="fa fa-check"></i><b>4</b> Data wrangling 1</a><ul>
-<li class="chapter" data-level="4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#learning-goals-2"><i class="fa fa-check"></i><b>4.1</b> Learning goals</a></li>
+<li class="chapter" data-level="4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#learning-objectives-1"><i class="fa fa-check"></i><b>4.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#install-packages"><i class="fa fa-check"></i><b>4.2</b> Install packages</a></li>
 <li class="chapter" data-level="4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#load-packages-1"><i class="fa fa-check"></i><b>4.3</b> Load packages</a></li>
 <li class="chapter" data-level="4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#some-r-basics"><i class="fa fa-check"></i><b>4.4</b> Some R basics</a><ul>
@@ -213,47 +220,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#wrangling-data"><i class="fa fa-check"></i><b>4.6</b> Wrangling data</a><ul>
 <li class="chapter" data-level="4.6.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#filter"><i class="fa fa-check"></i><b>4.6.1</b> <code>filter()</code></a></li>
-<li class="chapter" data-level="4.6.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#rename"><i class="fa fa-check"></i><b>4.6.2</b> <code>rename()</code></a></li>
-<li class="chapter" data-level="4.6.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#select"><i class="fa fa-check"></i><b>4.6.3</b> <code>select()</code></a></li>
-<li class="chapter" data-level="4.6.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#mutate"><i class="fa fa-check"></i><b>4.6.4</b> <code>mutate()</code></a></li>
-<li class="chapter" data-level="4.6.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#arrange"><i class="fa fa-check"></i><b>4.6.5</b> <code>arrange()</code></a></li>
-<li class="chapter" data-level="4.6.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-2"><i class="fa fa-check"></i><b>4.6.6</b> Practice 2</a></li>
+<li class="chapter" data-level="4.6.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#arrange"><i class="fa fa-check"></i><b>4.6.2</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.6.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#rename"><i class="fa fa-check"></i><b>4.6.3</b> <code>rename()</code></a></li>
+<li class="chapter" data-level="4.6.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#select"><i class="fa fa-check"></i><b>4.6.4</b> <code>select()</code></a></li>
+<li class="chapter" data-level="4.6.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-2"><i class="fa fa-check"></i><b>4.6.5</b> Practice 2</a></li>
+<li class="chapter" data-level="4.6.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#mutate"><i class="fa fa-check"></i><b>4.6.6</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="4.6.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-3"><i class="fa fa-check"></i><b>4.6.7</b> Practice 3</a></li>
 </ul></li>
 <li class="chapter" data-level="4.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#additional-resources-2"><i class="fa fa-check"></i><b>4.7</b> Additional resources</a><ul>
 <li class="chapter" data-level="4.7.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#cheatsheets-2"><i class="fa fa-check"></i><b>4.7.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="4.7.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-camp-courses-2"><i class="fa fa-check"></i><b>4.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="4.7.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-camp-courses-1"><i class="fa fa-check"></i><b>4.7.2</b> Data camp courses</a></li>
 <li class="chapter" data-level="4.7.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#books-and-chapters-2"><i class="fa fa-check"></i><b>4.7.3</b> Books and chapters</a></li>
 <li class="chapter" data-level="4.7.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#misc-2"><i class="fa fa-check"></i><b>4.7.4</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="4.8" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#session-info-3"><i class="fa fa-check"></i><b>4.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html"><i class="fa fa-check"></i><b>5</b> Data wrangling 2</a><ul>
-<li class="chapter" data-level="5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#learning-goals-3"><i class="fa fa-check"></i><b>5.1</b> Learning goals</a></li>
-<li class="chapter" data-level="5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#load-packages-2"><i class="fa fa-check"></i><b>5.2</b> Load packages</a></li>
-<li class="chapter" data-level="5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#wrangling-data-continued"><i class="fa fa-check"></i><b>5.3</b> Wrangling data (continued)</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#summarizing-data"><i class="fa fa-check"></i><b>5.3.1</b> Summarizing data</a></li>
-<li class="chapter" data-level="5.3.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reshaping-data"><i class="fa fa-check"></i><b>5.3.2</b> Reshaping data</a></li>
-<li class="chapter" data-level="5.3.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#joining-multiple-data-frames"><i class="fa fa-check"></i><b>5.3.3</b> Joining multiple data frames</a></li>
-<li class="chapter" data-level="5.3.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>5.3.4</b> Dealing with missing data</a></li>
+<li class="chapter" data-level="5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#load-packages-2"><i class="fa fa-check"></i><b>5.1</b> Load packages</a></li>
+<li class="chapter" data-level="5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#wrangling-data-continued"><i class="fa fa-check"></i><b>5.2</b> Wrangling data (continued)</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#summarizing-data"><i class="fa fa-check"></i><b>5.2.1</b> Summarizing data</a></li>
+<li class="chapter" data-level="5.2.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reshaping-data"><i class="fa fa-check"></i><b>5.2.2</b> Reshaping data</a></li>
+<li class="chapter" data-level="5.2.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#joining-multiple-data-frames"><i class="fa fa-check"></i><b>5.2.3</b> Joining multiple data frames</a></li>
+<li class="chapter" data-level="5.2.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>5.2.4</b> Dealing with missing data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reading-in-data"><i class="fa fa-check"></i><b>5.4</b> Reading in data</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv"><i class="fa fa-check"></i><b>5.4.1</b> csv</a></li>
-<li class="chapter" data-level="5.4.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata"><i class="fa fa-check"></i><b>5.4.2</b> RData</a></li>
+<li class="chapter" data-level="5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reading-in-data"><i class="fa fa-check"></i><b>5.3</b> Reading in data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv"><i class="fa fa-check"></i><b>5.3.1</b> csv</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata"><i class="fa fa-check"></i><b>5.3.2</b> RData</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#saving-data"><i class="fa fa-check"></i><b>5.5</b> Saving data</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv-1"><i class="fa fa-check"></i><b>5.5.1</b> csv</a></li>
-<li class="chapter" data-level="5.5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata-1"><i class="fa fa-check"></i><b>5.5.2</b> RData</a></li>
+<li class="chapter" data-level="5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#saving-data"><i class="fa fa-check"></i><b>5.4</b> Saving data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv-1"><i class="fa fa-check"></i><b>5.4.1</b> csv</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata-1"><i class="fa fa-check"></i><b>5.4.2</b> RData</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#additional-resources-3"><i class="fa fa-check"></i><b>5.6</b> Additional resources</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#cheatsheets-3"><i class="fa fa-check"></i><b>5.6.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="5.6.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#data-camp-courses-3"><i class="fa fa-check"></i><b>5.6.2</b> Data camp courses</a></li>
-<li class="chapter" data-level="5.6.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#books-and-chapters-3"><i class="fa fa-check"></i><b>5.6.3</b> Books and chapters</a></li>
-<li class="chapter" data-level="5.6.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#tutorials"><i class="fa fa-check"></i><b>5.6.4</b> Tutorials</a></li>
+<li class="chapter" data-level="5.5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#additional-resources-3"><i class="fa fa-check"></i><b>5.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#cheatsheets-3"><i class="fa fa-check"></i><b>5.5.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="5.5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#data-camp-courses-2"><i class="fa fa-check"></i><b>5.5.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="5.5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#books-and-chapters-3"><i class="fa fa-check"></i><b>5.5.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="5.5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#tutorials"><i class="fa fa-check"></i><b>5.5.4</b> Tutorials</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#session-info-4"><i class="fa fa-check"></i><b>5.7</b> Session info</a></li>
+<li class="chapter" data-level="5.6" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#session-info-4"><i class="fa fa-check"></i><b>5.6</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a><ul>
-<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#learning-goals-4"><i class="fa fa-check"></i><b>6.1</b> Learning goals</a></li>
+<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#learning-goals-1"><i class="fa fa-check"></i><b>6.1</b> Learning goals</a></li>
 <li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#load-packages-3"><i class="fa fa-check"></i><b>6.2</b> Load packages</a></li>
 <li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.3</b> Counting</a></li>
 <li class="chapter" data-level="6.4" data-path="probability-and-causality.html"><a href="probability-and-causality.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.4</b> Flipping a coin many times</a></li>
@@ -274,7 +281,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.10" data-path="probability-and-causality.html"><a href="probability-and-causality.html#session-info-5"><i class="fa fa-check"></i><b>6.10</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a><ul>
-<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#learning-goals-5"><i class="fa fa-check"></i><b>7.1</b> Learning goals</a></li>
+<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#learning-goals-2"><i class="fa fa-check"></i><b>7.1</b> Learning goals</a></li>
 <li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#load-packages-and-set-plotting-theme"><i class="fa fa-check"></i><b>7.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="7.3" data-path="simulation-1.html"><a href="simulation-1.html#working-with-distributions"><i class="fa fa-check"></i><b>7.3</b> Working with distributions</a><ul>
 <li class="chapter" data-level="7.3.1" data-path="simulation-1.html"><a href="simulation-1.html#plotting-distributions"><i class="fa fa-check"></i><b>7.3.1</b> Plotting distributions</a></li>
@@ -297,7 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.8" data-path="simulation-1.html"><a href="simulation-1.html#session-info-6"><i class="fa fa-check"></i><b>7.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a><ul>
-<li class="chapter" data-level="8.1" data-path="simulation-2.html"><a href="simulation-2.html#learning-goals-6"><i class="fa fa-check"></i><b>8.1</b> Learning goals</a></li>
+<li class="chapter" data-level="8.1" data-path="simulation-2.html"><a href="simulation-2.html#learning-goals-3"><i class="fa fa-check"></i><b>8.1</b> Learning goals</a></li>
 <li class="chapter" data-level="8.2" data-path="simulation-2.html"><a href="simulation-2.html#load-packages-and-set-plotting-theme-1"><i class="fa fa-check"></i><b>8.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="8.3" data-path="simulation-2.html"><a href="simulation-2.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>8.3</b> The central limit theorem</a><ul>
 <li class="chapter" data-level="8.3.1" data-path="simulation-2.html"><a href="simulation-2.html#population-distribution"><i class="fa fa-check"></i><b>8.3.1</b> Population distribution</a></li>
@@ -316,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.7" data-path="simulation-2.html"><a href="simulation-2.html#session-info-7"><i class="fa fa-check"></i><b>8.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="modeling-data.html"><a href="modeling-data.html"><i class="fa fa-check"></i><b>9</b> Modeling data</a><ul>
-<li class="chapter" data-level="9.1" data-path="modeling-data.html"><a href="modeling-data.html#learning-goals-7"><i class="fa fa-check"></i><b>9.1</b> Learning goals</a></li>
+<li class="chapter" data-level="9.1" data-path="modeling-data.html"><a href="modeling-data.html#learning-goals-4"><i class="fa fa-check"></i><b>9.1</b> Learning goals</a></li>
 <li class="chapter" data-level="9.2" data-path="modeling-data.html"><a href="modeling-data.html#load-packages-and-set-plotting-theme-2"><i class="fa fa-check"></i><b>9.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="9.3" data-path="modeling-data.html"><a href="modeling-data.html#things-that-came-up-in-class"><i class="fa fa-check"></i><b>9.3</b> Things that came up in class</a><ul>
 <li class="chapter" data-level="9.3.1" data-path="modeling-data.html"><a href="modeling-data.html#calculating-rmse-using-magrittr-verbs"><i class="fa fa-check"></i><b>9.3.1</b> Calculating RMSE using <code>magrittr</code> verbs</a></li>
@@ -335,7 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.7" data-path="modeling-data.html"><a href="modeling-data.html#session-info-8"><i class="fa fa-check"></i><b>9.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="linear-model-1.html"><a href="linear-model-1.html"><i class="fa fa-check"></i><b>10</b> Linear model 1</a><ul>
-<li class="chapter" data-level="10.1" data-path="linear-model-1.html"><a href="linear-model-1.html#learning-goals-8"><i class="fa fa-check"></i><b>10.1</b> Learning goals</a></li>
+<li class="chapter" data-level="10.1" data-path="linear-model-1.html"><a href="linear-model-1.html#learning-goals-5"><i class="fa fa-check"></i><b>10.1</b> Learning goals</a></li>
 <li class="chapter" data-level="10.2" data-path="linear-model-1.html"><a href="linear-model-1.html#load-packages-and-set-plotting-theme-3"><i class="fa fa-check"></i><b>10.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="10.3" data-path="linear-model-1.html"><a href="linear-model-1.html#things-that-came-up-in-class-1"><i class="fa fa-check"></i><b>10.3</b> Things that came up in class</a><ul>
 <li class="chapter" data-level="10.3.1" data-path="linear-model-1.html"><a href="linear-model-1.html#building-a-sampling-distribution-of-pre"><i class="fa fa-check"></i><b>10.3.1</b> Building a sampling distribution of PRE</a></li>
@@ -353,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.7" data-path="linear-model-1.html"><a href="linear-model-1.html#session-info-9"><i class="fa fa-check"></i><b>10.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="linear-model-2.html"><a href="linear-model-2.html"><i class="fa fa-check"></i><b>11</b> Linear model 2</a><ul>
-<li class="chapter" data-level="11.1" data-path="linear-model-2.html"><a href="linear-model-2.html#learning-goals-9"><i class="fa fa-check"></i><b>11.1</b> Learning goals</a></li>
+<li class="chapter" data-level="11.1" data-path="linear-model-2.html"><a href="linear-model-2.html#learning-goals-6"><i class="fa fa-check"></i><b>11.1</b> Learning goals</a></li>
 <li class="chapter" data-level="11.2" data-path="linear-model-2.html"><a href="linear-model-2.html#load-packages-and-set-plotting-theme-4"><i class="fa fa-check"></i><b>11.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="11.3" data-path="linear-model-2.html"><a href="linear-model-2.html#load-data-sets"><i class="fa fa-check"></i><b>11.3</b> Load data sets</a></li>
 <li class="chapter" data-level="11.4" data-path="linear-model-2.html"><a href="linear-model-2.html#things-that-came-up-in-class-2"><i class="fa fa-check"></i><b>11.4</b> Things that came up in class</a></li>
@@ -380,7 +387,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.10" data-path="linear-model-2.html"><a href="linear-model-2.html#session-info-10"><i class="fa fa-check"></i><b>11.10</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="linear-model-3.html"><a href="linear-model-3.html"><i class="fa fa-check"></i><b>12</b> Linear model 3</a><ul>
-<li class="chapter" data-level="12.1" data-path="linear-model-3.html"><a href="linear-model-3.html#learning-goals-10"><i class="fa fa-check"></i><b>12.1</b> Learning goals</a></li>
+<li class="chapter" data-level="12.1" data-path="linear-model-3.html"><a href="linear-model-3.html#learning-goals-7"><i class="fa fa-check"></i><b>12.1</b> Learning goals</a></li>
 <li class="chapter" data-level="12.2" data-path="linear-model-3.html"><a href="linear-model-3.html#load-packages-and-set-plotting-theme-5"><i class="fa fa-check"></i><b>12.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="12.3" data-path="linear-model-3.html"><a href="linear-model-3.html#load-data-sets-1"><i class="fa fa-check"></i><b>12.3</b> Load data sets</a><ul>
 <li class="chapter" data-level="12.3.1" data-path="linear-model-3.html"><a href="linear-model-3.html#one-way-anova"><i class="fa fa-check"></i><b>12.3.1</b> One-way ANOVA</a></li>
@@ -397,7 +404,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.6" data-path="linear-model-3.html"><a href="linear-model-3.html#session-info-11"><i class="fa fa-check"></i><b>12.6</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="linear-model-4.html"><a href="linear-model-4.html"><i class="fa fa-check"></i><b>13</b> Linear model 4</a><ul>
-<li class="chapter" data-level="13.1" data-path="linear-model-4.html"><a href="linear-model-4.html#learning-goals-11"><i class="fa fa-check"></i><b>13.1</b> Learning goals</a></li>
+<li class="chapter" data-level="13.1" data-path="linear-model-4.html"><a href="linear-model-4.html#learning-goals-8"><i class="fa fa-check"></i><b>13.1</b> Learning goals</a></li>
 <li class="chapter" data-level="13.2" data-path="linear-model-4.html"><a href="linear-model-4.html#load-packages-and-set-plotting-theme-6"><i class="fa fa-check"></i><b>13.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="13.3" data-path="linear-model-4.html"><a href="linear-model-4.html#load-data-sets-2"><i class="fa fa-check"></i><b>13.3</b> Load data sets</a></li>
 <li class="chapter" data-level="13.4" data-path="linear-model-4.html"><a href="linear-model-4.html#variance-decomposition-in-one-way-anova"><i class="fa fa-check"></i><b>13.4</b> Variance decomposition in one-way ANOVA</a><ul>
@@ -420,7 +427,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.10" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-12"><i class="fa fa-check"></i><b>13.10</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a><ul>
-<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#learning-goals-12"><i class="fa fa-check"></i><b>14.1</b> Learning goals</a></li>
+<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#learning-goals-9"><i class="fa fa-check"></i><b>14.1</b> Learning goals</a></li>
 <li class="chapter" data-level="14.2" data-path="power-analysis.html"><a href="power-analysis.html#load-packages-and-set-plotting-theme-7"><i class="fa fa-check"></i><b>14.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="14.3" data-path="power-analysis.html"><a href="power-analysis.html#load-data-sets-3"><i class="fa fa-check"></i><b>14.3</b> Load data sets</a></li>
 <li class="chapter" data-level="14.4" data-path="power-analysis.html"><a href="power-analysis.html#decision-making"><i class="fa fa-check"></i><b>14.4</b> Decision-making</a></li>
@@ -436,7 +443,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-13"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="bootstrapping.html"><a href="bootstrapping.html"><i class="fa fa-check"></i><b>15</b> Bootstrapping</a><ul>
-<li class="chapter" data-level="15.1" data-path="bootstrapping.html"><a href="bootstrapping.html#learning-goals-13"><i class="fa fa-check"></i><b>15.1</b> Learning goals</a></li>
+<li class="chapter" data-level="15.1" data-path="bootstrapping.html"><a href="bootstrapping.html#learning-goals-10"><i class="fa fa-check"></i><b>15.1</b> Learning goals</a></li>
 <li class="chapter" data-level="15.2" data-path="bootstrapping.html"><a href="bootstrapping.html#load-packages-and-set-plotting-theme-8"><i class="fa fa-check"></i><b>15.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="15.3" data-path="bootstrapping.html"><a href="bootstrapping.html#whats-wrong-with-parametric-tests"><i class="fa fa-check"></i><b>15.3</b> What’s wrong with parametric tests?</a><ul>
 <li class="chapter" data-level="15.3.1" data-path="bootstrapping.html"><a href="bootstrapping.html#t-tests-on-non-normal-distributions"><i class="fa fa-check"></i><b>15.3.1</b> T-tests on non-normal distributions</a></li>
@@ -450,10 +457,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.5.1" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-confidence-intervals"><i class="fa fa-check"></i><b>15.5.1</b> Bootstrap confidence intervals</a></li>
 <li class="chapter" data-level="15.5.2" data-path="bootstrapping.html"><a href="bootstrapping.html#bootstrap-permutation-hypothesis-tests"><i class="fa fa-check"></i><b>15.5.2</b> Bootstrap (&amp; permutation) hypothesis tests</a></li>
 </ul></li>
-<li class="chapter" data-level="15.6" data-path="bootstrapping.html"><a href="bootstrapping.html#session-info-14"><i class="fa fa-check"></i><b>15.6</b> Session info</a></li>
+<li class="chapter" data-level="15.6" data-path="bootstrapping.html"><a href="bootstrapping.html#additional-resources-13"><i class="fa fa-check"></i><b>15.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="15.6.1" data-path="bootstrapping.html"><a href="bootstrapping.html#data-camp-courses-3"><i class="fa fa-check"></i><b>15.6.1</b> Data camp courses</a></li>
+</ul></li>
+<li class="chapter" data-level="15.7" data-path="bootstrapping.html"><a href="bootstrapping.html#session-info-14"><i class="fa fa-check"></i><b>15.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>16</b> Model comparison</a><ul>
-<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#learning-goals-14"><i class="fa fa-check"></i><b>16.1</b> Learning goals</a></li>
+<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#learning-goals-11"><i class="fa fa-check"></i><b>16.1</b> Learning goals</a></li>
 <li class="chapter" data-level="16.2" data-path="model-comparison.html"><a href="model-comparison.html#load-packages-and-set-plotting-theme-9"><i class="fa fa-check"></i><b>16.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="16.3" data-path="model-comparison.html"><a href="model-comparison.html#determining-sample-size-1"><i class="fa fa-check"></i><b>16.3</b> Determining sample size</a><ul>
 <li class="chapter" data-level="16.3.1" data-path="model-comparison.html"><a href="model-comparison.html#pwr-package-1"><i class="fa fa-check"></i><b>16.3.1</b> <code>pwr</code> package</a></li>
@@ -467,7 +477,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.4.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>16.4.4</b> Bootstrap</a></li>
 <li class="chapter" data-level="16.4.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>16.4.5</b> AIC and BIC</a></li>
 </ul></li>
-<li class="chapter" data-level="16.5" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-13"><i class="fa fa-check"></i><b>16.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="16.5" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-14"><i class="fa fa-check"></i><b>16.5</b> Additional resources</a><ul>
 <li class="chapter" data-level="16.5.1" data-path="model-comparison.html"><a href="model-comparison.html#cheatsheet"><i class="fa fa-check"></i><b>16.5.1</b> Cheatsheet</a></li>
 <li class="chapter" data-level="16.5.2" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>16.5.2</b> Datacamp course</a></li>
 <li class="chapter" data-level="16.5.3" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>16.5.3</b> Reading</a></li>
@@ -476,19 +486,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.6" data-path="model-comparison.html"><a href="model-comparison.html#session-info-15"><i class="fa fa-check"></i><b>16.6</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html"><i class="fa fa-check"></i><b>17</b> Linear mixed effects models 1</a><ul>
-<li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#learning-goals-15"><i class="fa fa-check"></i><b>17.1</b> Learning goals</a></li>
+<li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#learning-goals-12"><i class="fa fa-check"></i><b>17.1</b> Learning goals</a></li>
 <li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#things-that-came-up-in-class-3"><i class="fa fa-check"></i><b>17.3</b> Things that came up in class</a><ul>
 <li class="chapter" data-level="17.3.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#comparing-t-test-with-f-test-in-lm"><i class="fa fa-check"></i><b>17.3.1</b> Comparing t-test with F-test in <code>lm()</code></a></li>
 </ul></li>
 <li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.4</b> Dependence</a></li>
-<li class="chapter" data-level="17.5" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-14"><i class="fa fa-check"></i><b>17.5</b> Additional resources</a><ul>
+<li class="chapter" data-level="17.5" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-15"><i class="fa fa-check"></i><b>17.5</b> Additional resources</a><ul>
 <li class="chapter" data-level="17.5.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.5.1</b> Readings</a></li>
 </ul></li>
 <li class="chapter" data-level="17.6" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#session-info-16"><i class="fa fa-check"></i><b>17.6</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html"><i class="fa fa-check"></i><b>18</b> Linear mixed effects models 2</a><ul>
-<li class="chapter" data-level="18.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#learning-goals-16"><i class="fa fa-check"></i><b>18.1</b> Learning goals</a></li>
+<li class="chapter" data-level="18.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#learning-goals-13"><i class="fa fa-check"></i><b>18.1</b> Learning goals</a></li>
 <li class="chapter" data-level="18.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#load-packages-and-set-plotting-theme-11"><i class="fa fa-check"></i><b>18.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="18.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#things-that-came-up-in-class-4"><i class="fa fa-check"></i><b>18.3</b> Things that came up in class</a><ul>
 <li class="chapter" data-level="18.3.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#difference-between-replicate-and-map"><i class="fa fa-check"></i><b>18.3.1</b> Difference between <code>replicate()</code> and <code>map()</code></a></li>
@@ -497,13 +507,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#the-effect-of-outliers"><i class="fa fa-check"></i><b>18.5</b> The effect of outliers</a></li>
 <li class="chapter" data-level="18.6" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.6</b> Different slopes</a></li>
 <li class="chapter" data-level="18.7" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.7</b> Simpson’s paradox</a></li>
-<li class="chapter" data-level="18.8" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-15"><i class="fa fa-check"></i><b>18.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="18.8" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-16"><i class="fa fa-check"></i><b>18.8</b> Additional resources</a><ul>
 <li class="chapter" data-level="18.8.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.8.1</b> Readings</a></li>
 </ul></li>
 <li class="chapter" data-level="18.9" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#session-info-17"><i class="fa fa-check"></i><b>18.9</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html"><i class="fa fa-check"></i><b>19</b> Linear mixed effects models 3</a><ul>
-<li class="chapter" data-level="19.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#learning-goals-17"><i class="fa fa-check"></i><b>19.1</b> Learning goals</a></li>
+<li class="chapter" data-level="19.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#learning-goals-14"><i class="fa fa-check"></i><b>19.1</b> Learning goals</a></li>
 <li class="chapter" data-level="19.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-packages-and-set-plotting-theme-12"><i class="fa fa-check"></i><b>19.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-set"><i class="fa fa-check"></i><b>19.3</b> Load data set</a></li>
 <li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#things-that-came-up-in-class-5"><i class="fa fa-check"></i><b>19.4</b> Things that came up in class</a><ul>
@@ -526,7 +536,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="19.9" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-18"><i class="fa fa-check"></i><b>19.9</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>20</b> Generalized linear model</a><ul>
-<li class="chapter" data-level="20.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#learning-goals-18"><i class="fa fa-check"></i><b>20.1</b> Learning goals</a></li>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#learning-goals-15"><i class="fa fa-check"></i><b>20.1</b> Learning goals</a></li>
 <li class="chapter" data-level="20.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-packages-and-set-plotting-theme-13"><i class="fa fa-check"></i><b>20.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="20.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set-1"><i class="fa fa-check"></i><b>20.3</b> Load data set</a></li>
 <li class="chapter" data-level="20.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>20.4</b> Logistic regression</a><ul>
@@ -541,7 +551,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-19"><i class="fa fa-check"></i><b>20.9</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html"><i class="fa fa-check"></i><b>21</b> Bayesian data analysis 1</a><ul>
-<li class="chapter" data-level="21.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#learning-goals-19"><i class="fa fa-check"></i><b>21.1</b> Learning goals</a></li>
+<li class="chapter" data-level="21.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#learning-goals-16"><i class="fa fa-check"></i><b>21.1</b> Learning goals</a></li>
 <li class="chapter" data-level="21.2" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#load-packages-and-set-plotting-theme-14"><i class="fa fa-check"></i><b>21.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="21.3" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#things-that-came-up"><i class="fa fa-check"></i><b>21.3</b> Things that came up</a><ul>
 <li class="chapter" data-level="21.3.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#bias-in-cosyne-2019-conference-admission"><i class="fa fa-check"></i><b>21.3.1</b> Bias in Cosyne 2019 conference admission?</a></li>
@@ -549,7 +559,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="21.4" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#session-info-20"><i class="fa fa-check"></i><b>21.4</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="22" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>22</b> Bayesian data analysis 2</a><ul>
-<li class="chapter" data-level="22.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#learning-goals-20"><i class="fa fa-check"></i><b>22.1</b> Learning goals</a></li>
+<li class="chapter" data-level="22.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#learning-goals-17"><i class="fa fa-check"></i><b>22.1</b> Learning goals</a></li>
 <li class="chapter" data-level="22.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#load-packages-and-set-plotting-theme-15"><i class="fa fa-check"></i><b>22.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="22.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#doing-bayesian-inference-by-hand"><i class="fa fa-check"></i><b>22.3</b> Doing Bayesian inference “by hand”</a><ul>
 <li class="chapter" data-level="22.3.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#sequential-updating-based-on-the-beta-distribution"><i class="fa fa-check"></i><b>22.3.1</b> Sequential updating based on the Beta distribution</a></li>
@@ -574,7 +584,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.7" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-21"><i class="fa fa-check"></i><b>22.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 3</a><ul>
-<li class="chapter" data-level="23.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#learning-goals-21"><i class="fa fa-check"></i><b>23.1</b> Learning goals</a></li>
+<li class="chapter" data-level="23.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#learning-goals-18"><i class="fa fa-check"></i><b>23.1</b> Learning goals</a></li>
 <li class="chapter" data-level="23.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-packages-and-set-plotting-theme-16"><i class="fa fa-check"></i><b>23.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="23.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-data-set-2"><i class="fa fa-check"></i><b>23.3</b> Load data set</a></li>
 <li class="chapter" data-level="23.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#poker"><i class="fa fa-check"></i><b>23.4</b> Poker</a><ul>
@@ -584,11 +594,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="23.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>23.5</b> Dealing with heteroscedasticity</a></li>
 <li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#ordinal-regression"><i class="fa fa-check"></i><b>23.6</b> Ordinal regression</a></li>
-<li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-16"><i class="fa fa-check"></i><b>23.7</b> Additional resources</a></li>
+<li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-17"><i class="fa fa-check"></i><b>23.7</b> Additional resources</a></li>
 <li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-22"><i class="fa fa-check"></i><b>23.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="mediation-moderation.html"><a href="mediation-moderation.html"><i class="fa fa-check"></i><b>24</b> Mediation &amp; Moderation</a><ul>
-<li class="chapter" data-level="24.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#learning-goals-22"><i class="fa fa-check"></i><b>24.1</b> Learning goals</a></li>
+<li class="chapter" data-level="24.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#learning-goals-19"><i class="fa fa-check"></i><b>24.1</b> Learning goals</a></li>
 <li class="chapter" data-level="24.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#recommended-reading"><i class="fa fa-check"></i><b>24.2</b> Recommended reading</a></li>
 <li class="chapter" data-level="24.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-packages-and-set-plotting-theme-17"><i class="fa fa-check"></i><b>24.3</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="24.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>24.4</b> Mediation</a><ul>
@@ -602,7 +612,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.5.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data-1"><i class="fa fa-check"></i><b>24.5.1</b> Generate data</a></li>
 <li class="chapter" data-level="24.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation-analysis"><i class="fa fa-check"></i><b>24.5.2</b> Moderation analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="24.6" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-17"><i class="fa fa-check"></i><b>24.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="24.6" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-18"><i class="fa fa-check"></i><b>24.6</b> Additional resources</a><ul>
 <li class="chapter" data-level="24.6.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#books"><i class="fa fa-check"></i><b>24.6.1</b> Books</a></li>
 <li class="chapter" data-level="24.6.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-2"><i class="fa fa-check"></i><b>24.6.2</b> Tutorials</a></li>
 </ul></li>
@@ -617,6 +627,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.1.5" data-path="reporting-statistics.html"><a href="reporting-statistics.html#frequentist-statistics"><i class="fa fa-check"></i><b>25.1.5</b> Frequentist statistics</a></li>
 <li class="chapter" data-level="25.1.6" data-path="reporting-statistics.html"><a href="reporting-statistics.html#bayesian-statistics"><i class="fa fa-check"></i><b>25.1.6</b> Bayesian statistics –&gt;</a></li>
 </ul></li>
+<li class="chapter" data-level="25.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#session-info-24"><i class="fa fa-check"></i><b>25.2</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="26" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>26</b> Cheatsheets</a><ul>
 <li class="chapter" data-level="26.1" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html#statistics"><i class="fa fa-check"></i><b>26.1</b> Statistics</a></li>
@@ -645,9 +656,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="data-wrangling-2" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Data wrangling 2</h1>
-<p>In this session, we will continue to learn about wrangling data. Some of the functions that I’ll introduce in this session are a little tricky to master. Like learning a new language, it takes some time to get fluent. However, it’s worth investing the time.</p>
-<div id="learning-goals-3" class="section level2">
-<h2><span class="header-section-number">5.1</span> Learning goals</h2>
+<p>In this session, we will continue to learn about wrangling data. Some of the functions that I’ll introduce in this session are a little tricky to master. Like learning a new language, it takes some time to get fluent. However, it’s worth investing the time.
+## Learning goals</p>
 <ul>
 <li>Learn how to group and summarize data using <code>group_by()</code> and <code>summarize()</code>.</li>
 <li>Learn how to deal with missing data entries <code>NA</code>.</li>
@@ -655,23 +665,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Learn the basics of how to join multiple data frames with a focus on <code>left_join()</code>.</li>
 <li>Master how to <em>read</em> and <em>save</em> data.</li>
 </ul>
-</div>
 <div id="load-packages-2" class="section level2">
-<h2><span class="header-section-number">5.2</span> Load packages</h2>
+<h2><span class="header-section-number">5.1</span> Load packages</h2>
 <p>Let’s first load the packages that we need for this chapter.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>) <span class="co"># for rendering the RMarkdown file</span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># for data wrangling </span></a>
-<a class="sourceLine" id="cb1-3" title="3"></a>
-<a class="sourceLine" id="cb1-4" title="4">opts_chunk<span class="op">$</span><span class="kw">set</span>(</a>
-<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">comment =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb1-6" title="6">  <span class="dt">results =</span> <span class="st">&quot;hold&quot;</span>,</a>
-<a class="sourceLine" id="cb1-7" title="7">  <span class="dt">fig.show =</span> <span class="st">&quot;hold&quot;</span></a>
-<a class="sourceLine" id="cb1-8" title="8">)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># for data wrangling </span></a></code></pre></div>
 </div>
 <div id="wrangling-data-continued" class="section level2">
-<h2><span class="header-section-number">5.3</span> Wrangling data (continued)</h2>
+<h2><span class="header-section-number">5.2</span> Wrangling data (continued)</h2>
 <div id="summarizing-data" class="section level3">
-<h3><span class="header-section-number">5.3.1</span> Summarizing data</h3>
+<h3><span class="header-section-number">5.2.1</span> Summarizing data</h3>
 <p>Let’s first load the <code>starwars</code> data set again:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df.starwars =<span class="st"> </span>starwars</a></code></pre></div>
 <p>A particularly powerful way of interating with data is by grouping and summarizing it. <code>summarize()</code> returns a single value for each summary that we ask for:</p>
@@ -679,29 +682,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">height_mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T),</a>
 <a class="sourceLine" id="cb3-3" title="3">            <span class="dt">height_max =</span> <span class="kw">max</span>(height, <span class="dt">na.rm =</span> T),</a>
 <a class="sourceLine" id="cb3-4" title="4">            <span class="dt">n =</span> <span class="kw">n</span>())</a></code></pre></div>
-<pre><code># A tibble: 1 x 3
-  height_mean height_max     n
-        &lt;dbl&gt;      &lt;int&gt; &lt;int&gt;
-1        174.        264    87</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   height_mean height_max     n
+##         &lt;dbl&gt;      &lt;int&gt; &lt;int&gt;
+## 1        174.        264    87</code></pre>
 <p>Here, I computed the mean height, the maximum height, and the total number of observations (using the function <code>n()</code>).
 Let’s say we wanted to get a quick sense for how tall starwars characters from different species are. To do that, we combine grouping with summarizing:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">height_mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T))</a></code></pre></div>
-<pre><code># A tibble: 38 x 2
-   species   height_mean
-   &lt;chr&gt;           &lt;dbl&gt;
- 1 Aleena            79 
- 2 Besalisk         198 
- 3 Cerean           198 
- 4 Chagrian         196 
- 5 Clawdite         168 
- 6 Droid            140 
- 7 Dug              112 
- 8 Ewok              88 
- 9 Geonosian        183 
-10 Gungan           209.
-# … with 28 more rows</code></pre>
+<pre><code>## # A tibble: 38 x 2
+##    species   height_mean
+##    &lt;chr&gt;           &lt;dbl&gt;
+##  1 Aleena            79 
+##  2 Besalisk         198 
+##  3 Cerean           198 
+##  4 Chagrian         196 
+##  5 Clawdite         168 
+##  6 Droid            140 
+##  7 Dug              112 
+##  8 Ewok              88 
+##  9 Geonosian        183 
+## 10 Gungan           209.
+## # … with 28 more rows</code></pre>
 <p>I’ve first used <code>group_by()</code> to group our data frame by the different species, and then used <code>summarize()</code> to calculate the mean height of each species.</p>
 <p>It would also be useful to know how many observations there are in each group.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -709,20 +712,20 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">height_mean =</span> <span class="kw">mean</span>(height, <span class="dt">na.rm =</span> T), </a>
 <a class="sourceLine" id="cb7-4" title="4">            <span class="dt">group_size =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(group_size)) </a></code></pre></div>
-<pre><code># A tibble: 38 x 3
-   species  height_mean group_size
-   &lt;chr&gt;          &lt;dbl&gt;      &lt;int&gt;
- 1 Human           177.         35
- 2 Droid           140           5
- 3 &lt;NA&gt;            160           5
- 4 Gungan          209.          3
- 5 Kaminoan        221           2
- 6 Mirialan        168           2
- 7 Twi&#39;lek         179           2
- 8 Wookiee         231           2
- 9 Zabrak          173           2
-10 Aleena           79           1
-# … with 28 more rows</code></pre>
+<pre><code>## # A tibble: 38 x 3
+##    species  height_mean group_size
+##    &lt;chr&gt;          &lt;dbl&gt;      &lt;int&gt;
+##  1 Human           177.         35
+##  2 Droid           140           5
+##  3 &lt;NA&gt;            160           5
+##  4 Gungan          209.          3
+##  5 Kaminoan        221           2
+##  6 Mirialan        168           2
+##  7 Twi&#39;lek         179           2
+##  8 Wookiee         231           2
+##  9 Zabrak          173           2
+## 10 Aleena           79           1
+## # … with 28 more rows</code></pre>
 <p>Here, I’ve used the <code>n()</code> function to get the number of observations in each group, and then I’ve arranged the data frame according to group size in descending order.</p>
 <p>Note that <code>n()</code> always yields the number of observations in each group. If we don’t group the data, then we get the overall number of observations in our data frame (i.e. the number of rows).</p>
 <p>So, Humans are the largest group in our data frame, followed by Droids (who are considerably smaller) and Gungans (who would make for good Basketball players).</p>
@@ -732,42 +735,42 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb9-3" title="3">  <span class="dt">participant =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each =</span> <span class="dv">5</span>),</a>
 <a class="sourceLine" id="cb9-4" title="4">  <span class="dt">judgment =</span> <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
-<pre><code># A tibble: 15 x 2
-   participant judgment
-         &lt;int&gt;    &lt;int&gt;
- 1           1       79
- 2           1       13
- 3           1       37
- 4           1       94
- 5           1        5
- 6           2       29
- 7           2       71
- 8           2        6
- 9           2       26
-10           2       99
-11           3       31
-12           3       30
-13           3        3
-14           3       58
-15           3       33</code></pre>
+<pre><code>## # A tibble: 15 x 2
+##    participant judgment
+##          &lt;int&gt;    &lt;int&gt;
+##  1           1       45
+##  2           1       60
+##  3           1       24
+##  4           1        5
+##  5           1      100
+##  6           2       82
+##  7           2       93
+##  8           2        7
+##  9           2       21
+## 10           2       66
+## 11           3       19
+## 12           3       96
+## 13           3       20
+## 14           3       17
+## 15           3       61</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">df.summarize <span class="op">%&gt;%</span><span class="st">   </span></a>
 <a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(participant) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># group by participants</span></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">judgment_zscored =</span> <span class="kw">scale</span>(judgment)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># z-score data on individual participant level </span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">judgment_zscored =</span> <span class="kw">scale</span>(judgment)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># z-score data of individual participants</span></a>
 <a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># ungroup the data frame</span></a>
 <a class="sourceLine" id="cb11-5" title="5"><span class="st">  </span><span class="kw">head</span>(<span class="dt">n =</span> <span class="dv">10</span>) <span class="co"># print the top 10 rows </span></a></code></pre></div>
-<pre><code># A tibble: 10 x 3
-   participant judgment judgment_zscored
-         &lt;int&gt;    &lt;int&gt;            &lt;dbl&gt;
- 1           1       79            0.845
- 2           1       13           -0.825
- 3           1       37           -0.218
- 4           1       94            1.23 
- 5           1        5           -1.03 
- 6           2       29           -0.455
- 7           2       71            0.656
- 8           2        6           -1.06 
- 9           2       26           -0.534
-10           2       99            1.40 </code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    participant judgment judgment_zscored
+##          &lt;int&gt;    &lt;int&gt;            &lt;dbl&gt;
+##  1           1       45          -0.0496
+##  2           1       60           0.363 
+##  3           1       24          -0.628 
+##  4           1        5          -1.15  
+##  5           1      100           1.47  
+##  6           2       82           0.744 
+##  7           2       93           1.03  
+##  8           2        7          -1.23  
+##  9           2       21          -0.865 
+## 10           2       66           0.322</code></pre>
 <p>First, I’ve generated some random data using the repeat function <code>rep()</code> for making a <code>participant</code> column, and the <code>sample()</code> function to randomly choose values from a range between 0 and 100 with replacement. (We will learn more about these functions later when we look into how to simulate data.) I’ve then grouped the data by participant, and used the scale function to z-score the data.</p>
 <blockquote>
 <p><strong>TIP</strong>: Don’t forget to <code>ungroup()</code> your data frame. Otherwise, any subsequent operations are applied per group.</p>
@@ -777,66 +780,66 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_height_mass =</span> <span class="kw">mean</span>(<span class="kw">c</span>(height, mass), <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb13-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, height, mass, mean_height_mass)</a></code></pre></div>
-<pre><code># A tibble: 87 x 4
-   name               height  mass mean_height_mass
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
- 1 Luke Skywalker        172    77             142.
- 2 C-3PO                 167    75             142.
- 3 R2-D2                  96    32             142.
- 4 Darth Vader           202   136             142.
- 5 Leia Organa           150    49             142.
- 6 Owen Lars             178   120             142.
- 7 Beru Whitesun lars    165    75             142.
- 8 R5-D4                  97    32             142.
- 9 Biggs Darklighter     183    84             142.
-10 Obi-Wan Kenobi        182    77             142.
-# … with 77 more rows</code></pre>
+<pre><code>## # A tibble: 87 x 4
+##    name               height  mass mean_height_mass
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
+##  1 Luke Skywalker        172    77             142.
+##  2 C-3PO                 167    75             142.
+##  3 R2-D2                  96    32             142.
+##  4 Darth Vader           202   136             142.
+##  5 Leia Organa           150    49             142.
+##  6 Owen Lars             178   120             142.
+##  7 Beru Whitesun lars    165    75             142.
+##  8 R5-D4                  97    32             142.
+##  9 Biggs Darklighter     183    84             142.
+## 10 Obi-Wan Kenobi        182    77             142.
+## # … with 77 more rows</code></pre>
 <p>Note that all the values are the same. The value shown here is just the mean of all the values in <code>height</code> and <code>mass</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw">select</span>(height, mass) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="kw">unlist</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># turns the data frame into a vector</span></a>
 <a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw">mean</span>(<span class="dt">na.rm =</span> T) </a></code></pre></div>
-<pre><code>[1] 141.8886</code></pre>
+<pre><code>## [1] 141.8886</code></pre>
 <p>To get the mean by row, we can either spell out the arithmetic</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_height_mass =</span> (height <span class="op">+</span><span class="st"> </span>mass) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># here, I&#39;ve replaced the mean() function  </span></a>
 <a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">select</span>(name, height, mass, mean_height_mass)</a></code></pre></div>
-<pre><code># A tibble: 87 x 4
-   name               height  mass mean_height_mass
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
- 1 Luke Skywalker        172    77            124. 
- 2 C-3PO                 167    75            121  
- 3 R2-D2                  96    32             64  
- 4 Darth Vader           202   136            169  
- 5 Leia Organa           150    49             99.5
- 6 Owen Lars             178   120            149  
- 7 Beru Whitesun lars    165    75            120  
- 8 R5-D4                  97    32             64.5
- 9 Biggs Darklighter     183    84            134. 
-10 Obi-Wan Kenobi        182    77            130. 
-# … with 77 more rows</code></pre>
+<pre><code>## # A tibble: 87 x 4
+##    name               height  mass mean_height_mass
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
+##  1 Luke Skywalker        172    77            124. 
+##  2 C-3PO                 167    75            121  
+##  3 R2-D2                  96    32             64  
+##  4 Darth Vader           202   136            169  
+##  5 Leia Organa           150    49             99.5
+##  6 Owen Lars             178   120            149  
+##  7 Beru Whitesun lars    165    75            120  
+##  8 R5-D4                  97    32             64.5
+##  9 Biggs Darklighter     183    84            134. 
+## 10 Obi-Wan Kenobi        182    77            130. 
+## # … with 77 more rows</code></pre>
 <p>or use the <code>rowwise()</code> helper function which is like <code>group_by()</code> but treats each row like a group:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">df.starwars <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw">rowwise</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># now, each row is treated like a separate group </span></a>
 <a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mean_height_mass =</span> <span class="kw">mean</span>(<span class="kw">c</span>(height, mass), <span class="dt">na.rm =</span> T)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb19-5" title="5"><span class="st">  </span><span class="kw">select</span>(name, height, mass, mean_height_mass)</a></code></pre></div>
-<pre><code># A tibble: 87 x 4
-   name               height  mass mean_height_mass
-   &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
- 1 Luke Skywalker        172    77            124. 
- 2 C-3PO                 167    75            121  
- 3 R2-D2                  96    32             64  
- 4 Darth Vader           202   136            169  
- 5 Leia Organa           150    49             99.5
- 6 Owen Lars             178   120            149  
- 7 Beru Whitesun lars    165    75            120  
- 8 R5-D4                  97    32             64.5
- 9 Biggs Darklighter     183    84            134. 
-10 Obi-Wan Kenobi        182    77            130. 
-# … with 77 more rows</code></pre>
+<pre><code>## # A tibble: 87 x 4
+##    name               height  mass mean_height_mass
+##    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
+##  1 Luke Skywalker        172    77            124. 
+##  2 C-3PO                 167    75            121  
+##  3 R2-D2                  96    32             64  
+##  4 Darth Vader           202   136            169  
+##  5 Leia Organa           150    49             99.5
+##  6 Owen Lars             178   120            149  
+##  7 Beru Whitesun lars    165    75            120  
+##  8 R5-D4                  97    32             64.5
+##  9 Biggs Darklighter     183    84            134. 
+## 10 Obi-Wan Kenobi        182    77            130. 
+## # … with 77 more rows</code></pre>
 <div id="practice-1-1" class="section level4">
-<h4><span class="header-section-number">5.3.1.1</span> Practice 1</h4>
+<h4><span class="header-section-number">5.2.1.1</span> Practice 1</h4>
 <p>Find out what the average <code>height</code> and <code>mass</code> (as well as the standard deviation) is from different <code>species</code> in different <code>homeworld</code>s. Why is the standard deviation <code>NA</code> for many groups?</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co"># write your code here </span></a></code></pre></div>
 <p>Who is the tallest member of each species? What eye color do they have? The <code>top_n()</code> function or the <code>row_number()</code> function (in combination with <code>filter()</code>) will be useful here.</p>
@@ -844,7 +847,7 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 </div>
 </div>
 <div id="reshaping-data" class="section level3">
-<h3><span class="header-section-number">5.3.2</span> Reshaping data</h3>
+<h3><span class="header-section-number">5.2.2</span> Reshaping data</h3>
 <p>We want our data frames to be tidy. What’s tidy?</p>
 <ol style="list-style-type: decimal">
 <li>Each variable must have its own column.</li>
@@ -859,20 +862,19 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <p>“Tidy datasets are all alike, but every messy dataset is messy in its own way.” –– Hadley Wickham</p>
 </blockquote>
 <div id="pivot_longer-and-pivot_wider" class="section level4">
-<h4><span class="header-section-number">5.3.2.1</span> <code>pivot_longer()</code> and <code>pivot_wider()</code></h4>
+<h4><span class="header-section-number">5.2.2.1</span> <code>pivot_longer()</code> and <code>pivot_wider()</code></h4>
 <p>Let’s first generate a data set that is <em>not</em> tidy.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># construct data frame </span></a>
-<a class="sourceLine" id="cb23-2" title="2">df.reshape =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb23-3" title="3">  <span class="dt">participant =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb23-4" title="4">  <span class="dt">observation_1 =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),</a>
-<a class="sourceLine" id="cb23-5" title="5">  <span class="dt">observation_2 =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),</a>
-<a class="sourceLine" id="cb23-6" title="6">  <span class="dt">observation_3 =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-7" title="7"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
-<pre><code># A tibble: 2 x 4
-  participant observation_1 observation_2 observation_3
-        &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-1           1            10           100            24
-2           2            25            63            45</code></pre>
+<a class="sourceLine" id="cb23-2" title="2">df.reshape =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">participant =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb23-3" title="3">                    <span class="dt">observation_1 =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),</a>
+<a class="sourceLine" id="cb23-4" title="4">                    <span class="dt">observation_2 =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),</a>
+<a class="sourceLine" id="cb23-5" title="5">                    <span class="dt">observation_3 =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 4
+##   participant observation_1 observation_2 observation_3
+##         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+## 1           1            10           100            24
+## 2           2            25            63            45</code></pre>
 <p>Here, I’ve generated data from two participants with three observations. This data frame is not tidy since each row contains more than a single observation. Data frames that have one row per participant but many observations are called <em>wide</em> data frames.</p>
 <p>We can make it tidy using the <code>pivot_longer()</code> function.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">df.reshape.long =<span class="st"> </span>df.reshape <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -881,21 +883,21 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb25-4" title="4">               <span class="dt">cols =</span> <span class="op">-</span>participant) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb25-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb25-6" title="6"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
-<pre><code># A tibble: 6 x 3
-  participant index         rating
-        &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
-1           1 observation_1     10
-2           1 observation_2    100
-3           1 observation_3     24
-4           2 observation_1     25
-5           2 observation_2     63
-6           2 observation_3     45</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   participant index         rating
+##         &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
+## 1           1 observation_1     10
+## 2           1 observation_2    100
+## 3           1 observation_3     24
+## 4           2 observation_1     25
+## 5           2 observation_2     63
+## 6           2 observation_3     45</code></pre>
 <p><code>df.reshape.long</code> now contains one observation in each row. Data frames with one row per observation are called <em>long</em> data frames.</p>
 <p>The <code>pivot_longer()</code> function takes at least four arguments:</p>
 <ol style="list-style-type: decimal">
 <li>the data which I’ve passed to it via the pipe <code>%&gt;%</code></li>
 <li>a <code>names_to</code> argument which specifies the name of the column which will contain the column names of the original data frame</li>
-<li>a <code>values_to</code> argument which specifies the name of the columh which will contain the values that were spread across different columns in the original data frame</li>
+<li>a <code>values_to</code> argument which specifies the name of the column which will contain the values that were spread across different columns in the original data frame</li>
 <li>a specification for which columns we want to gather – here I’ve specified that we want to gather the values from all columns except the <code>participant</code> column</li>
 </ol>
 <p><code>pivot_wider()</code> is the counterpart of <code>pivot_longer()</code>. We can use it to go from a data frame that is in <em>long</em> format, to a data frame in <em>wide</em> format, like so:</p>
@@ -903,31 +905,29 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> index,</a>
 <a class="sourceLine" id="cb27-3" title="3">              <span class="dt">values_from =</span> rating) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb27-4" title="4"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
-<pre><code># A tibble: 2 x 4
-  participant observation_1 observation_2 observation_3
-        &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
-1           1            10           100            24
-2           2            25            63            45</code></pre>
-<p>For my data, I often have a wide data frame that contains demographic information about participants, and a long data frame that contains participants’ responses in the experiment. In Section <a href="data-wrangling-2.html#joining-multiple-data-frames">5.3.3</a>, we will learn how to combine information from multiple data frames (with potentially different formats).</p>
-<p>Here is a slightly more advanced example that involves reshaping a data frame. Let’s consider the following data frame to start with:</p>
+<pre><code>## # A tibble: 2 x 4
+##   participant observation_1 observation_2 observation_3
+##         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+## 1           1            10           100            24
+## 2           2            25            63            45</code></pre>
+<p>For my data, I often have a wide data frame that contains demographic information about participants, and a long data frame that contains participants’ responses in the experiment. In Section <a href="data-wrangling-2.html#joining-multiple-data-frames">5.2.3</a>, we will learn how to combine information from multiple data frames (with potentially different formats).</p>
+<p>Here is a more advanced example that involves reshaping a data frame. Let’s consider the following data frame to start with:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co"># construct data frame </span></a>
-<a class="sourceLine" id="cb29-2" title="2">df.reshape2 =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb29-3" title="3">  <span class="dt">participant =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb29-4" title="4">  <span class="dt">stimulus_1 =</span> <span class="kw">c</span>(<span class="st">&quot;flower&quot;</span>, <span class="st">&quot;car&quot;</span>),</a>
-<a class="sourceLine" id="cb29-5" title="5">  <span class="dt">observation_1 =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),</a>
-<a class="sourceLine" id="cb29-6" title="6">  <span class="dt">stimulus_2 =</span> <span class="kw">c</span>(<span class="st">&quot;house&quot;</span>, <span class="st">&quot;flower&quot;</span>),</a>
-<a class="sourceLine" id="cb29-7" title="7">  <span class="dt">observation_2 =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),</a>
-<a class="sourceLine" id="cb29-8" title="8">  <span class="dt">stimulus_3 =</span> <span class="kw">c</span>(<span class="st">&quot;car&quot;</span>, <span class="st">&quot;house&quot;</span>),</a>
-<a class="sourceLine" id="cb29-9" title="9">  <span class="dt">observation_3 =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)</a>
-<a class="sourceLine" id="cb29-10" title="10">) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-11" title="11"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
-<pre><code># A tibble: 2 x 7
-  participant stimulus_1 observation_1 stimulus_2 observation_2 stimulus_3
-        &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;     
-1           1 flower                10 house                100 car       
-2           2 car                   25 flower                63 house     
-# … with 1 more variable: observation_3 &lt;dbl&gt;</code></pre>
-<p>Now, the data frame contains in each row, which stimuli a participant saw, and what rating she gave. Each of the two participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of <code>pivot_longer()</code>, and <code>pivot_wider()</code> to turn this into a data frame in long format.</p>
+<a class="sourceLine" id="cb29-2" title="2">df.reshape2 =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">participant =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb29-3" title="3">                     <span class="dt">stimulus_1 =</span> <span class="kw">c</span>(<span class="st">&quot;flower&quot;</span>, <span class="st">&quot;car&quot;</span>),</a>
+<a class="sourceLine" id="cb29-4" title="4">                     <span class="dt">observation_1 =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),</a>
+<a class="sourceLine" id="cb29-5" title="5">                     <span class="dt">stimulus_2 =</span> <span class="kw">c</span>(<span class="st">&quot;house&quot;</span>, <span class="st">&quot;flower&quot;</span>),</a>
+<a class="sourceLine" id="cb29-6" title="6">                     <span class="dt">observation_2 =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),</a>
+<a class="sourceLine" id="cb29-7" title="7">                     <span class="dt">stimulus_3 =</span> <span class="kw">c</span>(<span class="st">&quot;car&quot;</span>, <span class="st">&quot;house&quot;</span>),</a>
+<a class="sourceLine" id="cb29-8" title="8">                     <span class="dt">observation_3 =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-9" title="9"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 7
+##   participant stimulus_1 observation_1 stimulus_2 observation_2 stimulus_3
+##         &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;     
+## 1           1 flower                10 house                100 car       
+## 2           2 car                   25 flower                63 house     
+## # … with 1 more variable: observation_3 &lt;dbl&gt;</code></pre>
+<p>The data frame contains in each row: which stimuli a participant saw, and what rating she gave. The participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of <code>pivot_longer()</code>, and <code>pivot_wider()</code> to turn this into a data frame in long format.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb31-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</a>
 <a class="sourceLine" id="cb31-3" title="3">               <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</a>
@@ -938,15 +938,15 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb31-8" title="8">              <span class="dt">values_from =</span> <span class="st">&quot;rating&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb31-9" title="9"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(order, observation), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb31-10" title="10"><span class="st">  </span><span class="kw">select</span>(participant, order, stimulus, <span class="dt">rating =</span> observation)</a></code></pre></div>
-<pre><code># A tibble: 6 x 4
-  participant order stimulus rating
-        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-1           1     1 flower       10
-2           1     2 house       100
-3           1     3 car          24
-4           2     1 car          25
-5           2     2 flower       63
-6           2     3 house        45</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   participant order stimulus rating
+##         &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+## 1           1     1 flower       10
+## 2           1     2 house       100
+## 3           1     3 car          24
+## 4           2     1 car          25
+## 5           2     2 flower       63
+## 6           2     3 house        45</code></pre>
 <p>Voilà! Getting the desired data frame involved a few new tricks. Let’s take it step by step.</p>
 <p>First, I use <code>pivot_longer()</code> to make a long table.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -955,23 +955,23 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb33-4" title="4">               <span class="dt">values_to =</span> <span class="st">&quot;rating&quot;</span>,</a>
 <a class="sourceLine" id="cb33-5" title="5">               <span class="dt">values_ptypes =</span> <span class="kw">list</span>(<span class="dt">rating =</span> <span class="st">&quot;character&quot;</span>),</a>
 <a class="sourceLine" id="cb33-6" title="6">               <span class="dt">cols =</span> <span class="op">-</span>participant)</a></code></pre></div>
-<pre><code># A tibble: 12 x 4
-   participant index       order rating
-         &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
- 1           1 stimulus    1     flower
- 2           1 observation 1     10    
- 3           1 stimulus    2     house 
- 4           1 observation 2     100   
- 5           1 stimulus    3     car   
- 6           1 observation 3     24    
- 7           2 stimulus    1     car   
- 8           2 observation 1     25    
- 9           2 stimulus    2     flower
-10           2 observation 2     63    
-11           2 stimulus    3     house 
-12           2 observation 3     45    </code></pre>
+<pre><code>## # A tibble: 12 x 4
+##    participant index       order rating
+##          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
+##  1           1 stimulus    1     flower
+##  2           1 observation 1     10    
+##  3           1 stimulus    2     house 
+##  4           1 observation 2     100   
+##  5           1 stimulus    3     car   
+##  6           1 observation 3     24    
+##  7           2 stimulus    1     car   
+##  8           2 observation 1     25    
+##  9           2 stimulus    2     flower
+## 10           2 observation 2     63    
+## 11           2 stimulus    3     house 
+## 12           2 observation 3     45</code></pre>
 <p>Notice how I’ve used a combination of the <code>names_to =</code> and <code>names_sep =</code> arguments to create two columns. Because I’m combining data of two different types (“character” and “numeric”), I needed to specify what I want the resulting data type to be via the <code>values_ptypes =</code> argument.</p>
-<p>However, I want to have the information about the stimulus and the observation in the same row. That is, I want to see what rating a participant gave to the flower stimulus, for example. To get there, I can use the <code>pivot_wider()</code> function to make a separate column for each entry in <code>index</code> that contains the values in <code>rating</code>.</p>
+<p>I would like to have the information about the stimulus and the observation in the same row. That is, I want to see what rating a participant gave to the flower stimulus, for example. To get there, I can use the <code>pivot_wider()</code> function to make a separate column for each entry in <code>index</code> that contains the values in <code>rating</code>.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb35-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</a>
 <a class="sourceLine" id="cb35-3" title="3">               <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</a>
@@ -980,15 +980,15 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb35-6" title="6">               <span class="dt">cols =</span> <span class="op">-</span>participant) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb35-7" title="7"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> <span class="st">&quot;index&quot;</span>,</a>
 <a class="sourceLine" id="cb35-8" title="8">              <span class="dt">values_from =</span> <span class="st">&quot;rating&quot;</span>)</a></code></pre></div>
-<pre><code># A tibble: 6 x 4
-  participant order stimulus observation
-        &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;      
-1           1 1     flower   10         
-2           1 2     house    100        
-3           1 3     car      24         
-4           2 1     car      25         
-5           2 2     flower   63         
-6           2 3     house    45         </code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   participant order stimulus observation
+##         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;      
+## 1           1 1     flower   10         
+## 2           1 2     house    100        
+## 3           1 3     car      24         
+## 4           2 1     car      25         
+## 5           2 2     flower   63         
+## 6           2 3     house    45</code></pre>
 <p>That’s pretty much it. Now, each row contains information about the order in which a stimulus was presented, what the stimulus was, and the judgment that a participant made in this trial.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb37-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</a>
@@ -1000,22 +1000,22 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb37-8" title="8">              <span class="dt">values_from =</span> <span class="st">&quot;rating&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb37-9" title="9"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(order, observation), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.numeric</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb37-10" title="10"><span class="st">  </span><span class="kw">select</span>(participant, order, stimulus, <span class="dt">rating =</span> observation)</a></code></pre></div>
-<pre><code># A tibble: 6 x 4
-  participant order stimulus rating
-        &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
-1           1     1 flower       10
-2           1     2 house       100
-3           1     3 car          24
-4           2     1 car          25
-5           2     2 flower       63
-6           2     3 house        45</code></pre>
-<p>The rest is familiar. I’ve used <code>mutate_at()</code> to turn <code>order</code> and <code>observation</code> into numeric columns, <code>select()</code> to change the order of the columns (and renamed the <code>observation</code> column to <code>rating</code> along the way), and <code>arrange()</code> to sort the data frame by <code>participant</code> and <code>order</code>.</p>
+<pre><code>## # A tibble: 6 x 4
+##   participant order stimulus rating
+##         &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
+## 1           1     1 flower       10
+## 2           1     2 house       100
+## 3           1     3 car          24
+## 4           2     1 car          25
+## 5           2     2 flower       63
+## 6           2     3 house        45</code></pre>
+<p>The rest is familiar. I’ve used <code>mutate_at()</code> to turn <code>order</code> and <code>observation</code> into numeric columns, <code>select()</code> to change the order of the columns (and renamed the <code>observation</code> column to <code>rating</code> along the way).</p>
 <p>Getting familiar with <code>pivot_longer()</code> and <code>pivot_wider()</code> takes some time plus trial and error. So don’t be discouraged if you don’t get what you want straight away. Once you’ve mastered these functions, they will make it much easier to beat your data frames into shape.</p>
 <p>After having done some transformations like this, it’s worth checking that nothing went wrong. I often compare a few values in the transformed and original data frame to make sure everything is legit.</p>
 <p>When reading older code, you will often see <code>gather()</code> (instead of <code>pivot_longer()</code>), and <code>spread()</code> (instead of <code>pivot_wider()</code>). <code>gather</code> and <code>spread</code> are not developed anymore now, and their newer counterparts have additional functionality that comes in handy.</p>
 </div>
 <div id="separate-and-unite" class="section level4">
-<h4><span class="header-section-number">5.3.2.2</span> <code>separate()</code> and <code>unite()</code></h4>
+<h4><span class="header-section-number">5.2.2.2</span> <code>separate()</code> and <code>unite()</code></h4>
 <p>Sometimes, we want to separate one column into multiple columns. For example, we could have achieved the same result we did above slightly differently, like so:</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">df.reshape2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;index&quot;</span>,</a>
@@ -1025,21 +1025,21 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <a class="sourceLine" id="cb39-6" title="6"><span class="st">  </span><span class="kw">separate</span>(<span class="dt">col =</span> index,</a>
 <a class="sourceLine" id="cb39-7" title="7">           <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</a>
 <a class="sourceLine" id="cb39-8" title="8">           <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a></code></pre></div>
-<pre><code># A tibble: 12 x 4
-   participant index       order rating
-         &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
- 1           1 stimulus    1     flower
- 2           1 observation 1     10    
- 3           1 stimulus    2     house 
- 4           1 observation 2     100   
- 5           1 stimulus    3     car   
- 6           1 observation 3     24    
- 7           2 stimulus    1     car   
- 8           2 observation 1     25    
- 9           2 stimulus    2     flower
-10           2 observation 2     63    
-11           2 stimulus    3     house 
-12           2 observation 3     45    </code></pre>
+<pre><code>## # A tibble: 12 x 4
+##    participant index       order rating
+##          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
+##  1           1 stimulus    1     flower
+##  2           1 observation 1     10    
+##  3           1 stimulus    2     house 
+##  4           1 observation 2     100   
+##  5           1 stimulus    3     car   
+##  6           1 observation 3     24    
+##  7           2 stimulus    1     car   
+##  8           2 observation 1     25    
+##  9           2 stimulus    2     flower
+## 10           2 observation 2     63    
+## 11           2 stimulus    3     house 
+## 12           2 observation 3     45</code></pre>
 <p>Here, I’ve used the <code>separate()</code> function to separate the original <code>index</code> column into two columns. The <code>separate()</code> function takes four arguments:</p>
 <ol style="list-style-type: decimal">
 <li>the data which I’ve passed to it via the pipe <code>%&gt;%</code></li>
@@ -1051,46 +1051,42 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="kw">c</span>(<span class="st">&quot;flower&quot;</span>, <span class="st">&quot;observation&quot;</span>),</a>
 <a class="sourceLine" id="cb41-2" title="2">       <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb41-3" title="3"><span class="st">  </span><span class="kw">unite</span>(<span class="st">&quot;combined&quot;</span>, index, order)</a></code></pre></div>
-<pre><code># A tibble: 2 x 1
-  combined     
-  &lt;chr&gt;        
-1 flower_1     
-2 observation_2</code></pre>
+<pre><code>## # A tibble: 2 x 1
+##   combined     
+##   &lt;chr&gt;        
+## 1 flower_1     
+## 2 observation_2</code></pre>
 <p>Sometimes, we may have a data frame where data is recorded in a long string.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">df.reshape3 =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb43-2" title="2">  <span class="dt">participant =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb43-3" title="3">  <span class="dt">judgments =</span> <span class="kw">c</span>(<span class="st">&quot;10, 4, 12, 15&quot;</span>, <span class="st">&quot;3, 4&quot;</span>)</a>
-<a class="sourceLine" id="cb43-4" title="4">) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb43-5" title="5"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
-<pre><code># A tibble: 2 x 2
-  participant judgments    
-        &lt;int&gt; &lt;chr&gt;        
-1           1 10, 4, 12, 15
-2           2 3, 4         </code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">df.reshape3 =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">participant =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb43-2" title="2">                     <span class="dt">judgments =</span> <span class="kw">c</span>(<span class="st">&quot;10, 4, 12, 15&quot;</span>, <span class="st">&quot;3, 4&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb43-3" title="3"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   participant judgments    
+##         &lt;int&gt; &lt;chr&gt;        
+## 1           1 10, 4, 12, 15
+## 2           2 3, 4</code></pre>
 <p>Here, I’ve created a data frame with data from two participants. For whatever reason, we have four judgments from participant 1 and only two judgments from participant 2 (data is often messy in real life, too!).</p>
 <p>We can use the <code>separate_rows()</code> function to turn this into a tidy data frame in long format.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">df.reshape3 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb45-2" title="2"><span class="st">  </span><span class="kw">separate_rows</span>(judgments)</a></code></pre></div>
-<pre><code># A tibble: 6 x 2
-  participant judgments
-        &lt;int&gt; &lt;chr&gt;    
-1           1 10       
-2           1 4        
-3           1 12       
-4           1 15       
-5           2 3        
-6           2 4        </code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   participant judgments
+##         &lt;int&gt; &lt;chr&gt;    
+## 1           1 10       
+## 2           1 4        
+## 3           1 12       
+## 4           1 15       
+## 5           2 3        
+## 6           2 4</code></pre>
 </div>
 <div id="practice-2-1" class="section level4">
-<h4><span class="header-section-number">5.3.2.3</span> Practice 2</h4>
+<h4><span class="header-section-number">5.2.2.3</span> Practice 2</h4>
 <p>Load this data frame first.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">df.practice2 =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb47-2" title="2">  <span class="dt">participant =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb47-3" title="3">  <span class="dt">initial =</span> <span class="kw">c</span>(<span class="st">&quot;AR&quot;</span>, <span class="st">&quot;FA&quot;</span>, <span class="st">&quot;IR&quot;</span>, <span class="st">&quot;NC&quot;</span>, <span class="st">&quot;ER&quot;</span>, <span class="st">&quot;PI&quot;</span>, <span class="st">&quot;DH&quot;</span>, <span class="st">&quot;CN&quot;</span>, <span class="st">&quot;WT&quot;</span>, <span class="st">&quot;JD&quot;</span>), </a>
-<a class="sourceLine" id="cb47-4" title="4">  <span class="dt">judgment_1 =</span> <span class="kw">c</span>(<span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">1</span>, <span class="dv">14</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">41</span>, <span class="dv">100</span>, <span class="dv">33</span>),</a>
-<a class="sourceLine" id="cb47-5" title="5">  <span class="dt">judgment_2 =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">89</span>, <span class="dv">94</span>, <span class="dv">27</span>, <span class="dv">29</span>, <span class="dv">19</span>, <span class="dv">57</span>, <span class="dv">74</span>),</a>
-<a class="sourceLine" id="cb47-6" title="6">  <span class="dt">judgment_3 =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">89</span>, <span class="dv">94</span>, <span class="dv">27</span>, <span class="dv">29</span>, <span class="dv">19</span>, <span class="dv">57</span>, <span class="dv">74</span>)</a>
-<a class="sourceLine" id="cb47-7" title="7">)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">df.practice2 =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">participant =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb47-2" title="2">                      <span class="dt">initial =</span> <span class="kw">c</span>(<span class="st">&quot;AR&quot;</span>, <span class="st">&quot;FA&quot;</span>, <span class="st">&quot;IR&quot;</span>, <span class="st">&quot;NC&quot;</span>, <span class="st">&quot;ER&quot;</span>, <span class="st">&quot;PI&quot;</span>, <span class="st">&quot;DH&quot;</span>, <span class="st">&quot;CN&quot;</span>, <span class="st">&quot;WT&quot;</span>, <span class="st">&quot;JD&quot;</span>), </a>
+<a class="sourceLine" id="cb47-3" title="3">                      <span class="dt">judgment_1 =</span> <span class="kw">c</span>(<span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">1</span>, <span class="dv">14</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">41</span>, <span class="dv">100</span>, <span class="dv">33</span>),</a>
+<a class="sourceLine" id="cb47-4" title="4">                      <span class="dt">judgment_2 =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">89</span>, <span class="dv">94</span>, <span class="dv">27</span>, <span class="dv">29</span>, <span class="dv">19</span>, <span class="dv">57</span>, <span class="dv">74</span>),</a>
+<a class="sourceLine" id="cb47-5" title="5">                      <span class="dt">judgment_3 =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">89</span>, <span class="dv">94</span>, <span class="dv">27</span>, <span class="dv">29</span>, <span class="dv">19</span>, <span class="dv">57</span>, <span class="dv">74</span>))</a></code></pre></div>
 <ul>
 <li>Make the <code>df.practice2</code> data framey tidy (by turning into a long format).</li>
 <li>Compute the z-score of each participants’ judgments (using the <code>scale()</code> function).</li>
@@ -1101,233 +1097,222 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 </div>
 </div>
 <div id="joining-multiple-data-frames" class="section level3">
-<h3><span class="header-section-number">5.3.3</span> Joining multiple data frames</h3>
+<h3><span class="header-section-number">5.2.3</span> Joining multiple data frames</h3>
 <p>It’s nice to have all the information we need in a single, tidy data frame. We have learned above how to go from a single untidy data frame to a tidy one. However, often our situation to start off with is even worse. The information we need sits in several, messy data frames.</p>
 <p>For example, we may have one data frame <code>df.stimuli</code> with information about each stimulus, and then have another data frame with participants’ responses <code>df.responses</code> that only contains a stimulus index but no other infromation about the stimuli.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1</span>) <span class="co"># setting random seed to make this example reproducible</span></a>
 <a class="sourceLine" id="cb49-2" title="2"></a>
 <a class="sourceLine" id="cb49-3" title="3"><span class="co"># data frame with stimulus information</span></a>
-<a class="sourceLine" id="cb49-4" title="4">df.stimuli =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb49-5" title="5">  <span class="dt">index =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb49-6" title="6">  <span class="dt">height =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb49-7" title="7">  <span class="dt">width =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb49-8" title="8">  <span class="dt">n_dots =</span> <span class="kw">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">7</span>),</a>
-<a class="sourceLine" id="cb49-9" title="9">  <span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)</a>
-<a class="sourceLine" id="cb49-10" title="10">) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb49-11" title="11"><span class="st">  </span><span class="kw">print</span>()</a>
-<a class="sourceLine" id="cb49-12" title="12"></a>
-<a class="sourceLine" id="cb49-13" title="13"><span class="co"># data frame with participants&#39; responses </span></a>
-<a class="sourceLine" id="cb49-14" title="14">df.responses =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb49-15" title="15">  <span class="dt">participant =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each =</span> <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb49-16" title="16">  <span class="dt">index =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">3</span>), </a>
-<a class="sourceLine" id="cb49-17" title="17">  <span class="dt">response =</span> <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>) <span class="co"># randomly sample 15 values from 0 to 100</span></a>
-<a class="sourceLine" id="cb49-18" title="18">) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb49-19" title="19"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
-<pre><code># A tibble: 5 x 5
-  index height width n_dots color
-  &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
-1     1      2     4     12 green
-2     2      3     5     15 blue 
-3     3      1     2      5 white
-4     4      4     3     13 red  
-5     5      5     1      7 black
-# A tibble: 15 x 3
-   participant index response
-         &lt;int&gt; &lt;int&gt;    &lt;int&gt;
- 1           1     1       67
- 2           1     2       38
- 3           1     3        0
- 4           1     4       33
- 5           1     5       86
- 6           2     1       42
- 7           2     2       13
- 8           2     3       81
- 9           2     4       58
-10           2     5       50
-11           3     1       96
-12           3     2       84
-13           3     3       20
-14           3     4       53
-15           3     5       73</code></pre>
+<a class="sourceLine" id="cb49-4" title="4">df.stimuli =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">index =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb49-5" title="5">  <span class="dt">height =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb49-6" title="6">  <span class="dt">width =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb49-7" title="7">  <span class="dt">n_dots =</span> <span class="kw">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb49-8" title="8">  <span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb49-9" title="9"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   index height width n_dots color
+##   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
+## 1     1      2     4     12 green
+## 2     2      3     5     15 blue 
+## 3     3      1     2      5 white
+## 4     4      4     3     13 red  
+## 5     5      5     1      7 black</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="co"># data frame with participants&#39; responses </span></a>
+<a class="sourceLine" id="cb51-2" title="2">df.responses =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">participant =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each =</span> <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb51-3" title="3">  <span class="dt">index =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">3</span>), </a>
+<a class="sourceLine" id="cb51-4" title="4">  <span class="dt">response =</span> <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># randomly sample 15 values from 0 to 100</span></a>
+<a class="sourceLine" id="cb51-5" title="5"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 15 x 3
+##    participant index response
+##          &lt;int&gt; &lt;int&gt;    &lt;int&gt;
+##  1           1     1       67
+##  2           1     2       38
+##  3           1     3        0
+##  4           1     4       33
+##  5           1     5       86
+##  6           2     1       42
+##  7           2     2       13
+##  8           2     3       81
+##  9           2     4       58
+## 10           2     5       50
+## 11           3     1       96
+## 12           3     2       84
+## 13           3     3       20
+## 14           3     4       53
+## 15           3     5       73</code></pre>
 <p>The <code>df.stimuli</code> data frame contains an <code>index</code>, information about the <code>height</code>, and <code>width</code>, as well as the number of <code>dots</code>, and their <code>color</code>. Let’s imagine that participants had to judge how much they liked each image from a scale of 0 (“not liking this dot pattern at all”) to 100 (“super thrilled about this dot pattern”).</p>
 <p>Let’s say that I now wanted to know what participants’ average response for the differently colored dot patterns are. Here is how I would do this:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">df.responses <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-2" title="2"><span class="st">  </span><span class="kw">left_join</span>(df.stimuli <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-3" title="3"><span class="st">              </span><span class="kw">select</span>(index, color),</a>
-<a class="sourceLine" id="cb51-4" title="4">            <span class="dt">by =</span> <span class="st">&quot;index&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">response_mean =</span> <span class="kw">mean</span>(response))</a></code></pre></div>
-<pre><code># A tibble: 5 x 2
-  color response_mean
-  &lt;chr&gt;         &lt;dbl&gt;
-1 black          69.7
-2 blue           45  
-3 green          68.3
-4 red            48  
-5 white          33.7</code></pre>
-<p>Let’s take it step by step. The key here is to add the information from the <code>df.stimuli</code> data frame to the <code>df.responses</code> data frame.</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">df.responses <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-2" title="2"><span class="st">  </span><span class="kw">left_join</span>(df.stimuli <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-2" title="2"><span class="st">  </span><span class="kw">left_join</span>(df.stimuli <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb53-3" title="3"><span class="st">              </span><span class="kw">select</span>(index, color),</a>
-<a class="sourceLine" id="cb53-4" title="4">            <span class="dt">by =</span> <span class="st">&quot;index&quot;</span>)</a></code></pre></div>
-<pre><code># A tibble: 15 x 4
-   participant index response color
-         &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
- 1           1     1       67 green
- 2           1     2       38 blue 
- 3           1     3        0 white
- 4           1     4       33 red  
- 5           1     5       86 black
- 6           2     1       42 green
- 7           2     2       13 blue 
- 8           2     3       81 white
- 9           2     4       58 red  
-10           2     5       50 black
-11           3     1       96 green
-12           3     2       84 blue 
-13           3     3       20 white
-14           3     4       53 red  
-15           3     5       73 black</code></pre>
+<a class="sourceLine" id="cb53-4" title="4">            <span class="dt">by =</span> <span class="st">&quot;index&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(color) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">response_mean =</span> <span class="kw">mean</span>(response))</a></code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##   color response_mean
+##   &lt;chr&gt;         &lt;dbl&gt;
+## 1 black          69.7
+## 2 blue           45  
+## 3 green          68.3
+## 4 red            48  
+## 5 white          33.7</code></pre>
+<p>Let’s take it step by step. The key here is to add the information from the <code>df.stimuli</code> data frame to the <code>df.responses</code> data frame.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">df.responses <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-2" title="2"><span class="st">  </span><span class="kw">left_join</span>(df.stimuli <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="st">              </span><span class="kw">select</span>(index, color),</a>
+<a class="sourceLine" id="cb55-4" title="4">            <span class="dt">by =</span> <span class="st">&quot;index&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 15 x 4
+##    participant index response color
+##          &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
+##  1           1     1       67 green
+##  2           1     2       38 blue 
+##  3           1     3        0 white
+##  4           1     4       33 red  
+##  5           1     5       86 black
+##  6           2     1       42 green
+##  7           2     2       13 blue 
+##  8           2     3       81 white
+##  9           2     4       58 red  
+## 10           2     5       50 black
+## 11           3     1       96 green
+## 12           3     2       84 blue 
+## 13           3     3       20 white
+## 14           3     4       53 red  
+## 15           3     5       73 black</code></pre>
 <p>I’ve joined the <code>df.stimuli</code> table in which I’ve only selected the <code>index</code> and <code>color</code> column, with the <code>df.responses</code> table, and specified the <code>index</code> column as the one by which the tables should be joined. This is the only column that both of the data frames have in common.</p>
 <p>To specify multiple columns by which we would like to join tables, we specify the <code>by</code> argument as follows: <code>by = c("one_column", "another_column")</code>.</p>
 <p>Sometimes, the tables I want to join don’t have any column names in common. In that case, we can tell the <code>left_join()</code> function which column pair(s) should be used for joining.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">df.responses <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-2" title="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">stimuli =</span> index) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># I&#39;ve renamed the index column to stimuli</span></a>
-<a class="sourceLine" id="cb55-3" title="3"><span class="st">  </span><span class="kw">left_join</span>(df.stimuli <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-4" title="4"><span class="st">              </span><span class="kw">select</span>(index, color),</a>
-<a class="sourceLine" id="cb55-5" title="5">            <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;stimuli&quot;</span> =<span class="st"> &quot;index&quot;</span>)) </a></code></pre></div>
-<pre><code># A tibble: 15 x 4
-   participant stimuli response color
-         &lt;int&gt;   &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
- 1           1       1       67 green
- 2           1       2       38 blue 
- 3           1       3        0 white
- 4           1       4       33 red  
- 5           1       5       86 black
- 6           2       1       42 green
- 7           2       2       13 blue 
- 8           2       3       81 white
- 9           2       4       58 red  
-10           2       5       50 black
-11           3       1       96 green
-12           3       2       84 blue 
-13           3       3       20 white
-14           3       4       53 red  
-15           3       5       73 black</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1">df.responses <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb57-2" title="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">stimuli =</span> index) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># I&#39;ve renamed the index column to stimuli</span></a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="st">  </span><span class="kw">left_join</span>(df.stimuli <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb57-4" title="4"><span class="st">              </span><span class="kw">select</span>(index, color),</a>
+<a class="sourceLine" id="cb57-5" title="5">            <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;stimuli&quot;</span> =<span class="st"> &quot;index&quot;</span>)) </a></code></pre></div>
+<pre><code>## # A tibble: 15 x 4
+##    participant stimuli response color
+##          &lt;int&gt;   &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
+##  1           1       1       67 green
+##  2           1       2       38 blue 
+##  3           1       3        0 white
+##  4           1       4       33 red  
+##  5           1       5       86 black
+##  6           2       1       42 green
+##  7           2       2       13 blue 
+##  8           2       3       81 white
+##  9           2       4       58 red  
+## 10           2       5       50 black
+## 11           3       1       96 green
+## 12           3       2       84 blue 
+## 13           3       3       20 white
+## 14           3       4       53 red  
+## 15           3       5       73 black</code></pre>
 <p>Here, I’ve first renamed the index column (to create the problem) and then used the <code>by = c("stimuli" = "index")</code> construction (to solve the problem).</p>
 <p>In my experience, it often takes a little bit of playing around to make sure that the data frames were joined as intended. One very good indicator is the row number of the initial data frame, and the joined one. For a <code>left_join()</code>, most of the time, we want the row number of the original data frame (“the one on the left”) and the joined data frame to be the same. If the row number changed, something probably went wrong.</p>
 <p>Take a look at the <code>join</code> help file to see other operations for combining two or more data frames into one (make sure to look at the one from the <code>dplyr</code> package).</p>
-<div id="practice-3" class="section level4">
-<h4><span class="header-section-number">5.3.3.1</span> Practice 3</h4>
+<div id="practice-3-1" class="section level4">
+<h4><span class="header-section-number">5.2.3.1</span> Practice 3</h4>
 <p>Load these three data frames first:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb57-2" title="2"></a>
-<a class="sourceLine" id="cb57-3" title="3">df.judgments =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb57-4" title="4">  <span class="dt">participant =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each =</span> <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb57-5" title="5">  <span class="dt">stimulus =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb57-6" title="6">  <span class="dt">judgment =</span> <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">replace =</span> T)</a>
-<a class="sourceLine" id="cb57-7" title="7">)</a>
-<a class="sourceLine" id="cb57-8" title="8"></a>
-<a class="sourceLine" id="cb57-9" title="9">df.information =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb57-10" title="10">  <span class="dt">number =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">100</span>, <span class="dt">length.out =</span> <span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb57-11" title="11">  <span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>)</a>
-<a class="sourceLine" id="cb57-12" title="12">)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb59-2" title="2"></a>
+<a class="sourceLine" id="cb59-3" title="3">df.judgments =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">participant =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">each =</span> <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb59-4" title="4">                      <span class="dt">stimulus =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb59-5" title="5">                      <span class="dt">judgment =</span> <span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">size =</span> <span class="dv">15</span>, <span class="dt">replace =</span> T))</a>
+<a class="sourceLine" id="cb59-6" title="6"></a>
+<a class="sourceLine" id="cb59-7" title="7">df.information =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">number =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">100</span>, <span class="dt">length.out =</span> <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb59-8" title="8">                        <span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>))</a></code></pre></div>
 <p>Create a new data frame called <code>df.join</code> that combines the information from both <code>df.judgments</code> and <code>df.information</code>. Note that column with the colors is called <code>stimulus</code> in <code>df.judgments</code> and <code>color</code> in <code>df.information</code>. At the end, you want a data frame that contains the following columns: <code>participant</code>, <code>stimulus</code>, <code>number</code>, and <code>judgment</code>.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="co"># write your code here</span></a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="co"># write your code here</span></a></code></pre></div>
 </div>
 </div>
 <div id="dealing-with-missing-data" class="section level3">
-<h3><span class="header-section-number">5.3.4</span> Dealing with missing data</h3>
+<h3><span class="header-section-number">5.2.4</span> Dealing with missing data</h3>
 <p>There are two ways for data to be missing.</p>
 <ul>
 <li><strong>implicit</strong>: data is not present in the table</li>
 <li><strong>explicit</strong>: data is flagged with <code>NA</code></li>
 </ul>
 <p>We can check for explicit missing values using the <code>is.na()</code> function like so:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">tmp.na =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb59-2" title="2"><span class="kw">is.na</span>(tmp.na)</a></code></pre></div>
-<pre><code>[1] FALSE FALSE  TRUE FALSE</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">tmp.na =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="kw">is.na</span>(tmp.na)</a></code></pre></div>
+<pre><code>## [1] FALSE FALSE  TRUE FALSE</code></pre>
 <p>I’ve first created a vector <code>tmp.na</code> with a missing value at index 3. Calling the <code>is.na()</code> function on this vector yields a logical vector with <code>FALSE</code> for each value that is not missing, and <code>TRUE</code> for each missing value.</p>
 <p>Let’s say that we have a data frame with missing values and that we want to replace those missing values with something else. Let’s first create a data frame with missing values.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">df.missing =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>),</a>
-<a class="sourceLine" id="cb61-2" title="2">                 <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;b&quot;</span>))</a>
-<a class="sourceLine" id="cb61-3" title="3"><span class="kw">print</span>(df.missing)</a></code></pre></div>
-<pre><code># A tibble: 3 x 2
-      x y    
-  &lt;dbl&gt; &lt;chr&gt;
-1     1 a    
-2     2 &lt;NA&gt; 
-3    NA b    </code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">df.missing =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="ot">NA</span>),</a>
+<a class="sourceLine" id="cb63-2" title="2">                    <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;b&quot;</span>))</a>
+<a class="sourceLine" id="cb63-3" title="3"><span class="kw">print</span>(df.missing)</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##       x y    
+##   &lt;dbl&gt; &lt;chr&gt;
+## 1     1 a    
+## 2     2 &lt;NA&gt; 
+## 3    NA b</code></pre>
 <p>We can use the <code>replace_na()</code> function to replace the missing values with something else.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">df.missing <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb63-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">replace_na</span>(x, <span class="dt">replace =</span> <span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb63-3" title="3">         <span class="dt">y =</span> <span class="kw">replace_na</span>(y, <span class="dt">replace =</span> <span class="st">&quot;unknown&quot;</span>))</a></code></pre></div>
-<pre><code># A tibble: 3 x 2
-      x y      
-  &lt;dbl&gt; &lt;chr&gt;  
-1     1 a      
-2     2 unknown
-3     0 b      </code></pre>
-<p>We can also remove rows with missing values using the <code>drop_na()</code> function.</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">df.missing <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb65-2" title="2"><span class="st">  </span><span class="kw">drop_na</span>()</a></code></pre></div>
-<pre><code># A tibble: 1 x 2
-      x y    
-  &lt;dbl&gt; &lt;chr&gt;
-1     1 a    </code></pre>
-<p>If we only want to drop values from specific columns, we can specify these columns within the <code>drop_na()</code> function call. So, if we only want to drop rows that have missing values in the <code>x</code> column, we can write:</p>
+<a class="sourceLine" id="cb65-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x =</span> <span class="kw">replace_na</span>(x, <span class="dt">replace =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb65-3" title="3">         <span class="dt">y =</span> <span class="kw">replace_na</span>(y, <span class="dt">replace =</span> <span class="st">&quot;unknown&quot;</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 2
+##       x y      
+##   &lt;dbl&gt; &lt;chr&gt;  
+## 1     1 a      
+## 2     2 unknown
+## 3     0 b</code></pre>
+<p>We can also remove rows with missing values using the <code>drop_na()</code> function.</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">df.missing <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb67-2" title="2"><span class="st">  </span><span class="kw">drop_na</span>(x)</a></code></pre></div>
-<pre><code># A tibble: 2 x 2
-      x y    
-  &lt;dbl&gt; &lt;chr&gt;
-1     1 a    
-2     2 &lt;NA&gt; </code></pre>
+<a class="sourceLine" id="cb67-2" title="2"><span class="st">  </span><span class="kw">drop_na</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##       x y    
+##   &lt;dbl&gt; &lt;chr&gt;
+## 1     1 a</code></pre>
+<p>If we only want to drop values from specific columns, we can specify these columns within the <code>drop_na()</code> function call. So, if we only want to drop rows that have missing values in the <code>x</code> column, we can write:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">df.missing <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb69-2" title="2"><span class="st">  </span><span class="kw">drop_na</span>(x)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##       x y    
+##   &lt;dbl&gt; &lt;chr&gt;
+## 1     1 a    
+## 2     2 &lt;NA&gt;</code></pre>
 <p>To make the distinction between implicit and explicit missing values more concrete, let’s consider the following example (taken from <a href="https://r4ds.had.co.nz/tidy-data.html#missing-values-3">here</a>):</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">df.stocks =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb69-2" title="2">  <span class="dt">year   =</span> <span class="kw">c</span>(<span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2016</span>, <span class="dv">2016</span>),</a>
-<a class="sourceLine" id="cb69-3" title="3">  <span class="dt">qtr    =</span> <span class="kw">c</span>(   <span class="dv">1</span>,    <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>,    <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb69-4" title="4">  <span class="dt">return =</span> <span class="kw">c</span>(<span class="fl">1.88</span>, <span class="fl">0.59</span>, <span class="fl">0.35</span>,   <span class="ot">NA</span>, <span class="fl">0.92</span>, <span class="fl">0.17</span>, <span class="fl">2.66</span>)</a>
-<a class="sourceLine" id="cb69-5" title="5">)</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">df.stocks =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">year   =</span> <span class="kw">c</span>(<span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2016</span>, <span class="dv">2016</span>),</a>
+<a class="sourceLine" id="cb71-2" title="2">                   <span class="dt">qtr    =</span> <span class="kw">c</span>(   <span class="dv">1</span>,    <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>,    <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>),</a>
+<a class="sourceLine" id="cb71-3" title="3">                   <span class="dt">return =</span> <span class="kw">c</span>(<span class="fl">1.88</span>, <span class="fl">0.59</span>, <span class="fl">0.35</span>,   <span class="ot">NA</span>, <span class="fl">0.92</span>, <span class="fl">0.17</span>, <span class="fl">2.66</span>))</a></code></pre></div>
 <p>There are two missing values in this dataset:</p>
 <ul>
 <li>The return for the fourth quarter of 2015 is explicitly missing, because the cell where its value should be instead contains <code>NA</code>.</li>
 <li>The return for the first quarter of 2016 is implicitly missing, because it simply does not appear in the dataset.</li>
 </ul>
-<p>We can use the <code>complete()</code> function to turn implicit missing values explicit:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">df.stocks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb70-2" title="2"><span class="st">  </span><span class="kw">complete</span>(year, qtr)</a></code></pre></div>
-<pre><code># A tibble: 8 x 3
-   year   qtr return
-  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-1  2015     1   1.88
-2  2015     2   0.59
-3  2015     3   0.35
-4  2015     4  NA   
-5  2016     1  NA   
-6  2016     2   0.92
-7  2016     3   0.17
-8  2016     4   2.66</code></pre>
+<p>We can use the <code>complete()</code> function to make implicit missing values explicit:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">df.stocks <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span><span class="kw">complete</span>(year, qtr)</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##    year   qtr return
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1  2015     1   1.88
+## 2  2015     2   0.59
+## 3  2015     3   0.35
+## 4  2015     4  NA   
+## 5  2016     1  NA   
+## 6  2016     2   0.92
+## 7  2016     3   0.17
+## 8  2016     4   2.66</code></pre>
 <p>Note how now, the data frame contains an additional row in which <code>year = 2016</code>, <code>qtr = 1</code> and <code>return = NA</code> even though we didn’t originally specify this.</p>
 <p>We can also directly tell the <code>complete()</code> function to replace the <code>NA</code> values via passing a list to its <code>fill</code> argument like so:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">df.stocks <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span><span class="kw">complete</span>(year, qtr, <span class="dt">fill =</span> <span class="kw">list</span>(<span class="dt">return =</span> <span class="dv">0</span>))</a></code></pre></div>
-<pre><code># A tibble: 8 x 3
-   year   qtr return
-  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
-1  2015     1   1.88
-2  2015     2   0.59
-3  2015     3   0.35
-4  2015     4   0   
-5  2016     1   0   
-6  2016     2   0.92
-7  2016     3   0.17
-8  2016     4   2.66</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">df.stocks <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-2" title="2"><span class="st">  </span><span class="kw">complete</span>(year, qtr, <span class="dt">fill =</span> <span class="kw">list</span>(<span class="dt">return =</span> <span class="dv">0</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##    year   qtr return
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1  2015     1   1.88
+## 2  2015     2   0.59
+## 3  2015     3   0.35
+## 4  2015     4   0   
+## 5  2016     1   0   
+## 6  2016     2   0.92
+## 7  2016     3   0.17
+## 8  2016     4   2.66</code></pre>
 <p>This specifies that we would like to replace any <code>NA</code> in the <code>return</code> column with <code>0</code>. Again, if we had multiple columns with <code>NA</code>s, we could speficy for each column separately how to replace it.</p>
 </div>
 </div>
 <div id="reading-in-data" class="section level2">
-<h2><span class="header-section-number">5.4</span> Reading in data</h2>
+<h2><span class="header-section-number">5.3</span> Reading in data</h2>
 <p>So far, we’ve used data sets that already came with the packages we’ve loaded. In the visualization chapters, we used the <code>diamonds</code> data set from the <code>ggplot2</code> package, and in the data wrangling chapters, we used the <code>starwars</code> data set from the <code>dplyr</code> package.</p>
 <table>
 <thead>
@@ -1368,93 +1353,93 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <p>The <code>foreign</code> <a href="https://cran.r-project.org/web/packages/foreign/index.html">package</a> helps with importing data that was saved in SPSS, Stata, or Minitab.</p>
 <p>For data in a json format, I highly recommend the <code>tidyjson</code> <a href="https://github.com/sailthru/tidyjson">package</a>.</p>
 <div id="csv" class="section level3">
-<h3><span class="header-section-number">5.4.1</span> csv</h3>
+<h3><span class="header-section-number">5.3.1</span> csv</h3>
 <p>I’ve stored some data files in the <code>data/</code> subfolder. Let’s first read a csv (= <strong>c</strong>omma-<strong>s</strong>eparated-<strong>v</strong>alue) file.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1">df.csv =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/movies.csv&quot;</span>)</a></code></pre></div>
-<pre><code>Parsed with column specification:
-cols(
-  title = col_character(),
-  genre = col_character(),
-  director = col_character(),
-  year = col_double(),
-  duration = col_double(),
-  gross = col_double(),
-  budget = col_double(),
-  cast_facebook_likes = col_double(),
-  votes = col_double(),
-  reviews = col_double(),
-  rating = col_double()
-)</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">df.csv =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/movies.csv&quot;</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   title = col_character(),
+##   genre = col_character(),
+##   director = col_character(),
+##   year = col_double(),
+##   duration = col_double(),
+##   gross = col_double(),
+##   budget = col_double(),
+##   cast_facebook_likes = col_double(),
+##   votes = col_double(),
+##   reviews = col_double(),
+##   rating = col_double()
+## )</code></pre>
 <p>The <code>read_csv()</code> function gives us information about how each column was parsed. Here, we have some columns that are characters (such as <code>title</code> and <code>genre</code>), and some columns that are numeric (such as <code>year</code> and <code>duration</code>). Note that it says <code>double()</code> in the specification but double and numeric are identical.</p>
 <p>And let’s take a quick peek at the data:</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">df.csv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glimpse</span>()</a></code></pre></div>
-<pre><code>Observations: 2,961
-Variables: 11
-$ title               &lt;chr&gt; &quot;Over the Hill to the Poorhouse&quot;, &quot;The Broad…
-$ genre               &lt;chr&gt; &quot;Crime&quot;, &quot;Musical&quot;, &quot;Comedy&quot;, &quot;Comedy&quot;, &quot;Com…
-$ director            &lt;chr&gt; &quot;Harry F. Millarde&quot;, &quot;Harry Beaumont&quot;, &quot;Lloy…
-$ year                &lt;dbl&gt; 1920, 1929, 1933, 1935, 1936, 1937, 1939, 19…
-$ duration            &lt;dbl&gt; 110, 100, 89, 81, 87, 83, 102, 226, 88, 144,…
-$ gross               &lt;dbl&gt; 3000000, 2808000, 2300000, 3000000, 163245, …
-$ budget              &lt;dbl&gt; 100000, 379000, 439000, 609000, 1500000, 200…
-$ cast_facebook_likes &lt;dbl&gt; 4, 109, 995, 824, 352, 229, 2509, 1862, 1178…
-$ votes               &lt;dbl&gt; 5, 4546, 7921, 13269, 143086, 133348, 291875…
-$ reviews             &lt;dbl&gt; 2, 107, 162, 164, 331, 349, 746, 863, 252, 1…
-$ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5,…</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1">df.csv <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">glimpse</span>()</a></code></pre></div>
+<pre><code>## Observations: 2,961
+## Variables: 11
+## $ title               &lt;chr&gt; &quot;Over the Hill to the Poorhouse&quot;, &quot;The Broadway M…
+## $ genre               &lt;chr&gt; &quot;Crime&quot;, &quot;Musical&quot;, &quot;Comedy&quot;, &quot;Comedy&quot;, &quot;Comedy&quot;,…
+## $ director            &lt;chr&gt; &quot;Harry F. Millarde&quot;, &quot;Harry Beaumont&quot;, &quot;Lloyd Bac…
+## $ year                &lt;dbl&gt; 1920, 1929, 1933, 1935, 1936, 1937, 1939, 1939, 1…
+## $ duration            &lt;dbl&gt; 110, 100, 89, 81, 87, 83, 102, 226, 88, 144, 172,…
+## $ gross               &lt;dbl&gt; 3000000, 2808000, 2300000, 3000000, 163245, 18492…
+## $ budget              &lt;dbl&gt; 100000, 379000, 439000, 609000, 1500000, 2000000,…
+## $ cast_facebook_likes &lt;dbl&gt; 4, 109, 995, 824, 352, 229, 2509, 1862, 1178, 203…
+## $ votes               &lt;dbl&gt; 5, 4546, 7921, 13269, 143086, 133348, 291875, 215…
+## $ reviews             &lt;dbl&gt; 2, 107, 162, 164, 331, 349, 746, 863, 252, 119, 3…
+## $ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5, 6.9,…</code></pre>
 <p>The data frame contains a bunch of movies with information about their genre, director, rating, etc.</p>
 <p>The <code>readr</code> package (which contains the <code>read_csv()</code> function) has a number of other functions for reading data. Just type <code>read_</code> in the console below and take a look at the suggestions that autocomplete offers.</p>
 </div>
 <div id="rdata" class="section level3">
-<h3><span class="header-section-number">5.4.2</span> RData</h3>
+<h3><span class="header-section-number">5.3.2</span> RData</h3>
 <p>RData is a data format native to R. Since this format can only be read by R, it’s not a good format for sharing data. However, it’s a useful format that allows us to flexibly save and load R objects. For example, consider that we always start our script by reading in and structuring data, and that this takes quite a while. One thing we can do is to save the output of intermediate steps as an RData object, and then simply load this object (instead of re-running the whole routine every time).</p>
 <p>We read (or load) an RData file in the following way:</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1"><span class="kw">load</span>(<span class="st">&quot;data/test.RData&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>Loading objects:
-  df.test</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1"><span class="kw">load</span>(<span class="st">&quot;data/test.RData&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## Loading objects:
+##   df.test</code></pre>
 <p>I’ve set the <code>verbose =</code> argument to <code>TRUE</code> here so that the <code>load()</code> function tells me what objects it added to the environment. This is useful for checking whether existing objects were overwritten.</p>
 </div>
 </div>
 <div id="saving-data" class="section level2">
-<h2><span class="header-section-number">5.5</span> Saving data</h2>
+<h2><span class="header-section-number">5.4</span> Saving data</h2>
 <div id="csv-1" class="section level3">
-<h3><span class="header-section-number">5.5.1</span> csv</h3>
+<h3><span class="header-section-number">5.4.1</span> csv</h3>
 <p>To save a data frame as a csv file, we simply write:</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">df.test =<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb80-2" title="2">  <span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb80-3" title="3">  <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;test1&quot;</span>, <span class="st">&quot;test2&quot;</span>, <span class="st">&quot;test3&quot;</span>)</a>
-<a class="sourceLine" id="cb80-4" title="4">)</a>
-<a class="sourceLine" id="cb80-5" title="5"></a>
-<a class="sourceLine" id="cb80-6" title="6"><span class="kw">write_csv</span>(df.test, <span class="dt">path =</span> <span class="st">&quot;data/test.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1">df.test =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb82-2" title="2">                 <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;test1&quot;</span>, <span class="st">&quot;test2&quot;</span>, <span class="st">&quot;test3&quot;</span>))</a>
+<a class="sourceLine" id="cb82-3" title="3"></a>
+<a class="sourceLine" id="cb82-4" title="4"><span class="kw">write_csv</span>(df.test, <span class="dt">path =</span> <span class="st">&quot;data/test.csv&quot;</span>)</a></code></pre></div>
 <p>Just like for reading in data, the <code>readr</code> package has a number of other functions for saving data. Just type <code>write_</code> in the console below and take a look at the autocomplete suggestions.</p>
 </div>
 <div id="rdata-1" class="section level3">
-<h3><span class="header-section-number">5.5.2</span> RData</h3>
+<h3><span class="header-section-number">5.4.2</span> RData</h3>
 <p>To save objects as an RData file, we write:</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">save</span>(df.test, <span class="dt">file =</span> <span class="st">&quot;data/test.RData&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1"><span class="kw">save</span>(df.test, <span class="dt">file =</span> <span class="st">&quot;data/test.RData&quot;</span>)</a></code></pre></div>
 <p>We can add multiple objects simply by adding them at the beginning, like so:</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1"><span class="kw">save</span>(df.test, df.starwars, <span class="dt">file =</span> <span class="st">&quot;data/test_starwars.RData&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1"><span class="kw">save</span>(df.test, df.starwars, <span class="dt">file =</span> <span class="st">&quot;data/test_starwars.RData&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="additional-resources-3" class="section level2">
-<h2><span class="header-section-number">5.6</span> Additional resources</h2>
+<h2><span class="header-section-number">5.5</span> Additional resources</h2>
 <div id="cheatsheets-3" class="section level3">
-<h3><span class="header-section-number">5.6.1</span> Cheatsheets</h3>
+<h3><span class="header-section-number">5.5.1</span> Cheatsheets</h3>
 <ul>
-<li><a href="figures/data-wrangling.pdf">wrangling data</a> –&gt; wrangling data using <code>dplyr</code> and <code>tidyr</code></li>
-<li><a href="figures/data-import.pdf">importing &amp; saving data</a> –&gt; importing and saving data with <code>readr</code></li>
+<li><a href="figures/cheatsheets/data-wrangling.pdf">wrangling data</a> –&gt; wrangling data using <code>dplyr</code> and <code>tidyr</code></li>
+<li><a href="figures/cheatsheets/data-import.pdf">importing &amp; saving data</a> –&gt; importing and saving data with <code>readr</code></li>
 </ul>
 </div>
-<div id="data-camp-courses-3" class="section level3">
-<h3><span class="header-section-number">5.6.2</span> Data camp courses</h3>
+<div id="data-camp-courses-2" class="section level3">
+<h3><span class="header-section-number">5.5.2</span> Data camp courses</h3>
 <ul>
 <li><a href="https://www.datacamp.com/courses/joining-data-in-r-with-dplyr">Joining tables</a></li>
 <li><a href="https://www.datacamp.com/courses/writing-functions-in-r">writing functions</a></li>
 <li><a href="https://www.datacamp.com/courses/importing-data-in-r-part-1">importing data 1</a></li>
 <li><a href="https://www.datacamp.com/courses/importing-data-in-r-part-2">importing data 2</a></li>
+<li><a href="https://www.datacamp.com/courses/categorical-data-in-the-tidyverse">categorical data</a></li>
+<li><a href="https://www.datacamp.com/courses/dealing-with-missing-data-in-r">dealing with missing data</a></li>
 </ul>
 </div>
 <div id="books-and-chapters-3" class="section level3">
-<h3><span class="header-section-number">5.6.3</span> Books and chapters</h3>
+<h3><span class="header-section-number">5.5.3</span> Books and chapters</h3>
 <ul>
 <li><a href="https://r4ds.had.co.nz/program-intro.html">Chapters 17-21 in R for Data Science</a></li>
 <li><a href="https://bookdown.org/rdpeng/exdata/">Exploratory data analysis</a></li>
@@ -1462,7 +1447,7 @@ $ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5,�
 </ul>
 </div>
 <div id="tutorials" class="section level3">
-<h3><span class="header-section-number">5.6.4</span> Tutorials</h3>
+<h3><span class="header-section-number">5.5.4</span> Tutorials</h3>
 <ul>
 <li><strong>Joining data</strong>:
 <ul>
@@ -1474,40 +1459,41 @@ $ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5,�
 </div>
 </div>
 <div id="session-info-4" class="section level2">
-<h2><span class="header-section-number">5.7</span> Session info</h2>
-<pre><code>R version 3.6.1 (2019-07-05)
-Platform: x86_64-apple-darwin15.6.0 (64-bit)
-Running under: macOS Mojave 10.14.6
-
-Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
-
-locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-other attached packages:
- [1] forcats_0.4.0   stringr_1.4.0   dplyr_0.8.3     purrr_0.3.3    
- [5] readr_1.3.1     tidyr_1.0.0     tibble_2.1.3    ggplot2_3.2.1  
- [9] tidyverse_1.2.1 knitr_1.25     
-
-loaded via a namespace (and not attached):
- [1] tidyselect_0.2.5 xfun_0.9         haven_2.1.1      lattice_0.20-38 
- [5] colorspace_1.4-1 vctrs_0.2.0      generics_0.0.2   htmltools_0.3.6 
- [9] yaml_2.2.0       utf8_1.1.4       rlang_0.4.1      pillar_1.4.2    
-[13] glue_1.3.1       withr_2.1.2      modelr_0.1.5     readxl_1.3.1    
-[17] lifecycle_0.1.0  munsell_0.5.0    gtable_0.3.0     cellranger_1.1.0
-[21] rvest_0.3.4      evaluate_0.14    fansi_0.4.0      highr_0.8       
-[25] broom_0.5.2      Rcpp_1.0.3       backports_1.1.5  scales_1.0.0    
-[29] jsonlite_1.6     hms_0.5.2        digest_0.6.22    stringi_1.4.3   
-[33] bookdown_0.13    grid_3.6.1       cli_1.1.0        tools_3.6.1     
-[37] magrittr_1.5     lazyeval_0.2.2   crayon_1.3.4     pkgconfig_2.0.3 
-[41] zeallot_0.1.0    ellipsis_0.3.0   xml2_1.2.2       lubridate_1.7.4 
-[45] assertthat_0.2.1 rmarkdown_1.15   httr_1.4.1       rstudioapi_0.10 
-[49] R6_2.4.1         nlme_3.1-141     compiler_3.6.1  </code></pre>
+<h2><span class="header-section-number">5.6</span> Session info</h2>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Mojave 10.14.6
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] forcats_0.4.0   stringr_1.4.0   dplyr_0.8.3     purrr_0.3.3    
+##  [5] readr_1.3.1     tidyr_1.0.0     tibble_2.1.3    ggplot2_3.2.1  
+##  [9] tidyverse_1.3.0 knitr_1.26     
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.5 xfun_0.11        haven_2.2.0      lattice_0.20-38 
+##  [5] colorspace_1.4-1 vctrs_0.2.1      generics_0.0.2   htmltools_0.4.0 
+##  [9] yaml_2.2.0       utf8_1.1.4       rlang_0.4.2      pillar_1.4.3    
+## [13] withr_2.1.2      glue_1.3.1       DBI_1.1.0        dbplyr_1.4.2    
+## [17] modelr_0.1.5     readxl_1.3.1     lifecycle_0.1.0  munsell_0.5.0   
+## [21] gtable_0.3.0     cellranger_1.1.0 rvest_0.3.5      evaluate_0.14   
+## [25] fansi_0.4.0      highr_0.8        broom_0.5.3      Rcpp_1.0.3      
+## [29] backports_1.1.5  scales_1.1.0     jsonlite_1.6     fs_1.3.1        
+## [33] hms_0.5.2        digest_0.6.23    stringi_1.4.3    bookdown_0.16   
+## [37] grid_3.6.2       cli_2.0.0        tools_3.6.2      magrittr_1.5    
+## [41] lazyeval_0.2.2   crayon_1.3.4     pkgconfig_2.0.3  zeallot_0.1.0   
+## [45] ellipsis_0.3.0   xml2_1.2.2       reprex_0.3.0     lubridate_1.7.4 
+## [49] assertthat_0.2.1 rmarkdown_2.0    httr_1.4.1       rstudioapi_0.10 
+## [53] R6_2.4.1         nlme_3.1-142     compiler_3.6.2</code></pre>
 
 </div>
 </div>
@@ -1522,11 +1508,13 @@ loaded via a namespace (and not attached):
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1534,12 +1522,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1551,6 +1539,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
