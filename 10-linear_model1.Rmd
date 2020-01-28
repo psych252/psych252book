@@ -1,13 +1,5 @@
 # Linear model 1
 
-## Learning goals 
-
-- Correlation.
-  - Pearson's moment correlation.
-  - Spearman's rank correlation.
-- Regression.
-  - Understand conceptually and learn how to do it in R. 
-
 ## Load packages and set plotting theme  
 
 ```{r linear-model1-01, message=FALSE}
@@ -16,139 +8,24 @@ library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
 library("broom")      # for tidying up linear models 
 library("tidyverse")  # for wrangling, plotting, etc. 
-
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
 ```
 
 ```{r linear-model1-02}
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+            theme(text = element_text(size = 20))) #set the default text size
 ```
 
-## Things that came up in class 
-
-### Building a sampling distribution of PRE 
-
-Here is the general procedure for building a sampling distribution of the proportinal reduction of error (PRE). In this instance, I compare the following two models 
-
-- Model C (compact): $Y_i = 75 + \epsilon_i$
-- Model A (augmented): $Y_i = \overline Y + \epsilon_i$
-
-whereby I assume that $\epsilon_i \sim \mathcal{N}(0, \sigma)$.
-
-For this example, I assume that I know the population distribution. I first draw a sample from that distribution, and then calculate PRE. 
+## Correlation 
 
 ```{r linear-model1-03}
-# make example reproducible
-set.seed(1)
-
-# set the sample size 
-sample_size = 50 
-
-# draw sample from the population distribution (I've fixed sigma -- the standard deviation
-# of the population distribution to be 5)
-df.sample = tibble(
-  observation = 1:sample_size,
-  value = 75 + rnorm(sample_size, mean = 0, sd = 5)
-)
-
-# calculate SSE for each model, and then PRE based on that 
-df.summary = df.sample %>% 
-  mutate(compact = 75,
-         augmented = mean(value)) %>% 
-  summarize(sse_compact = sum((value - compact)^2),
-            sse_augmented = sum((value - augmented)^2),
-            pre = 1 - (sse_augmented/sse_compact))
-```
-
-To generate the sampling distribution, I assume that the null hypothesis is true, and then take a look at what values for PRE we could expect by chance for our given sample size. 
-
-```{r linear-model1-04, warning=F, message=F}
-# simulation parameters
-n_samples = 1000
-sample_size = 50 
-mu = 75 # true mean of the distribution 
-sigma = 5 # true standard deviation of the errors 
-
-# function to draw samples from the population distribution 
-fun.draw_sample = function(sample_size, sigma){
-  sample = mu + rnorm(sample_size, mean = 0, sd = sigma)
-  return(sample)
-}
-
-# draw samples
-samples = n_samples %>% 
-  replicate(fun.draw_sample(sample_size, sigma)) %>% 
-  t() # transpose the resulting matrix (i.e. flip rows and columns)
-
-# put samples in data frame and compute PRE 
-df.samples = samples %>% 
-  as_tibble(.name_repair = "unique") %>% 
-  mutate(sample = 1:n()) %>% 
-  pivot_longer(names_to = "index",
-               values_to = "value",
-               cols = -sample) %>% 
-  mutate(compact = mu) %>% 
-  group_by(sample) %>% 
-  mutate(augmented = mean(value)) %>% 
-  summarize(sse_compact = sum((value - compact)^2),
-            sse_augmented = sum((value - augmented)^2),
-            pre = 1 - sse_augmented/sse_compact)
-            
-
-# plot the sampling distribution for PRE 
-ggplot(data = df.samples,
-       mapping = aes(x = pre)) +
-  stat_density(geom = "line")
-
-# calculate the p-value for our sample 
-df.samples %>% 
-  summarize(p_value = sum(pre >= df.summary$pre)/n())
-
-```
-
-Some code I wrote to show a subset of the samples. 
-
-```{r linear-model1-05, warning=F, message=F}
-samples %>% 
-  as_tibble(.name_repair = "unique") %>% 
-  mutate(sample = 1:n()) %>% 
-  pivot_longer(names_to = "index",
-               values_to = "value",
-               cols = -sample) %>% 
-  mutate(compact = mu) %>% 
-  group_by(sample) %>% 
-  mutate(augmented = mean(value)) %>% 
-  ungroup() %>% 
-  mutate(index = str_extract(index, pattern = "\\-*\\d+\\.*\\d*"),
-         index = as.numeric(index)) %>% 
-  filter(index < 6) %>% 
-  arrange(sample, index) %>% 
-    head(15) %>% 
-    kable(digits = 2) %>% 
-    kable_styling(bootstrap_options = "striped",
-                full_width = F)
-```
-
-### Correlation 
-
-```{r linear-model1-06}
 # make example reproducible 
 set.seed(1)
 
 n_samples = 20
 
 # create correlated data
-df.correlation = tibble(
-  x = runif(n_samples, min = 0, max = 100),
-  y = x + rnorm(n_samples, sd = 15)
-)
+df.correlation = tibble(x = runif(n_samples, min = 0, max = 100),
+                        y = x + rnorm(n_samples, sd = 15))
 
 # plot the data
 ggplot(data = df.correlation,
@@ -165,15 +42,13 @@ Variance is the average squared difference between each data point and the mean:
 
 - $Var(Y) = \frac{\sum_{i = 1}^n(Y_i - \overline Y)^2}{n-1}$
 
-```{r linear-model1-07}
+```{r linear-model1-04}
 # make example reproducible 
 set.seed(1)
 
 # generate random data
-df.variance = tibble(
-  x = 1:10,
-  y = runif(10, min = 0, max = 1)
-)
+df.variance = tibble(x = 1:10,
+                     y = runif(10, min = 0, max = 1))
 
 # plot the data
 ggplot(data = df.variance,
@@ -199,15 +74,13 @@ Covariance is defined in the following way:
 
 - $Cov(X,Y) = \sum_{i=1}^n\frac{(X_i-\overline X)(Y_i-\overline Y)}{n-1}$
 
-```{r linear-model1-08}
+```{r linear-model1-05}
 # make example reproducible 
 set.seed(1)
 
 # generate random data
-df.covariance = tibble(
-  x = runif(20, min = 0, max = 1),
-  y = x + rnorm(x, mean = 0.5, sd = 0.25)
-)
+df.covariance = tibble(x = runif(20, min = 0, max = 1),
+                       y = x + rnorm(x, mean = 0.5, sd = 0.25))
 
 # plot the data
 ggplot(df.covariance,
@@ -221,7 +94,7 @@ ggplot(df.covariance,
 
 Add lines for $\overline X$ and $\overline Y$ to the data:
 
-```{r linear-model1-09}
+```{r linear-model1-06}
 ggplot(df.covariance,
        aes(x = x, y = y)) +
   geom_hline(yintercept = mean(df.covariance$y),
@@ -238,7 +111,7 @@ ggplot(df.covariance,
 
 Illustrate how covariance is computed by drawing the distance to $\overline X$ and $\overline Y$ for three data points:
 
-```{r linear-model1-10}
+```{r linear-model1-07}
 df.plot = df.covariance %>% 
   mutate(covariance = (x-mean(x)) *( y-mean(y))) %>% 
   arrange(abs(covariance)) %>% 
@@ -311,7 +184,7 @@ ggplot(df.plot,
 
 Spearman's $\rho$ captures the extent to which the relationship between two variables is monotonic.
 
-```{r linear-model1-11}
+```{r linear-model1-08}
 # create data frame with data points and ranks 
 df.ranking = tibble(
   x = c(1.2, 2.5, 4.5),
@@ -342,7 +215,7 @@ ggplot(df.ranking,
 
 Show that Spearman's $\rho$ is equivalent to Pearson's $r$ applied to ranked data.
 
-```{r linear-model1-12}
+```{r linear-model1-09}
 
 # data set
 df.spearman = df.correlation %>% 
@@ -374,12 +247,10 @@ df.spearman %>%
 
 Comparison between $r$ and $\rho$ for a given data set: 
 
-```{r linear-model1-13}
+```{r linear-model1-10}
 # data set
-df.example = tibble(
-  x = 1:10,
-  y = c(-10, 2:9, 20)
-) %>% 
+df.example = tibble(x = 1:10,
+                    y = c(-10, 2:9, 20)) %>% 
   mutate(x_rank = dense_rank(x),
          y_rank = dense_rank(y))
 
@@ -400,15 +271,13 @@ ggplot(df.example,
 
 Another example
 
-```{r linear-model1-14}
+```{r linear-model1-11}
 # make example reproducible 
 set.seed(1)
 
 # data set
-df.example2 = tibble(
-  x = c(1, rnorm(8, mean = 5, sd = 1),  10),
-  y = c(-10, rnorm(8, sd = 1), 20)
-) %>% 
+df.example2 = tibble(x = c(1, rnorm(8, mean = 5, sd = 1),  10),
+                     y = c(-10, rnorm(8, sd = 1), 20)) %>% 
   mutate(x_rank = dense_rank(x),
          y_rank = dense_rank(y))
 
@@ -429,7 +298,7 @@ ggplot(df.example2,
 
 ## Regression 
 
-```{r linear-model1-15}
+```{r linear-model1-12}
 # make example reproducible 
 set.seed(1)
 
@@ -437,10 +306,8 @@ set.seed(1)
 n_samples = 10
 
 # generate correlated data
-df.regression = tibble(
-  chocolate = runif(n_samples, min = 0, max = 100),
-  happiness = chocolate * 0.5 + rnorm(n_samples, sd = 15)
-)
+df.regression = tibble(chocolate = runif(n_samples, min = 0, max = 100),
+                       happiness = chocolate * 0.5 + rnorm(n_samples, sd = 15))
 
 # plot the data 
 ggplot(data = df.regression,
@@ -453,7 +320,7 @@ ggplot(data = df.regression,
 
 Define and fit the compact model (Model C): $Y_i = \beta_0 + \epsilon_i$
 
-```{r linear-model1-16}
+```{r linear-model1-13}
 # fit the compact model
 lm.compact = lm(happiness ~ 1, data = df.regression)
 
@@ -473,7 +340,7 @@ ggplot(data = df.regression,
 
 Define and fit the augmented model (Model A): $Y_i = \beta_0 + \beta_1 X_{1i} + \epsilon_i$
 
-```{r linear-model1-17}
+```{r linear-model1-14}
 # fit the augmented model
 lm.augmented = lm(happiness ~ chocolate, data = df.regression)
 
@@ -495,7 +362,7 @@ ggplot(data = df.regression,
 
 Illustration of the residuals for the compact model:  
 
-```{r linear-model1-18}
+```{r linear-model1-15}
 # fit the model 
 lm.compact = lm(happiness ~ 1, data = df.regression)
 
@@ -526,7 +393,7 @@ df.compact_model %>%
 
 Illustration of the residuals for the augmented model:  
 
-```{r linear-model1-19}
+```{r linear-model1-16}
 # fit the model 
 lm.augmented = lm(happiness ~ chocolate, data = df.regression)
 
@@ -559,7 +426,7 @@ df.augmented_model %>%
 
 Calculate the F-test to determine whether PRE is significant. 
 
-```{r linear-model1-20}
+```{r linear-model1-17}
 pc = 1 # number of parameters in the compact model  
 pa = 2 # number of parameters in the augmented model  
 n = 10 # number of observations
@@ -586,7 +453,7 @@ print(p_value)
 
 F-distribution with a red line indicating the calculated F-statistic.
 
-```{r linear-model1-21}
+```{r linear-model1-18}
 ggplot(data = tibble(x = c(0, 10)),
        mapping = aes(x = x)) +
   stat_function(fun = "df",
@@ -600,7 +467,7 @@ ggplot(data = tibble(x = c(0, 10)),
 
 The short version of doing what we did above :) 
 
-```{r linear-model1-22}
+```{r linear-model1-19}
 anova(lm.compact, lm.augmented)
 ```
 
@@ -608,7 +475,7 @@ anova(lm.compact, lm.augmented)
 
 Let's load the credit card data: 
 
-```{r linear-model1-23}
+```{r linear-model1-20}
 df.credit = read_csv("data/credit.csv") %>% 
   rename(index = X1) %>% 
   clean_names()
@@ -616,7 +483,7 @@ df.credit = read_csv("data/credit.csv") %>%
 
 Here is a short description of the variables:
 
-```{r linear-model1-24, echo=F, fig.caption="Credit card data variable description."}
+```{r linear-model1-21, echo=F, fig.caption="Credit card data variable description."}
 tibble(
   variable = c("income", "limit", "rating", "cards", "age", "education",
                "gender", "student", "married", "ethnicity", "balance"),
@@ -639,7 +506,7 @@ tibble(
 
 Scatterplot of the relationship between `income` and `balance`.
 
-```{r linear-model1-25}
+```{r linear-model1-22}
 ggplot(data = df.credit,
        mapping = aes(x = income,
                      y = balance)) + 
@@ -649,7 +516,7 @@ ggplot(data = df.credit,
 
 To make the model intercept interpretable, we can center the predictor variable by subtracting the mean from each value.
 
-```{r linear-model1-26}
+```{r linear-model1-23}
 df.plot = df.credit %>% 
   mutate(income_centered = income - mean(income)) %>% 
   select(balance, income, income_centered)
@@ -673,7 +540,7 @@ ggplot(data = df.plot,
 
 Let's fit the model and take a look at the model summary: 
 
-```{r linear-model1-27}
+```{r linear-model1-24}
 fit = lm(balance ~ 1 + income, data = df.credit) 
 
 fit %>% 
@@ -683,23 +550,21 @@ fit %>%
 
 Here, I double check that I understand how the statistics about the residuals are calculated that the model summary gives me.  
 
-```{r linear-model1-28}
+```{r linear-model1-25}
 fit %>% 
   augment() %>% 
   clean_names() %>% 
-  summarize(
-    min = min(resid),
-    first_quantile = quantile(resid, 0.25),
-    median = median(resid),
-    third_quantile = quantile(resid, 0.75),
-    max = max(resid),
-    rmse = sqrt(mean(resid^2))
-  )
+  summarize(min = min(resid),
+            first_quantile = quantile(resid, 0.25),
+            median = median(resid),
+            third_quantile = quantile(resid, 0.75),
+            max = max(resid),
+            rmse = sqrt(mean(resid^2)))
 ```
 
 Here is a plot of the residuals. Residual plots are important for checking whether any of the linear model assumptions have been violated. 
 
-```{r linear-model1-29}
+```{r linear-model1-26}
 fit %>% 
   augment() %>% 
   clean_names() %>% 
@@ -712,7 +577,7 @@ fit %>%
 
 We can use the `glance()` function from the `broom` package to print out model statistics. 
 
-```{r linear-model1-30}
+```{r linear-model1-27}
 fit %>% 
   glance() %>% 
     kable(digits = 2) %>% 
@@ -723,7 +588,7 @@ fit %>%
 
 Let's test whether income is a significant predictor of balance in the credit data set. 
 
-```{r linear-model1-31}
+```{r linear-model1-28}
 # fitting the compact model 
 fit_c = lm(formula = balance ~ 1,
            data = df.credit)
@@ -738,7 +603,7 @@ anova(fit_c, fit_a)
 
 Let's print out the paramters of the augmented model with confidence intervals: 
 
-```{r linear-model1-32}
+```{r linear-model1-29}
 fit_a %>% 
   tidy(conf.int = T) %>% 
     kable(digits = 2) %>% 
@@ -748,13 +613,13 @@ fit_a %>%
 
 We can use `augment()` with the `newdata = ` argument to get predictions about new data from our fitted model: 
 
-```{r linear-model1-33}
+```{r linear-model1-30}
 augment(fit, newdata = tibble(income = 130))
 ```
 
 Here is a plot of the model with confidence interval (that captures our uncertainty in the intercept and slope of the model) and the predicted `balance` value for an `income` of 130:
 
-```{r linear-model1-34}
+```{r linear-model1-31}
 ggplot(data = df.credit,
        mapping = aes(x = income,
                      y = balance)) + 
@@ -768,10 +633,9 @@ ggplot(data = df.credit,
   coord_cartesian(xlim = c(0, max(df.credit$income)))
 ```
 
-
 Finally, let's take a look at how the residuals are distributed. 
 
-```{r linear-model1-35}
+```{r linear-model1-32}
 # get the residuals 
 df.plot = fit_a %>% 
   augment() %>% 
