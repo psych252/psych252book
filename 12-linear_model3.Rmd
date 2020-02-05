@@ -7,11 +7,11 @@
   - dummy-coding vs. effect-coding
   - planned contrasts 
 
-## Load packages and set plotting theme  
-
 ```{r linear-model3-01, include=FALSE, eval=FALSE}
 install.packages(c("afex", "car"))
 ```
+
+## Load packages and set plotting theme  
 
 ```{r linear-model3-02, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
@@ -22,19 +22,11 @@ library("car")        # for running ANOVAs
 library("afex")       # also for running ANOVAs
 library("emmeans")    # for calculating constrasts
 library("tidyverse")  # for wrangling, plotting, etc. 
-
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
 ```
 
 ```{r linear-model3-03}
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+            theme(text = element_text(size = 20))) #set the default text size
 ```
 
 ## Load data sets 
@@ -68,9 +60,9 @@ df.poker %>%
 
 ```
 
-### One-way ANOVA
+## One-way ANOVA
 
-#### Visualization 
+### Visualization 
 
 ```{r linear-model3-06}
 df.poker %>% 
@@ -91,7 +83,7 @@ df.poker %>%
   theme(legend.position = "none")
 ```
 
-#### Model fitting 
+### Model fitting 
 
 We pass the result of the `lm()` function to `anova()` to calculate an analysis of variance like so: 
 
@@ -101,7 +93,7 @@ lm(formula = balance ~ hand,
   anova()
 ```
 
-#### Hypothesis test 
+### Hypothesis test 
 
 The F-test reported by the ANOVA compares the fitted model with a compact model that only predicts the grand mean: 
 
@@ -114,7 +106,7 @@ fit_a = lm(formula = balance ~ hand, data = df.poker)
 anova(fit_c, fit_a)
 ```
 
-#### Visualize the model's predictions 
+### Visualize the model's predictions 
 
 Here is the model prediction of the compact model:
 
@@ -153,80 +145,60 @@ And here is the prediction of the augmented model (which predicts different mean
 ```{r linear-model3-10}
 set.seed(1)
 
-df.plot = df.poker %>%
-  mutate(
-    hand_jitter = hand %>% as.numeric(),
-    hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4)
-  )
 
-df.tidy = fit_a %>%
-  tidy() %>%
-  select_if(is.numeric) %>%
-  mutate_all(funs(round, .args = list(digits = 2)))
+df.plot = df.poker %>% 
+  mutate(hand_jitter = hand %>% as.numeric(),
+         hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4))
 
-df.augment = fit_a %>%
+df.tidy = fit_a %>% 
+  tidy() %>% 
+  select_if(is.numeric) %>% 
+  mutate_all(~ round(., digits = 2))
+
+df.augment = fit_a %>% 
   augment() %>%
-  clean_names() %>%
+  clean_names() %>% 
   bind_cols(df.plot %>% select(hand_jitter))
 
-ggplot(
-  data = df.plot,
-  mapping = aes(
-    x = hand_jitter,
-    y = balance,
-    color = hand
-  )
-) +
+ggplot(data = df.plot,
+       mapping = aes(x = hand_jitter,
+                       y = balance,
+                       color = hand)) + 
   geom_point(alpha = 0.8) +
-  geom_segment(
-    data = NULL,
-    aes(
-      x = 0.6,
-      xend = 1.4,
-      y = df.tidy$estimate[1],
-      yend = df.tidy$estimate[1]
-    ),
-    color = "red",
-    size = 1
-  ) +
-  geom_segment(
-    data = NULL,
-    aes(
-      x = 1.6,
-      xend = 2.4,
-      y = df.tidy$estimate[1] + df.tidy$estimate[2],
-      yend = df.tidy$estimate[1] + df.tidy$estimate[2]
-    ),
-    color = "orange",
-    size = 1
-  ) +
-  geom_segment(
-    data = NULL,
-    aes(
-      x = 2.6,
-      xend = 3.4,
-      y = df.tidy$estimate[1] + df.tidy$estimate[3],
-      yend = df.tidy$estimate[1] + df.tidy$estimate[3]
-    ),
-    color = "green",
-    size = 1
-  ) +
-  geom_segment(
-    data = df.augment,
-    aes(
-      xend = hand_jitter,
-      y = balance,
-      yend = fitted
-    ),
-    alpha = 0.3
-  ) +
-  labs(y = "balance") +
-  scale_color_manual(values = c("red", "orange", "green")) +
-  scale_x_continuous(breaks = 1:3, labels = c("bad", "neutral", "good")) +
-  theme(
-    legend.position = "none",
-    axis.title.x = element_blank()
-  )
+  geom_segment(data = NULL,
+               aes(x = 0.6,
+                   xend = 1.4,
+                   y = df.tidy$estimate[1],
+                   yend = df.tidy$estimate[1]
+                   ),
+               color = "red",
+               size = 1) +
+  geom_segment(data = NULL,
+               aes(x = 1.6,
+                   xend = 2.4,
+                   y = df.tidy$estimate[1] + df.tidy$estimate[2],
+                   yend = df.tidy$estimate[1] + df.tidy$estimate[2]
+                   ),
+               color = "orange",
+               size = 1) +
+  geom_segment(data = NULL,
+               aes(x = 2.6,
+                   xend = 3.4,
+                   y = df.tidy$estimate[1] + df.tidy$estimate[3],
+                   yend = df.tidy$estimate[1] + df.tidy$estimate[3]
+                   ),
+               color = "green",
+               size = 1) +
+  geom_segment(data = df.augment,
+               aes(xend = hand_jitter,
+                   y = balance,
+                   yend = fitted),
+               alpha = 0.3) +
+  labs(y = "balance") + 
+  scale_color_manual(values = c("red", "orange", "green")) + 
+  scale_x_continuous(breaks = 1:3, labels = c("bad", "neutral", "good")) + 
+  theme(legend.position = "none",
+        axis.title.x = element_blank())
 ```
 
 The vertical lines illustrate the residual sum of squares. 
@@ -243,44 +215,42 @@ df.plot = df.poker %>%
   mutate(mean_group = mean(balance)) %>% 
   ungroup() %>% 
   mutate(mean_grand = mean(balance))
-  
+
 df.means = df.poker %>% 
   group_by(hand) %>% 
   summarize(mean = mean(balance)) %>% 
-  pivot_wider(names_from = hand, values_from = mean)
+  pivot_wider(names_from = hand, 
+              values_from = mean)
 
 ggplot(data = df.plot,
        mapping = aes(x = hand_jitter,
-                       y = mean_group,
-                       color = hand)) + 
+                     y = mean_group,
+                     color = hand)) + 
   geom_point(alpha = 0.8) +
   geom_segment(data = NULL,
-               aes(x = 0.6,
-                   xend = 1.4,
-                   y = df.means$bad,
-                   yend = df.means$bad
-                   ),
+               mapping = aes(x = 0.6,
+                             xend = 1.4,
+                             y = df.means$bad,
+                             yend = df.means$bad),
                color = "red",
                size = 1) +
   geom_segment(data = NULL,
-               aes(x = 1.6,
-                   xend = 2.4,
-                   y = df.means$neutral,
-                   yend = df.means$neutral
-                   ),
+               mapping = aes(x = 1.6,
+                             xend = 2.4,
+                             y = df.means$neutral,
+                             yend = df.means$neutral),
                color = "orange",
                size = 1) +
   geom_segment(data = NULL,
-               aes(x = 2.6,
-                   xend = 3.4,
-                   y = df.means$good,
-                   yend = df.means$good
-                   ),
+               mapping = aes(x = 2.6,
+                             xend = 3.4,
+                             y = df.means$good,
+                             yend = df.means$good),
                color = "green",
                size = 1) +
-  geom_segment(aes(xend = hand_jitter,
-                   y = mean_group,
-                   yend = mean_grand),
+  geom_segment(mapping = aes(xend = hand_jitter,
+                             y = mean_group,
+                             yend = mean_grand),
                alpha = 0.3) +
   geom_hline(yintercept = mean(df.poker$balance),
              size = 1) + 
@@ -318,7 +288,7 @@ fit_a %>%
   summary()
 ```
 
-#### Dummy coding
+### Dummy coding
 
 Let's check that we understand how dummy-coding works for a variable with more than 2 levels: 
 
@@ -348,7 +318,7 @@ fit.tmp %>%
 ```
 Here, I've directly put the dummy-coded variables as predictors into the `lm()`. We get the same model as if we used the `hand` variable instead. 
 
-#### Follow up questions
+### Follow up questions
 
 Here are some follow up questions we may ask about the data. 
 
@@ -382,6 +352,189 @@ df.poker %>%
   summary()
 ```
 
+### Variance decomposition
+
+Let's first run the model 
+
+```{r linear-model3-18}
+fit = lm(formula = balance ~ hand, 
+         data = df.poker)
+
+fit %>%
+  anova()
+```
+
+#### Calculate sums of squares
+
+And then let's make sure that we understand how the variance is broken down:  
+
+```{r linear-model3-19}
+df.poker %>% 
+  mutate(mean_grand = mean(balance)) %>% 
+  group_by(hand) %>% 
+  mutate(mean_group = mean(balance)) %>% 
+  ungroup() %>% 
+  summarize(variance_total = sum((balance - mean_grand)^2),
+            variance_model = sum((mean_group - mean_grand)^2),
+            variance_residual = variance_total - variance_model)
+```
+
+#### Visualize model predictions 
+
+##### Total variance
+
+```{r linear-model3-20}
+set.seed(1)
+
+fit_c = lm(formula = balance ~ 1,
+           data = df.poker)
+
+df.plot = df.poker %>% 
+  mutate(hand_jitter = 1 + runif(n(), min = -0.25, max = 0.25))
+
+df.augment = fit_c %>% 
+  augment() %>% 
+  clean_names() %>% 
+  bind_cols(df.plot %>% select(balance, hand, hand_jitter))
+
+ggplot(data = df.plot, 
+       mapping = aes(x = hand_jitter,
+                       y = balance,
+                       fill = hand)) + 
+  geom_hline(yintercept = mean(df.poker$balance)) +
+  geom_point(alpha = 0.5) + 
+  geom_segment(data = df.augment,
+               aes(xend = hand_jitter,
+                   yend = fitted),
+               alpha = 0.2) +
+  labs(y = "balance") + 
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.title.x = element_blank())
+
+```
+
+##### Model variance
+
+```{r linear-model3-21}
+set.seed(1)
+
+df.plot = df.poker %>% 
+  mutate(hand_jitter = hand %>% as.numeric(),
+         hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4)) %>% 
+  group_by(hand) %>% 
+  mutate(mean_group = mean(balance)) %>% 
+  ungroup() %>% 
+  mutate(mean_grand = mean(balance))
+
+df.means = df.poker %>% 
+  group_by(hand) %>% 
+  summarize(mean = mean(balance)) %>% 
+  pivot_wider(names_from = hand,
+              values_from = mean)
+
+ggplot(data = df.plot,
+       mapping = aes(x = hand_jitter,
+                     y = mean_group,
+                     color = hand)) + 
+  geom_point(alpha = 0.8) +
+  geom_segment(data = NULL,
+               aes(x = 0.6,
+                   xend = 1.4,
+                   y = df.means$bad,
+                   yend = df.means$bad),
+               color = "red",
+               size = 1) +
+  geom_segment(data = NULL,
+               aes(x = 1.6,
+                   xend = 2.4,
+                   y = df.means$neutral,
+                   yend = df.means$neutral),
+               color = "orange",
+               size = 1) +
+  geom_segment(data = NULL,
+               aes(x = 2.6,
+                   xend = 3.4,
+                   y = df.means$good,
+                   yend = df.means$good),
+               color = "green",
+               size = 1) +
+  geom_segment(aes(xend = hand_jitter,
+                   y = mean_group,
+                   yend = mean_grand),
+               alpha = 0.3) +
+  geom_hline(yintercept = mean(df.poker$balance),
+             size = 1) + 
+  labs(y = "balance") + 
+  scale_color_manual(values = c("red", "orange", "green")) + 
+  scale_x_continuous(breaks = 1:3, labels = c("bad", "neutral", "good")) + 
+  scale_y_continuous(breaks = c(0, 10, 20), labels = c(0, 10, 20), limits = c(0, 25)) + 
+  theme(legend.position = "none",
+        axis.title.x = element_blank())
+
+```
+
+##### Residual variance 
+
+```{r linear-model3-22}
+set.seed(1)
+
+fit_a = lm(formula = balance ~ hand,
+           data = df.poker)
+
+df.plot = df.poker %>% 
+  mutate(hand_jitter = hand %>% as.numeric(),
+         hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4))
+
+df.tidy = fit_a %>% 
+  tidy() %>% 
+  select_if(is.numeric) %>% 
+  mutate_all(~ round(., digits = 2))
+
+df.augment = fit_a %>% 
+  augment() %>%
+  clean_names() %>% 
+  bind_cols(df.plot %>% select(hand_jitter))
+
+ggplot(data = df.plot,
+       mapping = aes(x = hand_jitter,
+                     y = balance,
+                     color = hand)) + 
+  geom_point(alpha = 0.8) +
+  geom_segment(data = NULL,
+               aes(x = 0.6,
+                   xend = 1.4,
+                   y = df.tidy$estimate[1],
+                   yend = df.tidy$estimate[1]),
+               color = "red",
+               size = 1) +
+  geom_segment(data = NULL,
+               aes(x = 1.6,
+                   xend = 2.4,
+                   y = df.tidy$estimate[1] + df.tidy$estimate[2],
+                   yend = df.tidy$estimate[1] + df.tidy$estimate[2]),
+               color = "orange",
+               size = 1) +
+  geom_segment(data = NULL,
+               aes(x = 2.6,
+                   xend = 3.4,
+                   y = df.tidy$estimate[1] + df.tidy$estimate[3],
+                   yend = df.tidy$estimate[1] + df.tidy$estimate[3]),
+               color = "green",
+               size = 1) +
+  geom_segment(data = df.augment,
+               aes(xend = hand_jitter,
+                   y = balance,
+                   yend = fitted),
+               alpha = 0.3) +
+  labs(y = "balance") + 
+  scale_color_manual(values = c("red", "orange", "green")) + 
+  scale_x_continuous(breaks = 1:3, labels = c("bad", "neutral", "good")) + 
+  theme(legend.position = "none",
+        axis.title.x = element_blank())
+```
+
+
 ## Two-way ANOVA 
 
 Now let's take a look at a case where we have multiple categorical predictors. 
@@ -390,7 +543,7 @@ Now let's take a look at a case where we have multiple categorical predictors.
 
 Let's look at the overall effect of skill: 
 
-```{r linear-model3-18}
+```{r linear-model3-23}
 ggplot(data = df.poker,
        mapping = aes(x = skill,
                      y = balance)) +
@@ -415,7 +568,7 @@ ggplot(data = df.poker,
 
 And now let's take a look at the means for the full the 3 (hand) x 2 (skill) design:
 
-```{r linear-model3-19}
+```{r linear-model3-24}
 ggplot(data = df.poker,
        mapping = aes(x = hand,
                      y = balance,
@@ -445,7 +598,7 @@ ggplot(data = df.poker,
 
 For N-way ANOVAs, we need to be careful about what sums of squares we are using. The standard (based on the SPSS output) is to use type III sums of squares. We set this up in the following way: 
 
-```{r linear-model3-20}
+```{r linear-model3-25}
 lm(formula = balance ~ hand * skill,
    data = df.poker,
    contrasts = list(hand = "contr.sum",
@@ -457,7 +610,7 @@ So, we fit our linear model, but set the contrasts to "contr.sum" (which yields 
 
 Alternatively, we could use the `afex` package and specify the ANOVA like so: 
 
-```{r linear-model3-21}
+```{r linear-model3-26}
 aov_ez(id = "participant",
        dv = "balance",
        data = df.poker,
@@ -471,7 +624,7 @@ The `afex` package uses effect coding and type 3 sums of squares by default.
 
 Code I've used to generate the different plots in the competition: 
 
-```{r linear-model3-22}
+```{r linear-model3-27}
 set.seed(1)
 
 b0 = 15
@@ -528,7 +681,7 @@ ggplot(df.data,
 
 And here is one specific example. Let's generate the data first: 
 
-```{r linear-model3-23}
+```{r linear-model3-28}
 # make example reproducible 
 set.seed(1)
 
@@ -555,7 +708,7 @@ df.data = tibble(
 
 Show part of the generated data frame: 
 
-```{r linear-model3-24}
+```{r linear-model3-29}
 # show data frame
 df.data %>% 
   group_by(condition, treatment) %>% 
@@ -569,7 +722,7 @@ df.data %>%
 
 Plot the data:
 
-```{r linear-model3-25}
+```{r linear-model3-30}
 # plot data
 ggplot(df.data,
        aes(x = condition,
@@ -589,25 +742,113 @@ ggplot(df.data,
 
 And check whether we can successfully infer the parameters that we used to generate the data: 
 
-```{r linear-model3-26}
+```{r linear-model3-31}
 # infer parameters
 lm(formula = rating ~ 1 + condition + treatment + condition:treatment,
    data = df.data) %>% 
   summary()
 ```
 
+### Variance decomposition
+
+Let's fit the model first:
+
+```{r linear-model3-32}
+fit = lm(formula = balance ~ hand + skill, 
+         data = df.poker)
+
+fit %>%
+  anova()
+
+```
+
+#### Calculate sums of squares
+
+```{r linear-model3-33}
+df.poker %>% 
+  mutate(mean_grand = mean(balance)) %>% 
+  group_by(skill) %>% 
+  mutate(mean_skill = mean(balance)) %>%
+  group_by(hand) %>% 
+  mutate(mean_hand = mean(balance)) %>%
+  ungroup() %>%
+  summarize(variance_total = sum((balance - mean_grand)^2),
+            variance_skill = sum((mean_skill - mean_grand)^2),
+            variance_hand = sum((mean_hand - mean_grand)^2),
+            variance_residual = variance_total - variance_skill - variance_hand)
+```
+
+#### Visualize model predictions
+
+##### `Skill` factor
+
+```{r linear-model3-34}
+set.seed(1)
+
+df.plot = df.poker %>% 
+  mutate(skill_jitter = skill %>% as.numeric(),
+         skill_jitter = skill_jitter + runif(n(), min = -0.4, max = 0.4)) %>% 
+  group_by(skill) %>% 
+  mutate(mean_group = mean(balance)) %>% 
+  ungroup() %>% 
+  mutate(mean_grand = mean(balance))
+  
+df.means = df.poker %>% 
+  group_by(skill) %>% 
+  summarize(mean = mean(balance)) %>% 
+  pivot_wider(names_from = skill,
+              values_from = mean)
+
+ggplot(data = df.plot,
+       mapping = aes(x = skill_jitter,
+                       y = mean_group,
+                       color = skill)) + 
+  geom_point(alpha = 0.8) +
+  geom_segment(data = NULL,
+               aes(x = 0.6,
+                   xend = 1.4,
+                   y = df.means$average,
+                   yend = df.means$average),
+               color = "black",
+               size = 1) +
+  geom_segment(data = NULL,
+               aes(x = 1.6,
+                   xend = 2.4,
+                   y = df.means$expert,
+                   yend = df.means$expert),
+               color = "gray50",
+               size = 1) +
+  geom_segment(aes(xend = skill_jitter,
+                   y = mean_group,
+                   yend = mean_grand),
+               alpha = 0.3) +
+  geom_hline(yintercept = mean(df.poker$balance),
+             size = 1) + 
+  labs(y = "balance") + 
+  scale_color_manual(values = c("black", "gray50")) + 
+  scale_x_continuous(breaks = 1:2, labels = c("average", "expert")) + 
+  scale_y_continuous(breaks = c(0, 10, 20), labels = c(0, 10, 20), limits = c(0, 25)) +
+  theme(legend.position = "none",
+        axis.title.x = element_blank())
+
+```
+
 ## Additional resources 
 
 ### Datacamp 
 
-- [modeling](https://www.datacamp.com/courses/modeling-with-data-in-the-tidyverse)
+- [Statistical modeling 1](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
+- [Statistical modeling 2](https://www.datacamp.com/courses/statistical-modeling-in-r-part-2)
+- [Correlation and regression](https://www.datacamp.com/courses/correlation-and-regression)
 
 ### Misc 
 
 - [Explanation of different types of sums of squares](https://mcfromnz.wordpress.com/2011/03/02/anova-type-iiiiii-ss-explained/)
 
-## Session info
+## Session info 
 
-```{r, echo=F}
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+```{r linear-model3-35 session}
 sessionInfo()
 ```
