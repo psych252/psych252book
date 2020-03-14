@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 24 Bayesian data analysis 4 | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
+  <meta name="description" content="Course notes for Psych 252." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 24 Bayesian data analysis 4 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Course notes for Psych 252." />
+  <meta name="github-repo" content="psych252/psych252book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 24 Bayesian data analysis 4 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  
+  <meta name="twitter:description" content="Course notes for Psych 252." />
+  
+
+<meta name="author" content="Tobias Gerstenberg" />
+
+
+<meta name="date" content="2020-03-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bayesian-data-analysis-3.html"/>
+<link rel="next" href="model-assumptions.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Psych 252</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-description"><i class="fa fa-check"></i>Course description</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-homepage"><i class="fa fa-check"></i>Course homepage</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#session-info"><i class="fa fa-check"></i><b>1.3</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a><ul>
+<li class="chapter" data-level="2.1" data-path="visualization-1.html"><a href="visualization-1.html#learning-goals"><i class="fa fa-check"></i><b>2.1</b> Learning goals</a></li>
+<li class="chapter" data-level="2.2" data-path="visualization-1.html"><a href="visualization-1.html#load-packages"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
+<li class="chapter" data-level="2.3" data-path="visualization-1.html"><a href="visualization-1.html#why-visualize-data"><i class="fa fa-check"></i><b>2.3</b> Why visualize data?</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="visualization-1.html"><a href="visualization-1.html#how-not-to-visualize-data"><i class="fa fa-check"></i><b>2.3.1</b> How <em>not</em> to visualize data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="visualization-1.html"><a href="visualization-1.html#how-to-make-it-better"><i class="fa fa-check"></i><b>2.3.2</b> How to make it better</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-rstudio"><i class="fa fa-check"></i><b>2.4</b> Setting up RStudio</a></li>
+<li class="chapter" data-level="2.5" data-path="visualization-1.html"><a href="visualization-1.html#getting-help"><i class="fa fa-check"></i><b>2.5</b> Getting help</a></li>
+<li class="chapter" data-level="2.6" data-path="visualization-1.html"><a href="visualization-1.html#data-visualization-using-ggplot2"><i class="fa fa-check"></i><b>2.6</b> Data visualization using <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="2.6.1" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.6.1</b> Setting up a plot</a></li>
+<li class="chapter" data-level="2.6.2" data-path="visualization-1.html"><a href="visualization-1.html#setting-the-default-plot-theme"><i class="fa fa-check"></i><b>2.6.2</b> Setting the default plot theme</a></li>
+<li class="chapter" data-level="2.6.3" data-path="visualization-1.html"><a href="visualization-1.html#scatter-plot"><i class="fa fa-check"></i><b>2.6.3</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.6.4" data-path="visualization-1.html"><a href="visualization-1.html#line-plot"><i class="fa fa-check"></i><b>2.6.4</b> Line plot</a></li>
+<li class="chapter" data-level="2.6.5" data-path="visualization-1.html"><a href="visualization-1.html#adding-error-bars"><i class="fa fa-check"></i><b>2.6.5</b> Adding error bars</a></li>
+<li class="chapter" data-level="2.6.6" data-path="visualization-1.html"><a href="visualization-1.html#grouping-data"><i class="fa fa-check"></i><b>2.6.6</b> Grouping data</a></li>
+<li class="chapter" data-level="2.6.7" data-path="visualization-1.html"><a href="visualization-1.html#making-facets"><i class="fa fa-check"></i><b>2.6.7</b> Making facets</a></li>
+<li class="chapter" data-level="2.6.8" data-path="visualization-1.html"><a href="visualization-1.html#global-local-and-setting-aes"><i class="fa fa-check"></i><b>2.6.8</b> Global, local, and setting <code>aes()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="visualization-1.html"><a href="visualization-1.html#additional-resources"><i class="fa fa-check"></i><b>2.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="visualization-1.html"><a href="visualization-1.html#cheatsheets"><i class="fa fa-check"></i><b>2.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="2.7.2" data-path="visualization-1.html"><a href="visualization-1.html#datacamp-courses"><i class="fa fa-check"></i><b>2.7.2</b> Datacamp courses</a></li>
+<li class="chapter" data-level="2.7.3" data-path="visualization-1.html"><a href="visualization-1.html#books-and-chapters"><i class="fa fa-check"></i><b>2.7.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="2.7.4" data-path="visualization-1.html"><a href="visualization-1.html#misc"><i class="fa fa-check"></i><b>2.7.4</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="visualization-1.html"><a href="visualization-1.html#session-info-1"><i class="fa fa-check"></i><b>2.8</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualization-2.html"><a href="visualization-2.html"><i class="fa fa-check"></i><b>3</b> Visualization 2</a><ul>
+<li class="chapter" data-level="3.1" data-path="visualization-2.html"><a href="visualization-2.html#learning-goals-1"><i class="fa fa-check"></i><b>3.1</b> Learning goals</a></li>
+<li class="chapter" data-level="3.2" data-path="visualization-2.html"><a href="visualization-2.html#install-and-load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>3.2</b> Install and load packages, load data, set theme</a></li>
+<li class="chapter" data-level="3.3" data-path="visualization-2.html"><a href="visualization-2.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>3.3</b> Overview of different plot types for different things</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="visualization-2.html"><a href="visualization-2.html#proportions"><i class="fa fa-check"></i><b>3.3.1</b> Proportions</a></li>
+<li class="chapter" data-level="3.3.2" data-path="visualization-2.html"><a href="visualization-2.html#comparisons"><i class="fa fa-check"></i><b>3.3.2</b> Comparisons</a></li>
+<li class="chapter" data-level="3.3.3" data-path="visualization-2.html"><a href="visualization-2.html#relationships"><i class="fa fa-check"></i><b>3.3.3</b> Relationships</a></li>
+<li class="chapter" data-level="3.3.4" data-path="visualization-2.html"><a href="visualization-2.html#temporal-data"><i class="fa fa-check"></i><b>3.3.4</b> Temporal data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-plots"><i class="fa fa-check"></i><b>3.4</b> Customizing plots</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#anatomy-of-a-ggplot"><i class="fa fa-check"></i><b>3.4.1</b> Anatomy of a <code>ggplot</code></a></li>
+<li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.2</b> Changing the order of things</a></li>
+<li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.3</b> Dealing with legends</a></li>
+<li class="chapter" data-level="3.4.4" data-path="visualization-2.html"><a href="visualization-2.html#choosing-good-colors"><i class="fa fa-check"></i><b>3.4.4</b> Choosing good colors</a></li>
+<li class="chapter" data-level="3.4.5" data-path="visualization-2.html"><a href="visualization-2.html#customizing-themes"><i class="fa fa-check"></i><b>3.4.5</b> Customizing themes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="visualization-2.html"><a href="visualization-2.html#saving-plots"><i class="fa fa-check"></i><b>3.5</b> Saving plots</a></li>
+<li class="chapter" data-level="3.6" data-path="visualization-2.html"><a href="visualization-2.html#creating-figure-panels"><i class="fa fa-check"></i><b>3.6</b> Creating figure panels</a></li>
+<li class="chapter" data-level="3.7" data-path="visualization-2.html"><a href="visualization-2.html#peeking-behind-the-scenes"><i class="fa fa-check"></i><b>3.7</b> Peeking behind the scenes</a></li>
+<li class="chapter" data-level="3.8" data-path="visualization-2.html"><a href="visualization-2.html#making-animations"><i class="fa fa-check"></i><b>3.8</b> Making animations</a></li>
+<li class="chapter" data-level="3.9" data-path="visualization-2.html"><a href="visualization-2.html#shiny-apps"><i class="fa fa-check"></i><b>3.9</b> Shiny apps</a></li>
+<li class="chapter" data-level="3.10" data-path="visualization-2.html"><a href="visualization-2.html#defining-snippets"><i class="fa fa-check"></i><b>3.10</b> Defining snippets</a></li>
+<li class="chapter" data-level="3.11" data-path="visualization-2.html"><a href="visualization-2.html#additional-resources-1"><i class="fa fa-check"></i><b>3.11</b> Additional resources</a><ul>
+<li class="chapter" data-level="3.11.1" data-path="visualization-2.html"><a href="visualization-2.html#cheatsheets-1"><i class="fa fa-check"></i><b>3.11.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="3.11.2" data-path="visualization-2.html"><a href="visualization-2.html#data-camp-courses"><i class="fa fa-check"></i><b>3.11.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="3.11.3" data-path="visualization-2.html"><a href="visualization-2.html#books-and-chapters-1"><i class="fa fa-check"></i><b>3.11.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="3.11.4" data-path="visualization-2.html"><a href="visualization-2.html#misc-1"><i class="fa fa-check"></i><b>3.11.4</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="visualization-2.html"><a href="visualization-2.html#session-info-2"><i class="fa fa-check"></i><b>3.12</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html"><i class="fa fa-check"></i><b>4</b> Data wrangling 1</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#learning-goals-2"><i class="fa fa-check"></i><b>4.1</b> Learning goals</a></li>
+<li class="chapter" data-level="4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#install-packages"><i class="fa fa-check"></i><b>4.2</b> Install packages</a></li>
+<li class="chapter" data-level="4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#load-packages-1"><i class="fa fa-check"></i><b>4.3</b> Load packages</a></li>
+<li class="chapter" data-level="4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#some-r-basics"><i class="fa fa-check"></i><b>4.4</b> Some R basics</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#modes"><i class="fa fa-check"></i><b>4.4.1</b> Modes</a></li>
+<li class="chapter" data-level="4.4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-types"><i class="fa fa-check"></i><b>4.4.2</b> Data types</a></li>
+<li class="chapter" data-level="4.4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#operators"><i class="fa fa-check"></i><b>4.4.3</b> Operators</a></li>
+<li class="chapter" data-level="4.4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#control-flow"><i class="fa fa-check"></i><b>4.4.4</b> Control flow</a></li>
+<li class="chapter" data-level="4.4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#functions"><i class="fa fa-check"></i><b>4.4.5</b> Functions</a></li>
+<li class="chapter" data-level="4.4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#the-pipe-operator"><i class="fa fa-check"></i><b>4.4.6</b> The pipe operator <code>%&gt;%</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#looking-at-data"><i class="fa fa-check"></i><b>4.5</b> Looking at data</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#head"><i class="fa fa-check"></i><b>4.5.1</b> <code>head()</code></a></li>
+<li class="chapter" data-level="4.5.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#glimpse"><i class="fa fa-check"></i><b>4.5.2</b> <code>glimpse()</code></a></li>
+<li class="chapter" data-level="4.5.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#distinct"><i class="fa fa-check"></i><b>4.5.3</b> <code>distinct()</code></a></li>
+<li class="chapter" data-level="4.5.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#count"><i class="fa fa-check"></i><b>4.5.4</b> <code>count()</code></a></li>
+<li class="chapter" data-level="4.5.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#datatable"><i class="fa fa-check"></i><b>4.5.5</b> <code>datatable()</code></a></li>
+<li class="chapter" data-level="4.5.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#other-tools-for-taking-a-quick-look-at-data"><i class="fa fa-check"></i><b>4.5.6</b> Other tools for taking a quick look at data</a></li>
+<li class="chapter" data-level="4.5.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>4.5.7</b> A quick note on naming things</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#wrangling-data"><i class="fa fa-check"></i><b>4.6</b> Wrangling data</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#filter"><i class="fa fa-check"></i><b>4.6.1</b> <code>filter()</code></a></li>
+<li class="chapter" data-level="4.6.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#arrange"><i class="fa fa-check"></i><b>4.6.2</b> <code>arrange()</code></a></li>
+<li class="chapter" data-level="4.6.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#rename"><i class="fa fa-check"></i><b>4.6.3</b> <code>rename()</code></a></li>
+<li class="chapter" data-level="4.6.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#select"><i class="fa fa-check"></i><b>4.6.4</b> <code>select()</code></a></li>
+<li class="chapter" data-level="4.6.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-2"><i class="fa fa-check"></i><b>4.6.5</b> Practice 2</a></li>
+<li class="chapter" data-level="4.6.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#mutate"><i class="fa fa-check"></i><b>4.6.6</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="4.6.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-3"><i class="fa fa-check"></i><b>4.6.7</b> Practice 3</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#additional-resources-2"><i class="fa fa-check"></i><b>4.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#cheatsheets-2"><i class="fa fa-check"></i><b>4.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="4.7.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-camp-courses-1"><i class="fa fa-check"></i><b>4.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="4.7.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#books-and-chapters-2"><i class="fa fa-check"></i><b>4.7.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="4.7.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#misc-2"><i class="fa fa-check"></i><b>4.7.4</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#session-info-3"><i class="fa fa-check"></i><b>4.8</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html"><i class="fa fa-check"></i><b>5</b> Data wrangling 2</a><ul>
+<li class="chapter" data-level="5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#learning-goals-3"><i class="fa fa-check"></i><b>5.1</b> Learning goals</a></li>
+<li class="chapter" data-level="5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#load-packages-2"><i class="fa fa-check"></i><b>5.2</b> Load packages</a></li>
+<li class="chapter" data-level="5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#wrangling-data-continued"><i class="fa fa-check"></i><b>5.3</b> Wrangling data (continued)</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#summarizing-data"><i class="fa fa-check"></i><b>5.3.1</b> Summarizing data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reshaping-data"><i class="fa fa-check"></i><b>5.3.2</b> Reshaping data</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#joining-multiple-data-frames"><i class="fa fa-check"></i><b>5.3.3</b> Joining multiple data frames</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>5.3.4</b> Dealing with missing data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reading-in-data"><i class="fa fa-check"></i><b>5.4</b> Reading in data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv"><i class="fa fa-check"></i><b>5.4.1</b> csv</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata"><i class="fa fa-check"></i><b>5.4.2</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#saving-data"><i class="fa fa-check"></i><b>5.5</b> Saving data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv-1"><i class="fa fa-check"></i><b>5.5.1</b> csv</a></li>
+<li class="chapter" data-level="5.5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata-1"><i class="fa fa-check"></i><b>5.5.2</b> RData</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#additional-resources-3"><i class="fa fa-check"></i><b>5.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#cheatsheets-3"><i class="fa fa-check"></i><b>5.6.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="5.6.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#data-camp-courses-2"><i class="fa fa-check"></i><b>5.6.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="5.6.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#books-and-chapters-3"><i class="fa fa-check"></i><b>5.6.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="5.6.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#tutorials"><i class="fa fa-check"></i><b>5.6.4</b> Tutorials</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#session-info-4"><i class="fa fa-check"></i><b>5.7</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a><ul>
+<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#learning-goals-4"><i class="fa fa-check"></i><b>6.1</b> Learning goals</a></li>
+<li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#install-and-load-packages-load-data-set-theme-1"><i class="fa fa-check"></i><b>6.2</b> Install and load packages, load data, set theme</a></li>
+<li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.3</b> Counting</a></li>
+<li class="chapter" data-level="6.4" data-path="probability-and-causality.html"><a href="probability-and-causality.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.4</b> Flipping a coin many times</a></li>
+<li class="chapter" data-level="6.5" data-path="probability-and-causality.html"><a href="probability-and-causality.html#the-random-secretary"><i class="fa fa-check"></i><b>6.5</b> The random secretary</a></li>
+<li class="chapter" data-level="6.6" data-path="probability-and-causality.html"><a href="probability-and-causality.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.6</b> Clue guide to probability</a><ul>
+<li class="chapter" data-level="6.6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#conditional-probability"><i class="fa fa-check"></i><b>6.6.1</b> Conditional probability</a></li>
+<li class="chapter" data-level="6.6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.6.2</b> Law of total probability</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="probability-and-causality.html"><a href="probability-and-causality.html#probability-operations"><i class="fa fa-check"></i><b>6.7</b> Probability operations</a></li>
+<li class="chapter" data-level="6.8" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.8</b> Bayesian reasoning example</a></li>
+<li class="chapter" data-level="6.9" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-networks"><i class="fa fa-check"></i><b>6.9</b> Bayesian networks</a><ul>
+<li class="chapter" data-level="6.9.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#sprinkler-example"><i class="fa fa-check"></i><b>6.9.1</b> Sprinkler example</a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="probability-and-causality.html"><a href="probability-and-causality.html#additional-resources-4"><i class="fa fa-check"></i><b>6.10</b> Additional resources</a><ul>
+<li class="chapter" data-level="6.10.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.10.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="6.10.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.10.2</b> Books and chapters</a></li>
+<li class="chapter" data-level="6.10.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#misc-3"><i class="fa fa-check"></i><b>6.10.3</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="6.11" data-path="probability-and-causality.html"><a href="probability-and-causality.html#session-info-5"><i class="fa fa-check"></i><b>6.11</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a><ul>
+<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#learning-goals-5"><i class="fa fa-check"></i><b>7.1</b> Learning goals</a></li>
+<li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#load-packages-and-set-plotting-theme"><i class="fa fa-check"></i><b>7.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="7.3" data-path="simulation-1.html"><a href="simulation-1.html#working-with-distributions"><i class="fa fa-check"></i><b>7.3</b> Working with distributions</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="simulation-1.html"><a href="simulation-1.html#plotting-distributions"><i class="fa fa-check"></i><b>7.3.1</b> Plotting distributions</a></li>
+<li class="chapter" data-level="7.3.2" data-path="simulation-1.html"><a href="simulation-1.html#sampling-from-distributions"><i class="fa fa-check"></i><b>7.3.2</b> Sampling from distributions</a></li>
+<li class="chapter" data-level="7.3.3" data-path="simulation-1.html"><a href="simulation-1.html#cumulative-probability-distribution"><i class="fa fa-check"></i><b>7.3.3</b> Cumulative probability distribution</a></li>
+<li class="chapter" data-level="7.3.4" data-path="simulation-1.html"><a href="simulation-1.html#inverse-cumulative-distribution"><i class="fa fa-check"></i><b>7.3.4</b> Inverse cumulative distribution</a></li>
+<li class="chapter" data-level="7.3.5" data-path="simulation-1.html"><a href="simulation-1.html#computing-probabilities"><i class="fa fa-check"></i><b>7.3.5</b> Computing probabilities</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#bayesian-inference-with-the-normal-distribution"><i class="fa fa-check"></i><b>7.4</b> Bayesian inference with the normal distribution</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="simulation-1.html"><a href="simulation-1.html#analytic-solution"><i class="fa fa-check"></i><b>7.4.1</b> Analytic solution</a></li>
+<li class="chapter" data-level="7.4.2" data-path="simulation-1.html"><a href="simulation-1.html#solution-via-sampling"><i class="fa fa-check"></i><b>7.4.2</b> Solution via sampling</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="simulation-1.html"><a href="simulation-1.html#working-with-samples"><i class="fa fa-check"></i><b>7.5</b> Working with samples</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="simulation-1.html"><a href="simulation-1.html#understanding-density"><i class="fa fa-check"></i><b>7.5.1</b> Understanding <code>density()</code></a></li>
+<li class="chapter" data-level="7.5.2" data-path="simulation-1.html"><a href="simulation-1.html#the-quantile-function"><i class="fa fa-check"></i><b>7.5.2</b> The <code>quantile()</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="simulation-1.html"><a href="simulation-1.html#comparing-probability-distributions"><i class="fa fa-check"></i><b>7.6</b> Comparing probability distributions</a></li>
+<li class="chapter" data-level="7.7" data-path="simulation-1.html"><a href="simulation-1.html#relationship-between-probability-and-likelihood"><i class="fa fa-check"></i><b>7.7</b> Relationship between probability and likelihood</a></li>
+<li class="chapter" data-level="7.8" data-path="simulation-1.html"><a href="simulation-1.html#additional-resources-5"><i class="fa fa-check"></i><b>7.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="simulation-1.html"><a href="simulation-1.html#cheatsheets-5"><i class="fa fa-check"></i><b>7.8.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="7.8.2" data-path="simulation-1.html"><a href="simulation-1.html#datacamp"><i class="fa fa-check"></i><b>7.8.2</b> Datacamp</a></li>
+<li class="chapter" data-level="7.8.3" data-path="simulation-1.html"><a href="simulation-1.html#tutorials-1"><i class="fa fa-check"></i><b>7.8.3</b> Tutorials</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="simulation-1.html"><a href="simulation-1.html#session-info-6"><i class="fa fa-check"></i><b>7.9</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a><ul>
+<li class="chapter" data-level="8.1" data-path="simulation-2.html"><a href="simulation-2.html#learning-goals-6"><i class="fa fa-check"></i><b>8.1</b> Learning goals</a></li>
+<li class="chapter" data-level="8.2" data-path="simulation-2.html"><a href="simulation-2.html#load-packages-and-set-plotting-theme-1"><i class="fa fa-check"></i><b>8.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="8.3" data-path="simulation-2.html"><a href="simulation-2.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>8.3</b> The central limit theorem</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation-2.html"><a href="simulation-2.html#population-distribution"><i class="fa fa-check"></i><b>8.3.1</b> Population distribution</a></li>
+<li class="chapter" data-level="8.3.2" data-path="simulation-2.html"><a href="simulation-2.html#distribution-of-a-single-sample"><i class="fa fa-check"></i><b>8.3.2</b> Distribution of a single sample</a></li>
+<li class="chapter" data-level="8.3.3" data-path="simulation-2.html"><a href="simulation-2.html#the-sampling-distribution"><i class="fa fa-check"></i><b>8.3.3</b> The sampling distribution</a></li>
+<li class="chapter" data-level="8.3.4" data-path="simulation-2.html"><a href="simulation-2.html#exploring-the-clt"><i class="fa fa-check"></i><b>8.3.4</b> Exploring the CLT</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="simulation-2.html"><a href="simulation-2.html#understanding-p-values"><i class="fa fa-check"></i><b>8.4</b> Understanding p-values</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="simulation-2.html"><a href="simulation-2.html#permutation-test"><i class="fa fa-check"></i><b>8.4.1</b> Permutation test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="simulation-2.html"><a href="simulation-2.html#confidence-intervals"><i class="fa fa-check"></i><b>8.5</b> Confidence intervals</a></li>
+<li class="chapter" data-level="8.6" data-path="simulation-2.html"><a href="simulation-2.html#additional-resources-6"><i class="fa fa-check"></i><b>8.6</b> Additional resources</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="modeling-data.html"><a href="modeling-data.html"><i class="fa fa-check"></i><b>9</b> Modeling data</a><ul>
+<li class="chapter" data-level="9.1" data-path="modeling-data.html"><a href="modeling-data.html#learning-goals-7"><i class="fa fa-check"></i><b>9.1</b> Learning goals</a></li>
+<li class="chapter" data-level="9.2" data-path="modeling-data.html"><a href="modeling-data.html#load-packages-and-set-plotting-theme-2"><i class="fa fa-check"></i><b>9.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="9.3" data-path="modeling-data.html"><a href="modeling-data.html#modeling-data-1"><i class="fa fa-check"></i><b>9.3</b> Modeling data</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="modeling-data.html"><a href="modeling-data.html#simplicity-vs.-accuracy-trade-off"><i class="fa fa-check"></i><b>9.3.1</b> Simplicity vs. accuracy trade-off</a></li>
+<li class="chapter" data-level="9.3.2" data-path="modeling-data.html"><a href="modeling-data.html#error-definitions-and-best-estimators"><i class="fa fa-check"></i><b>9.3.2</b> Error definitions and best estimators</a></li>
+<li class="chapter" data-level="9.3.3" data-path="modeling-data.html"><a href="modeling-data.html#sampling-distributions-for-median-and-mean"><i class="fa fa-check"></i><b>9.3.3</b> Sampling distributions for median and mean</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="modeling-data.html"><a href="modeling-data.html#hypothesis-testing-one-sample-t-test"><i class="fa fa-check"></i><b>9.4</b> Hypothesis testing: “One-sample t-test”</a></li>
+<li class="chapter" data-level="9.5" data-path="modeling-data.html"><a href="modeling-data.html#building-a-sampling-distribution-of-pre"><i class="fa fa-check"></i><b>9.5</b> Building a sampling distribution of PRE</a></li>
+<li class="chapter" data-level="9.6" data-path="modeling-data.html"><a href="modeling-data.html#additional-resources-7"><i class="fa fa-check"></i><b>9.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="modeling-data.html"><a href="modeling-data.html#reading"><i class="fa fa-check"></i><b>9.6.1</b> Reading</a></li>
+<li class="chapter" data-level="9.6.2" data-path="modeling-data.html"><a href="modeling-data.html#datacamp-1"><i class="fa fa-check"></i><b>9.6.2</b> Datacamp</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="modeling-data.html"><a href="modeling-data.html#session-info-7"><i class="fa fa-check"></i><b>9.7</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="linear-model-1.html"><a href="linear-model-1.html"><i class="fa fa-check"></i><b>10</b> Linear model 1</a><ul>
+<li class="chapter" data-level="10.1" data-path="linear-model-1.html"><a href="linear-model-1.html#learning-goals-8"><i class="fa fa-check"></i><b>10.1</b> Learning goals</a></li>
+<li class="chapter" data-level="10.2" data-path="linear-model-1.html"><a href="linear-model-1.html#load-packages-and-set-plotting-theme-3"><i class="fa fa-check"></i><b>10.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="10.3" data-path="linear-model-1.html"><a href="linear-model-1.html#correlation"><i class="fa fa-check"></i><b>10.3</b> Correlation</a></li>
+<li class="chapter" data-level="10.4" data-path="linear-model-1.html"><a href="linear-model-1.html#regression"><i class="fa fa-check"></i><b>10.4</b> Regression</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="linear-model-1.html"><a href="linear-model-1.html#define-and-fit-the-models"><i class="fa fa-check"></i><b>10.4.1</b> Define and fit the models</a></li>
+<li class="chapter" data-level="10.4.2" data-path="linear-model-1.html"><a href="linear-model-1.html#calculate-the-sum-of-squared-errors-of-each-model"><i class="fa fa-check"></i><b>10.4.2</b> Calculate the sum of squared errors of each model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="linear-model-1.html"><a href="linear-model-1.html#credit-example"><i class="fa fa-check"></i><b>10.5</b> Credit example</a></li>
+<li class="chapter" data-level="10.6" data-path="linear-model-1.html"><a href="linear-model-1.html#additional-resources-8"><i class="fa fa-check"></i><b>10.6</b> Additional resources</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="linear-model-1.html"><a href="linear-model-1.html#datacamp-2"><i class="fa fa-check"></i><b>10.6.1</b> Datacamp</a></li>
+<li class="chapter" data-level="10.6.2" data-path="linear-model-1.html"><a href="linear-model-1.html#misc-4"><i class="fa fa-check"></i><b>10.6.2</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="10.7" data-path="linear-model-1.html"><a href="linear-model-1.html#session-info-8"><i class="fa fa-check"></i><b>10.7</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="linear-model-2.html"><a href="linear-model-2.html"><i class="fa fa-check"></i><b>11</b> Linear model 2</a><ul>
+<li class="chapter" data-level="11.1" data-path="linear-model-2.html"><a href="linear-model-2.html#learning-goals-9"><i class="fa fa-check"></i><b>11.1</b> Learning goals</a></li>
+<li class="chapter" data-level="11.2" data-path="linear-model-2.html"><a href="linear-model-2.html#load-packages-and-set-plotting-theme-4"><i class="fa fa-check"></i><b>11.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="11.3" data-path="linear-model-2.html"><a href="linear-model-2.html#load-data-sets"><i class="fa fa-check"></i><b>11.3</b> Load data sets</a></li>
+<li class="chapter" data-level="11.4" data-path="linear-model-2.html"><a href="linear-model-2.html#multiple-continuous-variables"><i class="fa fa-check"></i><b>11.4</b> Multiple continuous variables</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="linear-model-2.html"><a href="linear-model-2.html#explore-correlations"><i class="fa fa-check"></i><b>11.4.1</b> Explore correlations</a></li>
+<li class="chapter" data-level="11.4.2" data-path="linear-model-2.html"><a href="linear-model-2.html#multipe-regression"><i class="fa fa-check"></i><b>11.4.2</b> Multipe regression</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="linear-model-2.html"><a href="linear-model-2.html#one-categorical-variable"><i class="fa fa-check"></i><b>11.5</b> One categorical variable</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions"><i class="fa fa-check"></i><b>11.5.1</b> Visualization of the model predictions</a></li>
+<li class="chapter" data-level="11.5.2" data-path="linear-model-2.html"><a href="linear-model-2.html#dummy-coding"><i class="fa fa-check"></i><b>11.5.2</b> Dummy coding</a></li>
+<li class="chapter" data-level="11.5.3" data-path="linear-model-2.html"><a href="linear-model-2.html#reporting-the-results"><i class="fa fa-check"></i><b>11.5.3</b> Reporting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="linear-model-2.html"><a href="linear-model-2.html#one-continuous-and-one-categorical-variable"><i class="fa fa-check"></i><b>11.6</b> One continuous and one categorical variable</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions-1"><i class="fa fa-check"></i><b>11.6.1</b> Visualization of the model predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.7" data-path="linear-model-2.html"><a href="linear-model-2.html#interactions"><i class="fa fa-check"></i><b>11.7</b> Interactions</a><ul>
+<li class="chapter" data-level="11.7.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-3"><i class="fa fa-check"></i><b>11.7.1</b> Visualization</a></li>
+<li class="chapter" data-level="11.7.2" data-path="linear-model-2.html"><a href="linear-model-2.html#hypothesis-test"><i class="fa fa-check"></i><b>11.7.2</b> Hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="11.8" data-path="linear-model-2.html"><a href="linear-model-2.html#additional-resources-9"><i class="fa fa-check"></i><b>11.8</b> Additional resources</a><ul>
+<li class="chapter" data-level="11.8.1" data-path="linear-model-2.html"><a href="linear-model-2.html#datacamp-3"><i class="fa fa-check"></i><b>11.8.1</b> Datacamp</a></li>
+<li class="chapter" data-level="11.8.2" data-path="linear-model-2.html"><a href="linear-model-2.html#misc-5"><i class="fa fa-check"></i><b>11.8.2</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="11.9" data-path="linear-model-2.html"><a href="linear-model-2.html#session-info-9"><i class="fa fa-check"></i><b>11.9</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-model-3.html"><a href="linear-model-3.html"><i class="fa fa-check"></i><b>12</b> Linear model 3</a><ul>
+<li class="chapter" data-level="12.1" data-path="linear-model-3.html"><a href="linear-model-3.html#learning-goals-10"><i class="fa fa-check"></i><b>12.1</b> Learning goals</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-model-3.html"><a href="linear-model-3.html#load-packages-and-set-plotting-theme-5"><i class="fa fa-check"></i><b>12.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="12.3" data-path="linear-model-3.html"><a href="linear-model-3.html#load-data-sets-1"><i class="fa fa-check"></i><b>12.3</b> Load data sets</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-model-3.html"><a href="linear-model-3.html#one-way-anova"><i class="fa fa-check"></i><b>12.4</b> One-way ANOVA</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="linear-model-3.html"><a href="linear-model-3.html#visualization-4"><i class="fa fa-check"></i><b>12.4.1</b> Visualization</a></li>
+<li class="chapter" data-level="12.4.2" data-path="linear-model-3.html"><a href="linear-model-3.html#model-fitting"><i class="fa fa-check"></i><b>12.4.2</b> Model fitting</a></li>
+<li class="chapter" data-level="12.4.3" data-path="linear-model-3.html"><a href="linear-model-3.html#hypothesis-test-1"><i class="fa fa-check"></i><b>12.4.3</b> Hypothesis test</a></li>
+<li class="chapter" data-level="12.4.4" data-path="linear-model-3.html"><a href="linear-model-3.html#visualize-the-models-predictions"><i class="fa fa-check"></i><b>12.4.4</b> Visualize the model’s predictions</a></li>
+<li class="chapter" data-level="12.4.5" data-path="linear-model-3.html"><a href="linear-model-3.html#dummy-coding-1"><i class="fa fa-check"></i><b>12.4.5</b> Dummy coding</a></li>
+<li class="chapter" data-level="12.4.6" data-path="linear-model-3.html"><a href="linear-model-3.html#follow-up-questions"><i class="fa fa-check"></i><b>12.4.6</b> Follow up questions</a></li>
+<li class="chapter" data-level="12.4.7" data-path="linear-model-3.html"><a href="linear-model-3.html#variance-decomposition"><i class="fa fa-check"></i><b>12.4.7</b> Variance decomposition</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova"><i class="fa fa-check"></i><b>12.5</b> Two-way ANOVA</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="linear-model-3.html"><a href="linear-model-3.html#visualization-5"><i class="fa fa-check"></i><b>12.5.1</b> Visualization</a></li>
+<li class="chapter" data-level="12.5.2" data-path="linear-model-3.html"><a href="linear-model-3.html#model-fitting-1"><i class="fa fa-check"></i><b>12.5.2</b> Model fitting</a></li>
+<li class="chapter" data-level="12.5.3" data-path="linear-model-3.html"><a href="linear-model-3.html#interpreting-interactions"><i class="fa fa-check"></i><b>12.5.3</b> Interpreting interactions</a></li>
+<li class="chapter" data-level="12.5.4" data-path="linear-model-3.html"><a href="linear-model-3.html#variance-decomposition-1"><i class="fa fa-check"></i><b>12.5.4</b> Variance decomposition</a></li>
+<li class="chapter" data-level="12.5.5" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova-with-interaction"><i class="fa fa-check"></i><b>12.5.5</b> Two-way ANOVA (with interaction)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="linear-model-3.html"><a href="linear-model-3.html#anova-with-unbalanced-design"><i class="fa fa-check"></i><b>12.6</b> ANOVA with unbalanced design</a></li>
+<li class="chapter" data-level="12.7" data-path="linear-model-3.html"><a href="linear-model-3.html#additional-resources-10"><i class="fa fa-check"></i><b>12.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="12.7.1" data-path="linear-model-3.html"><a href="linear-model-3.html#datacamp-4"><i class="fa fa-check"></i><b>12.7.1</b> Datacamp</a></li>
+<li class="chapter" data-level="12.7.2" data-path="linear-model-3.html"><a href="linear-model-3.html#misc-6"><i class="fa fa-check"></i><b>12.7.2</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="linear-model-3.html"><a href="linear-model-3.html#session-info-10"><i class="fa fa-check"></i><b>12.8</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linear-model-4.html"><a href="linear-model-4.html"><i class="fa fa-check"></i><b>13</b> Linear model 4</a><ul>
+<li class="chapter" data-level="13.1" data-path="linear-model-4.html"><a href="linear-model-4.html#learning-goals-11"><i class="fa fa-check"></i><b>13.1</b> Learning goals</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-model-4.html"><a href="linear-model-4.html#load-packages-and-set-plotting-theme-6"><i class="fa fa-check"></i><b>13.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-model-4.html"><a href="linear-model-4.html#load-data-sets-2"><i class="fa fa-check"></i><b>13.3</b> Load data sets</a></li>
+<li class="chapter" data-level="13.4" data-path="linear-model-4.html"><a href="linear-model-4.html#planned-contrasts"><i class="fa fa-check"></i><b>13.4</b> Planned contrasts</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="linear-model-4.html"><a href="linear-model-4.html#hypothetical-data"><i class="fa fa-check"></i><b>13.4.1</b> Hypothetical data</a></li>
+<li class="chapter" data-level="13.4.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualization-6"><i class="fa fa-check"></i><b>13.4.2</b> Visualization</a></li>
+<li class="chapter" data-level="13.4.3" data-path="linear-model-4.html"><a href="linear-model-4.html#constrasts"><i class="fa fa-check"></i><b>13.4.3</b> Constrasts</a></li>
+<li class="chapter" data-level="13.4.4" data-path="linear-model-4.html"><a href="linear-model-4.html#post-hoc-tests"><i class="fa fa-check"></i><b>13.4.4</b> Post-hoc tests</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-11"><i class="fa fa-check"></i><b>13.5</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#learning-goals-12"><i class="fa fa-check"></i><b>14.1</b> Learning goals</a></li>
+<li class="chapter" data-level="14.2" data-path="power-analysis.html"><a href="power-analysis.html#load-packages-and-set-plotting-theme-7"><i class="fa fa-check"></i><b>14.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="14.3" data-path="power-analysis.html"><a href="power-analysis.html#load-data-sets-3"><i class="fa fa-check"></i><b>14.3</b> Load data sets</a></li>
+<li class="chapter" data-level="14.4" data-path="power-analysis.html"><a href="power-analysis.html#decision-making"><i class="fa fa-check"></i><b>14.4</b> Decision-making</a></li>
+<li class="chapter" data-level="14.5" data-path="power-analysis.html"><a href="power-analysis.html#effect-sizes"><i class="fa fa-check"></i><b>14.5</b> Effect sizes</a><ul>
+<li class="chapter" data-level="14.5.1" data-path="power-analysis.html"><a href="power-analysis.html#eta-squared-and-partial-eta-squared"><i class="fa fa-check"></i><b>14.5.1</b> eta-squared and partial eta-squared</a></li>
+<li class="chapter" data-level="14.5.2" data-path="power-analysis.html"><a href="power-analysis.html#cohens-d"><i class="fa fa-check"></i><b>14.5.2</b> Cohen’s d</a></li>
+</ul></li>
+<li class="chapter" data-level="14.6" data-path="power-analysis.html"><a href="power-analysis.html#determining-sample-size"><i class="fa fa-check"></i><b>14.6</b> Determining sample size</a><ul>
+<li class="chapter" data-level="14.6.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>14.6.1</b> <code>pwr</code> package</a></li>
+<li class="chapter" data-level="14.6.2" data-path="power-analysis.html"><a href="power-analysis.html#power-analysis-via-simulation"><i class="fa fa-check"></i><b>14.6.2</b> Power analysis via simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-11"><i class="fa fa-check"></i><b>14.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="14.7.1" data-path="power-analysis.html"><a href="power-analysis.html#datacamp-5"><i class="fa fa-check"></i><b>14.7.1</b> Datacamp</a></li>
+<li class="chapter" data-level="14.7.2" data-path="power-analysis.html"><a href="power-analysis.html#cheatsheets-6"><i class="fa fa-check"></i><b>14.7.2</b> Cheatsheets</a></li>
+<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-7"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-12"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="mediation-moderation.html"><a href="mediation-moderation.html"><i class="fa fa-check"></i><b>15</b> Mediation &amp; Moderation</a><ul>
+<li class="chapter" data-level="15.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#learning-goals-13"><i class="fa fa-check"></i><b>15.1</b> Learning goals</a></li>
+<li class="chapter" data-level="15.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#recommended-reading"><i class="fa fa-check"></i><b>15.2</b> Recommended reading</a></li>
+<li class="chapter" data-level="15.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-packages-and-set-plotting-theme-8"><i class="fa fa-check"></i><b>15.3</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="15.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#controlling-for-variables"><i class="fa fa-check"></i><b>15.4</b> Controlling for variables</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#illustration-of-the-d-separation-algorithm"><i class="fa fa-check"></i><b>15.4.1</b> Illustration of the d-separation algorithm</a></li>
+<li class="chapter" data-level="15.4.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#good-controls"><i class="fa fa-check"></i><b>15.4.2</b> Good controls</a></li>
+<li class="chapter" data-level="15.4.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#bad-controls"><i class="fa fa-check"></i><b>15.4.3</b> Bad controls</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>15.5</b> Mediation</a><ul>
+<li class="chapter" data-level="15.5.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data"><i class="fa fa-check"></i><b>15.5.1</b> Generate data</a></li>
+<li class="chapter" data-level="15.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>15.5.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
+<li class="chapter" data-level="15.5.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>15.5.3</b> Method 2: Sobel Test</a></li>
+<li class="chapter" data-level="15.5.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>15.5.4</b> Method 3: Bootstrapping</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation"><i class="fa fa-check"></i><b>15.6</b> Moderation</a><ul>
+<li class="chapter" data-level="15.6.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data-1"><i class="fa fa-check"></i><b>15.6.1</b> Generate data</a></li>
+<li class="chapter" data-level="15.6.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation-analysis"><i class="fa fa-check"></i><b>15.6.2</b> Moderation analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="15.7" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-12"><i class="fa fa-check"></i><b>15.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="15.7.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#books"><i class="fa fa-check"></i><b>15.7.1</b> Books</a></li>
+<li class="chapter" data-level="15.7.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-2"><i class="fa fa-check"></i><b>15.7.2</b> Tutorials</a></li>
+<li class="chapter" data-level="15.7.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#misc-8"><i class="fa fa-check"></i><b>15.7.3</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="15.8" data-path="mediation-moderation.html"><a href="mediation-moderation.html#session-info-13"><i class="fa fa-check"></i><b>15.8</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>16</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#learning-goals-14"><i class="fa fa-check"></i><b>16.1</b> Learning goals</a></li>
+<li class="chapter" data-level="16.2" data-path="model-comparison.html"><a href="model-comparison.html#load-packages-and-set-plotting-theme-9"><i class="fa fa-check"></i><b>16.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="16.3" data-path="model-comparison.html"><a href="model-comparison.html#model-comparison-1"><i class="fa fa-check"></i><b>16.3</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.3.1" data-path="model-comparison.html"><a href="model-comparison.html#fitting-vs.-predicting"><i class="fa fa-check"></i><b>16.3.1</b> Fitting vs. predicting</a></li>
+<li class="chapter" data-level="16.3.2" data-path="model-comparison.html"><a href="model-comparison.html#f-test"><i class="fa fa-check"></i><b>16.3.2</b> F-test</a></li>
+<li class="chapter" data-level="16.3.3" data-path="model-comparison.html"><a href="model-comparison.html#cross-validation"><i class="fa fa-check"></i><b>16.3.3</b> Cross-validation</a></li>
+<li class="chapter" data-level="16.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>16.3.4</b> Bootstrap</a></li>
+<li class="chapter" data-level="16.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>16.3.5</b> AIC and BIC</a></li>
+</ul></li>
+<li class="chapter" data-level="16.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-13"><i class="fa fa-check"></i><b>16.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="16.4.1" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>16.4.1</b> Datacamp course</a></li>
+<li class="chapter" data-level="16.4.2" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>16.4.2</b> Reading</a></li>
+<li class="chapter" data-level="16.4.3" data-path="model-comparison.html"><a href="model-comparison.html#misc-9"><i class="fa fa-check"></i><b>16.4.3</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="16.5" data-path="model-comparison.html"><a href="model-comparison.html#session-info-14"><i class="fa fa-check"></i><b>16.5</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html"><i class="fa fa-check"></i><b>17</b> Linear mixed effects models 1</a><ul>
+<li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#learning-goals-15"><i class="fa fa-check"></i><b>17.1</b> Learning goals</a></li>
+<li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.3</b> Dependence</a></li>
+<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-14"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="17.4.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.4.1</b> Readings</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#session-info-15"><i class="fa fa-check"></i><b>17.5</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html"><i class="fa fa-check"></i><b>18</b> Linear mixed effects models 2</a><ul>
+<li class="chapter" data-level="18.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#learning-goals-16"><i class="fa fa-check"></i><b>18.1</b> Learning goals</a></li>
+<li class="chapter" data-level="18.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#load-packages-and-set-plotting-theme-11"><i class="fa fa-check"></i><b>18.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="18.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simulating-a-linear-mixed-effects-model"><i class="fa fa-check"></i><b>18.3</b> Simulating a linear mixed effects model</a></li>
+<li class="chapter" data-level="18.4" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#the-effect-of-outliers"><i class="fa fa-check"></i><b>18.4</b> The effect of outliers</a></li>
+<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.5</b> Different slopes</a></li>
+<li class="chapter" data-level="18.6" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.6</b> Simpson’s paradox</a></li>
+<li class="chapter" data-level="18.7" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-15"><i class="fa fa-check"></i><b>18.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="18.7.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.7.1</b> Readings</a></li>
+</ul></li>
+<li class="chapter" data-level="18.8" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#session-info-16"><i class="fa fa-check"></i><b>18.8</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html"><i class="fa fa-check"></i><b>19</b> Linear mixed effects models 3</a><ul>
+<li class="chapter" data-level="19.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#learning-goals-17"><i class="fa fa-check"></i><b>19.1</b> Learning goals</a></li>
+<li class="chapter" data-level="19.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-packages-and-set-plotting-theme-12"><i class="fa fa-check"></i><b>19.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-set"><i class="fa fa-check"></i><b>19.3</b> Load data set</a></li>
+<li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixtures-of-participants"><i class="fa fa-check"></i><b>19.4</b> Mixtures of participants</a></li>
+<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#pooling-and-shrinkage"><i class="fa fa-check"></i><b>19.5</b> Pooling and shrinkage</a><ul>
+<li class="chapter" data-level="19.5.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#complete-pooling"><i class="fa fa-check"></i><b>19.5.1</b> Complete pooling</a></li>
+<li class="chapter" data-level="19.5.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#no-pooling"><i class="fa fa-check"></i><b>19.5.2</b> No pooling</a></li>
+<li class="chapter" data-level="19.5.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#partial-pooling"><i class="fa fa-check"></i><b>19.5.3</b> Partial pooling</a></li>
+<li class="chapter" data-level="19.5.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#compare-results"><i class="fa fa-check"></i><b>19.5.4</b> Compare results</a></li>
+<li class="chapter" data-level="19.5.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#coefficients"><i class="fa fa-check"></i><b>19.5.5</b> Coefficients</a></li>
+<li class="chapter" data-level="19.5.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#shrinkage"><i class="fa fa-check"></i><b>19.5.6</b> Shrinkage</a></li>
+<li class="chapter" data-level="19.5.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#plotting-marginal-effects"><i class="fa fa-check"></i><b>19.5.7</b> Plotting marginal effects</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#bootstrapping"><i class="fa fa-check"></i><b>19.6</b> Bootstrapping</a><ul>
+<li class="chapter" data-level="19.6.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#linear-model"><i class="fa fa-check"></i><b>19.6.1</b> Linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#getting-p-values"><i class="fa fa-check"></i><b>19.7</b> Getting p-values</a></li>
+<li class="chapter" data-level="19.8" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#understanding-the-lmer-syntax"><i class="fa fa-check"></i><b>19.8</b> Understanding the lmer() syntax</a></li>
+<li class="chapter" data-level="19.9" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-17"><i class="fa fa-check"></i><b>19.9</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>20</b> Generalized linear model</a><ul>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#learning-goals-18"><i class="fa fa-check"></i><b>20.1</b> Learning goals</a></li>
+<li class="chapter" data-level="20.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-packages-and-set-plotting-theme-13"><i class="fa fa-check"></i><b>20.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="20.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set-1"><i class="fa fa-check"></i><b>20.3</b> Load data set</a></li>
+<li class="chapter" data-level="20.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>20.4</b> Logistic regression</a><ul>
+<li class="chapter" data-level="20.4.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#interpreting-the-parameters"><i class="fa fa-check"></i><b>20.4.1</b> Interpreting the parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="20.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>20.5</b> Simulate a logistic regression</a></li>
+<li class="chapter" data-level="20.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>20.6</b> Testing hypotheses</a></li>
+<li class="chapter" data-level="20.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>20.7</b> Logistic mixed effects model</a></li>
+<li class="chapter" data-level="20.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logit-transform"><i class="fa fa-check"></i><b>20.8</b> Logit transform</a></li>
+<li class="chapter" data-level="20.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>20.9</b> Additional information</a><ul>
+<li class="chapter" data-level="20.9.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-6"><i class="fa fa-check"></i><b>20.9.1</b> Datacamp</a></li>
+</ul></li>
+<li class="chapter" data-level="20.10" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-18"><i class="fa fa-check"></i><b>20.10</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html"><i class="fa fa-check"></i><b>21</b> Bayesian data analysis</a><ul>
+<li class="chapter" data-level="21.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#learning-goals-19"><i class="fa fa-check"></i><b>21.1</b> Learning goals</a></li>
+<li class="chapter" data-level="21.2" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#load-packages-and-set-plotting-theme-14"><i class="fa fa-check"></i><b>21.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="21.3" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#doing-bayesian-inference-by-hand"><i class="fa fa-check"></i><b>21.3</b> Doing Bayesian inference “by hand”</a><ul>
+<li class="chapter" data-level="21.3.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#sequential-updating-based-on-the-beta-distribution"><i class="fa fa-check"></i><b>21.3.1</b> Sequential updating based on the Beta distribution</a></li>
+<li class="chapter" data-level="21.3.2" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#coin-flip-example"><i class="fa fa-check"></i><b>21.3.2</b> Coin flip example</a></li>
+<li class="chapter" data-level="21.3.3" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#bayesian-inference-by-discretization"><i class="fa fa-check"></i><b>21.3.3</b> Bayesian inference by discretization</a></li>
+<li class="chapter" data-level="21.3.4" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#effect-of-the-prior"><i class="fa fa-check"></i><b>21.3.4</b> Effect of the prior</a></li>
+<li class="chapter" data-level="21.3.5" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#effect-of-the-likelihood"><i class="fa fa-check"></i><b>21.3.5</b> Effect of the likelihood</a></li>
+<li class="chapter" data-level="21.3.6" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#effect-of-the-sample-size"><i class="fa fa-check"></i><b>21.3.6</b> Effect of the sample size</a></li>
+</ul></li>
+<li class="chapter" data-level="21.4" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#session-info-19"><i class="fa fa-check"></i><b>21.4</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>22</b> Bayesian data analysis 2</a><ul>
+<li class="chapter" data-level="22.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#learning-goals-20"><i class="fa fa-check"></i><b>22.1</b> Learning goals</a></li>
+<li class="chapter" data-level="22.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#load-packages-and-set-plotting-theme-15"><i class="fa fa-check"></i><b>22.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="22.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions"><i class="fa fa-check"></i><b>22.3</b> Distributions</a><ul>
+<li class="chapter" data-level="22.3.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-vs-student-t-distribution"><i class="fa fa-check"></i><b>22.3.1</b> Normal vs Student-t distribution</a></li>
+<li class="chapter" data-level="22.3.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#beta-distributions"><i class="fa fa-check"></i><b>22.3.2</b> Beta distributions</a></li>
+<li class="chapter" data-level="22.3.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-distributions"><i class="fa fa-check"></i><b>22.3.3</b> Normal distributions</a></li>
+<li class="chapter" data-level="22.3.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions-for-non-negative-parameters"><i class="fa fa-check"></i><b>22.3.4</b> Distributions for non-negative parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="22.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#inference-via-sampling"><i class="fa fa-check"></i><b>22.4</b> Inference via sampling</a></li>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#greta"><i class="fa fa-check"></i><b>22.5</b> Greta</a><ul>
+<li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#attitude-data-set"><i class="fa fa-check"></i><b>22.5.1</b> Attitude data set</a></li>
+<li class="chapter" data-level="22.5.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.5.2</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="22.5.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#bayesian-regression"><i class="fa fa-check"></i><b>22.5.3</b> Bayesian regression</a></li>
+</ul></li>
+<li class="chapter" data-level="22.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-20"><i class="fa fa-check"></i><b>22.6</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 3</a><ul>
+<li class="chapter" data-level="23.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#learning-goals-21"><i class="fa fa-check"></i><b>23.1</b> Learning goals</a></li>
+<li class="chapter" data-level="23.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-packages-and-set-plotting-theme-16"><i class="fa fa-check"></i><b>23.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="23.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-data-set-2"><i class="fa fa-check"></i><b>23.3</b> Load data set</a></li>
+<li class="chapter" data-level="23.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#poker"><i class="fa fa-check"></i><b>23.4</b> Poker</a><ul>
+<li class="chapter" data-level="23.4.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualization-7"><i class="fa fa-check"></i><b>23.4.1</b> Visualization</a></li>
+<li class="chapter" data-level="23.4.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#linear-model-5"><i class="fa fa-check"></i><b>23.4.2</b> Linear model</a></li>
+<li class="chapter" data-level="23.4.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-model"><i class="fa fa-check"></i><b>23.4.3</b> Bayesian model</a></li>
+</ul></li>
+<li class="chapter" data-level="23.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#sleep-study"><i class="fa fa-check"></i><b>23.5</b> Sleep study</a><ul>
+<li class="chapter" data-level="23.5.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#frequentist-analysis-1"><i class="fa fa-check"></i><b>23.5.1</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="23.5.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-analysis"><i class="fa fa-check"></i><b>23.5.2</b> Bayesian analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#titanic-study"><i class="fa fa-check"></i><b>23.6</b> Titanic study</a><ul>
+<li class="chapter" data-level="23.6.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#frequentist-analysis-2"><i class="fa fa-check"></i><b>23.6.1</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="23.6.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-anaysis"><i class="fa fa-check"></i><b>23.6.2</b> Bayesian anaysis</a></li>
+</ul></li>
+<li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-16"><i class="fa fa-check"></i><b>23.7</b> Additional resources</a></li>
+<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-21"><i class="fa fa-check"></i><b>23.8</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html"><i class="fa fa-check"></i><b>24</b> Bayesian data analysis 4</a><ul>
+<li class="chapter" data-level="24.1" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#learning-goals-22"><i class="fa fa-check"></i><b>24.1</b> Learning goals</a></li>
+<li class="chapter" data-level="24.2" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#load-packages-and-set-plotting-theme-17"><i class="fa fa-check"></i><b>24.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="24.3" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#evidence-for-the-null-hypothesis"><i class="fa fa-check"></i><b>24.3</b> Evidence for the null hypothesis</a><ul>
+<li class="chapter" data-level="24.3.1" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#fit-the-model-4"><i class="fa fa-check"></i><b>24.3.1</b> Fit the model</a></li>
+<li class="chapter" data-level="24.3.2" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#visualize-the-results-3"><i class="fa fa-check"></i><b>24.3.2</b> Visualize the results</a></li>
+<li class="chapter" data-level="24.3.3" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#hypothesis-test-2"><i class="fa fa-check"></i><b>24.3.3</b> Hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="24.4" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>24.4</b> Dealing with heteroscedasticity</a><ul>
+<li class="chapter" data-level="24.4.1" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#visualize-the-data"><i class="fa fa-check"></i><b>24.4.1</b> Visualize the data</a></li>
+<li class="chapter" data-level="24.4.2" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#frequentist-analysis-3"><i class="fa fa-check"></i><b>24.4.2</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="24.4.3" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#bayesian-analysis-1"><i class="fa fa-check"></i><b>24.4.3</b> Bayesian analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="24.5" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#zero-one-inflated-beta-binomial-model"><i class="fa fa-check"></i><b>24.5</b> Zero-one inflated beta binomial model</a></li>
+<li class="chapter" data-level="24.6" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#ordinal-regression"><i class="fa fa-check"></i><b>24.6</b> Ordinal regression</a><ul>
+<li class="chapter" data-level="24.6.1" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#ordinal-regression-assuming-equal-variance"><i class="fa fa-check"></i><b>24.6.1</b> Ordinal regression (assuming equal variance)</a></li>
+<li class="chapter" data-level="24.6.2" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#gaussian-regression-assuming-equal-variance"><i class="fa fa-check"></i><b>24.6.2</b> Gaussian regression (assuming equal variance)</a></li>
+<li class="chapter" data-level="24.6.3" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#oridnal-regression-unequal-variance"><i class="fa fa-check"></i><b>24.6.3</b> Oridnal regression (unequal variance)</a></li>
+<li class="chapter" data-level="24.6.4" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#gaussian-regression-unequal-variance"><i class="fa fa-check"></i><b>24.6.4</b> Gaussian regression (unequal variance)</a></li>
+<li class="chapter" data-level="24.6.5" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#model-comparison-3"><i class="fa fa-check"></i><b>24.6.5</b> Model comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#additional-resources-17"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
+<li class="chapter" data-level="24.8" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#session-info-22"><i class="fa fa-check"></i><b>24.8</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>25</b> Model assumptions</a><ul>
+<li class="chapter" data-level="25.1" data-path="model-assumptions.html"><a href="model-assumptions.html#learning-goals-23"><i class="fa fa-check"></i><b>25.1</b> Learning goals</a></li>
+<li class="chapter" data-level="25.2" data-path="model-assumptions.html"><a href="model-assumptions.html#load-packages-and-set-plotting-theme-18"><i class="fa fa-check"></i><b>25.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="25.3" data-path="model-assumptions.html"><a href="model-assumptions.html#model-assumptions-and-what-to-do-if-they-are-violated"><i class="fa fa-check"></i><b>25.3</b> Model assumptions and what to do if they are violated</a><ul>
+<li class="chapter" data-level="25.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#influential-data-points"><i class="fa fa-check"></i><b>25.3.1</b> Influential data points</a></li>
+<li class="chapter" data-level="25.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#linear-and-additive"><i class="fa fa-check"></i><b>25.3.2</b> Linear and additive</a></li>
+<li class="chapter" data-level="25.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normally-distributed-residuals"><i class="fa fa-check"></i><b>25.3.3</b> Normally distributed residuals</a></li>
+<li class="chapter" data-level="25.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#non-parametric-tests"><i class="fa fa-check"></i><b>25.3.4</b> Non-parametric tests</a></li>
+<li class="chapter" data-level="25.3.5" data-path="model-assumptions.html"><a href="model-assumptions.html#bootstrapping-regressions"><i class="fa fa-check"></i><b>25.3.5</b> Bootstrapping regressions</a></li>
+</ul></li>
+<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-18"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
+<li class="chapter" data-level="25.5" data-path="model-assumptions.html"><a href="model-assumptions.html#session-info-23"><i class="fa fa-check"></i><b>25.5</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="reporting-statistics.html"><a href="reporting-statistics.html"><i class="fa fa-check"></i><b>26</b> Reporting statistics</a><ul>
+<li class="chapter" data-level="26.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#general-advice"><i class="fa fa-check"></i><b>26.1</b> General advice</a><ul>
+<li class="chapter" data-level="26.1.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#make-good-figures"><i class="fa fa-check"></i><b>26.1.1</b> Make good figures!</a></li>
+<li class="chapter" data-level="26.1.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#use-statistical-models-to-answer-concrete-research-questions."><i class="fa fa-check"></i><b>26.1.2</b> Use statistical models to answer concrete research questions.</a></li>
+<li class="chapter" data-level="26.1.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#illustrate-the-uncertainty-in-your-statistical-inferences."><i class="fa fa-check"></i><b>26.1.3</b> Illustrate the uncertainty in your statistical inferences.</a></li>
+<li class="chapter" data-level="26.1.4" data-path="reporting-statistics.html"><a href="reporting-statistics.html#report-effect-sizes."><i class="fa fa-check"></i><b>26.1.4</b> Report effect sizes.</a></li>
+<li class="chapter" data-level="26.1.5" data-path="reporting-statistics.html"><a href="reporting-statistics.html#frequentist-statistics"><i class="fa fa-check"></i><b>26.1.5</b> Frequentist statistics</a></li>
+<li class="chapter" data-level="26.1.6" data-path="reporting-statistics.html"><a href="reporting-statistics.html#bayesian-statistics"><i class="fa fa-check"></i><b>26.1.6</b> Bayesian statistics –&gt;</a></li>
+</ul></li>
+<li class="chapter" data-level="26.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#session-info-24"><i class="fa fa-check"></i><b>26.2</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="27" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html"><i class="fa fa-check"></i><b>27</b> Cheatsheets</a><ul>
+<li class="chapter" data-level="27.1" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html#statistics"><i class="fa fa-check"></i><b>27.1</b> Statistics</a></li>
+<li class="chapter" data-level="27.2" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html#r"><i class="fa fa-check"></i><b>27.2</b> R</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Psych 252: Statistical Methods for Behavioral and Social Sciences</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bayesian-data-analysis-4" class="section level1">
+<h1><span class="header-section-number">Chapter 24</span> Bayesian data analysis 4</h1>
+<div id="learning-goals-22" class="section level2">
+<h2><span class="header-section-number">24.1</span> Learning goals</h2>
+<ul>
+<li>Evidence for null results.</li>
+<li>Dealing with unequal variance.</li>
+<li>Zero-one inflated beta binomial model.</li>
+<li>Ordinal logistic regression.</li>
+</ul>
+</div>
+<div id="load-packages-and-set-plotting-theme-17" class="section level2">
+<h2><span class="header-section-number">24.2</span> Load packages and set plotting theme</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for nice RMarkdown tables</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(<span class="st">&quot;modelr&quot;</span>)     <span class="co"># for doing modeling stuff</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">library</span>(<span class="st">&quot;tidybayes&quot;</span>)  <span class="co"># tidying up results from Bayesian models</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">library</span>(<span class="st">&quot;brms&quot;</span>)       <span class="co"># Bayesian regression models with Stan</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">library</span>(<span class="st">&quot;rstanarm&quot;</span>)   <span class="co"># for Bayesian models</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)  <span class="co"># for making figure panels</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">library</span>(<span class="st">&quot;ggrepel&quot;</span>)    <span class="co"># for labels in ggplots</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># for tidying things up</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">library</span>(<span class="st">&quot;gganimate&quot;</span>)  <span class="co"># for animations</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="kw">library</span>(<span class="st">&quot;GGally&quot;</span>)     <span class="co"># for pairs plot</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="kw">library</span>(<span class="st">&quot;patchwork&quot;</span>)  <span class="co"># for figure panels</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="kw">library</span>(<span class="st">&quot;bayesplot&quot;</span>)  <span class="co"># for visualization of Bayesian model fits </span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="kw">library</span>(<span class="st">&quot;ggeffects&quot;</span>)  <span class="co"># for showing marginal/conditional effects</span></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="kw">library</span>(<span class="st">&quot;scales&quot;</span>)     <span class="co"># for percent y-axis</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">theme_set</span>(<span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="co">#set the theme </span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="st">            </span><span class="kw">theme</span>(<span class="dt">text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>))) <span class="co">#set the default text size</span></a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co"># set rstan options</span></a>
+<a class="sourceLine" id="cb2-5" title="5">rstan<span class="op">::</span><span class="kw">rstan_options</span>(<span class="dt">auto_write =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">options</span>(<span class="dt">mc.cores =</span> parallel<span class="op">::</span><span class="kw">detectCores</span>())</a></code></pre></div>
+</div>
+<div id="evidence-for-the-null-hypothesis" class="section level2">
+<h2><span class="header-section-number">24.3</span> Evidence for the null hypothesis</h2>
+<p>See <a href="https://vuorre.netlify.com/post/2017/03/21/bayes-factors-with-brms/">this tutorial</a> and this paper <span class="citation">(<span class="citeproc-not-found" data-reference-id="wagenmakers2010bayesiana"><strong>???</strong></span>)</span> for more information.</p>
+<div id="fit-the-model-4" class="section level3">
+<h3><span class="header-section-number">24.3.1</span> Fit the model</h3>
+<ul>
+<li>Define a binomial model</li>
+<li>Give a uniform prior <code>beta(1, 1)</code></li>
+<li>Get samples from the prior</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">df.null =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">s =</span> <span class="dv">6</span>, <span class="dt">k =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3">fit.brm0 =<span class="st"> </span><span class="kw">brm</span>(s <span class="op">|</span><span class="st"> </span><span class="kw">trials</span>(k) <span class="op">~</span><span class="st"> </span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>Intercept, </a>
+<a class="sourceLine" id="cb3-4" title="4">               <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;identity&quot;</span>),</a>
+<a class="sourceLine" id="cb3-5" title="5">               <span class="dt">prior =</span> <span class="kw">set_prior</span>(<span class="st">&quot;beta(1, 1)&quot;</span>, <span class="dt">class =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">lb =</span> <span class="dv">0</span>, <span class="dt">ub =</span> <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb3-6" title="6">               <span class="dt">data =</span> df.null,</a>
+<a class="sourceLine" id="cb3-7" title="7">               <span class="dt">sample_prior =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb3-8" title="8">               <span class="dt">cores =</span> <span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb3-9" title="9">               <span class="dt">file =</span> <span class="st">&quot;cache/24/brm0&quot;</span>)</a></code></pre></div>
+</div>
+<div id="visualize-the-results-3" class="section level3">
+<h3><span class="header-section-number">24.3.2</span> Visualize the results</h3>
+<p>Visualize the prior and posterior samples:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">fit.brm0 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">posterior_samples</span>(<span class="dt">pars =</span> <span class="st">&quot;b&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">everything</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> value,</a>
+<a class="sourceLine" id="cb4-5" title="5">                       <span class="dt">fill =</span> name)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>)</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-04-1.png" width="672" /></p>
+</div>
+<div id="hypothesis-test-2" class="section level3">
+<h3><span class="header-section-number">24.3.3</span> Hypothesis test</h3>
+<p>We test the H0: <span class="math inline">\(\theta = 0.5\)</span> versus the H1: <span class="math inline">\(\theta \neq 0.5\)</span> using the Savage-Dickey Method, according to which we can compute the Bayes factor like so:</p>
+<p><span class="math inline">\(BF_{01} = \frac{p(D|H_0)}{p(D|H_1)} = \frac{p(\theta = 0.5|D, H_1)}{p(\theta = 0.5|H_1)}\)</span></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">fit.brm0 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">hypothesis =</span> <span class="st">&quot;Intercept = 0.5&quot;</span>)</a></code></pre></div>
+<pre><code>## Hypothesis Tests for class b:
+##              Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
+## 1 (Intercept)-(0.5) = 0     0.08      0.13    -0.19     0.33       2.22
+##   Post.Prob Star
+## 1      0.69     
+## ---
+## &#39;CI&#39;: 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
+## &#39;*&#39;: For one-sided hypotheses, the posterior probability exceeds 95%;
+## for two-sided hypotheses, the value tested against lies outside the 95%-CI.
+## Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
+<p>The result shows that the evidence ratio is in favor of the H0 with <span class="math inline">\(BF_{01} = 2.22\)</span>. This means that H0 is 2.2 more likely than H1 given the data.</p>
+</div>
+</div>
+<div id="dealing-with-heteroscedasticity" class="section level2">
+<h2><span class="header-section-number">24.4</span> Dealing with heteroscedasticity</h2>
+<p>Let’s generate some fake developmental data where the variance in the data is greatest for young children, smaller for older children, and even smaller for adults:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># make example reproducible </span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">set.seed</span>(<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4">df.variance =<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">group =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="st">&quot;3yo&quot;</span>, <span class="st">&quot;5yo&quot;</span>, <span class="st">&quot;adults&quot;</span>), <span class="dt">each =</span> <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb7-5" title="5">                     <span class="dt">response =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">60</span>,</a>
+<a class="sourceLine" id="cb7-6" title="6">                                      <span class="dt">mean =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">8</span>), <span class="dt">each =</span> <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb7-7" title="7">                                      <span class="dt">sd =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="fl">1.5</span>, <span class="fl">0.3</span>), <span class="dt">each =</span> <span class="dv">20</span>)))</a></code></pre></div>
+<div id="visualize-the-data" class="section level3">
+<h3><span class="header-section-number">24.4.1</span> Visualize the data</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">df.variance <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> response)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb8-4" title="4">              <span class="dt">width =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb8-5" title="5">              <span class="dt">alpha =</span> <span class="fl">0.7</span>)</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-07-1.png" width="672" /></p>
+</div>
+<div id="frequentist-analysis-3" class="section level3">
+<h3><span class="header-section-number">24.4.2</span> Frequentist analysis</h3>
+<div id="fit-the-model-5" class="section level4">
+<h4><span class="header-section-number">24.4.2.1</span> Fit the model</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">fit.lm1 =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> response <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>group,</a>
+<a class="sourceLine" id="cb9-2" title="2">             <span class="dt">data =</span> df.variance)</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4">fit.lm1 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = response ~ 1 + group, data = df.variance)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.6145 -0.8288 -0.0879  0.6315  7.2193 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.005336   0.421618  -0.013     0.99    
+## group5yo     5.172810   0.596258   8.675 5.25e-12 ***
+## groupadults  7.970655   0.596258  13.368  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.886 on 57 degrees of freedom
+## Multiple R-squared:  0.7635, Adjusted R-squared:  0.7552 
+## F-statistic: 91.99 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">fit.lm1 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw">glance</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">digits =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span><span class="kw">kable_styling</span>()</a></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+r.squared
+</th>
+<th style="text-align:right;">
+adj.r.squared
+</th>
+<th style="text-align:right;">
+sigma
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0.76
+</td>
+<td style="text-align:right;">
+0.76
+</td>
+<td style="text-align:right;">
+1.89
+</td>
+<td style="text-align:right;">
+91.99
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+-121.65
+</td>
+<td style="text-align:right;">
+251.3
+</td>
+<td style="text-align:right;">
+259.68
+</td>
+<td style="text-align:right;">
+202.65
+</td>
+<td style="text-align:right;">
+57
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="visualize-the-model-predictions" class="section level4">
+<h4><span class="header-section-number">24.4.2.2</span> Visualize the model predictions</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb12-2" title="2">fit.lm1 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="st">  </span><span class="kw">simulate</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="st">  </span><span class="kw">bind_cols</span>(df.variance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> sim_<span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb12-7" title="7">              <span class="dt">width =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb12-8" title="8">              <span class="dt">alpha =</span> <span class="fl">0.7</span>)</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-09-1.png" width="672" /></p>
+<p>Notice how the model predicts that the variance is equal for each group.</p>
+</div>
+</div>
+<div id="bayesian-analysis-1" class="section level3">
+<h3><span class="header-section-number">24.4.3</span> Bayesian analysis</h3>
+<p>While frequentist models (such as a linear regression) assume equality of variance, Bayesian models afford us with the flexibility of inferring both the parameter estimates of the groups (i.e. the means and differences between the means), as well as the variances.</p>
+<div id="fit-the-model-6" class="section level4">
+<h4><span class="header-section-number">24.4.3.1</span> Fit the model</h4>
+<p>We define a multivariate model which tries to fit both the <code>response</code> as well as the variance <code>sigma</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">fit.brm1 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> <span class="kw">bf</span>(response <span class="op">~</span><span class="st"> </span>group,</a>
+<a class="sourceLine" id="cb13-2" title="2">                            sigma <span class="op">~</span><span class="st"> </span>group),</a>
+<a class="sourceLine" id="cb13-3" title="3">               <span class="dt">data =</span> df.variance,</a>
+<a class="sourceLine" id="cb13-4" title="4">               <span class="dt">file =</span> <span class="st">&quot;cache/24/brm1&quot;</span>,</a>
+<a class="sourceLine" id="cb13-5" title="5">               <span class="dt">seed =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="kw">summary</span>(fit.brm1)</a></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = log 
+## Formula: response ~ group 
+##          sigma ~ group
+##    Data: df.variance (Number of observations: 60) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##                   Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept            -0.01      0.73    -1.41     1.51 1.01     1107     1072
+## sigma_Intercept       1.15      0.17     0.85     1.51 1.00     1991     1922
+## group5yo              5.18      0.77     3.60     6.65 1.00     1252     1327
+## groupadults           7.98      0.74     6.47     9.37 1.01     1110     1079
+## sigma_group5yo       -1.05      0.24    -1.51    -0.57 1.00     2249     2420
+## sigma_groupadults    -2.19      0.24    -2.66    -1.74 1.00     2171     2427
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<p>Notice that sigma is on the log scale. To get the standard deviations, we have to exponentiate the predictors, like so:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">fit.brm1 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="st">  </span><span class="kw">tidy</span>(<span class="dt">parameters =</span> <span class="st">&quot;^b_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(term, <span class="st">&quot;sigma&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw">select</span>(term, estimate) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">str_remove</span>(term, <span class="st">&quot;b_sigma_&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> term,</a>
+<a class="sourceLine" id="cb15-7" title="7">              <span class="dt">values_from =</span> estimate) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-9" title="9"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(<span class="op">-</span>intercept), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="kw">exp</span>(. <span class="op">+</span><span class="st"> </span>intercept)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">intercept =</span> <span class="kw">exp</span>(intercept))</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 3
+##   intercept group5yo groupadults
+##       &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+## 1      3.16     1.10       0.352</code></pre>
+</div>
+<div id="visualize-the-model-predictions-1" class="section level4">
+<h4><span class="header-section-number">24.4.3.2</span> Visualize the model predictions</h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">df.variance <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="kw">expand</span>(group) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">add_fitted_draws</span>(fit.brm1, <span class="dt">dpar =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw">select</span>(group, .row, .draw, <span class="dt">posterior =</span> .value, mu, sigma) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(mu, sigma),</a>
+<a class="sourceLine" id="cb17-6" title="6">               <span class="dt">names_to =</span> <span class="st">&quot;index&quot;</span>,</a>
+<a class="sourceLine" id="cb17-7" title="7">               <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">y =</span> group)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-9" title="9"><span class="st">  </span><span class="kw">geom_halfeyeh</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-10" title="10"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-11" title="11"><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(index))</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-12-1.png" width="672" /></p>
+<p>This plot shows what the posterior looks like for both mu (the inferred means), and for sigma (the inferred variances) for the different groups.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb18-2" title="2">df.variance <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="st">  </span><span class="kw">add_predicted_draws</span>(<span class="dt">model =</span> fit.brm1,</a>
+<a class="sourceLine" id="cb18-4" title="4">                      <span class="dt">n =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> .prediction)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">height =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb18-7" title="7">              <span class="dt">width =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb18-8" title="8">              <span class="dt">alpha =</span> <span class="fl">0.7</span>)</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-13-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="zero-one-inflated-beta-binomial-model" class="section level2">
+<h2><span class="header-section-number">24.5</span> Zero-one inflated beta binomial model</h2>
+<p>See this <a href="https://vuorre.netlify.com/post/2019/02/18/analyze-analog-scale-ratings-with-zero-one-inflated-beta-models/#zoib-regression">blog post</a>.</p>
+</div>
+<div id="ordinal-regression" class="section level2">
+<h2><span class="header-section-number">24.6</span> Ordinal regression</h2>
+<p>Check out the following two papers:</p>
+<ul>
+<li><span class="citation">(<span class="citeproc-not-found" data-reference-id="liddell2018analyzin"><strong>???</strong></span>)</span></li>
+<li><span class="citation">(<span class="citeproc-not-found" data-reference-id="burkner2019ordinal"><strong>???</strong></span>)</span></li>
+</ul>
+<p>Let’s read in some movie ratings:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">df.movies =<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file =</span> <span class="st">&quot;data/MoviesData.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb19-2" title="2"></a>
+<a class="sourceLine" id="cb19-3" title="3">df.movies =<span class="st"> </span>df.movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> n1<span class="op">:</span>n5,</a>
+<a class="sourceLine" id="cb19-5" title="5">               <span class="dt">names_to =</span> <span class="st">&quot;stars&quot;</span>,</a>
+<a class="sourceLine" id="cb19-6" title="6">               <span class="dt">values_to =</span> <span class="st">&quot;rating&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stars =</span> <span class="kw">str_remove</span>(stars,<span class="st">&quot;n&quot;</span>),</a>
+<a class="sourceLine" id="cb19-8" title="8">         <span class="dt">stars =</span> <span class="kw">as.numeric</span>(stars))</a>
+<a class="sourceLine" id="cb19-9" title="9"></a>
+<a class="sourceLine" id="cb19-10" title="10">df.movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-11" title="11"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-12" title="12"><span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-13" title="13"><span class="st">  </span><span class="kw">kable_styling</span>()</a></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+ID
+</th>
+<th style="text-align:left;">
+Descrip
+</th>
+<th style="text-align:right;">
+stars
+</th>
+<th style="text-align:right;">
+rating
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+49
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+70
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+119
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+217
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+245
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Priceless
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+67
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Priceless
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+22
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Priceless
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+22
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Priceless
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+60
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Priceless
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+574
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">df.movies =<span class="st"> </span>df.movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="st">  </span><span class="kw">uncount</span>(<span class="dt">weights =</span> rating) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">id =</span> <span class="kw">as.factor</span>(ID)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="st">  </span><span class="kw">filter</span>(ID <span class="op">&lt;=</span><span class="st"> </span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb20-5" title="5"></a>
+<a class="sourceLine" id="cb20-6" title="6">df.movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-7" title="7"><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="st">  </span><span class="kw">kable</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="st">  </span><span class="kw">kable_styling</span>()</a></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+ID
+</th>
+<th style="text-align:left;">
+Descrip
+</th>
+<th style="text-align:right;">
+stars
+</th>
+<th style="text-align:left;">
+id
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+The Whole Truth
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<div id="ordinal-regression-assuming-equal-variance" class="section level3">
+<h3><span class="header-section-number">24.6.1</span> Ordinal regression (assuming equal variance)</h3>
+<div id="fit-the-model-7" class="section level4">
+<h4><span class="header-section-number">24.6.1.1</span> Fit the model</h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">fit.brm5 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> stars <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>id,</a>
+<a class="sourceLine" id="cb21-2" title="2">               <span class="dt">family =</span> <span class="kw">cumulative</span>(<span class="dt">link =</span> <span class="st">&quot;probit&quot;</span>),</a>
+<a class="sourceLine" id="cb21-3" title="3">               <span class="dt">data =</span> df.movies,</a>
+<a class="sourceLine" id="cb21-4" title="4">               <span class="dt">file =</span> <span class="st">&quot;cache/24/brm5&quot;</span>,</a>
+<a class="sourceLine" id="cb21-5" title="5">               <span class="dt">seed =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb21-6" title="6"></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="kw">summary</span>(fit.brm5)</a></code></pre></div>
+<pre><code>##  Family: cumulative 
+##   Links: mu = probit; disc = identity 
+## Formula: stars ~ 1 + id 
+##    Data: df.movies (Number of observations: 21708) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept[1]    -1.22      0.04    -1.31    -1.14 1.00     1877     2488
+## Intercept[2]    -0.90      0.04    -0.98    -0.82 1.00     1787     2419
+## Intercept[3]    -0.44      0.04    -0.52    -0.36 1.00     1692     2185
+## Intercept[4]     0.32      0.04     0.24     0.40 1.00     1634     2101
+## id2              0.84      0.06     0.71     0.96 1.00     2354     2553
+## id3              0.22      0.05     0.11     0.32 1.00     2146     2516
+## id4              0.33      0.04     0.24     0.41 1.00     1647     2315
+## id5              0.44      0.05     0.34     0.54 1.00     1982     2608
+## id6              0.75      0.04     0.67     0.83 1.00     1659     2158
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<div id="visualizations" class="section level4">
+<h4><span class="header-section-number">24.6.1.2</span> Visualizations</h4>
+<div id="model-parameters" class="section level5">
+<h5><span class="header-section-number">24.6.1.2.1</span> Model parameters</h5>
+<p>The model infers the thresholds and the means of the Gaussian distributions in latent space.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">df.params =<span class="st"> </span>fit.brm5 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span><span class="kw">tidy</span>(<span class="dt">parameters =</span> <span class="st">&quot;^b_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span><span class="kw">select</span>(term, estimate) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">str_remove</span>(term, <span class="st">&quot;b_&quot;</span>))</a>
+<a class="sourceLine" id="cb23-5" title="5"></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>)),</a>
+<a class="sourceLine" id="cb23-7" title="7">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-8" title="8"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(.),</a>
+<a class="sourceLine" id="cb23-9" title="9">                <span class="dt">size =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb23-10" title="10">                <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-11" title="11"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(., <span class="dt">mean =</span> df.params <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-12" title="12"><span class="st">                                </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(term, <span class="st">&quot;id2&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-13" title="13"><span class="st">                                </span><span class="kw">pull</span>(estimate)),</a>
+<a class="sourceLine" id="cb23-14" title="14">                <span class="dt">size =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb23-15" title="15">                <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-16" title="16"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> df.params <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-17" title="17"><span class="st">               </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(term, <span class="st">&quot;Intercept&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-18" title="18"><span class="st">               </span><span class="kw">pull</span>(estimate))</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-16-1.png" width="672" /></p>
+</div>
+<div id="mcmc-inference" class="section level5">
+<h5><span class="header-section-number">24.6.1.2.2</span> MCMC inference</h5>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">fit.brm5 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span><span class="kw">plot</span>(<span class="dt">N =</span> <span class="dv">9</span>)</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-17-1.png" width="768" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">fit.brm5 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="st">  </span><span class="kw">pp_check</span>(<span class="dt">nsamples =</span> <span class="dv">20</span>)</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-18-1.png" width="672" /></p>
+</div>
+<div id="model-predictions" class="section level5">
+<h5><span class="header-section-number">24.6.1.2.3</span> Model predictions</h5>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">conditional_effects</span>(fit.brm5,</a>
+<a class="sourceLine" id="cb26-2" title="2">                    <span class="dt">effects =</span> <span class="st">&quot;id&quot;</span>,</a>
+<a class="sourceLine" id="cb26-3" title="3">                    <span class="dt">categorical =</span> T)</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">df.model =<span class="st"> </span><span class="kw">add_fitted_draws</span>(<span class="dt">newdata =</span> <span class="kw">expand_grid</span>(<span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),</a>
+<a class="sourceLine" id="cb27-2" title="2">                           <span class="dt">model =</span> fit.brm5,</a>
+<a class="sourceLine" id="cb27-3" title="3">                           <span class="dt">n =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb27-4" title="4"></a>
+<a class="sourceLine" id="cb27-5" title="5">df.plot =<span class="st"> </span>df.movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-6" title="6"><span class="st">  </span><span class="kw">count</span>(id, stars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-7" title="7"><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stars =</span> <span class="kw">as.factor</span>(stars))</a>
+<a class="sourceLine" id="cb27-10" title="10">  </a>
+<a class="sourceLine" id="cb27-11" title="11"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,</a>
+<a class="sourceLine" id="cb27-12" title="12">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> stars,</a>
+<a class="sourceLine" id="cb27-13" title="13">                     <span class="dt">y =</span> p)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-14" title="14"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb27-15" title="15">           <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-16" title="16"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df.model,</a>
+<a class="sourceLine" id="cb27-17" title="17">             <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> .category,</a>
+<a class="sourceLine" id="cb27-18" title="18">                           <span class="dt">y =</span> .value),</a>
+<a class="sourceLine" id="cb27-19" title="19">             <span class="dt">alpha =</span> <span class="fl">0.3</span>,</a>
+<a class="sourceLine" id="cb27-20" title="20">             <span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.3</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-21" title="21"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>id, <span class="dt">ncol =</span> <span class="dv">6</span>) </a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-20-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="gaussian-regression-assuming-equal-variance" class="section level3">
+<h3><span class="header-section-number">24.6.2</span> Gaussian regression (assuming equal variance)</h3>
+<div id="fit-the-model-8" class="section level4">
+<h4><span class="header-section-number">24.6.2.1</span> Fit the model</h4>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">fit.brm6 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> stars <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>id,</a>
+<a class="sourceLine" id="cb28-2" title="2">               <span class="dt">data =</span> df.movies,</a>
+<a class="sourceLine" id="cb28-3" title="3">               <span class="dt">file =</span> <span class="st">&quot;cache/24/brm6&quot;</span>,</a>
+<a class="sourceLine" id="cb28-4" title="4">               <span class="dt">seed =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb28-5" title="5"></a>
+<a class="sourceLine" id="cb28-6" title="6"><span class="kw">summary</span>(fit.brm6)</a></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = identity 
+## Formula: stars ~ 1 + id 
+##    Data: df.movies (Number of observations: 21708) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept     3.77      0.04     3.70     3.84 1.00     1203     1621
+## id2           0.64      0.05     0.54     0.75 1.00     1605     2335
+## id3           0.20      0.05     0.10     0.30 1.00     1558     2147
+## id4           0.37      0.04     0.29     0.45 1.00     1267     1862
+## id5           0.30      0.05     0.21     0.40 1.00     1441     2154
+## id6           0.72      0.04     0.65     0.79 1.00     1205     1720
+## 
+## Family Specific Parameters: 
+##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sigma     1.00      0.00     0.99     1.01 1.00     3300     2723
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<div id="visualizations-1" class="section level4">
+<h4><span class="header-section-number">24.6.2.2</span> Visualizations</h4>
+<div id="model-predictions-1" class="section level5">
+<h5><span class="header-section-number">24.6.2.2.1</span> Model predictions</h5>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co"># get the predictions for each value of the Likert scale </span></a>
+<a class="sourceLine" id="cb30-2" title="2">df.model =<span class="st"> </span>fit.brm6 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="st">  </span><span class="kw">tidy</span>(<span class="dt">parameters =</span> <span class="st">&quot;^b_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="st">  </span><span class="kw">select</span>(term, estimate) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">str_remove</span>(term, <span class="st">&quot;b_&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-6" title="6"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> term,</a>
+<a class="sourceLine" id="cb30-7" title="7">              <span class="dt">values_from =</span> estimate) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-8" title="8"><span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-9" title="9"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(id2<span class="op">:</span>id6), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>intercept) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-10" title="10"><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">str_c</span>(<span class="st">&quot;mu_&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-11" title="11"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">everything</span>(),</a>
+<a class="sourceLine" id="cb30-12" title="12">               <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;parameter&quot;</span>, <span class="st">&quot;movie&quot;</span>),</a>
+<a class="sourceLine" id="cb30-13" title="13">               <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</a>
+<a class="sourceLine" id="cb30-14" title="14">               <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-15" title="15"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> parameter, </a>
+<a class="sourceLine" id="cb30-16" title="16">              <span class="dt">values_from =</span> value) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-17" title="17"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map</span>(<span class="dt">.x =</span> mu, <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb30-18" title="18">                                           <span class="dt">y  =</span> <span class="kw">dnorm</span>(x, <span class="dt">mean =</span> .x)))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-19" title="19"><span class="st">  </span><span class="kw">select</span>(movie, data) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-20" title="20"><span class="st">  </span><span class="kw">unnest</span>(<span class="kw">c</span>(data)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-21" title="21"><span class="st">  </span><span class="kw">group_by</span>(movie) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-22" title="22"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> y<span class="op">/</span><span class="kw">sum</span>(y)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-23" title="23"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-24" title="24"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">id =</span> movie)</a>
+<a class="sourceLine" id="cb30-25" title="25"></a>
+<a class="sourceLine" id="cb30-26" title="26"><span class="co"># visualize the predictions </span></a>
+<a class="sourceLine" id="cb30-27" title="27">df.plot =<span class="st"> </span>df.movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-28" title="28"><span class="st">  </span><span class="kw">count</span>(id, stars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-29" title="29"><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-30" title="30"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-31" title="31"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stars =</span> <span class="kw">as.factor</span>(stars))</a>
+<a class="sourceLine" id="cb30-32" title="32"></a>
+<a class="sourceLine" id="cb30-33" title="33"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,</a>
+<a class="sourceLine" id="cb30-34" title="34">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> stars,</a>
+<a class="sourceLine" id="cb30-35" title="35">                     <span class="dt">y =</span> p)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-36" title="36"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb30-37" title="37">           <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-38" title="38"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df.model,</a>
+<a class="sourceLine" id="cb30-39" title="39">            <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x,</a>
+<a class="sourceLine" id="cb30-40" title="40">                          <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-41" title="41"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>id, <span class="dt">ncol =</span> <span class="dv">6</span>) </a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-22-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="oridnal-regression-unequal-variance" class="section level3">
+<h3><span class="header-section-number">24.6.3</span> Oridnal regression (unequal variance)</h3>
+<div id="fit-the-model-9" class="section level4">
+<h4><span class="header-section-number">24.6.3.1</span> Fit the model</h4>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">fit.brm7 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> <span class="kw">bf</span>(stars <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>id) <span class="op">+</span><span class="st"> </span><span class="kw">lf</span>(disc <span class="op">~</span><span class="st"> </span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>id, <span class="dt">cmc =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb31-2" title="2">               <span class="dt">family =</span> <span class="kw">cumulative</span>(<span class="dt">link =</span> <span class="st">&quot;probit&quot;</span>),</a>
+<a class="sourceLine" id="cb31-3" title="3">               <span class="dt">data =</span> df.movies,</a>
+<a class="sourceLine" id="cb31-4" title="4">               <span class="dt">file =</span> <span class="st">&quot;cache/24/brm7&quot;</span>,</a>
+<a class="sourceLine" id="cb31-5" title="5">               <span class="dt">seed =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb31-6" title="6"></a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="kw">summary</span>(fit.brm7)</a></code></pre></div>
+<pre><code>##  Family: cumulative 
+##   Links: mu = probit; disc = log 
+## Formula: stars ~ 1 + id 
+##          disc ~ 0 + id
+##    Data: df.movies (Number of observations: 21708) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept[1]    -1.41      0.06    -1.53    -1.29 1.00     1484     2421
+## Intercept[2]    -1.00      0.05    -1.10    -0.90 1.00     1852     2561
+## Intercept[3]    -0.46      0.04    -0.54    -0.37 1.00     2405     2684
+## Intercept[4]     0.41      0.05     0.32     0.51 1.00     1336     2161
+## id2              2.71      0.33     2.14     3.44 1.00     1681     1865
+## id3              0.33      0.07     0.20     0.47 1.00     1961     2618
+## id4              0.36      0.05     0.26     0.46 1.00     1525     2753
+## id5              1.65      0.17     1.34     2.00 1.00     1929     2281
+## id6              0.86      0.06     0.74     0.98 1.00     1112     1769
+## disc_id2        -1.12      0.10    -1.33    -0.94 1.00     1672     1943
+## disc_id3        -0.23      0.06    -0.34    -0.11 1.00     1342     1955
+## disc_id4        -0.01      0.04    -0.09     0.07 1.00     1043     1747
+## disc_id5        -1.09      0.07    -1.23    -0.95 1.00     1681     1996
+## disc_id6        -0.08      0.04    -0.15     0.00 1.00      941     1489
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<div id="visualizations-2" class="section level4">
+<h4><span class="header-section-number">24.6.3.2</span> Visualizations</h4>
+<div id="model-parameters-1" class="section level5">
+<h5><span class="header-section-number">24.6.3.2.1</span> Model parameters</h5>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">df.params =<span class="st"> </span>fit.brm7 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="st">  </span><span class="kw">tidy</span>(<span class="dt">parameters =</span> <span class="st">&quot;^b_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="st">  </span><span class="kw">select</span>(term, estimate) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">str_remove</span>(term, <span class="st">&quot;b_&quot;</span>))</a>
+<a class="sourceLine" id="cb33-5" title="5"></a>
+<a class="sourceLine" id="cb33-6" title="6"><span class="kw">ggplot</span>(<span class="dt">data =</span> <span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>)),</a>
+<a class="sourceLine" id="cb33-7" title="7">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-8" title="8"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(.),</a>
+<a class="sourceLine" id="cb33-9" title="9">                <span class="dt">size =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb33-10" title="10">                <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-11" title="11"><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun =</span> <span class="op">~</span><span class="st"> </span><span class="kw">dnorm</span>(.,</a>
+<a class="sourceLine" id="cb33-12" title="12">                              <span class="dt">mean =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb33-13" title="13">                              <span class="dt">sd =</span> <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb33-14" title="14">                <span class="dt">size =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb33-15" title="15">                <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-16" title="16"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> df.params <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-17" title="17"><span class="st">               </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(term, <span class="st">&quot;Intercept&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-18" title="18"><span class="st">               </span><span class="kw">pull</span>(estimate))</a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-24-1.png" width="672" /></p>
+</div>
+<div id="model-predictions-2" class="section level5">
+<h5><span class="header-section-number">24.6.3.2.2</span> Model predictions</h5>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">df.model =<span class="st"> </span><span class="kw">add_fitted_draws</span>(<span class="dt">newdata =</span> <span class="kw">expand_grid</span>(<span class="dt">id =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>),</a>
+<a class="sourceLine" id="cb34-2" title="2">                           <span class="dt">model =</span> fit.brm7,</a>
+<a class="sourceLine" id="cb34-3" title="3">                           <span class="dt">n =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb34-4" title="4"></a>
+<a class="sourceLine" id="cb34-5" title="5">df.plot =<span class="st"> </span>df.movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-6" title="6"><span class="st">  </span><span class="kw">count</span>(id, stars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-7" title="7"><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-8" title="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stars =</span> <span class="kw">as.factor</span>(stars))</a>
+<a class="sourceLine" id="cb34-10" title="10">  </a>
+<a class="sourceLine" id="cb34-11" title="11"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,</a>
+<a class="sourceLine" id="cb34-12" title="12">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> stars,</a>
+<a class="sourceLine" id="cb34-13" title="13">                     <span class="dt">y =</span> p)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-14" title="14"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb34-15" title="15">           <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-16" title="16"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df.model,</a>
+<a class="sourceLine" id="cb34-17" title="17">             <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> .category,</a>
+<a class="sourceLine" id="cb34-18" title="18">                           <span class="dt">y =</span> .value),</a>
+<a class="sourceLine" id="cb34-19" title="19">             <span class="dt">alpha =</span> <span class="fl">0.3</span>,</a>
+<a class="sourceLine" id="cb34-20" title="20">             <span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.3</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-21" title="21"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>id, <span class="dt">ncol =</span> <span class="dv">6</span>) </a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-25-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="gaussian-regression-unequal-variance" class="section level3">
+<h3><span class="header-section-number">24.6.4</span> Gaussian regression (unequal variance)</h3>
+<div id="fit-the-model-10" class="section level4">
+<h4><span class="header-section-number">24.6.4.1</span> Fit the model</h4>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">fit.brm8 =<span class="st"> </span><span class="kw">brm</span>(<span class="dt">formula =</span> <span class="kw">bf</span>(stars <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>id,</a>
+<a class="sourceLine" id="cb35-2" title="2">                            sigma <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>id),</a>
+<a class="sourceLine" id="cb35-3" title="3">               <span class="dt">data =</span> df.movies,</a>
+<a class="sourceLine" id="cb35-4" title="4">               <span class="dt">file =</span> <span class="st">&quot;cache/24/brm8&quot;</span>,</a>
+<a class="sourceLine" id="cb35-5" title="5">               <span class="dt">seed =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb35-6" title="6"></a>
+<a class="sourceLine" id="cb35-7" title="7"><span class="kw">summary</span>(fit.brm8)</a></code></pre></div>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = log 
+## Formula: stars ~ 1 + id 
+##          sigma ~ 1 + id
+##    Data: df.movies (Number of observations: 21708) 
+## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup samples = 4000
+## 
+## Population-Level Effects: 
+##                 Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept           3.77      0.05     3.68     3.86 1.00     1429     1985
+## sigma_Intercept     0.20      0.03     0.15     0.25 1.00     1530     1891
+## id2                 0.64      0.07     0.51     0.77 1.00     1888     2421
+## id3                 0.20      0.06     0.07     0.33 1.00     1866     2185
+## id4                 0.37      0.05     0.27     0.47 1.00     1500     2009
+## id5                 0.30      0.06     0.18     0.43 1.00     1904     2216
+## id6                 0.72      0.05     0.63     0.82 1.00     1416     2072
+## sigma_id2           0.02      0.04    -0.05     0.09 1.00     2095     2789
+## sigma_id3           0.03      0.04    -0.04     0.10 1.00     1874     2556
+## sigma_id4          -0.14      0.03    -0.19    -0.08 1.00     1669     2129
+## sigma_id5           0.20      0.03     0.14     0.27 1.00     1864     2203
+## sigma_id6          -0.35      0.03    -0.40    -0.30 1.00     1601     2009
+## 
+## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+<div id="visualizations-3" class="section level4">
+<h4><span class="header-section-number">24.6.4.2</span> Visualizations</h4>
+<div id="model-predictions-3" class="section level5">
+<h5><span class="header-section-number">24.6.4.2.1</span> Model predictions</h5>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">df.model =<span class="st"> </span>fit.brm8 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="st">  </span><span class="kw">tidy</span>(<span class="dt">parameters =</span> <span class="st">&quot;^b_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-3" title="3"><span class="st">  </span><span class="kw">select</span>(term, estimate) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> <span class="kw">str_remove</span>(term, <span class="st">&quot;b_&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-5" title="5"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> term,</a>
+<a class="sourceLine" id="cb37-6" title="6">              <span class="dt">values_from =</span> estimate) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-7" title="7"><span class="st">  </span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-8" title="8"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(id2<span class="op">:</span>id6), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>intercept) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-9" title="9"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(<span class="kw">contains</span>(<span class="st">&quot;sigma&quot;</span>)), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="kw">exp</span>(.)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-10" title="10"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="dt">.vars =</span> <span class="kw">vars</span>(sigma_id2<span class="op">:</span>sigma_id5), <span class="dt">.funs =</span> <span class="op">~</span><span class="st"> </span>. <span class="op">+</span><span class="st"> </span>sigma_intercept) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-11" title="11"><span class="st">  </span><span class="kw">set_names</span>(<span class="kw">c</span>(<span class="st">&quot;mu_1&quot;</span>, <span class="st">&quot;sigma_1&quot;</span>, <span class="kw">str_c</span>(<span class="st">&quot;mu_&quot;</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>), <span class="kw">str_c</span>(<span class="st">&quot;sigma_&quot;</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-12" title="12"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">everything</span>(),</a>
+<a class="sourceLine" id="cb37-13" title="13">               <span class="dt">names_to =</span> <span class="kw">c</span>(<span class="st">&quot;parameter&quot;</span>, <span class="st">&quot;movie&quot;</span>),</a>
+<a class="sourceLine" id="cb37-14" title="14">               <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</a>
+<a class="sourceLine" id="cb37-15" title="15">               <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-16" title="16"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> parameter, </a>
+<a class="sourceLine" id="cb37-17" title="17">              <span class="dt">values_from =</span> value) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-18" title="18"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> mu, <span class="dt">.y =</span> sigma, <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb37-19" title="19">                                                        <span class="dt">y  =</span> <span class="kw">dnorm</span>(x,</a>
+<a class="sourceLine" id="cb37-20" title="20">                                                       <span class="dt">mean =</span> .x,</a>
+<a class="sourceLine" id="cb37-21" title="21">                                                       <span class="dt">sd =</span> .y)))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-22" title="22"><span class="st">  </span><span class="kw">select</span>(movie, data) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-23" title="23"><span class="st">  </span><span class="kw">unnest</span>(<span class="kw">c</span>(data)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-24" title="24"><span class="st">  </span><span class="kw">group_by</span>(movie) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-25" title="25"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> y<span class="op">/</span><span class="kw">sum</span>(y)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-26" title="26"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-27" title="27"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">id =</span> movie)</a>
+<a class="sourceLine" id="cb37-28" title="28"></a>
+<a class="sourceLine" id="cb37-29" title="29">df.plot =<span class="st"> </span>df.movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-30" title="30"><span class="st">  </span><span class="kw">count</span>(id, stars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-31" title="31"><span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-32" title="32"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-33" title="33"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">stars =</span> <span class="kw">as.factor</span>(stars))</a>
+<a class="sourceLine" id="cb37-34" title="34"></a>
+<a class="sourceLine" id="cb37-35" title="35"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.plot,</a>
+<a class="sourceLine" id="cb37-36" title="36">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> stars,</a>
+<a class="sourceLine" id="cb37-37" title="37">                     <span class="dt">y =</span> p)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb37-38" title="38"><span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">color =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb37-39" title="39">           <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb37-40" title="40"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> df.model,</a>
+<a class="sourceLine" id="cb37-41" title="41">            <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> x,</a>
+<a class="sourceLine" id="cb37-42" title="42">                          <span class="dt">y =</span> y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb37-43" title="43"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>id, <span class="dt">ncol =</span> <span class="dv">6</span>) </a></code></pre></div>
+<p><img src="psych252_files/figure-html/bda4-27-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="model-comparison-3" class="section level3">
+<h3><span class="header-section-number">24.6.5</span> Model comparison</h3>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="co"># ordinal regression with equal variance </span></a>
+<a class="sourceLine" id="cb38-2" title="2">fit.brm5 =<span class="st"> </span><span class="kw">add_criterion</span>(fit.brm5,</a>
+<a class="sourceLine" id="cb38-3" title="3">                         <span class="dt">criterion =</span> <span class="st">&quot;loo&quot;</span>)</a></code></pre></div>
+<pre><code>## Automatically saving the model object in &#39;cache/24/brm5.rds&#39;</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># Gaussian regression with equal variance</span></a>
+<a class="sourceLine" id="cb40-2" title="2">fit.brm6 =<span class="st"> </span><span class="kw">add_criterion</span>(fit.brm6,</a>
+<a class="sourceLine" id="cb40-3" title="3">                         <span class="dt">criterion =</span> <span class="st">&quot;loo&quot;</span>)</a></code></pre></div>
+<pre><code>## Automatically saving the model object in &#39;cache/24/brm6.rds&#39;</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">loo_compare</span>(fit.brm5, fit.brm6)</a></code></pre></div>
+<pre><code>##          elpd_diff se_diff
+## fit.brm5     0.0       0.0
+## fit.brm6 -7657.1     109.2</code></pre>
+</div>
+</div>
+<div id="additional-resources-17" class="section level2">
+<h2><span class="header-section-number">24.7</span> Additional resources</h2>
+<ul>
+<li><a href="https://mjskay.github.io/tidybayes/articles/tidy-brms.html">Tutorial on visualizing brms posteriors with tidybayes</a></li>
+<li><a href="https://mucollective.northwestern.edu/files/2018-HOPsTrends-InfoVis.pdf">Hypothetical outcome plots</a></li>
+<li><a href="https://cran.r-project.org/web/packages/bayesplot/vignettes/visual-mcmc-diagnostics.html#general-mcmc-diagnostics">Visual MCMC diagnostics</a></li>
+<li><a href="https://chi-feng.github.io/mcmc-demo/">Visualiztion of different MCMC algorithms</a></li>
+</ul>
+</div>
+<div id="session-info-22" class="section level2">
+<h2><span class="header-section-number">24.8</span> Session info</h2>
+<p>Information about this R session including which version of R was used, and what packages were loaded.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<pre><code>## R version 3.6.2 (2019-12-12)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Mojave 10.14.6
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] forcats_0.5.0    stringr_1.4.0    dplyr_0.8.4      purrr_0.3.3     
+##  [5] readr_1.3.1      tidyr_1.0.2      tibble_2.1.3     tidyverse_1.3.0 
+##  [9] scales_1.1.0     ggeffects_0.14.1 bayesplot_1.7.1  GGally_1.4.0    
+## [13] gganimate_1.0.5  broom_0.5.5      ggrepel_0.8.1    ggplot2_3.3.0   
+## [17] patchwork_1.0.0  rstanarm_2.19.3  brms_2.12.0      Rcpp_1.0.3      
+## [21] tidybayes_2.0.1  modelr_0.1.6     janitor_1.2.1    kableExtra_1.1.0
+## [25] knitr_1.28      
+## 
+## loaded via a namespace (and not attached):
+##   [1] readxl_1.3.1         backports_1.1.5      plyr_1.8.6          
+##   [4] igraph_1.2.4.2       splines_3.6.2        svUnit_0.7-12       
+##   [7] crosstalk_1.0.0      rstantools_2.0.0     inline_0.3.15       
+##  [10] digest_0.6.25        htmltools_0.4.0      rsconnect_0.8.16    
+##  [13] fansi_0.4.1          magrittr_1.5         matrixStats_0.55.0  
+##  [16] xts_0.12-0           prettyunits_1.1.1    colorspace_1.4-1    
+##  [19] rvest_0.3.5          haven_2.2.0          xfun_0.12           
+##  [22] callr_3.4.2          crayon_1.3.4         jsonlite_1.6.1      
+##  [25] lme4_1.1-21          survival_3.1-8       zoo_1.8-7           
+##  [28] glue_1.3.1           gtable_0.3.0         webshot_0.5.2       
+##  [31] pkgbuild_1.0.6       rstan_2.19.3         abind_1.4-5         
+##  [34] mvtnorm_1.1-0        DBI_1.1.0            miniUI_0.1.1.1      
+##  [37] viridisLite_0.3.0    xtable_1.8-4         progress_1.2.2      
+##  [40] stats4_3.6.2         StanHeaders_2.21.0-1 DT_0.12             
+##  [43] htmlwidgets_1.5.1    httr_1.4.1           threejs_0.3.3       
+##  [46] arrayhelpers_1.1-0   RColorBrewer_1.1-2   pkgconfig_2.0.3     
+##  [49] reshape_0.8.8        loo_2.2.0            farver_2.0.3        
+##  [52] dbplyr_1.4.2         utf8_1.1.4           labeling_0.3        
+##  [55] tidyselect_1.0.0     rlang_0.4.5          reshape2_1.4.3      
+##  [58] later_1.0.0          munsell_0.5.0        cellranger_1.1.0    
+##  [61] tools_3.6.2          cli_2.0.2            generics_0.0.2      
+##  [64] sjlabelled_1.1.3     gifski_0.8.6         ggridges_0.5.2      
+##  [67] evaluate_0.14        fastmap_1.0.1        yaml_2.2.1          
+##  [70] fs_1.3.2             processx_3.4.2       nlme_3.1-145        
+##  [73] mime_0.9             xml2_1.2.2           compiler_3.6.2      
+##  [76] shinythemes_1.1.2    rstudioapi_0.11      reprex_0.3.0        
+##  [79] tweenr_1.0.1         stringi_1.4.6        highr_0.8           
+##  [82] ps_1.3.2             Brobdingnag_1.2-6    lattice_0.20-40     
+##  [85] Matrix_1.2-18        nloptr_1.2.1         markdown_1.1        
+##  [88] shinyjs_1.1          vctrs_0.2.3          pillar_1.4.3        
+##  [91] lifecycle_0.1.0      bridgesampling_1.0-0 insight_0.8.1       
+##  [94] httpuv_1.5.2         R6_2.4.1             bookdown_0.18       
+##  [97] promises_1.1.0       gridExtra_2.3        codetools_0.2-16    
+## [100] boot_1.3-24          colourpicker_1.0     MASS_7.3-51.5       
+## [103] gtools_3.8.1         assertthat_0.2.1     withr_2.1.2         
+## [106] shinystan_2.5.0      parallel_3.6.2       hms_0.5.3           
+## [109] grid_3.6.2           coda_0.19-3          minqa_1.2.4         
+## [112] snakecase_0.11.0     rmarkdown_2.1        shiny_1.4.0         
+## [115] lubridate_1.7.4      base64enc_0.1-3      dygraphs_1.1.1.6</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bayesian-data-analysis-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-assumptions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/psych252/psych252book/edit/master/24-bayesian_data_analysis4.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toc_depth": 3,
+"search": false
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -17,49 +17,20 @@ library("patchwork")  # for making figure panels
 library("lme4")       # for linear mixed effects models
 library("tidyverse")  # for wrangling, plotting, etc. 
 
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
+# include references for used packages
+knitr::write_bib(.packages(), "packages.bib") 
 ```
 
 ```{r lmer2-02}
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
-```
-
-## Things that came up in class 
-
-### Difference between `replicate()` and `map()`
-
-`replicate()` comes with base R whereas `map()` is part of the tidyverse. `map()` can do everything that `replicate()` can do and more. However, if you just want to run the same function (without changing the parameters) multiple times, you might as well use `replicate()`. 
-
-Here are some examples for what you can do with `replicate()` and `map()`.
-
-```{r lmer2-03}
-# draw from a normal distribution and take mean
-fun.normal_means = function(n, mean, sd){
-  mean(rnorm(n = n, mean = mean, sd = sd))
-}
-
-# execute the function 4 times
-replicate(n = 4, fun.normal_means(n = 20, mean = 1, sd = 0.5))
-
-# same same but different 
-map_dbl(.x = c(20, 20, 20, 20), ~ fun.normal_means(n = .x, mean = 1, sd = 0.5))
-
-# and more flexible
-map_dbl(.x = c(1, 1, 10, 10), ~ fun.normal_means(n = 20, mean = .x, sd = 0.5))
+theme_set(theme_classic() + #set the theme 
+            theme(text = element_text(size = 20))) #set the default text size
 ```
 
 ## Simulating a linear mixed effects model 
 
 To generate some data for a linear mixed effects model with random intercepts, we do pretty much what we are used to doing when we generated data for a linear model. However, this time, we have an additional parameter that captures the variance in the intercepts between participants. So, we draw a separate (offset from the global) intercept for each participant from this distribution.  
 
-```{r lmer2-04}
+```{r lmer2-03}
 # make example reproducible 
 set.seed(1)
 
@@ -74,15 +45,27 @@ sd_participant = 0.5
 intercepts = rnorm(sample_size, sd = sd_participant)
 
 # generate the data 
-df.mixed = tibble(
-  condition = rep(0:1, each = sample_size), 
-  participant = rep(1:sample_size, 2)) %>% 
+df.mixed = tibble(condition = rep(0:1, each = sample_size), 
+                  participant = rep(1:sample_size, 2)) %>% 
   group_by(condition) %>% 
   mutate(value = b0 + b1 * condition + intercepts + rnorm(n(), sd = sd_residual)) %>% 
   ungroup %>% 
   mutate(condition = as.factor(condition),
          participant = as.factor(participant))
 ```
+
+Let's take a look at the simulated data set: 
+
+```{r lmer2-04}
+df.mixed %>% 
+  select(participant, condition, value) %>% 
+  arrange(participant) %>% 
+  head(8) %>% 
+  kable(digits = 2) %>% 
+  kable_styling(bootstrap_options = "striped",
+                full_width = F)
+```
+
 
 Let's fit a model to this data now and take a look at the summary output: 
 
@@ -153,7 +136,7 @@ Let's take 20 participants from our `df.mixed` data set, and make one of the par
 # let's make one outlier
 df.outlier = df.mixed %>%
   mutate(participant = participant %>% as.character() %>% as.numeric()) %>% 
-  filter(participant <= 20) %>% 
+  filter(participant <= 20) %>%
   mutate(value = ifelse(participant == 20, value + 30, value),
          participant = as.factor(participant))
 ```
@@ -362,12 +345,12 @@ Lesson learned: taking dependence into account is critical for drawing correct i
 
 - [Linear mixed effects models tutorial by Bodo Winter](https://arxiv.org/pdf/1308.5499.pdf)
 - [Simpson's paradox](https://paulvanderlaken.com/2017/09/27/simpsons-paradox-two-hr-examples-with-r-code/)
-- [Individuals are not small groups](https://solomonkurz.netlify.com/post/individuals-are-not-small-groups-ii-the-ecological-fallacy/)
-- [Simpson's paradox in psychological science: a practical guide](https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00513/full)
 - [Tutorial on pooling](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/)
 
-## Session info
+## Session info 
 
-```{r, echo=F}
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+```{r lmer2-23}
 sessionInfo()
 ```
