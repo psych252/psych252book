@@ -1,21 +1,31 @@
 # Reporting statistics 
 
 ```{r, message=FALSE, include=FALSE}
-library("knitr")      # for knitting RMarkdown 
-library("kableExtra") # for making nice tables
-library("janitor")    # for cleaning column names
-library("broom")      # for tidying up model fits
-library("lme4")       # mixed effects models 
-library("brms")       # Bayesian regression
-library("modelr")     # cross-validation and bootstrapping
-library("tidybayes")  # tidying up results from Bayesian models
-library("tidyverse")  # for wrangling, plotting, etc. 
+library("knitr")             # for knitting RMarkdown 
+library("kableExtra")        # for making nice tables
+library("janitor")           # for cleaning column names
+library("broom")             # for tidying up model fits
+library("lme4")              # mixed effects models 
+library("brms")              # Bayesian regression
+library("modelr")            # cross-validation and bootstrapping
+library("tidybayes")         # tidying up results from Bayesian models
+library("ggeffects")         # for marginal effects
+library("statsExpressions")  # for extracting stats results APA style
+library("tidyverse")         # for wrangling, plotting, etc. 
 
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() +
+            theme(text = element_text(size = 20)))
 ```
+
+```{r}
+# Helper functions 
+
+f_rmzero = function(x){
+  str_remove(x, "^0+")
+}
+```
+
+
 
 In this chapter, I'll give a few examples for how to report statistical analysis. 
 
@@ -33,6 +43,7 @@ Here is some general advice first:
 Chapters \@ref(visualization-1) and \@ref(visualization-2) go into how to make figures and also talk a little bit about what makes for a good figure. Personally, I like it when the figures give me a good sense for the actual data. For example, for an experimental study, I would like to get a good sense for the responses that participants gave in the different experimental conditions. 
 
 Sometimes, papers just report the results of statistical tests, or only visually display estimates of the parameters in the model. I'm not a fan of that since, as we've learned, the parameters of the model are only useful in so far the model captures the data-generating process reasonably well. 
+
 ### Use statistical models to answer concrete research questions.
 
 Ideally, we formulate our research questions as statistical models upfront and pre-register our planned analyses (e.g. as an RMarkdown script with a complete analysis based on simulated data). We can then organize the results section by going through the sequence of research questions. Each statistical analysis then provides an answer to a specific research question. 
@@ -49,13 +60,13 @@ Our figures should also indicate the uncertainty that we have in our statistical
 
 Rather than just saying whether the results of a statistical test was significant or not, you should, where possible, provide a measure of the effect size. Chapter \@ref(power-analysis) gives an overview of commonly used measures of effect size. 
 
-<!-- ## Some concrete examples 
+## Some concrete example
 
-In this section, I'll give a few concrete examples for how to report the results of statistical tests. Each example tries to implement the general advice mentioned above. I will discuss frequentist and Bayesian statistics separately. 
+In this section, I'll give a few concrete examples for how to report the results of statistical tests. Each example tries to implement the general advice mentioned above. I will discuss frequentist and Bayesian statistics separately.
 
-### Frequentist statistics 
+### Frequentist statistics
 
-#### Simple regression 
+#### Simple regression
 
 ```{r, message=FALSE}
 df.credit = read_csv("data/credit.csv") %>% 
@@ -63,11 +74,9 @@ df.credit = read_csv("data/credit.csv") %>%
   clean_names()
 ```
 
-__Research question__: Does a person's credit card balance increase with their level of income? 
+__Research question__: Do people with more income have a higher credit card balance? 
 
-
-
-```{r, fig.cap="Relationship between income level and credit card balance"}
+```{r fig.cap="Relationship between income level and credit card balance. The error band indicates a 95% confidence interval.", fig.height=6, fig.width=8}
 ggplot(data = df.credit,
        mapping = aes(x = income,
                      y = balance)) + 
@@ -76,12 +85,43 @@ ggplot(data = df.credit,
   geom_point(alpha = 0.2) +
   coord_cartesian(xlim = c(0, max(df.credit$income))) + 
   labs(x = "Income in $1K per year",
-       y = "Credit card balance in $",
-       title = "Relationship between income level and credit card balance.",
-       subtitle = "The error band indicates a 95% confidence interval.")
+       y = "Credit card balance in $")
 ```
 
-### Bayesian statistics  -->
+```{r}
+# fit a model 
+fit = lm(formula = balance ~ income,
+         data = df.credit)
+
+summary(fit)
+```
+
+```{r}
+# summarize the model results 
+results = cor.test(df.credit$balance, df.credit$income) %>% 
+  tidy() %>% 
+  mutate_if(is.numeric, ~round(.,2))
+
+parameters = fit %>% 
+  tidy(conf.int = T) %>% 
+  mutate_if(is.numeric, ~round(.,2))
+
+prediction = fit %>% 
+  ggpredict(terms = "income [20, 100]") %>% 
+  mutate_if(is.numeric, ~round(.,2))
+
+```
+
+**Possible text**:
+
+People with a higher income have a greater credit card balance $t(`r results$parameter`) = `r results$statistic`~, p `r ifelse(results$p.value < .001, "< .001", str_c(" = ", f_rmzero(results$p.value)))`,~ r = `r f_rmzero(results$estimate)`~ [`r f_rmzero(results$conf.low)`, `r f_rmzero(results$conf.high)`]$. For each increase in income of \$1K per year, the credit card balance is predicted to increase by \$`r parameters$estimate[2]` [`r parameters$conf.low[2]`, `r parameters$conf.high[2]`]. For example, the predicted credit card balance of a person with an income of \$20K per year is \$`r prediction$predicted[1]` [`r prediction$conf.low[1]`, `r prediction$conf.high[1]`], whereas for a person with an income of \$100K per year, it is \$`r prediction$predicted[2]` [`r prediction$conf.low[2]`, `r prediction$conf.high[2]`].
+
+For regression models with several predictors, it's a good idea to produce tables that contain the model parameters with confidence intervals. 
+
+
+
+
+<!-- ### Bayesian statistics -->
 
 ## Session info
 
