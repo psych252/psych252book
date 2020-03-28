@@ -4,6 +4,8 @@
 library("knitr")             # for knitting RMarkdown 
 library("kableExtra")        # for making nice tables
 library("janitor")           # for cleaning column names
+library("papaja")            # for reporting statistical results
+                             # install via: devtools::install_github("crsh/papaja")
 library("broom")             # for tidying up model fits
 library("lme4")              # mixed effects models 
 library("brms")              # Bayesian regression
@@ -16,16 +18,6 @@ library("tidyverse")         # for wrangling, plotting, etc.
 theme_set(theme_classic() +
             theme(text = element_text(size = 20)))
 ```
-
-```{r}
-# Helper functions 
-
-f_rmzero = function(x){
-  str_remove(x, "^0+")
-}
-```
-
-
 
 In this chapter, I'll give a few examples for how to report statistical analysis. 
 
@@ -60,6 +52,10 @@ Our figures should also indicate the uncertainty that we have in our statistical
 
 Rather than just saying whether the results of a statistical test was significant or not, you should, where possible, provide a measure of the effect size. Chapter \@ref(power-analysis) gives an overview of commonly used measures of effect size. 
 
+### Reporting statistical results using RMarkdown 
+
+For reporting statistical results in RMarkdown, I recommend the `papaja` package (see this chapter in the [online book](https://crsh.github.io/papaja_man/reporting.html#results-from-statistical-tests)). 
+
 ## Some concrete example
 
 In this section, I'll give a few concrete examples for how to report the results of statistical tests. Each example tries to implement the general advice mentioned above. I will discuss frequentist and Bayesian statistics separately.
@@ -68,7 +64,7 @@ In this section, I'll give a few concrete examples for how to report the results
 
 #### Simple regression
 
-```{r, message=FALSE}
+```{r, message=FALSE, warning=F}
 df.credit = read_csv("data/credit.csv") %>% 
   rename(index = X1) %>% 
   clean_names()
@@ -76,7 +72,7 @@ df.credit = read_csv("data/credit.csv") %>%
 
 __Research question__: Do people with more income have a higher credit card balance? 
 
-```{r fig.cap="Relationship between income level and credit card balance. The error band indicates a 95% confidence interval.", fig.height=6, fig.width=8}
+```{r income-figure, fig.cap="Relationship between income level and credit card balance. The error band indicates a 95% confidence interval.", fig.height=6, fig.width=8}
 ggplot(data = df.credit,
        mapping = aes(x = income,
                      y = balance)) + 
@@ -98,27 +94,23 @@ summary(fit)
 
 ```{r}
 # summarize the model results 
-results = cor.test(df.credit$balance, df.credit$income) %>% 
-  tidy() %>% 
-  mutate_if(is.numeric, ~round(.,2))
+results_regression = fit %>% 
+  apa_print()
 
-parameters = fit %>% 
-  tidy(conf.int = T) %>% 
-  mutate_if(is.numeric, ~round(.,2))
-
-prediction = fit %>% 
+results_prediction = fit %>% 
   ggpredict(terms = "income [20, 100]") %>% 
   mutate_if(is.numeric, ~round(.,2))
-
 ```
 
 **Possible text**:
 
-People with a higher income have a greater credit card balance $t(`r results$parameter`) = `r results$statistic`~, p `r ifelse(results$p.value < .001, "< .001", str_c(" = ", f_rmzero(results$p.value)))`,~ r = `r f_rmzero(results$estimate)`~ [`r f_rmzero(results$conf.low)`, `r f_rmzero(results$conf.high)`]$. For each increase in income of \$1K per year, the credit card balance is predicted to increase by \$`r parameters$estimate[2]` [`r parameters$conf.low[2]`, `r parameters$conf.high[2]`]. For example, the predicted credit card balance of a person with an income of \$20K per year is \$`r prediction$predicted[1]` [`r prediction$conf.low[1]`, `r prediction$conf.high[1]`], whereas for a person with an income of \$100K per year, it is \$`r prediction$predicted[2]` [`r prediction$conf.low[2]`, `r prediction$conf.high[2]`].
+People with a higher income have a greater credit card balance `r results_regression$full_result$modelfit$r2` (see Table \@ref(tab:apa-table)). For each increase in income of \$1K per year, the credit card balance is predicted to increase by `r results_regression$estimate$income`. For example, the predicted credit card balance of a person with an income of \$20K per year is \$`r results_prediction$predicted[1]`, 95% CI [`r results_prediction$conf.low[1]`, `r results_prediction$conf.high[1]`], whereas for a person with an income of \$100K per year, it is \$`r results_prediction$predicted[2]`, 95% CI [`r results_prediction$conf.low[2]`, `r results_prediction$conf.high[2]`] (see Figure \@ref(fig:income-figure)).
 
-For regression models with several predictors, it's a good idea to produce tables that contain the model parameters with confidence intervals. 
-
-
+```{r apa-table}
+apa_table(results_regression$table,
+          caption = "A full regression table.",
+          escape = FALSE)
+```
 
 
 <!-- ### Bayesian statistics -->

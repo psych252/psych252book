@@ -24,7 +24,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2020-03-24" />
+<meta name="date" content="2020-03-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -634,6 +634,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="26.1.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#use-statistical-models-to-answer-concrete-research-questions."><i class="fa fa-check"></i><b>26.1.2</b> Use statistical models to answer concrete research questions.</a></li>
 <li class="chapter" data-level="26.1.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#illustrate-the-uncertainty-in-your-statistical-inferences."><i class="fa fa-check"></i><b>26.1.3</b> Illustrate the uncertainty in your statistical inferences.</a></li>
 <li class="chapter" data-level="26.1.4" data-path="reporting-statistics.html"><a href="reporting-statistics.html#report-effect-sizes."><i class="fa fa-check"></i><b>26.1.4</b> Report effect sizes.</a></li>
+<li class="chapter" data-level="26.1.5" data-path="reporting-statistics.html"><a href="reporting-statistics.html#reporting-statistical-results-using-rmarkdown"><i class="fa fa-check"></i><b>26.1.5</b> Reporting statistical results using RMarkdown</a></li>
 </ul></li>
 <li class="chapter" data-level="26.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#some-concrete-example"><i class="fa fa-check"></i><b>26.2</b> Some concrete example</a><ul>
 <li class="chapter" data-level="26.2.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#frequentist-statistics"><i class="fa fa-check"></i><b>26.2.1</b> Frequentist statistics</a></li>
@@ -667,11 +668,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="reporting-statistics" class="section level1">
 <h1><span class="header-section-number">Chapter 26</span> Reporting statistics</h1>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Helper functions </span></a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3">f_rmzero =<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="kw">str_remove</span>(x, <span class="st">&quot;^0+&quot;</span>)</a>
-<a class="sourceLine" id="cb1-5" title="5">}</a></code></pre></div>
 <p>In this chapter, I’ll give a few examples for how to report statistical analysis.</p>
 <div id="general-advice" class="section level2">
 <h2><span class="header-section-number">26.1</span> General advice</h2>
@@ -701,6 +697,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">26.1.4</span> Report effect sizes.</h3>
 <p>Rather than just saying whether the results of a statistical test was significant or not, you should, where possible, provide a measure of the effect size. Chapter <a href="power-analysis.html#power-analysis">14</a> gives an overview of commonly used measures of effect size.</p>
 </div>
+<div id="reporting-statistical-results-using-rmarkdown" class="section level3">
+<h3><span class="header-section-number">26.1.5</span> Reporting statistical results using RMarkdown</h3>
+<p>For reporting statistical results in RMarkdown, I recommend the <code>papaja</code> package (see this chapter in the <a href="https://crsh.github.io/papaja_man/reporting.html#results-from-statistical-tests">online book</a>).</p>
+</div>
 </div>
 <div id="some-concrete-example" class="section level2">
 <h2><span class="header-section-number">26.2</span> Some concrete example</h2>
@@ -709,32 +709,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">26.2.1</span> Frequentist statistics</h3>
 <div id="simple-regression" class="section level4">
 <h4><span class="header-section-number">26.2.1.1</span> Simple regression</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df.credit =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">index =</span> X1) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">clean_names</span>()</a></code></pre></div>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">df.credit =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">index =</span> X1) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="st">  </span><span class="kw">clean_names</span>()</a></code></pre></div>
 <p><strong>Research question</strong>: Do people with more income have a higher credit card balance?</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.credit,</a>
-<a class="sourceLine" id="cb4-2" title="2">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> income,</a>
-<a class="sourceLine" id="cb4-3" title="3">                     <span class="dt">y =</span> balance)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb4-5" title="5">              <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(df.credit<span class="op">$</span>income))) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Income in $1K per year&quot;</span>,</a>
-<a class="sourceLine" id="cb4-9" title="9">       <span class="dt">y =</span> <span class="st">&quot;Credit card balance in $&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.credit,</a>
+<a class="sourceLine" id="cb2-2" title="2">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> income,</a>
+<a class="sourceLine" id="cb2-3" title="3">                     <span class="dt">y =</span> balance)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb2-5" title="5">              <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(df.credit<span class="op">$</span>income))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Income in $1K per year&quot;</span>,</a>
+<a class="sourceLine" id="cb2-9" title="9">       <span class="dt">y =</span> <span class="st">&quot;Credit card balance in $&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<div class="figure"><span id="fig:unnamed-chunk-4"></span>
-<img src="psych252_files/figure-html/unnamed-chunk-4-1.png" alt="Relationship between income level and credit card balance. The error band indicates a 95% confidence interval." width="768" />
+<div class="figure"><span id="fig:income-figure"></span>
+<img src="psych252_files/figure-html/income-figure-1.png" alt="Relationship between income level and credit card balance. The error band indicates a 95% confidence interval." width="768" />
 <p class="caption">
 Figure 26.1: Relationship between income level and credit card balance. The error band indicates a 95% confidence interval.
 </p>
 </div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># fit a model </span></a>
-<a class="sourceLine" id="cb6-2" title="2">fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>income,</a>
-<a class="sourceLine" id="cb6-3" title="3">         <span class="dt">data =</span> df.credit)</a>
-<a class="sourceLine" id="cb6-4" title="4"></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="kw">summary</span>(fit)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># fit a model </span></a>
+<a class="sourceLine" id="cb4-2" title="2">fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>income,</a>
+<a class="sourceLine" id="cb4-3" title="3">         <span class="dt">data =</span> df.credit)</a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="kw">summary</span>(fit)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = balance ~ income, data = df.credit)
@@ -753,21 +752,51 @@ Figure 26.1: Relationship between income level and credit card balance. The erro
 ## Residual standard error: 407.9 on 398 degrees of freedom
 ## Multiple R-squared:  0.215,  Adjusted R-squared:  0.213 
 ## F-statistic:   109 on 1 and 398 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># summarize the model results </span></a>
-<a class="sourceLine" id="cb8-2" title="2">results =<span class="st"> </span><span class="kw">cor.test</span>(df.credit<span class="op">$</span>balance, df.credit<span class="op">$</span>income) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw">tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="op">~</span><span class="kw">round</span>(.,<span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb8-5" title="5"></a>
-<a class="sourceLine" id="cb8-6" title="6">parameters =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="st">  </span><span class="kw">tidy</span>(<span class="dt">conf.int =</span> T) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="op">~</span><span class="kw">round</span>(.,<span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb8-9" title="9"></a>
-<a class="sourceLine" id="cb8-10" title="10">prediction =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="st">  </span><span class="kw">ggpredict</span>(<span class="dt">terms =</span> <span class="st">&quot;income [20, 100]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="op">~</span><span class="kw">round</span>(.,<span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># summarize the model results </span></a>
+<a class="sourceLine" id="cb6-2" title="2">results_regression =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">apa_print</span>()</a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5">results_prediction =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">ggpredict</span>(<span class="dt">terms =</span> <span class="st">&quot;income [20, 100]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="op">~</span><span class="kw">round</span>(.,<span class="dv">2</span>))</a></code></pre></div>
 <p><strong>Possible text</strong>:</p>
-<p>People with a higher income have a greater credit card balance <span class="math inline">\(t(398) = 10.44~, p &lt; .001,~ r = .46~ [.38, .54]\)</span>. For each increase in income of $1K per year, the credit card balance is predicted to increase by $6.05 [4.91, 7.19]. For example, the predicted credit card balance of a person with an income of $20K per year is $367.48 [318.31, 416.65], whereas for a person with an income of $100K per year, it is $851.35 [777.41, 925.29].</p>
-<p>For regression models with several predictors, it’s a good idea to produce tables that contain the model parameters with confidence intervals.</p>
+<p>People with a higher income have a greater credit card balance <span class="math inline">\(R^2 = .21\)</span>, <span class="math inline">\(F(1, 398) = 108.99\)</span>, <span class="math inline">\(p &lt; .001\)</span> (see Table <a href="reporting-statistics.html#tab:apa-table">26.1</a>). For each increase in income of $1K per year, the credit card balance is predicted to increase by <span class="math inline">\(b = 6.05\)</span>, 95% CI <span class="math inline">\([4.91\)</span>, <span class="math inline">\(7.19]\)</span>. For example, the predicted credit card balance of a person with an income of $20K per year is $367.48, 95% CI [318.31, 416.65], whereas for a person with an income of $100K per year, it is $851.35, 95% CI [777.41, 925.29] (see Figure <a href="reporting-statistics.html#fig:income-figure">26.1</a>).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">apa_table</span>(results_regression<span class="op">$</span>table,</a>
+<a class="sourceLine" id="cb7-2" title="2">          <span class="dt">caption =</span> <span class="st">&quot;A full regression table.&quot;</span>,</a>
+<a class="sourceLine" id="cb7-3" title="3">          <span class="dt">escape =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<caption>
+<span id="tab:apa-table">Table 26.1: </span>
+</caption>
+<div custom-style="Table Caption">
+<em>A full regression table.</em>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Predictor</th>
+<th align="left"><span class="math inline">\(b\)</span></th>
+<th align="left">95% CI</th>
+<th align="left"><span class="math inline">\(t(398)\)</span></th>
+<th align="left"><span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercept</td>
+<td align="left">246.51</td>
+<td align="left"><span class="math inline">\([181.25\)</span>, <span class="math inline">\(311.78]\)</span></td>
+<td align="left">7.43</td>
+<td align="left">&lt; .001</td>
+</tr>
+<tr class="even">
+<td align="left">Income</td>
+<td align="left">6.05</td>
+<td align="left"><span class="math inline">\([4.91\)</span>, <span class="math inline">\(7.19]\)</span></td>
+<td align="left">10.44</td>
+<td align="left">&lt; .001</td>
+</tr>
+</tbody>
+</table>
 <!-- ### Bayesian statistics -->
 </div>
 </div>
@@ -792,15 +821,16 @@ Figure 26.1: Relationship between income level and credit card balance. The erro
 ##  [1] forcats_0.5.0          stringr_1.4.0          dplyr_0.8.5           
 ##  [4] purrr_0.3.3            readr_1.3.1            tidyr_1.0.2           
 ##  [7] tibble_2.1.3           ggplot2_3.3.0          tidyverse_1.3.0       
-## [10] statsExpressions_0.3.1 ggeffects_0.14.2       tidybayes_2.0.1       
-## [13] modelr_0.1.6           brms_2.12.0            Rcpp_1.0.3            
-## [16] lme4_1.1-21            Matrix_1.2-18          broom_0.5.5           
-## [19] janitor_1.2.1          kableExtra_1.1.0       knitr_1.28            
+## [10] statsExpressions_0.3.1 ggeffects_0.14.2       tidybayes_2.0.2       
+## [13] modelr_0.1.6           brms_2.12.0            Rcpp_1.0.4            
+## [16] lme4_1.1-21            Matrix_1.2-18          broom_0.5.3.9000      
+## [19] papaja_0.1.0.9942      janitor_1.2.1          kableExtra_1.1.0      
+## [22] knitr_1.28            
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] tidyselect_1.0.0       htmlwidgets_1.5.1      grid_3.6.2            
 ##   [4] munsell_0.5.0          effectsize_0.2.0       codetools_0.2-16      
-##   [7] DT_0.12                miniUI_0.1.1.1         withr_2.1.2           
+##   [7] DT_0.13                miniUI_0.1.1.1         withr_2.1.2           
 ##  [10] Brobdingnag_1.2-6      metaBMA_0.6.2          colorspace_1.4-1      
 ##  [13] highr_0.8              rstudioapi_0.11        stats4_3.6.2          
 ##  [16] DescTools_0.99.34      ipmisc_1.2.0           rcompanion_2.3.25     
@@ -837,7 +867,7 @@ Figure 26.1: Relationship between income level and credit card balance. The erro
 ## [109] expm_0.999-4           lubridate_1.7.4        DBI_1.1.0             
 ## [112] sjlabelled_1.1.3       dbplyr_1.4.2           MASS_7.3-51.5         
 ## [115] boot_1.3-24            car_3.0-7              cli_2.0.2             
-## [118] parallel_3.6.2         insight_0.8.2          igraph_1.2.4.2        
+## [118] parallel_3.6.2         insight_0.8.2          igraph_1.2.5          
 ## [121] pkgconfig_2.0.3        metaplus_0.7-11        numDeriv_2016.8-1.1   
 ## [124] coin_1.3-1             foreign_0.8-76         xml2_1.2.5            
 ## [127] svUnit_0.7-12          dygraphs_1.1.1.6       webshot_0.5.2         
