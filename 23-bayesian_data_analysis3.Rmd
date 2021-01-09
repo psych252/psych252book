@@ -112,7 +112,7 @@ I use the `file = ` argument to save the model's results so that when I run this
 
 #### Visualize the posteriors 
 
-Let's visualize what the posterior for the different parameters looks like. We use the `geom_halfeyeh()` function from the "tidybayes" package to do so: 
+Let's visualize what the posterior for the different parameters looks like. We use the `stat_halfeyeh()` function from the "tidybayes" package to do so: 
 
 ```{r bda3-08}
 fit.brm1 %>% 
@@ -124,7 +124,8 @@ fit.brm1 %>%
   ggplot(data = .,
          mapping = aes(y = variable,
                        x = value)) +
-  geom_halfeyeh(fun.data = mode_hdih)
+  stat_halfeye(point_interval = mode_hdi,
+               .width = 0.95)
 ```
 
 #### Compute highest density intervals 
@@ -277,7 +278,8 @@ fit.brm1 %>%
                values_to = "value") %>% 
   ggplot(data = .,
          mapping = aes(y = variable, x = value)) +
-  geom_halfeyeh() + 
+  stat_halfeye(point_interval = mode_hdi,
+               .width = 0.95) +
   geom_vline(xintercept = 0,
              color = "red")
 ```
@@ -695,7 +697,8 @@ fit.brm7 %>%
   ggplot(data = .,
          mapping = aes(y = variable,
                        x = value)) +
-  geom_halfeyeh(fun.data = mode_hdih)
+  stat_halfeye(point_interval = mode_hdi,
+               .width = 0.95)
 ```
 
 ##### Comparison with data 

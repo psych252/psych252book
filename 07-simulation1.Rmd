@@ -53,6 +53,7 @@ You can get more info about the distributions that come with R via running `help
 ### Plotting distributions 
 
 Here's an easy way to plot distributions in `ggplot2` using the `stat_function()` function. 
+
 ```{r simulation1-05, results = "hold"}
 ggplot(data = tibble(x = c(-5, 5)),
        mapping = aes(x = x)) +
@@ -124,7 +125,8 @@ ggplot(data = df.plot,
   coord_cartesian(xlim = c(-4, 4), expand = F)
 
 # remove all variables with tmp in their name 
-rm(list = ls() %>% str_subset(pattern = "tmp."))
+rm(list = ls() %>% 
+     str_subset(pattern = "tmp."))
 ```
 
 Let's see how many samples it takes to closely approximate the shape of the normal distribution with our histogram of samples. 
@@ -467,7 +469,8 @@ df.camp = tibble(kid = 1:tmp.nkids,
                          no = rnorm(., mean = mean_basketball, sd = sd_basketball))) %>% 
   ungroup
 
-df.camp %>% print()
+df.camp %>% 
+  print()
 ```
 
 Now we have a data frame with kids whose height was randomly sampled depending on which sport they do. I've used the `sample()` function to assign a sport to each kid first using the `prob = ` argument to make sure that a kid is more likely to be assigned the sport "basketball" than "chess". 
@@ -1042,7 +1045,6 @@ ggplot(data = tibble(x = c(-3, 3)),
 ```
 
 ```{r simulation1-41, fig.cap="Relationship between density and cumulative probability distribution."}
-
 point = 1
 
 p1 = ggplot(data = tibble(x = c(-3, 3)),
@@ -1062,7 +1064,7 @@ p1 = ggplot(data = tibble(x = c(-3, 3)),
   labs(y = "density") +
   scale_x_continuous(breaks = -2:2,
                      expand = c(0, 0)) +
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
+  scale_y_continuous(expand = expansion(add = c(0.001, 0.1)))
 
 p2 = ggplot(data = tibble(x = c(-3, 3)),
             mapping = aes(x = x)) + 
@@ -1083,7 +1085,7 @@ p2 = ggplot(data = tibble(x = c(-3, 3)),
   scale_x_continuous(breaks = -2:2,
                      expand = c(0, 0)) +
   scale_y_continuous(breaks = c(0, 0.5, 1),
-                     expand = expand_scale(add = c(0.01, 0.1)))
+                     expand = expansion(add = c(0.01, 0.1)))
 
 p1 + p2 +
   plot_layout(ncol = 1)

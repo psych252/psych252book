@@ -497,7 +497,7 @@ n_permutations = 500
 # permutation function
 func_permutations = function(df){
   df %>%
-    mutate(condition = sample(condition)) %>% #we randomly shuffle the condition labels
+    mutate(condition = sample(condition)) %>% # we randomly shuffle the condition labels
     group_by(condition) %>%
     summarize(mean = mean(performance)) %>%
     pull(mean) %>%
@@ -507,8 +507,7 @@ func_permutations = function(df){
 # data frame with permutation results 
 df.permutations = tibble(
   permutation = 1:n_permutations, 
-  mean_difference = replicate(n = n_permutations, func_permutations(df.permutation))
-)
+  mean_difference = replicate(n = n_permutations, func_permutations(df.permutation)))
 
 #plot the distribution of the differences 
 ggplot(data = df.permutations, aes(x = mean_difference)) +
@@ -550,7 +549,7 @@ So let's run a a simulation to check whether the definition of the confidence in
 
 ```{r simulation2-26}
 # make example reproducible 
-set.seed(1)
+# set.seed(1)
 
 # parameters 
 sample_size = 25 # size of each sample

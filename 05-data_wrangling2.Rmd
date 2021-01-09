@@ -222,10 +222,10 @@ df.reshape2 %>%
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_ptypes = list(rating = "character")) %>% 
+               values_transform = list(rating = as.character)) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating") %>% 
-  mutate_at(.vars = vars(order, observation), .funs = ~ as.numeric(.)) %>% 
+  mutate(.cols = across(c(order, observation), .fns = ~ as.numeric(.))) %>% 
   select(participant, order, stimulus, rating = observation)
 ```
 
@@ -239,7 +239,7 @@ df.reshape2 %>%
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_ptypes = list(rating = "character"))
+               values_transform = list(rating = as.character))
 ```
 
 Notice how I've used a combination of the `names_to = ` and `names_sep = ` arguments to create two columns. Because I'm combining data of two different types ("character" and "numeric"), I needed to specify what I want the resulting data type to be via the `values_ptypes = ` argument. 
@@ -252,7 +252,7 @@ df.reshape2 %>%
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_ptypes = list(rating = "character")) %>% 
+               values_transform = list(rating = as.character)) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating")
 ```
@@ -265,14 +265,14 @@ df.reshape2 %>%
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_ptypes = list(rating = "character")) %>% 
+               values_transform = list(rating = as.character)) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating") %>% 
-  mutate_at(.vars = vars(order, observation), .funs = ~ as.numeric(.)) %>% 
+  mutate(.cols = across(c(order, observation), .fns = ~ as.numeric(.))) %>% 
   select(participant, order, stimulus, rating = observation)
 ```
 
-The rest is familiar. I've used `mutate_at()` to turn `order` and `observation` into numeric columns, `select()` to change the order of the columns (and renamed the `observation` column to `rating` along the way). 
+The rest is familiar. I've used `mutate()` with `across()` to turn `order` and `observation` into numeric columns, `select()` to change the order of the columns (and renamed the `observation` column to `rating` along the way). 
 
 Getting familiar with `pivot_longer()` and `pivot_wider()` takes some time plus trial and error. So don't be discouraged if you don't get what you want straight away. Once you've mastered these functions, they will make it much easier to beat your data frames into shape. 
 
@@ -289,7 +289,7 @@ df.reshape2 %>%
   pivot_longer(cols = -participant,
                names_to = "index",
                values_to = "rating",
-               values_ptypes = list(rating = "numeric")) %>% 
+               values_transform = list(rating = as.character)) %>% 
   separate(col = index,
            into = c("index", "order"),
            sep = "_")

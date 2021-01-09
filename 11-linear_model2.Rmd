@@ -93,7 +93,7 @@ Here is an example that illustrates some of the key functions in the `corrr` pac
 
 ```{r linear-model2-07}
 df.ads %>% 
-  select_if(is.numeric) %>% 
+  select(where(is.numeric)) %>% 
   correlate(quiet = T) %>% 
   shave() %>%
   fashion()
@@ -105,7 +105,7 @@ df.ads %>%
 
 ```{r linear-model2-08, fig.cap="Bar plot illustrating how strongly different variables correlate with income."}
 df.credit %>% 
-  select_if(is.numeric) %>%
+  select(where(is.numeric)) %>%
   correlate(quiet = T) %>%
   select(rowname, income) %>% 
   mutate(rowname = reorder(rowname, income)) %>%
@@ -128,7 +128,7 @@ df.credit %>%
 
 ```{r linear-model2-09, fig.caption = "Correlation plot showing the pairwise correlations between different variables."}
 tmp = df.credit %>%
-  select_if(is.numeric) %>%
+  select(where(is.numeric)) %>%
   correlate(diagonal = 0,
             quiet = T) %>%
   rearrange() %>%
@@ -310,7 +310,9 @@ One thing we can do to make different predictors more comparable is to standardi
 
 ```{r linear-model2-19}
 df.ads = df.ads %>% 
-  mutate_at(vars(tv, radio), funs(scaled = scale(.)[,]))
+  mutate(across(.cols = c(tv, radio),
+                .fns = ~ scale(.)[,],
+                .names = "{.col}_scaled"))
   
 df.ads %>% 
   select(-newspaper) %>%
@@ -487,7 +489,7 @@ df.credit %>%
   group_by(student) %>% 
   summarize(mean = mean(balance),
             sd = sd(balance)) %>% 
-  mutate_if(is.numeric, funs(round(., 2)))
+  mutate(across(where(is.numeric), ~ round(., 2)))
 ```
 
 ## One continuous and one categorical variable

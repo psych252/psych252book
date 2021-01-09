@@ -156,8 +156,8 @@ df.plot = df.poker %>%
 
 df.tidy = fit_a %>% 
   tidy() %>% 
-  select_if(is.numeric) %>% 
-  mutate_all(~ round(., digits = 2))
+  select(where(is.numeric)) %>% 
+  mutate(across(everything(), ~ round(., digits = 2)))
 
 df.augment = fit_a %>% 
   augment() %>%
@@ -492,8 +492,8 @@ df.plot = df.poker %>%
 
 df.tidy = fit_a %>% 
   tidy() %>% 
-  select_if(is.numeric) %>% 
-  mutate_all(~ round(., digits = 2))
+  select(where(is.numeric)) %>% 
+  mutate(across(everything(), ~ round(., digits = 2)))
 
 df.augment = fit_a %>% 
   augment() %>%

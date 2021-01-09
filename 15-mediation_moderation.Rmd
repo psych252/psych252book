@@ -984,7 +984,7 @@ df.moderation = tibble(x  = abs(rnorm(n, 6, 4)), # hours of sleep
 ```{r mediation-moderation-33}
 # scale the predictors 
 df.moderation = df.moderation %>%
-  mutate_at(vars(x, z), ~ scale(.)[,])
+  mutate(across(c(x, z), ~ scale(.)[,]))
 
 # run regression model with interaction 
 fit.moderation = lm(formula = y ~ 1 + x * z,

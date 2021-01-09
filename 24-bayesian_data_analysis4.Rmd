@@ -173,7 +173,7 @@ fit.brm1 %>%
   pivot_wider(names_from = term,
               values_from = estimate) %>% 
   clean_names() %>% 
-  mutate_at(.vars = vars(-intercept), .funs = ~ exp(. + intercept)) %>% 
+  mutate(across(-intercept, ~ exp(. + intercept))) %>% 
   mutate(intercept = exp(intercept))
 ```
 
@@ -357,7 +357,7 @@ df.model = fit.brm6 %>%
   pivot_wider(names_from = term,
               values_from = estimate) %>% 
   clean_names() %>%
-  mutate_at(.vars = vars(id2:id6), .funs = ~ . + intercept) %>% 
+  mutate(across(id2:id6, ~ . + intercept)) %>% 
   set_names(str_c("mu_", 1:6)) %>%
   pivot_longer(cols = everything(),
                names_to = c("parameter", "movie"),
@@ -483,9 +483,9 @@ df.model = fit.brm8 %>%
   pivot_wider(names_from = term,
               values_from = estimate) %>% 
   clean_names() %>%
-  mutate_at(.vars = vars(id2:id6), .funs = ~ . + intercept) %>% 
-  mutate_at(.vars = vars(contains("sigma")), .funs = ~ 1/exp(.)) %>% 
-  mutate_at(.vars = vars(sigma_id2:sigma_id5), .funs = ~ . + sigma_intercept) %>% 
+  mutate(across(id2:id6, ~ . + intercept),
+         across(contains("sigma"), ~ 1/exp(.)),
+         across(sigma_id2:sigma_id5, ~ . + sigma_intercept)) %>% 
   set_names(c("mu_1", "sigma_1", str_c("mu_", 2:6), str_c("sigma_", 2:6))) %>% 
   pivot_longer(cols = everything(),
                names_to = c("parameter", "movie"),
@@ -493,10 +493,12 @@ df.model = fit.brm8 %>%
                values_to = "value") %>% 
   pivot_wider(names_from = parameter, 
               values_from = value) %>% 
-  mutate(data = map2(.x = mu, .y = sigma, .f = ~ tibble(x = 1:5,
-                                                        y  = dnorm(x,
-                                                       mean = .x,
-                                                       sd = .y)))) %>% 
+  mutate(data = map2(.x = mu,
+                     .y = sigma,
+                     .f = ~ tibble(x = 1:5,
+                                   y  = dnorm(x,
+                                              mean = .x,
+                                              sd = .y)))) %>% 
   select(movie, data) %>% 
   unnest(c(data)) %>% 
   group_by(movie) %>% 

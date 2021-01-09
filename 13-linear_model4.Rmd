@@ -71,8 +71,8 @@ df.plot = df.poker %>%
 
 df.tidy = fit.contrast %>% 
   tidy() %>% 
-  select_if(is.numeric) %>% 
-  mutate_all(~ round(., 2))
+  select(where(is.numeric)) %>% 
+  mutate(across(everything(), ~ round(., digits = 2)))
 
 df.augment = fit.contrast %>% 
   augment() %>%
@@ -228,8 +228,8 @@ df.plot = df.contrast %>%
 
 df.tidy = fit %>% 
   tidy() %>% 
-  select_if(is.numeric) %>% 
-  mutate_all(funs(round, .args = list(digits = 2)))
+  select(where(is.numeric)) %>% 
+  mutate(across(everything(), ~ round(., digits = 2)))
 
 df.augment = fit %>% 
   augment() %>%

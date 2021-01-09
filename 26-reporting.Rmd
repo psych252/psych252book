@@ -99,7 +99,7 @@ results_regression = fit %>%
 
 results_prediction = fit %>% 
   ggpredict(terms = "income [20, 100]") %>% 
-  mutate_if(is.numeric, ~round(.,2))
+  mutate(across(where(is.numeric), ~ round(., 2)))
 ```
 
 **Possible text**:

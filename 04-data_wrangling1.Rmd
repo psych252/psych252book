@@ -7,7 +7,7 @@ In this lecture, we will take a look at how to wrangle data using the [dplyr](ht
 - Review R basics (incl. variable modes, data types, operators, control flow, and functions). 
 - Learn how the pipe operator `%>%` works. 
 - See different ways for getting a sense of one's data. 
-- Master key data manipulation verbs from the `dplyr` package (incl. `filter()`, `rename()`, `select()`, `mutate()`, and `arrange()`)
+- Master key data manipulation verbs from the `dplyr` package (incl. `filter()`, `arrange()`, `rename()`, `relocate()`, `select()`, `mutate()`) as well as the helper functions `across()` and `where()`.
 
 ## Install packages 
 
@@ -570,7 +570,7 @@ The `summarytools` package is another great package for taking a look at the dat
 
 ```{r data-wrangling1-40, eval=FALSE}
 df.starwars %>% 
-  select_if(negate(is.list)) %>% # this removes all list columns
+  select(where(~ !is.list(.))) %>% # this removes all list columns
   summarytools::dfSummary() %>% 
   summarytools::view()
 ```
@@ -608,14 +608,14 @@ We use the functions in the package `dplyr` to manipulate our data.
 
 ```{r data-wrangling1-42}
 df.starwars %>% 
-  filter(gender == 'male')
+  filter(gender == "masculine")
 ```
 
 We can combine multiple conditions in the same call. Here, I've filtered out male characters, whose height is greater than the median height (i.e. they are in the top 50 percentile), and whose mass was not `NA`. 
 
 ```{r data-wrangling1-43}
 df.starwars %>% 
-  filter(gender == 'male',
+  filter(gender == "masculine",
          height > median(height, na.rm = T),
          !is.na(mass))
 ```
@@ -659,6 +659,21 @@ To rename all variables at the same time use `set_names()`:
 ```{r data-wrangling1-47}
 df.starwars %>%
   set_names(letters[1:ncol(.)])  # renamed all variables to letters: a, b, ...
+```
+
+### `relocate()`
+
+`relocate()` moves columns. For example, the following piece of code moves the `species` column to the front of the data frame: 
+
+```{r}
+df.starwars %>% 
+  relocate(species)
+```
+We could also move the `species` column after the name column like so: 
+
+```{r}
+df.starwars %>% 
+  relocate(species, .after = name)
 ```
 
 ### `select()` 
@@ -705,37 +720,27 @@ df.starwars %>%
   select(starts_with("h")) # every column that starts with an "h"
 ```
 
-We can also use `select()` to reorder the columns: 
+We can rename some of the columns using `select()` like so: 
 
-```{r data-wrangling1-54}
-# useful trick for changing the column order, now eye_color is at the beginning
+```{r data-wrangling1-59}
 df.starwars %>% 
-  select(eye_color, everything())
+  select(person = name, height, mass_kg = mass)
 ```
 
-Here, I've moved the `eye_color` column to the beginning of the data frame. `everything()` is a helper function which selects all the columns. 
+#### `where()`
 
-```{r data-wrangling1-55}
-df.starwars %>% 
-  select(-eye_color, everything(), eye_color) # move eye_color to the end
-```
-
-Here, I've moved `eye_color` to the end. Note that I had to deselect it first. 
-
-#### `select_if()`
-
-We can select columns based on their data type using `select_if()`. 
+`where()` is a useful helper function that comes in handy, for example, when we want to select columns based on their data type. 
 
 ```{r data-wrangling1-56}
 df.starwars %>% 
-  select_if(is.numeric) # just select numeric columns
+  select(where(is.numeric)) # just select numeric columns
 ```
 
 The following selects all columns that are not numeric: 
 
 ```{r data-wrangling1-57}
 df.starwars %>% 
-  select_if(~ !is.numeric(.)) # selects all columns that are not numeric
+  select(where(~ !is.numeric(.))) # selects all columns that are not numeric
 ```
 
 Note that I used `~` here to indicate that I'm creating an anonymous function to check whether column type is numeric. A one-sided formula (expression beginning with `~`) is interpreted as `function(x)`, and wherever `x` would go in the function is represented by `.`.
@@ -744,14 +749,7 @@ So, I could write the same code like so:
 
 ```{r data-wrangling1-58}
 df.starwars %>% 
-  select_if(function(x) !is.numeric(x)) # selects all columns that are not numeric
-```
-
-We can rename some of the columns using `select()` like so: 
-
-```{r data-wrangling1-59}
-df.starwars %>% 
-  select(person = name, height, mass_kg = mass)
+  select(where(function(x) !is.numeric(x))) # selects all columns that are not numeric
 ```
 
 For more details, take a look at the help file for `select()`, and this [this great tutorial](https://suzan.rbind.io/2018/01/dplyr-tutorial-1/) in which I learned about some of the more advanced ways of using `select()`. 
@@ -761,7 +759,7 @@ For more details, take a look at the help file for `select()`, and this [this gr
 Create a data frame that: 
 - only has the species `Human` and `Droid` 
 - with the following data columns (in this order): name, species, birth_year, homeworld
-- is arranged according to birth year (with the oldest entry at the top of the data frame)
+- is arranged according to birth year (with the lowest entry at the top of the data frame)
 - and has the `name` column renamed to `person`
 
 ```{r}
@@ -770,7 +768,7 @@ Create a data frame that:
 
 ### `mutate() `
 
-`mutate()` is used to change exisitng columns or make new ones. 
+`mutate()` is used to change existing columns or make new ones. 
 
 ```{r data-wrangling1-60}
 df.starwars %>% 
@@ -793,88 +791,73 @@ df.starwars %>%
 
 `ifelse()` works in the following way: we first specify the condition, then what should be returned if the condition is true, and finally what should be returned otherwise. The more verbose version of the statement above would be: `ifelse(test = height > median(height, na.rm = T), yes = "tall", no = "short")` 
 
-There are a number of variants of the `mutate()` function. Let's take a look at them. 
+In previous versions of `dplyr` (the package we use for data wrangling), there were a variety of additional mutate functions such as `mutate_at()`, `mutate_if()`, and `mutate_all()`. In the most recent version of `dplyr`, these additional functions have been deprecated, and replaced with the flexible `across()` helper function. 
 
-#### `mutate_at()`
+#### `across()`
 
-With `mutate_at()`, we can mutate several columns at the same time. 
+`across()` allows us to use the syntax that we've learned for `select()` to select particular variables and apply a function to each of the selected variables. 
+
+For example, let's imagine that we want to z-score a number of variables in our data frame. We can do this like so: 
 
 ```{r data-wrangling1-62}
-df.starwars %>% 
-  mutate_at(.vars = vars(height, mass, birth_year), .funs = "scale")
+df.starwars %>%  
+  mutate(across(.cols = c(height, mass, birth_year),
+                .fns = scale))
 ```
 
-In `vars()` I've specified what variables to mutate, I've passed the function name `"scale"` to the `.funs` argument. Here, I've z-scored `height`, `mass`, and `birth_year` using the `scale()` function. Note that I wrote the function without `()`. The `.funs` argument expects a list of functions that can be specified by: 
+In the `.cols = ` argument of `across()`, I've specified what variables to mutate. In the `.fns = ` argument, I've specified that I want to use the function `scale`. Note that I wrote the function without `()`. The `.fns` argument expects allows these possible values: 
 
-- their name, "mean"
-- the function itself, `mean`
-- a call to the function with `.` as a dummy argument, `~ mean(.)` (note the `~` before the function call).
-
-Within `vars()`, we can use the same helper functions for selecting columns that we've seen above for `select()`. 
+- the function itself, e.g. `mean`
+- a call to the function with `.` as a dummy argument, `~ mean(.)` (note the `~` before the function call)
+- a list of functions `list(mean = mean, median = ~ median(.))` (where I've mixed both of the other ways)
 
 We can also use names to create new columns:
 
 ```{r data-wrangling1-63}
-df.starwars %>% 
-  mutate_at(.vars = vars(height, mass, birth_year), .funs = list(z = "scale")) %>% 
+df.starwars %>%  
+  mutate(across(.cols = c(height, mass, birth_year),
+                .fns = scale,
+                .names = "{.col}_z")) %>% 
   select(name, contains("height"), contains("mass"), contains("birth_year"))
 ```
+I've specified how I'd like the new variables to be called by using the `.names = ` argument of `across()`. `{.col}` stands of the name of the original column, and here I've just added `_z` to each column name for the scaled columns. 
 
-As we can see, new columns were created with `_z` added to the end of the column name. 
-
-And we can apply several functions at the same time. 
+We can also apply several functions at the same time. 
 
 ```{r data-wrangling1-64}
 df.starwars %>% 
-  mutate_at(vars(height, mass, birth_year),
-            list(z = "scale",
-                 centered = ~ scale(., scale = FALSE))) %>% 
+  mutate(across(.cols = c(height, mass, birth_year),
+                .fns = list(z = scale,
+                            centered = ~ scale(., scale = FALSE)))) %>%
   select(name, contains("height"), contains("mass"), contains("birth_year"))
 ```
-
 Here, I've created z-scored and centered (i.e. only subtracted the mean but didn't divide by the standard deviation) versions of the `height`, `mass`, and `birth_year` columns in one go. 
 
-#### `mutate_all()`
-
-`mutate_all()` is used to mutate all columns in a data frame.  
+You can use the `everything()` helper function if you want to apply a function to all of the columns in your data frame. 
 
 ```{r data-wrangling1-65}
 df.starwars %>% 
   select(height, mass) %>%
-  mutate_all("as.character") # transform all columns to characters
+  mutate(across(everything(),
+                as.character)) # transform all columns to characters
 ```
 
 Here, I've selected some columns first, and then changed the mode to character in each of them. 
 
-Like we've seen with `mutate_at()`, you can add a name in the `mutate_all()` function call to make new columns instead of replacing the existing ones. 
+Sometimes, you want to apply a function only to those columns that have a particular data type. This is where `where()` comes in handy! 
 
-```{r data-wrangling1-66}
-df.starwars %>% 
-  select(height, mass) %>%
-  mutate_all(.funs = list(char = "as.character")) # make new character columns
-```
-
-#### `mutate_if()`
-
-`mutate_if()` can sometimes come in handy. For example, the following code changes all the numeric columns to character columns:
+For example, the following code changes all the numeric columns to character columns:
 
 ```{r data-wrangling1-67}
 df.starwars %>% 
-  mutate_if(.predicate = "is.numeric", .funs = "as.character")
+  mutate(across(where("is.numeric"), .fns = as.character))
 ```
 
-Or we can round all the numeric columns: 
+Or we could round all the numeric columns to one digit: 
 
 ```{r data-wrangling1-68}
 df.starwars %>% 
-  mutate_if(.predicate = "is.numeric", .funs = "round")
-```
-
-If we wanted to round to the first decimal place, we would need to use the anonymous function syntax like so: 
-
-```{r data-wrangling1-69}
-df.starwars %>% 
-  mutate_if(.predicate = "is.numeric", .funs = ~ round(., 1))
+  mutate(across(where("is.numeric"), .fns = ~ round(., digits = 1)))
 ```
 
 ### Practice 3 
