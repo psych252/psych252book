@@ -20,7 +20,7 @@ install.packages(c("skimr", "visdat", "summarytools", "DT"))
 
 Let's first load the packages that we need for this chapter. 
 
-```{r data-wrangling1-01, message=FALSE}
+```{r, message=FALSE}
 library("knitr")        # for rendering the RMarkdown file
 library("skimr")        # for visualizing data 
 library("visdat")       # for visualizing data 
@@ -35,15 +35,13 @@ To test your knowledge of the R basics, I recommend taking the free interactive 
 
 ### Modes 
 
-Variables in R can have different modes. Table \@ref(tab:data-wrangling1-02) shows the most common ones. 
+Variables in R can have different modes. Table \@ref(tab:variable-modes) shows the most common ones. 
 
-```{r data-wrangling1-02, echo=FALSE}
+```{r variable-modes, echo=FALSE}
 name = c("numeric", "character", "logical", "not available")
-example = c(
-  "`1`, `3`, `48`",
-  "`'Steve'`, `'a'`, `'78'`",
-  "`TRUE`, `FALSE`",
-  "`NA`")
+example = c("`1`, `3`, `48`",
+            "`'Steve'`, `'a'`, `'78'`",
+            "`TRUE`, `FALSE`","`NA`")
 kable(x = tibble(name, example), 
       caption = "Most commonly used variable modes in R.",
       align = c("r", "l"),
@@ -52,7 +50,7 @@ kable(x = tibble(name, example),
 
 For characters you can either use `"` or `'`. R has a number of functions to convert a variable from one mode to another. `NA` is used for missing values.
 
-```{r data-wrangling1-03}
+```{r}
 tmp1 = "1" # we start with a character
 str(tmp1) 
 
@@ -73,9 +71,9 @@ The `str()` function displays the structure of an R object. Here, it shows us wh
 
 ### Data types
 
-R has a number of different data types. Table \@ref(tab:data-wrangling1-04) shows the ones you're most likely to come across (taken from [this source](https://www.statmethods.net/input/datatypes.html)): 
+R has a number of different data types. Table \@ref(tab:data-types) shows the ones you're most likely to come across (taken from [this source](https://www.statmethods.net/input/datatypes.html)): 
 
-```{r data-wrangling1-04, echo=FALSE}
+```{r data-types, echo=FALSE}
 name = c("vector", "factor", "matrix", "array", "data frame", "list") 
 description = c(
   "list of values with of the same variable mode",
@@ -95,7 +93,7 @@ kable(x = tibble(name, description),
 
 We build vectors using the concatenate function `c()`, and we use `[]` to access one or more elements of a vector.  
 
-```{r data-wrangling1-05}
+```{r}
 numbers = c(1, 4, 5) # make a vector
 numbers[2] # access the second element 
 numbers[1:2] # access the first two elements
@@ -108,7 +106,7 @@ In R (unlike in Python for example), 1 refers to the first element of a vector (
 
 We build a matrix using the `matrix()` function, and we use `[]` to access its elements. 
 
-```{r data-wrangling1-06}
+```{r}
 matrix = matrix(data = c(1, 2, 3, 4, 5, 6),
                 nrow = 3,
                 ncol = 2)
@@ -127,7 +125,7 @@ Arrays work the same was as matrices with data of more than two dimensions.
 
 #### Data frame 
 
-```{r data-wrangling1-07}
+```{r}
 df = tibble(participant_id = c(1, 2, 3),
             participant_name = c("Leia", "Luke", "Darth")) # make the data frame 
 
@@ -147,7 +145,7 @@ Here we used the `tibble()` function to create the data frame. A `tibble` is alm
 
 #### Lists 
 
-```{r data-wrangling1-08}
+```{r}
 l.mixed = list(number = 1, 
                character = "2", 
                factor = factor(3), 
@@ -165,9 +163,9 @@ Lists are a very flexible data format. You can put almost anything in a list.
 
 ### Operators
 
-Table \@ref(tab:data-wrangling1-09) shows the comparison operators that result in logical outputs. 
+Table \@ref(tab:logical-operators) shows the comparison operators that result in logical outputs. 
 
-```{r data-wrangling1-09, echo=FALSE}
+```{r logical-operators, echo=FALSE}
 operators = c("`==`", "`!=`", "`>`, `<`", "`>=`, `<=`", "`&`, `|`, `!`", "`%in%`")
 explanation = c("equal to", "not equal to", "greater/less than", 
                 "greater/less than or equal", "logical operators: and, or, not", 
@@ -192,7 +190,7 @@ It's particularly useful for filtering data as we will see below.
 
 #### if-then {#if-else}
 
-```{r data-wrangling1-11}
+```{r}
 number = 3
 
 if (number == 1) {
@@ -206,14 +204,14 @@ if (number == 1) {
 
 As a shorthand version, we can also use the `ifelse()` function like so: 
 
-```{r data-wrangling1-12}
+```{r}
 number = 3
 ifelse(test = number == 1, yes = "correct", no = "false")
 ```
 
 #### for loop
 
-```{r data-wrangling1-13}
+```{r}
 sequence = 1:10
 
 for(i in 1:length(sequence)){
@@ -223,7 +221,7 @@ for(i in 1:length(sequence)){
 
 #### while loop 
 
-```{r data-wrangling1-14}
+```{r}
 number = 1 
 
 while(number <= 10){
@@ -234,7 +232,7 @@ while(number <= 10){
 
 ### Functions 
 
-```{r data-wrangling1-15}
+```{r}
 fun.add_two_numbers = function(a, b){
   x = a + b
   return(str_c("The result is ", x))
@@ -247,7 +245,7 @@ I've used the `str_c()` function here to concatenate the string with the number.
 
 #### Some often used functions 
 
-```{r data-wrangling1-16, echo=FALSE}
+```{r, echo=FALSE}
 name = c(
 "`length()`",
 "`dim()`",
@@ -288,11 +286,11 @@ kable(x = tibble(name, description),
 
 ### The pipe operator `%>%` 
 
-```{r data-wrangling1-17, out.width = "80%", echo=FALSE, fig.cap="Inspiration for the `magrittr` package name."}
+```{r, out.width = "80%", echo=FALSE, fig.cap="Inspiration for the `magrittr` package name."}
 include_graphics("figures/pipe.jpg")
 ```
 
-```{r data-wrangling1-18, out.width = '40%', echo=FALSE, fig.cap="The `magrittr` package logo."}
+```{r, out.width = '40%', echo=FALSE, fig.cap="The `magrittr` package logo."}
 include_graphics("figures/magrittr.png")
 ```
 
@@ -300,7 +298,7 @@ The pipe operator `%>%` is a special operator introduced in the `magrittr` packa
 
 Let's consider the following example of making and eating a cake (thanks to https://twitter.com/dmi3k/status/1191824875842879489?s=09). This would be the traditional way of writing some code: 
 
-```{r data-wrangling1-19, eval=F}
+```{r, eval=F}
 eat(
   slice(
     bake(
@@ -317,7 +315,7 @@ eat(
 
 To see what's going on here, we need to read the code inside out. That is, we have to start in the innermost bracket, and then work our way outward. However, there is a natural causal ordering to these steps and wouldn't it be nice if we could just write code in that order? Thanks to the pipe operator `%>%` we can! Here is the same example using the pipe: 
 
-```{r data-wrangling1-20, eval=F}
+```{r, eval=F}
 ingredients %>% 
   mix %>% 
   pour(into = baking_form) %>% 
@@ -335,7 +333,7 @@ Abstractly, the pipe operator does the following:
 
 For example, in standard R, we would write: 
 
-```{r data-wrangling1-21}
+```{r}
 x = 1:3
 
 # standard R 
@@ -344,7 +342,7 @@ sum(x)
 
 With the pipe, we can rewrite this as: 
 
-```{r data-wrangling1-22}
+```{r}
 x = 1:3
 
 # with the pipe  
@@ -357,21 +355,21 @@ This doesn't seem super useful yet, but just hold on a little longer.
 
 So, we could rewrite the following standard R code ... 
 
-```{r data-wrangling1-23}
+```{r}
 # rounding pi to 6 digits, standard R 
 round(pi, digits = 6)
 ```
 
 ... by using the pipe: 
 
-```{r data-wrangling1-24}
+```{r}
 # rounding pi to 6 digits, standard R 
 pi %>% round(digits = 6)
 ```
 
 Here is another example: 
 
-```{r data-wrangling1-25}
+```{r}
 a = 3
 b = 4
 sum(a, b) # standard way 
@@ -380,7 +378,7 @@ a %>% sum(b) # the pipe way
 
 The pipe operator inserts the result of the previous computation as a first element into the next computation. So, `a %>% sum(b)` is equivalent to `sum(a, b)`. We can also specify to insert the result at a different position via the `.` operator. For example:  
 
-```{r data-wrangling1-26}
+```{r}
 a = 1
 b = 10 
 b %>% seq(from = a, to = .)
@@ -405,7 +403,7 @@ where $\hat{y}_i$ denotes the prediction, and $y_i$ the actually observed value.
 
 In base R, we would do the following. 
 
-```{r data-wrangling1-27}
+```{r}
 data = c(1, 3, 4, 2, 5)
 prediction = c(1, 2, 2, 1, 4)
 
@@ -416,7 +414,7 @@ print(rmse)
 
 Using the pipe operator makes the operation more intuitive: 
 
-```{r data-wrangling1-28}
+```{r}
 data = c(1, 3, 4, 2, 5)
 prediction = c(1, 2, 2, 1, 4)
 
@@ -443,7 +441,7 @@ A key advantage of using the pipe is that you don't have to save intermediate co
 
 Let's practice the pipe operator. 
 
-```{r data-wrangling1-29}
+```{r}
 # here are some numbers
 x = seq(from = 1, to = 5, by = 1)
 
@@ -451,10 +449,9 @@ x = seq(from = 1, to = 5, by = 1)
 log(x)
 
 # now take the log the pipe way (write your code underneath)
-
 ```
 
-```{r data-wrangling1-30}
+```{r}
 # some more numbers
 x = seq(from = 10, to = 5, by = -1)
 
@@ -462,14 +459,32 @@ x = seq(from = 10, to = 5, by = -1)
 mean(round(sqrt(x), digits = 2))
 
 # the pipe way (write your code underneath)
+```
 
+## A quick note on naming things 
+
+Personally, I like to name things in a (pretty) consistent way so that I have no trouble finding stuff even when I open up a project that I haven't worked on for a while. I try to use the following naming conventions: 
+
+```{r, echo=FALSE}
+name = c("df.thing",
+         "l.thing",
+         "fun.thing",
+         "tmp.thing")
+use = c("for data frames",
+        "for lists",
+        "for functions",
+        "for temporary variables")
+kable(x = tibble(name, use), 
+      caption = "Some naming conventions I adopt to make my life easier.", 
+      align = c("r", "l"),
+      booktabs = TRUE)
 ```
 
 ## Looking at data
 
 The package `dplyr` which we loaded as part of the tidyverse, includes a data set with information about starwars characters. Let's store this as  `df.starwars`. 
 
-```{r data-wrangling1-31}
+```{r}
 df.starwars = starwars
 ```
 
@@ -492,7 +507,7 @@ Here are some useful functions:
 
 Without any extra arguments specified, `head()` shows the top six rows of the data. 
 
-```{r data-wrangling1-32}
+```{r}
 head(df.starwars)
 ```
 
@@ -500,7 +515,7 @@ head(df.starwars)
 
 `glimpse()` is helpful when the data frame has many columns. The data is shown in a transposed way with columns as rows. 
 
-```{r data-wrangling1-33}
+```{r}
 glimpse(df.starwars)
 ```
 
@@ -508,25 +523,25 @@ glimpse(df.starwars)
 
 `distinct()` shows all the distinct values for a character or factor column. 
 
-```{r data-wrangling1-34}
+```{r}
 df.starwars %>% 
-  distinct(name)
+  distinct(species)
 ```
 
 ### `count()`
 
 `count()` shows a count of all the different distinct values in a column. 
 
-```{r data-wrangling1-35}
+```{r}
 df.starwars %>% 
-  count(gender)
+  count(eye_color)
 ```
 
 It's possible to do grouped counts by combining several variables.
 
-```{r data-wrangling1-36}
+```{r}
 df.starwars %>% 
-  count(species, gender) %>% 
+  count(eye_color, gender) %>% 
   head(n = 10)
 ```
 
@@ -534,7 +549,7 @@ df.starwars %>%
 
 For RMardkown files specifically, we can use the `datatable()` function from the `DT` package to get an interactive table widget.
 
-```{r data-wrangling1-37}
+```{r}
 df.starwars %>% 
   DT::datatable()
 ```
@@ -545,7 +560,7 @@ df.starwars %>%
 
 The `vis_dat()` function from the `visdat` package, gives a visual summary that makes it easy to see the variable types and whether there are missing values in the data. 
 
-```{r data-wrangling1-38}
+```{r}
 visdat::vis_dat(df.starwars)
 ```
 
@@ -559,7 +574,7 @@ This is why, in general, I recommend to load the tidyverse package last (since i
 
 The `skim()` function from the `skimr` package provides a nice overview of the data, separated by variable types. 
 
-```{r data-wrangling1-39}
+```{r}
 # install.packages("skimr")
 skimr::skim(df.starwars)
 ```
@@ -568,7 +583,7 @@ skimr::skim(df.starwars)
 
 The `summarytools` package is another great package for taking a look at the data. It renders a nice html output for the data frame including a lot of helpful information. You can find out more about this package [here](https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html).
 
-```{r data-wrangling1-40, eval=FALSE}
+```{r, eval=FALSE}
 df.starwars %>% 
   select(where(~ !is.list(.))) %>% # this removes all list columns
   summarytools::dfSummary() %>% 
@@ -579,52 +594,33 @@ df.starwars %>%
 
 Once we've taken a look at the data, the next step would be to visualize relationships between variables of interest. 
 
-### A quick note on naming things 
-
-Personally, I like to name things in a (pretty) consistent way so that I have no trouble finding stuff even when I open up a project that I haven't worked on for a while. I try to use the following naming conventions: 
-
-```{r data-wrangling1-41, echo=FALSE}
-name = c("df.thing",
-         "l.thing",
-         "fun.thing",
-         "tmp.thing")
-use = c("for data frames",
-        "for lists",
-        "for functions",
-        "for temporary variables")
-kable(x = tibble(name, use), 
-      caption = "Some naming conventions I adopt to make my life easier.", 
-      align = c("r", "l"),
-      booktabs = TRUE)
-```
-
 ## Wrangling data 
 
 We use the functions in the package `dplyr` to manipulate our data. 
 
 ### `filter()`
 
-`filter()` lets us apply logical (and other) operators (see Table \@ref(tab:data-wrangling1-09)) to subset the data. Here, I've filtered out the male characters. 
+`filter()` lets us apply logical (and other) operators (see Table \@ref(tab:logical-operators)) to subset the data. Here, I've filtered out the masculine characters. 
 
-```{r data-wrangling1-42}
+```{r}
 df.starwars %>% 
   filter(gender == "masculine")
 ```
 
-We can combine multiple conditions in the same call. Here, I've filtered out male characters, whose height is greater than the median height (i.e. they are in the top 50 percentile), and whose mass was not `NA`. 
+We can combine multiple conditions in the same call. Here, I've filtered out masculine characters, whose height is greater than the median height (i.e. they are in the top 50 percentile), and whose mass was not `NA`. 
 
-```{r data-wrangling1-43}
+```{r}
 df.starwars %>% 
   filter(gender == "masculine",
          height > median(height, na.rm = T),
          !is.na(mass))
 ```
 
-Many functions like `mean()`, `median()`, `var()`, `sd()`, `sum()` have the argument `na.rm` which is set to `FALSE` by default. I set the argument to `TRUE` here (or `T` for short), which means that the `NA` values are ignored, and the `median()` is calculated based on the remaning values.
+Many functions like `mean()`, `median()`, `var()`, `sd()`, `sum()` have the argument `na.rm` which is set to `FALSE` by default. I set the argument to `TRUE` here (or `T` for short), which means that the `NA` values are ignored, and the `median()` is calculated based on the remaining values.
 
 You can use `,` and `&` interchangeably in `filter()`. Make sure to use parentheses when combining several logical operators to indicate which logical operation should be performed first: 
 
-```{r data-wrangling1-44}
+```{r}
 df.starwars %>% 
   filter((skin_color %in% c("dark", "pale") | gender == "hermaphrodite") & height > 170)
 ```
@@ -635,7 +631,7 @@ The starwars characters that have either a `"dark"` or a `"pale"` skin tone, or 
 
 `arrange()` allows us to sort the values in a data frame by one or more column entries. 
 
-```{r data-wrangling1-45}
+```{r}
 df.starwars %>% 
   arrange(hair_color, desc(height))
 ```
@@ -646,7 +642,7 @@ Here, I've sorted the data frame first by `hair_color`, and then by `height`. I'
 
 `rename()` renames column names.
 
-```{r data-wrangling1-46}
+```{r}
 df.starwars %>% 
   rename(person = name,
          mass_kg = mass)
@@ -654,12 +650,14 @@ df.starwars %>%
 
 The new variable names goes on the LHS of the`=` sign, and the old name on the RHS.  
 
-To rename all variables at the same time use `set_names()`: 
+To rename all variables at the same time use `rename_with()`: 
 
-```{r data-wrangling1-47}
+```{r}
 df.starwars %>%
-  set_names(letters[1:ncol(.)])  # renamed all variables to letters: a, b, ...
+  rename_with(.fn = ~ toupper(.))
 ```
+
+Notice that I used the `~` here in the function call. I will explain what this does shortly. 
 
 ### `relocate()`
 
@@ -669,6 +667,7 @@ df.starwars %>%
 df.starwars %>% 
   relocate(species)
 ```
+
 We could also move the `species` column after the name column like so: 
 
 ```{r}
@@ -680,21 +679,21 @@ df.starwars %>%
 
 `select()` allows us to select a subset of the columns in the data frame. 
 
-```{r data-wrangling1-48}
+```{r}
 df.starwars %>% 
   select(name, height, mass)
 ```
 
 We can select multiple columns using the `(from:to)` syntax: 
 
-```{r data-wrangling1-49}
+```{r}
 df.starwars %>%  
   select(name:birth_year) # from name to birth_year
 ```
 
 Or use a variable for column selection: 
 
-```{r data-wrangling1-50}
+```{r}
 columns = c("name", "height", "species")
 
 df.starwars %>% 
@@ -703,26 +702,26 @@ df.starwars %>%
 
 We can also _deselect_ (multiple) columns:
 
-```{r data-wrangling1-51}
+```{r}
 df.starwars %>% 
   select(-name, -(birth_year:vehicles))
 ```
 
 And select columns by partially matching the column name:
 
-```{r data-wrangling1-52}
+```{r}
 df.starwars %>% 
   select(contains("_")) # every column that contains the character "_"
 ```
 
-```{r data-wrangling1-53}
+```{r}
 df.starwars %>% 
   select(starts_with("h")) # every column that starts with an "h"
 ```
 
 We can rename some of the columns using `select()` like so: 
 
-```{r data-wrangling1-59}
+```{r}
 df.starwars %>% 
   select(person = name, height, mass_kg = mass)
 ```
@@ -731,14 +730,14 @@ df.starwars %>%
 
 `where()` is a useful helper function that comes in handy, for example, when we want to select columns based on their data type. 
 
-```{r data-wrangling1-56}
+```{r}
 df.starwars %>% 
-  select(where(is.numeric)) # just select numeric columns
+  select(where(fn = is.numeric)) # just select numeric columns
 ```
 
 The following selects all columns that are not numeric: 
 
-```{r data-wrangling1-57}
+```{r}
 df.starwars %>% 
   select(where(~ !is.numeric(.))) # selects all columns that are not numeric
 ```
@@ -747,13 +746,13 @@ Note that I used `~` here to indicate that I'm creating an anonymous function to
 
 So, I could write the same code like so: 
 
-```{r data-wrangling1-58}
+```{r}
 df.starwars %>% 
   select(where(function(x) !is.numeric(x))) # selects all columns that are not numeric
 ```
 
-For more details, take a look at the help file for `select()`, and this [this great tutorial](https://suzan.rbind.io/2018/01/dplyr-tutorial-1/) in which I learned about some of the more advanced ways of using `select()`. 
-
+For more details, take a look at the help file for `select()`, and this [this great tutorial](https://suzan.rbind.io/2018/01/dplyr-tutorial-1/) in which I learned about some of the more advanced ways of using `select()`.
+ 
 ### Practice 2
 
 Create a data frame that: 
@@ -770,7 +769,7 @@ Create a data frame that:
 
 `mutate()` is used to change existing columns or make new ones. 
 
-```{r data-wrangling1-60}
+```{r}
 df.starwars %>% 
   mutate(height = height / 100, # to get height in meters
          bmi = mass / (height^2)) %>% # bmi = kg / (m^2)
@@ -781,7 +780,7 @@ Here, I've calculated the bmi for the different starwars characters. I first mut
 
 A useful helper function for `mutate()` is `ifelse()` which is a shorthand for the if-else control flow (Section \@ref(if-else)). Here is an example: 
 
-```{r data-wrangling1-61}
+```{r}
 df.starwars %>% 
   mutate(height_categorical = ifelse(height > median(height, na.rm = T),
                                      "tall",
@@ -799,7 +798,7 @@ In previous versions of `dplyr` (the package we use for data wrangling), there w
 
 For example, let's imagine that we want to z-score a number of variables in our data frame. We can do this like so: 
 
-```{r data-wrangling1-62}
+```{r}
 df.starwars %>%  
   mutate(across(.cols = c(height, mass, birth_year),
                 .fns = scale))
@@ -813,29 +812,31 @@ In the `.cols = ` argument of `across()`, I've specified what variables to mutat
 
 We can also use names to create new columns:
 
-```{r data-wrangling1-63}
+```{r}
 df.starwars %>%  
   mutate(across(.cols = c(height, mass, birth_year),
                 .fns = scale,
                 .names = "{.col}_z")) %>% 
   select(name, contains("height"), contains("mass"), contains("birth_year"))
 ```
+
 I've specified how I'd like the new variables to be called by using the `.names = ` argument of `across()`. `{.col}` stands of the name of the original column, and here I've just added `_z` to each column name for the scaled columns. 
 
 We can also apply several functions at the same time. 
 
-```{r data-wrangling1-64}
+```{r}
 df.starwars %>% 
   mutate(across(.cols = c(height, mass, birth_year),
                 .fns = list(z = scale,
                             centered = ~ scale(., scale = FALSE)))) %>%
   select(name, contains("height"), contains("mass"), contains("birth_year"))
 ```
+
 Here, I've created z-scored and centered (i.e. only subtracted the mean but didn't divide by the standard deviation) versions of the `height`, `mass`, and `birth_year` columns in one go. 
 
 You can use the `everything()` helper function if you want to apply a function to all of the columns in your data frame. 
 
-```{r data-wrangling1-65}
+```{r}
 df.starwars %>% 
   select(height, mass) %>%
   mutate(across(everything(),
@@ -848,32 +849,32 @@ Sometimes, you want to apply a function only to those columns that have a partic
 
 For example, the following code changes all the numeric columns to character columns:
 
-```{r data-wrangling1-67}
+```{r}
 df.starwars %>% 
-  mutate(across(where("is.numeric"), .fns = as.character))
+  mutate(across(where(~ is.numeric(.)), .fns = ~ as.character(.)))
 ```
 
 Or we could round all the numeric columns to one digit: 
 
-```{r data-wrangling1-68}
+```{r}
 df.starwars %>% 
-  mutate(across(where("is.numeric"), .fns = ~ round(., digits = 1)))
+  mutate(across(where(~ is.numeric(.)), .fns = ~ round(., digits = 1)))
 ```
 
 ### Practice 3 
 
-Compute the body mass index for `male` characters who are `human`.
+Compute the body mass index for `masculine` characters who are `human`.
 
 - select only the columns you need 
 - filter out only the rows you need 
 - make the new variable with the body mass index 
 - arrange the data frame starting with the highest body mass index 
 
-```{r data-wrangling1-70}
+```{r}
 # write your code here 
 ```
 
-## Additional resources  
+## Additional resources   
 
 ### Cheatsheets 
 
@@ -902,6 +903,6 @@ Compute the body mass index for `male` characters who are `human`.
 
 ## Session info
 
-```{r data-wrangling1-71, echo=F}
+```{r, echo=F}
 sessionInfo()
 ```
