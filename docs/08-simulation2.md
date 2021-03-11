@@ -2,46 +2,31 @@
 
 In which we figure out some key statistical concepts through simulation and plotting. On the menu we have: 
 
-- Central limit theorem 
 - Sampling distributions 
 - p-value
 - Confidence interval
+- Bootstrapping 
 
 ## Load packages and set plotting theme  
 
 
-
-
 ```r
 library("knitr")      # for knitting RMarkdown 
-library("NHANES")     # data set 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
 library("tidyverse")  # for wrangling, plotting, etc. 
-
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
 ```
 
 
 ```r
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+            theme(text = element_text(size = 20))) #set the default text size
+
+opts_chunk$set(comment = "",
+               fig.show = "hold")
 ```
 
-## The central limit theorem 
-
-> The Central Limit Theorem (CLT) states that the sample mean of a sufficiently large number of independent and identically distributed (i.i.d.) random variables is approximately normally distributed. The larger the sample, the better the approximation.  The theorem is a key ("central") concept in probability theory because it implies that statistical methods that work for normal distributions can be applicable to many problems involving other types of distributions.
-
-Here are some nice interactive illustrations of the CLT: 
-
-- [seeing-theory.brown.edu](https://seeing-theory.brown.edu/probability-distributions/index.html#section3)
-- [http://mfviz.com/central-limit/](http://mfviz.com/central-limit/)
+## Making statistical inferences (frequentist style)
 
 ### Population distribution 
 
@@ -50,10 +35,8 @@ Let's first put the information we need for our population distribution in a dat
 
 ```r
 # the distribution from which we want to sample (aka the heavy metal distribution)
-df.population = tibble(
-  numbers = 1:6,
-  probability = c(1/3, 0, 1/6, 1/6, 0, 1/3)
-)
+df.population = tibble(numbers = 1:6,
+                       probability = c(1/3, 0, 1/6, 1/6, 0, 1/3))
 ```
 
 And then let's plot it: 
@@ -73,7 +56,7 @@ ggplot(data = df.population,
   coord_cartesian(expand = F)
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-05-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 Here are the true mean and standard deviation of our population distribution: 
 
@@ -130,10 +113,10 @@ ggplot(data = df.sample,
                  fill = "lightblue",
                  color = "black") +
   scale_x_continuous(breaks = min(df.sample$number):max(df.sample$number)) + 
-  scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-07-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 Here are the sample mean and standard deviation:
 
@@ -157,7 +140,7 @@ df.sample %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:right;"> 3.73 </td>
+   <td style="text-align:right;"> 3.72 </td>
    <td style="text-align:right;"> 2.05 </td>
   </tr>
 </tbody>
@@ -174,14 +157,14 @@ set.seed(1)
 
 # parameters 
 sample_size = 40 # size of each sample
-sample_n = 10000 # number of samples 
+sample_n = 10000 # number of samples
 
 # define a function that draws samples from a discrete distribution
 fun.draw_sample = function(sample_size, distribution){
   x = sample(distribution$numbers,
-       size = sample_size,
-       replace = T,
-       prob = distribution$probability)
+             size = sample_size,
+             replace = T,
+             prob = distribution$probability)
   return(x)
 }
 
@@ -191,22 +174,16 @@ samples = replicate(n = sample_n,
 
 # set up a data frame with samples 
 df.sampling_distribution = matrix(samples, ncol = sample_n) %>%
-  as_tibble() %>%
-  set_names(str_c(1:ncol(.))) %>%
-  gather("sample", "number") %>% 
+  as_tibble(.name_repair = ~ str_c(1:sample_n)) %>%
+  pivot_longer(cols = everything(),
+               names_to = "sample",
+               values_to = "number") %>% 
   mutate(sample = as.numeric(sample)) %>% 
   group_by(sample) %>% 
   mutate(draw = 1:n()) %>% 
   select(sample, draw, number) %>% 
   ungroup()
-```
 
-```
-Warning: `as_tibble.matrix()` requires a matrix with column names or a `.name_repair` argument. Using compatibility `.name_repair`.
-This warning is displayed once per session.
-```
-
-```r
 # turn the data frame into long format and calculate the means of each sample
 df.sampling_distribution_means = df.sampling_distribution %>% 
   group_by(sample) %>% 
@@ -219,8 +196,10 @@ And plot it:
 
 ```r
 # plot a histogram of the means with density overlaid 
-ggplot(data = df.sampling_distribution_means %>% 
-         sample_frac(size = 1, replace = T),
+df.plot = df.sampling_distribution_means %>% 
+  sample_frac(size = 1, replace = T)
+
+ggplot(data = df.plot,
        mapping = aes(x = mean)) + 
   geom_histogram(aes(y = stat(density)),
                  binwidth = 0.05, 
@@ -228,14 +207,13 @@ ggplot(data = df.sampling_distribution_means %>%
                  color = "black") +
   stat_density(bw = 0.1,
                size = 2,
-               geom = "line"
-               ) + 
-  scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
+               geom = "line") + 
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-10-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
-That's the central limit theorem in action! Even though our population distribution was far from normal (and much more heavy-metal like), the means of that distribution are normally distributed. 
+Even though our population distribution was far from normal (and much more heavy-metal like), the means of the sampling  distribution are normally distributed. 
 
 And here are the mean and standard deviation of the sampling distribution: 
 
@@ -272,8 +250,9 @@ Here is a data frame that I've used for illustrating the idea behind how a sampl
 # data frame for illustration in class 
 df.sampling_distribution %>% 
   filter(sample <= 10, draw <= 4) %>% 
-  spread(draw, number) %>% 
-  set_names(c("sample", str_c("draw_", 1:(ncol(.)-1)))) %>% 
+  pivot_wider(names_from = draw,
+              values_from = number) %>% 
+  set_names(c("sample", str_c("draw_", 1:(ncol(.) - 1)))) %>% 
   mutate(sample_mean = rowMeans(.[, -1])) %>% 
     head(10) %>% 
     kable(digits = 2) %>% 
@@ -399,18 +378,35 @@ func.bootstrap = function(df){
 }
 
 # data frame with bootstrapped results 
-df.bootstrap = tibble(
-  bootstrap = 1:n_samples, 
-  average = replicate(n = n_samples, func.bootstrap(df.sample))
-)
+df.bootstrap = tibble(bootstrap = 1:n_samples, 
+                      average = replicate(n = n_samples, func.bootstrap(df.sample)))
 ```
+Let's plot our sample first: 
+
+
+```r
+# plot the distribution 
+ggplot(data = df.sample,
+       mapping = aes(x = number)) +
+  geom_bar(stat = "count",
+           fill = "lightblue",
+           color = "black") +
+  scale_x_continuous(breaks = 1:6,
+                     labels = 1:6,
+                     limits = c(0.1, 6.9)) +
+  coord_cartesian(expand = F)
+```
+
+<img src="08-simulation2_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+
 
 Let's plot the bootstrapped sampling distribution: 
 
 
 ```r
 # plot the bootstrapped sampling distribution
-ggplot(data = df.bootstrap, aes(x = average)) +
+ggplot(data = df.bootstrap, 
+       mapping = aes(x = average)) +
   geom_histogram(aes(y = stat(density)),
                  color = "black",
                  fill = "lightblue",
@@ -419,19 +415,19 @@ ggplot(data = df.bootstrap, aes(x = average)) +
                size = 1.5,
                bw = 0.1) +
   labs(x = "mean") +
-  scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-14-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 And let's calculate the mean and standard deviation: 
 
 
 ```r
 # print out sampling distribution mean and standard deviation 
-df.sampling_distribution_means %>% 
-  summarize(bootstrapped_distribution_mean = mean(mean),
-            bootstrapped_distribution_sd = sd(mean)) %>% 
+df.bootstrap %>% 
+  summarize(bootstrapped_distribution_mean = mean(average),
+            bootstrapped_distribution_sd = sd(average)) %>% 
   kable(digits = 2) %>% 
   kable_styling(bootstrap_options = "striped",
                 full_width = F)
@@ -446,7 +442,7 @@ df.sampling_distribution_means %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:right;"> 3.5 </td>
+   <td style="text-align:right;"> 3.74 </td>
    <td style="text-align:right;"> 0.33 </td>
   </tr>
 </tbody>
@@ -454,280 +450,16 @@ df.sampling_distribution_means %>%
 
 Neat, as we can see, the mean and standard deviation of the bootstrapped sampling distribution are very close to the sampling distribution that we generated from the population distribution. 
 
-### Exploring the CLT 
-
-#### Distribution of height 
-
-In order for the CLT to apply, the following have to hold (approximately): 
-
-- sufficiently large number of variables that affect the outcome 
-- the variables are idependent and identically distributed 
-- the variables contribute additively, and none of the variables affects the outcome much more strongly than the rest 
-
-Let's take a look at a situation where the CLT breaks down. We use survey data collected by the US National Center for Health Statistics (NCHS). The data is from 2009-2012. You can get more information about the NHANES data set by running `help(NHANES)`. 
-
-Let's load the data set into our environment first.
-
-
-```r
-df.nhanes = NHANES %>% 
-  clean_names() %>% 
-  distinct(id, .keep_all = T) #drop duplicates
-```
-
-Let's now plot a density of the distribution of womens' height 
-
-
-```r
-df.plot = df.nhanes %>% 
-  drop_na(height) %>% # remove missing values
-  filter(
-    age >= 18, # only look at adults 
-    gender == "female"
-    ) 
-  
-ggplot(data = df.plot, 
-       mapping = aes(x = height)) +
-  geom_density(size = 1,
-               fill = "red",
-               alpha = 0.5,
-               kernel = "gaussian",
-               bw = 2) +
-  stat_function(fun = "dnorm",
-                color = "red",
-                args = list(mean = mean(df.plot$height),
-                            sd = sd(df.plot$height)),
-                size = 2) +
-  labs(title = "Women's height") +
-  coord_cartesian(expand = F, clip = "off")
-```
-
-<img src="08-simulation2_files/figure-html/simulation2-17-1.png" width="672" />
-
-Women's height in the `NHANES` data set is approximately normally distributed. 
-
-
-```r
-df.plot = df.nhanes %>% 
-  drop_na(height) %>% # remove missing values
-  filter(
-    age >= 18, # only look at adults 
-    gender == "male"
-    ) 
-  
-ggplot(data = df.plot, 
-       mapping = aes(x = height)) +
-  geom_density(size = 1,
-               fill = "blue",
-               alpha = 0.5,
-               kernel = "gaussian",
-               bw = 2) +
-  stat_function(fun = "dnorm",
-                color = "blue",
-                args = list(mean = mean(df.plot$height),
-                            sd = sd(df.plot$height)),
-                size = 2) +
-  labs(title = "Men's height") +
-  coord_cartesian(expand = F, clip = "off")
-```
-
-<img src="08-simulation2_files/figure-html/simulation2-18-1.png" width="672" />
-
-The same is true for men's height.
-
-
-```r
-df.plot = df.nhanes %>% 
-  drop_na(height) %>% # remove missing values
-  filter(
-    age >= 18 # only look at adults
-    ) 
-
-ggplot(data = df.plot, 
-       mapping = aes(x = height))+
-  geom_density(size = 1,
-               fill = "gray50",
-               alpha = 0.5,
-               kernel = "gaussian",
-               bw = 2)+
-  stat_function(fun = "dnorm",
-                color = "black",
-                args = list(mean = mean(df.plot$height),
-                            sd = sd(df.plot$height)),
-                size = 2)+
-  labs(title = "Adults' height") +
-  coord_cartesian(expand = F, clip = "off")
-```
-
-<img src="08-simulation2_files/figure-html/simulation2-19-1.png" width="672" />
-
-However, adults' height is not quite normally distributed. Note that the distribution is too flat in the middle.  
-
-
-```r
-df.plot = df.nhanes %>% 
-  drop_na(height) %>% # remove missing values
-  filter(
-    age >= 18
-    )
-
-ggplot(data = df.plot, aes(x = height, group = gender, fill = gender))+
-  geom_density(size = 1, 
-               alpha = 0.5,
-               kernel = "gaussian",
-               bw = 2)+
-  stat_function(fun = "dnorm", color = "blue", 
-                args = df.plot %>% 
-                  filter(gender == "male") %>% 
-                  summarise(mean = mean(height),
-                            sd = sd(height)) %>% 
-                  as.list(),
-                size = 2)+
-  stat_function(fun = "dnorm", color = "red", 
-                args = df.plot %>% 
-                  filter(gender == "female") %>% 
-                  summarise(mean = mean(height),
-                            sd = sd(height)) %>% 
-                  as.list(),
-                size = 2)+
-  labs(title = "Adults' height (separated by gender)")+
-  theme(legend.position = c(0.9, 0.8))
-```
-
-<img src="08-simulation2_files/figure-html/simulation2-20-1.png" width="672" />
-
-The fact that adults' height overall is not normally distributed is because there is a single factor (gender) that accounts for much of the variation. 
-
-#### Testing the limits 
-
-How do sample size and the number of samples affect what the sampling distribution looks like? Here are some simulations. Feel free to play around with: 
-
-- the population distributions to sample from
-- the sample size for each sample 
-- the number of samples
-
-
-```r
-ggplot(data = tibble(x = c(0, 20)), aes(x = x)) +
-  stat_function(fun = "dnorm",
-                args = list(mean = 10,
-                            sd = 5),
-                size = 1,
-                color = "red") +
-  stat_function(fun = "dunif",
-                args = list(min = 0,
-                            max = 20),
-                size = 1,
-                color = "green") +
-  stat_function(fun = "dexp",
-                args = list(rate = 0.1),
-                size = 1,
-                color = "blue") +
-  annotate(geom = "text",
-           label = "normal",
-           x = 0,
-           y = .03,
-           hjust = 0,
-           color = "red",
-           size = 6) +
-  annotate(geom = "text",
-           label = "uniform",
-           x = 0,
-           y = .055,
-           hjust = 0,
-           color = "green",
-           size = 6) +
-  annotate(geom = "text",
-           label = "exponential",
-           x = 0,
-           y = .105,
-           hjust = 0,
-           color = "blue",
-           size = 6)
-```
-
-<img src="08-simulation2_files/figure-html/simulation2-21-1.png" width="672" />
-
-
-
-```r
-# Parameters for the simulation
-n_samples = c(10, 100, 1000, 10000)
-sample_size = c(5, 10, 25, 100)
-distributions = c("normal", "uniform", "exponential")
-
-# take samples (of size n) from specified distribution and calculate the mean 
-fun.sample_mean = function(n, distribution){
-  if (distribution == "normal"){
-    tmp = rnorm(n, mean = 10, sd = 5)
-  }else if (distribution == "uniform"){
-    tmp = runif(n, min = 0, max = 20) 
-  }else if (distribution == "exponential"){
-    tmp = rexp(n, rate = 0.1)
-  }
-  return(mean(tmp)) 
-}
-
-df.central_limit = tibble()
-
-for (i in 1:length(n_samples)){
-  for (j in 1:length(sample_size)){
-    for (k in 1:length(distributions)){
-      # calculate sample mean 
-      sample_mean = replicate(n_samples[i], 
-                              fun.sample_mean(sample_size[j],
-                                              distributions[k]))
-      df.tmp = tibble(n_samples = n_samples[i], 
-                       sample_size = sample_size[j],
-                       distribution = distributions[k],
-                       mean_value = list(sample_mean))
-      df.central_limit = rbind(df.central_limit, df.tmp)
-    }
-  }
-}
-
-# transform from list column
-df.plot = df.central_limit %>% 
-  unnest() %>% 
-  mutate(sample_size = str_c("sample size = ", sample_size),
-         sample_size = factor(sample_size,
-                              levels = str_c("sample size = ", c(5, 10, 25, 100))),
-         n_samples = str_c("n samples = ", n_samples),
-         distribution = factor(distribution,
-                               levels = c("normal", "uniform", "exponential"))
-         )
-  
-# densities of sample means 
-ggplot(df.plot, aes(x = mean_value, color = distribution))+
-  stat_density(geom = "line", position = "identity")+
-  facet_grid(n_samples ~ sample_size, scales = "free")+
-  scale_x_continuous(breaks = c(0, 10, 20))+
-  coord_cartesian(xlim = c(0, 20))+
-  labs(x = "sample mean")+
-  theme(
-    axis.text.x = element_text(size = 10),
-    axis.text.y = element_text(size = 10),
-    strip.text.y = element_text(size = 6),
-    strip.text.x = element_text(size = 8),
-    legend.position = "bottom",
-    panel.background = element_rect(color = "black")
-    )
-```
-
-<img src="08-simulation2_files/figure-html/simulation2-22-1.png" width="672" />
-
-No matter where we start, as long as we draw samples that are independent and identically distributed, and these samples combine in an additive way, we end up with a normal distribution (note that this takes considerably longer when we start with an exponential distribution -- shown in blue -- compared to the other population distributions).
-
 ## Understanding p-values 
 
 > The p-value is the probability of finding the observed, or more extreme, results when the null hypothesis ($H_0$) is true.
 
 $$
-\text{p-value = p(observed or more extreme sample statistic} | H_{0}=\text{true})
+\text{p-value = p(observed or more extreme test statistic} | H_{0}=\text{true})
 $$
 What we are really interested in is the probability of a hypothesis given the data. However, frequentist statistics doesn't give us this probability -- we'll get to Bayesian statistics later in the course. 
 
-Instead, we define a null hypothesis, construct a sampling distribution that tells us what we would expect the test statistic of interest to look like if the null hypothesis were true. We reject the null hypothesis in case our observed data would be unlikely if the null hypothesis were true. 
+Instead, we define a null hypothesis, construct a sampling distribution that tells us what we would expect the test statistic of interest to look like if the null hypothesis were true. We reject the null hypothesis in case our observed result would be unlikely if the null hypothesis were true. 
 
 An intutive way for illustrating (this rather unintuitive procedure) is the permutation test. 
 
@@ -741,11 +473,11 @@ Let's start by generating some random data from two different normal distributio
 set.seed(1)
 
 # generate data from two conditions 
-df.permutation = tibble(
-  control = rnorm(25, mean = 5.5, sd = 2),
-  experimental = rnorm(25, mean = 4.5, sd = 1.5)
-) %>% 
-  gather("condition", "performance")
+df.permutation = tibble(control = rnorm(25, mean = 5.5, sd = 2),
+                        experimental = rnorm(25, mean = 4.5, sd = 1.5)) %>% 
+  pivot_longer(cols = everything(),
+               names_to = "condition",
+               values_to = "performance")
 ```
 
 Here is a summary of how each group performed: 
@@ -756,8 +488,11 @@ df.permutation %>%
   group_by(condition) %>%
   summarize(mean = mean(performance),
             sd = sd(performance)) %>%
-  gather("statistic", "value", - condition) %>%
-  spread(condition, value) %>%
+  pivot_longer(cols = - condition,
+               names_to = "statistic",
+               values_to = "value") %>%
+  pivot_wider(names_from = condition,
+              values_from = value) %>%
   kable(digits = 2) %>% 
   kable_styling(bootstrap_options = "striped",
                 full_width = F)
@@ -796,7 +531,7 @@ ggplot(data = df.permutation,
   stat_summary(fun.data = mean_cl_boot, 
                geom = "linerange", 
                size = 1) +
-  stat_summary(fun.y = "mean", 
+  stat_summary(fun = "mean", 
                geom = "point", 
                shape = 21, 
                color = "black", 
@@ -807,7 +542,7 @@ ggplot(data = df.permutation,
                      limits = c(0, 10))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-25-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 We are interested in the difference in the mean performance between the two groups: 
 
@@ -843,10 +578,10 @@ df.permutation %>%
 # A tibble: 1 x 1
      diff
     <dbl>
-1 -0.0223
+1 -0.0105
 ```
 
-Here, the difference between the two conditions is 0.0223078.
+Here, the difference between the two conditions is 0.0105496.
 
 After randomly shuffling the condition labels, this is how the results would look like: 
 
@@ -855,13 +590,13 @@ After randomly shuffling the condition labels, this is how the results would loo
 ggplot(data = df.permutation, aes(x = permutation, y = performance))+
   geom_point(aes(color = condition), position = position_jitter(height = 0, width = 0.1)) +
   stat_summary(fun.data = mean_cl_boot, geom = 'linerange', size = 1) +
-  stat_summary(fun.y = "mean", geom = 'point', shape = 21, color = "black", fill = "white", size = 4) + 
+  stat_summary(fun = "mean", geom = 'point', shape = 21, color = "black", fill = "white", size = 4) + 
   scale_y_continuous(breaks = 0:10,
                      labels = 0:10,
                      limits = c(0, 10))
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-28-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 The idea is now that, similar to bootstrapping above, we can get a sampling distribution of the difference in the means between the two conditions (assuming that the null hypothesis were true), by randomly shuffling the labels and calculating the difference in means (and doing this many times). What we get is a distribution of the differences we would expect, if there was no effect of condition. 
 
@@ -872,7 +607,7 @@ set.seed(1)
 n_permutations = 500
 
 # permutation function
-func_permutations = function(df){
+fun.permutations = function(df){
   df %>%
     mutate(condition = sample(condition)) %>% #we randomly shuffle the condition labels
     group_by(condition) %>%
@@ -882,10 +617,8 @@ func_permutations = function(df){
 }
 
 # data frame with permutation results 
-df.permutations = tibble(
-  permutation = 1:n_permutations, 
-  mean_difference = replicate(n = n_permutations, func_permutations(df.permutation))
-)
+df.permutations = tibble(permutation = 1:n_permutations, 
+  mean_difference = replicate(n = n_permutations, fun.permutations(df.permutation)))
 
 #plot the distribution of the differences 
 ggplot(data = df.permutations, aes(x = mean_difference)) +
@@ -908,7 +641,7 @@ ggplot(data = df.permutations, aes(x = mean_difference)) +
 Warning: Removed 2 rows containing missing values (geom_bar).
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-29-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 And we can then simply calculate the p-value by using some basic data wrangling (i.e. finding the proportion of differences that were as or more extreme than the one we observed).
 
@@ -923,8 +656,106 @@ df.permutations %>%
 # A tibble: 1 x 1
   p_value
     <dbl>
-1   0.006
+1   0.002
 ```
+
+### t-test by hand 
+
+Examining the t-distribution. 
+
+
+```r
+set.seed(1)
+
+n_simulations = 1000 
+sample_size = 100
+mean = 5
+sd = 2
+
+fun.normal_sample_mean = function(sample_size, mean, sd){
+  rnorm(n = sample_size, mean = mean, sd = sd) %>% 
+    mean()
+}
+
+df.ttest = tibble(simulation = 1:n_simulations) %>% 
+  mutate(sample1 = replicate(n = n_simulations,
+                             expr = fun.normal_sample_mean(sample_size, mean, sd)),
+         sample2 = replicate(n = n_simulations, 
+                             expr = fun.normal_sample_mean(sample_size, mean, sd))) %>% 
+  mutate(difference = sample1 - sample2,
+         # assuming the same standard deviation in each sample
+         tstatistic = difference / sqrt(sd^2 * (1/sample_size + 1/sample_size)))
+
+df.ttest
+```
+
+```
+# A tibble: 1,000 x 5
+   simulation sample1 sample2 difference tstatistic
+        <int>   <dbl>   <dbl>      <dbl>      <dbl>
+ 1          1    5.22    4.99     0.225      0.796 
+ 2          2    4.92    5.06    -0.132     -0.467 
+ 3          3    5.06    5.40    -0.340     -1.20  
+ 4          4    5.10    4.97     0.132      0.468 
+ 5          5    4.92    4.75     0.173      0.613 
+ 6          6    4.91    4.99    -0.0787    -0.278 
+ 7          7    4.60    5.11    -0.513     -1.82  
+ 8          8    5.00    5.01    -0.0113    -0.0401
+ 9          9    5.02    5.10    -0.0773    -0.273 
+10         10    5.01    4.98     0.0267     0.0945
+# … with 990 more rows
+```
+
+Population distribution 
+
+
+```r
+mean = 0
+sd = 1
+
+ggplot(data = tibble(x = c(mean - 3 * sd, mean + 3 * sd)),
+       mapping = aes(x = x)) + 
+  stat_function(fun = ~ dnorm(.,mean = mean, sd = sd),
+                color = "black",
+                size = 2) + 
+  geom_vline(xintercept = qnorm(c(0.025, 0.975), mean = mean, sd = sd),
+             linetype = 2)
+  # labs(x = "performance")
+```
+
+<img src="08-simulation2_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+
+Distribution of differences in means
+
+
+```r
+ggplot(data = df.ttest,
+       mapping = aes(x = difference)) + 
+  geom_density(size = 1) + 
+  geom_vline(xintercept = quantile(df.ttest$difference,
+                                   probs = c(0.025, 0.975)),
+             linetype = 2) 
+```
+
+<img src="08-simulation2_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+
+t-distribution 
+
+
+```r
+ggplot(data = df.ttest,
+       mapping = aes(x = tstatistic)) + 
+  stat_function(fun = ~ dt(., df = sample_size * 2 - 2),
+                color = "red",
+                size = 2) +
+  geom_density(size = 1) + 
+  geom_vline(xintercept = qt(c(0.025, 0.975), df = sample_size * 2 - 2),
+             linetype = 2) + 
+  scale_x_continuous(limits = c(-4, 4),
+                     breaks = seq(-4, 4, 1))
+```
+
+<img src="08-simulation2_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 
 ## Confidence intervals 
@@ -951,19 +782,18 @@ confidence_level = 0.95 # desired level of confidence
 
 # define a function that draws samples and calculates means and CIs
 fun.confidence = function(sample_size, distribution){
-  df = tibble(
-    values = sample(distribution$numbers,
-                    size = sample_size,
-                    replace = T,
-                    prob = distribution$probability)) %>% 
+  df = tibble(values = sample(distribution$numbers,
+                              size = sample_size,
+                              replace = T,
+                              prob = distribution$probability)) %>% 
     summarize(mean = mean(values),
               sd = sd(values),
               n = n(),
               # confidence interval assuming a normal distribution 
-              # error = qnorm(1-(1-confidence_level)*2) * sd / sqrt(n),
+              # error = qnorm(1 - (1 - confidence_level)/2) * sd / sqrt(n),
               # assuming a t-distribution (more conservative, appropriate for smaller
               # sample sizes)
-              error = qt(1-(1-confidence_level)/2, df = n-1) * sd / sqrt(n),
+              error = qt(1 - (1 - confidence_level)/2, df = n - 1) * sd / sqrt(n),
               conf_low = mean - error,
               conf_high = mean + error)
   return(df)
@@ -986,24 +816,231 @@ df.confidence = df.confidence %>%
                              'inside'))
 
 # plot the result
-ggplot(data = df.confidence, aes(x = sample, y = mean, color = conf_index))+
-  geom_hline(yintercept = 3.5, color = "red")+
-  geom_point()+
-  geom_linerange(aes(ymin = conf_low, ymax = conf_high))+
-  coord_flip()+
-  scale_color_manual(values = c("black", "red"), labels = c("inside", "outside"))+
+ggplot(data = df.confidence, aes(x = sample, y = mean, color = conf_index)) +
+  geom_hline(yintercept = 3.5, color = "red") +
+  geom_point() +
+  geom_linerange(aes(ymin = conf_low, ymax = conf_high)) +
+  coord_flip() +
+  scale_color_manual(values = c("black", "red"), labels = c("inside", "outside")) +
   theme(axis.text.y = element_text(size = 12),
         legend.position = "none")
 ```
 
-<img src="08-simulation2_files/figure-html/simulation2-31-1.png" width="672" />
+<img src="08-simulation2_files/figure-html/unnamed-chunk-28-1.png" width="672" />
 
 So, out of the 20 samples that we drew the 95% confidence interval of 1 sample did not contain the true mean. That makes sense! 
 
 Feel free to play around with the code above. For example, change the sample size, the number of samples, the confidence level.  
+
+### `mean_cl_boot()` explained
+
+
+```r
+set.seed(1)
+
+n = 10 # sample size per group
+k = 3 # number of groups 
+
+df.data = tibble(participant = 1:(n*k),
+                 condition = as.factor(rep(1:k, each = n)),
+                 rating = rnorm(n*k, mean = 7, sd = 1))
+
+p = ggplot(data = df.data,
+       mapping = aes(x = condition,
+                     y = rating)) + 
+  geom_point(alpha = 0.1,
+             position = position_jitter(width = 0.1, height = 0)) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               shape = 21, 
+               size = 1,
+               fill = "lightblue")
+
+print(p)
+```
+
+<img src="08-simulation2_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+
+Peeking behind the scenes 
+
+
+```r
+build = ggplot_build(p)
+
+build$data[[2]] %>% 
+  kable(digits = 2) %>% 
+  kable_styling(bootstrap_options = "striped",
+                full_width = F)
+```
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> x </th>
+   <th style="text-align:right;"> group </th>
+   <th style="text-align:right;"> y </th>
+   <th style="text-align:right;"> ymin </th>
+   <th style="text-align:right;"> ymax </th>
+   <th style="text-align:left;"> PANEL </th>
+   <th style="text-align:left;"> flipped_aes </th>
+   <th style="text-align:left;"> colour </th>
+   <th style="text-align:right;"> size </th>
+   <th style="text-align:right;"> linetype </th>
+   <th style="text-align:right;"> shape </th>
+   <th style="text-align:left;"> fill </th>
+   <th style="text-align:left;"> alpha </th>
+   <th style="text-align:right;"> stroke </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 7.13 </td>
+   <td style="text-align:right;"> 6.69 </td>
+   <td style="text-align:right;"> 7.62 </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> FALSE </td>
+   <td style="text-align:left;"> black </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:left;"> lightblue </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 7.25 </td>
+   <td style="text-align:right;"> 6.56 </td>
+   <td style="text-align:right;"> 7.82 </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> FALSE </td>
+   <td style="text-align:left;"> black </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:left;"> lightblue </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 6.87 </td>
+   <td style="text-align:right;"> 6.28 </td>
+   <td style="text-align:right;"> 7.41 </td>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:left;"> FALSE </td>
+   <td style="text-align:left;"> black </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:left;"> lightblue </td>
+   <td style="text-align:left;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+</tbody>
+</table>
+
+Let's focus on condition 1 
+
+
+```r
+set.seed(1)
+
+df.condition1 = df.data %>% 
+  filter(condition == 1)
+
+fun.sample_with_replacement = function(df){
+  df %>% 
+    slice_sample(n = nrow(df),
+                 replace = T) %>% 
+    summarize(mean = mean(rating)) %>% 
+    pull(mean)
+}
+
+bootstraps = replicate(n = 100, fun.sample_with_replacement(df.condition1))
+
+quantile(bootstraps, prob = c(0.025, 0.975))
+```
+
+```
+    2.5%    97.5% 
+6.671962 7.583905 
+```
+
+```r
+ggplot(data = as_tibble(bootstraps),
+       mapping = aes(x = value)) + 
+  geom_density(size = 1) + 
+  geom_vline(xintercept = quantile(bootstraps,
+                                   probs = c(0.025, 0.975)),
+             linetype = 2) 
+```
+
+<img src="08-simulation2_files/figure-html/unnamed-chunk-31-1.png" width="672" />
 
 ## Additional resources 
 
 ### Datacamp 
 
 - [Foundations of Inference](https://www.datacamp.com/courses/foundations-of-inference)
+
+## Session info 
+
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+
+```r
+sessionInfo()
+```
+
+```
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
+ [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     ggplot2_3.3.3   
+ [9] tidyverse_1.3.0  janitor_2.1.0    kableExtra_1.3.1 knitr_1.31      
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2          jsonlite_1.7.2      viridisLite_0.3.0  
+ [4] splines_4.0.3       modelr_0.1.8        Formula_1.2-4      
+ [7] assertthat_0.2.1    highr_0.8           latticeExtra_0.6-29
+[10] cellranger_1.1.0    yaml_2.2.1          pillar_1.4.7       
+[13] backports_1.2.1     lattice_0.20-41     glue_1.4.2         
+[16] digest_0.6.27       checkmate_2.0.0     RColorBrewer_1.1-2 
+[19] rvest_0.3.6         snakecase_0.11.0    colorspace_2.0-0   
+[22] htmltools_0.5.1.1   Matrix_1.3-2        pkgconfig_2.0.3    
+[25] broom_0.7.3         haven_2.3.1         bookdown_0.21      
+[28] scales_1.1.1        webshot_0.5.2       jpeg_0.1-8.1       
+[31] htmlTable_2.1.0     generics_0.1.0      farver_2.1.0       
+[34] ellipsis_0.3.1      withr_2.4.1         nnet_7.3-15        
+[37] cli_2.3.0           survival_3.2-7      magrittr_2.0.1     
+[40] crayon_1.4.1        readxl_1.3.1        evaluate_0.14      
+[43] ps_1.6.0            fansi_0.4.2         fs_1.5.0           
+[46] xml2_1.3.2          foreign_0.8-81      data.table_1.13.6  
+[49] tools_4.0.3         hms_1.0.0           lifecycle_1.0.0    
+[52] munsell_0.5.0       reprex_1.0.0        cluster_2.1.0      
+[55] compiler_4.0.3      rlang_0.4.10        grid_4.0.3         
+[58] rstudioapi_0.13     htmlwidgets_1.5.3   base64enc_0.1-3    
+[61] labeling_0.4.2      rmarkdown_2.6       gtable_0.3.0       
+[64] DBI_1.1.1           R6_2.5.0            gridExtra_2.3      
+[67] lubridate_1.7.9.2   utf8_1.1.4          Hmisc_4.4-2        
+[70] stringi_1.5.3       Rcpp_1.0.6          rpart_4.1-15       
+[73] vctrs_0.3.6         png_0.1-7           dbplyr_2.0.0       
+[76] tidyselect_1.1.0    xfun_0.21          
+```

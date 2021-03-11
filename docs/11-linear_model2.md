@@ -1,6 +1,16 @@
 # Linear model 2
 
+## Learning goals
 
+- Multiple regression. 
+  - Appreciate model assumptions. 
+- Several continuous predictors. 
+  - Hypothesis tests. 
+  - Interpreting parameters. 
+  - Reporting results. 
+- One categorical predictor. 
+- Both continuous and categorical predictors. 
+- Interpreting interactions. 
 
 ## Load packages and set plotting theme  
 
@@ -15,19 +25,18 @@ library("corrplot")   # for plotting correlations
 library("GGally")     # for running ggpairs() function
 library("tidyverse")  # for wrangling, plotting, etc. 
 
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
+# include references for used packages
+knitr::write_bib(.packages(), "packages.bib") 
 ```
 
 
 ```r
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+    theme(text = element_text(size = 20))) #set the default text size
+
+
+opts_chunk$set(comment = "",
+               fig.show = "hold")
 ```
 
 ## Load data sets 
@@ -102,61 +111,6 @@ df.ads = read_csv("data/advertising.csv") %>%
 </tbody>
 </table>
 
-## Things that came up in class
-
-Can the density at a given point be greater than 1? Yes, since it's the area under the curve that has to sum to 1. Here is the density plot for a uniform distribution (note that the density is 1 uniformly).
-
-
-```r
-# play around with this value to see how the density changes
-tmp.max = 5
-
-ggplot(data = tibble(x = c(0, tmp.max)),
-       mapping = aes(x = x)) + 
-  stat_function(fun = "dunif",
-                geom = "area",
-                fill = "lightblue",
-                size = 1,
-                args = list(min = 0,
-                            max = tmp.max)) +
-  stat_function(fun = "dunif",
-                size = 1,
-                args = list(min = 0,
-                            max = tmp.max)) +
-  coord_cartesian(xlim = c(0, tmp.max),
-                  ylim = c(0, 6),
-                  expand = F)
-```
-
-<img src="11-linear_model2_files/figure-html/linear-model2-06-1.png" width="672" />
-
-And here is the density plot for a beta distribution:
-
-
-```r
-# play around with these parameters
-tmp.shape1 = 1
-tmp.shape2 = 2
-
-ggplot(data = tibble(x = c(0, 1)),
-       mapping = aes(x = x)) + 
-  stat_function(fun = "dbeta",
-                args = list(shape1 = tmp.shape1,
-                            shape2 = tmp.shape2),
-                geom = "area",
-                fill = "lightblue",
-                size = 1) +
-  stat_function(fun = "dbeta",
-                args = list(shape1 = tmp.shape1,
-                            shape2 = tmp.shape2),
-                size = 1) +
-  coord_cartesian(xlim = c(0, 1),
-                  ylim = c(0, 3),
-                  expand = F)
-```
-
-<img src="11-linear_model2_files/figure-html/linear-model2-07-1.png" width="672" />
-
 ## Multiple continuous variables 
 
 Let's take a look at a case where we have multiple continuous predictor variables. In this case, we want to make sure that our predictors are not too highly correlated with each other (as this makes the interpration of how much each variable explains the outcome difficult). So we first need to explore the pairwise correlations between variables. 
@@ -176,14 +130,14 @@ Here is an example that illustrates some of the key functions in the `corrr` pac
 
 ```r
 df.ads %>% 
-  select_if(is.numeric) %>% 
+  select(where(is.numeric)) %>% 
   correlate(quiet = T) %>% 
   shave() %>%
   fashion()
 ```
 
 ```
-    rowname index   tv radio newspaper sales
+       term index   tv radio newspaper sales
 1     index                                 
 2        tv   .02                           
 3     radio  -.11  .05                      
@@ -198,12 +152,12 @@ df.ads %>%
 
 ```r
 df.credit %>% 
-  select_if(is.numeric) %>%
+  select(where(is.numeric)) %>%
   correlate(quiet = T) %>%
-  select(rowname, income) %>% 
-  mutate(rowname = reorder(rowname, income)) %>%
+  select(term, income) %>% 
+  mutate(term = reorder(term, income)) %>%
   drop_na() %>% 
-  ggplot(aes(x = rowname, 
+  ggplot(aes(x = term, 
              y = income,
              fill = income)) +
   geom_hline(yintercept = 0) +
@@ -218,8 +172,8 @@ df.credit %>%
 ```
 
 <div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-10-1.png" alt="Bar plot illustrating how strongly different variables correlate with income." width="672" />
-<p class="caption">(\#fig:linear-model2-10)Bar plot illustrating how strongly different variables correlate with income.</p>
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-7-1.png" alt="Bar plot illustrating how strongly different variables correlate with income." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-7)Bar plot illustrating how strongly different variables correlate with income.</p>
 </div>
 
 ##### All pairwise correlations
@@ -227,16 +181,16 @@ df.credit %>%
 
 ```r
 tmp = df.credit %>%
-  select_if(is.numeric) %>%
+  select(where(is.numeric), -index) %>%
   correlate(diagonal = 0,
             quiet = T) %>%
   rearrange() %>%
-  column_to_rownames() %>%
+  select(-term) %>% 
   as.matrix() %>%
   corrplot()
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-11-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 
 ```r
@@ -246,8 +200,8 @@ df.ads %>%
 ```
 
 <div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-12-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal." width="672" />
-<p class="caption">(\#fig:linear-model2-12)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal.</p>
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-9-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-9)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal.</p>
 </div>
 
 With some customization: 
@@ -263,8 +217,8 @@ df.ads %>%
 ```
 
 <div class="figure">
-<img src="11-linear_model2_files/figure-html/linear-model2-13-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized)." width="672" />
-<p class="caption">(\#fig:linear-model2-13)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized).</p>
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-10-1.png" alt="Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized)." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10)Pairwise correlations with scatter plots, correlation values, and densities on the diagonal (customized).</p>
 </div>
 
 ### Multipe regression
@@ -303,7 +257,11 @@ ggplot(df.ads,
   theme(text = element_text(size = 30))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-14-1.png" width="672" />
+```
+`geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 TV ads and radio ads aren't correlated. Yay! 
 
@@ -363,7 +321,7 @@ ggplot(df.plot,
   geom_qq_line() 
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-16-1.png" width="672" /><img src="11-linear_model2_files/figure-html/linear-model2-16-2.png" width="672" /><img src="11-linear_model2_files/figure-html/linear-model2-16-3.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="11-linear_model2_files/figure-html/unnamed-chunk-13-2.png" width="672" /><img src="11-linear_model2_files/figure-html/unnamed-chunk-13-3.png" width="672" />
 
 There is a slight non-linear trend in the residuals. We can also see that the residuals aren't perfectly normally distributed. We'll see later what we can do about this ... 
 
@@ -392,6 +350,7 @@ fit_a %>%
    <th style="text-align:right;"> BIC </th>
    <th style="text-align:right;"> deviance </th>
    <th style="text-align:right;"> df.residual </th>
+   <th style="text-align:right;"> nobs </th>
   </tr>
  </thead>
 <tbody>
@@ -401,12 +360,13 @@ fit_a %>%
    <td style="text-align:right;"> 1.681 </td>
    <td style="text-align:right;"> 859.618 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2 </td>
    <td style="text-align:right;"> -386.197 </td>
    <td style="text-align:right;"> 780.394 </td>
    <td style="text-align:right;"> 793.587 </td>
    <td style="text-align:right;"> 556.914 </td>
    <td style="text-align:right;"> 197 </td>
+   <td style="text-align:right;"> 200 </td>
   </tr>
 </tbody>
 </table>
@@ -432,7 +392,7 @@ ggplot(df.plot, aes(x = radio, y = sales, color = tv)) +
   theme(legend.position = c(0.1, 0.8))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-18-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 We used color here to encode TV ads (and the x-axis for the radio ads). 
 
@@ -459,7 +419,7 @@ ggplot(df.plot, aes(x = radio, y = sales, color = tv)) +
   theme(legend.position = c(0.1, 0.8))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-19-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 #### Interpreting the model fits
 
@@ -525,22 +485,10 @@ One thing we can do to make different predictors more comparable is to standardi
 
 ```r
 df.ads = df.ads %>% 
-  mutate_at(vars(tv, radio), funs(scaled = scale(.)[,]))
-```
-
-```
-Warning: funs() is soft deprecated as of dplyr 0.8.0
-please use list() instead
-
-# Before:
-funs(name = f(.)
-
-# After: 
-list(name = ~f(.))
-This warning is displayed once per session.
-```
-
-```r
+  mutate(across(.cols = c(tv, radio),
+                .fns = ~ scale(.),
+                .names = "{.col}_scaled"))
+  
 df.ads %>% 
   select(-newspaper) %>%
   head(10) %>% 
@@ -566,80 +514,80 @@ df.ads %>%
    <td style="text-align:right;"> 230.1 </td>
    <td style="text-align:right;"> 37.8 </td>
    <td style="text-align:right;"> 22.1 </td>
-   <td style="text-align:right;"> 0.97 </td>
-   <td style="text-align:right;"> 0.98 </td>
+   <td style="text-align:right;"> 0.96742460 </td>
+   <td style="text-align:right;"> 0.9790656 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 2 </td>
    <td style="text-align:right;"> 44.5 </td>
    <td style="text-align:right;"> 39.3 </td>
    <td style="text-align:right;"> 10.4 </td>
-   <td style="text-align:right;"> -1.19 </td>
-   <td style="text-align:right;"> 1.08 </td>
+   <td style="text-align:right;"> -1.19437904 </td>
+   <td style="text-align:right;"> 1.0800974 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 3 </td>
    <td style="text-align:right;"> 17.2 </td>
    <td style="text-align:right;"> 45.9 </td>
    <td style="text-align:right;"> 9.3 </td>
-   <td style="text-align:right;"> -1.51 </td>
-   <td style="text-align:right;"> 1.52 </td>
+   <td style="text-align:right;"> -1.51235985 </td>
+   <td style="text-align:right;"> 1.5246374 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 4 </td>
    <td style="text-align:right;"> 151.5 </td>
    <td style="text-align:right;"> 41.3 </td>
    <td style="text-align:right;"> 18.5 </td>
-   <td style="text-align:right;"> 0.05 </td>
-   <td style="text-align:right;"> 1.21 </td>
+   <td style="text-align:right;"> 0.05191939 </td>
+   <td style="text-align:right;"> 1.2148065 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 5 </td>
    <td style="text-align:right;"> 180.8 </td>
    <td style="text-align:right;"> 10.8 </td>
    <td style="text-align:right;"> 12.9 </td>
-   <td style="text-align:right;"> 0.39 </td>
-   <td style="text-align:right;"> -0.84 </td>
+   <td style="text-align:right;"> 0.39319551 </td>
+   <td style="text-align:right;"> -0.8395070 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 6 </td>
    <td style="text-align:right;"> 8.7 </td>
    <td style="text-align:right;"> 48.9 </td>
    <td style="text-align:right;"> 7.2 </td>
-   <td style="text-align:right;"> -1.61 </td>
-   <td style="text-align:right;"> 1.73 </td>
+   <td style="text-align:right;"> -1.61136487 </td>
+   <td style="text-align:right;"> 1.7267010 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 7 </td>
    <td style="text-align:right;"> 57.5 </td>
    <td style="text-align:right;"> 32.8 </td>
    <td style="text-align:right;"> 11.8 </td>
-   <td style="text-align:right;"> -1.04 </td>
-   <td style="text-align:right;"> 0.64 </td>
+   <td style="text-align:right;"> -1.04295960 </td>
+   <td style="text-align:right;"> 0.6422929 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 8 </td>
    <td style="text-align:right;"> 120.2 </td>
    <td style="text-align:right;"> 19.6 </td>
    <td style="text-align:right;"> 13.2 </td>
-   <td style="text-align:right;"> -0.31 </td>
-   <td style="text-align:right;"> -0.25 </td>
+   <td style="text-align:right;"> -0.31265202 </td>
+   <td style="text-align:right;"> -0.2467870 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 9 </td>
    <td style="text-align:right;"> 8.6 </td>
    <td style="text-align:right;"> 2.1 </td>
    <td style="text-align:right;"> 4.8 </td>
-   <td style="text-align:right;"> -1.61 </td>
-   <td style="text-align:right;"> -1.43 </td>
+   <td style="text-align:right;"> -1.61252963 </td>
+   <td style="text-align:right;"> -1.4254915 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 10 </td>
    <td style="text-align:right;"> 199.8 </td>
    <td style="text-align:right;"> 2.6 </td>
    <td style="text-align:right;"> 10.6 </td>
-   <td style="text-align:right;"> 0.61 </td>
-   <td style="text-align:right;"> -1.39 </td>
+   <td style="text-align:right;"> 0.61450084 </td>
+   <td style="text-align:right;"> -1.3918142 </td>
   </tr>
 </tbody>
 </table>
@@ -652,7 +600,7 @@ We can standardize (z-score) variables using the `scale()` function.
 tmp.variable = "tv_scaled" 
 
 ggplot(df.ads,
-       aes_string(x = tmp.variable)) +
+       aes(x = .data[[tmp.variable]])) +
   stat_density(geom = "line",
                size = 1) + 
   annotate(geom = "text", 
@@ -661,19 +609,17 @@ ggplot(df.ads,
            label = str_c("sd = ", sd(df.ads[[tmp.variable]]) %>% round(2)),
            size = 10,
            vjust = -1,
-           hjust = 0.5
-           ) + 
-annotate(geom = "text", 
+           hjust = 0.5) + 
+  annotate(geom = "text", 
            x = median(df.ads[[tmp.variable]]),
            y = -Inf,
            label = str_c("mean = ", mean(df.ads[[tmp.variable]]) %>% round(2)),
            size = 10,
            vjust = -3,
-         hjust = 0.5
-           )
+           hjust = 0.5)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-22-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 Scaling a variable leaves the distribution intact, but changes the mean to 0 and the SD to 1. 
 
@@ -689,9 +635,6 @@ fit_a = lm(balance ~ 1 + student, data = df.credit)
 
 # run the F test 
 anova(fit_c, fit_a)
-
-fit_a %>% 
-  summary()
 ```
 
 ```
@@ -704,6 +647,14 @@ Model 2: balance ~ 1 + student
 2    398 78681540  1   5658372 28.622 1.488e-07 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+```r
+fit_a %>% 
+  summary()
+```
+
+```
 
 Call:
 lm(formula = balance ~ 1 + student, data = df.credit)
@@ -743,7 +694,7 @@ ggplot(df.credit,
   geom_point(alpha = 0.5) 
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-24-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 It just predicts the mean (the horizontal black line). The vertical lines from each data point to the mean illustrate the residuals. 
 
@@ -782,7 +733,7 @@ ggplot(df.credit,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-25-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 Note that this model predicts two horizontal lines. One for students, and one for non-students. 
 
@@ -792,7 +743,7 @@ Let's make simple plot that shows the means of both groups with bootstrapped con
 ```r
 ggplot(data = df.credit,
        mapping = aes(x = student, y = balance, fill = student)) + 
-  stat_summary(fun.y = "mean",
+  stat_summary(fun = "mean",
                geom = "bar",
                color = "black",
                show.legend = F) +
@@ -802,7 +753,7 @@ ggplot(data = df.credit,
   scale_fill_brewer(palette = "Set1")
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-26-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 And let's double check that we also get a signifcant result when we run a t-test instead of our model comparison procedure: 
 
@@ -917,14 +868,10 @@ ggplot(df.plot,
   geom_point(alpha = 0.1,
              position = position_jitter(height = 0, width = 0.1)) +
   stat_summary(fun.data = "mean_cl_boot",
-               geom = "linerange",
-               size = 1) +
-  stat_summary(fun.y = "mean",
-               geom = "point",
-               size = 4)
+               size = 1)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-29-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-26-1.png" width="672" />
 
 And then report the means and standard deviations together with the result of our signifance test: 
 
@@ -934,13 +881,13 @@ df.credit %>%
   group_by(student) %>% 
   summarize(mean = mean(balance),
             sd = sd(balance)) %>% 
-  mutate_if(is.numeric, funs(round(., 2)))
+  mutate(across(where(is.numeric), ~ round(., 2)))
 ```
 
 ```
 # A tibble: 2 x 3
   student  mean    sd
-  <chr>   <dbl> <dbl>
+* <chr>   <dbl> <dbl>
 1 No       480.  439.
 2 Yes      877.  490 
 ```
@@ -993,7 +940,11 @@ ggplot(df.augment,
   geom_point(alpha = 0.3)
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-32-1.png" width="672" />
+```
+`geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 This time, the compact model still predicts just one line (like above) but note that this line is not horizontal anymore. 
 
@@ -1038,7 +989,7 @@ ggplot(df.augment,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-33-1.png" width="672" />
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-30-1.png" width="672" />
 
 The augmented model predicts two lines again, each with the same slope (but the intercept differs).
 
@@ -1064,7 +1015,11 @@ ggplot(data = df.credit,
   guides(color = guide_legend(reverse = T))
 ```
 
-<img src="11-linear_model2_files/figure-html/linear-model2-34-1.png" width="672" />
+```
+`geom_smooth()` using formula 'y ~ x'
+```
+
+<img src="11-linear_model2_files/figure-html/unnamed-chunk-31-1.png" width="672" />
 
 Note that we just specified here that we want to have a linear model (via `geom_smooth(method = "lm")`). By default, `ggplot2` assumes that we want a model that includes interactions. We can see this by the fact that two fitted lines are not parallel. 
 
@@ -1107,3 +1062,67 @@ Nope, not worth it! The F-test comes out non-significant.
 ### Misc 
 
 - [Nice review of multiple regression in R](https://bookdown.org/roback/bookdown-bysh/ch-MLRreview.html)
+
+## Session info 
+
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+
+```r
+sessionInfo()
+```
+
+```
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
+ [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     tidyverse_1.3.0 
+ [9] GGally_2.1.0     ggplot2_3.3.3    corrplot_0.84    corrr_0.4.3     
+[13] broom_0.7.3      janitor_2.1.0    kableExtra_1.3.1 knitr_1.31      
+
+loaded via a namespace (and not attached):
+ [1] nlme_3.1-151        fs_1.5.0            lubridate_1.7.9.2  
+ [4] webshot_0.5.2       RColorBrewer_1.1-2  httr_1.4.2         
+ [7] tools_4.0.3         backports_1.2.1     utf8_1.1.4         
+[10] R6_2.5.0            rpart_4.1-15        Hmisc_4.4-2        
+[13] DBI_1.1.1           mgcv_1.8-33         colorspace_2.0-0   
+[16] nnet_7.3-15         withr_2.4.1         gridExtra_2.3      
+[19] tidyselect_1.1.0    compiler_4.0.3      cli_2.3.0          
+[22] rvest_0.3.6         htmlTable_2.1.0     TSP_1.1-10         
+[25] xml2_1.3.2          labeling_0.4.2      bookdown_0.21      
+[28] checkmate_2.0.0     scales_1.1.1        digest_0.6.27      
+[31] foreign_0.8-81      rmarkdown_2.6       base64enc_0.1-3    
+[34] jpeg_0.1-8.1        pkgconfig_2.0.3     htmltools_0.5.1.1  
+[37] dbplyr_2.0.0        highr_0.8           htmlwidgets_1.5.3  
+[40] rlang_0.4.10        readxl_1.3.1        rstudioapi_0.13    
+[43] farver_2.1.0        generics_0.1.0      jsonlite_1.7.2     
+[46] magrittr_2.0.1      Formula_1.2-4       Matrix_1.3-2       
+[49] fansi_0.4.2         Rcpp_1.0.6          munsell_0.5.0      
+[52] lifecycle_1.0.0     stringi_1.5.3       yaml_2.2.1         
+[55] snakecase_0.11.0    plyr_1.8.6          grid_4.0.3         
+[58] crayon_1.4.1        lattice_0.20-41     haven_2.3.1        
+[61] splines_4.0.3       hms_1.0.0           ps_1.6.0           
+[64] pillar_1.4.7        codetools_0.2-18    reprex_1.0.0       
+[67] glue_1.4.2          evaluate_0.14       latticeExtra_0.6-29
+[70] data.table_1.13.6   modelr_0.1.8        vctrs_0.3.6        
+[73] png_0.1-7           foreach_1.5.1       cellranger_1.1.0   
+[76] gtable_0.3.0        reshape_0.8.8       assertthat_0.2.1   
+[79] xfun_0.21           survival_3.2-7      viridisLite_0.3.0  
+[82] seriation_1.2-9     iterators_1.0.13    registry_0.5-1     
+[85] cluster_2.1.0       ellipsis_0.3.1     
+```
+
+## References

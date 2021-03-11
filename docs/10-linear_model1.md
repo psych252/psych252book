@@ -9,254 +9,18 @@ library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
 library("broom")      # for tidying up linear models 
 library("tidyverse")  # for wrangling, plotting, etc. 
-
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
 ```
 
 
 ```r
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+            theme(text = element_text(size = 20))) #set the default text size
+
+opts_chunk$set(comment = "",
+               fig.show = "hold")            
 ```
 
-## Things that came up in class 
-
-### Building a sampling distribution of PRE 
-
-Here is the general procedure for building a sampling distribution of the proportinal reduction of error (PRE). In this instance, I compare the following two models 
-
-- Model C (compact): $Y_i = 75 + \epsilon_i$
-- Model A (augmented): $Y_i = \overline Y + \epsilon_i$
-
-whereby I assume that $\epsilon_i \sim \mathcal{N}(0, \sigma)$.
-
-For this example, I assume that I know the population distribution. I first draw a sample from that distribution, and then calculate PRE. 
-
-
-```r
-# make example reproducible
-set.seed(1)
-
-# set the sample size 
-sample_size = 50 
-
-# draw sample from the population distribution (I've fixed sigma -- the standard deviation
-# of the population distribution to be 5)
-df.sample = tibble(
-  observation = 1:sample_size,
-  value = 75 + rnorm(sample_size, mean = 0, sd = 5)
-)
-
-# calculate SSE for each model, and then PRE based on that 
-df.summary = df.sample %>% 
-  mutate(compact = 75,
-         augmented = mean(value)) %>% 
-  summarize(sse_compact = sum((value - compact)^2),
-            sse_augmented = sum((value - augmented)^2),
-            pre = 1 - (sse_augmented/sse_compact))
-```
-
-To generate the sampling distribution, I assume that the null hypothesis is true, and then take a look at what values for PRE we could expect by chance for our given sample size. 
-
-
-```r
-# simulation parameters
-n_samples = 1000
-sample_size = 50 
-mu = 75 # true mean of the distribution 
-sigma = 5 # true standard deviation of the errors 
-
-# function to draw samples from the population distribution 
-fun.draw_sample = function(sample_size, sigma){
-  sample = mu + rnorm(sample_size, mean = 0, sd = sigma)
-  return(sample)
-}
-
-# draw samples
-samples = n_samples %>% 
-  replicate(fun.draw_sample(sample_size, sigma)) %>% 
-  t() # transpose the resulting matrix (i.e. flip rows and columns)
-
-# put samples in data frame and compute PRE 
-df.samples = samples %>% 
-  as_tibble(.name_repair = "unique") %>% 
-  mutate(sample = 1:n()) %>% 
-  gather("index", "value", -sample) %>% 
-  mutate(compact = mu) %>% 
-  group_by(sample) %>% 
-  mutate(augmented = mean(value)) %>% 
-  summarize(sse_compact = sum((value - compact)^2),
-            sse_augmented = sum((value - augmented)^2),
-            pre = 1 - sse_augmented/sse_compact)
-            
-
-# plot the sampling distribution for PRE 
-ggplot(data = df.samples,
-       mapping = aes(x = pre)) +
-  stat_density(geom = "line")
-
-# calculate the p-value for our sample 
-df.samples %>% 
-  summarize(p_value = sum(pre >= df.summary$pre)/n())
-```
-
-```
-# A tibble: 1 x 1
-  p_value
-    <dbl>
-1   0.394
-```
-
-<img src="10-linear_model1_files/figure-html/linear-model1-04-1.png" width="672" />
-
-Some code I wrote to show a subset of the samples. 
-
-
-```r
-samples %>% 
-  as_tibble(.name_repair = "unique") %>% 
-  mutate(sample = 1:n()) %>% 
-  gather("index", "value", -sample) %>% 
-  mutate(compact = mu) %>% 
-  group_by(sample) %>% 
-  mutate(augmented = mean(value)) %>% 
-  ungroup() %>% 
-  mutate(index = str_extract(index, pattern = "\\-*\\d+\\.*\\d*"),
-         index = as.numeric(index)) %>% 
-  filter(index < 6) %>% 
-  arrange(sample, index) %>% 
-    head(15) %>% 
-    kable(digits = 2) %>% 
-    kable_styling(bootstrap_options = "striped",
-                full_width = F)
-```
-
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> sample </th>
-   <th style="text-align:right;"> index </th>
-   <th style="text-align:right;"> value </th>
-   <th style="text-align:right;"> compact </th>
-   <th style="text-align:right;"> augmented </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 76.99 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 71.94 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 76.71 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 69.35 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 82.17 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 71.90 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 75.21 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 70.45 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 75.79 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 71.73 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 74.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 77.25 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 74.91 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 73.41 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 70.35 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 67.56 </td>
-   <td style="text-align:right;"> 75 </td>
-   <td style="text-align:right;"> 75.38 </td>
-  </tr>
-</tbody>
-</table>
-
-### Correlation 
+## Correlation 
 
 
 ```r
@@ -266,10 +30,8 @@ set.seed(1)
 n_samples = 20
 
 # create correlated data
-df.correlation = tibble(
-  x = runif(n_samples, min = 0, max = 100),
-  y = x + rnorm(n_samples, sd = 15)
-)
+df.correlation = tibble(x = runif(n_samples, min = 0, max = 100),
+                        y = x + rnorm(n_samples, sd = 15))
 
 # plot the data
 ggplot(data = df.correlation,
@@ -280,7 +42,7 @@ ggplot(data = df.correlation,
        y = "happiness")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-06-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
 #### Variance 
 
@@ -294,10 +56,8 @@ Variance is the average squared difference between each data point and the mean:
 set.seed(1)
 
 # generate random data
-df.variance = tibble(
-  x = 1:10,
-  y = runif(10, min = 0, max = 1)
-)
+df.variance = tibble(x = 1:10,
+                     y = runif(10, min = 0, max = 1))
 
 # plot the data
 ggplot(data = df.variance,
@@ -312,11 +72,14 @@ ggplot(data = df.variance,
              color = "blue") +
   theme(axis.text.x = element_blank(),
         axis.title.x = element_blank(),
-        axis.ticks.x = element_blank()
-        )
+        axis.ticks.x = element_blank())
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-07-1.png" width="672" />
+```
+Warning: Use of `df.variance$y` is discouraged. Use `y` instead.
+```
+
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 #### Covariance 
 
@@ -330,10 +93,8 @@ Covariance is defined in the following way:
 set.seed(1)
 
 # generate random data
-df.covariance = tibble(
-  x = runif(20, min = 0, max = 1),
-  y = x + rnorm(x, mean = 0.5, sd = 0.25)
-)
+df.covariance = tibble(x = runif(20, min = 0, max = 1),
+                       y = x + rnorm(x, mean = 0.5, sd = 0.25))
 
 # plot the data
 ggplot(df.covariance,
@@ -344,7 +105,7 @@ ggplot(df.covariance,
         axis.ticks = element_blank())
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-08-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 Add lines for $\overline X$ and $\overline Y$ to the data:
 
@@ -364,7 +125,7 @@ ggplot(df.covariance,
         axis.ticks = element_blank())
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-09-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 Illustrate how covariance is computed by drawing the distance to $\overline X$ and $\overline Y$ for three data points:
 
@@ -438,7 +199,7 @@ ggplot(df.plot,
         legend.position = "none")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-10-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 #### Spearman's rank order correlation
 
@@ -447,14 +208,12 @@ Spearman's $\rho$ captures the extent to which the relationship between two vari
 
 ```r
 # create data frame with data points and ranks 
-df.ranking = tibble(
-  x = c(1.2, 2.5, 4.5),
-  y = c(2.2, 1, 3.3),
-  label = str_c("(", x, ", ", y, ")"),
-  x_rank = dense_rank(x),
-  y_rank = dense_rank(y),
-  label_rank = str_c("(", x_rank, ", ", y_rank, ")")
-)
+df.ranking = tibble(x = c(1.2, 2.5, 4.5),
+                    y = c(2.2, 1, 3.3),
+                    label = str_c("(", x, ", ", y, ")"),
+                    x_rank = dense_rank(x),
+                    y_rank = dense_rank(y),
+                    label_rank = str_c("(", x_rank, ", ", y_rank, ")"))
 
 # plot the data (and show their ranks)
 ggplot(df.ranking,
@@ -473,7 +232,7 @@ ggplot(df.ranking,
                   ylim = c(0, 4))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-11-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 Show that Spearman's $\rho$ is equivalent to Pearson's $r$ applied to ranked data.
 
@@ -489,7 +248,16 @@ df.spearman %>%
   summarize(r = cor(x, y, method = "pearson"),
             spearman = cor(x, y, method = "spearman"),
             r_ranks = cor(x_rank, y_rank))
+```
 
+```
+# A tibble: 1 x 3
+      r spearman r_ranks
+  <dbl>    <dbl>   <dbl>
+1 0.851    0.836   0.836
+```
+
+```r
 # plot
 ggplot(df.spearman,
        aes(x = x_rank, y = y_rank)) +
@@ -504,13 +272,6 @@ df.spearman %>%
   kable(digits = 2) %>% 
   kable_styling(bootstrap_options = "striped",
               full_width = F)
-```
-
-```
-# A tibble: 1 x 3
-      r spearman r_ranks
-  <dbl>    <dbl>   <dbl>
-1 0.851    0.836   0.836
 ```
 
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -586,17 +347,15 @@ df.spearman %>%
 </tbody>
 </table>
 
-<img src="10-linear_model1_files/figure-html/linear-model1-12-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 Comparison between $r$ and $\rho$ for a given data set: 
 
 
 ```r
 # data set
-df.example = tibble(
-  x = 1:10,
-  y = c(-10, 2:9, 20)
-) %>% 
+df.example = tibble(x = 1:10,
+                    y = c(-10, 2:9, 20)) %>% 
   mutate(x_rank = dense_rank(x),
          y_rank = dense_rank(y))
 
@@ -605,7 +364,16 @@ df.example %>%
   summarize(r = cor(x, y, method = "pearson"),
             spearman = cor(x, y, method = "spearman"),
             r_ranks = cor(x_rank, y_rank))
+```
 
+```
+# A tibble: 1 x 3
+      r spearman r_ranks
+  <dbl>    <dbl>   <dbl>
+1 0.878     1.00    1.00
+```
+
+```r
 # plot
 ggplot(df.example,
        # aes(x = x_rank, y = y_rank)) + # see the ranked data 
@@ -614,14 +382,7 @@ ggplot(df.example,
   theme(axis.text = element_text(size = 10))
 ```
 
-```
-# A tibble: 1 x 3
-      r spearman r_ranks
-  <dbl>    <dbl>   <dbl>
-1 0.878    1.000   1.000
-```
-
-<img src="10-linear_model1_files/figure-html/linear-model1-13-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 Another example
 
@@ -631,10 +392,8 @@ Another example
 set.seed(1)
 
 # data set
-df.example2 = tibble(
-  x = c(1, rnorm(8, mean = 5, sd = 1),  10),
-  y = c(-10, rnorm(8, sd = 1), 20)
-) %>% 
+df.example2 = tibble(x = c(1, rnorm(8, mean = 5, sd = 1),  10),
+                     y = c(-10, rnorm(8, sd = 1), 20)) %>% 
   mutate(x_rank = dense_rank(x),
          y_rank = dense_rank(y))
 
@@ -643,13 +402,6 @@ df.example2 %>%
   summarize(r = cor(x, y, method = "pearson"),
             spearman = cor(x, y, method = "spearman"),
             r_ranks = cor(x_rank, y_rank))
-
-# plot
-ggplot(df.example2,
-       # aes(x = x_rank, y = y_rank)) + # see the ranked data 
-       aes(x = x, y = y)) + # see the original data
-  geom_point(size = 3) +
-  theme(axis.text = element_text(size = 10))
 ```
 
 ```
@@ -659,7 +411,16 @@ ggplot(df.example2,
 1 0.919    0.467   0.467
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-14-1.png" width="672" />
+```r
+# plot
+ggplot(df.example2,
+       # aes(x = x_rank, y = y_rank)) + # see the ranked data 
+       aes(x = x, y = y)) + # see the original data
+  geom_point(size = 3) +
+  theme(axis.text = element_text(size = 10))
+```
+
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 ## Regression 
 
@@ -672,10 +433,8 @@ set.seed(1)
 n_samples = 10
 
 # generate correlated data
-df.regression = tibble(
-  chocolate = runif(n_samples, min = 0, max = 100),
-  happiness = chocolate * 0.5 + rnorm(n_samples, sd = 15)
-)
+df.regression = tibble(chocolate = runif(n_samples, min = 0, max = 100),
+                       happiness = chocolate * 0.5 + rnorm(n_samples, sd = 15))
 
 # plot the data 
 ggplot(data = df.regression,
@@ -684,7 +443,7 @@ ggplot(data = df.regression,
   geom_point(size = 3)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-15-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 ### Define and fit the models
 
@@ -708,7 +467,7 @@ ggplot(data = df.regression,
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-16-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 Define and fit the augmented model (Model A): $Y_i = \beta_0 + \beta_1 X_{1i} + \epsilon_i$
 
@@ -726,12 +485,12 @@ ggplot(data = df.regression,
            y = happiness)) +
   geom_abline(intercept = df.augmented$estimate[1],
               slope = df.augmented$estimate[2],
-             color = "red",
+              color = "red",
               size = 1) +
   geom_point(size = 3) 
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-17-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 ### Calculate the sum of squared errors of each model
 
@@ -748,14 +507,8 @@ df.compact_summary = tidy(lm.compact)
 # create a data frame that contains the residuals 
 df.compact_model = augment(lm.compact) %>% 
   clean_names() %>% 
-  left_join(df.regression)
-```
+  left_join(df.regression, by = "happiness")
 
-```
-Joining, by = "happiness"
-```
-
-```r
 # plot model prediction with residuals
 ggplot(data = df.compact_model,
        aes(x = chocolate,
@@ -780,7 +533,7 @@ df.compact_model %>%
 1 5215.
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-18-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 Illustration of the residuals for the augmented model:  
 
@@ -795,14 +548,8 @@ df.augmented_summary = tidy(lm.augmented)
 # create a data frame that contains the residuals 
 df.augmented_model = augment(lm.augmented) %>% 
   clean_names() %>% 
-  left_join(df.regression)
-```
+  left_join(df.regression, by = c("happiness", "chocolate"))
 
-```
-Joining, by = c("happiness", "chocolate")
-```
-
-```r
 # plot model prediction with residuals
 ggplot(data = df.augmented_model,
        aes(x = chocolate,
@@ -828,7 +575,7 @@ df.augmented_model %>%
 1 2397.
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-19-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 Calculate the F-test to determine whether PRE is significant. 
 
@@ -877,7 +624,7 @@ ggplot(data = tibble(x = c(0, 10)),
              size = 1)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-21-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 The short version of doing what we did above :) 
 
@@ -907,28 +654,6 @@ Let's load the credit card data:
 df.credit = read_csv("data/credit.csv") %>% 
   rename(index = X1) %>% 
   clean_names()
-```
-
-```
-Warning: Missing column names filled in: 'X1' [1]
-```
-
-```
-Parsed with column specification:
-cols(
-  X1 = col_double(),
-  Income = col_double(),
-  Limit = col_double(),
-  Rating = col_double(),
-  Cards = col_double(),
-  Age = col_double(),
-  Education = col_double(),
-  Gender = col_character(),
-  Student = col_character(),
-  Married = col_character(),
-  Ethnicity = col_character(),
-  Balance = col_double()
-)
 ```
 
 Here is a short description of the variables:
@@ -999,7 +724,7 @@ ggplot(data = df.credit,
   coord_cartesian(xlim = c(0, max(df.credit$income)))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-25-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 To make the model intercept interpretable, we can center the predictor variable by subtracting the mean from each value.
 
@@ -1022,10 +747,17 @@ ggplot(data = df.plot,
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm", se = F) +
   scale_color_manual(values = c("black", "red"))
+```
+
+```
+`geom_smooth()` using formula 'y ~ x'
+```
+
+```r
   # coord_cartesian(xlim = c(0, max(df.plot$income_centered)))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-26-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 Let's fit the model and take a look at the model summary: 
 
@@ -1058,7 +790,6 @@ Multiple R-squared:  0.215,	Adjusted R-squared:  0.213
 F-statistic:   109 on 1 and 398 DF,  p-value: < 2.2e-16
 ```
 
-
 Here, I double check that I understand how the statistics about the residuals are calculated that the model summary gives me.  
 
 
@@ -1066,14 +797,12 @@ Here, I double check that I understand how the statistics about the residuals ar
 fit %>% 
   augment() %>% 
   clean_names() %>% 
-  summarize(
-    min = min(resid),
-    first_quantile = quantile(resid, 0.25),
-    median = median(resid),
-    third_quantile = quantile(resid, 0.75),
-    max = max(resid),
-    rmse = sqrt(mean(resid^2))
-  )
+  summarize(min = min(resid),
+            first_quantile = quantile(resid, 0.25),
+            median = median(resid),
+            third_quantile = quantile(resid, 0.75),
+            max = max(resid),
+            rmse = sqrt(mean(resid^2)))
 ```
 
 ```
@@ -1097,7 +826,7 @@ fit %>%
   geom_point(alpha = 0.3)
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-29-1.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-26-1.png" width="672" />
 
 We can use the `glance()` function from the `broom` package to print out model statistics. 
 
@@ -1105,8 +834,8 @@ We can use the `glance()` function from the `broom` package to print out model s
 ```r
 fit %>% 
   glance() %>% 
-    kable(digits = 2) %>% 
-    kable_styling(bootstrap_options = "striped",
+  kable(digits = 2) %>% 
+  kable_styling(bootstrap_options = "striped",
                 full_width = F)
 ```
 
@@ -1124,6 +853,7 @@ fit %>%
    <th style="text-align:right;"> BIC </th>
    <th style="text-align:right;"> deviance </th>
    <th style="text-align:right;"> df.residual </th>
+   <th style="text-align:right;"> nobs </th>
   </tr>
  </thead>
 <tbody>
@@ -1133,12 +863,13 @@ fit %>%
    <td style="text-align:right;"> 407.86 </td>
    <td style="text-align:right;"> 108.99 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> -2970.95 </td>
    <td style="text-align:right;"> 5947.89 </td>
    <td style="text-align:right;"> 5959.87 </td>
    <td style="text-align:right;"> 66208745 </td>
    <td style="text-align:right;"> 398 </td>
+   <td style="text-align:right;"> 400 </td>
   </tr>
 </tbody>
 </table>
@@ -1171,14 +902,14 @@ Model 2: balance ~ 1 + income
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-Let's print out the paramters of the augmented model with confidence intervals: 
+Let's print out the parameters of the augmented model with confidence intervals: 
 
 
 ```r
 fit_a %>% 
   tidy(conf.int = T) %>% 
-    kable(digits = 2) %>% 
-    kable_styling(bootstrap_options = "striped",
+  kable(digits = 2) %>% 
+  kable_styling(bootstrap_options = "striped",
                 full_width = F)
 ```
 
@@ -1220,14 +951,15 @@ We can use `augment()` with the `newdata = ` argument to get predictions about n
 
 
 ```r
-augment(fit, newdata = tibble(income = 130))
+fit %>% 
+  augment(newdata = tibble(income = 130))
 ```
 
 ```
-# A tibble: 1 x 3
-  income .fitted .se.fit
-   <dbl>   <dbl>   <dbl>
-1    130   1033.    53.2
+# A tibble: 1 x 2
+  income .fitted
+   <dbl>   <dbl>
+1    130   1033.
 ```
 
 Here is a plot of the model with confidence interval (that captures our uncertainty in the intercept and slope of the model) and the predicted `balance` value for an `income` of 130:
@@ -1247,8 +979,11 @@ ggplot(data = df.credit,
   coord_cartesian(xlim = c(0, max(df.credit$income)))
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-34-1.png" width="672" />
+```
+`geom_smooth()` using formula 'y ~ x'
+```
 
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-31-1.png" width="672" />
 
 Finally, let's take a look at how the residuals are distributed. 
 
@@ -1259,19 +994,30 @@ df.plot = fit_a %>%
   augment() %>% 
   clean_names()
 
-# plot a quantile-quantile plot 
-ggplot(df.plot, aes(sample = resid)) +
-  geom_qq_line() +
-  geom_qq()
-
 # and a density of the residuals
 ggplot(df.plot, aes(x = resid)) +
   stat_density(geom = "line")
 ```
 
-<img src="10-linear_model1_files/figure-html/linear-model1-35-1.png" width="672" /><img src="10-linear_model1_files/figure-html/linear-model1-35-2.png" width="672" />
+<img src="10-linear_model1_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 
 Not quite as normally distributed as we would hope. We learn what to do if some of the assumptions of the linear model are violated later in class. 
+
+In general, we'd like the residuals to have the following shape: 
+
+
+
+The model assumptions are: 
+
+- independent observations
+- Y is continuous
+- errors are normally distributed
+- errors have constant variance
+- error terms are uncorrelated
+
+Here are some examples of what the residuals could look like when things go wrong: 
+
+
 
 ## Additional resources 
 
@@ -1284,3 +1030,52 @@ Not quite as normally distributed as we would hope. We learn what to do if some 
 ### Misc 
 
 - [Spurious correlations](http://www.tylervigen.com/spurious-correlations)
+
+## Session info 
+
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+
+```r
+sessionInfo()
+```
+
+```
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
+ [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     ggplot2_3.3.3   
+ [9] tidyverse_1.3.0  broom_0.7.3      janitor_2.1.0    kableExtra_1.3.1
+[13] knitr_1.31      
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.6        lattice_0.20-41   lubridate_1.7.9.2 png_0.1-7        
+ [5] ps_1.6.0          assertthat_0.2.1  digest_0.6.27     utf8_1.1.4       
+ [9] R6_2.5.0          cellranger_1.1.0  backports_1.2.1   reprex_1.0.0     
+[13] evaluate_0.14     httr_1.4.2        highr_0.8         pillar_1.4.7     
+[17] rlang_0.4.10      readxl_1.3.1      rstudioapi_0.13   Matrix_1.3-2     
+[21] rmarkdown_2.6     splines_4.0.3     labeling_0.4.2    webshot_0.5.2    
+[25] munsell_0.5.0     compiler_4.0.3    modelr_0.1.8      xfun_0.21        
+[29] pkgconfig_2.0.3   mgcv_1.8-33       htmltools_0.5.1.1 tidyselect_1.1.0 
+[33] bookdown_0.21     fansi_0.4.2       viridisLite_0.3.0 crayon_1.4.1     
+[37] dbplyr_2.0.0      withr_2.4.1       grid_4.0.3        nlme_3.1-151     
+[41] jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0   DBI_1.1.1        
+[45] magrittr_2.0.1    scales_1.1.1      cli_2.3.0         stringi_1.5.3    
+[49] farver_2.1.0      fs_1.5.0          snakecase_0.11.0  xml2_1.3.2       
+[53] ellipsis_0.3.1    generics_0.1.0    vctrs_0.3.6       tools_4.0.3      
+[57] glue_1.4.2        hms_1.0.0         yaml_2.2.1        colorspace_2.0-0 
+[61] rvest_0.3.6       haven_2.3.1      
+```

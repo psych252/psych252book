@@ -1,37 +1,64 @@
 # Linear mixed effects models 3
 
+## Learning goals 
 
+- Pitfalls in fitting `lmers()`s (and what to do about it). 
+- Understanding `lmer()` syntax even better.
+- ANOVA vs. Lmer 
 
 ## Load packages and set plotting theme  
 
 
 ```r
-library("knitr")      # for knitting RMarkdown 
-library("kableExtra") # for making nice tables
-library("janitor")    # for cleaning column names
-library("broom")      # for tidying up linear models 
-library("patchwork")  # for making figure panels
-library("lme4")       # for linear mixed effects models
-library("modelr")     # for bootstrapping
-library("boot")       # also for bootstrapping
-library("tidyverse")  # for wrangling, plotting, etc. 
+library("knitr")       # for knitting RMarkdown 
+library("kableExtra")  # for making nice tables
+library("janitor")     # for cleaning column names
+library("broom.mixed") # for tidying up linear mixed effects models 
+```
 
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
+```
+## Warning in checkMatrixPackageVersion(): Package version inconsistency detected.
+## TMB was built with Matrix version 1.2.18
+## Current Matrix version is 1.3.2
+## Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package
+```
+
+```r
+library("patchwork")   # for making figure panels
+library("lme4")        # for linear mixed effects models
+library("afex")        # for ANOVAs
+library("car")         # for ANOVAs
+library("datarium")    # for ANOVA dataset
+library("modelr")      # for bootstrapping
+library("boot")        # also for bootstrapping
+library("ggeffects")   # for plotting marginal effects
+library("emmeans")     # for marginal effects
+library("tidyverse")   # for wrangling, plotting, etc. 
 ```
 
 
 ```r
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+            theme(text = element_text(size = 20))) #set the default text size
+
+# knitr display options 
+opts_chunk$set(comment = "",
+               fig.show = "hold")
+
+# include references for used packages
+write_bib(.packages(), "packages.bib") 
+
+
+# set contrasts to using sum contrasts
+options(contrasts = c("contr.sum", "contr.poly"))
+
+# suppress grouping warning messages
+options(dplyr.summarise.inform = F)
 ```
 
-## Load data set 
+## Load data sets 
+
+### Sleep data 
 
 
 ```r
@@ -41,81 +68,633 @@ df.sleep = sleepstudy %>%
   clean_names() %>% 
   mutate(subject = as.character(subject)) %>% 
   select(subject, days, reaction)
-```
 
-
-```r
 # add two fake participants (with missing data)
 df.sleep = df.sleep %>% 
-  bind_rows(
-    tibble(subject = "374",
-           days = 0:1,
-           reaction = c(286, 288)),
-    tibble(subject = "373",
-           days = 0,
-           reaction = 245)
-  )
+  bind_rows(tibble(subject = "374",
+                   days = 0:1,
+                   reaction = c(286, 288)),
+            tibble(subject = "373",
+                   days = 0,
+                   reaction = 245))
 ```
 
-## Things that came up in class 
-
-### One-tailed vs. two-tailed tests
-
-#### t distribution
-
-Some code to draw a t-distribution: 
+### Reasoning data 
 
 
 ```r
-tibble(x = c(-4, 4)) %>% 
-  ggplot(data = ., 
-         mapping = aes(x = x)) + 
-  stat_function(fun = "dt",
-                args = list(df = 20),
-                size = 1,
-                geom = "area",
-                fill = "red",
-                # xlim = c(qt(0.95, df = 20), qt(0.999, df = 20))) +
-                # xlim = c(qt(0.001, df = 20), qt(0.05, df = 20))) +
-                xlim = c(qt(0.001, df = 20), qt(0.025, df = 20))) +
-  stat_function(fun = "dt",
-                args = list(df = 20),
-                size = 1,
-                geom = "area",
-                fill = "red",
-                xlim = c(qt(0.975, df = 20), qt(0.999, df = 20))) +
-  stat_function(fun = "dt",
-                args = list(df = 20),
-                size = 1) +
-  coord_cartesian(expand = F)
+df.reasoning = sk2011.1
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-06-1.png" width="672" />
-
-#### F distribution
-
-Some code to draw an F-distribution
+### Weight loss data 
 
 
 ```r
-tibble(x = c(0, 5)) %>% 
-  ggplot(data = ., 
-         mapping = aes(x = x)) +
-  stat_function(fun = "df",
-                args = list(df1 = 100, df2 = 10),
-                size = 1,
-                geom = "area",
-                fill = "red",
-                xlim = c(qf(0.95, df1 = 100, df2 = 10), qf(0.999, df1 = 100, df2 = 10))) +
-  stat_function(fun = "df",
-                args = list(df1 = 100, df2 = 10),
-                size = 1) +
-  coord_cartesian(expand = F)
+data("weightloss", package = "datarium")
+
+# Modify it to have three-way mixed design
+df.weightloss = weightloss %>%
+  mutate(id = rep(1:24, 2)) %>% 
+  pivot_longer(cols = t1:t3,
+               names_to = "timepoint",
+               values_to = "score") %>% 
+  arrange(id)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-07-1.png" width="672" />
+### Politness data 
 
-### Mixtures of participants 
+
+```r
+df.politeness = read_csv("data/politeness_data.csv") %>% 
+  mutate(scenario = as.factor(scenario))
+```
+
+```
+
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+cols(
+  subject = col_character(),
+  gender = col_character(),
+  scenario = col_double(),
+  attitude = col_character(),
+  frequency = col_double()
+)
+```
+
+## Understanding the lmer() syntax 
+
+Here is an overview of how to specify different kinds of linear mixed effects models.
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> formula </th>
+   <th style="text-align:left;"> description </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> `dv ~ x1 + (1 | g)` </td>
+   <td style="text-align:left;"> Random intercept for each level of `g` </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> `dv ~ x1 + (0 + x1 | g)` </td>
+   <td style="text-align:left;"> Random slope for each level of `g` </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> `dv ~ x1 + (x1 | g)` </td>
+   <td style="text-align:left;"> Correlated random slope and intercept for each level of `g` </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> `dv ~ x1 + (x1 || g)` </td>
+   <td style="text-align:left;"> Uncorrelated random slope and intercept for each level of `g` </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> `dv ~ x1 + (1 | school) + (1 | teacher)` </td>
+   <td style="text-align:left;"> Random intercept for each level of `school` and for each level of `teacher` (crossed) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> `dv ~ x1 + (1 | school/teacher)` </td>
+   <td style="text-align:left;"> Random intercept for each level of `school` and for each level of `teacher` in `school` (nested) </td>
+  </tr>
+</tbody>
+</table>
+
+Note that this `(1 | school/teacher)` is equivalent to `(1 | school) + (1 | teacher:school)` (see [here](https://stats.stackexchange.com/questions/228800/crossed-vs-nested-random-effects-how-do-they-differ-and-how-are-they-specified)). 
+
+## ANOVA vs. Lmer 
+
+### Between subjects ANOVA 
+
+Let's start with a between subjects ANOVA (which means we are in `lm()` world). We'll take a look whether what type of `instruction` participants received made a difference to their `response`. 
+
+First, we use the `aov_ez()` function from the "afex" package to do so. 
+
+
+```r
+aov_ez(id = "id",
+       dv = "response",
+       between = "instruction",
+       data = df.reasoning)
+```
+
+```
+Warning: More than one observation per cell, aggregating the data using mean
+(i.e, fun_aggregate = mean)!
+```
+
+```
+Anova Table (Type 3 tests)
+
+Response: response
+       Effect    df    MSE    F  ges p.value
+1 instruction 1, 38 253.43 0.31 .008    .583
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+Looks like there was no main effect of `instruction` on participants' responses. 
+
+An alternative route for getting at the same test, would be via combining `lm()` with `Anova()` (as we've done before in class). 
+
+
+```r
+lm(formula = response ~ instruction,
+   data = df.reasoning %>% 
+     group_by(id, instruction) %>% 
+     summarize(response = mean(response)) %>% 
+     ungroup()) %>% 
+  Anova(type = 3,
+        method = "F")
+```
+
+```
+Anova Table (Type III tests)
+
+Response: response
+            Sum Sq Df  F value Pr(>F)    
+(Intercept) 250530  1 988.5637 <2e-16 ***
+instruction     78  1   0.3066  0.583    
+Residuals     9630 38                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+The two routes yield the same result. Notice that for the `lm()` approach, I calculated the means for each participant in each condition first (using `group_by()` and `summarize()`). 
+
+### Repeated-measures ANOVA 
+
+Now let's take a look whether `validity` and `plausibility` affected participants' responses in the reasoning task. These two factors were varied within participants. Again, we'll use the `aov_ez()` function like so: 
+
+
+```r
+aov_ez(id = "id",
+       dv = "response",
+       within = c("validity", "plausibility"),
+       data = df.reasoning %>% 
+         filter(instruction == "probabilistic"))
+```
+
+```
+Warning: More than one observation per cell, aggregating the data using mean
+(i.e, fun_aggregate = mean)!
+```
+
+```
+Anova Table (Type 3 tests)
+
+Response: response
+                 Effect    df    MSE         F   ges p.value
+1              validity 1, 19 183.01      0.01 <.001    .904
+2          plausibility 1, 19 321.44 30.30 ***  .366   <.001
+3 validity:plausibility 1, 19  65.83   9.21 **  .035    .007
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+For the linear model route, given that we have repeated observations from the same participants, we need to use `lmer()`. The repeated measures anova has the random effect structure as shown below: 
+
+
+```r
+mixed(formula = response ~ validity * plausibility + (1 | id) + (1 | validity:id) + (1 | plausibility:id),
+      data = df.reasoning %>% 
+        filter(instruction == "probabilistic") %>%
+        group_by(id, validity, plausibility) %>%
+        summarize(response = mean(response)))
+```
+
+```
+Fitting one lmer() model. 
+```
+
+```
+boundary (singular) fit: see ?isSingular
+```
+
+```
+[DONE]
+Calculating p-values. [DONE]
+```
+
+```
+Warning: lme4 reported (at least) the following warnings for 'full':
+  * boundary (singular) fit: see ?isSingular
+```
+
+```
+Mixed Model Anova Table (Type 3 tests, KR-method)
+
+Model: response ~ validity * plausibility + (1 | id) + (1 | validity:id) + 
+Model:     (1 | plausibility:id)
+Data: %>%
+Data: df.reasoning %>% filter(instruction == "probabilistic") %>% group_by(id, validity, plausibility)
+Data: summarize(response = mean(response))
+                 Effect    df         F p.value
+1              validity 1, 19      0.02    .901
+2          plausibility 1, 19 34.21 ***   <.001
+3 validity:plausibility 1, 19   8.93 **    .008
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+Here, I've used the `mixed()` function from the "afex" package. What's handy about that function is that it computes F-tests with p-values.
+
+Note though that the results of the ANOVA route and the `lmer()` route weren't identical here (although they were very close). For more information as to why this happens, see [this post](https://stats.stackexchange.com/questions/117660/what-is-the-lme4lmer-equivalent-of-a-three-way-repeated-measures-anova).
+
+### Mixed ANOVA 
+
+Now let's take a look at both between- as well as within-subjects factors. Let's compare the `aov_ez()` route
+
+
+```r
+aov_ez(id = "id",
+       dv = "response",
+       between = "instruction",
+       within = c("validity", "plausibility"),
+       data = df.reasoning)
+```
+
+```
+Warning: More than one observation per cell, aggregating the data using mean
+(i.e, fun_aggregate = mean)!
+```
+
+```
+Anova Table (Type 3 tests)
+
+Response: response
+                             Effect    df     MSE         F   ges p.value
+1                       instruction 1, 38 1013.71      0.31  .005    .583
+2                          validity 1, 38  339.32    4.12 *  .020    .049
+3              instruction:validity 1, 38  339.32    4.65 *  .023    .037
+4                      plausibility 1, 38  234.41 34.23 ***  .106   <.001
+5          instruction:plausibility 1, 38  234.41  10.67 **  .036    .002
+6             validity:plausibility 1, 38  185.94      0.14 <.001    .715
+7 instruction:validity:plausibility 1, 38  185.94    4.78 *  .013    .035
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+with the `lmer()` route: 
+
+
+```r
+mixed(formula = response ~ instruction * validity * plausibility + (1 | id) + (1 | validity:id) + (1 | plausibility:id),
+      data = df.reasoning %>%
+        group_by(id, validity, plausibility, instruction) %>%
+        summarize(response = mean(response)))
+```
+
+```
+Fitting one lmer() model. [DONE]
+Calculating p-values. [DONE]
+```
+
+```
+Mixed Model Anova Table (Type 3 tests, KR-method)
+
+Model: response ~ instruction * validity * plausibility + (1 | id) + 
+Model:     (1 | validity:id) + (1 | plausibility:id)
+Data: %>%
+Data: df.reasoning %>% group_by(id, validity, plausibility, instruction)
+Data: summarize(response = mean(response))
+                             Effect    df         F p.value
+1                       instruction 1, 38      0.31    .583
+2                          validity 1, 38    4.12 *    .049
+3                      plausibility 1, 38 34.23 ***   <.001
+4              instruction:validity 1, 38    4.65 *    .037
+5          instruction:plausibility 1, 38  10.67 **    .002
+6             validity:plausibility 1, 38      0.14    .715
+7 instruction:validity:plausibility 1, 38    4.78 *    .035
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+Here, both routes yield the same results. 
+
+## Follow-up tests with emmeans
+
+Just like with the linear model `lm()`, we can use linear contrasts to test more specific hypotheses with `lmer()`. The `emmeans()` function from the `emmeans` package will be our friend. 
+
+### Sleep study 
+
+Let's ask some more specific question aboust the sleep study. 
+
+1. Do reaction times differ between day 0 and the first day of sleep deprivation? 
+2. Do reaction times differ between the first and the second half of the study? 
+
+Let's visualize the data first: 
+
+
+```r
+ggplot(data = df.sleep %>% 
+         mutate(days = as.factor(days)),
+       mapping = aes(x = days,
+                     y = reaction)) + 
+  geom_point(position = position_jitter(width = 0.1),
+             alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot")
+```
+
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+
+And now let's fit the model, and compute the contrasts: 
+
+
+```r
+fit = mixed(formula = reaction ~ 1 + days + (1 | subject),
+           data = df.sleep %>% 
+             mutate(days = as.factor(days)))
+```
+
+```
+Fitting one lmer() model. [DONE]
+Calculating p-values. [DONE]
+```
+
+```r
+contrast = list(first_vs_second = c(-1, 1, rep(0, 8)),
+                early_vs_late = c(rep(-1, 5)/5, rep(1, 5)/5))
+
+fit %>% 
+  emmeans(specs = "days",
+          contr = contrast) %>% 
+  pluck("contrasts")
+```
+
+```
+ contrast        estimate    SE  df t.ratio p.value
+ first_vs_second     7.82 10.10 156  0.775  0.4398 
+ early_vs_late      53.66  4.65 155 11.534  <.0001 
+
+Degrees-of-freedom method: kenward-roger 
+```
+
+```r
+df.sleep %>% 
+  filter(days %in% c(0, 1)) %>% 
+  group_by(days) %>% 
+  summarize(reaction = mean(reaction))
+```
+
+```
+# A tibble: 2 x 2
+   days reaction
+* <dbl>    <dbl>
+1     0     258.
+2     1     266.
+```
+
+```r
+df.sleep %>% 
+  mutate(index = ifelse(days %in% 0:4, "early", "late")) %>% 
+  group_by(index) %>% 
+  summarize(reaction = mean(reaction))
+```
+
+```
+# A tibble: 2 x 2
+  index reaction
+* <chr>    <dbl>
+1 early     272.
+2 late      325.
+```
+### Weight loss study 
+
+For the weight loss data set, we want to check: 
+
+1. Whether there was a difference between the first two vs. the last time point. 
+2. Whether there was a linear trend across the time points. 
+
+Let's first visualize again: 
+
+
+```r
+ggplot(data = df.weightloss,
+       mapping = aes(x = timepoint,
+                     y = score,
+                     group = diet,
+                     color = diet)) + 
+  geom_point(position = position_jitterdodge(dodge.width = 0.5,
+                                  jitter.width = 0.1,
+                                  jitter.height = 0),
+             alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.5)) +
+  facet_wrap(~ exercises) + 
+  scale_color_brewer(palette = "Set1")
+
+
+ggplot(data = df.weightloss,
+       mapping = aes(x = timepoint,
+                     y = score)) + 
+  geom_point(position = position_jitter(width = 0.1),
+             alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot") +
+  scale_color_brewer(palette = "Set1")
+```
+
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-16-1.png" width="672" /><img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-16-2.png" width="672" />
+And then fit the model, and compute the contrasts:
+
+
+```r
+fit = aov_ez(id = "id",
+       dv = "score",
+       between = "exercises",
+       within = c("diet", "timepoint"),
+       data = df.weightloss)
+
+contrasts = list(first_two_vs_last = c(-0.5, -0.5, 1),
+                 linear_increase = c(-1, 0, 1))
+
+fit %>% 
+  emmeans(spec = "timepoint",
+          contr = contrasts)
+```
+
+```
+NOTE: Results may be misleading due to involvement in interactions
+```
+
+```
+$emmeans
+ timepoint emmean    SE df lower.CL upper.CL
+ t1          11.2 0.175 64     10.9     11.6
+ t2          12.7 0.175 64     12.3     13.0
+ t3          14.2 0.175 64     13.8     14.5
+
+Results are averaged over the levels of: exercises, diet 
+Warning: EMMs are biased unless design is perfectly balanced 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast          estimate    SE df t.ratio p.value
+ first_two_vs_last     2.24 0.200 44 11.194  <.0001 
+ linear_increase       2.97 0.231 44 12.820  <.0001 
+
+Results are averaged over the levels of: exercises, diet 
+```
+
+Because we only had one observation in each cell of our design, the ANOVA was appropriate here (no data points needed to be aggregated). 
+
+Both contrasts are significant. 
+
+### Politeness study 
+
+For the politeness study, we'll be interested in one particular contrast: 
+
+1. Was there an effect of attitude on frequency for female participants? 
+
+Let's visualize first: 
+
+
+```r
+# overview of the data 
+ggplot(data = df.politeness,
+        mapping = aes(x = attitude,
+                      y = frequency,
+                      group = gender,
+                      color = gender)) + 
+  geom_point(position = position_jitter(width = 0.1),
+             alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot") + 
+  scale_color_brewer(palette = "Set1")
+```
+
+```
+Warning: Removed 1 rows containing non-finite values (stat_summary).
+```
+
+```
+Warning: Removed 1 rows containing missing values (geom_point).
+```
+
+```r
+# variation across scenarios 
+ggplot(data = df.politeness,
+        mapping = aes(x = scenario,
+                      y = frequency)) + 
+  geom_point(position = position_jitter(width = 0.1),
+             alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot") + 
+  scale_color_brewer(palette = "Set1")
+```
+
+```
+Warning: Removed 1 rows containing non-finite values (stat_summary).
+
+Warning: Removed 1 rows containing missing values (geom_point).
+```
+
+```r
+# variation across participants
+ggplot(data = df.politeness,
+        mapping = aes(x = subject,
+                      y = frequency)) + 
+  geom_point(position = position_jitter(width = 0.1),
+             alpha = 0.1) + 
+  stat_summary(fun.data = "mean_cl_boot") + 
+  scale_color_brewer(palette = "Set1")
+```
+
+```
+Warning: Removed 1 rows containing non-finite values (stat_summary).
+
+Warning: Removed 1 rows containing missing values (geom_point).
+```
+
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-18-3.png" width="672" />
+
+We fit the model and compute the contrasts. 
+
+
+```r
+fit = mixed(formula = frequency ~ 1 + attitude * gender + (1 | subject) + (1 | scenario),
+      data = df.politeness)
+```
+
+```
+Warning: Due to missing values, reduced number of observations to 83
+```
+
+```
+Fitting one lmer() model. [DONE]
+Calculating p-values. [DONE]
+```
+
+```r
+fit %>% 
+  emmeans(specs = pairwise ~ attitude + gender,
+          adjust = "none")
+```
+
+```
+$emmeans
+ attitude gender emmean   SE   df lower.CL upper.CL
+ inf      F         261 16.3 5.73    220.2      301
+ pol      F         233 16.3 5.73    192.8      274
+ inf      M         144 16.3 5.73    104.0      185
+ pol      M         133 16.4 5.80     92.2      173
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast      estimate    SE    df t.ratio p.value
+ inf F - pol F     27.4  7.79 69.00 3.517   0.0008 
+ inf F - inf M    116.2 21.73  4.56 5.348   0.0040 
+ inf F - pol M    128.0 21.77  4.59 5.881   0.0027 
+ pol F - inf M     88.8 21.73  4.56 4.087   0.0115 
+ pol F - pol M    100.6 21.77  4.59 4.623   0.0071 
+ inf M - pol M     11.8  7.90 69.08 1.497   0.1390 
+
+Degrees-of-freedom method: kenward-roger 
+```
+
+Here, I've computed all pairwise contrasts. We were only interested in one: `inf F - pol F` and that one is significant. So the frequency of female participants' pitch differed between the informal and polite condition. 
+
+If we had used an ANOVA approach for this data set, we could have done it like so: 
+
+
+```r
+aov_ez(id = "subject",
+       dv = "frequency",
+       between = "gender",
+       within = "attitude",
+       data = df.politeness)
+```
+
+```
+Converting to factor: gender
+```
+
+```
+Warning: More than one observation per cell, aggregating the data using mean
+(i.e, fun_aggregate = mean)!
+```
+
+```
+Warning: Missing values for following ID(s):
+M4
+Removing those cases from the analysis.
+```
+
+```
+Anova Table (Type 3 tests)
+
+Response: frequency
+           Effect   df     MSE          F  ges p.value
+1          gender 1, 3 1729.42    17.22 * .851    .025
+2        attitude 1, 3    3.65 309.71 *** .179   <.001
+3 gender:attitude 1, 3    3.65    21.30 * .015    .019
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+
+This approach ignores the variation across scenarios (and just computed the mean instead). Arguably, the `lmer()` approach is better here as it takes all of the data into account. 
+
+## Mixtures of participants 
 
 What if we have groups of participants who differ from each other? Let's generate data for which this is the case.
 
@@ -149,7 +728,7 @@ df.mixed = tibble(
 
 #### Ignoring mixture
 
-Let' first fit a model that ignores the fact that there are two different groups of participatns. 
+Let' first fit a model that ignores the fact that there are two different groups of participants. 
 
 
 ```r
@@ -161,30 +740,33 @@ fit.mixed %>% summary()
 ```
 
 ```
-Linear mixed model fit by REML ['lmerMod']
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
 Formula: value ~ 1 + condition + (1 | participant)
    Data: df.mixed
 
-REML criterion at convergence: 165.6
+REML criterion at convergence: 164.9
 
 Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--1.6437 -0.4510 -0.0246  0.4987  1.5265 
+     Min       1Q   Median       3Q      Max 
+-1.62997 -0.41663 -0.05607  0.54750  1.54023 
 
 Random effects:
  Groups      Name        Variance Std.Dev.
- participant (Intercept) 21.5142  4.6383  
+ participant (Intercept) 19.2206  4.3841  
  Residual                 0.3521  0.5934  
 Number of obs: 40, groups:  participant, 20
 
 Fixed effects:
-            Estimate Std. Error t value
-(Intercept)   7.2229     1.0456   6.908
-condition1    1.6652     0.1876   8.875
+            Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)  6.70554    0.98480 19.00000   6.809 1.68e-06 ***
+condition1  -0.83260    0.09382 19.00000  -8.875 3.47e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
            (Intr)
-condition1 -0.090
+condition1 0.000 
 ```
 
 Let's look at the model's predictions: 
@@ -206,7 +788,7 @@ fit.mixed %>%
              color = "red")
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-10-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 
 And let's simulate some data from the fitted model: 
@@ -225,7 +807,7 @@ fit.mixed %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-11-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 
 As we can see, the simulated data doesn't look like the data that was used to fit the model.  
 
@@ -243,32 +825,35 @@ fit.grouped %>% summary()
 ```
 
 ```
-Linear mixed model fit by REML ['lmerMod']
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
 Formula: value ~ 1 + group + condition + (1 | participant)
    Data: df.mixed
 
-REML criterion at convergence: 83.7
+REML criterion at convergence: 83.6
 
 Scaled residuals: 
      Min       1Q   Median       3Q      Max 
--1.56168 -0.69876  0.05887  0.50419  2.30259 
+-1.61879 -0.61378  0.02557  0.49842  2.19076 
 
 Random effects:
  Groups      Name        Variance Std.Dev.
- participant (Intercept) 0.1147   0.3387  
- Residual                0.3521   0.5934  
+ participant (Intercept) 0.09265  0.3044  
+ Residual                0.35208  0.5934  
 Number of obs: 40, groups:  participant, 20
 
 Fixed effects:
-            Estimate Std. Error t value
-(Intercept)  -6.8299     0.4055 -16.842
-group         9.0663     0.2424  37.409
-condition1    1.6652     0.1876   8.875
+            Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept) -5.48096    0.35093 18.00000 -15.618 6.54e-12 ***
+group        8.70464    0.23660 18.00000  36.791  < 2e-16 ***
+condition1  -0.83260    0.09382 19.00000  -8.875 3.47e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
            (Intr) group 
-group      -0.926       
-condition1 -0.231  0.000
+group      -0.944       
+condition1  0.000  0.000
 ```
 
 Note how the variance of the random intercepts is much smaller now that we've taken the group structure in the data into account. 
@@ -292,7 +877,7 @@ fit.grouped %>%
              color = "red")
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-13-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-26-1.png" width="672" />
 
 And simulate some data from the model: 
 
@@ -310,9 +895,24 @@ fit.grouped %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-14-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 This time, the simulated data looks much more like the data that was used to fit the model. Yay! 
+
+
+
+```r
+ggpredict(model = fit.grouped,
+          terms = "condition") %>% 
+  plot()
+
+ggpredict(model = fit.mixed,
+          terms = "condition") %>% 
+  plot()
+```
+
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-28-1.png" width="672" /><img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-28-2.png" width="672" />
+
 
 #### Heterogeneity in variance
 
@@ -361,32 +961,35 @@ fit.variance %>% summary()
 ```
 
 ```
-Linear mixed model fit by REML ['lmerMod']
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
 Formula: value ~ 1 + group + condition + (1 | participant)
    Data: df.variance
 
-REML criterion at convergence: 250
+REML criterion at convergence: 234.1
 
 Scaled residuals: 
      Min       1Q   Median       3Q      Max 
--2.70344 -0.21278  0.07355  0.43873  1.39493 
+-2.96291 -0.19619  0.03751  0.28317  1.45552 
 
 Random effects:
  Groups      Name        Variance Std.Dev.
- participant (Intercept) 17.60    4.196   
- Residual                26.72    5.169   
+ participant (Intercept) 17.12    4.137   
+ Residual                13.74    3.706   
 Number of obs: 40, groups:  participant, 20
 
 Fixed effects:
-            Estimate Std. Error t value
-(Intercept) -26.5805     4.1525  -6.401
-group        29.6200     2.5010  11.843
-condition1    0.1853     1.6346   0.113
+            Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept) -23.7160     3.3155  18.0000  -7.153 1.16e-06 ***
+group        27.0696     2.2353  18.0000  12.110 4.36e-10 ***
+condition1   -0.2858     0.5860  19.0000  -0.488    0.631    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
            (Intr) group 
-group      -0.934       
-condition1 -0.197  0.000
+group      -0.944       
+condition1  0.000  0.000
 ```
 
 Look at the data and model predictions: 
@@ -408,14 +1011,14 @@ fit.variance %>%
              color = "red")
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-17-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-31-1.png" width="672" />
 
 And the simulated data: 
 
 
 ```r
 # simulated data 
-fit.mixed %>%
+fit.variance %>%
   simulate() %>%
   bind_cols(df.mixed) %>%
   ggplot(data = .,
@@ -426,570 +1029,11 @@ fit.mixed %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-18-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 
-The lmer() fails here. It uses one normal distribution to model the variance between participants. It cannot account for the fact that the answers of one groups of participants vary more than the answers from another groups of participants. Again, the simulated data doesn't look the original data, even though we did take the grouping into account. 
+The `lmer()` fails here. It uses one normal distribution to model the variance between participants. It cannot account for the fact that the answers of one group of participants vary more than the answers from another groups of participants. Again, the simulated data doesn't look like the original data, even though we did take the grouping into account. 
 
-## Pooling and shrinkage 
-
-Let's illustrate the concept of pooling and shrinkage via the sleep data set that comes with the lmer package. We've already loaded the data set into our environment as `df.sleep`. 
-
-Let's start by visualizing the data 
-
-
-```r
-# visualize the data
-ggplot(data = df.sleep,
-       mapping = aes(x = days, y = reaction)) + 
-  geom_point() +
-  facet_wrap(~subject, ncol = 5) +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-19-1.png" width="672" />
-
-The plot shows the effect of the number of days of sleep deprivation on the average reaction time (presumably in an experiment). Note that for participant 373 and 374 we only have one and two data points respectively. 
-
-### Complete pooling 
-
-Let's first fit a model the simply combines all the data points. This model ignores the dependence structure in the data (i.e. the fact that we have repeated observations from the same participants). 
-
-
-```r
-fit.complete = lm(formula = reaction ~ days,
-                  data = df.sleep)
-
-fit.params = tidy(fit.complete)
-
-fit.complete %>% 
-  summary()
-```
-
-```
-
-Call:
-lm(formula = reaction ~ days, data = df.sleep)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--110.646  -27.951    1.829   26.388  139.875 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)  252.321      6.406  39.389  < 2e-16 ***
-days          10.328      1.210   8.537 5.48e-15 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 47.43 on 181 degrees of freedom
-Multiple R-squared:  0.2871,	Adjusted R-squared:  0.2831 
-F-statistic: 72.88 on 1 and 181 DF,  p-value: 5.484e-15
-```
-
-And let's visualize the predictions of this model.
-
-
-```r
-# visualization (aggregate) 
-ggplot(data = df.sleep,
-       mapping = aes(x = days, y = reaction)) + 
-  geom_abline(intercept = fit.params$estimate[1],
-              slope = fit.params$estimate[2],
-              color = "blue") +
-  geom_point() +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-21-1.png" width="672" />
-
-And here is what the model's predictions look like separated by participant.
-
-
-```r
-# visualization (separate participants) 
-ggplot(data = df.sleep,
-       mapping = aes(x = days, y = reaction)) + 
-  geom_abline(intercept = fit.params$estimate[1],
-              slope = fit.params$estimate[2],
-              color = "blue") +
-  geom_point() +
-  facet_wrap(~subject, ncol = 5) +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-22-1.png" width="672" />
-
-The model predicts the same relationship between sleep deprivation and reaction time for each participant (not surprising since we didn't even tell the model that this data is based on different participants). 
-
-### No pooling 
-
-We could also fit separate regressions for each participant. Let's do that.
-
-
-```r
-# fit regressions and extract parameter estimates 
-df.no_pooling = df.sleep %>% 
-  group_by(subject) %>% 
-  nest(days, reaction) %>% 
-  mutate(fit = map(data, ~ lm(reaction ~ days, data = .)),
-         params = map(fit, tidy)) %>% 
-  unnest(params) %>% 
-  select(subject, term, estimate) %>% 
-  complete(subject, term, fill = list(estimate = 0)) %>% 
-  spread(term, estimate) %>% 
-  clean_names()
-```
-
-And let's visualize what the predictions of these separate regressions would look like: 
-
-
-```r
-ggplot(data = df.sleep,
-       mapping = aes(x = days,
-                     y = reaction)) + 
-  geom_abline(data = df.no_pooling %>% 
-                filter(subject != 373),
-              aes(intercept = intercept,
-                  slope = days),
-              color = "blue") +
-  geom_point() +
-  facet_wrap(~subject, ncol = 5) +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-24-1.png" width="672" />
-
-When we fit separate regression, no information is shared between participants. 
-
-### Partial pooling 
-
-By usign linear mixed effects models, we are partially pooling information. That is, the estimates for one participant are influenced by the rest of the participants.
-
-We'll fit a number of mixed effects models that differ in their random effects structure. 
-
-#### Random intercept and random slope
-
-This model allows for random differences in the intercepts and slopes between subjects (and also models the correlation between intercepts and slopes). 
-
-Let's fit the model
-
-
-```r
-fit.random_intercept_slope = lmer(formula = reaction ~ 1 + days + (1 + days | subject),
-                                  data = df.sleep)
-```
-
-and take a look at the model's predictions: 
-
-
-```r
-fit.random_intercept_slope %>% 
-  augment() %>% 
-  clean_names() %>% 
-ggplot(data = .,
-       mapping = aes(x = days,
-                     y = reaction)) + 
-  geom_line(aes(y = fitted),
-            color = "blue") + 
-  geom_point() +
-  facet_wrap(~subject, ncol = 5) +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-```
-geom_path: Each group consists of only one observation. Do you need to
-adjust the group aesthetic?
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-26-1.png" width="672" />
-
-As we can see, the lines for each participant are different. We've allowed for the intercept as well as the relationship between sleep deprivation and reaction time to be different between participants. 
-
-#### Only random intercepts 
-
-Let's fit a model that only allows for the intercepts to vary between participants. 
-
-
-```r
-fit.random_intercept = lmer(formula = reaction ~ 1 + days + (1 | subject),
-                            data = df.sleep)
-```
-
-And let's visualize what these predictions look like: 
-
-
-```r
-fit.random_intercept %>% 
-  augment() %>% 
-  clean_names() %>% 
-ggplot(data = .,
-       mapping = aes(x = days,
-                     y = reaction)) + 
-  geom_line(aes(y = fitted),
-            color = "blue") + 
-  geom_point() +
-  facet_wrap(~subject, ncol = 5) +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-```
-geom_path: Each group consists of only one observation. Do you need to
-adjust the group aesthetic?
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-28-1.png" width="672" />
-
-Now, all the lines are parallel but the intercept differs between participants. 
-
-#### Only random slopes 
-
-Finally, let's compare a model that only allows for the slopes to differ but not the intercepts. 
-
-
-```r
-fit.random_slope = lmer(formula = reaction ~ 1 + days + (0 + days | subject),
-                        data = df.sleep)
-```
-
-And let's visualize the model fit: 
-
-
-```r
-fit.random_slope %>% 
-  augment() %>% 
-  clean_names() %>% 
-ggplot(data = .,
-       mapping = aes(x = days,
-                     y = reaction)) + 
-  geom_line(aes(y = fitted),
-            color = "blue") + 
-  geom_point() +
-  facet_wrap(~subject, ncol = 5) +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-```
-geom_path: Each group consists of only one observation. Do you need to
-adjust the group aesthetic?
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-30-1.png" width="672" />
-
-Here, all the lines have the same starting point (i.e. the same intercept) but the slopes are different. 
-
-### Compare results 
-
-Let's compare the results of the different methods -- complete pooling, no pooling, and partial pooling (with random intercepts and slopes). 
-
-
-```r
-# complete pooling
-fit.complete_pooling = lm(formula = reaction ~ days,
-                          data = df.sleep)  
-
-df.complete_pooling =  fit.complete_pooling %>% 
-  augment() %>% 
-  bind_rows(
-    fit.complete_pooling %>% 
-      augment(newdata = tibble(subject = c("373", "374"),
-                               days = rep(10, 2)))
-  ) %>% 
-  clean_names() %>% 
-  select(reaction, days, complete_pooling = fitted)
-
-# no pooling
-df.no_pooling = df.sleep %>% 
-  group_by(subject) %>% 
-  nest(days, reaction) %>% 
-  mutate(fit = map(data, ~ lm(reaction ~ days, data = .)),
-         augment = map(fit, augment)) %>% 
-  unnest(augment) %>% 
-  clean_names() %>% 
-  select(subject, reaction, days, no_pooling = fitted)
-
-# partial pooling
-fit.lmer = lmer(formula = reaction ~ 1 + days + (1 + days | subject),
-                data = df.sleep) 
-
-df.partial_pooling = fit.lmer %>% 
-  augment() %>% 
-  bind_rows(
-    fit.lmer %>% 
-      augment(newdata = tibble(subject = c("373", "374"),
-                               days = rep(10, 2)))
-  ) %>% 
-  clean_names() %>% 
-  select(subject, reaction, days, partial_pooling = fitted)
-
-# combine results
-df.pooling = df.partial_pooling %>% 
-  left_join(df.complete_pooling) %>% 
-  left_join(df.no_pooling)
-```
-
-Let's compare the predictions of the different models visually: 
-
-
-```r
-ggplot(data = df.pooling,
-       mapping = aes(x = days,
-                     y = reaction)) + 
-  geom_smooth(method = "lm",
-              se = F,
-              color = "orange",
-              fullrange = T) + 
-  geom_line(aes(y = complete_pooling),
-            color = "green") + 
-  geom_line(aes(y = partial_pooling),
-            color = "blue") + 
-  geom_point() +
-  facet_wrap(~subject, ncol = 5) +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-```
-Warning: Removed 4 rows containing non-finite values (stat_smooth).
-```
-
-```
-Warning: Removed 4 rows containing missing values (geom_point).
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-32-1.png" width="672" />
-
-To better see the differences between the approaches, let's focus on the predictions for the participants with incomplete data: 
-
-
-```r
-# subselection
-ggplot(data = df.pooling %>% 
-         filter(subject %in% c("373", "374")),
-       mapping = aes(x = days,
-                     y = reaction)) + 
-  geom_smooth(method = "lm",
-              se = F,
-              color = "orange",
-              fullrange = T) + 
-  geom_line(aes(y = complete_pooling),
-            color = "green") + 
-  geom_line(aes(y = partial_pooling),
-            color = "blue") + 
-  geom_point() +
-  facet_wrap(~subject) +
-  labs(x = "Days of sleep deprivation", 
-       y = "Average reaction time (ms)") + 
-  scale_x_continuous(breaks = 0:4 * 2) +
-  theme(strip.text = element_text(size = 12),
-        axis.text.y = element_text(size = 12))
-```
-
-```
-Warning: Removed 4 rows containing non-finite values (stat_smooth).
-```
-
-```
-Warning: Removed 4 rows containing missing values (geom_point).
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-33-1.png" width="672" />
-
-### Coefficients 
-
-One good way to get a sense for what the different models are doing is by taking a look at the coefficients: 
-
-
-```r
-fit.complete_pooling %>% 
-  coef()
-```
-
-```
-(Intercept)        days 
-  252.32070    10.32766 
-```
-
-
-```r
-fit.random_intercept %>% 
-  coef()
-```
-
-```
-$subject
-    (Intercept)     days
-308    292.2749 10.43191
-309    174.0559 10.43191
-310    188.7454 10.43191
-330    256.0247 10.43191
-331    261.8141 10.43191
-332    259.8262 10.43191
-333    268.0765 10.43191
-334    248.6471 10.43191
-335    206.5096 10.43191
-337    323.5643 10.43191
-349    230.5114 10.43191
-350    265.6957 10.43191
-351    243.7988 10.43191
-352    287.8850 10.43191
-369    258.6454 10.43191
-370    245.2931 10.43191
-371    248.3508 10.43191
-372    269.6861 10.43191
-373    248.2086 10.43191
-374    273.9400 10.43191
-
-attr(,"class")
-[1] "coef.mer"
-```
-
-
-```r
-fit.random_slope %>% 
-  coef()
-```
-
-```
-$subject
-    (Intercept)       days
-308    252.2965 19.9526801
-309    252.2965 -4.3719650
-310    252.2965 -0.9574726
-330    252.2965  8.9909957
-331    252.2965 10.5394285
-332    252.2965 11.3994289
-333    252.2965 12.6074020
-334    252.2965 10.3413879
-335    252.2965 -0.5722073
-337    252.2965 24.2246485
-349    252.2965  7.7702676
-350    252.2965 15.0661415
-351    252.2965  7.9675415
-352    252.2965 17.0002999
-369    252.2965 11.6982767
-370    252.2965 11.3939807
-371    252.2965  9.4535879
-372    252.2965 13.4569059
-373    252.2965 10.4142695
-374    252.2965 11.9097917
-
-attr(,"class")
-[1] "coef.mer"
-```
-
-
-```r
-fit.random_intercept_slope %>% 
-  coef()
-```
-
-```
-$subject
-    (Intercept)       days
-308    253.9479 19.6264139
-309    211.7328  1.7319567
-310    213.1579  4.9061843
-330    275.1425  5.6435987
-331    273.7286  7.3862680
-332    260.6504 10.1632535
-333    268.3684 10.2245979
-334    244.5523 11.4837825
-335    251.3700 -0.3355554
-337    286.2321 19.1090061
-349    226.7662 11.5531963
-350    238.7807 17.0156766
-351    256.2344  7.4119501
-352    272.3512 13.9920698
-369    254.9484 11.2985741
-370    226.3701 15.2027922
-371    252.5051  9.4335432
-372    263.8916 11.7253342
-373    248.9752 10.3915245
-374    271.1451 11.0782697
-
-attr(,"class")
-[1] "coef.mer"
-```
-
-### Shrinkage 
-
-In mixed effects models, the variance of parameter estimates across participants shrinks compared to a no pooling model (where we fit a different regression to each participant). Expressed differently, individual parameter estimates are borrowing strength from the overall data set in mixed effects models. 
-
-
-```r
-# get estimates from partial pooling model
-df.partial_pooling = fit.random_intercept_slope %>% 
-  coef() %>% 
-  .[[1]] %>% 
-  rownames_to_column("subject") %>% 
-  clean_names()
-
-# combine estimates from no pooling with partial pooling model 
-df.plot = df.sleep %>% 
-  group_by(subject) %>% 
-  nest(days, reaction) %>% 
-  mutate(fit = map(data, ~ lm(reaction ~ days, data = .)),
-         tidy = map(fit, tidy)) %>% 
-  unnest(tidy) %>% 
-  select(subject, term, estimate) %>% 
-  spread(term, estimate) %>% 
-  clean_names() %>% 
-  mutate(method = "no pooling") %>% 
-  bind_rows(df.partial_pooling %>% 
-              mutate(method = "partial pooling")) %>% 
-  gather("index", "value", -c(subject, method)) %>% 
-  mutate(index = factor(index, levels = c("intercept", "days")))
-
-  
-# visualize the results  
-ggplot(data = df.plot,
-       mapping = aes(x = value,
-                     group = method,
-                     fill = method)) + 
-  stat_density(position = "identity",
-               geom = "area",
-               color = "black",
-               alpha = 0.3) +
-  facet_grid(cols = vars(index),
-             scales = "free")
-```
-
-```
-Warning: Removed 1 rows containing non-finite values (stat_density).
-```
-
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-38-1.png" width="672" />
+We will later see that it's straightforward in Bayesian models to explicitly model heterogeneity in variance. 
 
 ## Bootstrapping 
 
@@ -1007,7 +1051,14 @@ fit.lm = lm(formula = reaction ~ 1 + days,
 
 # coefficients
 fit.lm %>% coef()
+```
 
+```
+(Intercept)        days 
+  252.32070    10.32766 
+```
+
+```r
 # bootstrapping 
 df.boot = df.sleep %>% 
   bootstrap(n = 100,
@@ -1020,11 +1071,6 @@ df.boot = df.sleep %>%
   clean_names() 
 ```
 
-```
-(Intercept)        days 
-  252.32070    10.32766 
-```
-
 Let's illustrate the linear model with a confidence interval (making parametric assumptions using the t-distribution). 
 
 
@@ -1035,7 +1081,7 @@ ggplot(data = df.sleep,
   geom_point(alpha = 0.3)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-40-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-34-1.png" width="672" />
 
 And let's compare this with the different regression lines that we get out of our bootstrapped samples:
 
@@ -1051,7 +1097,7 @@ ggplot(data = df.sleep,
   geom_point(alpha = 0.3)
 ```
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-41-1.png" width="672" />
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-35-1.png" width="672" />
 
 #### bootmer() function
 
@@ -1059,6 +1105,8 @@ For the linear mixed effects model, we can use the `bootmer()` function to do bo
 
 
 ```r
+set.seed(1)
+
 # fit the model 
 fit.lmer = lmer(formula = reaction ~ 1 + days + (1 + days | subject),
                 data = df.sleep)
@@ -1070,7 +1118,23 @@ boot.lmer = bootMer(fit.lmer,
 
 # compute confidence interval 
 boot.ci(boot.lmer, index = 2, type = "perc")
+```
 
+```
+BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 100 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = boot.lmer, type = "perc", index = 2)
+
+Intervals : 
+Level     Percentile     
+95%   ( 7.26, 13.79 )  
+Calculations and Intervals on Original Scale
+Some percentile intervals may be unstable
+```
+
+```r
 # plot estimates 
 boot.lmer$t %>% 
   as_tibble() %>% 
@@ -1085,99 +1149,77 @@ boot.lmer$t %>%
   coord_cartesian(expand = F)
 ```
 
-```
-BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
-Based on 100 bootstrap replicates
+<img src="19-linear_mixed_effects_models3_files/figure-html/unnamed-chunk-36-1.png" width="672" />
 
-CALL : 
-boot.ci(boot.out = boot.lmer, type = "perc", index = 2)
 
-Intervals : 
-Level     Percentile     
-95%   ( 7.36, 13.52 )  
-Calculations and Intervals on Original Scale
-Some percentile intervals may be unstable
-```
+## Session info 
 
-<img src="19-linear_mixed_effects_models3_files/figure-html/lmer3-42-1.png" width="672" />
-
-## Getting p-values 
-
-We can use the "lmerTest" package to get p-values for the different fixed effects. 
+Information about this R session including which version of R was used, and what packages were loaded. 
 
 
 ```r
-lmerTest::lmer(formula = reaction ~ 1 + days + (1 + days | subject),
-                data = df.sleep) %>% 
-  summary()
+sessionInfo()
 ```
 
 ```
-Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-lmerModLmerTest]
-Formula: reaction ~ 1 + days + (1 + days | subject)
-   Data: df.sleep
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
 
-REML criterion at convergence: 1771.4
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--3.9707 -0.4703  0.0276  0.4594  5.2009 
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 
-Random effects:
- Groups   Name        Variance Std.Dev. Corr
- subject  (Intercept) 582.73   24.140       
-          days         35.03    5.919   0.07
- Residual             649.36   25.483       
-Number of obs: 183, groups:  subject, 20
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
 
-Fixed effects:
-            Estimate Std. Error      df t value Pr(>|t|)    
-(Intercept)  252.543      6.433  19.294  39.256  < 2e-16 ***
-days          10.452      1.542  17.163   6.778 3.06e-06 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+other attached packages:
+ [1] forcats_0.5.1     stringr_1.4.0     dplyr_1.0.4       purrr_0.3.4      
+ [5] readr_1.4.0       tidyr_1.1.2       tibble_3.0.6      ggplot2_3.3.3    
+ [9] tidyverse_1.3.0   emmeans_1.5.3     ggeffects_1.0.1   boot_1.3-26      
+[13] modelr_0.1.8      datarium_0.1.0    car_3.0-10        carData_3.0-4    
+[17] afex_0.28-1       lme4_1.1-26       Matrix_1.3-2      patchwork_1.1.1  
+[21] broom.mixed_0.2.6 janitor_2.1.0     kableExtra_1.3.1  knitr_1.31       
 
-Correlation of Fixed Effects:
-     (Intr)
-days -0.137
+loaded via a namespace (and not attached):
+  [1] TH.data_1.0-10      minqa_1.2.4         colorspace_2.0-0   
+  [4] ellipsis_0.3.1      rio_0.5.16          sjlabelled_1.1.7   
+  [7] htmlTable_2.1.0     estimability_1.3    snakecase_0.11.0   
+ [10] base64enc_0.1-3     fs_1.5.0            rstudioapi_0.13    
+ [13] farver_2.1.0        fansi_0.4.2         mvtnorm_1.1-1      
+ [16] lubridate_1.7.9.2   xml2_1.3.2          codetools_0.2-18   
+ [19] splines_4.0.3       Formula_1.2-4       jsonlite_1.7.2     
+ [22] nloptr_1.2.2.2      pbkrtest_0.5-0.1    broom_0.7.3        
+ [25] cluster_2.1.0       dbplyr_2.0.0        png_0.1-7          
+ [28] compiler_4.0.3      httr_1.4.2          backports_1.2.1    
+ [31] assertthat_0.2.1    cli_2.3.0           htmltools_0.5.1.1  
+ [34] tools_4.0.3         lmerTest_3.1-3      coda_0.19-4        
+ [37] gtable_0.3.0        glue_1.4.2          reshape2_1.4.4     
+ [40] Rcpp_1.0.6          cellranger_1.1.0    vctrs_0.3.6        
+ [43] nlme_3.1-151        insight_0.13.1.1    xfun_0.21          
+ [46] ps_1.6.0            openxlsx_4.2.3      rvest_0.3.6        
+ [49] lifecycle_1.0.0     statmod_1.4.35      MASS_7.3-53        
+ [52] zoo_1.8-8           scales_1.1.1        hms_1.0.0          
+ [55] parallel_4.0.3      sandwich_3.0-0      RColorBrewer_1.1-2 
+ [58] TMB_1.7.18          yaml_2.2.1          curl_4.3           
+ [61] gridExtra_2.3       rpart_4.1-15        latticeExtra_0.6-29
+ [64] stringi_1.5.3       highr_0.8           checkmate_2.0.0    
+ [67] zip_2.1.1           rlang_0.4.10        pkgconfig_2.0.3    
+ [70] evaluate_0.14       lattice_0.20-41     labeling_0.4.2     
+ [73] htmlwidgets_1.5.3   tidyselect_1.1.0    plyr_1.8.6         
+ [76] magrittr_2.0.1      bookdown_0.21       R6_2.5.0           
+ [79] Hmisc_4.4-2         generics_0.1.0      multcomp_1.4-15    
+ [82] DBI_1.1.1           mgcv_1.8-33         pillar_1.4.7       
+ [85] haven_2.3.1         foreign_0.8-81      withr_2.4.1        
+ [88] nnet_7.3-15         survival_3.2-7      abind_1.4-5        
+ [91] crayon_1.4.1        utf8_1.1.4          rmarkdown_2.6      
+ [94] jpeg_0.1-8.1        grid_4.0.3          readxl_1.3.1       
+ [97] data.table_1.13.6   reprex_1.0.0        digest_0.6.27      
+[100] webshot_0.5.2       xtable_1.8-4        numDeriv_2016.8-1.1
+[103] munsell_0.5.0       viridisLite_0.3.0  
 ```
 
-## Understanding the lmer() syntax 
-
-Here is an overview of how to specify different kinds of linear mixed effects models.
-
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> formula </th>
-   <th style="text-align:left;"> description </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (1 | g)` </td>
-   <td style="text-align:left;"> Random intercept for each level of `g` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (0 + x1 | g)` </td>
-   <td style="text-align:left;"> Random slope for each level of `g` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (x1 | g)` </td>
-   <td style="text-align:left;"> Correlated random slope and intercept for each level of `g` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (x1 || g)` </td>
-   <td style="text-align:left;"> Uncorrelated random slope and intercept for each level of `g` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (1 | school) + (1 | teacher)` </td>
-   <td style="text-align:left;"> Random intercept for each level of `school` and for each level of `teacher` (crossed) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (1 | school/teacher)` </td>
-   <td style="text-align:left;"> Random intercept for each level of `school` and for each level of `teacher` in `school` (nested) </td>
-  </tr>
-</tbody>
-</table>
+## References

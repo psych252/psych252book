@@ -7,287 +7,17 @@
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
-library("magrittr")   # for wrangling
-library("patchwork")  # for making figure panels
 library("tidyverse")  # for wrangling, plotting, etc. 
-
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
 ```
 
 
 ```r
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+            theme(text = element_text(size = 20))) #set the default text size
+
+opts_chunk$set(comment = "",
+               fig.show = "hold")
 ```
-
-## Things that came up in class 
-
-### Calculating RMSE using `magrittr` verbs
-
-Here is how we can calculate the root mean squared error using the pipe all the way through. Note that you have to load the `magrittr` package in order for this to work. 
-
-
-```r
-data = c(1, 3, 4, 2, 5)
-prediction = c(1, 2, 2, 1, 4)
-
-# calculate root mean squared error the pipe way 
-rmse = prediction %>% 
-  subtract(data) %>% 
-  raise_to_power(2) %>% 
-  mean() %>% 
-  sqrt() %>% 
-  print() 
-```
-
-```
-[1] 1.183216
-```
-
-### Relationship between probability and likelihood 
-
-
-```r
-margin = 1
-point = 0
-
-ggplot(data = tibble(x = c(-3, 3)),
-            mapping = aes(x = x)) + 
-  stat_function(fun = "dnorm",
-                geom = "area", 
-                xlim = c(point - margin, point + margin),
-                fill = "red", 
-                alpha = 0.5) + 
-  stat_function(fun = "dnorm",
-                size = 1) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
-```
-
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-04-1.png" alt="Probability is the area under the curve of the density" width="672" />
-<p class="caption">(\#fig:modeling-04)Probability is the area under the curve of the density</p>
-</div>
-
-
-
-```r
-point = 0
-param_mean = 1
-param_sd = 1
-
-ggplot(data = tibble(x = c(-3, 3)),
-       mapping = aes(x = x)) + 
-  stat_function(fun = "dnorm",
-                size = 1,
-                args = list(mean = param_mean,
-                            sd = param_sd)) +
-  geom_segment(aes(
-    x = point,
-    y = 0,
-    xend = point,
-    yend = dnorm(point, mean = param_mean, sd = param_sd)),
-    color = "red",
-    size = 1
-  ) +
-  geom_segment(aes(
-    x = -3, 
-    y = dnorm(point, mean = param_mean, sd = param_sd),
-    xend = point,
-    yend = dnorm(point, mean = param_mean, sd = param_sd)),
-    color = "red",
-    size = 1) +
-  geom_point(x = point,
-             y = dnorm(point, mean = param_mean, sd = param_sd),
-             shape = 21,
-             fill = "red",
-             size = 4) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
-```
-
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-05-1.png" alt="Likelihood is a particular value." width="672" />
-<p class="caption">(\#fig:modeling-05)Likelihood is a particular value.</p>
-</div>
-
-
-```r
-point = 1
-
-p1 = ggplot(data = tibble(x = c(-3, 3)),
-            mapping = aes(x = x)) + 
-  stat_function(fun = "dnorm",
-                geom = "area", 
-                xlim = c(-3, point),
-                fill = "red", 
-                alpha = 0.5) +
-  stat_function(fun = "dnorm",
-                size = 1) +
-  geom_point(x = point,
-             y = dnorm(point),
-             shape = 21,
-             fill = "red",
-             size = 3) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
-
-p2 = ggplot(data = tibble(x = c(-3, 3)),
-            mapping = aes(x = x)) + 
-  stat_function(fun = "pnorm",
-                size = 1) + 
-  geom_segment(mapping = aes(x = -3, 
-                             y = pnorm(point),
-                             xend = point,
-                             yend = pnorm(point)),
-               color = "red",
-               size = 1) + 
-  geom_point(x = point,
-             y = pnorm(point),
-             shape = 21,
-             fill = "red",
-             size = 3) +
-  labs(y = "cum prob") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(breaks = c(0, 0.5, 1),
-                     expand = expand_scale(add = c(0.01, 0.1)))
-
-p1 + p2 +
-  plot_layout(ncol = 1)
-```
-
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-06-1.png" alt="Relationship between density and cumulative probability distribution." width="672" />
-<p class="caption">(\#fig:modeling-06)Relationship between density and cumulative probability distribution.</p>
-</div>
-
-
-```r
-point = 0
-
-p1 = ggplot(data = tibble(x = c(-3, 3)),
-            mapping = aes(x = x)) + 
-  geom_segment(mapping = aes(x = -3, 
-                             y = dnorm(point),
-                             xend = point,
-                             yend = dnorm(point)),
-               color = "red",
-               size = 1) + 
-  stat_function(fun = "dnorm",
-                size = 1) +
-  geom_point(x = point,
-             y = dnorm(point),
-             shape = 21,
-             fill = "red",
-             size = 3) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
-
-p2 = ggplot(data = tibble(x = c(-3, 3)),
-            mapping = aes(x = x)) + 
-  stat_function(fun = "pnorm",
-                size = 1) + 
-  geom_abline(slope = dnorm(point),
-              intercept = pnorm(point) - dnorm(point) * point,
-              color = "red",
-              size = 1) +
-  geom_point(x = point,
-             y = pnorm(point),
-             shape = 21,
-             fill = "red",
-             size = 3) +
-  labs(y = "cum prob") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(breaks = c(0, 0.5, 1),
-                     expand = expand_scale(add = c(0.01, 0.1)))
-
-p1 + p2 +
-  plot_layout(ncol = 1)
-```
-
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-07-1.png" alt="The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution." width="672" />
-<p class="caption">(\#fig:modeling-07)The density is the first derivative of the cumulative probability distribution. The likelihood is the value of the slope in the cumulative probability distribution.</p>
-</div>
-
-
-```r
-margin = 0.1
-point_blue = -1
-point_red = 0
-
-ggplot(data = tibble(x = c(-3, 3)),
-            mapping = aes(x = x)) + 
-  stat_function(fun = "dnorm",
-                geom = "area", 
-                xlim = c(point_red - margin, point_red + margin),
-                fill = "red", 
-                alpha = 0.5) + 
-  stat_function(fun = "dnorm",
-                geom = "area", 
-                xlim = c(point_blue - margin, point_blue + margin),
-                fill = "blue", 
-                alpha = 0.5) + 
-  stat_function(fun = "dnorm",
-                size = 1) +
-  geom_segment(mapping = aes(x = -3, 
-                             y = dnorm(point_red),
-                             xend = point_red,
-                             yend = dnorm(point_red)),
-               color = "red",
-               size = 1) +
-  geom_segment(mapping = aes(x = -3, 
-                             y = dnorm(point_blue),
-                             xend = point_blue,
-                             yend = dnorm(point_blue)),
-               color = "blue",
-               size = 1) + 
-  geom_point(x = point_red,
-             y = dnorm(point_red),
-             shape = 21,
-             fill = "red",
-             size = 4) +
-  geom_point(x = point_blue,
-             y = dnorm(point_blue),
-             shape = 21,
-             fill = "blue",
-             size = 4) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
-
-(pnorm(point_red + margin) - pnorm(point_red - margin)) / 
-  (pnorm(point_blue + margin) - pnorm(point_blue - margin)) 
-
-dnorm(point_red) / dnorm(point_blue)
-```
-
-```
-[1] 1.64598
-[1] 1.648721
-```
-
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-08-1.png" alt="The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0." width="672" />
-<p class="caption">(\#fig:modeling-08)The relative likelihood of two observations is the same as the relative probability of two areas under the curve as the margin of these areas goes to 0.</p>
-</div>
 
 ## Modeling data 
 
@@ -299,13 +29,11 @@ dnorm(point_red) / dnorm(point_blue)
 set.seed(1)
 
 n_samples = 20 # sample size 
-n_parameters = 15 # number of parameters in the polynomial regression
+n_parameters = 2 # number of parameters in the polynomial regression
 
 # generate data 
-df.data = tibble(
-  x = runif(n_samples, min = 0, max = 10), 
-  y = 10 + 3 * x + 3 * x^2 + rnorm(n_samples, sd = 20)
-)
+df.data = tibble(x = runif(n_samples, min = 0, max = 10), 
+                 y = 10 + 3 * x + 3 * x^2 + rnorm(n_samples, sd = 20))
  
 # plot a fit to the data
 ggplot(data = df.data,
@@ -321,8 +49,8 @@ ggplot(data = df.data,
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-09-1.png" alt="Tradeoff between fit and model simplicity." width="672" />
-<p class="caption">(\#fig:modeling-09)Tradeoff between fit and model simplicity.</p>
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-3-1.png" alt="Tradeoff between fit and model simplicity." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-3)Tradeoff between fit and model simplicity.</p>
 </div>
 
 
@@ -332,10 +60,8 @@ set.seed(1)
 # n_samples = 20
 n_samples = 3
 
-df.pre = tibble(
-  x = runif(n_samples, min = 0, max = 10), 
-  y = 2 * x + rnorm(n_samples, sd = 1)
-)
+df.pre = tibble(x = runif(n_samples, min = 0, max = 10), 
+                y = 2 * x + rnorm(n_samples, sd = 1))
 
 # plot a fit to the data
 ggplot(data = df.pre,
@@ -344,15 +70,15 @@ ggplot(data = df.pre,
   geom_point(size = 3) +
   # geom_hline(yintercept = mean(df.pre$y), color = "blue") +
   geom_smooth(method = "lm", se = F,
-              formula = y ~ poly(x, 1, raw=TRUE)) +
+              formula = y ~ poly(x, 1, raw = TRUE)) +
   theme(axis.ticks = element_blank(),
         axis.title = element_blank(),
         axis.text = element_blank())
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-10-1.png" alt="Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive." width="672" />
-<p class="caption">(\#fig:modeling-10)Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive.</p>
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-4-1.png" alt="Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-4)Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive.</p>
 </div>
 
 ### Error definitions and best estimators
@@ -361,10 +87,8 @@ Let's start with some simple data:
 
 
 ```r
-df.data = tibble(
-  observation = 1:5,
-  value = c(1, 3, 5, 9, 14)
-)
+df.data = tibble(observation = 1:5,
+                 value = c(1, 3, 5, 9, 14))
 ```
 
 And plot the data
@@ -383,7 +107,7 @@ ggplot(data = df.data,
         text = element_text(size = 24))
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling-12-1.png" width="672" />
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 This is what the sum of absolute errors looks like for a given `value_predicted`. 
 
@@ -445,8 +169,8 @@ ggplot(data = df.data,
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-13-1.png" alt="Sum of absolute errors." width="672" />
-<p class="caption">(\#fig:modeling-13)Sum of absolute errors.</p>
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-7-1.png" alt="Sum of absolute errors." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-7)Sum of absolute errors.</p>
 </div>
 
 Play around with the code below to see how using (1) the sum of absolute errors, or (2) the sum of squared errors affects what estimate minimizes the error. 
@@ -456,10 +180,8 @@ Play around with the code below to see how using (1) the sum of absolute errors,
 value_predicted = seq(0, 50, 0.1)
 # value_predicted = seq(0, 10, 1)
 
-df.data = tibble(
-  observation = 1:5,
-  value = c(1, 3, 5, 9, 140)
-)
+df.data = tibble(observation = 1:5,
+                 value = c(1, 3, 5, 9, 140))
 
 # function that calculates the sum absolute error
 fun.sum_absolute_error = function(prediction){
@@ -490,7 +212,7 @@ ggplot(data = df.model,
   labs(y = "Sum of squared errors")
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling-14-1.png" width="672" />
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
  <thead>
@@ -525,36 +247,36 @@ median = mu
 mode = mu
 
 ggplot(data = tibble(x = c(-3, 3)),
-            mapping = aes(x = x)) + 
+       mapping = aes(x = x)) + 
   stat_function(fun = "dnorm",
                 size = 1) +
-  geom_segment(aes(x = median,
-                   xend = median,
-                   y = dnorm(median),
-                   yend = 0),
+  geom_segment(mapping = aes(x = median,
+                             xend = median,
+                             y = dnorm(median),
+                             yend = 0),
                color = "green",
                size = 2) +
-  geom_segment(aes(x = mode,
-                   xend = mode,
-                   y = dnorm(mode),
-                   yend = 0),
+  geom_segment(mapping = aes(x = mode,
+                             xend = mode,
+                             y = dnorm(mode),
+                             yend = 0),
                color = "red",
                size = 2) +
-  geom_segment(aes(x = mean,
-                   xend = mean,
-                   y = dnorm(mean),
-                   yend = 0),
+  geom_segment(mapping = aes(x = mean,
+                             xend = mean,
+                             y = dnorm(mean),
+                             yend = 0),
                color = "blue",
                size = 2) +
   labs(y = "density") +
   scale_x_continuous(breaks = -2:2,
                      expand = c(0, 0)) +
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
+  scale_y_continuous(expand = expansion(add = c(0.001, 0.1)))
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-16-1.png" alt="Mean, median, and mode on the normal distribution." width="672" />
-<p class="caption">(\#fig:modeling-16)Mean, median, and mode on the normal distribution.</p>
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-10-1.png" alt="Mean, median, and mode on the normal distribution." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10)Mean, median, and mode on the normal distribution.</p>
 </div>
 
 
@@ -590,12 +312,12 @@ ggplot(data = tibble(x = c(-0.1, 3)),
   labs(y = "density") +
   scale_x_continuous(breaks = 0:2,
                      expand = c(0, 0)) +
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1)))
+  scale_y_continuous(expand = expansion(add = c(0.001, 0.1)))
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-17-1.png" alt="Mean, median, and mode on the exponential distribution." width="672" />
-<p class="caption">(\#fig:modeling-17)Mean, median, and mode on the exponential distribution.</p>
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-11-1.png" alt="Mean, median, and mode on the exponential distribution." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-11)Mean, median, and mode on the exponential distribution.</p>
 </div>
 
 ### Sampling distributions for median and mean 
@@ -620,22 +342,25 @@ samples = replicate(n = sample_n,
 
 # set up a data frame with samples 
 df.sampling_distribution = matrix(samples, ncol = sample_n) %>%
-  as_tibble(.name_repair = "minimal") %>%
-  set_names(str_c(1:ncol(.))) %>%
-  gather("sample", "number") %>% 
+  as_tibble(.name_repair = ~ str_c(1:sample_n)) %>%
+  pivot_longer(cols = everything(),
+               names_to = "sample",
+               values_to = "number") %>% 
   mutate(sample = as.numeric(sample)) %>% 
   group_by(sample) %>% 
   mutate(draw = 1:n()) %>% 
   select(sample, draw, number) %>% 
   ungroup()
 
-# turn the data frame into long format and calculate the means of each sample
-df.sampling_distribution_means = df.sampling_distribution %>% 
+# turn the data frame into long format and calculate the mean and median of each sample
+df.sampling_distribution_summaries = df.sampling_distribution %>% 
   group_by(sample) %>% 
   summarize(mean = mean(number),
             median = median(number)) %>% 
   ungroup() %>% 
-  gather("index", "value", -sample)
+  pivot_longer(cols = -sample,
+               names_to = "index",
+               values_to = "value")
 ```
 
 And plot it: 
@@ -644,15 +369,15 @@ And plot it:
 ```r
 # plot a histogram of the means with density overlaid 
 
-ggplot(data = df.sampling_distribution_means,
+ggplot(data = df.sampling_distribution_summaries,
        mapping = aes(x = value, color = index)) + 
   stat_density(bw = 0.1,
                size = 2,
                geom = "line") + 
-  scale_y_continuous(expand = expand_scale(mult = c(0, 0.01)))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
 
-<img src="09-modeling_data_files/figure-html/modeling-19-1.png" width="672" />
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 ## Hypothesis testing: "One-sample t-test" 
 
@@ -663,7 +388,8 @@ df.internet = read_table2(file = "data/internet_access.txt") %>%
 ```
 
 ```
-Parsed with column specification:
+
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 cols(
   State = col_character(),
   Internet = col_double(),
@@ -787,25 +513,25 @@ pa = 1
 pc = 0 
 
 df.model = df.internet %>%
-  select(internet, state) %>%
+  select(internet, state) %>% 
   mutate(i = 1:n(),
          compact_b = 75,
          augmented_b = mean(internet),
-         compact_se = (internet - compact_b)^2,
-         augmented_se = (internet - augmented_b)^2) %>%
+         compact_se = (internet-compact_b)^2,
+         augmented_se = (internet-augmented_b)^2) %>% 
   select(i, state, internet, contains("compact"), contains("augmented"))
-
-df.model %>%
+  
+df.model %>% 
   summarize(augmented_sse = sum(augmented_se),
             compact_sse = sum(compact_se),
-            pre = 1 - augmented_sse / compact_sse,
-            f = (pre / (pa - pc)) / ((1 - pre) / (nrow(df.model) - pa)),
-            p_value = 1 - pf(f, pa - pc, nrow(df.model) - 1),
+            pre = 1 - augmented_sse/compact_sse,
+            f = (pre/(pa-pc))/((1-pre)/(nrow(df.model)-pa)),
+            p_value = 1-pf(f, pa-pc, nrow(df.model)-1),
             mean = mean(internet),
-            sd = sd(internet)) %>%
-  kable() %>%
-  kable_styling(bootstrap_options = "striped",
-                full_width = F)
+            sd = sd(internet)) %>% 
+              kable() %>% 
+              kable_styling(bootstrap_options = "striped",
+                          full_width = F)
 ```
 
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -841,26 +567,26 @@ df2 = 49
 
 ggplot(data = tibble(x = c(0, 10)),
        mapping = aes(x = x)) + 
-  # stat_function(fun = "df",
-  #               geom = "area",
-  #               fill = "red",
-  #               alpha = 0.5,
-  #               args = list(df1 = df1,
-  #                           df2 = df2),
-  #               size = 1,
-  #               xlim = c(qf(0.95, df1 = df1, df2 = df2), 10)
-  #               ) + 
   stat_function(fun = "df",
+                geom = "area",
+                fill = "red",
+                alpha = 0.5,
                 args = list(df1 = df1,
                             df2 = df2),
+                size = 1,
+                xlim = c(qf(0.95, df1 = df1, df2 = df2), 10)) +
+  stat_function(fun = ~ df(x = .,
+                           df1 = df1,
+                           df2 = df2),
                 size = 0.5) + 
-  scale_y_continuous(expand = expand_scale(add = c(0.001, 0.1))) +
-  labs(y = "density")
+  scale_y_continuous(expand = expansion(add = c(0.001, 0.1))) +
+  labs(y = "Density",
+       x = "Proportional reduction in error")
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/modeling-23-1.png" alt="The F distribution" width="672" />
-<p class="caption">(\#fig:modeling-23)The F distribution</p>
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-17-1.png" alt="F-distribution" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17)F-distribution</p>
 </div>
 
 We've implemented a one sample t-test (compare the p-value here to the one I computed above using PRE and the F statistic).
@@ -884,6 +610,240 @@ mean of x
    72.806 
 ```
 
+## Building a sampling distribution of PRE 
+
+Here is the general procedure for building a sampling distribution of the proportional reduction in error (PRE). In this instance, I compare the following two models 
+
+- Model C (compact): $Y_i = 75 + \epsilon_i$
+- Model A (augmented): $Y_i = \overline Y + \epsilon_i$
+
+whereby I assume that $\epsilon_i \sim \mathcal{N}(0, \sigma)$.
+
+For this example, I assume that I know the population distribution. I first draw a sample from that distribution, and then calculate PRE. 
+
+
+```r
+# make example reproducible
+set.seed(1)
+
+# set the sample size 
+sample_size = 50 
+
+# draw sample from the population distribution (I've fixed sigma -- the standard deviation
+# of the population distribution to be 5)
+df.sample = tibble(observation = 1:sample_size,
+                   value = 75 + rnorm(sample_size, mean = 0, sd = 5))
+
+# calculate SSE for each model, and then PRE based on that 
+df.summary = df.sample %>% 
+  mutate(compact = 75,
+         augmented = mean(value)) %>% 
+  summarize(sse_compact = sum((value - compact)^2),
+            sse_augmented = sum((value - augmented)^2),
+            pre = 1 - (sse_augmented/sse_compact))
+```
+
+To generate the sampling distribution, I assume that the null hypothesis is true, and then take a look at what values for PRE we could expect by chance for our given sample size. 
+
+
+```r
+# simulation parameters
+n_samples = 1000
+sample_size = 50 
+mu = 75 # true mean of the distribution 
+sigma = 5 # true standard deviation of the errors 
+
+# function to draw samples from the population distribution 
+fun.draw_sample = function(sample_size, mu, sigma){
+  sample = mu + rnorm(sample_size,
+                      mean = 0,
+                      sd = sigma)
+  return(sample)
+}
+
+# draw samples
+samples = n_samples %>% 
+  replicate(fun.draw_sample(sample_size, mu, sigma)) %>% 
+  t() # transpose the resulting matrix (i.e. flip rows and columns)
+
+# put samples in data frame and compute PRE 
+df.samples = samples %>% 
+  as_tibble(.name_repair = ~ str_c(1:ncol(samples))) %>% 
+  mutate(sample = 1:n()) %>% 
+  pivot_longer(cols = -sample,
+               names_to = "index",
+               values_to = "value") %>% 
+  mutate(compact = mu) %>% 
+  group_by(sample) %>% 
+  mutate(augmented = mean(value)) %>% 
+  summarize(sse_compact = sum((value - compact)^2),
+            sse_augmented = sum((value - augmented)^2),
+            pre = 1 - sse_augmented/sse_compact)
+            
+
+# plot the sampling distribution for PRE 
+ggplot(data = df.samples,
+       mapping = aes(x = pre)) +
+  stat_density(geom = "line") + 
+  labs(x = "Proportional reduction in error")
+
+# calculate the p-value for our sample 
+df.samples %>% 
+  summarize(p_value = sum(pre >= df.summary$pre)/n())
+```
+
+```
+# A tibble: 1 x 1
+  p_value
+    <dbl>
+1   0.394
+```
+
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+
+Some code I wrote to show a subset of the samples. 
+
+
+```r
+samples %>% 
+  as_tibble(.name_repair = "unique") %>% 
+  mutate(sample = 1:n()) %>% 
+  pivot_longer(cols = -sample,
+               names_to = "index",
+               values_to = "value") %>% 
+  mutate(compact = mu) %>% 
+  group_by(sample) %>% 
+  mutate(augmented = mean(value)) %>% 
+  ungroup() %>% 
+  mutate(index = str_extract(index, pattern = "\\-*\\d+\\.*\\d*"),
+         index = as.numeric(index)) %>% 
+  filter(index < 6) %>% 
+  arrange(sample, index) %>% 
+    head(15) %>% 
+    kable(digits = 2) %>% 
+    kable_styling(bootstrap_options = "striped",
+                full_width = F)
+```
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> sample </th>
+   <th style="text-align:right;"> index </th>
+   <th style="text-align:right;"> value </th>
+   <th style="text-align:right;"> compact </th>
+   <th style="text-align:right;"> augmented </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 76.99 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 71.94 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 76.71 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 69.35 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 82.17 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.59 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 71.90 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 74.24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 75.21 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 74.24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 70.45 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 74.24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 75.79 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 74.24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 71.73 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 74.24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 77.25 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 74.91 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 73.41 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 70.35 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.38 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 67.56 </td>
+   <td style="text-align:right;"> 75 </td>
+   <td style="text-align:right;"> 75.38 </td>
+  </tr>
+</tbody>
+</table>
+
 ## Additional resources 
 
 ### Reading 
@@ -893,3 +853,51 @@ mean of x
 ### Datacamp 
 
 - [Foundations of Inference](https://www.datacamp.com/courses/foundations-of-inference)
+
+## Session info 
+
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+
+```r
+sessionInfo()
+```
+
+```
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
+ [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     ggplot2_3.3.3   
+ [9] tidyverse_1.3.0  janitor_2.1.0    kableExtra_1.3.1 knitr_1.31      
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.6        lubridate_1.7.9.2 lattice_0.20-41   ps_1.6.0         
+ [5] utf8_1.1.4        assertthat_0.2.1  digest_0.6.27     R6_2.5.0         
+ [9] cellranger_1.1.0  backports_1.2.1   reprex_1.0.0      evaluate_0.14    
+[13] highr_0.8         httr_1.4.2        pillar_1.4.7      rlang_0.4.10     
+[17] readxl_1.3.1      rstudioapi_0.13   Matrix_1.3-2      rmarkdown_2.6    
+[21] labeling_0.4.2    splines_4.0.3     webshot_0.5.2     munsell_0.5.0    
+[25] broom_0.7.3       compiler_4.0.3    modelr_0.1.8      xfun_0.21        
+[29] pkgconfig_2.0.3   mgcv_1.8-33       htmltools_0.5.1.1 tidyselect_1.1.0 
+[33] bookdown_0.21     fansi_0.4.2       viridisLite_0.3.0 crayon_1.4.1     
+[37] dbplyr_2.0.0      withr_2.4.1       grid_4.0.3        nlme_3.1-151     
+[41] jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0   DBI_1.1.1        
+[45] magrittr_2.0.1    scales_1.1.1      cli_2.3.0         stringi_1.5.3    
+[49] farver_2.1.0      fs_1.5.0          snakecase_0.11.0  xml2_1.3.2       
+[53] ellipsis_0.3.1    generics_0.1.0    vctrs_0.3.6       tools_4.0.3      
+[57] glue_1.4.2        hms_1.0.0         yaml_2.2.1        colorspace_2.0-0 
+[61] rvest_0.3.6       haven_2.3.1      
+```

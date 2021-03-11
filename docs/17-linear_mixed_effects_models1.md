@@ -1,206 +1,46 @@
 # Linear mixed effects models 1
 
+## Learning goals 
 
+- Understanding sources of dependence in data. 
+  - fixed effects vs. random effects. 
+- `lmer()` syntax in R. 
+- Understanding the `lmer()` summary. 
+- Simulating data from an `lmer()`.
 
 ## Load packages and set plotting theme  
 
 
 ```r
-library("knitr")      # for knitting RMarkdown 
-library("kableExtra") # for making nice tables
-library("janitor")    # for cleaning column names
-library("broom")    # for tidying up linear models 
+library("knitr")        # for knitting RMarkdown 
+library("kableExtra")   # for making nice tables
+library("janitor")      # for cleaning column names
+library("broom.mixed")  # for tidying up linear models 
+```
+
+```
+## Warning in checkMatrixPackageVersion(): Package version inconsistency detected.
+## TMB was built with Matrix version 1.2.18
+## Current Matrix version is 1.3.2
+## Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package
+```
+
+```r
 library("patchwork")    # for making figure panels
-library("lme4")    # for linear mixed effects models
-library("tidyverse")  # for wrangling, plotting, etc. 
-
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
+library("lme4")         # for linear mixed effects models
+library("tidyverse")    # for wrangling, plotting, etc. 
 ```
 
 
 ```r
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+            theme(text = element_text(size = 20))) #set the default text size
+
+opts_chunk$set(comment = "",
+               fig.show = "hold")
+
+write_bib(.packages(), "packages.bib") 
 ```
-
-## Things that came up in class 
-
-### Comparing t-test with F-test in `lm()`
-
-What's the difference between the t-test on individual predictors in the model and the F-test comparing two models (one with, and one without the predictor)? 
-
-Let's generate some data first: 
-
-
-```r
-# make example reproducible 
-set.seed(1)
-
-# parameters
-sample_size = 100
-b0 = 1
-b1 = 0.5
-b2 = 0.5
-sd = 0.5
-
-# sample
-df.data = tibble(
-  participant = 1:sample_size,
-  x1 = runif(sample_size, min = 0, max = 1),
-  x2 = runif(sample_size, min = 0, max = 1),
-  # simple additive model
-  y = b0 + b1 * x1 + b2 * x2 + rnorm(sample_size, sd = sd) 
-) 
-
-# fit linear model 
-fit = lm(formula = y ~ 1 + x1 + x2,
-         data = df.data)
-
-# print model summary 
-fit %>% summary()
-```
-
-```
-
-Call:
-lm(formula = y ~ 1 + x1 + x2, data = df.data)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--0.9290 -0.3084 -0.0716  0.2676  1.1659 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   0.9953     0.1395   7.133 1.77e-10 ***
-x1            0.4654     0.1817   2.561  0.01198 *  
-x2            0.5072     0.1789   2.835  0.00558 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.4838 on 97 degrees of freedom
-Multiple R-squared:  0.1327,	Adjusted R-squared:  0.1149 
-F-statistic: 7.424 on 2 and 97 DF,  p-value: 0.001
-```
-
-Let's visualize the data: 
-
-
-```r
-df.data %>% 
-  ggplot(data = .,
-         mapping = aes(x = x1,
-                       y = y,
-                       color = x2)) +
-  geom_smooth(method = "lm",
-              color = "black") + 
-  geom_point()
-```
-
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-05-1.png" width="672" />
-
-#### Global F-test 
-
-The global F-test which is shown by the F-statistic at the bottom of the `summary()` output compares the full model with a  model that only has an intercept. So, to use our model comparison approach, we would compare the following two models: 
-
-
-```r
-# fit models 
-model_compact = lm(formula = y ~ 1,
-                   data = df.data)
-
-model_augmented = lm(formula = y ~ 1 + x1 + x2,
-                     data = df.data)
-
-# compare models using the F-test
-anova(model_compact, model_augmented)
-```
-
-```
-Analysis of Variance Table
-
-Model 1: y ~ 1
-Model 2: y ~ 1 + x1 + x2
-  Res.Df    RSS Df Sum of Sq      F Pr(>F)   
-1     99 26.175                              
-2     97 22.700  2    3.4746 7.4236  0.001 **
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-Note how the result of the F-test using the `anova()` function which compares the two models is identical to the F-statistic reported at the end of the `summary` function.
-
-#### Test for individual predictors
-
-To test for individual predictors in the model, we compare two models, a compact model without that predictor, and an augmented model with that predictor. Let's test the significance of `x1`. 
-
-
-```r
-# fit models 
-model_compact = lm(formula = y ~ 1 + x2,
-                   data = df.data)
-
-model_augmented = lm(formula = y ~ 1 + x1 + x2,
-                     data = df.data)
-
-# compare models using the F-test
-anova(model_compact, model_augmented)
-```
-
-```
-Analysis of Variance Table
-
-Model 1: y ~ 1 + x2
-Model 2: y ~ 1 + x1 + x2
-  Res.Df    RSS Df Sum of Sq     F  Pr(>F)  
-1     98 24.235                             
-2     97 22.700  1    1.5347 6.558 0.01198 *
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-Note how the p-value that we get from the F-test is equivalent to the one that we get from the t-test reported in the `summary()` function. The F-test statistic (in the `anova()` result) and the t-value (in the `summary()` of the linear model) are deterministically related. In fact, the relationship is just: 
-
-$$
-t = \sqrt{F}
-$$
-
-Let's check that that's correct: 
-
-
-```r
-# get the t-value from the fitted lm
-t_value = fit %>% 
-  tidy() %>% 
-  filter(term == "x1") %>% 
-  pull(statistic)
-
-# get the F-value from comparing the compact model (without x1) with the 
-# augmented model (with x1)
-
-f_value = anova(model_compact, model_augmented) %>% 
-  tidy() %>% 
-  pull(statistic) %>% 
-  .[2]
-
-# t-value 
-print(str_c("t_value: ", t_value))
-
-# square root of f_value 
-print(str_c("sqrt of f_value: ", sqrt(f_value)))
-```
-
-```
-[1] "t_value: 2.56085255904998"
-[1] "sqrt of f_value: 2.56085255904998"
-```
-
-Yip, they are the same. 
 
 ## Dependence 
 
@@ -211,17 +51,10 @@ Let's generate a data set in which two observations from the same participants a
 # make example reproducible 
 set.seed(1)
 
-df.dependence = data_frame(
-  participant = 1:20,
-  condition1 = rnorm(20),
-  condition2 = condition1 + rnorm(20, mean = 0.2, sd = 0.1)
-) %>% 
+df.dependence = tibble(participant = 1:20,
+                       condition1 = rnorm(20),
+                       condition2 = condition1 + rnorm(20, mean = 0.2, sd = 0.1)) %>% 
   mutate(condition2shuffled = sample(condition2)) # shuffles the condition label
-```
-
-```
-Warning: `data_frame()` is deprecated, use `tibble()`.
-This warning is displayed once per session.
 ```
 
 Let's visualize the original and shuffled data set: 
@@ -229,14 +62,17 @@ Let's visualize the original and shuffled data set:
 
 ```r
 df.plot = df.dependence %>% 
-  gather("condition", "value", -participant) %>% 
+  pivot_longer(cols = -participant,
+               names_to = "condition",
+               values_to = "value") %>% 
   mutate(condition = str_replace(condition, "condition", ""))
 
-p1 = ggplot(data = df.plot %>% filter(condition != "2shuffled"), 
+p1 = ggplot(data = df.plot %>% 
+              filter(condition != "2shuffled"), 
             mapping = aes(x = condition, y = value)) +
   geom_line(aes(group = participant), alpha = 0.3) +
   geom_point() +
-  stat_summary(fun.y = "mean", 
+  stat_summary(fun = "mean", 
                geom = "point",
                shape = 21, 
                fill = "red",
@@ -244,11 +80,12 @@ p1 = ggplot(data = df.plot %>% filter(condition != "2shuffled"),
   labs(title = "original",
        tag = "a)")
 
-p2 = ggplot(data = df.plot %>% filter(condition != "2"), 
+p2 = ggplot(data = df.plot %>% 
+              filter(condition != "2"), 
             mapping = aes(x = condition, y = value)) +
   geom_line(aes(group = participant), alpha = 0.3) +
   geom_point() +
-  stat_summary(fun.y = "mean", 
+  stat_summary(fun = "mean", 
                geom = "point",
                shape = 21, 
                fill = "red",
@@ -259,7 +96,7 @@ p2 = ggplot(data = df.plot %>% filter(condition != "2"),
 p1 + p2 
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-10-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 Let's save the two original and shuffled data set as two separate data sets.
 
@@ -267,12 +104,16 @@ Let's save the two original and shuffled data set as two separate data sets.
 ```r
 # separate the data sets 
 df.original = df.dependence %>% 
-  gather("condition", "value", -participant) %>% 
+  pivot_longer(cols = -participant,
+               names_to = "condition",
+               values_to = "value") %>% 
   mutate(condition = str_replace(condition, "condition", "")) %>% 
   filter(condition != "2shuffled")
 
 df.shuffled = df.dependence %>% 
-  gather("condition", "value", -participant) %>% 
+  pivot_longer(cols = -participant,
+               names_to = "condition",
+               values_to = "value") %>% 
   mutate(condition = str_replace(condition, "condition", "")) %>% 
   filter(condition != "2")
 ```
@@ -285,12 +126,6 @@ Let's run a linear model, and independent samples t-test on the original data se
 lm(formula = value ~ condition,
    data = df.original) %>% 
   summary() 
-
-t.test(df.original$value[df.original$condition == "1"],
-       df.original$value[df.original$condition == "2"],
-       alternative = "two.sided",
-       paired = F
-)
 ```
 
 ```
@@ -310,7 +145,16 @@ condition2    0.1994     0.2864   0.696    0.491
 Residual standard error: 0.9058 on 38 degrees of freedom
 Multiple R-squared:  0.01259,	Adjusted R-squared:  -0.0134 
 F-statistic: 0.4843 on 1 and 38 DF,  p-value: 0.4907
+```
 
+```r
+t.test(df.original$value[df.original$condition == "1"],
+       df.original$value[df.original$condition == "2"],
+       alternative = "two.sided",
+       paired = F)
+```
+
+```
 
 	Welch Two Sample t-test
 
@@ -386,12 +230,9 @@ Data: df.original
 Models:
 fit.compact: value ~ 1 + (1 | participant)
 fit.augmented: value ~ condition + (1 | participant)
-              Df    AIC    BIC   logLik deviance  Chisq Chi Df Pr(>Chisq)
-fit.compact    3 53.315 58.382 -23.6575   47.315                         
-fit.augmented  4 17.849 24.605  -4.9247    9.849 37.466      1  9.304e-10
-                 
-fit.compact      
-fit.augmented ***
+              npar    AIC    BIC   logLik deviance  Chisq Df Pr(>Chisq)    
+fit.compact      3 53.315 58.382 -23.6575   47.315                         
+fit.augmented    4 17.849 24.605  -4.9247    9.849 37.466  1  9.304e-10 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -442,7 +283,8 @@ Let's visualize the linear model's predictions:
 # plot with predictions by fit.independent 
 fit.independent %>% 
   augment() %>% 
-  bind_cols(df.original %>% select(participant)) %>% 
+  bind_cols(df.original %>%
+              select(participant)) %>% 
   clean_names() %>% 
   ggplot(data = .,
          mapping = aes(x = condition,
@@ -456,7 +298,7 @@ fit.independent %>%
             color = "red")
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-17-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 And this is what the residuals look like: 
 
@@ -467,7 +309,8 @@ set.seed(1)
 
 fit.independent %>% 
   augment() %>% 
-  bind_cols(df.original %>% select(participant)) %>% 
+  bind_cols(df.original %>%
+              select(participant)) %>% 
   clean_names() %>% 
   mutate(index = as.numeric(condition),
          index = index + runif(n(), min = -0.3, max = 0.3)) %>% 
@@ -491,7 +334,7 @@ fit.independent %>%
   theme(legend.position = "none")
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-18-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 It's clear from this residual plot, that fitting two separate lines (or points) is not much better than just fitting one line (or point). 
 
@@ -515,7 +358,7 @@ fit.dependent %>%
             color = "red")
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-19-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 Let's compare the residuals of the linear model with that of the linear mixed effects model: 
 
@@ -544,7 +387,7 @@ p2 = fit.dependent %>%
 p1 + p2
 ```
 
-<img src="17-linear_mixed_effects_models1_files/figure-html/lmer1-20-1.png" width="672" />
+<img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 The residuals of the linear mixed effects model are much smaller. Let's test whether taking the individual variation into account is worth it (statistically speaking). 
 
@@ -571,12 +414,9 @@ Data: df.original
 Models:
 fit.compact: value ~ 1 + condition
 fit.augmented: value ~ 1 + condition + (1 | participant)
-              Df     AIC     BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)
-fit.compact    3 109.551 114.617 -51.775  103.551                         
-fit.augmented  4  17.849  24.605  -4.925    9.849 93.701      1  < 2.2e-16
-                 
-fit.compact      
-fit.augmented ***
+              npar     AIC     BIC  logLik deviance  Chisq Df Pr(>Chisq)    
+fit.compact      3 109.551 114.617 -51.775  103.551                         
+fit.augmented    4  17.849  24.605  -4.925    9.849 93.701  1  < 2.2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -588,3 +428,56 @@ Yes, the likelihood of the data given the linear mixed effects model is signific
 ### Readings 
 
 - [Linear mixed effects models tutorial by Bodo Winter](https://arxiv.org/pdf/1308.5499.pdf)
+
+## Session info 
+
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+
+```r
+sessionInfo()
+```
+
+```
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.1     stringr_1.4.0     dplyr_1.0.4       purrr_0.3.4      
+ [5] readr_1.4.0       tidyr_1.1.2       tibble_3.0.6      ggplot2_3.3.3    
+ [9] tidyverse_1.3.0   lme4_1.1-26       Matrix_1.3-2      patchwork_1.1.1  
+[13] broom.mixed_0.2.6 janitor_2.1.0     kableExtra_1.3.1  knitr_1.31       
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2         jsonlite_1.7.2     viridisLite_0.3.0  splines_4.0.3     
+ [5] modelr_0.1.8       assertthat_0.2.1   statmod_1.4.35     highr_0.8         
+ [9] cellranger_1.1.0   yaml_2.2.1         pillar_1.4.7       backports_1.2.1   
+[13] lattice_0.20-41    glue_1.4.2         digest_0.6.27      RColorBrewer_1.1-2
+[17] rvest_0.3.6        snakecase_0.11.0   minqa_1.2.4        colorspace_2.0-0  
+[21] htmltools_0.5.1.1  plyr_1.8.6         pkgconfig_2.0.3    broom_0.7.3       
+[25] haven_2.3.1        bookdown_0.21      scales_1.1.1       webshot_0.5.2     
+[29] mgcv_1.8-33        generics_0.1.0     farver_2.1.0       ellipsis_0.3.1    
+[33] withr_2.4.1        TMB_1.7.18         cli_2.3.0          magrittr_2.0.1    
+[37] crayon_1.4.1       readxl_1.3.1       evaluate_0.14      ps_1.6.0          
+[41] fs_1.5.0           nlme_3.1-151       MASS_7.3-53        xml2_1.3.2        
+[45] tools_4.0.3        hms_1.0.0          lifecycle_1.0.0    munsell_0.5.0     
+[49] reprex_1.0.0       compiler_4.0.3     rlang_0.4.10       grid_4.0.3        
+[53] nloptr_1.2.2.2     rstudioapi_0.13    labeling_0.4.2     rmarkdown_2.6     
+[57] boot_1.3-26        gtable_0.3.0       DBI_1.1.1          reshape2_1.4.4    
+[61] R6_2.5.0           lubridate_1.7.9.2  stringi_1.5.3      Rcpp_1.0.6        
+[65] vctrs_0.3.6        dbplyr_2.0.0       tidyselect_1.1.0   xfun_0.21         
+[69] coda_0.19-4       
+```
+
+## References

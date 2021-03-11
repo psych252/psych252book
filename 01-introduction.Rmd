@@ -62,7 +62,6 @@ library("tidyverse")    # everything else
 
 # Visualization
 library("patchwork")    # making figure panels
-library("cowplot")      # making figure panels
 library("ggpol")        # for making fancy boxplots
 library("ggridges")     # for making joyplots 
 library("gganimate")    # for making animations
@@ -71,13 +70,13 @@ library("ggrepel")      # for labels in ggplots
 library("corrr")        # for calculating correlations between many variables
 library("corrplot")     # for plotting correlations
 library("DiagrammeR")   # for drawing diagrams
+library("ggeffects")    # for visualizing effects
 library("bayesplot")    # for visualization of Bayesian model fits 
 
 # Modeling 
 library("afex")         # also for running ANOVAs
 library("lme4")         # mixed effects models 
 library("emmeans")      # comparing estimated marginal means 
-library("broom")        # getting tidy model summaries
 library("broom.mixed")  # getting tidy mixed model summaries
 library("janitor")      # cleaning variable names 
 library("car")          # for running ANOVAs
@@ -91,6 +90,7 @@ library("multilevel")   # Sobel test
 library("extraDistr")   # additional probability distributions
 library("effects")      # for showing effects in linear, generalized linear, and other models
 library("brms")         # Bayesian regression
+library("parameters")   # For extracting parameters 
 
 # Misc 
 library("tictoc")       # timing things
@@ -99,7 +99,21 @@ library("lsr")          # for computing effect size measures
 library("extrafont")    # additional fonts
 library("pwr")          # for power calculations
 library("arrangements") # fast generators and iterators for permutations, combinations and partitions
+library("stargazer")    # for regression tables
+library("sjPlot")       # for regression tables
+library("xtable")       # for tables
 ```
+
+## Installing packages 
+
+```{r, eval=FALSE, include=FALSE}
+# Note: To get greta to work on my mac, I had to run the following commands 
+devtools::install_github("greta-dev/greta")
+greta::install_tensorflow(method = "conda",
+                   version = "1.14.0",
+                   extra_packages = "tensorflow-probability==0.7.0")
+```
+
 
 ## Session info
 

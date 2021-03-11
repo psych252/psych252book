@@ -1,157 +1,656 @@
-# Bayesian data analysis 1
+# Bayesian data analysis
 
-In this lecture, we did not perform any Bayesian data analysis. I discussed the costs and benefits of Bayesian analysis and introduced the Bayesian model of multi-modal integration based on the Plinko task. 
+## Learning goals 
+
+- Doing Bayesian inference "by hand"
+- Understanding the effect that prior, likelihood, and sample size have on the posterior. 
+- Doing Bayesian data analysis with `greta`
+  - A simple linear regression.
 
 ## Load packages and set plotting theme  
 
 
 ```r
-library("knitr")      # for knitting RMarkdown 
-library("kableExtra") # for making nice tables
-library("modelr")     # for permutation test 
+library("knitr")      # for knitting RMarkdown
+library("janitor")    # for cleaning column names
+library("patchwork")  # for figure panels
+library("tidybayes")  # tidying up results from Bayesian models
+library("greta")      # for writing Bayesian models
+library("gganimate")  # for animations
+library("extraDistr") # additional probability distributions
+library("broom")      # for tidy regression results
 library("tidyverse")  # for wrangling, plotting, etc. 
-
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
 ```
 
 
 ```r
-theme_set(
-  theme_classic() + #set the theme 
-    theme(text = element_text(size = 20)) #set the default text size
-)
+theme_set(theme_classic() + #set the theme 
+    theme(text = element_text(size = 20))) #set the default text size
+
+opts_chunk$set(comment = "",
+               fig.show = "hold")
 ```
 
-## Things that came up 
+## Doing Bayesian inference "by hand"
 
-### Bias in Cosyne 2019 conference admission? 
-
-Code up the data: 
+### Sequential updating based on the Beta distribution 
 
 
 ```r
-# data frame 
-df.conference = tibble(sex = rep(c("female", "male"), c(264, 677)),
-  accepted = rep(c("yes", "no", "yes", "no"), c(83, 264 - 83, 255, 677 - 255))) %>%
-  mutate(accepted = factor(accepted, levels = c("no", "yes"), labels = 0:1),
-    sex = as.factor(sex))
+# data 
+data = c(0, 1, 1, 0, 1, 1, 1, 1)
+
+# whether observation is a success or failure 
+success = c(0, cumsum(data)) 
+failure = c(0, cumsum(1 - data))
+# I've added 0 at the beginning to show the prior
+
+# plotting function
+fun.plot_beta = function(success, failure){
+  ggplot(data = tibble(x = c(0, 1)),
+         mapping = aes(x = x)) +
+    stat_function(fun = "dbeta",
+                  args = list(shape1 = success + 1, shape2 = failure + 1),
+                  geom = "area",
+                  color = "black",
+                  fill = "lightblue") +
+    coord_cartesian(expand = F) +
+    scale_x_continuous(breaks = seq(0.25, 0.75, 0.25)) + 
+    theme(axis.title = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          plot.margin = margin(r = 1, t = 0.5, unit = "cm"))
+}
+
+# generate the plots 
+plots = map2(success, failure, ~ fun.plot_beta(.x, .y))
+
+# make a grid of plots
+wrap_plots(plots, ncol = 3)
+```
+
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
+### Coin flip example 
+
+Is the coin biased? 
+
+
+```r
+# data 
+data = rep(0:1, c(8, 2))
+
+# parameters 
+theta = c(0.1, 0.5, 0.9)
+
+# prior 
+prior = c(0.25, 0.5, 0.25)
+# prior = c(0.1, 0.1, 0.8) # alternative setting of the prior
+# prior = c(0.000001, 0.000001, 0.999998) # another prior setting 
+
+# likelihood 
+likelihood = dbinom(sum(data == 1), size = length(data), prob = theta)
+
+# posterior 
+posterior = likelihood * prior / sum(likelihood * prior)
+
+# store in data frame 
+df.coins = tibble(theta = theta,
+                  prior = prior,
+                  likelihood = likelihood,
+                  posterior = posterior) 
 ```
 
 Visualize the results: 
 
 
 ```r
-df.conference %>% 
+df.coins %>% 
+  pivot_longer(cols = -theta,
+               names_to = "index",
+               values_to = "value") %>% 
+  mutate(index = factor(index, levels = c("prior", "likelihood", "posterior")),
+         theta = factor(theta, labels = c("p = 0.1", "p = 0.5", "p = 0.9"))) %>% 
   ggplot(data = .,
-         mapping = aes(x = sex, fill = accepted)) + 
-  geom_bar(color = "black") + 
-  scale_fill_brewer(palette = "Set1") +
-  coord_flip() +
-  theme(legend.direction = "horizontal",
-        legend.position = "top") + 
-  guides(fill = guide_legend(reverse = T))
+         mapping = aes(x = theta,
+                       y = value,
+                       fill = index)) + 
+  geom_bar(stat = "identity",
+           color = "black") +
+  facet_grid(rows = vars(index),
+             switch = "y",
+             scales = "free") + 
+  annotate("segment", x = -Inf, xend = Inf, y = -Inf, yend = -Inf) + 
+  annotate("segment", x = -Inf, xend = -Inf, y = -Inf, yend = Inf) + 
+  theme(legend.position = "none",
+        strip.background = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line = element_blank())
 ```
 
-<img src="21-bayesian_data_analysis1_files/figure-html/bda1-04-1.png" width="672" />
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
-Run a logistic regression with one binary predictor (Binomial test):
+### Bayesian inference by discretization
+
+#### Effect of the prior 
 
 
 ```r
-# logistic regression
-fit.glm = glm(formula = accepted ~ 1 + sex,
-              family = "binomial",
-              data = df.conference)
+# grid
+theta = seq(0, 1, 0.01)
 
-# model summary 
-fit.glm %>% 
+# data
+data = rep(0:1, c(8, 2))
+
+# calculate posterior
+df.prior_effect = tibble(theta = theta, 
+                  prior_uniform = dbeta(theta, shape1 = 1, shape2 = 1),
+                  prior_normal = dbeta(theta, shape1 = 5, shape2 = 5),
+                  prior_biased = dbeta(theta, shape1 = 8, shape2 = 2)) %>% 
+  pivot_longer(cols = -theta,
+               names_to = "prior_index",
+               values_to = "prior") %>% 
+  mutate(likelihood = dbinom(sum(data == 1),
+                             size = length(data),
+                             prob = theta)) %>% 
+  group_by(prior_index) %>% 
+  mutate(posterior = likelihood * prior / sum(likelihood * prior)) %>% 
+  ungroup() %>% 
+  pivot_longer(cols = -c(theta, prior_index),
+               names_to = "index",
+               values_to = "value")
+
+# make the plot
+df.prior_effect %>% 
+  mutate(index = factor(index, levels = c("prior", "likelihood", "posterior")),
+         prior_index = factor(prior_index,
+                              levels = c("prior_uniform", "prior_normal", "prior_biased"),
+                              labels = c("uniform", "symmetric", "asymmetric"))) %>% 
+  ggplot(data = .,
+         mapping = aes(x = theta,
+                       y = value,
+                       color = index)) +
+  geom_line(size = 1) + 
+  facet_grid(cols = vars(prior_index),
+             rows = vars(index),
+             scales = "free",
+             switch = "y") +
+  scale_x_continuous(breaks = seq(0, 1, 0.2)) +
+  annotate("segment", x = -Inf, xend = Inf, y = -Inf, yend = -Inf) + 
+  annotate("segment", x = -Inf, xend = -Inf, y = -Inf, yend = Inf) + 
+  theme(legend.position = "none",
+        strip.background = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_text(size = 10),
+        axis.line = element_blank())
+```
+
+<div class="figure">
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-6-1.png" alt="Illustration of how the prior affects the posterior." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-6)Illustration of how the prior affects the posterior.</p>
+</div>
+
+#### Effect of the likelihood 
+
+
+```r
+# grid
+theta = seq(0, 1, 0.01)
+
+df.likelihood_effect = tibble(theta = theta, 
+                              prior = dbeta(theta, shape1 = 2, shape2 = 8),
+                              likelihood_left = dbeta(theta, shape1 = 1, shape2 = 9),
+                              likelihood_center = dbeta(theta, shape1 = 5, shape2 = 5),
+                              likelihood_right = dbeta(theta, shape1 = 9, shape2 = 1)) %>% 
+  pivot_longer(cols = -c(theta, prior),
+               names_to = "likelihood_index",
+               values_to = "likelihood") %>% 
+  group_by(likelihood_index) %>% 
+  mutate(posterior = likelihood * prior / sum(likelihood * prior)) %>% 
+  ungroup() %>% 
+  pivot_longer(cols = -c(theta, likelihood_index),
+               names_to = "index",
+               values_to = "value")
+
+df.likelihood_effect %>% 
+  mutate(index = factor(index, levels = c("prior", "likelihood", "posterior")),
+         likelihood_index = factor(likelihood_index,
+                                   levels = c("likelihood_left",
+                                              "likelihood_center",
+                                              "likelihood_right"),
+                                   labels = c("left", "center", "right"))) %>% 
+  ggplot(data = .,
+         mapping = aes(x = theta,
+                       y = value,
+                       color = index)) +
+  geom_line(size = 1) + 
+  facet_grid(cols = vars(likelihood_index),
+             rows = vars(index),
+             scales = "free",
+             switch = "y") +
+  scale_x_continuous(breaks = seq(0, 1, 0.2)) +
+  annotate("segment", x = -Inf, xend = Inf, y = -Inf, yend = -Inf) + 
+  annotate("segment", x = -Inf, xend = -Inf, y = -Inf, yend = Inf) + 
+  theme(legend.position = "none",
+        strip.background = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_text(size = 10),
+        axis.line = element_blank(),
+        strip.text.x = element_blank())
+```
+
+<div class="figure">
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-7-1.png" alt="Illustration of how the likelihood of the data affects the posterior." width="672" />
+<p class="caption">(\#fig:unnamed-chunk-7)Illustration of how the likelihood of the data affects the posterior.</p>
+</div>
+
+#### Effect of the sample size  
+
+
+```r
+# grid
+theta = seq(0, 1, 0.01)
+
+df.sample_size_effect = tibble(theta = theta, 
+                               prior = dbeta(theta, shape1 = 5, shape2 = 5),
+                               likelihood_low = dbeta(theta, shape1 = 2, shape2 = 8),
+                               likelihood_medium = dbeta(theta,
+                                                         shape1 = 10,
+                                                         shape2 = 40),
+                               likelihood_high = dbeta(theta,
+                                                       shape1 = 20,
+                                                       shape2 = 80)) %>% 
+  pivot_longer(cols = -c(theta, prior),
+               names_to = "likelihood_index",
+               values_to = "likelihood") %>% 
+  group_by(likelihood_index) %>% 
+  mutate(posterior = likelihood * prior / sum(likelihood * prior)) %>% 
+  ungroup() %>% 
+  pivot_longer(cols = -c(theta, likelihood_index),
+               names_to = "index",
+               values_to = "value")
+
+df.sample_size_effect %>% 
+  mutate(index = factor(index, levels = c("prior", "likelihood", "posterior")),
+         likelihood_index = factor(likelihood_index,
+                                   levels = c("likelihood_low",
+                                              "likelihood_medium",
+                                              "likelihood_high"),
+                                   labels = c("n = low", "n = medium", "n = high"))) %>% 
+  ggplot(data = .,
+         mapping = aes(x = theta,
+                       y = value,
+                       color = index)) +
+  geom_line(size = 1) + 
+  facet_grid(cols = vars(likelihood_index),
+             rows = vars(index),
+             scales = "free",
+             switch = "y") +
+  scale_x_continuous(breaks = seq(0, 1, 0.2)) +
+  annotate("segment", x = -Inf, xend = Inf, y = -Inf, yend = -Inf) + 
+  annotate("segment", x = -Inf, xend = -Inf, y = -Inf, yend = Inf) + 
+  theme(legend.position = "none",
+        strip.background = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_text(size = 10),
+        axis.line = element_blank())
+```
+
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+
+## Doing Bayesian inference with Greta 
+
+You can find out more about how get started with "greta" here: [https://greta-stats.org/articles/get_started.html](https://greta-stats.org/articles/get_started.html). Make sure to install the development version of "greta" (as shown in the "install-packages" code chunk above: `devtools::install_github("greta-dev/greta")`).
+
+### Attitude data set 
+
+
+```r
+# load the attitude data set 
+df.attitude = attitude
+```
+
+Visualize relationship between how well complaints are handled and the overall rating of an employee
+
+
+```r
+ggplot(data = df.attitude,
+       mapping = aes(x = complaints,
+                     y = rating)) +
+  geom_point()
+```
+
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+
+### Frequentist analysis 
+
+
+```r
+# fit model 
+fit.lm = lm(formula = rating ~ 1 + complaints, 
+            data = df.attitude)
+
+# print summary
+fit.lm %>% 
   summary()
 ```
 
 ```
 
 Call:
-glm(formula = accepted ~ 1 + sex, family = "binomial", data = df.conference)
+lm(formula = rating ~ 1 + complaints, data = df.attitude)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--0.9723  -0.9723  -0.8689   1.3974   1.5213  
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.8799  -5.9905   0.1783   6.2978   9.6294 
 
 Coefficients:
-            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  -0.7797     0.1326  -5.881 4.07e-09 ***
-sexmale       0.2759     0.1545   1.786   0.0741 .  
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 14.37632    6.61999   2.172   0.0385 *  
+complaints   0.75461    0.09753   7.737 1.99e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 1228.9  on 940  degrees of freedom
-Residual deviance: 1225.6  on 939  degrees of freedom
-AIC: 1229.6
-
-Number of Fisher Scoring iterations: 4
+Residual standard error: 6.993 on 28 degrees of freedom
+Multiple R-squared:  0.6813,	Adjusted R-squared:  0.6699 
+F-statistic: 59.86 on 1 and 28 DF,  p-value: 1.988e-08
 ```
 
-The results of the logistic regression are not quite significant (at least when considering a two-tailed test) with $p = .0741$. 
-
-Let's run a permutation test (as suggested by the tweet I showed in class):
+Visualize the model's predictions
 
 
 ```r
-# make example reproducible 
+ggplot(data = df.attitude,
+       mapping = aes(x = complaints,
+                     y = rating)) +
+  geom_smooth(method = "lm",
+              color = "black") + 
+  geom_point()
+```
+
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+
+### Bayesian regression
+
+#### Fit the model
+
+
+```r
 set.seed(1)
 
-# difference in proportion 
-fun.difference = function(df){
-  df %>% 
-    as_tibble() %>% 
-    count(sex, accepted) %>% 
-    group_by(sex) %>% 
-    mutate(proportion = n / sum(n)) %>% 
-    filter(accepted == 1) %>% 
-    select(sex, proportion) %>% 
-    spread(sex, proportion) %>% 
-    mutate(difference = male - female) %>% 
-    pull(difference)  
-}
+# variables & priors
+b0 = normal(0, 10)
+b1 = normal(0, 10)
+sd = cauchy(0, 3, truncation = c(0, Inf))
 
-# actual difference 
-difference = df.conference %>% 
-  fun.difference()
+# linear predictor
+mu = b0 + b1 * df.attitude$complaints
 
-# permutation test 
-df.permutation = df.conference %>% 
-  permute(n = 1000, sex) %>% 
-  mutate(difference = map_dbl(perm, ~ fun.difference(.)))
+# observation model (likelihood)
+distribution(df.attitude$rating) = normal(mu, sd)
+
+# define the model
+m = model(b0, b1, sd)
 ```
 
-Let's calculate the p-value based on the permutation test: 
+Visualize the model as graph: 
 
 
 ```r
-sum(df.permutation$difference > difference) / nrow(df.permutation)
+# plotting
+plot(m)
 ```
 
-```
-[1] 0.026
+```{=html}
+<div id="htmlwidget-466d62322b30683bf1b7" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-466d62322b30683bf1b7">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       rankdir = \"LR\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"b0\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"2\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"3\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"4\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"5\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"6\" [label = \"mu\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"7\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"8\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"9\" [label = \"sd\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"10\" [label = \"cauchy\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"11\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"12\" [label = \"3\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"13\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"14\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"15\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"16\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"17\" [label = \"b1\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"18\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"19\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"20\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"21\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"22\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n\"1\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"expand_dim\", style = \"solid\"] \n\"2\"->\"1\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"3\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"4\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"5\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"6\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"7\"->\"13\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"8\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"9\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"expand_dim\", style = \"solid\"] \n\"10\"->\"9\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"11\"->\"10\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"location\", style = \"solid\"] \n\"12\"->\"10\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"scale\", style = \"solid\"] \n\"14\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"15\"->\"14\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"set_dim\", style = \"solid\"] \n\"16\"->\"15\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"17\"->\"16\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"expand_dim\", style = \"solid\"] \n\"18\"->\"17\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"19\"->\"18\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"20\"->\"18\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"21\"->\"15\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"22\"->\"21\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"set_dim\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
-And let's visualize the result (showing our observed value and comparing it to the sampling distribution under the null hypothesis):  
+Draw samples from the posterior distribution: 
 
 
 ```r
-df.permutation %>% 
+set.seed(1)
+
+# sampling
+draws = mcmc(m, n_samples = 1000)
+
+# tidy up the draws
+df.draws = tidy_draws(draws) %>% 
+  clean_names()
+```
+
+#### Visualize the priors
+
+These are the priors I used for the intercept, regression weights, and the standard deviation of the Gaussian likelihood function:  
+
+
+```r
+# Gaussian
+ggplot(tibble(x = c(-30, 30)),
+       aes(x = x)) +
+  stat_function(fun = "dnorm", 
+                size = 2,
+                args = list(sd = 10))
+
+# Cauchy
+ggplot(tibble(x = c(0, 30)),
+       aes(x = x)) +
+  stat_function(fun = "dcauchy", 
+                size = 2,
+                args = list(location = 0,
+                            scale = 3))
+```
+
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-16-1.png" width="672" /><img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-16-2.png" width="672" />
+
+#### Visualize the posteriors
+
+This is what the posterior looks like for the three parameters in the model: 
+
+
+```r
+df.draws %>% 
+  select(draw:sd) %>% 
+  pivot_longer(cols = -draw,
+               names_to = "index",
+               values_to = "value") %>% 
   ggplot(data = .,
-         mapping = aes(x = difference)) +
+         mapping = aes(x = value)) + 
   stat_density(geom = "line") + 
-  geom_vline(xintercept = difference, 
-             color = "red",
-              size = 1)
+  facet_grid(rows = vars(index),
+             scales = "free_y",
+             switch = "y") + 
+  annotate("segment", x = -Inf, xend = Inf, y = -Inf, yend = -Inf) + 
+  annotate("segment", x = -Inf, xend = -Inf, y = -Inf, yend = Inf) + 
+  theme(legend.position = "none",
+        strip.background = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_text(size = 10),
+        axis.line = element_blank(),
+        strip.text.x = element_blank())
 ```
 
-<img src="21-bayesian_data_analysis1_files/figure-html/bda1-08-1.png" width="672" />
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+#### Credible interval vs. confidence interval 
+
+
+```r
+fit.lm %>% 
+  tidy(conf.int = T) %>% 
+  ggplot(mapping = aes(y = term,
+                       x = estimate,
+                       xmin = conf.low,
+                       xmax = conf.high)) +
+  geom_pointrange()
+```
+
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+
+
+
+#### Visualize model predictions 
+
+Let's take some samples from the posterior to visualize the model predictions: 
+
+
+```r
+ggplot(data = df.attitude,
+       mapping = aes(x = complaints, 
+                     y = rating)) + 
+  geom_abline(data = df.draws %>% 
+                slice_sample(n = 50),
+              mapping = aes(intercept = b0, 
+                            slope = b1),
+              alpha = 0.3,
+              color = "lightblue") + 
+  geom_point() 
+```
+
+<img src="21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+
+#### Posterior predictive check 
+
+Let's make an animation that illustrates what predicted data sets (based on samples from the posterior) would look like: 
+
+
+```r
+p = df.draws %>% 
+  slice_sample(n = 10) %>%  
+  mutate(complaints = list(seq(min(df.attitude$complaints),
+                               max(df.attitude$complaints),
+                               length.out = nrow(df.attitude)))) %>% 
+  unnest(c(complaints)) %>% 
+  mutate(prediction = b0 + b1 * complaints + rnorm(n(), sd = sd)) %>% 
+  ggplot(aes(x = complaints, y = prediction)) + 
+  geom_point(alpha = 0.8,
+             color = "lightblue") +
+  geom_point(data = df.attitude,
+             aes(y = rating,
+                 x = complaints)) +
+  coord_cartesian(xlim = c(20, 100),
+                  ylim = c(20, 100)) +
+  transition_manual(draw)
+
+animate(p,
+        nframes = 60,
+        width = 800,
+        height = 600,
+        res = 96,
+        type = "cairo")
+
+# anim_save("posterior_predictive.gif")
+```
+
+![](21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-20-1.gif)<!-- -->
+
+#### Prior predictive check 
+
+And let's illustrate what data we would have expected to see just based on the information that we encoded in our priors. 
+
+
+```r
+sample_size = 10
+
+p = tibble(b0 = rnorm(sample_size, mean = 0, sd = 10),
+           b1 = rnorm(sample_size, mean = 0, sd = 10),
+           sd = rhcauchy(sample_size, sigma = 3),
+           draw = 1:sample_size) %>% 
+  mutate(complaints = list(runif(nrow(df.attitude),
+                                 min = min(df.attitude$complaints),
+                                 max = max(df.attitude$complaints)))) %>% 
+  unnest(c(complaints)) %>% 
+  mutate(prediction = b0 + b1 * complaints + rnorm(n(), sd = sd)) %>% 
+  ggplot(aes(x = complaints, y = prediction)) + 
+  geom_point(alpha = 0.8,
+             color = "lightblue") +
+  geom_point(data = df.attitude,
+             aes(y = rating,
+                 x = complaints)) +
+  transition_manual(draw)
+
+animate(p,
+        nframes = 60,
+        width = 800,
+        height = 600,
+        res = 96,
+        type = "cairo")
+
+# anim_save("prior_predictive.gif")
+```
+
+![](21-bayesian_data_analysis1_files/figure-html/unnamed-chunk-21-1.gif)<!-- -->
+
+## Session info 
+
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+
+```r
+sessionInfo()
+```
+
+```
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
+ [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     tidyverse_1.3.0 
+ [9] broom_0.7.3      extraDistr_1.9.1 gganimate_1.0.7  ggplot2_3.3.3   
+[13] greta_0.3.1.9012 tidybayes_2.3.1  patchwork_1.1.1  janitor_2.1.0   
+[17] knitr_1.31      
+
+loaded via a namespace (and not attached):
+ [1] nlme_3.1-151         fs_1.5.0             lubridate_1.7.9.2   
+ [4] RColorBrewer_1.1-2   progress_1.2.2       httr_1.4.2          
+ [7] DiagrammeRsvg_0.1    tools_4.0.3          backports_1.2.1     
+[10] R6_2.5.0             DBI_1.1.1            mgcv_1.8-33         
+[13] colorspace_2.0-0     ggdist_2.4.0         withr_2.4.1         
+[16] tidyselect_1.1.0     prettyunits_1.1.1    curl_4.3            
+[19] compiler_4.0.3       cli_2.3.0            rvest_0.3.6         
+[22] arrayhelpers_1.1-0   xml2_1.3.2           labeling_0.4.2      
+[25] bookdown_0.21        scales_1.1.1         tfruns_1.5.0        
+[28] digest_0.6.27        rmarkdown_2.6        base64enc_0.1-3     
+[31] pkgconfig_2.0.3      htmltools_0.5.1.1    parallelly_1.23.0   
+[34] dbplyr_2.0.0         highr_0.8            htmlwidgets_1.5.3   
+[37] rlang_0.4.10         readxl_1.3.1         rstudioapi_0.13     
+[40] visNetwork_2.0.9     farver_2.1.0         generics_0.1.0      
+[43] svUnit_1.0.3         jsonlite_1.7.2       tensorflow_2.2.0    
+[46] distributional_0.2.1 magrittr_2.0.1       Matrix_1.3-2        
+[49] Rcpp_1.0.6           munsell_0.5.0        reticulate_1.18     
+[52] lifecycle_1.0.0      stringi_1.5.3        whisker_0.4         
+[55] yaml_2.2.1           snakecase_0.11.0     plyr_1.8.6          
+[58] grid_4.0.3           parallel_4.0.3       listenv_0.8.0       
+[61] crayon_1.4.1         lattice_0.20-41      haven_2.3.1         
+[64] splines_4.0.3        hms_1.0.0            ps_1.6.0            
+[67] pillar_1.4.7         igraph_1.2.6         codetools_0.2-18    
+[70] reprex_1.0.0         glue_1.4.2           evaluate_0.14       
+[73] V8_3.4.0             gifski_0.8.6         modelr_0.1.8        
+[76] vctrs_0.3.6          tweenr_1.0.1         cellranger_1.1.0    
+[79] gtable_0.3.0         future_1.21.0        assertthat_0.2.1    
+[82] xfun_0.21            coda_0.19-4          DiagrammeR_1.0.6.1  
+[85] globals_0.14.0       ellipsis_0.3.1      
+```

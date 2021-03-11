@@ -1,7 +1,5 @@
 # Linear model 4
 
-
-
 ## Load packages and set plotting theme  
 
 
@@ -11,15 +9,9 @@ library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
 library("broom")      # for tidying up linear models 
 library("afex")       # for running ANOVAs
-library("emmeans")    # for calculating constrasts
+library("emmeans")    # for calculating contrasts
 library("car")        # for calculating ANOVAs
 library("tidyverse")  # for wrangling, plotting, etc.
-
-opts_chunk$set(
-  comment = "",
-  results = "hold",
-  fig.show = "hold"
-)
 ```
 
 
@@ -28,6 +20,13 @@ theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
 )
+
+# these options here change the formatting of how comments are rendered
+opts_chunk$set(comment = "",
+               fig.show = "hold")
+
+# include references for used packages
+write_bib(.packages(), "packages.bib") 
 ```
 
 ## Load data sets
@@ -51,527 +50,9 @@ df.poker = read_csv("data/poker.csv") %>%
   select(participant, everything())
 ```
 
-```
-Parsed with column specification:
-cols(
-  skill = col_double(),
-  hand = col_double(),
-  limit = col_double(),
-  balance = col_double()
-)
-```
+## Linear contrasts 
 
-```r
-df.poker.unbalanced = df.poker %>% 
-  filter(!participant %in% 1:10)
-```
-
-## Variance decomposition in one-way ANOVA
-
-Let's first run the model 
-
-
-```r
-fit = lm(formula = balance ~ hand, 
-         data = df.poker)
-
-fit %>%
-  anova()
-```
-
-```
-Analysis of Variance Table
-
-Response: balance
-           Df Sum Sq Mean Sq F value    Pr(>F)    
-hand        2 2559.4  1279.7  75.703 < 2.2e-16 ***
-Residuals 297 5020.6    16.9                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-### Calculate sums of squares
-
-And then let's make sure that we understand how the variance is broken down:  
-
-
-```r
-df.poker %>% 
-  mutate(mean_grand = mean(balance)) %>% 
-  group_by(hand) %>% 
-  mutate(mean_group = mean(balance)) %>% 
-  ungroup() %>% 
-  summarize(variance_total = sum((balance - mean_grand)^2),
-            variance_model = sum((mean_group - mean_grand)^2),
-            variance_residual = variance_total - variance_model)
-```
-
-```
-# A tibble: 1 x 3
-  variance_total variance_model variance_residual
-           <dbl>          <dbl>             <dbl>
-1          7580.          2559.             5021.
-```
-
-### Visualize model predictions 
-
-#### Total variance
-
-
-```r
-set.seed(1)
-
-fit_c = lm(formula = balance ~ 1,
-           data = df.poker)
-
-df.plot = df.poker %>% 
-  mutate(hand_jitter = 1 + runif(n(), min = -0.25, max = 0.25))
-
-df.augment = fit_c %>% 
-  augment() %>% 
-  clean_names() %>% 
-  bind_cols(df.plot %>% select(balance, hand, hand_jitter))
-
-ggplot(data = df.plot, 
-       mapping = aes(x = hand_jitter,
-                       y = balance,
-                       fill = hand)) + 
-  geom_hline(yintercept = mean(df.poker$balance)) +
-  geom_point(alpha = 0.5) + 
-  geom_segment(data = df.augment,
-               aes(xend = hand_jitter,
-                   yend = fitted),
-               alpha = 0.2) +
-  labs(y = "balance") + 
-  theme(legend.position = "none",
-        axis.text.x = element_blank(),
-        axis.title.x = element_blank())
-```
-
-<img src="13-linear_model4_files/figure-html/linear-model4-07-1.png" width="672" />
-
-#### Model variance
-
-
-```r
-set.seed(1)
-
-df.plot = df.poker %>% 
-  mutate(hand_jitter = hand %>% as.numeric(),
-         hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4)) %>% 
-  group_by(hand) %>% 
-  mutate(mean_group = mean(balance)) %>% 
-  ungroup() %>% 
-  mutate(mean_grand = mean(balance))
-  
-df.means = df.poker %>% 
-  group_by(hand) %>% 
-  summarize(mean = mean(balance)) %>% 
-  spread(hand, mean)
-
-ggplot(data = df.plot,
-       mapping = aes(x = hand_jitter,
-                       y = mean_group,
-                       color = hand)) + 
-  geom_point(alpha = 0.8) +
-  geom_segment(data = NULL,
-               aes(x = 0.6,
-                   xend = 1.4,
-                   y = df.means$bad,
-                   yend = df.means$bad
-                   ),
-               color = "red",
-               size = 1) +
-  geom_segment(data = NULL,
-               aes(x = 1.6,
-                   xend = 2.4,
-                   y = df.means$neutral,
-                   yend = df.means$neutral
-                   ),
-               color = "orange",
-               size = 1) +
-  geom_segment(data = NULL,
-               aes(x = 2.6,
-                   xend = 3.4,
-                   y = df.means$good,
-                   yend = df.means$good
-                   ),
-               color = "green",
-               size = 1) +
-  geom_segment(aes(xend = hand_jitter,
-                   y = mean_group,
-                   yend = mean_grand),
-               alpha = 0.3) +
-  geom_hline(yintercept = mean(df.poker$balance),
-             size = 1) + 
-  labs(y = "balance") + 
-  scale_color_manual(values = c("red", "orange", "green")) + 
-  scale_x_continuous(breaks = 1:3, labels = c("bad", "neutral", "good")) + 
-  scale_y_continuous(breaks = c(0, 10, 20), labels = c(0, 10, 20), limits = c(0, 25)) + 
-  theme(legend.position = "none",
-        axis.title.x = element_blank())
-```
-
-<img src="13-linear_model4_files/figure-html/linear-model4-08-1.png" width="672" />
-
-#### Residual variance 
-
-
-```r
-set.seed(1)
-
-fit_a = lm(formula = balance ~ hand,
-           data = df.poker)
-
-df.plot = df.poker %>% 
-  mutate(hand_jitter = hand %>% as.numeric(),
-         hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4))
-
-df.tidy = fit_a %>% 
-  tidy() %>% 
-  select_if(is.numeric) %>% 
-  mutate_all(funs(round, .args = list(digits = 2)))
-```
-
-```
-Warning: funs() is soft deprecated as of dplyr 0.8.0
-please use list() instead
-
-# Before:
-funs(name = f(.)
-
-# After: 
-list(name = ~f(.))
-This warning is displayed once per session.
-```
-
-```r
-df.augment = fit_a %>% 
-  augment() %>%
-  clean_names() %>% 
-  bind_cols(df.plot %>% select(hand_jitter))
-
-ggplot(data = df.plot,
-       mapping = aes(x = hand_jitter,
-                       y = balance,
-                       color = hand)) + 
-  geom_point(alpha = 0.8) +
-  geom_segment(data = NULL,
-               aes(x = 0.6,
-                   xend = 1.4,
-                   y = df.tidy$estimate[1],
-                   yend = df.tidy$estimate[1]
-                   ),
-               color = "red",
-               size = 1) +
-  geom_segment(data = NULL,
-               aes(x = 1.6,
-                   xend = 2.4,
-                   y = df.tidy$estimate[1] + df.tidy$estimate[2],
-                   yend = df.tidy$estimate[1] + df.tidy$estimate[2]
-                   ),
-               color = "orange",
-               size = 1) +
-  geom_segment(data = NULL,
-               aes(x = 2.6,
-                   xend = 3.4,
-                   y = df.tidy$estimate[1] + df.tidy$estimate[3],
-                   yend = df.tidy$estimate[1] + df.tidy$estimate[3]
-                   ),
-               color = "green",
-               size = 1) +
-  geom_segment(data = df.augment,
-               aes(xend = hand_jitter,
-                   y = balance,
-                   yend = fitted),
-               alpha = 0.3) +
-  labs(y = "balance") + 
-  scale_color_manual(values = c("red", "orange", "green")) + 
-  scale_x_continuous(breaks = 1:3, labels = c("bad", "neutral", "good")) + 
-  theme(legend.position = "none",
-        axis.title.x = element_blank())
-```
-
-<img src="13-linear_model4_files/figure-html/linear-model4-09-1.png" width="672" />
-
-## Two-way ANOVA (linear model)
-
-Let's fit the model first:
-
-
-```r
-fit = lm(formula = balance ~ hand + skill, 
-         data = df.poker)
-
-fit %>%
-  anova()
-```
-
-```
-Analysis of Variance Table
-
-Response: balance
-           Df Sum Sq Mean Sq F value Pr(>F)    
-hand        2 2559.4 1279.70 76.0437 <2e-16 ***
-skill       1   39.3   39.35  2.3383 0.1273    
-Residuals 296 4981.2   16.83                   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-### Calculate sums of squares
-
-
-```r
-df.poker %>% 
-  mutate(mean_grand = mean(balance)) %>% 
-  group_by(skill) %>% 
-  mutate(mean_skill = mean(balance)) %>%
-  group_by(hand) %>% 
-  mutate(mean_hand = mean(balance)) %>%
-  ungroup() %>%
-  summarize(variance_total = sum((balance - mean_grand)^2),
-            variance_skill = sum((mean_skill - mean_grand)^2),
-            variance_hand = sum((mean_hand - mean_grand)^2),
-            variance_residual = variance_total - variance_skill - variance_hand)
-```
-
-```
-# A tibble: 1 x 4
-  variance_total variance_skill variance_hand variance_residual
-           <dbl>          <dbl>         <dbl>             <dbl>
-1          7580.           39.3         2559.             4981.
-```
-
-### Visualize model predictions
-
-#### `Skill` factor
-
-
-```r
-set.seed(1)
-
-df.plot = df.poker %>% 
-  mutate(skill_jitter = skill %>% as.numeric(),
-         skill_jitter = skill_jitter + runif(n(), min = -0.4, max = 0.4)) %>% 
-  group_by(skill) %>% 
-  mutate(mean_group = mean(balance)) %>% 
-  ungroup() %>% 
-  mutate(mean_grand = mean(balance))
-  
-df.means = df.poker %>% 
-  group_by(skill) %>% 
-  summarize(mean = mean(balance)) %>% 
-  spread(skill, mean)
-
-ggplot(data = df.plot,
-       mapping = aes(x = skill_jitter,
-                       y = mean_group,
-                       color = skill)) + 
-  geom_point(alpha = 0.8) +
-  geom_segment(data = NULL,
-               aes(x = 0.6,
-                   xend = 1.4,
-                   y = df.means$average,
-                   yend = df.means$average
-                   ),
-               color = "black",
-               size = 1) +
-  geom_segment(data = NULL,
-               aes(x = 1.6,
-                   xend = 2.4,
-                   y = df.means$expert,
-                   yend = df.means$expert
-                   ),
-               color = "gray50",
-               size = 1) +
-  geom_segment(aes(xend = skill_jitter,
-                   y = mean_group,
-                   yend = mean_grand),
-               alpha = 0.3) +
-  geom_hline(yintercept = mean(df.poker$balance),
-             size = 1) + 
-  labs(y = "balance") + 
-  scale_color_manual(values = c("black", "gray50")) + 
-  scale_x_continuous(breaks = 1:2, labels = c("average", "expert")) + 
-  scale_y_continuous(breaks = c(0, 10, 20), labels = c(0, 10, 20), limits = c(0, 25)) +
-  theme(legend.position = "none",
-        axis.title.x = element_blank())
-```
-
-<img src="13-linear_model4_files/figure-html/linear-model4-12-1.png" width="672" />
-
-## ANOVA with unbalanced design
-
-For the standard `anova()` function, the order of the independent predictors matters when the design is unbalanced. 
-
-
-```r
-# one order 
-lm(formula = balance ~ skill + hand, 
-         data = df.poker.unbalanced) %>% 
-  anova()
-
-# another order 
-lm(formula = balance ~ hand + skill, 
-         data = df.poker.unbalanced) %>% 
-  anova()
-```
-
-```
-Analysis of Variance Table
-
-Response: balance
-           Df Sum Sq Mean Sq F value  Pr(>F)    
-skill       1   74.3   74.28  4.2904 0.03922 *  
-hand        2 2385.1 1192.57 68.8827 < 2e-16 ***
-Residuals 286 4951.5   17.31                    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-Analysis of Variance Table
-
-Response: balance
-           Df Sum Sq Mean Sq F value Pr(>F)    
-hand        2 2419.8 1209.92 69.8845 <2e-16 ***
-skill       1   39.6   39.59  2.2867 0.1316    
-Residuals 286 4951.5   17.31                   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-For unbalanced designs, we should compute an ANOVA with type 3 sums of squares. 
-
-
-```r
-# one order
-lm(formula = balance ~ hand + skill,
-   data = df.poker,
-   contrasts = list(hand = "contr.sum", 
-                    skill = "contr.sum")) %>% 
-  Anova(type = "3")
-
-# another order
-lm(formula = balance ~ skill + hand,
-   data = df.poker,
-   contrasts = list(hand = "contr.sum", 
-                    skill = "contr.sum")) %>% 
-  Anova(type = "3")
-```
-
-```
-Anova Table (Type III tests)
-
-Response: balance
-             Sum Sq  Df   F value Pr(>F)    
-(Intercept) 28644.7   1 1702.1527 <2e-16 ***
-hand         2559.4   2   76.0437 <2e-16 ***
-skill          39.3   1    2.3383 0.1273    
-Residuals    4981.2 296                     
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-Anova Table (Type III tests)
-
-Response: balance
-             Sum Sq  Df   F value Pr(>F)    
-(Intercept) 28644.7   1 1702.1527 <2e-16 ***
-skill          39.3   1    2.3383 0.1273    
-hand         2559.4   2   76.0437 <2e-16 ***
-Residuals    4981.2 296                     
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-Now, the order of the independent variables doesn't matter anymore. 
-
-We can also use the `aov_ez()` function from the `afex` package. 
-
-
-```r
-fit = aov_ez(id = "participant",
-             dv = "balance",
-             data = df.poker,
-             between = c("hand", "skill"))
-```
-
-```
-Contrasts set to contr.sum for the following variables: hand, skill
-```
-
-```r
-fit$Anova
-```
-
-```
-Anova Table (Type III tests)
-
-Response: dv
-             Sum Sq  Df   F value    Pr(>F)    
-(Intercept) 28644.7   1 1772.1137 < 2.2e-16 ***
-hand         2559.4   2   79.1692 < 2.2e-16 ***
-skill          39.3   1    2.4344 0.1197776    
-hand:skill    229.0   2    7.0830 0.0009901 ***
-Residuals    4752.3 294                        
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-## Two-way ANOVA (with interaction)
-
-Let's firt a two-way ANOVA with the interaction term. 
-
-
-```r
-fit = lm(formula = balance ~ hand * skill, data = df.poker)
-fit %>% 
-  anova()
-```
-
-```
-Analysis of Variance Table
-
-Response: balance
-            Df Sum Sq Mean Sq F value    Pr(>F)    
-hand         2 2559.4 1279.70 79.1692 < 2.2e-16 ***
-skill        1   39.3   39.35  2.4344 0.1197776    
-hand:skill   2  229.0  114.49  7.0830 0.0009901 ***
-Residuals  294 4752.3   16.16                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-And let's compute how the the sums of squares are decomposed:
-
-
-```r
-df.poker %>% 
-  mutate(mean_grand = mean(balance)) %>% 
-  group_by(skill) %>% 
-  mutate(mean_skill = mean(balance)) %>% 
-  group_by(hand) %>% 
-  mutate(mean_hand = mean(balance)) %>%
-  group_by(hand, skill) %>% 
-  mutate(mean_hand_skill = mean(balance)) %>%
-  ungroup() %>%
-  summarize(variance_total = sum((balance - mean_grand)^2),
-            variance_skill = sum((mean_skill - mean_grand)^2),
-            variance_hand = sum((mean_hand - mean_grand)^2),
-            variance_hand_skill = sum((mean_hand_skill - mean_skill - mean_hand + mean_grand)^2),
-            variance_residual = variance_total - variance_skill - variance_hand - variance_hand_skill
-            )
-```
-
-```
-# A tibble: 1 x 5
-  variance_total variance_skill variance_hand variance_hand_s…
-           <dbl>          <dbl>         <dbl>            <dbl>
-1          7580.           39.3         2559.             229.
-# … with 1 more variable: variance_residual <dbl>
-```
-
-
-## Planned contrasts 
-
-Here is a planned contrast that assumes that there is a linear relationship between the quality of one's hand, and the final balance.  
+Here is a linear contrast that assumes that there is a linear relationship between the quality of one's hand, and the final balance.  
 
 
 ```r
@@ -582,30 +63,7 @@ df.poker = df.poker %>%
          hand_contrast = hand_contrast %>% as.character() %>% as.numeric())
 
 fit.contrast = lm(formula = balance ~ hand_contrast,
-         data = df.poker)
-
-fit.contrast %>% summary()
-```
-
-```
-
-Call:
-lm(formula = balance ~ hand_contrast, data = df.poker)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--13.214  -2.684  -0.019   2.444  15.858 
-
-Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept)     9.7715     0.2381   41.03   <2e-16 ***
-hand_contrast   3.5424     0.2917   12.14   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 4.125 on 298 degrees of freedom
-Multiple R-squared:  0.3311,	Adjusted R-squared:  0.3289 
-F-statistic: 147.5 on 1 and 298 DF,  p-value: < 2.2e-16
+                  data = df.poker)
 ```
 
 Here is a visualization of the model prediction together with the residuals. 
@@ -619,7 +77,7 @@ df.plot = df.poker %>%
 df.tidy = fit.contrast %>% 
   tidy() %>% 
   select_if(is.numeric) %>% 
-  mutate_all(funs(round, .args = list(digits = 2)))
+  mutate_all(~ round(., 2))
 
 df.augment = fit.contrast %>% 
   augment() %>%
@@ -635,24 +93,21 @@ ggplot(data = df.plot,
                aes(x = 0.6,
                    xend = 1.4,
                    y = df.tidy$estimate[1]-df.tidy$estimate[2],
-                   yend = df.tidy$estimate[1]-df.tidy$estimate[2]
-                   ),
+                   yend = df.tidy$estimate[1]-df.tidy$estimate[2]),
                color = "red",
                size = 1) +
   geom_segment(data = NULL,
                aes(x = 1.6,
                    xend = 2.4,
                    y = df.tidy$estimate[1],
-                   yend = df.tidy$estimate[1]
-                   ),
+                   yend = df.tidy$estimate[1]),
                color = "orange",
                size = 1) +
   geom_segment(data = NULL,
                aes(x = 2.6,
                    xend = 3.4,
                    y = df.tidy$estimate[1] + df.tidy$estimate[2],
-                   yend = df.tidy$estimate[1] + df.tidy$estimate[2]
-                   ),
+                   yend = df.tidy$estimate[1] + df.tidy$estimate[2]),
                color = "green",
                size = 1) +
   geom_segment(data = df.augment,
@@ -667,7 +122,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-19-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ### Hypothetical data 
 
@@ -686,7 +141,7 @@ sd = 2
 sample_size = 20
 
 # generate data 
-df.contrast = tibble(
+df.development = tibble(
   group = rep(c("3-4", "5-6", "7-8"), each = sample_size),
   performance = NA) %>% 
   mutate(performance = ifelse(group == "3-4",
@@ -713,29 +168,26 @@ df.contrast = tibble(
            as.numeric())
 ```
 
-Let's define a linear contrast, and test whether it's significant. 
+Let's define a linear contrast using the `emmeans` package, and test whether it's significant. 
 
 
 ```r
 fit = lm(formula = performance ~ group,
-   data = df.contrast)
+         data = df.development)
 
-# define the contrasts of interest 
-contrasts = list(linear = c(-1, 0, 1))
-
-# compute estimated marginal means
-leastsquare = emmeans(fit, "group")
-
-# run follow-up analyses
-contrast(leastsquare,
-         contrasts,
-         adjust = "bonferroni")
+fit %>% 
+  emmeans("group",
+          contr = list(linear = c(-0.5, 0, 0.5)),
+          adjust = "bonferroni") %>% 
+  pluck("contrasts")
 ```
 
 ```
  contrast estimate    SE df t.ratio p.value
- linear       16.9 0.548 57 30.856  <.0001 
+ linear       8.45 0.274 57 30.856  <.0001 
 ```
+
+Yes, we see that there is a significant positive linear contrast with an estimate of 8.45. This means, it predicts a difference of 8.45 in performance between each of the consecutive age groups. For a visualization of the predictions of this model, see Figure \@ref{fig:linear-contrast-model}. 
 
 ### Visualization
 
@@ -746,21 +198,21 @@ Total variance:
 set.seed(1)
 
 fit_c = lm(formula = performance ~ 1,
-           data = df.contrast)
+           data = df.development)
 
-df.plot = df.contrast %>% 
+df.plot = df.development %>% 
   mutate(group_jitter = 1 + runif(n(), min = -0.25, max = 0.25))
 
 df.augment = fit_c %>% 
   augment() %>% 
   clean_names() %>% 
-  bind_cols(df.plot %>% select(performance, group, group_jitter))
+  bind_cols(df.plot %>% select(group, group_jitter))
 
 ggplot(data = df.plot, 
        mapping = aes(x = group_jitter,
                        y = performance,
                        fill = group)) + 
-  geom_hline(yintercept = mean(df.contrast$performance)) +
+  geom_hline(yintercept = mean(df.development$performance)) +
   geom_point(alpha = 0.5) + 
   geom_segment(data = df.augment,
                aes(xend = group_jitter,
@@ -772,7 +224,7 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-22-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 With contrast
 
@@ -782,21 +234,21 @@ With contrast
 set.seed(1)
 
 fit = lm(formula = performance ~ group_contrast,
-         data = df.contrast)
+         data = df.development)
 
-df.plot = df.contrast %>% 
+df.plot = df.development %>% 
   mutate(group_jitter = group %>% as.numeric(),
          group_jitter = group_jitter + runif(n(), min = -0.4, max = 0.4))
 
 df.tidy = fit %>% 
   tidy() %>% 
-  select_if(is.numeric) %>% 
-  mutate_all(funs(round, .args = list(digits = 2)))
+  select(where(is.numeric)) %>% 
+  mutate(across(.fns = ~ round(. , 2)))
 
 df.augment = fit %>% 
   augment() %>%
   clean_names() %>% 
-  bind_cols(df.plot %>% select(group_jitter, group_contrast))
+  bind_cols(df.plot %>% select(group_jitter))
 
 ggplot(data = df.plot,
        mapping = aes(x = group_jitter,
@@ -807,24 +259,21 @@ ggplot(data = df.plot,
                aes(x = 0.6,
                    xend = 1.4,
                    y = df.tidy$estimate[1]-df.tidy$estimate[2],
-                   yend = df.tidy$estimate[1]-df.tidy$estimate[2]
-                   ),
+                   yend = df.tidy$estimate[1]-df.tidy$estimate[2]),
                color = "red",
                size = 1) +
   geom_segment(data = NULL,
                aes(x = 1.6,
                    xend = 2.4,
                    y = df.tidy$estimate[1],
-                   yend = df.tidy$estimate[1]
-                   ),
+                   yend = df.tidy$estimate[1]),
                color = "orange",
                size = 1) +
   geom_segment(data = NULL,
                aes(x = 2.6,
                    xend = 3.4,
                    y = df.tidy$estimate[1] + df.tidy$estimate[2],
-                   yend = df.tidy$estimate[1] + df.tidy$estimate[2]
-                   ),
+                   yend = df.tidy$estimate[1] + df.tidy$estimate[2]),
                color = "green",
                size = 1) +
   geom_segment(data = df.augment,
@@ -832,89 +281,96 @@ ggplot(data = df.plot,
                    y = performance,
                    yend = fitted),
                alpha = 0.3) +
-  labs(y = "balance") + 
+  labs(y = "performance") + 
   scale_color_manual(values = c("red", "orange", "green")) + 
-  scale_x_continuous(breaks = 1:3, labels = levels(df.contrast$group)) +
+  scale_x_continuous(breaks = 1:3, labels = levels(df.development$group)) +
   theme(legend.position = "none",
         axis.title.x = element_blank())
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-23-1.png" width="672" />
+<div class="figure">
+<img src="13-linear_model4_files/figure-html/linear-contrast-model-1.png" alt="Predictions of the linear contrast model" width="672" />
+<p class="caption">(\#fig:linear-contrast-model)Predictions of the linear contrast model</p>
+</div>
 
 Results figure
 
 
 ```r
-df.contrast %>% 
+df.development %>% 
   ggplot(aes(x = group, y = performance)) + 
   geom_point(alpha = 0.3, position = position_jitter(width = 0.1, height = 0)) +
-  stat_summary(fun.data = "mean_cl_boot", geom = "linerange", size = 1) + 
-  stat_summary(fun.y = "mean", geom = "point", shape = 21, fill = "white", size = 3)
+  stat_summary(fun.data = "mean_cl_boot",
+               shape = 21, 
+               fill = "white",
+               size = 0.75)
 ```
 
-<img src="13-linear_model4_files/figure-html/linear-model4-24-1.png" width="672" />
+<img src="13-linear_model4_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
-### Constrasts 
-
-Estimated marginal means: 
+Here we test some more specific hypotheses: the the two youngest groups of children are different from the oldest group, and that the 3 year olds are different from the 5 year olds. 
 
 
 ```r
-df.development = df.contrast
-
+#  fit the linear model 
 fit = lm(formula = performance ~ group,
          data = df.development)
 
 # check factor levels 
 levels(df.development$group)
-
-# define the contrasts of interest 
-contrasts = list(young_vs_old = c(-0.5, -0.5, 1),
-                 three_vs_five = c(-1, 1, 0))
-
-# compute estimated marginal means
-leastsquare = emmeans(fit, "group")
-
-# run analyses
-contrast(leastsquare,
-         contrasts,
-         adjust = "bonferroni")
 ```
 
 ```
 [1] "3-4" "5-6" "7-8"
+```
+
+```r
+# define the contrasts of interest 
+contrasts = list(young_vs_old = c(-0.5, -0.5, 1),
+                 three_vs_five = c(-0.5, 0.5, 0))
+
+# compute significance test on contrasts 
+fit %>% 
+  emmeans("group",
+          contr = contrasts,
+          adjust = "bonferroni") %>% 
+  pluck("contrasts")
+```
+
+```
  contrast      estimate    SE df t.ratio p.value
- young_vs_old     16.09 0.474 57 33.936  <.0001 
- three_vs_five     1.61 0.548 57  2.933  0.0097 
+ young_vs_old    16.094 0.474 57 33.936  <.0001 
+ three_vs_five    0.803 0.274 57  2.933  0.0097 
 
 P value adjustment: bonferroni method for 2 tests 
 ```
 
 ### Post-hoc tests
 
-Post-hoc tests for a single predictor:
+Post-hoc tests for a single predictor (using the poker data set). 
 
 
 ```r
-fit = lm(formula = performance ~ group,
-         data = df.development)
+fit = lm(formula = balance ~ hand,
+         data = df.poker)
 
 # post hoc tests 
-leastsquare = emmeans(fit, "group")
-pairs(leastsquare,
-      adjust = "bonferroni")
+fit %>% 
+  emmeans(pairwise ~ hand,
+          adjust = "bonferroni") %>% 
+  pluck("contrasts")
 ```
 
 ```
- contrast  estimate    SE df t.ratio p.value
- 3-4 - 5-6    -1.61 0.548 57  -2.933 0.0145 
- 3-4 - 7-8   -16.90 0.548 57 -30.856 <.0001 
- 5-6 - 7-8   -15.29 0.548 57 -27.923 <.0001 
+ contrast       estimate    SE  df t.ratio p.value
+ bad - neutral     -4.41 0.581 297  -7.576 <.0001 
+ bad - good        -7.08 0.581 297 -12.185 <.0001 
+ neutral - good    -2.68 0.581 297  -4.609 <.0001 
 
 P value adjustment: bonferroni method for 3 tests 
 ```
 
-Post-hoc tests for two predictors:
+Post-hoc tests for two predictors (:
 
 
 ```r
@@ -923,28 +379,321 @@ fit = lm(formula = balance ~ hand + skill,
          data = df.poker)
 
 # post hoc tests 
-leastsquare = emmeans(fit, c("hand", "skill"))
-pairs(leastsquare,
-      adjust = "bonferroni")
+fit %>% 
+  emmeans(pairwise ~ hand + skill,
+          adjust = "bonferroni") %>% 
+  pluck("contrasts")
 ```
 
 ```
  contrast                         estimate    SE  df t.ratio p.value
- bad,average - neutral,average      -4.405 0.580 296  -7.593 <.0001 
- bad,average - good,average         -7.085 0.580 296 -12.212 <.0001 
- bad,average - bad,expert           -0.724 0.474 296  -1.529 1.0000 
- bad,average - neutral,expert       -5.129 0.749 296  -6.849 <.0001 
- bad,average - good,expert          -7.809 0.749 296 -10.427 <.0001 
- neutral,average - good,average     -2.680 0.580 296  -4.619 0.0001 
- neutral,average - bad,expert        3.681 0.749 296   4.914 <.0001 
- neutral,average - neutral,expert   -0.724 0.474 296  -1.529 1.0000 
- neutral,average - good,expert      -3.404 0.749 296  -4.545 0.0001 
- good,average - bad,expert           6.361 0.749 296   8.492 <.0001 
- good,average - neutral,expert       1.955 0.749 296   2.611 0.1424 
- good,average - good,expert         -0.724 0.474 296  -1.529 1.0000 
- bad,expert - neutral,expert        -4.405 0.580 296  -7.593 <.0001 
- bad,expert - good,expert           -7.085 0.580 296 -12.212 <.0001 
- neutral,expert - good,expert       -2.680 0.580 296  -4.619 0.0001 
+ bad average - neutral average      -4.405 0.580 296  -7.593 <.0001 
+ bad average - good average         -7.085 0.580 296 -12.212 <.0001 
+ bad average - bad expert           -0.724 0.474 296  -1.529 1.0000 
+ bad average - neutral expert       -5.129 0.749 296  -6.849 <.0001 
+ bad average - good expert          -7.809 0.749 296 -10.427 <.0001 
+ neutral average - good average     -2.680 0.580 296  -4.619 0.0001 
+ neutral average - bad expert        3.681 0.749 296   4.914 <.0001 
+ neutral average - neutral expert   -0.724 0.474 296  -1.529 1.0000 
+ neutral average - good expert      -3.404 0.749 296  -4.545 0.0001 
+ good average - bad expert           6.361 0.749 296   8.492 <.0001 
+ good average - neutral expert       1.955 0.749 296   2.611 0.1424 
+ good average - good expert         -0.724 0.474 296  -1.529 1.0000 
+ bad expert - neutral expert        -4.405 0.580 296  -7.593 <.0001 
+ bad expert - good expert           -7.085 0.580 296 -12.212 <.0001 
+ neutral expert - good expert       -2.680 0.580 296  -4.619 0.0001 
 
 P value adjustment: bonferroni method for 15 tests 
 ```
+
+
+
+```r
+fit = lm(formula = balance ~ hand,
+         data = df.poker)
+
+# comparing each to the mean 
+fit %>% 
+  emmeans(eff ~ hand) %>% 
+  pluck("contrasts")
+```
+
+```
+ contrast       estimate    SE  df t.ratio p.value
+ bad effect       -3.830 0.336 297 -11.409 <.0001 
+ neutral effect    0.575 0.336 297   1.713 0.0877 
+ good effect       3.255 0.336 297   9.696 <.0001 
+
+P value adjustment: fdr method for 3 tests 
+```
+
+```r
+# one vs. all others 
+fit %>% 
+  emmeans(del.eff ~ hand) %>% 
+  pluck("contrasts")
+```
+
+```
+ contrast       estimate    SE  df t.ratio p.value
+ bad effect       -5.745 0.504 297 -11.409 <.0001 
+ neutral effect    0.863 0.504 297   1.713 0.0877 
+ good effect       4.882 0.504 297   9.696 <.0001 
+
+P value adjustment: fdr method for 3 tests 
+```
+
+### Understanding dummy coding 
+
+
+```r
+fit = lm(formula = balance ~ 1 + hand,
+         data = df.poker)
+
+fit %>% 
+  summary()
+```
+
+```
+
+Call:
+lm(formula = balance ~ 1 + hand, data = df.poker)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.9264  -2.5902  -0.0115   2.6573  15.2834 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   5.9415     0.4111  14.451  < 2e-16 ***
+handneutral   4.4051     0.5815   7.576 4.55e-13 ***
+handgood      7.0849     0.5815  12.185  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.111 on 297 degrees of freedom
+Multiple R-squared:  0.3377,	Adjusted R-squared:  0.3332 
+F-statistic:  75.7 on 2 and 297 DF,  p-value: < 2.2e-16
+```
+
+```r
+model.matrix(fit) %>% 
+  as_tibble() %>% 
+  distinct()
+```
+
+```
+# A tibble: 3 x 3
+  `(Intercept)` handneutral handgood
+          <dbl>       <dbl>    <dbl>
+1             1           0        0
+2             1           1        0
+3             1           0        1
+```
+
+```r
+df.poker %>% 
+  select(participant, hand, balance) %>% 
+  group_by(hand) %>% 
+  top_n(3, wt = -participant) %>% 
+  kable(digits = 2) %>% 
+  kable_styling(bootstrap_options = "striped",
+                full_width = F)
+```
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> participant </th>
+   <th style="text-align:left;"> hand </th>
+   <th style="text-align:right;"> balance </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;"> bad </td>
+   <td style="text-align:right;"> 4.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:left;"> bad </td>
+   <td style="text-align:right;"> 5.55 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:left;"> bad </td>
+   <td style="text-align:right;"> 9.45 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 51 </td>
+   <td style="text-align:left;"> neutral </td>
+   <td style="text-align:right;"> 11.74 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:left;"> neutral </td>
+   <td style="text-align:right;"> 10.04 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 53 </td>
+   <td style="text-align:left;"> neutral </td>
+   <td style="text-align:right;"> 9.49 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 101 </td>
+   <td style="text-align:left;"> good </td>
+   <td style="text-align:right;"> 10.86 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 102 </td>
+   <td style="text-align:left;"> good </td>
+   <td style="text-align:right;"> 8.68 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 103 </td>
+   <td style="text-align:left;"> good </td>
+   <td style="text-align:right;"> 14.36 </td>
+  </tr>
+</tbody>
+</table>
+
+### Understanding effect coding 
+
+
+```r
+fit = lm(formula = balance ~ 1 + hand,
+         contrasts = list(hand = "contr.sum"),
+         data = df.poker)
+
+fit %>% 
+  summary()
+```
+
+```
+
+Call:
+lm(formula = balance ~ 1 + hand, data = df.poker, contrasts = list(hand = "contr.sum"))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-12.9264  -2.5902  -0.0115   2.6573  15.2834 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   9.7715     0.2374  41.165   <2e-16 ***
+hand1        -3.8300     0.3357 -11.409   <2e-16 ***
+hand2         0.5751     0.3357   1.713   0.0877 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.111 on 297 degrees of freedom
+Multiple R-squared:  0.3377,	Adjusted R-squared:  0.3332 
+F-statistic:  75.7 on 2 and 297 DF,  p-value: < 2.2e-16
+```
+
+```r
+model.matrix(fit) %>% 
+  as_tibble() %>% 
+  distinct() %>% 
+  kable(digits = 2) %>% 
+  kable_styling(bootstrap_options = "striped",
+                full_width = F)
+```
+
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> (Intercept) </th>
+   <th style="text-align:right;"> hand1 </th>
+   <th style="text-align:right;"> hand2 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> -1 </td>
+   <td style="text-align:right;"> -1 </td>
+  </tr>
+</tbody>
+</table>
+
+## Session info 
+
+Information about this R session including which version of R was used, and what packages were loaded. 
+
+
+```r
+sessionInfo()
+```
+
+```
+R version 4.0.3 (2020-10-10)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
+ [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     ggplot2_3.3.3   
+ [9] tidyverse_1.3.0  car_3.0-10       carData_3.0-4    emmeans_1.5.3   
+[13] afex_0.28-1      lme4_1.1-26      Matrix_1.3-2     broom_0.7.3     
+[17] janitor_2.1.0    kableExtra_1.3.1 knitr_1.31      
+
+loaded via a namespace (and not attached):
+  [1] TH.data_1.0-10      minqa_1.2.4         colorspace_2.0-0   
+  [4] ellipsis_0.3.1      rio_0.5.16          htmlTable_2.1.0    
+  [7] estimability_1.3    snakecase_0.11.0    base64enc_0.1-3    
+ [10] fs_1.5.0            rstudioapi_0.13     farver_2.1.0       
+ [13] fansi_0.4.2         mvtnorm_1.1-1       lubridate_1.7.9.2  
+ [16] xml2_1.3.2          codetools_0.2-18    splines_4.0.3      
+ [19] Formula_1.2-4       jsonlite_1.7.2      nloptr_1.2.2.2     
+ [22] cluster_2.1.0       dbplyr_2.0.0        png_0.1-7          
+ [25] compiler_4.0.3      httr_1.4.2          backports_1.2.1    
+ [28] assertthat_0.2.1    cli_2.3.0           htmltools_0.5.1.1  
+ [31] tools_4.0.3         lmerTest_3.1-3      coda_0.19-4        
+ [34] gtable_0.3.0        glue_1.4.2          reshape2_1.4.4     
+ [37] Rcpp_1.0.6          cellranger_1.1.0    vctrs_0.3.6        
+ [40] nlme_3.1-151        xfun_0.21           ps_1.6.0           
+ [43] openxlsx_4.2.3      rvest_0.3.6         lifecycle_1.0.0    
+ [46] statmod_1.4.35      MASS_7.3-53         zoo_1.8-8          
+ [49] scales_1.1.1        hms_1.0.0           parallel_4.0.3     
+ [52] sandwich_3.0-0      RColorBrewer_1.1-2  yaml_2.2.1         
+ [55] curl_4.3            gridExtra_2.3       rpart_4.1-15       
+ [58] latticeExtra_0.6-29 stringi_1.5.3       highr_0.8          
+ [61] checkmate_2.0.0     boot_1.3-26         zip_2.1.1          
+ [64] rlang_0.4.10        pkgconfig_2.0.3     evaluate_0.14      
+ [67] lattice_0.20-41     htmlwidgets_1.5.3   labeling_0.4.2     
+ [70] tidyselect_1.1.0    plyr_1.8.6          magrittr_2.0.1     
+ [73] bookdown_0.21       R6_2.5.0            generics_0.1.0     
+ [76] Hmisc_4.4-2         multcomp_1.4-15     DBI_1.1.1          
+ [79] pillar_1.4.7        haven_2.3.1         foreign_0.8-81     
+ [82] withr_2.4.1         nnet_7.3-15         survival_3.2-7     
+ [85] abind_1.4-5         modelr_0.1.8        crayon_1.4.1       
+ [88] utf8_1.1.4          rmarkdown_2.6       jpeg_0.1-8.1       
+ [91] grid_4.0.3          readxl_1.3.1        data.table_1.13.6  
+ [94] reprex_1.0.0        digest_0.6.27       webshot_0.5.2      
+ [97] xtable_1.8-4        numDeriv_2016.8-1.1 munsell_0.5.0      
+[100] viridisLite_0.3.0  
+```
+
+## References

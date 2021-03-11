@@ -2,10 +2,10 @@
 
 These notes are adapted from this tutorial: [Mediation and moderation](https://ademos.people.uic.edu/Chapter14.html)
 
-> _Mediation analysis_ tests a hypothetical causal chain where one variable __X__ affects a second variable __M__ and, in turn, that variable affects a third variable __Y__. Mediators describe the how or why of a (typically well-established) relationship between two other variables and are sometimes called intermediary variables since they often describe the process through which an effect occurs. This is also sometimes called an indirect effect. For instance, people with higher incomes tend to live longer but this effect is explained by the mediating influence of having access to better health care. 
-
 ## Learning goals 
 
+- Understanding what controlling for variables means. 
+- Learning a graphical procedure that helps identify when it's good vs. bad to control for variables. 
 - Simulating a mediation analysis.
 - Baron and Kenny's (1986) steps for mediation. 
 - Testing the significance of a mediation. 
@@ -22,11 +22,7 @@ These notes are adapted from this tutorial: [Mediation and moderation](https://a
 
 ## Load packages and set plotting theme  
 
-```{r mediation-moderation-01, echo=FALSE, eval=FALSE, include=FALSE}
-install.packages(c("mediation", "multilevel", "rsvg", "DiagrammeRsvg"))
-```
-
-```{r mediation-moderation-02, message=FALSE}
+```{r load-packages, message=FALSE}
 library("knitr")         # for knitting RMarkdown 
 library("kableExtra")    # for making nice tables
 library("janitor")       # for cleaning column names
@@ -39,9 +35,14 @@ library("rsvg")          # for exporting pdfs of graphs
 library("tidyverse")     # for wrangling, plotting, etc. 
 ```
 
-```{r mediation-moderation-03}
+```{r set-theme}
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
+
+opts_chunk$set(comment = "",
+               fig.show = "hold")
+
+options(dplyr.summarise.inform = FALSE) # Disable summarize ungroup messages
 ```
 
 ## Controlling for variables 
@@ -52,7 +53,7 @@ theme_set(theme_classic() + #set the theme
 
 #### Full DAG
 
-```{r mediation-moderation-04, warning=F, message=F}
+```{r, warning=F, message=F}
 g = grViz("
 digraph neato {
   
@@ -103,7 +104,7 @@ g
 
 #### Draw the ancestral graph
 
-```{r mediation-moderation-05, warning=F, message=F}
+```{r, warning=F, message=F}
 g = grViz("
 digraph neato {
   
@@ -150,7 +151,7 @@ g
 
 #### "Moralize" the ancestral graph by "marrying" any parents, and disorient by replacing arrows with edges
 
-```{r mediation-moderation-06, warning=F, message=F}
+```{r, warning=F, message=F}
 g = grViz("
 graph neato {
   
@@ -200,7 +201,7 @@ g
 
 - For the case in which we check whether D and E are independent conditioned on C
 
-```{r mediation-moderation-07, warning=F, message=F}
+```{r, warning=F, message=F}
 g = grViz("
 graph neato {
   
@@ -251,7 +252,7 @@ g
 
 ##### DAG
 
-```{r mediation-moderation-08, warning=F, message=F}
+```{r, warning=F, message=F}
 g = grViz("
 digraph neato {
   
@@ -295,7 +296,7 @@ g
 
 ##### Regression
 
-```{r mediation-moderation-09}
+```{r}
 set.seed(1)
 
 n = 1000
@@ -327,7 +328,7 @@ lm(formula = y ~ x + z,
 
 ##### Moralize and disorient the ancestral graph
 
-```{r mediation-moderation-10, warning=F, message=F}
+```{r, warning=F, message=F}
 g = grViz("
 graph neato {
   
@@ -378,7 +379,7 @@ g
 
 ##### DAG 
 
-```{r mediation-moderation-11}
+```{r}
 g = grViz("
 digraph neato {
   
@@ -421,7 +422,7 @@ g
 
 ##### Regression
 
-```{r mediation-moderation-12}
+```{r}
 set.seed(1)
 n = 1000
 b_zx = 2
@@ -451,11 +452,11 @@ lm(formula = y ~ x + z,
 
 ### Bad controls
 
-#### Common effect (with direct link)
+#### Common effect
 
 ##### DAG
 
-```{r mediation-moderation-13}
+```{r}
 g = grViz("
 digraph neato {
   
@@ -479,7 +480,6 @@ digraph neato {
   
   # edges between nodes
   edge [color = black]
-  x -> y
   x -> z
   y -> z
   
@@ -489,10 +489,10 @@ digraph neato {
 ")
 
 # export as pdf 
-# g %>% 
-#   export_svg %>% 
-#   charToRaw %>% 
-#   rsvg_pdf("figures/common_effect_with_direct_link.pdf")
+# g %>%
+#   export_svg %>%
+#   charToRaw %>%
+#   rsvg_pdf("figures/common_effect.pdf")
 
 # show plot
 g
@@ -500,10 +500,9 @@ g
 
 ##### Regression 
 
-```{r mediation-moderation-14}
-set.seed(2)
-n = 100
-b_xy = 2
+```{r}
+set.seed(1)
+n = 1000
 b_xz = 2
 b_yz = 2
 sd = 1
@@ -515,7 +514,7 @@ fun_error = function(n, sd){
 }
 
 df = tibble(x = fun_error(n, sd),
-            y = x * b_xy + fun_error(n, sd),
+            y = fun_error(n, sd),
             z = x * b_xz + y * b_yz + fun_error(n, sd))
 
 # without control
@@ -531,7 +530,7 @@ lm(formula = y ~ x + z,
 
 ##### Moralize and disorient the ancestral graph
 
-```{r mediation-moderation-15}
+```{r}
 g = grViz("
 graph neato {
   
@@ -565,11 +564,11 @@ graph neato {
 ")
 
 # export as pdf 
-# g %>% 
-#   export_svg %>% 
-#   charToRaw %>% 
-#   rsvg_pdf("figures/common_effect_with_direct_link_undirected1.pdf")
-#   # rsvg_pdf("figures/common_effect_with_direct_link_undirected2.pdf")
+# g %>%
+#   export_svg %>%
+#   charToRaw %>%
+#   rsvg_pdf("figures/common_effect_undirected1.pdf")
+#   rsvg_pdf("figures/common_effect_undirected2.pdf")
 
 # show plot
 g
@@ -579,7 +578,7 @@ g
 
 ##### DAG
 
-```{r mediation-moderation-16}
+```{r}
 g = grViz("
 digraph neato {
   
@@ -623,7 +622,7 @@ g
 
 ##### Regression 
 
-```{r mediation-moderation-17}
+```{r}
 set.seed(1)
 n = 20
 b_xz = 2
@@ -655,7 +654,7 @@ lm(formula = y ~ x + z,
 
 ##### DAG
 
-```{r mediation-moderation-18}
+```{r}
 g = grViz("
 digraph neato {
   
@@ -699,7 +698,7 @@ g
 
 ##### Regression 
 
-```{r mediation-moderation-19}
+```{r}
 set.seed(1)
 n = 20
 b_xy = 2
@@ -731,7 +730,7 @@ lm(formula = y ~ x + z,
 
 ##### DAG
 
-```{r mediation-moderation-20}
+```{r}
 g = grViz("
 digraph neato {
   
@@ -777,7 +776,7 @@ g
 
 #### Regression 
 
-```{r mediation-moderation-21}
+```{r}
 set.seed(1)
 n = 20
 b_xy = 2
@@ -810,19 +809,19 @@ lm(formula = y ~ x + z,
 
 ## Mediation 
 
-```{r mediation-moderation-22, echo=FALSE, out.width="75%", fig.cap="__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y."}
+```{r mediation, echo=FALSE, out.width="75%", fig.cap="__Basic mediation model__. c = the total effect of X on Y; c = c’ + ab; c’ = the direct effect of X on Y after controlling for M; c’ = c - ab; ab = indirect effect of X on Y."}
 include_graphics("figures/mediation.png")
 ```
 
 Mediation tests whether the effects of __X__ (the independent variable) on __Y__ (the dependent variable) operate through a third variable, __M__ (the mediator). In this way, mediators explain the causal relationship between two variables or "how" the relationship works, making it a very popular method in psychological research.
 
-Figure \@ref(fig:mediation-moderation-22) shows the standard mediation model. Perfect mediation occurs when the effect of __X__ on __Y__ decreases to 0 with __M__ in the model. Partial mediation occurs when the effect of __X__ on __Y__ decreases by a nontrivial amount (the actual amount is up for debate) with __M__ in the model.
+Figure \@ref(fig:mediation) shows the standard mediation model. Perfect mediation occurs when the effect of __X__ on __Y__ decreases to 0 with __M__ in the model. Partial mediation occurs when the effect of __X__ on __Y__ decreases by a nontrivial amount (the actual amount is up for debate) with __M__ in the model.
 
 __Important__: Both mediation and moderation assume that the DV __did not CAUSE the mediator/moderator__.
 
 ### Generate data 
 
-```{r mediation-moderation-23}
+```{r}
 # make example reproducible
 set.seed(123)
 
@@ -852,7 +851,7 @@ __The three steps__:
 
 Total effect of X on Y (not controlling for M).
 
-```{r mediation-moderation-24}
+```{r}
 # fit the model
 fit.y_x = lm(formula = y ~ 1 + x,
             data = df.mediation)
@@ -863,7 +862,7 @@ fit.y_x %>% summary()
 
 #### Path a 
 
-```{r mediation-moderation-25}
+```{r}
 fit.m_x = lm(formula = m ~ 1 + x,
             data = df.mediation)
 
@@ -874,7 +873,7 @@ fit.m_x %>% summary()
 
 Effect of M on Y controlling for X. 
 
-```{r mediation-moderation-26}
+```{r}
 fit.y_mx = lm(formula = y ~ 1 + m + x,
             data = df.mediation)
 
@@ -883,7 +882,7 @@ fit.y_mx %>% summary()
 
 #### Interpretation
 
-```{r mediation-moderation-27}
+```{r}
 fit.y_x %>% 
   tidy() %>% 
   mutate(path = "c") %>% 
@@ -907,7 +906,7 @@ Since the relationship between hours since dawn and wakefulness is no longer sig
 
 The Sobel Test tests whether the indirect effect from X via M to Y is significant. 
 
-```{r mediation-moderation-28}
+```{r}
 # run the sobel test
 fit.sobel = sobel(pred = df.mediation$x,
                   med = df.mediation$m,
@@ -927,7 +926,7 @@ The "mediation" packages uses the more recent bootstrapping method of @preacher2
 
 This method does not require that the data are normally distributed, and is particularly suitable for small sample sizes. 
 
-```{r mediation-moderation-29}
+```{r}
 library("mediation")
 
 # bootstrapped mediation 
@@ -947,7 +946,7 @@ fit.mediation %>% summary()
 
 Plot the results: 
 
-```{r mediation-moderation-30}
+```{r}
 fit.mediation %>% plot()
 ```
 
@@ -957,7 +956,7 @@ The `mediate()` function gives us our Average Causal Mediation Effects (ACME), o
 
 ## Moderation 
 
-```{r mediation-moderation-31, echo=FALSE, out.width="75%", fig.cap="__Basic moderation model__."}
+```{r moderation, echo=FALSE, out.width="75%", fig.cap="__Basic moderation model__."}
 include_graphics("figures/moderation.png")
 ```
 
@@ -965,7 +964,7 @@ Moderation can be tested by looking for significant interactions between the mod
 
 ### Generate data 
 
-```{r mediation-moderation-32}
+```{r}
 # make example reproducible 
 set.seed(123)
 
@@ -981,10 +980,10 @@ df.moderation = tibble(x  = abs(rnorm(n, 6, 4)), # hours of sleep
 
 ### Moderation analysis 
 
-```{r mediation-moderation-33}
+```{r}
 # scale the predictors 
 df.moderation = df.moderation %>%
-  mutate(across(c(x, z), ~ scale(.)[,]))
+  mutate_at(vars(x, z), ~ scale(.)[,])
 
 # run regression model with interaction 
 fit.moderation = lm(formula = y ~ 1 + x * z,
@@ -997,7 +996,7 @@ fit.moderation %>%
 
 #### Visualize result 
 
-```{r mediation-moderation-34}
+```{r}
 # generate data grid with three levels of the moderator 
 df.newdata = df.moderation %>% 
   expand(x = c(min(x), 
@@ -1028,7 +1027,7 @@ df.moderation %>%
   scale_color_brewer(palette = "Set1")
 ```
 
-```{r mediation-moderation-35}
+```{r}
 df.prediction %>% 
   head(9) %>% 
   kable(digits = 2) %>% 
@@ -1061,6 +1060,8 @@ df.prediction %>%
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
-```{r mediation-moderation-36}
+```{r session}
 sessionInfo()
 ```
+
+## References

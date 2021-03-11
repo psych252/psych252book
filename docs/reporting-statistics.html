@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 26 Reporting statistics | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
+  <title>Chapter 25 Reporting statistics | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
   <meta name="description" content="Course notes for Psych 252." />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 26 Reporting statistics | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta property="og:title" content="Chapter 25 Reporting statistics | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="psych252/psych252book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 26 Reporting statistics | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta name="twitter:title" content="Chapter 25 Reporting statistics | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   
   <meta name="twitter:description" content="Course notes for Psych 252." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2020-03-28" />
+<meta name="date" content="2021-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,8 @@
   
 <link rel="prev" href="model-assumptions.html"/>
 <link rel="next" href="cheatsheets-7.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,28 +51,42 @@
 
 
 
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.17/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +95,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -131,52 +146,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Psych 252</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-description"><i class="fa fa-check"></i>Course description</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-homepage"><i class="fa fa-check"></i>Course homepage</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#session-info"><i class="fa fa-check"></i><b>1.3</b> Session info</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#installing-packages"><i class="fa fa-check"></i><b>1.3</b> Installing packages</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#session-info"><i class="fa fa-check"></i><b>1.4</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a><ul>
+<li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="visualization-1.html"><a href="visualization-1.html#learning-goals"><i class="fa fa-check"></i><b>2.1</b> Learning goals</a></li>
 <li class="chapter" data-level="2.2" data-path="visualization-1.html"><a href="visualization-1.html#load-packages"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
-<li class="chapter" data-level="2.3" data-path="visualization-1.html"><a href="visualization-1.html#why-visualize-data"><i class="fa fa-check"></i><b>2.3</b> Why visualize data?</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="visualization-1.html"><a href="visualization-1.html#how-not-to-visualize-data"><i class="fa fa-check"></i><b>2.3.1</b> How <em>not</em> to visualize data</a></li>
-<li class="chapter" data-level="2.3.2" data-path="visualization-1.html"><a href="visualization-1.html#how-to-make-it-better"><i class="fa fa-check"></i><b>2.3.2</b> How to make it better</a></li>
+<li class="chapter" data-level="2.3" data-path="visualization-1.html"><a href="visualization-1.html#why-visualize-data"><i class="fa fa-check"></i><b>2.3</b> Why visualize data?</a></li>
+<li class="chapter" data-level="2.4" data-path="visualization-1.html"><a href="visualization-1.html#some-basics"><i class="fa fa-check"></i><b>2.4</b> Some basics</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-rstudio"><i class="fa fa-check"></i><b>2.4.1</b> Setting up RStudio</a></li>
+<li class="chapter" data-level="2.4.2" data-path="visualization-1.html"><a href="visualization-1.html#getting-help"><i class="fa fa-check"></i><b>2.4.2</b> Getting help</a></li>
+<li class="chapter" data-level="2.4.3" data-path="visualization-1.html"><a href="visualization-1.html#r-markdown-infos"><i class="fa fa-check"></i><b>2.4.3</b> R Markdown infos</a></li>
+<li class="chapter" data-level="2.4.4" data-path="visualization-1.html"><a href="visualization-1.html#helpful-keyboard-shortcuts"><i class="fa fa-check"></i><b>2.4.4</b> Helpful keyboard shortcuts</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-rstudio"><i class="fa fa-check"></i><b>2.4</b> Setting up RStudio</a></li>
-<li class="chapter" data-level="2.5" data-path="visualization-1.html"><a href="visualization-1.html#getting-help"><i class="fa fa-check"></i><b>2.5</b> Getting help</a></li>
-<li class="chapter" data-level="2.6" data-path="visualization-1.html"><a href="visualization-1.html#data-visualization-using-ggplot2"><i class="fa fa-check"></i><b>2.6</b> Data visualization using <code>ggplot2</code></a><ul>
-<li class="chapter" data-level="2.6.1" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.6.1</b> Setting up a plot</a></li>
-<li class="chapter" data-level="2.6.2" data-path="visualization-1.html"><a href="visualization-1.html#setting-the-default-plot-theme"><i class="fa fa-check"></i><b>2.6.2</b> Setting the default plot theme</a></li>
-<li class="chapter" data-level="2.6.3" data-path="visualization-1.html"><a href="visualization-1.html#scatter-plot"><i class="fa fa-check"></i><b>2.6.3</b> Scatter plot</a></li>
-<li class="chapter" data-level="2.6.4" data-path="visualization-1.html"><a href="visualization-1.html#line-plot"><i class="fa fa-check"></i><b>2.6.4</b> Line plot</a></li>
-<li class="chapter" data-level="2.6.5" data-path="visualization-1.html"><a href="visualization-1.html#adding-error-bars"><i class="fa fa-check"></i><b>2.6.5</b> Adding error bars</a></li>
-<li class="chapter" data-level="2.6.6" data-path="visualization-1.html"><a href="visualization-1.html#grouping-data"><i class="fa fa-check"></i><b>2.6.6</b> Grouping data</a></li>
-<li class="chapter" data-level="2.6.7" data-path="visualization-1.html"><a href="visualization-1.html#making-facets"><i class="fa fa-check"></i><b>2.6.7</b> Making facets</a></li>
-<li class="chapter" data-level="2.6.8" data-path="visualization-1.html"><a href="visualization-1.html#global-local-and-setting-aes"><i class="fa fa-check"></i><b>2.6.8</b> Global, local, and setting <code>aes()</code></a></li>
+<li class="chapter" data-level="2.5" data-path="visualization-1.html"><a href="visualization-1.html#data-visualization"><i class="fa fa-check"></i><b>2.5</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="visualization-1.html"><a href="visualization-1.html#setting-up-a-plot"><i class="fa fa-check"></i><b>2.5.1</b> Setting up a plot</a></li>
+<li class="chapter" data-level="2.5.2" data-path="visualization-1.html"><a href="visualization-1.html#bar-plot"><i class="fa fa-check"></i><b>2.5.2</b> Bar plot</a></li>
+<li class="chapter" data-level="2.5.3" data-path="visualization-1.html"><a href="visualization-1.html#setting-the-default-plot-theme"><i class="fa fa-check"></i><b>2.5.3</b> Setting the default plot theme</a></li>
+<li class="chapter" data-level="2.5.4" data-path="visualization-1.html"><a href="visualization-1.html#scatter-plot"><i class="fa fa-check"></i><b>2.5.4</b> Scatter plot</a></li>
+<li class="chapter" data-level="2.5.5" data-path="visualization-1.html"><a href="visualization-1.html#line-plot"><i class="fa fa-check"></i><b>2.5.5</b> Line plot</a></li>
+<li class="chapter" data-level="2.5.6" data-path="visualization-1.html"><a href="visualization-1.html#adding-error-bars"><i class="fa fa-check"></i><b>2.5.6</b> Adding error bars</a></li>
+<li class="chapter" data-level="2.5.7" data-path="visualization-1.html"><a href="visualization-1.html#order-matters"><i class="fa fa-check"></i><b>2.5.7</b> Order matters</a></li>
+<li class="chapter" data-level="2.5.8" data-path="visualization-1.html"><a href="visualization-1.html#grouping-data"><i class="fa fa-check"></i><b>2.5.8</b> Grouping data</a></li>
+<li class="chapter" data-level="2.5.9" data-path="visualization-1.html"><a href="visualization-1.html#making-facets"><i class="fa fa-check"></i><b>2.5.9</b> Making facets</a></li>
+<li class="chapter" data-level="2.5.10" data-path="visualization-1.html"><a href="visualization-1.html#global-local-and-setting-aes"><i class="fa fa-check"></i><b>2.5.10</b> Global, local, and setting <code>aes()</code></a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="visualization-1.html"><a href="visualization-1.html#additional-resources"><i class="fa fa-check"></i><b>2.7</b> Additional resources</a><ul>
-<li class="chapter" data-level="2.7.1" data-path="visualization-1.html"><a href="visualization-1.html#cheatsheets"><i class="fa fa-check"></i><b>2.7.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="2.7.2" data-path="visualization-1.html"><a href="visualization-1.html#datacamp-courses"><i class="fa fa-check"></i><b>2.7.2</b> Datacamp courses</a></li>
-<li class="chapter" data-level="2.7.3" data-path="visualization-1.html"><a href="visualization-1.html#books-and-chapters"><i class="fa fa-check"></i><b>2.7.3</b> Books and chapters</a></li>
-<li class="chapter" data-level="2.7.4" data-path="visualization-1.html"><a href="visualization-1.html#misc"><i class="fa fa-check"></i><b>2.7.4</b> Misc</a></li>
+<li class="chapter" data-level="2.6" data-path="visualization-1.html"><a href="visualization-1.html#additional-resources"><i class="fa fa-check"></i><b>2.6</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="visualization-1.html"><a href="visualization-1.html#cheatsheets"><i class="fa fa-check"></i><b>2.6.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="2.6.2" data-path="visualization-1.html"><a href="visualization-1.html#datacamp-courses"><i class="fa fa-check"></i><b>2.6.2</b> Datacamp courses</a></li>
+<li class="chapter" data-level="2.6.3" data-path="visualization-1.html"><a href="visualization-1.html#books-and-chapters"><i class="fa fa-check"></i><b>2.6.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="2.6.4" data-path="visualization-1.html"><a href="visualization-1.html#misc"><i class="fa fa-check"></i><b>2.6.4</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="2.8" data-path="visualization-1.html"><a href="visualization-1.html#session-info-1"><i class="fa fa-check"></i><b>2.8</b> Session info</a></li>
+<li class="chapter" data-level="2.7" data-path="visualization-1.html"><a href="visualization-1.html#session-info-1"><i class="fa fa-check"></i><b>2.7</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="visualization-2.html"><a href="visualization-2.html"><i class="fa fa-check"></i><b>3</b> Visualization 2</a><ul>
-<li class="chapter" data-level="3.1" data-path="visualization-2.html"><a href="visualization-2.html#learning-goals-1"><i class="fa fa-check"></i><b>3.1</b> Learning goals</a></li>
+<li class="chapter" data-level="3" data-path="visualization-2.html"><a href="visualization-2.html"><i class="fa fa-check"></i><b>3</b> Visualization 2</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visualization-2.html"><a href="visualization-2.html#learning-objectives"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
 <li class="chapter" data-level="3.2" data-path="visualization-2.html"><a href="visualization-2.html#install-and-load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>3.2</b> Install and load packages, load data, set theme</a></li>
-<li class="chapter" data-level="3.3" data-path="visualization-2.html"><a href="visualization-2.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>3.3</b> Overview of different plot types for different things</a><ul>
+<li class="chapter" data-level="3.3" data-path="visualization-2.html"><a href="visualization-2.html#overview-of-different-plot-types-for-different-things"><i class="fa fa-check"></i><b>3.3</b> Overview of different plot types for different things</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="visualization-2.html"><a href="visualization-2.html#proportions"><i class="fa fa-check"></i><b>3.3.1</b> Proportions</a></li>
 <li class="chapter" data-level="3.3.2" data-path="visualization-2.html"><a href="visualization-2.html#comparisons"><i class="fa fa-check"></i><b>3.3.2</b> Comparisons</a></li>
 <li class="chapter" data-level="3.3.3" data-path="visualization-2.html"><a href="visualization-2.html#relationships"><i class="fa fa-check"></i><b>3.3.3</b> Relationships</a></li>
 <li class="chapter" data-level="3.3.4" data-path="visualization-2.html"><a href="visualization-2.html#temporal-data"><i class="fa fa-check"></i><b>3.3.4</b> Temporal data</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-plots"><i class="fa fa-check"></i><b>3.4</b> Customizing plots</a><ul>
+<li class="chapter" data-level="3.4" data-path="visualization-2.html"><a href="visualization-2.html#customizing-plots"><i class="fa fa-check"></i><b>3.4</b> Customizing plots</a>
+<ul>
 <li class="chapter" data-level="3.4.1" data-path="visualization-2.html"><a href="visualization-2.html#anatomy-of-a-ggplot"><i class="fa fa-check"></i><b>3.4.1</b> Anatomy of a <code>ggplot</code></a></li>
 <li class="chapter" data-level="3.4.2" data-path="visualization-2.html"><a href="visualization-2.html#changing-the-order-of-things"><i class="fa fa-check"></i><b>3.4.2</b> Changing the order of things</a></li>
 <li class="chapter" data-level="3.4.3" data-path="visualization-2.html"><a href="visualization-2.html#dealing-with-legends"><i class="fa fa-check"></i><b>3.4.3</b> Dealing with legends</a></li>
@@ -189,7 +217,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="visualization-2.html"><a href="visualization-2.html#making-animations"><i class="fa fa-check"></i><b>3.8</b> Making animations</a></li>
 <li class="chapter" data-level="3.9" data-path="visualization-2.html"><a href="visualization-2.html#shiny-apps"><i class="fa fa-check"></i><b>3.9</b> Shiny apps</a></li>
 <li class="chapter" data-level="3.10" data-path="visualization-2.html"><a href="visualization-2.html#defining-snippets"><i class="fa fa-check"></i><b>3.10</b> Defining snippets</a></li>
-<li class="chapter" data-level="3.11" data-path="visualization-2.html"><a href="visualization-2.html#additional-resources-1"><i class="fa fa-check"></i><b>3.11</b> Additional resources</a><ul>
+<li class="chapter" data-level="3.11" data-path="visualization-2.html"><a href="visualization-2.html#additional-resources-1"><i class="fa fa-check"></i><b>3.11</b> Additional resources</a>
+<ul>
 <li class="chapter" data-level="3.11.1" data-path="visualization-2.html"><a href="visualization-2.html#cheatsheets-1"><i class="fa fa-check"></i><b>3.11.1</b> Cheatsheets</a></li>
 <li class="chapter" data-level="3.11.2" data-path="visualization-2.html"><a href="visualization-2.html#data-camp-courses"><i class="fa fa-check"></i><b>3.11.2</b> Data camp courses</a></li>
 <li class="chapter" data-level="3.11.3" data-path="visualization-2.html"><a href="visualization-2.html#books-and-chapters-1"><i class="fa fa-check"></i><b>3.11.3</b> Books and chapters</a></li>
@@ -197,195 +226,235 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.12" data-path="visualization-2.html"><a href="visualization-2.html#session-info-2"><i class="fa fa-check"></i><b>3.12</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html"><i class="fa fa-check"></i><b>4</b> Data wrangling 1</a><ul>
-<li class="chapter" data-level="4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#learning-goals-2"><i class="fa fa-check"></i><b>4.1</b> Learning goals</a></li>
-<li class="chapter" data-level="4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#install-packages"><i class="fa fa-check"></i><b>4.2</b> Install packages</a></li>
-<li class="chapter" data-level="4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#load-packages-1"><i class="fa fa-check"></i><b>4.3</b> Load packages</a></li>
-<li class="chapter" data-level="4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#some-r-basics"><i class="fa fa-check"></i><b>4.4</b> Some R basics</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#modes"><i class="fa fa-check"></i><b>4.4.1</b> Modes</a></li>
-<li class="chapter" data-level="4.4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-types"><i class="fa fa-check"></i><b>4.4.2</b> Data types</a></li>
-<li class="chapter" data-level="4.4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#operators"><i class="fa fa-check"></i><b>4.4.3</b> Operators</a></li>
-<li class="chapter" data-level="4.4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#control-flow"><i class="fa fa-check"></i><b>4.4.4</b> Control flow</a></li>
-<li class="chapter" data-level="4.4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#functions"><i class="fa fa-check"></i><b>4.4.5</b> Functions</a></li>
-<li class="chapter" data-level="4.4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#the-pipe-operator"><i class="fa fa-check"></i><b>4.4.6</b> The pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html"><i class="fa fa-check"></i><b>4</b> Data wrangling 1</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#learning-goals-1"><i class="fa fa-check"></i><b>4.1</b> Learning goals</a></li>
+<li class="chapter" data-level="4.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#load-packages-1"><i class="fa fa-check"></i><b>4.2</b> Load packages</a></li>
+<li class="chapter" data-level="4.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#some-r-basics"><i class="fa fa-check"></i><b>4.3</b> Some R basics</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#modes"><i class="fa fa-check"></i><b>4.3.1</b> Modes</a></li>
+<li class="chapter" data-level="4.3.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-types"><i class="fa fa-check"></i><b>4.3.2</b> Data types</a></li>
+<li class="chapter" data-level="4.3.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#operators"><i class="fa fa-check"></i><b>4.3.3</b> Operators</a></li>
+<li class="chapter" data-level="4.3.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#control-flow"><i class="fa fa-check"></i><b>4.3.4</b> Control flow</a></li>
+<li class="chapter" data-level="4.3.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#functions"><i class="fa fa-check"></i><b>4.3.5</b> Functions</a></li>
+<li class="chapter" data-level="4.3.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#the-pipe-operator"><i class="fa fa-check"></i><b>4.3.6</b> The pipe operator <code>%&gt;%</code></a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#looking-at-data"><i class="fa fa-check"></i><b>4.5</b> Looking at data</a><ul>
+<li class="chapter" data-level="4.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>4.4</b> A quick note on naming things</a></li>
+<li class="chapter" data-level="4.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#looking-at-data"><i class="fa fa-check"></i><b>4.5</b> Looking at data</a>
+<ul>
 <li class="chapter" data-level="4.5.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#head"><i class="fa fa-check"></i><b>4.5.1</b> <code>head()</code></a></li>
 <li class="chapter" data-level="4.5.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#glimpse"><i class="fa fa-check"></i><b>4.5.2</b> <code>glimpse()</code></a></li>
 <li class="chapter" data-level="4.5.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#distinct"><i class="fa fa-check"></i><b>4.5.3</b> <code>distinct()</code></a></li>
 <li class="chapter" data-level="4.5.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#count"><i class="fa fa-check"></i><b>4.5.4</b> <code>count()</code></a></li>
 <li class="chapter" data-level="4.5.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#datatable"><i class="fa fa-check"></i><b>4.5.5</b> <code>datatable()</code></a></li>
 <li class="chapter" data-level="4.5.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#other-tools-for-taking-a-quick-look-at-data"><i class="fa fa-check"></i><b>4.5.6</b> Other tools for taking a quick look at data</a></li>
-<li class="chapter" data-level="4.5.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#a-quick-note-on-naming-things"><i class="fa fa-check"></i><b>4.5.7</b> A quick note on naming things</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#wrangling-data"><i class="fa fa-check"></i><b>4.6</b> Wrangling data</a><ul>
+<li class="chapter" data-level="4.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#wrangling-data"><i class="fa fa-check"></i><b>4.6</b> Wrangling data</a>
+<ul>
 <li class="chapter" data-level="4.6.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#filter"><i class="fa fa-check"></i><b>4.6.1</b> <code>filter()</code></a></li>
 <li class="chapter" data-level="4.6.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#arrange"><i class="fa fa-check"></i><b>4.6.2</b> <code>arrange()</code></a></li>
 <li class="chapter" data-level="4.6.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#rename"><i class="fa fa-check"></i><b>4.6.3</b> <code>rename()</code></a></li>
-<li class="chapter" data-level="4.6.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#select"><i class="fa fa-check"></i><b>4.6.4</b> <code>select()</code></a></li>
-<li class="chapter" data-level="4.6.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-2"><i class="fa fa-check"></i><b>4.6.5</b> Practice 2</a></li>
-<li class="chapter" data-level="4.6.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#mutate"><i class="fa fa-check"></i><b>4.6.6</b> <code>mutate()</code></a></li>
-<li class="chapter" data-level="4.6.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-3"><i class="fa fa-check"></i><b>4.6.7</b> Practice 3</a></li>
+<li class="chapter" data-level="4.6.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#relocate"><i class="fa fa-check"></i><b>4.6.4</b> <code>relocate()</code></a></li>
+<li class="chapter" data-level="4.6.5" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#select"><i class="fa fa-check"></i><b>4.6.5</b> <code>select()</code></a></li>
+<li class="chapter" data-level="4.6.6" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-2"><i class="fa fa-check"></i><b>4.6.6</b> Practice 2</a></li>
+<li class="chapter" data-level="4.6.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#mutate"><i class="fa fa-check"></i><b>4.6.7</b> <code>mutate()</code></a></li>
+<li class="chapter" data-level="4.6.8" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#practice-3"><i class="fa fa-check"></i><b>4.6.8</b> Practice 3</a></li>
 </ul></li>
-<li class="chapter" data-level="4.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#additional-resources-2"><i class="fa fa-check"></i><b>4.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="4.7" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#additional-resources-2"><i class="fa fa-check"></i><b>4.7</b> Additional resources</a>
+<ul>
 <li class="chapter" data-level="4.7.1" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#cheatsheets-2"><i class="fa fa-check"></i><b>4.7.1</b> Cheatsheets</a></li>
 <li class="chapter" data-level="4.7.2" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#data-camp-courses-1"><i class="fa fa-check"></i><b>4.7.2</b> Data camp courses</a></li>
 <li class="chapter" data-level="4.7.3" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#books-and-chapters-2"><i class="fa fa-check"></i><b>4.7.3</b> Books and chapters</a></li>
-<li class="chapter" data-level="4.7.4" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#misc-2"><i class="fa fa-check"></i><b>4.7.4</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="4.8" data-path="data-wrangling-1.html"><a href="data-wrangling-1.html#session-info-3"><i class="fa fa-check"></i><b>4.8</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html"><i class="fa fa-check"></i><b>5</b> Data wrangling 2</a><ul>
-<li class="chapter" data-level="5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#learning-goals-3"><i class="fa fa-check"></i><b>5.1</b> Learning goals</a></li>
+<li class="chapter" data-level="5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html"><i class="fa fa-check"></i><b>5</b> Data wrangling 2</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#learning-goals-2"><i class="fa fa-check"></i><b>5.1</b> Learning goals</a></li>
 <li class="chapter" data-level="5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#load-packages-2"><i class="fa fa-check"></i><b>5.2</b> Load packages</a></li>
-<li class="chapter" data-level="5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#wrangling-data-continued"><i class="fa fa-check"></i><b>5.3</b> Wrangling data (continued)</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#summarizing-data"><i class="fa fa-check"></i><b>5.3.1</b> Summarizing data</a></li>
-<li class="chapter" data-level="5.3.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reshaping-data"><i class="fa fa-check"></i><b>5.3.2</b> Reshaping data</a></li>
-<li class="chapter" data-level="5.3.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#joining-multiple-data-frames"><i class="fa fa-check"></i><b>5.3.3</b> Joining multiple data frames</a></li>
-<li class="chapter" data-level="5.3.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>5.3.4</b> Dealing with missing data</a></li>
+<li class="chapter" data-level="5.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#settings"><i class="fa fa-check"></i><b>5.3</b> Settings</a></li>
+<li class="chapter" data-level="5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#wrangling-data-continued"><i class="fa fa-check"></i><b>5.4</b> Wrangling data (continued)</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#summarizing-data"><i class="fa fa-check"></i><b>5.4.1</b> Summarizing data</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reshaping-data"><i class="fa fa-check"></i><b>5.4.2</b> Reshaping data</a></li>
+<li class="chapter" data-level="5.4.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#joining-multiple-data-frames"><i class="fa fa-check"></i><b>5.4.3</b> Joining multiple data frames</a></li>
+<li class="chapter" data-level="5.4.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#dealing-with-missing-data"><i class="fa fa-check"></i><b>5.4.4</b> Dealing with missing data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reading-in-data"><i class="fa fa-check"></i><b>5.4</b> Reading in data</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv"><i class="fa fa-check"></i><b>5.4.1</b> csv</a></li>
-<li class="chapter" data-level="5.4.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata"><i class="fa fa-check"></i><b>5.4.2</b> RData</a></li>
+<li class="chapter" data-level="5.5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#reading-in-data"><i class="fa fa-check"></i><b>5.5</b> Reading in data</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv"><i class="fa fa-check"></i><b>5.5.1</b> csv</a></li>
+<li class="chapter" data-level="5.5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata"><i class="fa fa-check"></i><b>5.5.2</b> RData</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#saving-data"><i class="fa fa-check"></i><b>5.5</b> Saving data</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv-1"><i class="fa fa-check"></i><b>5.5.1</b> csv</a></li>
-<li class="chapter" data-level="5.5.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata-1"><i class="fa fa-check"></i><b>5.5.2</b> RData</a></li>
+<li class="chapter" data-level="5.6" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#saving-data"><i class="fa fa-check"></i><b>5.6</b> Saving data</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#csv-1"><i class="fa fa-check"></i><b>5.6.1</b> csv</a></li>
+<li class="chapter" data-level="5.6.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#rdata-1"><i class="fa fa-check"></i><b>5.6.2</b> RData</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#additional-resources-3"><i class="fa fa-check"></i><b>5.6</b> Additional resources</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#cheatsheets-3"><i class="fa fa-check"></i><b>5.6.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="5.6.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#data-camp-courses-2"><i class="fa fa-check"></i><b>5.6.2</b> Data camp courses</a></li>
-<li class="chapter" data-level="5.6.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#books-and-chapters-3"><i class="fa fa-check"></i><b>5.6.3</b> Books and chapters</a></li>
-<li class="chapter" data-level="5.6.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#tutorials"><i class="fa fa-check"></i><b>5.6.4</b> Tutorials</a></li>
+<li class="chapter" data-level="5.7" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#additional-resources-3"><i class="fa fa-check"></i><b>5.7</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#cheatsheets-3"><i class="fa fa-check"></i><b>5.7.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="5.7.2" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#data-camp-courses-2"><i class="fa fa-check"></i><b>5.7.2</b> Data camp courses</a></li>
+<li class="chapter" data-level="5.7.3" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#books-and-chapters-3"><i class="fa fa-check"></i><b>5.7.3</b> Books and chapters</a></li>
+<li class="chapter" data-level="5.7.4" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#tutorials"><i class="fa fa-check"></i><b>5.7.4</b> Tutorials</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#session-info-4"><i class="fa fa-check"></i><b>5.7</b> Session info</a></li>
+<li class="chapter" data-level="5.8" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#session-info-4"><i class="fa fa-check"></i><b>5.8</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a><ul>
-<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#learning-goals-4"><i class="fa fa-check"></i><b>6.1</b> Learning goals</a></li>
-<li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#install-and-load-packages-load-data-set-theme-1"><i class="fa fa-check"></i><b>6.2</b> Install and load packages, load data, set theme</a></li>
-<li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.3</b> Counting</a></li>
+<li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>6.1</b> Load packages, load data, set theme</a></li>
+<li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.2</b> Counting</a></li>
+<li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#the-random-secretary"><i class="fa fa-check"></i><b>6.3</b> The random secretary</a></li>
 <li class="chapter" data-level="6.4" data-path="probability-and-causality.html"><a href="probability-and-causality.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.4</b> Flipping a coin many times</a></li>
-<li class="chapter" data-level="6.5" data-path="probability-and-causality.html"><a href="probability-and-causality.html#the-random-secretary"><i class="fa fa-check"></i><b>6.5</b> The random secretary</a></li>
-<li class="chapter" data-level="6.6" data-path="probability-and-causality.html"><a href="probability-and-causality.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.6</b> Clue guide to probability</a><ul>
-<li class="chapter" data-level="6.6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#conditional-probability"><i class="fa fa-check"></i><b>6.6.1</b> Conditional probability</a></li>
-<li class="chapter" data-level="6.6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.6.2</b> Law of total probability</a></li>
+<li class="chapter" data-level="6.5" data-path="probability-and-causality.html"><a href="probability-and-causality.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.5</b> Clue guide to probability</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#conditional-probability"><i class="fa fa-check"></i><b>6.5.1</b> Conditional probability</a></li>
+<li class="chapter" data-level="6.5.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.5.2</b> Law of total probability</a></li>
 </ul></li>
-<li class="chapter" data-level="6.7" data-path="probability-and-causality.html"><a href="probability-and-causality.html#probability-operations"><i class="fa fa-check"></i><b>6.7</b> Probability operations</a></li>
-<li class="chapter" data-level="6.8" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.8</b> Bayesian reasoning example</a></li>
-<li class="chapter" data-level="6.9" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-networks"><i class="fa fa-check"></i><b>6.9</b> Bayesian networks</a><ul>
-<li class="chapter" data-level="6.9.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#sprinkler-example"><i class="fa fa-check"></i><b>6.9.1</b> Sprinkler example</a></li>
+<li class="chapter" data-level="6.6" data-path="probability-and-causality.html"><a href="probability-and-causality.html#probability-operations"><i class="fa fa-check"></i><b>6.6</b> Probability operations</a></li>
+<li class="chapter" data-level="6.7" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.7</b> Bayesian reasoning example</a></li>
+<li class="chapter" data-level="6.8" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-networks"><i class="fa fa-check"></i><b>6.8</b> Bayesian networks</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#sprinkler-example"><i class="fa fa-check"></i><b>6.8.1</b> Sprinkler example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="probability-and-causality.html"><a href="probability-and-causality.html#additional-resources-4"><i class="fa fa-check"></i><b>6.10</b> Additional resources</a><ul>
-<li class="chapter" data-level="6.10.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.10.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="6.10.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.10.2</b> Books and chapters</a></li>
-<li class="chapter" data-level="6.10.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#misc-3"><i class="fa fa-check"></i><b>6.10.3</b> Misc</a></li>
+<li class="chapter" data-level="6.9" data-path="probability-and-causality.html"><a href="probability-and-causality.html#additional-resources-4"><i class="fa fa-check"></i><b>6.9</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.9.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="6.9.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.9.2</b> Books and chapters</a></li>
+<li class="chapter" data-level="6.9.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#misc-2"><i class="fa fa-check"></i><b>6.9.3</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="6.11" data-path="probability-and-causality.html"><a href="probability-and-causality.html#session-info-5"><i class="fa fa-check"></i><b>6.11</b> Session info</a></li>
+<li class="chapter" data-level="6.10" data-path="probability-and-causality.html"><a href="probability-and-causality.html#session-info-5"><i class="fa fa-check"></i><b>6.10</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a><ul>
-<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#learning-goals-5"><i class="fa fa-check"></i><b>7.1</b> Learning goals</a></li>
-<li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#load-packages-and-set-plotting-theme"><i class="fa fa-check"></i><b>7.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="7.3" data-path="simulation-1.html"><a href="simulation-1.html#working-with-distributions"><i class="fa fa-check"></i><b>7.3</b> Working with distributions</a><ul>
+<li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#load-packages-and-set-plotting-theme"><i class="fa fa-check"></i><b>7.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#sampling"><i class="fa fa-check"></i><b>7.2</b> Sampling</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="simulation-1.html"><a href="simulation-1.html#drawing-numbers-from-a-vector"><i class="fa fa-check"></i><b>7.2.1</b> Drawing numbers from a vector</a></li>
+<li class="chapter" data-level="7.2.2" data-path="simulation-1.html"><a href="simulation-1.html#drawing-rows-from-a-data-frame"><i class="fa fa-check"></i><b>7.2.2</b> Drawing rows from a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="simulation-1.html"><a href="simulation-1.html#working-with-distributions"><i class="fa fa-check"></i><b>7.3</b> Working with distributions</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="simulation-1.html"><a href="simulation-1.html#plotting-distributions"><i class="fa fa-check"></i><b>7.3.1</b> Plotting distributions</a></li>
 <li class="chapter" data-level="7.3.2" data-path="simulation-1.html"><a href="simulation-1.html#sampling-from-distributions"><i class="fa fa-check"></i><b>7.3.2</b> Sampling from distributions</a></li>
-<li class="chapter" data-level="7.3.3" data-path="simulation-1.html"><a href="simulation-1.html#cumulative-probability-distribution"><i class="fa fa-check"></i><b>7.3.3</b> Cumulative probability distribution</a></li>
-<li class="chapter" data-level="7.3.4" data-path="simulation-1.html"><a href="simulation-1.html#inverse-cumulative-distribution"><i class="fa fa-check"></i><b>7.3.4</b> Inverse cumulative distribution</a></li>
-<li class="chapter" data-level="7.3.5" data-path="simulation-1.html"><a href="simulation-1.html#computing-probabilities"><i class="fa fa-check"></i><b>7.3.5</b> Computing probabilities</a></li>
+<li class="chapter" data-level="7.3.3" data-path="simulation-1.html"><a href="simulation-1.html#understanding-density"><i class="fa fa-check"></i><b>7.3.3</b> Understanding <code>density()</code></a></li>
+<li class="chapter" data-level="7.3.4" data-path="simulation-1.html"><a href="simulation-1.html#cumulative-probability-distribution"><i class="fa fa-check"></i><b>7.3.4</b> Cumulative probability distribution</a></li>
+<li class="chapter" data-level="7.3.5" data-path="simulation-1.html"><a href="simulation-1.html#inverse-cumulative-distribution"><i class="fa fa-check"></i><b>7.3.5</b> Inverse cumulative distribution</a></li>
+<li class="chapter" data-level="7.3.6" data-path="simulation-1.html"><a href="simulation-1.html#computing-probabilities"><i class="fa fa-check"></i><b>7.3.6</b> Computing probabilities</a></li>
+<li class="chapter" data-level="7.3.7" data-path="simulation-1.html"><a href="simulation-1.html#make-the-plot"><i class="fa fa-check"></i><b>7.3.7</b> Make the plot</a></li>
+<li class="chapter" data-level="7.3.8" data-path="simulation-1.html"><a href="simulation-1.html#analytic-solutions"><i class="fa fa-check"></i><b>7.3.8</b> Analytic solutions</a></li>
+<li class="chapter" data-level="7.3.9" data-path="simulation-1.html"><a href="simulation-1.html#sampling-solution"><i class="fa fa-check"></i><b>7.3.9</b> Sampling solution</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#bayesian-inference-with-the-normal-distribution"><i class="fa fa-check"></i><b>7.4</b> Bayesian inference with the normal distribution</a><ul>
+<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#bayesian-inference-with-the-normal-distribution"><i class="fa fa-check"></i><b>7.4</b> Bayesian inference with the normal distribution</a>
+<ul>
 <li class="chapter" data-level="7.4.1" data-path="simulation-1.html"><a href="simulation-1.html#analytic-solution"><i class="fa fa-check"></i><b>7.4.1</b> Analytic solution</a></li>
 <li class="chapter" data-level="7.4.2" data-path="simulation-1.html"><a href="simulation-1.html#solution-via-sampling"><i class="fa fa-check"></i><b>7.4.2</b> Solution via sampling</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="simulation-1.html"><a href="simulation-1.html#working-with-samples"><i class="fa fa-check"></i><b>7.5</b> Working with samples</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="simulation-1.html"><a href="simulation-1.html#understanding-density"><i class="fa fa-check"></i><b>7.5.1</b> Understanding <code>density()</code></a></li>
-<li class="chapter" data-level="7.5.2" data-path="simulation-1.html"><a href="simulation-1.html#the-quantile-function"><i class="fa fa-check"></i><b>7.5.2</b> The <code>quantile()</code> function</a></li>
+<li class="chapter" data-level="7.5" data-path="simulation-1.html"><a href="simulation-1.html#additional-resources-5"><i class="fa fa-check"></i><b>7.5</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="simulation-1.html"><a href="simulation-1.html#cheatsheets-5"><i class="fa fa-check"></i><b>7.5.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="7.5.2" data-path="simulation-1.html"><a href="simulation-1.html#datacamp"><i class="fa fa-check"></i><b>7.5.2</b> Datacamp</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="simulation-1.html"><a href="simulation-1.html#comparing-probability-distributions"><i class="fa fa-check"></i><b>7.6</b> Comparing probability distributions</a></li>
-<li class="chapter" data-level="7.7" data-path="simulation-1.html"><a href="simulation-1.html#relationship-between-probability-and-likelihood"><i class="fa fa-check"></i><b>7.7</b> Relationship between probability and likelihood</a></li>
-<li class="chapter" data-level="7.8" data-path="simulation-1.html"><a href="simulation-1.html#additional-resources-5"><i class="fa fa-check"></i><b>7.8</b> Additional resources</a><ul>
-<li class="chapter" data-level="7.8.1" data-path="simulation-1.html"><a href="simulation-1.html#cheatsheets-5"><i class="fa fa-check"></i><b>7.8.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="7.8.2" data-path="simulation-1.html"><a href="simulation-1.html#datacamp"><i class="fa fa-check"></i><b>7.8.2</b> Datacamp</a></li>
-<li class="chapter" data-level="7.8.3" data-path="simulation-1.html"><a href="simulation-1.html#tutorials-1"><i class="fa fa-check"></i><b>7.8.3</b> Tutorials</a></li>
+<li class="chapter" data-level="7.6" data-path="simulation-1.html"><a href="simulation-1.html#session-info-6"><i class="fa fa-check"></i><b>7.6</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="7.9" data-path="simulation-1.html"><a href="simulation-1.html#session-info-6"><i class="fa fa-check"></i><b>7.9</b> Session info</a></li>
+<li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="simulation-2.html"><a href="simulation-2.html#load-packages-and-set-plotting-theme-1"><i class="fa fa-check"></i><b>8.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="8.2" data-path="simulation-2.html"><a href="simulation-2.html#making-statistical-inferences-frequentist-style"><i class="fa fa-check"></i><b>8.2</b> Making statistical inferences (frequentist style)</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="simulation-2.html"><a href="simulation-2.html#population-distribution"><i class="fa fa-check"></i><b>8.2.1</b> Population distribution</a></li>
+<li class="chapter" data-level="8.2.2" data-path="simulation-2.html"><a href="simulation-2.html#distribution-of-a-single-sample"><i class="fa fa-check"></i><b>8.2.2</b> Distribution of a single sample</a></li>
+<li class="chapter" data-level="8.2.3" data-path="simulation-2.html"><a href="simulation-2.html#the-sampling-distribution"><i class="fa fa-check"></i><b>8.2.3</b> The sampling distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a><ul>
-<li class="chapter" data-level="8.1" data-path="simulation-2.html"><a href="simulation-2.html#learning-goals-6"><i class="fa fa-check"></i><b>8.1</b> Learning goals</a></li>
-<li class="chapter" data-level="8.2" data-path="simulation-2.html"><a href="simulation-2.html#load-packages-and-set-plotting-theme-1"><i class="fa fa-check"></i><b>8.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="8.3" data-path="simulation-2.html"><a href="simulation-2.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>8.3</b> The central limit theorem</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="simulation-2.html"><a href="simulation-2.html#population-distribution"><i class="fa fa-check"></i><b>8.3.1</b> Population distribution</a></li>
-<li class="chapter" data-level="8.3.2" data-path="simulation-2.html"><a href="simulation-2.html#distribution-of-a-single-sample"><i class="fa fa-check"></i><b>8.3.2</b> Distribution of a single sample</a></li>
-<li class="chapter" data-level="8.3.3" data-path="simulation-2.html"><a href="simulation-2.html#the-sampling-distribution"><i class="fa fa-check"></i><b>8.3.3</b> The sampling distribution</a></li>
-<li class="chapter" data-level="8.3.4" data-path="simulation-2.html"><a href="simulation-2.html#exploring-the-clt"><i class="fa fa-check"></i><b>8.3.4</b> Exploring the CLT</a></li>
+<li class="chapter" data-level="8.3" data-path="simulation-2.html"><a href="simulation-2.html#understanding-p-values"><i class="fa fa-check"></i><b>8.3</b> Understanding p-values</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation-2.html"><a href="simulation-2.html#permutation-test"><i class="fa fa-check"></i><b>8.3.1</b> Permutation test</a></li>
+<li class="chapter" data-level="8.3.2" data-path="simulation-2.html"><a href="simulation-2.html#t-test-by-hand"><i class="fa fa-check"></i><b>8.3.2</b> t-test by hand</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="simulation-2.html"><a href="simulation-2.html#understanding-p-values"><i class="fa fa-check"></i><b>8.4</b> Understanding p-values</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="simulation-2.html"><a href="simulation-2.html#permutation-test"><i class="fa fa-check"></i><b>8.4.1</b> Permutation test</a></li>
+<li class="chapter" data-level="8.4" data-path="simulation-2.html"><a href="simulation-2.html#confidence-intervals"><i class="fa fa-check"></i><b>8.4</b> Confidence intervals</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="simulation-2.html"><a href="simulation-2.html#mean_cl_boot-explained"><i class="fa fa-check"></i><b>8.4.1</b> <code>mean_cl_boot()</code> explained</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="simulation-2.html"><a href="simulation-2.html#confidence-intervals"><i class="fa fa-check"></i><b>8.5</b> Confidence intervals</a></li>
-<li class="chapter" data-level="8.6" data-path="simulation-2.html"><a href="simulation-2.html#additional-resources-6"><i class="fa fa-check"></i><b>8.6</b> Additional resources</a></li>
+<li class="chapter" data-level="8.5" data-path="simulation-2.html"><a href="simulation-2.html#additional-resources-6"><i class="fa fa-check"></i><b>8.5</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="simulation-2.html"><a href="simulation-2.html#datacamp-1"><i class="fa fa-check"></i><b>8.5.1</b> Datacamp</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="modeling-data.html"><a href="modeling-data.html"><i class="fa fa-check"></i><b>9</b> Modeling data</a><ul>
-<li class="chapter" data-level="9.1" data-path="modeling-data.html"><a href="modeling-data.html#learning-goals-7"><i class="fa fa-check"></i><b>9.1</b> Learning goals</a></li>
-<li class="chapter" data-level="9.2" data-path="modeling-data.html"><a href="modeling-data.html#load-packages-and-set-plotting-theme-2"><i class="fa fa-check"></i><b>9.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="9.3" data-path="modeling-data.html"><a href="modeling-data.html#modeling-data-1"><i class="fa fa-check"></i><b>9.3</b> Modeling data</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="modeling-data.html"><a href="modeling-data.html#simplicity-vs.-accuracy-trade-off"><i class="fa fa-check"></i><b>9.3.1</b> Simplicity vs. accuracy trade-off</a></li>
-<li class="chapter" data-level="9.3.2" data-path="modeling-data.html"><a href="modeling-data.html#error-definitions-and-best-estimators"><i class="fa fa-check"></i><b>9.3.2</b> Error definitions and best estimators</a></li>
-<li class="chapter" data-level="9.3.3" data-path="modeling-data.html"><a href="modeling-data.html#sampling-distributions-for-median-and-mean"><i class="fa fa-check"></i><b>9.3.3</b> Sampling distributions for median and mean</a></li>
+<li class="chapter" data-level="8.6" data-path="simulation-2.html"><a href="simulation-2.html#session-info-7"><i class="fa fa-check"></i><b>8.6</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="modeling-data.html"><a href="modeling-data.html#hypothesis-testing-one-sample-t-test"><i class="fa fa-check"></i><b>9.4</b> Hypothesis testing: “One-sample t-test”</a></li>
-<li class="chapter" data-level="9.5" data-path="modeling-data.html"><a href="modeling-data.html#building-a-sampling-distribution-of-pre"><i class="fa fa-check"></i><b>9.5</b> Building a sampling distribution of PRE</a></li>
-<li class="chapter" data-level="9.6" data-path="modeling-data.html"><a href="modeling-data.html#additional-resources-7"><i class="fa fa-check"></i><b>9.6</b> Additional resources</a><ul>
-<li class="chapter" data-level="9.6.1" data-path="modeling-data.html"><a href="modeling-data.html#reading"><i class="fa fa-check"></i><b>9.6.1</b> Reading</a></li>
-<li class="chapter" data-level="9.6.2" data-path="modeling-data.html"><a href="modeling-data.html#datacamp-1"><i class="fa fa-check"></i><b>9.6.2</b> Datacamp</a></li>
+<li class="chapter" data-level="9" data-path="modeling-data.html"><a href="modeling-data.html"><i class="fa fa-check"></i><b>9</b> Modeling data</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="modeling-data.html"><a href="modeling-data.html#load-packages-and-set-plotting-theme-2"><i class="fa fa-check"></i><b>9.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="9.2" data-path="modeling-data.html"><a href="modeling-data.html#modeling-data-1"><i class="fa fa-check"></i><b>9.2</b> Modeling data</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="modeling-data.html"><a href="modeling-data.html#simplicity-vs.-accuracy-trade-off"><i class="fa fa-check"></i><b>9.2.1</b> Simplicity vs. accuracy trade-off</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modeling-data.html"><a href="modeling-data.html#error-definitions-and-best-estimators"><i class="fa fa-check"></i><b>9.2.2</b> Error definitions and best estimators</a></li>
+<li class="chapter" data-level="9.2.3" data-path="modeling-data.html"><a href="modeling-data.html#sampling-distributions-for-median-and-mean"><i class="fa fa-check"></i><b>9.2.3</b> Sampling distributions for median and mean</a></li>
 </ul></li>
-<li class="chapter" data-level="9.7" data-path="modeling-data.html"><a href="modeling-data.html#session-info-7"><i class="fa fa-check"></i><b>9.7</b> Session info</a></li>
+<li class="chapter" data-level="9.3" data-path="modeling-data.html"><a href="modeling-data.html#hypothesis-testing-one-sample-t-test"><i class="fa fa-check"></i><b>9.3</b> Hypothesis testing: “One-sample t-test”</a></li>
+<li class="chapter" data-level="9.4" data-path="modeling-data.html"><a href="modeling-data.html#building-a-sampling-distribution-of-pre"><i class="fa fa-check"></i><b>9.4</b> Building a sampling distribution of PRE</a></li>
+<li class="chapter" data-level="9.5" data-path="modeling-data.html"><a href="modeling-data.html#additional-resources-7"><i class="fa fa-check"></i><b>9.5</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="modeling-data.html"><a href="modeling-data.html#reading"><i class="fa fa-check"></i><b>9.5.1</b> Reading</a></li>
+<li class="chapter" data-level="9.5.2" data-path="modeling-data.html"><a href="modeling-data.html#datacamp-2"><i class="fa fa-check"></i><b>9.5.2</b> Datacamp</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="linear-model-1.html"><a href="linear-model-1.html"><i class="fa fa-check"></i><b>10</b> Linear model 1</a><ul>
-<li class="chapter" data-level="10.1" data-path="linear-model-1.html"><a href="linear-model-1.html#learning-goals-8"><i class="fa fa-check"></i><b>10.1</b> Learning goals</a></li>
-<li class="chapter" data-level="10.2" data-path="linear-model-1.html"><a href="linear-model-1.html#load-packages-and-set-plotting-theme-3"><i class="fa fa-check"></i><b>10.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="10.3" data-path="linear-model-1.html"><a href="linear-model-1.html#correlation"><i class="fa fa-check"></i><b>10.3</b> Correlation</a></li>
-<li class="chapter" data-level="10.4" data-path="linear-model-1.html"><a href="linear-model-1.html#regression"><i class="fa fa-check"></i><b>10.4</b> Regression</a><ul>
-<li class="chapter" data-level="10.4.1" data-path="linear-model-1.html"><a href="linear-model-1.html#define-and-fit-the-models"><i class="fa fa-check"></i><b>10.4.1</b> Define and fit the models</a></li>
-<li class="chapter" data-level="10.4.2" data-path="linear-model-1.html"><a href="linear-model-1.html#calculate-the-sum-of-squared-errors-of-each-model"><i class="fa fa-check"></i><b>10.4.2</b> Calculate the sum of squared errors of each model</a></li>
+<li class="chapter" data-level="9.6" data-path="modeling-data.html"><a href="modeling-data.html#session-info-8"><i class="fa fa-check"></i><b>9.6</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="10.5" data-path="linear-model-1.html"><a href="linear-model-1.html#credit-example"><i class="fa fa-check"></i><b>10.5</b> Credit example</a></li>
-<li class="chapter" data-level="10.6" data-path="linear-model-1.html"><a href="linear-model-1.html#additional-resources-8"><i class="fa fa-check"></i><b>10.6</b> Additional resources</a><ul>
-<li class="chapter" data-level="10.6.1" data-path="linear-model-1.html"><a href="linear-model-1.html#datacamp-2"><i class="fa fa-check"></i><b>10.6.1</b> Datacamp</a></li>
-<li class="chapter" data-level="10.6.2" data-path="linear-model-1.html"><a href="linear-model-1.html#misc-4"><i class="fa fa-check"></i><b>10.6.2</b> Misc</a></li>
+<li class="chapter" data-level="10" data-path="linear-model-1.html"><a href="linear-model-1.html"><i class="fa fa-check"></i><b>10</b> Linear model 1</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="linear-model-1.html"><a href="linear-model-1.html#load-packages-and-set-plotting-theme-3"><i class="fa fa-check"></i><b>10.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="10.2" data-path="linear-model-1.html"><a href="linear-model-1.html#correlation"><i class="fa fa-check"></i><b>10.2</b> Correlation</a></li>
+<li class="chapter" data-level="10.3" data-path="linear-model-1.html"><a href="linear-model-1.html#regression"><i class="fa fa-check"></i><b>10.3</b> Regression</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="linear-model-1.html"><a href="linear-model-1.html#define-and-fit-the-models"><i class="fa fa-check"></i><b>10.3.1</b> Define and fit the models</a></li>
+<li class="chapter" data-level="10.3.2" data-path="linear-model-1.html"><a href="linear-model-1.html#calculate-the-sum-of-squared-errors-of-each-model"><i class="fa fa-check"></i><b>10.3.2</b> Calculate the sum of squared errors of each model</a></li>
 </ul></li>
-<li class="chapter" data-level="10.7" data-path="linear-model-1.html"><a href="linear-model-1.html#session-info-8"><i class="fa fa-check"></i><b>10.7</b> Session info</a></li>
+<li class="chapter" data-level="10.4" data-path="linear-model-1.html"><a href="linear-model-1.html#credit-example"><i class="fa fa-check"></i><b>10.4</b> Credit example</a></li>
+<li class="chapter" data-level="10.5" data-path="linear-model-1.html"><a href="linear-model-1.html#additional-resources-8"><i class="fa fa-check"></i><b>10.5</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="linear-model-1.html"><a href="linear-model-1.html#datacamp-3"><i class="fa fa-check"></i><b>10.5.1</b> Datacamp</a></li>
+<li class="chapter" data-level="10.5.2" data-path="linear-model-1.html"><a href="linear-model-1.html#misc-3"><i class="fa fa-check"></i><b>10.5.2</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="linear-model-2.html"><a href="linear-model-2.html"><i class="fa fa-check"></i><b>11</b> Linear model 2</a><ul>
-<li class="chapter" data-level="11.1" data-path="linear-model-2.html"><a href="linear-model-2.html#learning-goals-9"><i class="fa fa-check"></i><b>11.1</b> Learning goals</a></li>
+<li class="chapter" data-level="10.6" data-path="linear-model-1.html"><a href="linear-model-1.html#session-info-9"><i class="fa fa-check"></i><b>10.6</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="linear-model-2.html"><a href="linear-model-2.html"><i class="fa fa-check"></i><b>11</b> Linear model 2</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="linear-model-2.html"><a href="linear-model-2.html#learning-goals-3"><i class="fa fa-check"></i><b>11.1</b> Learning goals</a></li>
 <li class="chapter" data-level="11.2" data-path="linear-model-2.html"><a href="linear-model-2.html#load-packages-and-set-plotting-theme-4"><i class="fa fa-check"></i><b>11.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="11.3" data-path="linear-model-2.html"><a href="linear-model-2.html#load-data-sets"><i class="fa fa-check"></i><b>11.3</b> Load data sets</a></li>
-<li class="chapter" data-level="11.4" data-path="linear-model-2.html"><a href="linear-model-2.html#multiple-continuous-variables"><i class="fa fa-check"></i><b>11.4</b> Multiple continuous variables</a><ul>
+<li class="chapter" data-level="11.4" data-path="linear-model-2.html"><a href="linear-model-2.html#multiple-continuous-variables"><i class="fa fa-check"></i><b>11.4</b> Multiple continuous variables</a>
+<ul>
 <li class="chapter" data-level="11.4.1" data-path="linear-model-2.html"><a href="linear-model-2.html#explore-correlations"><i class="fa fa-check"></i><b>11.4.1</b> Explore correlations</a></li>
 <li class="chapter" data-level="11.4.2" data-path="linear-model-2.html"><a href="linear-model-2.html#multipe-regression"><i class="fa fa-check"></i><b>11.4.2</b> Multipe regression</a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="linear-model-2.html"><a href="linear-model-2.html#one-categorical-variable"><i class="fa fa-check"></i><b>11.5</b> One categorical variable</a><ul>
+<li class="chapter" data-level="11.5" data-path="linear-model-2.html"><a href="linear-model-2.html#one-categorical-variable"><i class="fa fa-check"></i><b>11.5</b> One categorical variable</a>
+<ul>
 <li class="chapter" data-level="11.5.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions"><i class="fa fa-check"></i><b>11.5.1</b> Visualization of the model predictions</a></li>
 <li class="chapter" data-level="11.5.2" data-path="linear-model-2.html"><a href="linear-model-2.html#dummy-coding"><i class="fa fa-check"></i><b>11.5.2</b> Dummy coding</a></li>
 <li class="chapter" data-level="11.5.3" data-path="linear-model-2.html"><a href="linear-model-2.html#reporting-the-results"><i class="fa fa-check"></i><b>11.5.3</b> Reporting the results</a></li>
 </ul></li>
-<li class="chapter" data-level="11.6" data-path="linear-model-2.html"><a href="linear-model-2.html#one-continuous-and-one-categorical-variable"><i class="fa fa-check"></i><b>11.6</b> One continuous and one categorical variable</a><ul>
+<li class="chapter" data-level="11.6" data-path="linear-model-2.html"><a href="linear-model-2.html#one-continuous-and-one-categorical-variable"><i class="fa fa-check"></i><b>11.6</b> One continuous and one categorical variable</a>
+<ul>
 <li class="chapter" data-level="11.6.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-of-the-model-predictions-1"><i class="fa fa-check"></i><b>11.6.1</b> Visualization of the model predictions</a></li>
 </ul></li>
-<li class="chapter" data-level="11.7" data-path="linear-model-2.html"><a href="linear-model-2.html#interactions"><i class="fa fa-check"></i><b>11.7</b> Interactions</a><ul>
+<li class="chapter" data-level="11.7" data-path="linear-model-2.html"><a href="linear-model-2.html#interactions"><i class="fa fa-check"></i><b>11.7</b> Interactions</a>
+<ul>
 <li class="chapter" data-level="11.7.1" data-path="linear-model-2.html"><a href="linear-model-2.html#visualization-3"><i class="fa fa-check"></i><b>11.7.1</b> Visualization</a></li>
 <li class="chapter" data-level="11.7.2" data-path="linear-model-2.html"><a href="linear-model-2.html#hypothesis-test"><i class="fa fa-check"></i><b>11.7.2</b> Hypothesis test</a></li>
 </ul></li>
-<li class="chapter" data-level="11.8" data-path="linear-model-2.html"><a href="linear-model-2.html#additional-resources-9"><i class="fa fa-check"></i><b>11.8</b> Additional resources</a><ul>
-<li class="chapter" data-level="11.8.1" data-path="linear-model-2.html"><a href="linear-model-2.html#datacamp-3"><i class="fa fa-check"></i><b>11.8.1</b> Datacamp</a></li>
-<li class="chapter" data-level="11.8.2" data-path="linear-model-2.html"><a href="linear-model-2.html#misc-5"><i class="fa fa-check"></i><b>11.8.2</b> Misc</a></li>
+<li class="chapter" data-level="11.8" data-path="linear-model-2.html"><a href="linear-model-2.html#additional-resources-9"><i class="fa fa-check"></i><b>11.8</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="11.8.1" data-path="linear-model-2.html"><a href="linear-model-2.html#datacamp-4"><i class="fa fa-check"></i><b>11.8.1</b> Datacamp</a></li>
+<li class="chapter" data-level="11.8.2" data-path="linear-model-2.html"><a href="linear-model-2.html#misc-4"><i class="fa fa-check"></i><b>11.8.2</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="11.9" data-path="linear-model-2.html"><a href="linear-model-2.html#session-info-9"><i class="fa fa-check"></i><b>11.9</b> Session info</a></li>
+<li class="chapter" data-level="11.9" data-path="linear-model-2.html"><a href="linear-model-2.html#session-info-10"><i class="fa fa-check"></i><b>11.9</b> Session info</a></li>
+<li class="chapter" data-level="11.10" data-path="linear-model-2.html"><a href="linear-model-2.html#references"><i class="fa fa-check"></i><b>11.10</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="linear-model-3.html"><a href="linear-model-3.html"><i class="fa fa-check"></i><b>12</b> Linear model 3</a><ul>
-<li class="chapter" data-level="12.1" data-path="linear-model-3.html"><a href="linear-model-3.html#learning-goals-10"><i class="fa fa-check"></i><b>12.1</b> Learning goals</a></li>
+<li class="chapter" data-level="12" data-path="linear-model-3.html"><a href="linear-model-3.html"><i class="fa fa-check"></i><b>12</b> Linear model 3</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="linear-model-3.html"><a href="linear-model-3.html#learning-goals-4"><i class="fa fa-check"></i><b>12.1</b> Learning goals</a></li>
 <li class="chapter" data-level="12.2" data-path="linear-model-3.html"><a href="linear-model-3.html#load-packages-and-set-plotting-theme-5"><i class="fa fa-check"></i><b>12.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="12.3" data-path="linear-model-3.html"><a href="linear-model-3.html#load-data-sets-1"><i class="fa fa-check"></i><b>12.3</b> Load data sets</a></li>
-<li class="chapter" data-level="12.4" data-path="linear-model-3.html"><a href="linear-model-3.html#one-way-anova"><i class="fa fa-check"></i><b>12.4</b> One-way ANOVA</a><ul>
+<li class="chapter" data-level="12.4" data-path="linear-model-3.html"><a href="linear-model-3.html#one-way-anova"><i class="fa fa-check"></i><b>12.4</b> One-way ANOVA</a>
+<ul>
 <li class="chapter" data-level="12.4.1" data-path="linear-model-3.html"><a href="linear-model-3.html#visualization-4"><i class="fa fa-check"></i><b>12.4.1</b> Visualization</a></li>
 <li class="chapter" data-level="12.4.2" data-path="linear-model-3.html"><a href="linear-model-3.html#model-fitting"><i class="fa fa-check"></i><b>12.4.2</b> Model fitting</a></li>
 <li class="chapter" data-level="12.4.3" data-path="linear-model-3.html"><a href="linear-model-3.html#hypothesis-test-1"><i class="fa fa-check"></i><b>12.4.3</b> Hypothesis test</a></li>
@@ -394,258 +463,327 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.4.6" data-path="linear-model-3.html"><a href="linear-model-3.html#follow-up-questions"><i class="fa fa-check"></i><b>12.4.6</b> Follow up questions</a></li>
 <li class="chapter" data-level="12.4.7" data-path="linear-model-3.html"><a href="linear-model-3.html#variance-decomposition"><i class="fa fa-check"></i><b>12.4.7</b> Variance decomposition</a></li>
 </ul></li>
-<li class="chapter" data-level="12.5" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova"><i class="fa fa-check"></i><b>12.5</b> Two-way ANOVA</a><ul>
+<li class="chapter" data-level="12.5" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova"><i class="fa fa-check"></i><b>12.5</b> Two-way ANOVA</a>
+<ul>
 <li class="chapter" data-level="12.5.1" data-path="linear-model-3.html"><a href="linear-model-3.html#visualization-5"><i class="fa fa-check"></i><b>12.5.1</b> Visualization</a></li>
 <li class="chapter" data-level="12.5.2" data-path="linear-model-3.html"><a href="linear-model-3.html#model-fitting-1"><i class="fa fa-check"></i><b>12.5.2</b> Model fitting</a></li>
 <li class="chapter" data-level="12.5.3" data-path="linear-model-3.html"><a href="linear-model-3.html#interpreting-interactions"><i class="fa fa-check"></i><b>12.5.3</b> Interpreting interactions</a></li>
 <li class="chapter" data-level="12.5.4" data-path="linear-model-3.html"><a href="linear-model-3.html#variance-decomposition-1"><i class="fa fa-check"></i><b>12.5.4</b> Variance decomposition</a></li>
-<li class="chapter" data-level="12.5.5" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova-with-interaction"><i class="fa fa-check"></i><b>12.5.5</b> Two-way ANOVA (with interaction)</a></li>
 </ul></li>
-<li class="chapter" data-level="12.6" data-path="linear-model-3.html"><a href="linear-model-3.html#anova-with-unbalanced-design"><i class="fa fa-check"></i><b>12.6</b> ANOVA with unbalanced design</a></li>
-<li class="chapter" data-level="12.7" data-path="linear-model-3.html"><a href="linear-model-3.html#additional-resources-10"><i class="fa fa-check"></i><b>12.7</b> Additional resources</a><ul>
-<li class="chapter" data-level="12.7.1" data-path="linear-model-3.html"><a href="linear-model-3.html#datacamp-4"><i class="fa fa-check"></i><b>12.7.1</b> Datacamp</a></li>
-<li class="chapter" data-level="12.7.2" data-path="linear-model-3.html"><a href="linear-model-3.html#misc-6"><i class="fa fa-check"></i><b>12.7.2</b> Misc</a></li>
+<li class="chapter" data-level="12.6" data-path="linear-model-3.html"><a href="linear-model-3.html#two-way-anova-with-interaction"><i class="fa fa-check"></i><b>12.6</b> Two-way ANOVA (with interaction)</a></li>
+<li class="chapter" data-level="12.7" data-path="linear-model-3.html"><a href="linear-model-3.html#anova-with-unbalanced-design"><i class="fa fa-check"></i><b>12.7</b> ANOVA with unbalanced design</a></li>
+<li class="chapter" data-level="12.8" data-path="linear-model-3.html"><a href="linear-model-3.html#interpreting-parameters-very-important"><i class="fa fa-check"></i><b>12.8</b> Interpreting parameters (very important!)</a></li>
+<li class="chapter" data-level="12.9" data-path="linear-model-3.html"><a href="linear-model-3.html#additional-resources-10"><i class="fa fa-check"></i><b>12.9</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="12.9.1" data-path="linear-model-3.html"><a href="linear-model-3.html#datacamp-5"><i class="fa fa-check"></i><b>12.9.1</b> Datacamp</a></li>
+<li class="chapter" data-level="12.9.2" data-path="linear-model-3.html"><a href="linear-model-3.html#misc-5"><i class="fa fa-check"></i><b>12.9.2</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="12.8" data-path="linear-model-3.html"><a href="linear-model-3.html#session-info-10"><i class="fa fa-check"></i><b>12.8</b> Session info</a></li>
+<li class="chapter" data-level="12.10" data-path="linear-model-3.html"><a href="linear-model-3.html#session-info-11"><i class="fa fa-check"></i><b>12.10</b> Session info</a></li>
+<li class="chapter" data-level="12.11" data-path="linear-model-3.html"><a href="linear-model-3.html#references-1"><i class="fa fa-check"></i><b>12.11</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="linear-model-4.html"><a href="linear-model-4.html"><i class="fa fa-check"></i><b>13</b> Linear model 4</a><ul>
-<li class="chapter" data-level="13.1" data-path="linear-model-4.html"><a href="linear-model-4.html#learning-goals-11"><i class="fa fa-check"></i><b>13.1</b> Learning goals</a></li>
-<li class="chapter" data-level="13.2" data-path="linear-model-4.html"><a href="linear-model-4.html#load-packages-and-set-plotting-theme-6"><i class="fa fa-check"></i><b>13.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="13.3" data-path="linear-model-4.html"><a href="linear-model-4.html#load-data-sets-2"><i class="fa fa-check"></i><b>13.3</b> Load data sets</a></li>
-<li class="chapter" data-level="13.4" data-path="linear-model-4.html"><a href="linear-model-4.html#planned-contrasts"><i class="fa fa-check"></i><b>13.4</b> Planned contrasts</a><ul>
-<li class="chapter" data-level="13.4.1" data-path="linear-model-4.html"><a href="linear-model-4.html#hypothetical-data"><i class="fa fa-check"></i><b>13.4.1</b> Hypothetical data</a></li>
-<li class="chapter" data-level="13.4.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualization-6"><i class="fa fa-check"></i><b>13.4.2</b> Visualization</a></li>
-<li class="chapter" data-level="13.4.3" data-path="linear-model-4.html"><a href="linear-model-4.html#constrasts"><i class="fa fa-check"></i><b>13.4.3</b> Constrasts</a></li>
-<li class="chapter" data-level="13.4.4" data-path="linear-model-4.html"><a href="linear-model-4.html#post-hoc-tests"><i class="fa fa-check"></i><b>13.4.4</b> Post-hoc tests</a></li>
+<li class="chapter" data-level="13" data-path="linear-model-4.html"><a href="linear-model-4.html"><i class="fa fa-check"></i><b>13</b> Linear model 4</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="linear-model-4.html"><a href="linear-model-4.html#load-packages-and-set-plotting-theme-6"><i class="fa fa-check"></i><b>13.1</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="13.2" data-path="linear-model-4.html"><a href="linear-model-4.html#load-data-sets-2"><i class="fa fa-check"></i><b>13.2</b> Load data sets</a></li>
+<li class="chapter" data-level="13.3" data-path="linear-model-4.html"><a href="linear-model-4.html#linear-contrasts"><i class="fa fa-check"></i><b>13.3</b> Linear contrasts</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="linear-model-4.html"><a href="linear-model-4.html#hypothetical-data"><i class="fa fa-check"></i><b>13.3.1</b> Hypothetical data</a></li>
+<li class="chapter" data-level="13.3.2" data-path="linear-model-4.html"><a href="linear-model-4.html#visualization-6"><i class="fa fa-check"></i><b>13.3.2</b> Visualization</a></li>
+<li class="chapter" data-level="13.3.3" data-path="linear-model-4.html"><a href="linear-model-4.html#post-hoc-tests"><i class="fa fa-check"></i><b>13.3.3</b> Post-hoc tests</a></li>
+<li class="chapter" data-level="13.3.4" data-path="linear-model-4.html"><a href="linear-model-4.html#understanding-dummy-coding"><i class="fa fa-check"></i><b>13.3.4</b> Understanding dummy coding</a></li>
+<li class="chapter" data-level="13.3.5" data-path="linear-model-4.html"><a href="linear-model-4.html#understanding-effect-coding"><i class="fa fa-check"></i><b>13.3.5</b> Understanding effect coding</a></li>
 </ul></li>
-<li class="chapter" data-level="13.5" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-11"><i class="fa fa-check"></i><b>13.5</b> Session info</a></li>
+<li class="chapter" data-level="13.4" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-12"><i class="fa fa-check"></i><b>13.4</b> Session info</a></li>
+<li class="chapter" data-level="13.5" data-path="linear-model-4.html"><a href="linear-model-4.html#references-2"><i class="fa fa-check"></i><b>13.5</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a><ul>
-<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#learning-goals-12"><i class="fa fa-check"></i><b>14.1</b> Learning goals</a></li>
+<li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#learning-goals-5"><i class="fa fa-check"></i><b>14.1</b> Learning goals</a></li>
 <li class="chapter" data-level="14.2" data-path="power-analysis.html"><a href="power-analysis.html#load-packages-and-set-plotting-theme-7"><i class="fa fa-check"></i><b>14.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="14.3" data-path="power-analysis.html"><a href="power-analysis.html#load-data-sets-3"><i class="fa fa-check"></i><b>14.3</b> Load data sets</a></li>
 <li class="chapter" data-level="14.4" data-path="power-analysis.html"><a href="power-analysis.html#decision-making"><i class="fa fa-check"></i><b>14.4</b> Decision-making</a></li>
-<li class="chapter" data-level="14.5" data-path="power-analysis.html"><a href="power-analysis.html#effect-sizes"><i class="fa fa-check"></i><b>14.5</b> Effect sizes</a><ul>
-<li class="chapter" data-level="14.5.1" data-path="power-analysis.html"><a href="power-analysis.html#eta-squared-and-partial-eta-squared"><i class="fa fa-check"></i><b>14.5.1</b> eta-squared and partial eta-squared</a></li>
-<li class="chapter" data-level="14.5.2" data-path="power-analysis.html"><a href="power-analysis.html#cohens-d"><i class="fa fa-check"></i><b>14.5.2</b> Cohen’s d</a></li>
+<li class="chapter" data-level="14.5" data-path="power-analysis.html"><a href="power-analysis.html#effect-sizes"><i class="fa fa-check"></i><b>14.5</b> Effect sizes</a>
+<ul>
+<li class="chapter" data-level="14.5.1" data-path="power-analysis.html"><a href="power-analysis.html#cohens-d"><i class="fa fa-check"></i><b>14.5.1</b> Cohen’s d</a></li>
 </ul></li>
-<li class="chapter" data-level="14.6" data-path="power-analysis.html"><a href="power-analysis.html#determining-sample-size"><i class="fa fa-check"></i><b>14.6</b> Determining sample size</a><ul>
+<li class="chapter" data-level="14.6" data-path="power-analysis.html"><a href="power-analysis.html#determining-sample-size"><i class="fa fa-check"></i><b>14.6</b> Determining sample size</a>
+<ul>
 <li class="chapter" data-level="14.6.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>14.6.1</b> <code>pwr</code> package</a></li>
 <li class="chapter" data-level="14.6.2" data-path="power-analysis.html"><a href="power-analysis.html#power-analysis-via-simulation"><i class="fa fa-check"></i><b>14.6.2</b> Power analysis via simulation</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-11"><i class="fa fa-check"></i><b>14.7</b> Additional resources</a><ul>
-<li class="chapter" data-level="14.7.1" data-path="power-analysis.html"><a href="power-analysis.html#datacamp-5"><i class="fa fa-check"></i><b>14.7.1</b> Datacamp</a></li>
+<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-11"><i class="fa fa-check"></i><b>14.7</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="power-analysis.html"><a href="power-analysis.html#datacamp-6"><i class="fa fa-check"></i><b>14.7.1</b> Datacamp</a></li>
 <li class="chapter" data-level="14.7.2" data-path="power-analysis.html"><a href="power-analysis.html#cheatsheets-6"><i class="fa fa-check"></i><b>14.7.2</b> Cheatsheets</a></li>
-<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-7"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
+<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-6"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-12"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
+<li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-13"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
+<li class="chapter" data-level="14.9" data-path="power-analysis.html"><a href="power-analysis.html#references-3"><i class="fa fa-check"></i><b>14.9</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="mediation-moderation.html"><a href="mediation-moderation.html"><i class="fa fa-check"></i><b>15</b> Mediation &amp; Moderation</a><ul>
-<li class="chapter" data-level="15.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#learning-goals-13"><i class="fa fa-check"></i><b>15.1</b> Learning goals</a></li>
+<li class="chapter" data-level="15" data-path="mediation-moderation.html"><a href="mediation-moderation.html"><i class="fa fa-check"></i><b>15</b> Mediation &amp; Moderation</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#learning-goals-6"><i class="fa fa-check"></i><b>15.1</b> Learning goals</a></li>
 <li class="chapter" data-level="15.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#recommended-reading"><i class="fa fa-check"></i><b>15.2</b> Recommended reading</a></li>
 <li class="chapter" data-level="15.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#load-packages-and-set-plotting-theme-8"><i class="fa fa-check"></i><b>15.3</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="15.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#controlling-for-variables"><i class="fa fa-check"></i><b>15.4</b> Controlling for variables</a><ul>
+<li class="chapter" data-level="15.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#controlling-for-variables"><i class="fa fa-check"></i><b>15.4</b> Controlling for variables</a>
+<ul>
 <li class="chapter" data-level="15.4.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#illustration-of-the-d-separation-algorithm"><i class="fa fa-check"></i><b>15.4.1</b> Illustration of the d-separation algorithm</a></li>
 <li class="chapter" data-level="15.4.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#good-controls"><i class="fa fa-check"></i><b>15.4.2</b> Good controls</a></li>
 <li class="chapter" data-level="15.4.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#bad-controls"><i class="fa fa-check"></i><b>15.4.3</b> Bad controls</a></li>
 </ul></li>
-<li class="chapter" data-level="15.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>15.5</b> Mediation</a><ul>
+<li class="chapter" data-level="15.5" data-path="mediation-moderation.html"><a href="mediation-moderation.html#mediation"><i class="fa fa-check"></i><b>15.5</b> Mediation</a>
+<ul>
 <li class="chapter" data-level="15.5.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data"><i class="fa fa-check"></i><b>15.5.1</b> Generate data</a></li>
 <li class="chapter" data-level="15.5.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>15.5.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
 <li class="chapter" data-level="15.5.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>15.5.3</b> Method 2: Sobel Test</a></li>
 <li class="chapter" data-level="15.5.4" data-path="mediation-moderation.html"><a href="mediation-moderation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>15.5.4</b> Method 3: Bootstrapping</a></li>
 </ul></li>
-<li class="chapter" data-level="15.6" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation"><i class="fa fa-check"></i><b>15.6</b> Moderation</a><ul>
+<li class="chapter" data-level="15.6" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation"><i class="fa fa-check"></i><b>15.6</b> Moderation</a>
+<ul>
 <li class="chapter" data-level="15.6.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#generate-data-1"><i class="fa fa-check"></i><b>15.6.1</b> Generate data</a></li>
 <li class="chapter" data-level="15.6.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#moderation-analysis"><i class="fa fa-check"></i><b>15.6.2</b> Moderation analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="15.7" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-12"><i class="fa fa-check"></i><b>15.7</b> Additional resources</a><ul>
+<li class="chapter" data-level="15.7" data-path="mediation-moderation.html"><a href="mediation-moderation.html#additional-resources-12"><i class="fa fa-check"></i><b>15.7</b> Additional resources</a>
+<ul>
 <li class="chapter" data-level="15.7.1" data-path="mediation-moderation.html"><a href="mediation-moderation.html#books"><i class="fa fa-check"></i><b>15.7.1</b> Books</a></li>
-<li class="chapter" data-level="15.7.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-2"><i class="fa fa-check"></i><b>15.7.2</b> Tutorials</a></li>
-<li class="chapter" data-level="15.7.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#misc-8"><i class="fa fa-check"></i><b>15.7.3</b> Misc</a></li>
+<li class="chapter" data-level="15.7.2" data-path="mediation-moderation.html"><a href="mediation-moderation.html#tutorials-1"><i class="fa fa-check"></i><b>15.7.2</b> Tutorials</a></li>
+<li class="chapter" data-level="15.7.3" data-path="mediation-moderation.html"><a href="mediation-moderation.html#misc-7"><i class="fa fa-check"></i><b>15.7.3</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="15.8" data-path="mediation-moderation.html"><a href="mediation-moderation.html#session-info-13"><i class="fa fa-check"></i><b>15.8</b> Session info</a></li>
+<li class="chapter" data-level="15.8" data-path="mediation-moderation.html"><a href="mediation-moderation.html#session-info-14"><i class="fa fa-check"></i><b>15.8</b> Session info</a></li>
+<li class="chapter" data-level="15.9" data-path="mediation-moderation.html"><a href="mediation-moderation.html#references-4"><i class="fa fa-check"></i><b>15.9</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>16</b> Model comparison</a><ul>
-<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#learning-goals-14"><i class="fa fa-check"></i><b>16.1</b> Learning goals</a></li>
+<li class="chapter" data-level="16" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>16</b> Model comparison</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#learning-goals-7"><i class="fa fa-check"></i><b>16.1</b> Learning goals</a></li>
 <li class="chapter" data-level="16.2" data-path="model-comparison.html"><a href="model-comparison.html#load-packages-and-set-plotting-theme-9"><i class="fa fa-check"></i><b>16.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="16.3" data-path="model-comparison.html"><a href="model-comparison.html#model-comparison-1"><i class="fa fa-check"></i><b>16.3</b> Model comparison</a><ul>
+<li class="chapter" data-level="16.3" data-path="model-comparison.html"><a href="model-comparison.html#model-comparison-1"><i class="fa fa-check"></i><b>16.3</b> Model comparison</a>
+<ul>
 <li class="chapter" data-level="16.3.1" data-path="model-comparison.html"><a href="model-comparison.html#fitting-vs.-predicting"><i class="fa fa-check"></i><b>16.3.1</b> Fitting vs. predicting</a></li>
 <li class="chapter" data-level="16.3.2" data-path="model-comparison.html"><a href="model-comparison.html#f-test"><i class="fa fa-check"></i><b>16.3.2</b> F-test</a></li>
 <li class="chapter" data-level="16.3.3" data-path="model-comparison.html"><a href="model-comparison.html#cross-validation"><i class="fa fa-check"></i><b>16.3.3</b> Cross-validation</a></li>
 <li class="chapter" data-level="16.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>16.3.4</b> Bootstrap</a></li>
 <li class="chapter" data-level="16.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>16.3.5</b> AIC and BIC</a></li>
 </ul></li>
-<li class="chapter" data-level="16.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-13"><i class="fa fa-check"></i><b>16.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="16.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-13"><i class="fa fa-check"></i><b>16.4</b> Additional resources</a>
+<ul>
 <li class="chapter" data-level="16.4.1" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>16.4.1</b> Datacamp course</a></li>
 <li class="chapter" data-level="16.4.2" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>16.4.2</b> Reading</a></li>
-<li class="chapter" data-level="16.4.3" data-path="model-comparison.html"><a href="model-comparison.html#misc-9"><i class="fa fa-check"></i><b>16.4.3</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="16.5" data-path="model-comparison.html"><a href="model-comparison.html#session-info-14"><i class="fa fa-check"></i><b>16.5</b> Session info</a></li>
+<li class="chapter" data-level="16.5" data-path="model-comparison.html"><a href="model-comparison.html#session-info-15"><i class="fa fa-check"></i><b>16.5</b> Session info</a></li>
+<li class="chapter" data-level="16.6" data-path="model-comparison.html"><a href="model-comparison.html#references-5"><i class="fa fa-check"></i><b>16.6</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html"><i class="fa fa-check"></i><b>17</b> Linear mixed effects models 1</a><ul>
-<li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#learning-goals-15"><i class="fa fa-check"></i><b>17.1</b> Learning goals</a></li>
+<li class="chapter" data-level="17" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html"><i class="fa fa-check"></i><b>17</b> Linear mixed effects models 1</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#learning-goals-8"><i class="fa fa-check"></i><b>17.1</b> Learning goals</a></li>
 <li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.3</b> Dependence</a></li>
-<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-14"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a><ul>
+<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-14"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a>
+<ul>
 <li class="chapter" data-level="17.4.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.4.1</b> Readings</a></li>
 </ul></li>
-<li class="chapter" data-level="17.5" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#session-info-15"><i class="fa fa-check"></i><b>17.5</b> Session info</a></li>
+<li class="chapter" data-level="17.5" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#session-info-16"><i class="fa fa-check"></i><b>17.5</b> Session info</a></li>
+<li class="chapter" data-level="17.6" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#references-6"><i class="fa fa-check"></i><b>17.6</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html"><i class="fa fa-check"></i><b>18</b> Linear mixed effects models 2</a><ul>
-<li class="chapter" data-level="18.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#learning-goals-16"><i class="fa fa-check"></i><b>18.1</b> Learning goals</a></li>
+<li class="chapter" data-level="18" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html"><i class="fa fa-check"></i><b>18</b> Linear mixed effects models 2</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#learning-goals-9"><i class="fa fa-check"></i><b>18.1</b> Learning goals</a></li>
 <li class="chapter" data-level="18.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#load-packages-and-set-plotting-theme-11"><i class="fa fa-check"></i><b>18.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="18.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simulating-a-linear-mixed-effects-model"><i class="fa fa-check"></i><b>18.3</b> Simulating a linear mixed effects model</a></li>
-<li class="chapter" data-level="18.4" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#the-effect-of-outliers"><i class="fa fa-check"></i><b>18.4</b> The effect of outliers</a></li>
-<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.5</b> Different slopes</a></li>
-<li class="chapter" data-level="18.6" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.6</b> Simpson’s paradox</a></li>
-<li class="chapter" data-level="18.7" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-15"><i class="fa fa-check"></i><b>18.7</b> Additional resources</a><ul>
-<li class="chapter" data-level="18.7.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.7.1</b> Readings</a></li>
+<li class="chapter" data-level="18.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#a-worked-example"><i class="fa fa-check"></i><b>18.3</b> A worked example</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#complete-pooling"><i class="fa fa-check"></i><b>18.3.1</b> Complete pooling</a></li>
+<li class="chapter" data-level="18.3.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#no-pooling"><i class="fa fa-check"></i><b>18.3.2</b> No pooling</a></li>
+<li class="chapter" data-level="18.3.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#partial-pooling"><i class="fa fa-check"></i><b>18.3.3</b> Partial pooling</a></li>
+<li class="chapter" data-level="18.3.4" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#compare-results"><i class="fa fa-check"></i><b>18.3.4</b> Compare results</a></li>
+<li class="chapter" data-level="18.3.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#getting-p-values"><i class="fa fa-check"></i><b>18.3.5</b> Getting p-values</a></li>
+<li class="chapter" data-level="18.3.6" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#reporting-results"><i class="fa fa-check"></i><b>18.3.6</b> Reporting results</a></li>
+<li class="chapter" data-level="18.3.7" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#the-effect-of-outliers"><i class="fa fa-check"></i><b>18.3.7</b> The effect of outliers</a></li>
+<li class="chapter" data-level="18.3.8" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.3.8</b> Different slopes</a></li>
+<li class="chapter" data-level="18.3.9" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.3.9</b> Simpson’s paradox</a></li>
 </ul></li>
-<li class="chapter" data-level="18.8" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#session-info-16"><i class="fa fa-check"></i><b>18.8</b> Session info</a></li>
+<li class="chapter" data-level="18.4" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-15"><i class="fa fa-check"></i><b>18.4</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="18.4.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.4.1</b> Readings</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html"><i class="fa fa-check"></i><b>19</b> Linear mixed effects models 3</a><ul>
-<li class="chapter" data-level="19.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#learning-goals-17"><i class="fa fa-check"></i><b>19.1</b> Learning goals</a></li>
+<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#session-info-17"><i class="fa fa-check"></i><b>18.5</b> Session info</a></li>
+<li class="chapter" data-level="18.6" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#references-7"><i class="fa fa-check"></i><b>18.6</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html"><i class="fa fa-check"></i><b>19</b> Linear mixed effects models 3</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#learning-goals-10"><i class="fa fa-check"></i><b>19.1</b> Learning goals</a></li>
 <li class="chapter" data-level="19.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-packages-and-set-plotting-theme-12"><i class="fa fa-check"></i><b>19.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-set"><i class="fa fa-check"></i><b>19.3</b> Load data set</a></li>
-<li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixtures-of-participants"><i class="fa fa-check"></i><b>19.4</b> Mixtures of participants</a></li>
-<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#pooling-and-shrinkage"><i class="fa fa-check"></i><b>19.5</b> Pooling and shrinkage</a><ul>
-<li class="chapter" data-level="19.5.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#complete-pooling"><i class="fa fa-check"></i><b>19.5.1</b> Complete pooling</a></li>
-<li class="chapter" data-level="19.5.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#no-pooling"><i class="fa fa-check"></i><b>19.5.2</b> No pooling</a></li>
-<li class="chapter" data-level="19.5.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#partial-pooling"><i class="fa fa-check"></i><b>19.5.3</b> Partial pooling</a></li>
-<li class="chapter" data-level="19.5.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#compare-results"><i class="fa fa-check"></i><b>19.5.4</b> Compare results</a></li>
-<li class="chapter" data-level="19.5.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#coefficients"><i class="fa fa-check"></i><b>19.5.5</b> Coefficients</a></li>
-<li class="chapter" data-level="19.5.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#shrinkage"><i class="fa fa-check"></i><b>19.5.6</b> Shrinkage</a></li>
-<li class="chapter" data-level="19.5.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#plotting-marginal-effects"><i class="fa fa-check"></i><b>19.5.7</b> Plotting marginal effects</a></li>
+<li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-sets-4"><i class="fa fa-check"></i><b>19.3</b> Load data sets</a>
+<ul>
+<li class="chapter" data-level="19.3.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#sleep-data"><i class="fa fa-check"></i><b>19.3.1</b> Sleep data</a></li>
+<li class="chapter" data-level="19.3.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#reasoning-data"><i class="fa fa-check"></i><b>19.3.2</b> Reasoning data</a></li>
+<li class="chapter" data-level="19.3.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#weight-loss-data"><i class="fa fa-check"></i><b>19.3.3</b> Weight loss data</a></li>
+<li class="chapter" data-level="19.3.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#politness-data"><i class="fa fa-check"></i><b>19.3.4</b> Politness data</a></li>
 </ul></li>
-<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#bootstrapping"><i class="fa fa-check"></i><b>19.6</b> Bootstrapping</a><ul>
-<li class="chapter" data-level="19.6.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#linear-model"><i class="fa fa-check"></i><b>19.6.1</b> Linear model</a></li>
+<li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#understanding-the-lmer-syntax"><i class="fa fa-check"></i><b>19.4</b> Understanding the lmer() syntax</a></li>
+<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#anova-vs.-lmer"><i class="fa fa-check"></i><b>19.5</b> ANOVA vs. Lmer</a>
+<ul>
+<li class="chapter" data-level="19.5.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#between-subjects-anova"><i class="fa fa-check"></i><b>19.5.1</b> Between subjects ANOVA</a></li>
+<li class="chapter" data-level="19.5.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#repeated-measures-anova"><i class="fa fa-check"></i><b>19.5.2</b> Repeated-measures ANOVA</a></li>
+<li class="chapter" data-level="19.5.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixed-anova"><i class="fa fa-check"></i><b>19.5.3</b> Mixed ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="19.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#getting-p-values"><i class="fa fa-check"></i><b>19.7</b> Getting p-values</a></li>
-<li class="chapter" data-level="19.8" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#understanding-the-lmer-syntax"><i class="fa fa-check"></i><b>19.8</b> Understanding the lmer() syntax</a></li>
-<li class="chapter" data-level="19.9" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-17"><i class="fa fa-check"></i><b>19.9</b> Session info</a></li>
+<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#follow-up-tests-with-emmeans"><i class="fa fa-check"></i><b>19.6</b> Follow-up tests with emmeans</a>
+<ul>
+<li class="chapter" data-level="19.6.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#sleep-study"><i class="fa fa-check"></i><b>19.6.1</b> Sleep study</a></li>
+<li class="chapter" data-level="19.6.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#weight-loss-study"><i class="fa fa-check"></i><b>19.6.2</b> Weight loss study</a></li>
+<li class="chapter" data-level="19.6.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#politeness-study"><i class="fa fa-check"></i><b>19.6.3</b> Politeness study</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>20</b> Generalized linear model</a><ul>
-<li class="chapter" data-level="20.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#learning-goals-18"><i class="fa fa-check"></i><b>20.1</b> Learning goals</a></li>
+<li class="chapter" data-level="19.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixtures-of-participants"><i class="fa fa-check"></i><b>19.7</b> Mixtures of participants</a></li>
+<li class="chapter" data-level="19.8" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#bootstrapping"><i class="fa fa-check"></i><b>19.8</b> Bootstrapping</a>
+<ul>
+<li class="chapter" data-level="19.8.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#linear-model"><i class="fa fa-check"></i><b>19.8.1</b> Linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="19.9" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-18"><i class="fa fa-check"></i><b>19.9</b> Session info</a></li>
+<li class="chapter" data-level="19.10" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#references-8"><i class="fa fa-check"></i><b>19.10</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>20</b> Generalized linear model</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#learning-goals-11"><i class="fa fa-check"></i><b>20.1</b> Learning goals</a></li>
 <li class="chapter" data-level="20.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-packages-and-set-plotting-theme-13"><i class="fa fa-check"></i><b>20.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="20.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set-1"><i class="fa fa-check"></i><b>20.3</b> Load data set</a></li>
-<li class="chapter" data-level="20.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>20.4</b> Logistic regression</a><ul>
+<li class="chapter" data-level="20.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set"><i class="fa fa-check"></i><b>20.3</b> Load data set</a></li>
+<li class="chapter" data-level="20.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>20.4</b> Logistic regression</a>
+<ul>
 <li class="chapter" data-level="20.4.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#interpreting-the-parameters"><i class="fa fa-check"></i><b>20.4.1</b> Interpreting the parameters</a></li>
+<li class="chapter" data-level="20.4.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#binary-predictor"><i class="fa fa-check"></i><b>20.4.2</b> Binary predictor</a></li>
+<li class="chapter" data-level="20.4.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#continuous-predictor"><i class="fa fa-check"></i><b>20.4.3</b> Continuous predictor</a></li>
+<li class="chapter" data-level="20.4.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#several-predictors"><i class="fa fa-check"></i><b>20.4.4</b> Several predictors</a></li>
+<li class="chapter" data-level="20.4.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#using-the-ggeffects-package"><i class="fa fa-check"></i><b>20.4.5</b> Using the “ggeffects” package</a></li>
 </ul></li>
 <li class="chapter" data-level="20.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>20.5</b> Simulate a logistic regression</a></li>
 <li class="chapter" data-level="20.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>20.6</b> Testing hypotheses</a></li>
 <li class="chapter" data-level="20.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>20.7</b> Logistic mixed effects model</a></li>
-<li class="chapter" data-level="20.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logit-transform"><i class="fa fa-check"></i><b>20.8</b> Logit transform</a></li>
-<li class="chapter" data-level="20.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>20.9</b> Additional information</a><ul>
-<li class="chapter" data-level="20.9.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-6"><i class="fa fa-check"></i><b>20.9.1</b> Datacamp</a></li>
+<li class="chapter" data-level="20.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>20.8</b> Additional information</a>
+<ul>
+<li class="chapter" data-level="20.8.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-7"><i class="fa fa-check"></i><b>20.8.1</b> Datacamp</a></li>
 </ul></li>
-<li class="chapter" data-level="20.10" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-18"><i class="fa fa-check"></i><b>20.10</b> Session info</a></li>
+<li class="chapter" data-level="20.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-19"><i class="fa fa-check"></i><b>20.9</b> Session info</a></li>
+<li class="chapter" data-level="20.10" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#references-9"><i class="fa fa-check"></i><b>20.10</b> References</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html"><i class="fa fa-check"></i><b>21</b> Bayesian data analysis</a><ul>
-<li class="chapter" data-level="21.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#learning-goals-19"><i class="fa fa-check"></i><b>21.1</b> Learning goals</a></li>
+<li class="chapter" data-level="21" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html"><i class="fa fa-check"></i><b>21</b> Bayesian data analysis</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#learning-goals-12"><i class="fa fa-check"></i><b>21.1</b> Learning goals</a></li>
 <li class="chapter" data-level="21.2" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#load-packages-and-set-plotting-theme-14"><i class="fa fa-check"></i><b>21.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="21.3" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#doing-bayesian-inference-by-hand"><i class="fa fa-check"></i><b>21.3</b> Doing Bayesian inference “by hand”</a><ul>
+<li class="chapter" data-level="21.3" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#doing-bayesian-inference-by-hand"><i class="fa fa-check"></i><b>21.3</b> Doing Bayesian inference “by hand”</a>
+<ul>
 <li class="chapter" data-level="21.3.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#sequential-updating-based-on-the-beta-distribution"><i class="fa fa-check"></i><b>21.3.1</b> Sequential updating based on the Beta distribution</a></li>
 <li class="chapter" data-level="21.3.2" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#coin-flip-example"><i class="fa fa-check"></i><b>21.3.2</b> Coin flip example</a></li>
 <li class="chapter" data-level="21.3.3" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#bayesian-inference-by-discretization"><i class="fa fa-check"></i><b>21.3.3</b> Bayesian inference by discretization</a></li>
-<li class="chapter" data-level="21.3.4" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#effect-of-the-prior"><i class="fa fa-check"></i><b>21.3.4</b> Effect of the prior</a></li>
-<li class="chapter" data-level="21.3.5" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#effect-of-the-likelihood"><i class="fa fa-check"></i><b>21.3.5</b> Effect of the likelihood</a></li>
-<li class="chapter" data-level="21.3.6" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#effect-of-the-sample-size"><i class="fa fa-check"></i><b>21.3.6</b> Effect of the sample size</a></li>
 </ul></li>
-<li class="chapter" data-level="21.4" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#session-info-19"><i class="fa fa-check"></i><b>21.4</b> Session info</a></li>
+<li class="chapter" data-level="21.4" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#doing-bayesian-inference-with-greta"><i class="fa fa-check"></i><b>21.4</b> Doing Bayesian inference with Greta</a>
+<ul>
+<li class="chapter" data-level="21.4.1" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#attitude-data-set"><i class="fa fa-check"></i><b>21.4.1</b> Attitude data set</a></li>
+<li class="chapter" data-level="21.4.2" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#frequentist-analysis"><i class="fa fa-check"></i><b>21.4.2</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="21.4.3" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#bayesian-regression"><i class="fa fa-check"></i><b>21.4.3</b> Bayesian regression</a></li>
 </ul></li>
-<li class="chapter" data-level="22" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>22</b> Bayesian data analysis 2</a><ul>
-<li class="chapter" data-level="22.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#learning-goals-20"><i class="fa fa-check"></i><b>22.1</b> Learning goals</a></li>
+<li class="chapter" data-level="21.5" data-path="bayesian-data-analysis.html"><a href="bayesian-data-analysis.html#session-info-20"><i class="fa fa-check"></i><b>21.5</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>22</b> Bayesian data analysis 2</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#learning-goals-13"><i class="fa fa-check"></i><b>22.1</b> Learning goals</a></li>
 <li class="chapter" data-level="22.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#load-packages-and-set-plotting-theme-15"><i class="fa fa-check"></i><b>22.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="22.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions"><i class="fa fa-check"></i><b>22.3</b> Distributions</a><ul>
-<li class="chapter" data-level="22.3.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-vs-student-t-distribution"><i class="fa fa-check"></i><b>22.3.1</b> Normal vs Student-t distribution</a></li>
-<li class="chapter" data-level="22.3.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#beta-distributions"><i class="fa fa-check"></i><b>22.3.2</b> Beta distributions</a></li>
-<li class="chapter" data-level="22.3.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#normal-distributions"><i class="fa fa-check"></i><b>22.3.3</b> Normal distributions</a></li>
-<li class="chapter" data-level="22.3.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#distributions-for-non-negative-parameters"><i class="fa fa-check"></i><b>22.3.4</b> Distributions for non-negative parameters</a></li>
+<li class="chapter" data-level="22.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#load-data-sets-5"><i class="fa fa-check"></i><b>22.3</b> Load data sets</a></li>
+<li class="chapter" data-level="22.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#poker"><i class="fa fa-check"></i><b>22.4</b> Poker</a>
+<ul>
+<li class="chapter" data-level="22.4.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data"><i class="fa fa-check"></i><b>22.4.1</b> 1. Visualize the data</a></li>
+<li class="chapter" data-level="22.4.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model"><i class="fa fa-check"></i><b>22.4.2</b> 2. Specify and fit the model</a></li>
+<li class="chapter" data-level="22.4.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#model-evaluation"><i class="fa fa-check"></i><b>22.4.3</b> 3. Model evaluation</a></li>
+<li class="chapter" data-level="22.4.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#interpret-the-model-parameters"><i class="fa fa-check"></i><b>22.4.4</b> 4. Interpret the model parameters</a></li>
+<li class="chapter" data-level="22.4.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#test-specific-hypotheses"><i class="fa fa-check"></i><b>22.4.5</b> 5. Test specific hypotheses</a></li>
 </ul></li>
-<li class="chapter" data-level="22.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#inference-via-sampling"><i class="fa fa-check"></i><b>22.4</b> Inference via sampling</a></li>
-<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#greta"><i class="fa fa-check"></i><b>22.5</b> Greta</a><ul>
-<li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#attitude-data-set"><i class="fa fa-check"></i><b>22.5.1</b> Attitude data set</a></li>
-<li class="chapter" data-level="22.5.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.5.2</b> Frequentist analysis</a></li>
-<li class="chapter" data-level="22.5.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#bayesian-regression"><i class="fa fa-check"></i><b>22.5.3</b> Bayesian regression</a></li>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#sleep-study-1"><i class="fa fa-check"></i><b>22.5</b> Sleep study</a>
+<ul>
+<li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data-1"><i class="fa fa-check"></i><b>22.5.1</b> 1. Visualize the data</a></li>
+<li class="chapter" data-level="22.5.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model-1"><i class="fa fa-check"></i><b>22.5.2</b> 2. Specify and fit the model</a></li>
+<li class="chapter" data-level="22.5.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#model-evaluation-1"><i class="fa fa-check"></i><b>22.5.3</b> 3. Model evaluation</a></li>
+<li class="chapter" data-level="22.5.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#interpret-the-parameters"><i class="fa fa-check"></i><b>22.5.4</b> 4. Interpret the parameters</a></li>
+<li class="chapter" data-level="22.5.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#test-specific-hypotheses-1"><i class="fa fa-check"></i><b>22.5.5</b> 5. Test specific hypotheses</a></li>
+<li class="chapter" data-level="22.5.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#report-results"><i class="fa fa-check"></i><b>22.5.6</b> 6. Report results</a></li>
 </ul></li>
-<li class="chapter" data-level="22.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-20"><i class="fa fa-check"></i><b>22.6</b> Session info</a></li>
+<li class="chapter" data-level="22.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#titanic-study"><i class="fa fa-check"></i><b>22.6</b> Titanic study</a>
+<ul>
+<li class="chapter" data-level="22.6.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-that-data"><i class="fa fa-check"></i><b>22.6.1</b> 1. Visualize that data</a></li>
+<li class="chapter" data-level="22.6.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model-2"><i class="fa fa-check"></i><b>22.6.2</b> 2. Specify and fit the model</a></li>
+<li class="chapter" data-level="22.6.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#model-evaluation-2"><i class="fa fa-check"></i><b>22.6.3</b> 3. Model evaluation</a></li>
+<li class="chapter" data-level="22.6.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#interpret-the-parameters-1"><i class="fa fa-check"></i><b>22.6.4</b> 4. Interpret the parameters</a></li>
+<li class="chapter" data-level="22.6.5" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#test-specific-hypotheses-2"><i class="fa fa-check"></i><b>22.6.5</b> 5. Test specific hypotheses</a></li>
+<li class="chapter" data-level="22.6.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#report-results-1"><i class="fa fa-check"></i><b>22.6.6</b> 6. Report results</a></li>
 </ul></li>
-<li class="chapter" data-level="23" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 3</a><ul>
-<li class="chapter" data-level="23.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#learning-goals-21"><i class="fa fa-check"></i><b>23.1</b> Learning goals</a></li>
+<li class="chapter" data-level="22.7" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#politeness-data"><i class="fa fa-check"></i><b>22.7</b> Politeness data</a>
+<ul>
+<li class="chapter" data-level="22.7.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data-2"><i class="fa fa-check"></i><b>22.7.1</b> 1. Visualize the data</a></li>
+<li class="chapter" data-level="22.7.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#test-specific-hypotheses-3"><i class="fa fa-check"></i><b>22.7.2</b> 5. Test specific hypotheses</a></li>
+</ul></li>
+<li class="chapter" data-level="22.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-16"><i class="fa fa-check"></i><b>22.8</b> Additional resources</a></li>
+<li class="chapter" data-level="22.9" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-21"><i class="fa fa-check"></i><b>22.9</b> Session info</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 3</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#learning-goals-14"><i class="fa fa-check"></i><b>23.1</b> Learning goals</a></li>
 <li class="chapter" data-level="23.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-packages-and-set-plotting-theme-16"><i class="fa fa-check"></i><b>23.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="23.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#load-data-set-2"><i class="fa fa-check"></i><b>23.3</b> Load data set</a></li>
-<li class="chapter" data-level="23.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#poker"><i class="fa fa-check"></i><b>23.4</b> Poker</a><ul>
-<li class="chapter" data-level="23.4.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualization-7"><i class="fa fa-check"></i><b>23.4.1</b> Visualization</a></li>
-<li class="chapter" data-level="23.4.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#linear-model-5"><i class="fa fa-check"></i><b>23.4.2</b> Linear model</a></li>
-<li class="chapter" data-level="23.4.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-model"><i class="fa fa-check"></i><b>23.4.3</b> Bayesian model</a></li>
+<li class="chapter" data-level="23.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#evidence-for-the-null-hypothesis"><i class="fa fa-check"></i><b>23.3</b> Evidence for the null hypothesis</a>
+<ul>
+<li class="chapter" data-level="23.3.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayes-factor-1"><i class="fa fa-check"></i><b>23.3.1</b> Bayes factor</a></li>
+<li class="chapter" data-level="23.3.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#loo"><i class="fa fa-check"></i><b>23.3.2</b> LOO</a></li>
 </ul></li>
-<li class="chapter" data-level="23.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#sleep-study"><i class="fa fa-check"></i><b>23.5</b> Sleep study</a><ul>
-<li class="chapter" data-level="23.5.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#frequentist-analysis-1"><i class="fa fa-check"></i><b>23.5.1</b> Frequentist analysis</a></li>
-<li class="chapter" data-level="23.5.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-analysis"><i class="fa fa-check"></i><b>23.5.2</b> Bayesian analysis</a></li>
+<li class="chapter" data-level="23.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>23.4</b> Dealing with heteroscedasticity</a>
+<ul>
+<li class="chapter" data-level="23.4.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualize-the-data-3"><i class="fa fa-check"></i><b>23.4.1</b> Visualize the data</a></li>
+<li class="chapter" data-level="23.4.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#frequentist-analysis-4"><i class="fa fa-check"></i><b>23.4.2</b> Frequentist analysis</a></li>
+<li class="chapter" data-level="23.4.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-analysis-3"><i class="fa fa-check"></i><b>23.4.3</b> Bayesian analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#titanic-study"><i class="fa fa-check"></i><b>23.6</b> Titanic study</a><ul>
-<li class="chapter" data-level="23.6.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#frequentist-analysis-2"><i class="fa fa-check"></i><b>23.6.1</b> Frequentist analysis</a></li>
-<li class="chapter" data-level="23.6.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-anaysis"><i class="fa fa-check"></i><b>23.6.2</b> Bayesian anaysis</a></li>
+<li class="chapter" data-level="23.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#zero-one-inflated-beta-binomial-model"><i class="fa fa-check"></i><b>23.5</b> Zero-one inflated beta binomial model</a></li>
+<li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#ordinal-regression"><i class="fa fa-check"></i><b>23.6</b> Ordinal regression</a>
+<ul>
+<li class="chapter" data-level="23.6.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#ordinal-regression-assuming-equal-variance"><i class="fa fa-check"></i><b>23.6.1</b> Ordinal regression (assuming equal variance)</a></li>
+<li class="chapter" data-level="23.6.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#gaussian-regression-assuming-equal-variance"><i class="fa fa-check"></i><b>23.6.2</b> Gaussian regression (assuming equal variance)</a></li>
+<li class="chapter" data-level="23.6.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#oridnal-regression-unequal-variance"><i class="fa fa-check"></i><b>23.6.3</b> Oridnal regression (unequal variance)</a></li>
+<li class="chapter" data-level="23.6.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#gaussian-regression-unequal-variance"><i class="fa fa-check"></i><b>23.6.4</b> Gaussian regression (unequal variance)</a></li>
+<li class="chapter" data-level="23.6.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#model-comparison-2"><i class="fa fa-check"></i><b>23.6.5</b> Model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-16"><i class="fa fa-check"></i><b>23.7</b> Additional resources</a></li>
-<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-21"><i class="fa fa-check"></i><b>23.8</b> Session info</a></li>
+<li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-17"><i class="fa fa-check"></i><b>23.7</b> Additional resources</a></li>
+<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-22"><i class="fa fa-check"></i><b>23.8</b> Session info</a></li>
+<li class="chapter" data-level="" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#references-10"><i class="fa fa-check"></i>References</a></li>
 </ul></li>
-<li class="chapter" data-level="24" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html"><i class="fa fa-check"></i><b>24</b> Bayesian data analysis 4</a><ul>
-<li class="chapter" data-level="24.1" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#learning-goals-22"><i class="fa fa-check"></i><b>24.1</b> Learning goals</a></li>
-<li class="chapter" data-level="24.2" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#load-packages-and-set-plotting-theme-17"><i class="fa fa-check"></i><b>24.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="24.3" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#evidence-for-the-null-hypothesis"><i class="fa fa-check"></i><b>24.3</b> Evidence for the null hypothesis</a><ul>
-<li class="chapter" data-level="24.3.1" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#fit-the-model-4"><i class="fa fa-check"></i><b>24.3.1</b> Fit the model</a></li>
-<li class="chapter" data-level="24.3.2" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#visualize-the-results-3"><i class="fa fa-check"></i><b>24.3.2</b> Visualize the results</a></li>
-<li class="chapter" data-level="24.3.3" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#hypothesis-test-2"><i class="fa fa-check"></i><b>24.3.3</b> Hypothesis test</a></li>
+<li class="chapter" data-level="24" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>24</b> Model assumptions</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="model-assumptions.html"><a href="model-assumptions.html#learning-goals-15"><i class="fa fa-check"></i><b>24.1</b> Learning goals</a></li>
+<li class="chapter" data-level="24.2" data-path="model-assumptions.html"><a href="model-assumptions.html#load-packages-and-set-plotting-theme-17"><i class="fa fa-check"></i><b>24.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="24.3" data-path="model-assumptions.html"><a href="model-assumptions.html#model-assumptions-and-what-to-do-if-they-are-violated"><i class="fa fa-check"></i><b>24.3</b> Model assumptions and what to do if they are violated</a>
+<ul>
+<li class="chapter" data-level="24.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#influential-data-points"><i class="fa fa-check"></i><b>24.3.1</b> Influential data points</a></li>
+<li class="chapter" data-level="24.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#linear-and-additive"><i class="fa fa-check"></i><b>24.3.2</b> Linear and additive</a></li>
+<li class="chapter" data-level="24.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normally-distributed-residuals"><i class="fa fa-check"></i><b>24.3.3</b> Normally distributed residuals</a></li>
+<li class="chapter" data-level="24.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#non-parametric-tests"><i class="fa fa-check"></i><b>24.3.4</b> Non-parametric tests</a></li>
+<li class="chapter" data-level="24.3.5" data-path="model-assumptions.html"><a href="model-assumptions.html#bootstrapping-regressions"><i class="fa fa-check"></i><b>24.3.5</b> Bootstrapping regressions</a></li>
 </ul></li>
-<li class="chapter" data-level="24.4" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>24.4</b> Dealing with heteroscedasticity</a><ul>
-<li class="chapter" data-level="24.4.1" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#visualize-the-data"><i class="fa fa-check"></i><b>24.4.1</b> Visualize the data</a></li>
-<li class="chapter" data-level="24.4.2" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#frequentist-analysis-3"><i class="fa fa-check"></i><b>24.4.2</b> Frequentist analysis</a></li>
-<li class="chapter" data-level="24.4.3" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#bayesian-analysis-1"><i class="fa fa-check"></i><b>24.4.3</b> Bayesian analysis</a></li>
+<li class="chapter" data-level="24.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-18"><i class="fa fa-check"></i><b>24.4</b> Additional resources</a></li>
+<li class="chapter" data-level="24.5" data-path="model-assumptions.html"><a href="model-assumptions.html#session-info-23"><i class="fa fa-check"></i><b>24.5</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="24.5" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#zero-one-inflated-beta-binomial-model"><i class="fa fa-check"></i><b>24.5</b> Zero-one inflated beta binomial model</a></li>
-<li class="chapter" data-level="24.6" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#ordinal-regression"><i class="fa fa-check"></i><b>24.6</b> Ordinal regression</a><ul>
-<li class="chapter" data-level="24.6.1" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#ordinal-regression-assuming-equal-variance"><i class="fa fa-check"></i><b>24.6.1</b> Ordinal regression (assuming equal variance)</a></li>
-<li class="chapter" data-level="24.6.2" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#gaussian-regression-assuming-equal-variance"><i class="fa fa-check"></i><b>24.6.2</b> Gaussian regression (assuming equal variance)</a></li>
-<li class="chapter" data-level="24.6.3" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#oridnal-regression-unequal-variance"><i class="fa fa-check"></i><b>24.6.3</b> Oridnal regression (unequal variance)</a></li>
-<li class="chapter" data-level="24.6.4" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#gaussian-regression-unequal-variance"><i class="fa fa-check"></i><b>24.6.4</b> Gaussian regression (unequal variance)</a></li>
-<li class="chapter" data-level="24.6.5" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#model-comparison-3"><i class="fa fa-check"></i><b>24.6.5</b> Model comparison</a></li>
+<li class="chapter" data-level="25" data-path="reporting-statistics.html"><a href="reporting-statistics.html"><i class="fa fa-check"></i><b>25</b> Reporting statistics</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#general-advice"><i class="fa fa-check"></i><b>25.1</b> General advice</a>
+<ul>
+<li class="chapter" data-level="25.1.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#make-good-figures"><i class="fa fa-check"></i><b>25.1.1</b> Make good figures!</a></li>
+<li class="chapter" data-level="25.1.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#use-statistical-models-to-answer-concrete-research-questions."><i class="fa fa-check"></i><b>25.1.2</b> Use statistical models to answer concrete research questions.</a></li>
+<li class="chapter" data-level="25.1.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#illustrate-the-uncertainty-in-your-statistical-inferences."><i class="fa fa-check"></i><b>25.1.3</b> Illustrate the uncertainty in your statistical inferences.</a></li>
+<li class="chapter" data-level="25.1.4" data-path="reporting-statistics.html"><a href="reporting-statistics.html#report-effect-sizes."><i class="fa fa-check"></i><b>25.1.4</b> Report effect sizes.</a></li>
+<li class="chapter" data-level="25.1.5" data-path="reporting-statistics.html"><a href="reporting-statistics.html#reporting-statistical-results-using-rmarkdown"><i class="fa fa-check"></i><b>25.1.5</b> Reporting statistical results using RMarkdown</a></li>
 </ul></li>
-<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#additional-resources-17"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
-<li class="chapter" data-level="24.8" data-path="bayesian-data-analysis-4.html"><a href="bayesian-data-analysis-4.html#session-info-22"><i class="fa fa-check"></i><b>24.8</b> Session info</a></li>
+<li class="chapter" data-level="25.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#some-concrete-example"><i class="fa fa-check"></i><b>25.2</b> Some concrete example</a>
+<ul>
+<li class="chapter" data-level="25.2.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#frequentist-statistics"><i class="fa fa-check"></i><b>25.2.1</b> Frequentist statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>25</b> Model assumptions</a><ul>
-<li class="chapter" data-level="25.1" data-path="model-assumptions.html"><a href="model-assumptions.html#learning-goals-23"><i class="fa fa-check"></i><b>25.1</b> Learning goals</a></li>
-<li class="chapter" data-level="25.2" data-path="model-assumptions.html"><a href="model-assumptions.html#load-packages-and-set-plotting-theme-18"><i class="fa fa-check"></i><b>25.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="25.3" data-path="model-assumptions.html"><a href="model-assumptions.html#model-assumptions-and-what-to-do-if-they-are-violated"><i class="fa fa-check"></i><b>25.3</b> Model assumptions and what to do if they are violated</a><ul>
-<li class="chapter" data-level="25.3.1" data-path="model-assumptions.html"><a href="model-assumptions.html#influential-data-points"><i class="fa fa-check"></i><b>25.3.1</b> Influential data points</a></li>
-<li class="chapter" data-level="25.3.2" data-path="model-assumptions.html"><a href="model-assumptions.html#linear-and-additive"><i class="fa fa-check"></i><b>25.3.2</b> Linear and additive</a></li>
-<li class="chapter" data-level="25.3.3" data-path="model-assumptions.html"><a href="model-assumptions.html#normally-distributed-residuals"><i class="fa fa-check"></i><b>25.3.3</b> Normally distributed residuals</a></li>
-<li class="chapter" data-level="25.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#non-parametric-tests"><i class="fa fa-check"></i><b>25.3.4</b> Non-parametric tests</a></li>
-<li class="chapter" data-level="25.3.5" data-path="model-assumptions.html"><a href="model-assumptions.html#bootstrapping-regressions"><i class="fa fa-check"></i><b>25.3.5</b> Bootstrapping regressions</a></li>
+<li class="chapter" data-level="25.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#session-info-24"><i class="fa fa-check"></i><b>25.3</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-18"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
-<li class="chapter" data-level="25.5" data-path="model-assumptions.html"><a href="model-assumptions.html#session-info-23"><i class="fa fa-check"></i><b>25.5</b> Session info</a></li>
+<li class="chapter" data-level="26" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html"><i class="fa fa-check"></i><b>26</b> Cheatsheets</a>
+<ul>
+<li class="chapter" data-level="26.1" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html#statistics"><i class="fa fa-check"></i><b>26.1</b> Statistics</a></li>
+<li class="chapter" data-level="26.2" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html#r"><i class="fa fa-check"></i><b>26.2</b> R</a></li>
 </ul></li>
-<li class="chapter" data-level="26" data-path="reporting-statistics.html"><a href="reporting-statistics.html"><i class="fa fa-check"></i><b>26</b> Reporting statistics</a><ul>
-<li class="chapter" data-level="26.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#general-advice"><i class="fa fa-check"></i><b>26.1</b> General advice</a><ul>
-<li class="chapter" data-level="26.1.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#make-good-figures"><i class="fa fa-check"></i><b>26.1.1</b> Make good figures!</a></li>
-<li class="chapter" data-level="26.1.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#use-statistical-models-to-answer-concrete-research-questions."><i class="fa fa-check"></i><b>26.1.2</b> Use statistical models to answer concrete research questions.</a></li>
-<li class="chapter" data-level="26.1.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#illustrate-the-uncertainty-in-your-statistical-inferences."><i class="fa fa-check"></i><b>26.1.3</b> Illustrate the uncertainty in your statistical inferences.</a></li>
-<li class="chapter" data-level="26.1.4" data-path="reporting-statistics.html"><a href="reporting-statistics.html#report-effect-sizes."><i class="fa fa-check"></i><b>26.1.4</b> Report effect sizes.</a></li>
-<li class="chapter" data-level="26.1.5" data-path="reporting-statistics.html"><a href="reporting-statistics.html#reporting-statistical-results-using-rmarkdown"><i class="fa fa-check"></i><b>26.1.5</b> Reporting statistical results using RMarkdown</a></li>
-</ul></li>
-<li class="chapter" data-level="26.2" data-path="reporting-statistics.html"><a href="reporting-statistics.html#some-concrete-example"><i class="fa fa-check"></i><b>26.2</b> Some concrete example</a><ul>
-<li class="chapter" data-level="26.2.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#frequentist-statistics"><i class="fa fa-check"></i><b>26.2.1</b> Frequentist statistics</a></li>
-</ul></li>
-<li class="chapter" data-level="26.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#session-info-24"><i class="fa fa-check"></i><b>26.3</b> Session info</a></li>
-</ul></li>
-<li class="chapter" data-level="27" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html"><i class="fa fa-check"></i><b>27</b> Cheatsheets</a><ul>
-<li class="chapter" data-level="27.1" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html#statistics"><i class="fa fa-check"></i><b>27.1</b> Statistics</a></li>
-<li class="chapter" data-level="27.2" data-path="cheatsheets-7.html"><a href="cheatsheets-7.html#r"><i class="fa fa-check"></i><b>27.2</b> R</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="" data-path="references-11.html"><a href="references-11.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -666,11 +804,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reporting-statistics" class="section level1">
-<h1><span class="header-section-number">Chapter 26</span> Reporting statistics</h1>
+<div id="reporting-statistics" class="section level1" number="25">
+<h1><span class="header-section-number">Chapter 25</span> Reporting statistics</h1>
 <p>In this chapter, I’ll give a few examples for how to report statistical analysis.</p>
-<div id="general-advice" class="section level2">
-<h2><span class="header-section-number">26.1</span> General advice</h2>
+<div id="general-advice" class="section level2" number="25.1">
+<h2><span class="header-section-number">25.1</span> General advice</h2>
 <p>Here is some general advice first:</p>
 <ol style="list-style-type: decimal">
 <li>Make good figures!</li>
@@ -678,62 +816,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Illustrate the uncertainty in your statistical inferences.</li>
 <li>Report effect sizes.</li>
 </ol>
-<div id="make-good-figures" class="section level3">
-<h3><span class="header-section-number">26.1.1</span> Make good figures!</h3>
+<div id="make-good-figures" class="section level3" number="25.1.1">
+<h3><span class="header-section-number">25.1.1</span> Make good figures!</h3>
 <p>Chapters <a href="visualization-1.html#visualization-1">2</a> and <a href="visualization-2.html#visualization-2">3</a> go into how to make figures and also talk a little bit about what makes for a good figure. Personally, I like it when the figures give me a good sense for the actual data. For example, for an experimental study, I would like to get a good sense for the responses that participants gave in the different experimental conditions.</p>
 <p>Sometimes, papers just report the results of statistical tests, or only visually display estimates of the parameters in the model. I’m not a fan of that since, as we’ve learned, the parameters of the model are only useful in so far the model captures the data-generating process reasonably well.</p>
 </div>
-<div id="use-statistical-models-to-answer-concrete-research-questions." class="section level3">
-<h3><span class="header-section-number">26.1.2</span> Use statistical models to answer concrete research questions.</h3>
+<div id="use-statistical-models-to-answer-concrete-research-questions." class="section level3" number="25.1.2">
+<h3><span class="header-section-number">25.1.2</span> Use statistical models to answer concrete research questions.</h3>
 <p>Ideally, we formulate our research questions as statistical models upfront and pre-register our planned analyses (e.g. as an RMarkdown script with a complete analysis based on simulated data). We can then organize the results section by going through the sequence of research questions. Each statistical analysis then provides an answer to a specific research question.</p>
 </div>
-<div id="illustrate-the-uncertainty-in-your-statistical-inferences." class="section level3">
-<h3><span class="header-section-number">26.1.3</span> Illustrate the uncertainty in your statistical inferences.</h3>
+<div id="illustrate-the-uncertainty-in-your-statistical-inferences." class="section level3" number="25.1.3">
+<h3><span class="header-section-number">25.1.3</span> Illustrate the uncertainty in your statistical inferences.</h3>
 <p>For frequentist statistics, we can calculate confidence intervals (e.g. using bootstrapping) and we should provide these intervals together with the point estimates of the model’s predictors.</p>
 <p>For Bayesian statistics, we can calculate credible intervals based on the posterior over the model parameters.</p>
 <p>Our figures should also indicate the uncertainty that we have in our statistical inferences (e.g. by adding confidence bands, or by showing some samples from the posterior).</p>
 </div>
-<div id="report-effect-sizes." class="section level3">
-<h3><span class="header-section-number">26.1.4</span> Report effect sizes.</h3>
+<div id="report-effect-sizes." class="section level3" number="25.1.4">
+<h3><span class="header-section-number">25.1.4</span> Report effect sizes.</h3>
 <p>Rather than just saying whether the results of a statistical test was significant or not, you should, where possible, provide a measure of the effect size. Chapter <a href="power-analysis.html#power-analysis">14</a> gives an overview of commonly used measures of effect size.</p>
 </div>
-<div id="reporting-statistical-results-using-rmarkdown" class="section level3">
-<h3><span class="header-section-number">26.1.5</span> Reporting statistical results using RMarkdown</h3>
+<div id="reporting-statistical-results-using-rmarkdown" class="section level3" number="25.1.5">
+<h3><span class="header-section-number">25.1.5</span> Reporting statistical results using RMarkdown</h3>
 <p>For reporting statistical results in RMarkdown, I recommend the <code>papaja</code> package (see this chapter in the <a href="https://crsh.github.io/papaja_man/reporting.html#results-from-statistical-tests">online book</a>).</p>
 </div>
 </div>
-<div id="some-concrete-example" class="section level2">
-<h2><span class="header-section-number">26.2</span> Some concrete example</h2>
+<div id="some-concrete-example" class="section level2" number="25.2">
+<h2><span class="header-section-number">25.2</span> Some concrete example</h2>
 <p>In this section, I’ll give a few concrete examples for how to report the results of statistical tests. Each example tries to implement the general advice mentioned above. I will discuss frequentist and Bayesian statistics separately.</p>
-<div id="frequentist-statistics" class="section level3">
-<h3><span class="header-section-number">26.2.1</span> Frequentist statistics</h3>
-<div id="simple-regression" class="section level4">
-<h4><span class="header-section-number">26.2.1.1</span> Simple regression</h4>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">df.credit =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">index =</span> X1) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="st">  </span><span class="kw">clean_names</span>()</a></code></pre></div>
+<div id="frequentist-statistics" class="section level3" number="25.2.1">
+<h3><span class="header-section-number">25.2.1</span> Frequentist statistics</h3>
+<div id="simple-regression" class="section level4" number="25.2.1.1">
+<h4><span class="header-section-number">25.2.1.1</span> Simple regression</h4>
+<div class="sourceCode" id="cb1471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1471-1"><a href="reporting-statistics.html#cb1471-1" aria-hidden="true" tabindex="-1"></a>df.credit <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1471-2"><a href="reporting-statistics.html#cb1471-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">index =</span> X1) <span class="sc">%&gt;%</span> </span>
+<span id="cb1471-3"><a href="reporting-statistics.html#cb1471-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code></pre></div>
 <p><strong>Research question</strong>: Do people with more income have a higher credit card balance?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> df.credit,</a>
-<a class="sourceLine" id="cb2-2" title="2">       <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> income,</a>
-<a class="sourceLine" id="cb2-3" title="3">                     <span class="dt">y =</span> balance)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb2-5" title="5">              <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(df.credit<span class="op">$</span>income))) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Income in $1K per year&quot;</span>,</a>
-<a class="sourceLine" id="cb2-9" title="9">       <span class="dt">y =</span> <span class="st">&quot;Credit card balance in $&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1472-1"><a href="reporting-statistics.html#cb1472-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.credit,</span>
+<span id="cb1472-2"><a href="reporting-statistics.html#cb1472-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> income,</span>
+<span id="cb1472-3"><a href="reporting-statistics.html#cb1472-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> balance)) <span class="sc">+</span> </span>
+<span id="cb1472-4"><a href="reporting-statistics.html#cb1472-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb1472-5"><a href="reporting-statistics.html#cb1472-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1472-6"><a href="reporting-statistics.html#cb1472-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb1472-7"><a href="reporting-statistics.html#cb1472-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(df.credit<span class="sc">$</span>income))) <span class="sc">+</span> </span>
+<span id="cb1472-8"><a href="reporting-statistics.html#cb1472-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Income in $1K per year&quot;</span>,</span>
+<span id="cb1472-9"><a href="reporting-statistics.html#cb1472-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Credit card balance in $&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <div class="figure"><span id="fig:income-figure"></span>
-<img src="psych252_files/figure-html/income-figure-1.png" alt="Relationship between income level and credit card balance. The error band indicates a 95% confidence interval." width="768" />
+<img src="25-reporting_files/figure-html/income-figure-1.png" alt="Relationship between income level and credit card balance. The error band indicates a 95% confidence interval." width="768" />
 <p class="caption">
-Figure 26.1: Relationship between income level and credit card balance. The error band indicates a 95% confidence interval.
+Figure 25.1: Relationship between income level and credit card balance. The error band indicates a 95% confidence interval.
 </p>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># fit a model </span></a>
-<a class="sourceLine" id="cb4-2" title="2">fit =<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> balance <span class="op">~</span><span class="st"> </span>income,</a>
-<a class="sourceLine" id="cb4-3" title="3">         <span class="dt">data =</span> df.credit)</a>
-<a class="sourceLine" id="cb4-4" title="4"></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="kw">summary</span>(fit)</a></code></pre></div>
+<div class="sourceCode" id="cb1474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1474-1"><a href="reporting-statistics.html#cb1474-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit a model </span></span>
+<span id="cb1474-2"><a href="reporting-statistics.html#cb1474-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> income,</span>
+<span id="cb1474-3"><a href="reporting-statistics.html#cb1474-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.credit)</span>
+<span id="cb1474-4"><a href="reporting-statistics.html#cb1474-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1474-5"><a href="reporting-statistics.html#cb1474-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = balance ~ income, data = df.credit)
@@ -752,20 +890,20 @@ Figure 26.1: Relationship between income level and credit card balance. The erro
 ## Residual standard error: 407.9 on 398 degrees of freedom
 ## Multiple R-squared:  0.215,  Adjusted R-squared:  0.213 
 ## F-statistic:   109 on 1 and 398 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># summarize the model results </span></a>
-<a class="sourceLine" id="cb6-2" title="2">results_regression =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">apa_print</span>()</a>
-<a class="sourceLine" id="cb6-4" title="4"></a>
-<a class="sourceLine" id="cb6-5" title="5">results_prediction =<span class="st"> </span>fit <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">ggpredict</span>(<span class="dt">terms =</span> <span class="st">&quot;income [20, 100]&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">mutate_if</span>(is.numeric, <span class="op">~</span><span class="kw">round</span>(.,<span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1476-1"><a href="reporting-statistics.html#cb1476-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize the model results </span></span>
+<span id="cb1476-2"><a href="reporting-statistics.html#cb1476-2" aria-hidden="true" tabindex="-1"></a>results_regression <span class="ot">=</span> fit <span class="sc">%&gt;%</span> </span>
+<span id="cb1476-3"><a href="reporting-statistics.html#cb1476-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apa_print</span>()</span>
+<span id="cb1476-4"><a href="reporting-statistics.html#cb1476-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1476-5"><a href="reporting-statistics.html#cb1476-5" aria-hidden="true" tabindex="-1"></a>results_prediction <span class="ot">=</span> fit <span class="sc">%&gt;%</span> </span>
+<span id="cb1476-6"><a href="reporting-statistics.html#cb1476-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpredict</span>(<span class="at">terms =</span> <span class="st">&quot;income [20, 100]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1476-7"><a href="reporting-statistics.html#cb1476-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">round</span>(., <span class="dv">2</span>)))</span></code></pre></div>
 <p><strong>Possible text</strong>:</p>
-<p>People with a higher income have a greater credit card balance <span class="math inline">\(R^2 = .21\)</span>, <span class="math inline">\(F(1, 398) = 108.99\)</span>, <span class="math inline">\(p &lt; .001\)</span> (see Table <a href="reporting-statistics.html#tab:apa-table">26.1</a>). For each increase in income of $1K per year, the credit card balance is predicted to increase by <span class="math inline">\(b = 6.05\)</span>, 95% CI <span class="math inline">\([4.91\)</span>, <span class="math inline">\(7.19]\)</span>. For example, the predicted credit card balance of a person with an income of $20K per year is $367.48, 95% CI [318.31, 416.65], whereas for a person with an income of $100K per year, it is $851.35, 95% CI [777.41, 925.29] (see Figure <a href="reporting-statistics.html#fig:income-figure">26.1</a>).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">apa_table</span>(results_regression<span class="op">$</span>table,</a>
-<a class="sourceLine" id="cb7-2" title="2">          <span class="dt">caption =</span> <span class="st">&quot;A full regression table.&quot;</span>,</a>
-<a class="sourceLine" id="cb7-3" title="3">          <span class="dt">escape =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>People with a higher income have a greater credit card balance <span class="math inline">\(R^2 = .21\)</span>, <span class="math inline">\(F(1, 398) = 108.99\)</span>, <span class="math inline">\(p &lt; .001\)</span> (see Table <a href="reporting-statistics.html#tab:apa-table">25.1</a>). For each increase in income of $1K per year, the credit card balance is predicted to increase by <span class="math inline">\(b = 6.05\)</span>, 95% CI <span class="math inline">\([4.91, 7.19]\)</span>. For example, the predicted credit card balance of a person with an income of $20K per year is $367.48, 95% CI [318.31, 416.65], whereas for a person with an income of $100K per year, it is $851.35, 95% CI [777.41, 925.29] (see Figure <a href="reporting-statistics.html#fig:income-figure">25.1</a>).</p>
+<div class="sourceCode" id="cb1477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1477-1"><a href="reporting-statistics.html#cb1477-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apa_table</span>(results_regression<span class="sc">$</span>table,</span>
+<span id="cb1477-2"><a href="reporting-statistics.html#cb1477-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">caption =</span> <span class="st">&quot;A full regression table.&quot;</span>,</span>
+<span id="cb1477-3"><a href="reporting-statistics.html#cb1477-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">escape =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <caption>
-<span id="tab:apa-table">Table 26.1: </span>
+<span id="tab:apa-table">Table 25.1: </span>
 </caption>
 <div custom-style="Table Caption">
 <em>A full regression table.</em>
@@ -784,14 +922,14 @@ Figure 26.1: Relationship between income level and credit card balance. The erro
 <tr class="odd">
 <td align="left">Intercept</td>
 <td align="left">246.51</td>
-<td align="left"><span class="math inline">\([181.25\)</span>, <span class="math inline">\(311.78]\)</span></td>
+<td align="left">[181.25, 311.78]</td>
 <td align="left">7.43</td>
 <td align="left">&lt; .001</td>
 </tr>
 <tr class="even">
 <td align="left">Income</td>
 <td align="left">6.05</td>
-<td align="left"><span class="math inline">\([4.91\)</span>, <span class="math inline">\(7.19]\)</span></td>
+<td align="left">[4.91, 7.19]</td>
 <td align="left">10.44</td>
 <td align="left">&lt; .001</td>
 </tr>
@@ -801,15 +939,15 @@ Figure 26.1: Relationship between income level and credit card balance. The erro
 </div>
 </div>
 </div>
-<div id="session-info-24" class="section level2">
-<h2><span class="header-section-number">26.3</span> Session info</h2>
-<pre><code>## R version 3.6.2 (2019-12-12)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS Mojave 10.14.6
+<div id="session-info-24" class="section level2" number="25.3">
+<h2><span class="header-section-number">25.3</span> Session info</h2>
+<pre><code>## R version 4.0.3 (2020-10-10)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.7
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -818,71 +956,68 @@ Figure 26.1: Relationship between income level and credit card balance. The erro
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] forcats_0.5.0          stringr_1.4.0          dplyr_0.8.5           
-##  [4] purrr_0.3.3            readr_1.3.1            tidyr_1.0.2           
-##  [7] tibble_2.1.3           ggplot2_3.3.0          tidyverse_1.3.0       
-## [10] statsExpressions_0.3.1 ggeffects_0.14.2       tidybayes_2.0.2       
-## [13] modelr_0.1.6           brms_2.12.0            Rcpp_1.0.4            
-## [16] lme4_1.1-21            Matrix_1.2-18          broom_0.5.3.9000      
-## [19] papaja_0.1.0.9942      janitor_1.2.1          kableExtra_1.1.0      
-## [22] knitr_1.28            
+##  [1] forcats_0.5.1          stringr_1.4.0          dplyr_1.0.4           
+##  [4] purrr_0.3.4            readr_1.4.0            tidyr_1.1.2           
+##  [7] tibble_3.0.6           ggplot2_3.3.3          tidyverse_1.3.0       
+## [10] statsExpressions_0.7.0 ggeffects_1.0.1        tidybayes_2.3.1       
+## [13] modelr_0.1.8           brms_2.14.4            Rcpp_1.0.6            
+## [16] lme4_1.1-26            Matrix_1.3-2           broom_0.7.3           
+## [19] papaja_0.1.0.9997      tinylabels_0.2.0       janitor_2.1.0         
+## [22] kableExtra_1.3.1       knitr_1.31            
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] tidyselect_1.0.0       htmlwidgets_1.5.1      grid_3.6.2            
-##   [4] munsell_0.5.0          effectsize_0.2.0       codetools_0.2-16      
-##   [7] DT_0.13                miniUI_0.1.1.1         withr_2.1.2           
-##  [10] Brobdingnag_1.2-6      metaBMA_0.6.2          colorspace_1.4-1      
-##  [13] highr_0.8              rstudioapi_0.11        stats4_3.6.2          
-##  [16] DescTools_0.99.34      ipmisc_1.2.0           rcompanion_2.3.25     
-##  [19] bayesplot_1.7.1        labeling_0.3           emmeans_1.4.5         
-##  [22] rstan_2.19.3           bbmle_1.0.23.1         mnormt_1.5-6          
-##  [25] farver_2.0.3           bridgesampling_1.0-0   coda_0.19-3           
-##  [28] vctrs_0.2.4            generics_0.0.2         TH.data_1.0-10        
-##  [31] metafor_2.4-0          xfun_0.12              R6_2.4.1              
-##  [34] markdown_1.1           BayesFactor_0.9.12-4.2 reshape_0.8.8         
-##  [37] logspline_2.1.15       assertthat_0.2.1       promises_1.1.0        
-##  [40] scales_1.1.0           multcomp_1.4-12        gtable_0.3.0          
-##  [43] multcompView_0.1-8     processx_3.4.2         sandwich_2.5-1        
-##  [46] rlang_0.4.5            MatrixModels_0.4-1     EMT_1.1               
-##  [49] zeallot_0.1.0          splines_3.6.2          TMB_1.7.16            
-##  [52] inline_0.3.15          yaml_2.2.1             reshape2_1.4.3        
-##  [55] abind_1.4-5            threejs_0.3.3          crosstalk_1.1.0.1     
-##  [58] backports_1.1.5        httpuv_1.5.2           rsconnect_0.8.16      
-##  [61] tools_3.6.2            bookdown_0.18          psych_1.9.12.31       
-##  [64] WRS2_1.0-0             ggridges_0.5.2         ez_4.4-0              
-##  [67] plyr_1.8.6             base64enc_0.1-3        ps_1.3.2              
-##  [70] prettyunits_1.1.1      pbapply_1.4-2          zoo_1.8-7             
-##  [73] LaplacesDemon_16.1.4   haven_2.2.0            fs_1.3.2              
-##  [76] magrittr_1.5           data.table_1.12.8      openxlsx_4.1.4        
-##  [79] reprex_0.3.0           colourpicker_1.0       lmtest_0.9-37         
-##  [82] mvtnorm_1.1-0          broomExtra_2.5.0       sjmisc_2.8.3          
-##  [85] matrixStats_0.56.0     hms_0.5.3              shinyjs_1.1           
-##  [88] mime_0.9               evaluate_0.14          arrayhelpers_1.1-0    
-##  [91] xtable_1.8-4           shinystan_2.5.0        sjstats_0.17.9        
-##  [94] rio_0.5.16             broom.mixed_0.2.4      readxl_1.3.1          
-##  [97] gridExtra_2.3          rstantools_2.0.0       compiler_3.6.2        
-## [100] bdsmatrix_1.3-4        crayon_1.3.4           minqa_1.2.4           
-## [103] StanHeaders_2.21.0-1   htmltools_0.4.0        mgcv_1.8-31           
-## [106] mc2d_0.1-18            later_1.0.0            libcoin_1.0-5         
-## [109] expm_0.999-4           lubridate_1.7.4        DBI_1.1.0             
-## [112] sjlabelled_1.1.3       dbplyr_1.4.2           MASS_7.3-51.5         
-## [115] boot_1.3-24            car_3.0-7              cli_2.0.2             
-## [118] parallel_3.6.2         insight_0.8.2          igraph_1.2.5          
-## [121] pkgconfig_2.0.3        metaplus_0.7-11        numDeriv_2016.8-1.1   
-## [124] coin_1.3-1             foreign_0.8-76         xml2_1.2.5            
-## [127] svUnit_0.7-12          dygraphs_1.1.1.6       webshot_0.5.2         
-## [130] estimability_1.3       rvest_0.3.5            snakecase_0.11.0      
-## [133] callr_3.4.2            digest_0.6.25          parameters_0.6.0      
-## [136] fastGHQuad_1.0         rmarkdown_2.1          cellranger_1.1.0      
-## [139] nortest_1.0-4          curl_4.3               shiny_1.4.0.2         
-## [142] gtools_3.8.1           modeltools_0.2-23      nloptr_1.2.2.1        
-## [145] jsonlite_1.6.1         lifecycle_0.2.0        nlme_3.1-145          
-## [148] carData_3.0-3          viridisLite_0.3.0      fansi_0.4.1           
-## [151] pillar_1.4.3           lattice_0.20-40        loo_2.2.0             
-## [154] fastmap_1.0.1          httr_1.4.1             pkgbuild_1.0.6        
-## [157] survival_3.1-11        glue_1.3.2             xts_0.12-0            
-## [160] bayestestR_0.5.2       zip_2.0.4              shinythemes_1.1.2     
-## [163] stringi_1.4.6          performance_0.4.4</code></pre>
+##   [1] tidyselect_1.1.0       htmlwidgets_1.5.3      grid_4.0.3            
+##   [4] munsell_0.5.0          codetools_0.2-18       effectsize_0.4.3-1    
+##   [7] statmod_1.4.35         DT_0.17                miniUI_0.1.1.1        
+##  [10] withr_2.4.1            Brobdingnag_1.2-6      metaBMA_0.6.6         
+##  [13] colorspace_2.0-0       highr_0.8              rstudioapi_0.13       
+##  [16] stats4_4.0.3           ipmisc_5.0.2           bayesplot_1.8.0       
+##  [19] labeling_0.4.2         emmeans_1.5.3          rstan_2.21.1          
+##  [22] bbmle_1.0.23.1         farver_2.1.0           bridgesampling_1.0-0  
+##  [25] coda_0.19-4            vctrs_0.3.6            generics_0.1.0        
+##  [28] TH.data_1.0-10         metafor_2.4-0          afex_0.28-1           
+##  [31] xfun_0.21              R6_2.5.0               markdown_1.1          
+##  [34] BayesFactor_0.9.12-4.2 gamm4_0.2-6            projpred_2.0.2        
+##  [37] reshape_0.8.8          logspline_2.1.16       assertthat_0.2.1      
+##  [40] promises_1.1.1         scales_1.1.1           multcomp_1.4-15       
+##  [43] gtable_0.3.0           processx_3.4.5         sandwich_3.0-0        
+##  [46] rlang_0.4.10           MatrixModels_0.4-1     zeallot_0.1.0         
+##  [49] splines_4.0.3          inline_0.3.17          yaml_2.2.1            
+##  [52] reshape2_1.4.4         abind_1.4-5            threejs_0.3.3         
+##  [55] crosstalk_1.1.1        backports_1.2.1        httpuv_1.5.5          
+##  [58] rsconnect_0.8.16       tools_4.0.3            bookdown_0.21         
+##  [61] ellipsis_0.3.1         WRS2_1.1-0             ggridges_0.5.3        
+##  [64] plyr_1.8.6             base64enc_0.1-3        ps_1.6.0              
+##  [67] prettyunits_1.1.1      pbapply_1.4-3          correlation_0.5.0     
+##  [70] zoo_1.8-8              LaplacesDemon_16.1.4   haven_2.3.1           
+##  [73] fs_1.5.0               magrittr_2.0.1         data.table_1.13.6     
+##  [76] ggdist_2.4.0           openxlsx_4.2.3         lmerTest_3.1-3        
+##  [79] reprex_1.0.0           colourpicker_1.1.0     mvtnorm_1.1-1         
+##  [82] matrixStats_0.57.0     hms_1.0.0              shinyjs_2.0.0         
+##  [85] mime_0.10              evaluate_0.14          arrayhelpers_1.1-0    
+##  [88] xtable_1.8-4           shinystan_2.5.0        rio_0.5.16            
+##  [91] readxl_1.3.1           gridExtra_2.3          rstantools_2.1.1      
+##  [94] bdsmatrix_1.3-4        compiler_4.0.3         V8_3.4.0              
+##  [97] crayon_1.4.1           minqa_1.2.4            StanHeaders_2.21.0-7  
+## [100] htmltools_0.5.1.1      mgcv_1.8-33            mc2d_0.1-18           
+## [103] later_1.1.0.1          RcppParallel_5.0.2     lubridate_1.7.9.2     
+## [106] DBI_1.1.1              sjlabelled_1.1.7       dbplyr_2.0.0          
+## [109] MASS_7.3-53            boot_1.3-26            car_3.0-10            
+## [112] cli_2.3.0              parallel_4.0.3         insight_0.13.1.1      
+## [115] igraph_1.2.6           metaplus_0.7-11        pkgconfig_2.0.3       
+## [118] numDeriv_2016.8-1.1    foreign_0.8-81         xml2_1.3.2            
+## [121] svUnit_1.0.3           dygraphs_1.1.1.6       webshot_0.5.2         
+## [124] estimability_1.3       rvest_0.3.6            snakecase_0.11.0      
+## [127] distributional_0.2.1   callr_3.5.1            digest_0.6.27         
+## [130] parameters_0.12.0.1    fastGHQuad_1.0         rmarkdown_2.6         
+## [133] cellranger_1.1.0       curl_4.3               shiny_1.6.0           
+## [136] gtools_3.8.2           nloptr_1.2.2.2         lifecycle_1.0.0       
+## [139] nlme_3.1-151           jsonlite_1.7.2         carData_3.0-4         
+## [142] viridisLite_0.3.0      pillar_1.4.7           lattice_0.20-41       
+## [145] loo_2.4.1.9000         fastmap_1.1.0          httr_1.4.2            
+## [148] pkgbuild_1.2.0         survival_3.2-7         glue_1.4.2            
+## [151] xts_0.12.1             bayestestR_0.8.3.1     zip_2.1.1             
+## [154] shinythemes_1.2.0      performance_0.7.0.1    stringi_1.5.3</code></pre>
 
 </div>
 </div>
@@ -924,7 +1059,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/psych252/psych252book/edit/master/26-reporting.Rmd",
+"link": "https://github.com/psych252/psych252book/edit/master/25-reporting.Rmd",
 "text": "Edit"
 },
 "history": {
