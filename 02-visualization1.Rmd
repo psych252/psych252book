@@ -91,7 +91,8 @@ You may want to write it this way instead:
 
 ```{r, eval=FALSE}
 ggplot(data = diamonds, 
-       mapping = aes(x = cut, y = price)) +
+       mapping = aes(x = cut,
+                     y = price)) +
   # display the means
   stat_summary(fun = "mean",
                geom = "bar",
@@ -141,7 +142,7 @@ R help files can sometimes look a little cryptic. Most R help files have the fol
 
 __Title__: A one-sentence overview of the function.
 
-__Description__: An introduction to the high-level objectives of the function, typically about one paragraph long.
+__Description__: An introduction to the high-level objectives of the function.
 
 __Usage__: A description of the syntax of the function (in other words, how the function is called). This is where you find all the arguments that you can supply to the function, as well as any default values of these arguments.
 
@@ -168,17 +169,17 @@ Here is the help file for the `print()` function:
 An RMarkdown file has four key components: 
 
 1. YAML header 
-2. Headings to structure the document 3
+2. Headings to structure the document
 3. Text 
 4. Code chunks 
 
-The YAML (*Y*et *A*nother *M*arkdown *L*anguage) header specifies general options such as whether you'd like to have a table of content displayed, and in what output format you want to create your report (e.g. html or pdf). Notice that the YAML header cares about indentation, so make sure to get that right!  
+The **YAML** (*Y*et *A*nother *M*arkdown *L*anguage) header specifies general options such as whether you'd like to have a table of content displayed, and in what output format you want to create your report (e.g. html or pdf). Notice that the YAML header cares about indentation, so make sure to get that right!  
 
-Headings are very useful for structuring your RMarkdown file. For your reports, it's often a good idea to have one header for each code chunk. The outline viewer here on the right is great for navigating large analysis files. 
+**Headings** are very useful for structuring your RMarkdown file. For your reports, it's often a good idea to have one header for each code chunk. The outline viewer here on the right is great for navigating large analysis files. 
 
-Text is self-explanatory. 
+**Text** is self-explanatory. 
 
-Code chunks is where the coding happens. You can add one via the Insert button above, or via the shortcut `cmd + option + i` (the much cooler way of doing it!)
+**Code chunks** is where the coding happens. You can add one via the Insert button above, or via the shortcut `cmd + option + i` (the much cooler way of doing it!)
 
 ```{r another-code-chunk, eval=FALSE}
 
@@ -226,7 +227,7 @@ Above, we assigned the `diamonds` dataset to the variable `df.diamonds` so that 
 
 Let's take a look at the full dataset by clicking on it in the explorer.
 
->__Tip__: You can view a data frame by highlighting the text in the editor (or simply moving the mouse above the text), and then press `F2`.
+>__Tip__: You can view a data frame by highlighting the text in the editor (or simply moving the mouse above the text), and then pressing `F2`.
 
 The `df.diamonds` data frame contains information about almost 60,000 diamonds, including their `price`, `carat` value, size, etc. Let's use visualization to get a better sense for this dataset.
 
@@ -401,7 +402,7 @@ ggplot(data = df.diamonds,
        mapping = aes(x = clarity,
                      y = price)) +
   stat_summary(fun.data = "mean_cl_boot",
-               geom = "pointrange") 
+               geom = "pointrange")
 ```
 
 Here we have it. The average price of our diamonds for different levels of `clarity` together with bootstrapped 95% confidence intervals. How do we know that we have 95% confidence intervals? That's what `mean_cl_boot()` computes as a default. Let's take a look at that function:
@@ -417,9 +418,9 @@ Note that I had to use the `fun.data = ` argument here instead of `fun = ` becau
 The order in which we add geoms to a ggplot matters! Generally, we want to plot error bars before the points that represent the means. To illustrate, let's set the color in which we show the means to "red".
 
 ```{r good-figure, fig.cap='This figure looks good. Error bars and means are drawn in the correct order.'}
-ggplot(df.diamonds,
-       aes(x = clarity,
-           y = price)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = clarity,
+                     y = price)) +
   stat_summary(fun.data = "mean_cl_boot",
                geom = "linerange") +
   stat_summary(fun = "mean",
@@ -758,8 +759,8 @@ Here, I've set `color = "black"` within the `geom_smooth()` function, and now on
 - [R graphics cookbook](http://www.cookbook-r.com/Graphs/) --> quick intro to the the most common graphs
 - [ggplot2 book](https://ggplot2-book.org/) 
 - [R for Data Science book](http://r4ds.had.co.nz/)
-  + [Data visualization](http://r4ds.had.co.nz/data-visualisation.html)
-  + [Graphics for communication](http://r4ds.had.co.nz/graphics-for-communication.html)
+	+ [Data visualization](http://r4ds.had.co.nz/data-visualisation.html)
+	+ [Graphics for communication](http://r4ds.had.co.nz/graphics-for-communication.html)
 - [Data Visualization -- A practical introduction (by Kieran Healy)](http://socviz.co/)
   + [Look at data](http://socviz.co/lookatdata.html#lookatdata)
   + [Make a plot](http://socviz.co/makeplot.html#makeplot)

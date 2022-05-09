@@ -29,6 +29,10 @@ Various people have helped in the process of putting together these materials (e
 
 Special thanks go to my teaching teams: 
 
+- 2022: 
+  - Ari Beller
+  - Sarah Wu
+  - Chengxu Zhuang 
 - 2021: 
   - Andrew Nam 
   - Catherine Thomas 
@@ -114,13 +118,13 @@ library("xtable")       # for tables
 
 
 ```
-## R version 4.0.3 (2020-10-10)
+## R version 4.1.2 (2021-11-01)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.7
+## Running under: macOS Big Sur 10.16
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -129,8 +133,10 @@ library("xtable")       # for tables
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] compiler_4.0.3    magrittr_2.0.1    bookdown_0.21     htmltools_0.5.1.1
-##  [5] tools_4.0.3       yaml_2.2.1        stringi_1.5.3     rmarkdown_2.6    
-##  [9] knitr_1.31        stringr_1.4.0     digest_0.6.27     xfun_0.21        
-## [13] rlang_0.4.10      evaluate_0.14
+##  [1] bookdown_0.26   digest_0.6.29   R6_2.5.1        jsonlite_1.8.0 
+##  [5] magrittr_2.0.3  evaluate_0.15   stringi_1.7.6   rlang_1.0.2    
+##  [9] cli_3.3.0       jquerylib_0.1.4 bslib_0.3.1     rmarkdown_2.14 
+## [13] tools_4.1.2     stringr_1.4.0   xfun_0.30       yaml_2.3.5     
+## [17] fastmap_1.1.0   compiler_4.1.2  htmltools_0.5.2 knitr_1.39     
+## [21] sass_0.4.1
 ```

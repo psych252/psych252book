@@ -1,4 +1,4 @@
-# Data wrangling 2 
+# Data wrangling 2
 
 In this session, we will continue to learn about wrangling data. Some of the functions that I'll introduce in this session are a little tricky to master. Like learning a new language, it takes some time to get fluent. However, it's worth investing the time. 
 
@@ -10,7 +10,7 @@ In this session, we will continue to learn about wrangling data. Some of the fun
 - Learn how to deal with missing data entries `NA`. 
 - Master how to _read_ and _save_ data. 
 
-## Load packages 
+## Load packages
 
 Let's first load the packages that we need for this chapter. 
 
@@ -20,7 +20,7 @@ library("knitr") # for rendering the RMarkdown file
 library("tidyverse") # for data wrangling 
 ```
 
-## Settings 
+## Settings
 
 
 ```r
@@ -34,7 +34,7 @@ options(dplyr.summarise.inform = F)
 
 ## Wrangling data (continued)
 
-### Summarizing data 
+### Summarizing data
 
 Let's first load the `starwars` data set again: 
 
@@ -54,7 +54,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 1 x 3
+# A tibble: 1 × 3
   height_mean height_max     n
         <dbl>      <int> <int>
 1        174.        264    87
@@ -71,9 +71,9 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 38 x 2
+# A tibble: 38 × 2
    species   height_mean
- * <chr>           <dbl>
+   <chr>           <dbl>
  1 Aleena            79 
  2 Besalisk         198 
  3 Cerean           198 
@@ -101,7 +101,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 38 x 3
+# A tibble: 38 × 3
    species  height_mean group_size
    <chr>          <dbl>      <int>
  1 Human           177.         35
@@ -136,7 +136,7 @@ df.summarize = tibble(participant = rep(1:3, each = 5),
 ```
 
 ```
-# A tibble: 15 x 2
+# A tibble: 15 × 2
    participant judgment
          <int>    <int>
  1           1       67
@@ -166,7 +166,7 @@ df.summarize %>%
 ```
 
 ```
-# A tibble: 10 x 3
+# A tibble: 10 × 3
    participant judgment judgment_zscored[,1]
          <int>    <int>                <dbl>
  1           1       67               0.671 
@@ -197,7 +197,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 4
+# A tibble: 87 × 4
    name               height  mass mean_height_mass
    <chr>               <int> <dbl>            <dbl>
  1 Luke Skywalker        172    77             142.
@@ -237,7 +237,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 4
+# A tibble: 87 × 4
    name               height  mass mean_height_mass
    <chr>               <int> <dbl>            <dbl>
  1 Luke Skywalker        172    77            124. 
@@ -265,7 +265,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 4
+# A tibble: 87 × 4
    name               height  mass mean_height_mass
    <chr>               <int> <dbl>            <dbl>
  1 Luke Skywalker        172    77            124. 
@@ -281,7 +281,7 @@ df.starwars %>%
 # … with 77 more rows
 ```
 
-#### Practice 1 
+#### Practice 1
 
 Find out what the average `height` and `mass` (as well as the standard deviation) is from different `species` in different `homeworld`s. Why is the standard deviation `NA` for many groups?  
 
@@ -297,7 +297,7 @@ Who is the tallest member of each species? What eye color do they have? The `top
 # write your code here 
 ```
 
-### Reshaping data 
+### Reshaping data
 
 We want our data frames to be tidy. What's tidy? 
 
@@ -326,7 +326,7 @@ df.reshape = tibble(participant = c(1, 2),
 ```
 
 ```
-# A tibble: 2 x 4
+# A tibble: 2 × 4
   participant observation_1 observation_2 observation_3
         <dbl>         <dbl>         <dbl>         <dbl>
 1           1            10           100            24
@@ -348,7 +348,7 @@ df.reshape.long = df.reshape %>%
 ```
 
 ```
-# A tibble: 6 x 3
+# A tibble: 6 × 3
   participant index         rating
         <dbl> <chr>          <dbl>
 1           1 observation_1     10
@@ -379,7 +379,7 @@ df.reshape.wide = df.reshape.long %>%
 ```
 
 ```
-# A tibble: 2 x 4
+# A tibble: 2 × 4
   participant observation_1 observation_2 observation_3
         <dbl>         <dbl>         <dbl>         <dbl>
 1           1            10           100            24
@@ -404,7 +404,7 @@ df.reshape2 = tibble(participant = c(1, 2),
 ```
 
 ```
-# A tibble: 2 x 7
+# A tibble: 2 × 7
   participant stimulus_1 observation_1 stimulus_2 observation_2 stimulus_3
         <dbl> <chr>              <dbl> <chr>              <dbl> <chr>     
 1           1 flower                10 house                100 car       
@@ -430,7 +430,7 @@ df.reshape2 %>%
 ```
 
 ```
-# A tibble: 6 x 4
+# A tibble: 6 × 4
   participant order stimulus rating
         <dbl> <dbl> <chr>     <dbl>
 1           1     1 flower       10
@@ -456,7 +456,7 @@ df.reshape2 %>%
 ```
 
 ```
-# A tibble: 12 x 4
+# A tibble: 12 × 4
    participant index       order rating
          <dbl> <chr>       <chr> <chr> 
  1           1 stimulus    1     flower
@@ -490,7 +490,7 @@ df.reshape2 %>%
 ```
 
 ```
-# A tibble: 6 x 4
+# A tibble: 6 × 4
   participant order stimulus observation
         <dbl> <chr> <chr>    <chr>      
 1           1 1     flower   10         
@@ -519,7 +519,7 @@ df.reshape2 %>%
 ```
 
 ```
-# A tibble: 6 x 4
+# A tibble: 6 × 4
   participant order stimulus rating
         <dbl> <dbl> <chr>     <dbl>
 1           1     1 flower       10
@@ -555,7 +555,7 @@ df.reshape2 %>%
 ```
 
 ```
-# A tibble: 12 x 4
+# A tibble: 12 × 4
    participant index       order rating
          <dbl> <chr>       <chr> <chr> 
  1           1 stimulus    1     flower
@@ -589,7 +589,7 @@ tibble(index = c("flower", "observation"),
 ```
 
 ```
-# A tibble: 2 x 1
+# A tibble: 2 × 1
   combined     
   <chr>        
 1 flower_1     
@@ -606,7 +606,7 @@ df.reshape3 = tibble(participant = 1:2,
 ```
 
 ```
-# A tibble: 2 x 2
+# A tibble: 2 × 2
   participant judgments    
         <int> <chr>        
 1           1 10, 4, 12, 15
@@ -624,7 +624,7 @@ df.reshape3 %>%
 ```
 
 ```
-# A tibble: 6 x 2
+# A tibble: 6 × 2
   participant judgments
         <int> <chr>    
 1           1 10       
@@ -635,7 +635,7 @@ df.reshape3 %>%
 6           2 4        
 ```
 
-#### Practice 2 
+#### Practice 2
 
 Load this data frame first.
 
@@ -659,7 +659,7 @@ df.practice2 = tibble(participant = 1:10,
 ```
 
 
-### Joining multiple data frames 
+### Joining multiple data frames
 
 It's nice to have all the information we need in a single, tidy data frame. We have learned above how to go from a single untidy data frame to a tidy one. However, often our situation to start off with is even worse. The information we need sits in several, messy data frames. 
 
@@ -679,7 +679,7 @@ df.stimuli = tibble(index = 1:5,
 ```
 
 ```
-# A tibble: 5 x 5
+# A tibble: 5 × 5
   index height width n_dots color
   <int>  <dbl> <dbl>  <dbl> <chr>
 1     1      2     4     12 green
@@ -698,7 +698,7 @@ df.responses = tibble(participant = rep(1:3, each = 5),
 ```
 
 ```
-# A tibble: 15 x 3
+# A tibble: 15 × 3
    participant index response
          <int> <int>    <int>
  1           1     1       67
@@ -733,9 +733,9 @@ df.responses %>%
 ```
 
 ```
-# A tibble: 5 x 2
+# A tibble: 5 × 2
   color response_mean
-* <chr>         <dbl>
+  <chr>         <dbl>
 1 black          69.7
 2 blue           45  
 3 green          68.3
@@ -754,7 +754,7 @@ df.responses %>%
 ```
 
 ```
-# A tibble: 15 x 4
+# A tibble: 15 × 4
    participant index response color
          <int> <int>    <int> <chr>
  1           1     1       67 green
@@ -790,7 +790,7 @@ df.responses %>%
 ```
 
 ```
-# A tibble: 15 x 4
+# A tibble: 15 × 4
    participant stimuli response color
          <int>   <int>    <int> <chr>
  1           1       1       67 green
@@ -840,7 +840,7 @@ Create a new data frame called `df.join` that combines the information from both
 ```
 
 
-### Dealing with missing data 
+### Dealing with missing data
 
 There are two ways for data to be missing. 
 
@@ -871,7 +871,7 @@ print(df.missing)
 ```
 
 ```
-# A tibble: 3 x 2
+# A tibble: 3 × 2
       x y    
   <dbl> <chr>
 1     1 a    
@@ -889,7 +889,7 @@ df.missing %>%
 ```
 
 ```
-# A tibble: 3 x 2
+# A tibble: 3 × 2
       x y      
   <dbl> <chr>  
 1     1 a      
@@ -906,7 +906,7 @@ df.missing %>%
 ```
 
 ```
-# A tibble: 1 x 2
+# A tibble: 1 × 2
       x y    
   <dbl> <chr>
 1     1 a    
@@ -921,7 +921,7 @@ df.missing %>%
 ```
 
 ```
-# A tibble: 2 x 2
+# A tibble: 2 × 2
       x y    
   <dbl> <chr>
 1     1 a    
@@ -951,7 +951,7 @@ df.stocks %>%
 ```
 
 ```
-# A tibble: 8 x 3
+# A tibble: 8 × 3
    year   qtr return
   <dbl> <dbl>  <dbl>
 1  2015     1   1.88
@@ -975,7 +975,7 @@ df.stocks %>%
 ```
 
 ```
-# A tibble: 8 x 3
+# A tibble: 8 × 3
    year   qtr return
   <dbl> <dbl>  <dbl>
 1  2015     1   1.88
@@ -990,7 +990,7 @@ df.stocks %>%
 
 This specifies that we would like to replace any `NA` in the `return` column with `0`. Again, if we had multiple columns with `NA`s, we could speficy for each column separately how to replace it. 
 
-## Reading in data 
+## Reading in data
 
 So far, we've used data sets that already came with the packages we've loaded. In the visualization chapters, we used the `diamonds` data set from the `ggplot2` package, and in the data wrangling chapters, we used the `starwars` data set from the `dplyr` package. 
 
@@ -1018,21 +1018,14 @@ df.csv = read_csv("data/movies.csv")
 ```
 
 ```
-
+Rows: 2961 Columns: 11
 ── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
-cols(
-  title = col_character(),
-  genre = col_character(),
-  director = col_character(),
-  year = col_double(),
-  duration = col_double(),
-  gross = col_double(),
-  budget = col_double(),
-  cast_facebook_likes = col_double(),
-  votes = col_double(),
-  reviews = col_double(),
-  rating = col_double()
-)
+Delimiter: ","
+chr (3): title, genre, director
+dbl (8): year, duration, gross, budget, cast_facebook_likes, votes, reviews,...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 The `read_csv()` function gives us information about how each column was parsed. Here, we have some columns that are characters (such as `title` and `genre`), and some columns that are numeric (such as `year` and `duration`). Note that it says `double()` in the specification but double and numeric are identical.  
@@ -1047,24 +1040,24 @@ df.csv %>% glimpse()
 ```
 Rows: 2,961
 Columns: 11
-$ title               <chr> "Over the Hill to the Poorhouse", "The Broadway M…
-$ genre               <chr> "Crime", "Musical", "Comedy", "Comedy", "Comedy",…
-$ director            <chr> "Harry F. Millarde", "Harry Beaumont", "Lloyd Bac…
-$ year                <dbl> 1920, 1929, 1933, 1935, 1936, 1937, 1939, 1939, 1…
-$ duration            <dbl> 110, 100, 89, 81, 87, 83, 102, 226, 88, 144, 172,…
-$ gross               <dbl> 3000000, 2808000, 2300000, 3000000, 163245, 18492…
-$ budget              <dbl> 100000, 379000, 439000, 609000, 1500000, 2000000,…
-$ cast_facebook_likes <dbl> 4, 109, 995, 824, 352, 229, 2509, 1862, 1178, 203…
-$ votes               <dbl> 5, 4546, 7921, 13269, 143086, 133348, 291875, 215…
-$ reviews             <dbl> 2, 107, 162, 164, 331, 349, 746, 863, 252, 119, 3…
-$ rating              <dbl> 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5, 6.9,…
+$ title               <chr> "Over the Hill to the Poorhouse", "The Broadway Me…
+$ genre               <chr> "Crime", "Musical", "Comedy", "Comedy", "Comedy", …
+$ director            <chr> "Harry F. Millarde", "Harry Beaumont", "Lloyd Baco…
+$ year                <dbl> 1920, 1929, 1933, 1935, 1936, 1937, 1939, 1939, 19…
+$ duration            <dbl> 110, 100, 89, 81, 87, 83, 102, 226, 88, 144, 172, …
+$ gross               <dbl> 3000000, 2808000, 2300000, 3000000, 163245, 184925…
+$ budget              <dbl> 100000, 379000, 439000, 609000, 1500000, 2000000, …
+$ cast_facebook_likes <dbl> 4, 109, 995, 824, 352, 229, 2509, 1862, 1178, 2037…
+$ votes               <dbl> 5, 4546, 7921, 13269, 143086, 133348, 291875, 2153…
+$ reviews             <dbl> 2, 107, 162, 164, 331, 349, 746, 863, 252, 119, 33…
+$ rating              <dbl> 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5, 6.9, …
 ```
 
 The data frame contains a bunch of movies with information about their genre, director, rating, etc. 
 
 The `readr` package (which contains the `read_csv()` function) has a number of other functions for reading data. Just type `read_` in the console below and take a look at the suggestions that autocomplete offers. 
 
-### RData 
+### RData
 
 RData is a data format native to R. Since this format can only be read by R, it's not a good format for sharing data. However, it's a useful format that allows us to flexibly save and load R objects. For example, consider that we always start our script by reading in and structuring data, and that this takes quite a while. One thing we can do is to save the output of intermediate steps as an RData object, and then simply load this object (instead of re-running the whole routine every time). 
 
@@ -1082,9 +1075,9 @@ Loading objects:
 
 I've set the `verbose = ` argument to `TRUE` here so that the `load()` function tells me what objects it added to the environment. This is useful for checking whether existing objects were overwritten. 
 
-## Saving data 
+## Saving data
 
-### csv 
+### csv
 
 To save a data frame as a csv file, we simply write: 
 
@@ -1098,7 +1091,7 @@ write_csv(df.test, file = "data/test.csv")
 
 Just like for reading in data, the `readr` package has a number of other functions for saving data. Just type `write_` in the console below and take a look at the autocomplete suggestions.
 
-### RData 
+### RData
 
 To save objects as an RData file, we write: 
 
@@ -1149,13 +1142,13 @@ save(df.test, df.starwars, file = "data/test_starwars.RData")
 
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1164,22 +1157,24 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.4     purrr_0.3.4    
- [5] readr_1.4.0     tidyr_1.1.2     tibble_3.0.6    ggplot2_3.3.3  
- [9] tidyverse_1.3.0 knitr_1.31     
+ [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
+ [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    ggplot2_3.3.6  
+ [9] tidyverse_1.3.1 knitr_1.39     
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.1.0  xfun_0.21         haven_2.3.1       colorspace_2.0-0 
- [5] vctrs_0.3.6       generics_0.1.0    htmltools_0.5.1.1 yaml_2.2.1       
- [9] utf8_1.1.4        rlang_0.4.10      pillar_1.4.7      glue_1.4.2       
-[13] withr_2.4.1       DBI_1.1.1         dbplyr_2.0.0      modelr_0.1.8     
-[17] readxl_1.3.1      lifecycle_1.0.0   munsell_0.5.0     gtable_0.3.0     
-[21] cellranger_1.1.0  rvest_0.3.6       evaluate_0.14     ps_1.6.0         
-[25] fansi_0.4.2       highr_0.8         broom_0.7.3       Rcpp_1.0.6       
-[29] scales_1.1.1      backports_1.2.1   jsonlite_1.7.2    fs_1.5.0         
-[33] hms_1.0.0         digest_0.6.27     stringi_1.5.3     bookdown_0.21    
-[37] grid_4.0.3        cli_2.3.0         tools_4.0.3       magrittr_2.0.1   
-[41] crayon_1.4.1      pkgconfig_2.0.3   ellipsis_0.3.1    xml2_1.3.2       
-[45] reprex_1.0.0      lubridate_1.7.9.2 assertthat_0.2.1  rmarkdown_2.6    
-[49] httr_1.4.2        rstudioapi_0.13   R6_2.5.0          compiler_4.0.3   
+ [1] tidyselect_1.1.2 xfun_0.30        bslib_0.3.1      haven_2.5.0     
+ [5] colorspace_2.0-3 vctrs_0.4.1      generics_0.1.2   htmltools_0.5.2 
+ [9] yaml_2.3.5       utf8_1.2.2       rlang_1.0.2      jquerylib_0.1.4 
+[13] pillar_1.7.0     withr_2.5.0      glue_1.6.2       DBI_1.1.2       
+[17] bit64_4.0.5      dbplyr_2.1.1     modelr_0.1.8     readxl_1.4.0    
+[21] lifecycle_1.0.1  munsell_0.5.0    gtable_0.3.0     cellranger_1.1.0
+[25] rvest_1.0.2      evaluate_0.15    tzdb_0.3.0       fastmap_1.1.0   
+[29] parallel_4.1.2   fansi_1.0.3      highr_0.9        broom_0.8.0     
+[33] backports_1.4.1  scales_1.2.0     vroom_1.5.7      jsonlite_1.8.0  
+[37] bit_4.0.4        fs_1.5.2         hms_1.1.1        digest_0.6.29   
+[41] stringi_1.7.6    bookdown_0.26    grid_4.1.2       cli_3.3.0       
+[45] tools_4.1.2      magrittr_2.0.3   sass_0.4.1       crayon_1.5.1    
+[49] pkgconfig_2.0.3  ellipsis_0.3.2   xml2_1.3.3       reprex_2.0.1    
+[53] lubridate_1.8.0  rstudioapi_0.13  assertthat_0.2.1 rmarkdown_2.14  
+[57] httr_1.4.3       R6_2.5.1         compiler_4.1.2  
 ```

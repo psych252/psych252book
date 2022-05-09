@@ -1,0 +1,124 @@
+# Reporting statistics 
+
+```{r, message=FALSE, include=FALSE}
+library("knitr")             # for knitting RMarkdown 
+library("kableExtra")        # for making nice tables
+library("janitor")           # for cleaning column names
+library("papaja")            # for reporting statistical results
+                             # install via: devtools::install_github("crsh/papaja")
+library("broom")             # for tidying up model fits
+library("lme4")              # mixed effects models 
+library("brms")              # Bayesian regression
+library("modelr")            # cross-validation and bootstrapping
+library("tidybayes")         # tidying up results from Bayesian models
+library("ggeffects")         # for marginal effects
+library("statsExpressions")  # for extracting stats results APA style
+library("tidyverse")         # for wrangling, plotting, etc. 
+
+theme_set(theme_classic() +
+            theme(text = element_text(size = 20)))
+```
+
+In this chapter, I'll give a few examples for how to report statistical analysis. 
+
+## General advice
+
+Here is some general advice first: 
+
+1. Make good figures! 
+2. Use statistical models to answer concrete research questions.
+3. Illustrate the uncertainty in your statistical inferences. 
+4. Report effect sizes. 
+
+### Make good figures!
+
+Chapters \@ref(visualization-1) and \@ref(visualization-2) go into how to make figures and also talk a little bit about what makes for a good figure. Personally, I like it when the figures give me a good sense for the actual data. For example, for an experimental study, I would like to get a good sense for the responses that participants gave in the different experimental conditions. 
+
+Sometimes, papers just report the results of statistical tests, or only visually display estimates of the parameters in the model. I'm not a fan of that since, as we've learned, the parameters of the model are only useful in so far the model captures the data-generating process reasonably well. 
+
+### Use statistical models to answer concrete research questions.
+
+Ideally, we formulate our research questions as statistical models upfront and pre-register our planned analyses (e.g. as an RMarkdown script with a complete analysis based on simulated data). We can then organize the results section by going through the sequence of research questions. Each statistical analysis then provides an answer to a specific research question. 
+
+### Illustrate the uncertainty in your statistical inferences. 
+
+For frequentist statistics, we can calculate confidence intervals (e.g. using bootstrapping) and we should provide these intervals together with the point estimates of the model's predictors. 
+
+For Bayesian statistics, we can calculate credible intervals based on the posterior over the model parameters. 
+
+Our figures should also indicate the uncertainty that we have in our statistical inferences (e.g. by adding confidence bands, or by showing some samples from the posterior). 
+
+### Report effect sizes.
+
+Rather than just saying whether the results of a statistical test was significant or not, you should, where possible, provide a measure of the effect size. Chapter \@ref(power-analysis) gives an overview of commonly used measures of effect size. 
+
+### Reporting statistical results using RMarkdown 
+
+For reporting statistical results in RMarkdown, I recommend the `papaja` package (see this chapter in the [online book](https://crsh.github.io/papaja_man/reporting.html#results-from-statistical-tests)). 
+
+## Some concrete example
+
+In this section, I'll give a few concrete examples for how to report the results of statistical tests. Each example tries to implement the general advice mentioned above. I will discuss frequentist and Bayesian statistics separately.
+
+### Frequentist statistics
+
+#### Simple regression
+
+```{r, message=FALSE, warning=F}
+df.credit = read_csv("data/credit.csv") %>% 
+  rename(index = `...1`) %>% 
+  clean_names()
+```
+
+__Research question__: Do people with more income have a higher credit card balance? 
+
+```{r income-figure, fig.cap="Relationship between income level and credit card balance. The error band indicates a 95% confidence interval.", fig.height=6, fig.width=8}
+ggplot(data = df.credit,
+       mapping = aes(x = income,
+                     y = balance)) + 
+  geom_smooth(method = "lm",
+              color = "black") + 
+  geom_point(alpha = 0.2) +
+  coord_cartesian(xlim = c(0, max(df.credit$income))) + 
+  labs(x = "Income in $1K per year",
+       y = "Credit card balance in $")
+```
+
+```{r}
+# fit a model 
+fit = lm(formula = balance ~ income,
+         data = df.credit)
+
+summary(fit)
+```
+
+```{r}
+# summarize the model results 
+results_regression = fit %>% 
+  apa_print()
+
+results_prediction = fit %>% 
+  ggpredict(terms = "income [20, 100]") %>% 
+  mutate(across(where(is.numeric), ~ round(., 2)))
+```
+
+**Possible text**:
+
+People with a higher income have a greater credit card balance `r results_regression$full_result$modelfit$r2` (see Table \@ref(tab:apa-table)). For each increase in income of \$1K per year, the credit card balance is predicted to increase by `r results_regression$estimate$income`. For example, the predicted credit card balance of a person with an income of \$20K per year is \$`r results_prediction$predicted[1]`, 95% CI [`r results_prediction$conf.low[1]`, `r results_prediction$conf.high[1]`], whereas for a person with an income of \$100K per year, it is \$`r results_prediction$predicted[2]`, 95% CI [`r results_prediction$conf.low[2]`, `r results_prediction$conf.high[2]`] (see Figure \@ref(fig:income-figure)).
+
+```{r apa-table}
+apa_table(results_regression$table,
+          caption = "A full regression table.",
+          escape = FALSE)
+```
+
+
+<!-- ### Bayesian statistics -->
+
+## Session info
+
+```{r, echo=F}
+sessionInfo()
+```
+
+

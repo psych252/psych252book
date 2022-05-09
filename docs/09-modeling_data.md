@@ -1,6 +1,6 @@
 # Modeling data
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 
 ```r
@@ -19,9 +19,9 @@ opts_chunk$set(comment = "",
                fig.show = "hold")
 ```
 
-## Modeling data 
+## Modeling data
 
-### Simplicity vs. accuracy trade-off 
+### Simplicity vs. accuracy trade-off
 
 
 ```r
@@ -81,246 +81,7 @@ ggplot(data = df.pre,
 <p class="caption">(\#fig:unnamed-chunk-4)Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive.</p>
 </div>
 
-### Error definitions and best estimators
-
-Let's start with some simple data:
-
-
-```r
-df.data = tibble(observation = 1:5,
-                 value = c(1, 3, 5, 9, 14))
-```
-
-And plot the data
-
-
-```r
-ggplot(data = df.data,
-       mapping = aes(x = "1",
-                     y = value)) + 
-  geom_point(size = 3) + 
-  scale_y_continuous(breaks = seq(0, 16, 2),
-                     limits = c(0, 16)) +
-  theme(panel.grid.major.y = element_line(color = "gray80", linetype = 2),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        text = element_text(size = 24))
-```
-
-<img src="09-modeling_data_files/figure-html/unnamed-chunk-6-1.png" width="672" />
-
-This is what the sum of absolute errors looks like for a given `value_predicted`. 
-
-
-```r
-value_predicted = 7
-
-df.data = df.data %>% 
-  mutate(prediction = value_predicted,
-         error_absolute = abs(prediction - value))
-
-ggplot(data = df.data,
-       mapping = aes(x = observation, 
-                     y = value)) + 
-  geom_segment(mapping = aes(x = observation,
-                             xend = observation,
-                             y = value_predicted,
-                             yend = value
-                             ),
-               color = "blue",
-               size = 1) +
-  geom_line(data = tibble(x = c(1, 5),
-                   y = value_predicted),
-            mapping = aes(x = x,
-                y = y),
-            size = 1,
-            color = "green") +
-  geom_point(size = 4) +
-  annotate(x = 1,
-           y = 15.5,
-           geom = "text",
-           label = str_c("Prediction = ", value_predicted),
-           size = 8,
-           hjust = 0,
-           vjust = 1,
-           color = "green") +
-  annotate(x = 1,
-           y = 13.5,
-           geom = "text",
-           label = str_c("Sum of absolute errors = ", sum(df.data$error_absolute)),
-           size = 8,
-           hjust = 0,
-           vjust = 1,
-           color = "blue") +
-  annotate(x = 5,
-           y = value_predicted,
-           geom = "text",
-           label = parse(text = str_c("{hat(Y)","==b[0]}==", value_predicted)),
-           hjust = -0.1,
-           size = 8) +
-  scale_x_continuous(breaks = df.data$observation,
-                     labels = parse(text = str_c('e[',df.data$observation,']', "==", df.data$error_absolute)),
-                     limits = c(1, 6)) +
-  scale_y_continuous(breaks = seq(0, 16, 2),
-                     limits = c(0, 16)) +
-  theme(panel.grid.major.y = element_line(color = "gray80", linetype = 2),
-        axis.title.x = element_blank(),
-        text = element_text(size = 24))
-```
-
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/unnamed-chunk-7-1.png" alt="Sum of absolute errors." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-7)Sum of absolute errors.</p>
-</div>
-
-Play around with the code below to see how using (1) the sum of absolute errors, or (2) the sum of squared errors affects what estimate minimizes the error. 
-
-
-```r
-value_predicted = seq(0, 50, 0.1)
-# value_predicted = seq(0, 10, 1)
-
-df.data = tibble(observation = 1:5,
-                 value = c(1, 3, 5, 9, 140))
-
-# function that calculates the sum absolute error
-fun.sum_absolute_error = function(prediction){
-  x = df.data$value
-  sum_absolute_error = sum(abs(x-prediction))
-  return(sum_absolute_error)
-}
-
-# function that calculates the sum squared error
-fun.sum_squared_error = function(prediction){
-  x = df.data$value
-  sum_squared_error = sum((x-prediction)^2)
-  return(sum_squared_error)
-}
-
-df.model = tibble(
-  estimate = value_predicted,
-  sum_absolute_error = map_dbl(value_predicted, fun.sum_absolute_error),
-  sum_squared_error = map_dbl(value_predicted, fun.sum_squared_error)
-)
-
-ggplot(data = df.model,
-       mapping = aes(x = estimate,
-                     # y = sum_absolute_error)) +
-                     y = sum_squared_error)) +
-  geom_line(size = 1) +
-  # labs(y = "Sum absolute error")
-  labs(y = "Sum of squared errors")
-```
-
-<img src="09-modeling_data_files/figure-html/unnamed-chunk-8-1.png" width="672" />
-
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Error definition </th>
-   <th style="text-align:left;"> Best estimator </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Count of errors </td>
-   <td style="text-align:left;"> Mode = most frequent value </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Sum of absolute errors </td>
-   <td style="text-align:left;"> Median = middle observation of all values </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Sum of squared errors </td>
-   <td style="text-align:left;"> Mean = average of all values </td>
-  </tr>
-</tbody>
-</table>
-
-
-```r
-mu = 0 
-sigma = 1
-
-mean = mu
-median = mu
-mode = mu
-
-ggplot(data = tibble(x = c(-3, 3)),
-       mapping = aes(x = x)) + 
-  stat_function(fun = "dnorm",
-                size = 1) +
-  geom_segment(mapping = aes(x = median,
-                             xend = median,
-                             y = dnorm(median),
-                             yend = 0),
-               color = "green",
-               size = 2) +
-  geom_segment(mapping = aes(x = mode,
-                             xend = mode,
-                             y = dnorm(mode),
-                             yend = 0),
-               color = "red",
-               size = 2) +
-  geom_segment(mapping = aes(x = mean,
-                             xend = mean,
-                             y = dnorm(mean),
-                             yend = 0),
-               color = "blue",
-               size = 2) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expansion(add = c(0.001, 0.1)))
-```
-
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/unnamed-chunk-10-1.png" alt="Mean, median, and mode on the normal distribution." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-10)Mean, median, and mode on the normal distribution.</p>
-</div>
-
-
-```r
-rate = 1 
-
-mean = rate
-median = rate * log(2)
-mode = 0
-
-ggplot(data = tibble(x = c(-0.1, 3)),
-            mapping = aes(x = x)) + 
-  stat_function(fun = "dexp",
-                size = 1) +
-  geom_segment(aes(x = median,
-                   xend = median,
-                   y = dexp(median),
-                   yend = 0),
-               color = "green",
-               size = 2) +
-  geom_segment(aes(x = mode,
-                   xend = mode,
-                   y = dexp(mode),
-                   yend = 0),
-               color = "red",
-               size = 2) +
-  geom_segment(aes(x = mean,
-                   xend = mean,
-                   y = dexp(mean),
-                   yend = 0),
-               color = "blue",
-               size = 2) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = 0:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expansion(add = c(0.001, 0.1)))
-```
-
-<div class="figure">
-<img src="09-modeling_data_files/figure-html/unnamed-chunk-11-1.png" alt="Mean, median, and mode on the exponential distribution." width="672" />
-<p class="caption">(\#fig:unnamed-chunk-11)Mean, median, and mode on the exponential distribution.</p>
-</div>
-
-### Sampling distributions for median and mean 
+### Sampling distributions for median and mean
 
 
 ```r
@@ -377,9 +138,46 @@ ggplot(data = df.sampling_distribution_summaries,
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
 
-<img src="09-modeling_data_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
-## Hypothesis testing: "One-sample t-test" 
+### Residuals need to be normally distributed, not the data itself
+
+
+```r
+set.seed(1)
+
+n_participants = 1000
+
+df.normal = tibble(participant = 1:n_participants,
+                   condition = rep(c("control", "experimental"), each = n_participants/2)) %>% 
+  mutate(score = ifelse(condition == "control",
+                        rnorm(n = n_participants, mean = 5, sd = 2),
+                        rnorm(n = n_participants, mean = 15, sd = 3)))
+
+# distribution of the data 
+ggplot(data = df.normal,
+       mapping = aes(x = score)) + 
+  geom_density() +
+  geom_density(mapping = aes(group = condition,
+                             color = condition))
+  
+
+# distribution of the residuals after having fitted a linear model 
+# we'll learn how to do this later   
+
+fit = lm(formula = score ~ 1 + condition,
+         data = df.normal)
+
+
+ggplot(data = tibble(residuals = fit$residuals),
+                     mapping = aes(x = residuals)) + 
+  geom_density()
+```
+
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-7-1.png" width="672" /><img src="09-modeling_data_files/figure-html/unnamed-chunk-7-2.png" width="672" />
+
+
+## Hypothesis testing: "One-sample t-test"
 
 
 ```r
@@ -585,8 +383,8 @@ ggplot(data = tibble(x = c(0, 10)),
 ```
 
 <div class="figure">
-<img src="09-modeling_data_files/figure-html/unnamed-chunk-17-1.png" alt="F-distribution" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-17)F-distribution</p>
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-11-1.png" alt="F-distribution" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-11)F-distribution</p>
 </div>
 
 We've implemented a one sample t-test (compare the p-value here to the one I computed above using PRE and the F statistic).
@@ -610,7 +408,7 @@ mean of x
    72.806 
 ```
 
-## Building a sampling distribution of PRE 
+## Building a sampling distribution of PRE
 
 Here is the general procedure for building a sampling distribution of the proportional reduction in error (PRE). In this instance, I compare the following two models 
 
@@ -693,13 +491,13 @@ df.samples %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   p_value
     <dbl>
 1   0.394
 ```
 
-<img src="09-modeling_data_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 Some code I wrote to show a subset of the samples. 
 
@@ -844,17 +642,76 @@ samples %>%
 </tbody>
 </table>
 
-## Additional resources 
+## Misc
 
-### Reading 
+Some code to plot probability distributions together with values of interest highlighted. 
+
+
+```r
+value_mean = 3.73
+value_sd = 2.05/sqrt(40)
+q_low = qnorm(0.025, mean = value_mean, sd = value_sd)
+q_high = qnorm(0.975, mean = value_mean, sd = value_sd)
+qnorm(0.975) * value_sd
+```
+
+```
+[1] 0.6352899
+```
+
+```r
+# density function
+
+ggplot(data = tibble(x = c(2.73, 4.73)),
+       mapping = aes(x = x)) + 
+  stat_function(fun = ~ dnorm(.,
+                              mean = value_mean,
+                              sd = value_sd),
+                size = 2) + 
+  geom_vline(xintercept = c(q_low, q_high),
+             linetype = 2)
+
+
+# quantile function 
+df.paths = tibble(x = c(rep(c(0.025, 0.975), each = 2),
+                        -Inf, 0.025, -Inf, 0.975),
+                  y = c(2.9, q_low,
+                        2.9, q_high,
+                        q_low, q_low,
+                        q_high, q_high),
+                  group = rep(1:4, each = 2))
+
+ggplot(data = tibble(x = c(0, 1)),
+       mapping = aes(x = x)) + 
+  stat_function(fun = ~ qnorm(.,
+                              mean = value_mean,
+                              sd = value_sd)) + 
+  geom_path(data = df.paths,
+            mapping = aes(x = x,
+                          y = y,
+                          group = group),
+            color = "blue",
+            size = 2,
+            lineend = "round") + 
+  coord_cartesian(xlim = c(-0.05, 1.05),
+                  ylim = c(2.9, 4.5),
+                  expand = F)
+```
+
+<img src="09-modeling_data_files/figure-html/unnamed-chunk-16-1.png" width="672" /><img src="09-modeling_data_files/figure-html/unnamed-chunk-16-2.png" width="672" />
+
+
+## Additional resources
+
+### Reading
 
 - Judd, C. M., McClelland, G. H., & Ryan, C. S. (2011). Data analysis: A model comparison approach. Routledge. --> Chapters 1--4
 
-### Datacamp 
+### Datacamp
 
 - [Foundations of Inference](https://www.datacamp.com/courses/foundations-of-inference)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -864,13 +721,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -879,25 +736,26 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
- [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     ggplot2_3.3.3   
- [9] tidyverse_1.3.0  janitor_2.1.0    kableExtra_1.3.1 knitr_1.31      
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
+ [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
+ [9] tidyverse_1.3.1  janitor_2.1.0    kableExtra_1.3.4 knitr_1.39      
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6        lubridate_1.7.9.2 lattice_0.20-41   ps_1.6.0         
- [5] utf8_1.1.4        assertthat_0.2.1  digest_0.6.27     R6_2.5.0         
- [9] cellranger_1.1.0  backports_1.2.1   reprex_1.0.0      evaluate_0.14    
-[13] highr_0.8         httr_1.4.2        pillar_1.4.7      rlang_0.4.10     
-[17] readxl_1.3.1      rstudioapi_0.13   Matrix_1.3-2      rmarkdown_2.6    
-[21] labeling_0.4.2    splines_4.0.3     webshot_0.5.2     munsell_0.5.0    
-[25] broom_0.7.3       compiler_4.0.3    modelr_0.1.8      xfun_0.21        
-[29] pkgconfig_2.0.3   mgcv_1.8-33       htmltools_0.5.1.1 tidyselect_1.1.0 
-[33] bookdown_0.21     fansi_0.4.2       viridisLite_0.3.0 crayon_1.4.1     
-[37] dbplyr_2.0.0      withr_2.4.1       grid_4.0.3        nlme_3.1-151     
-[41] jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0   DBI_1.1.1        
-[45] magrittr_2.0.1    scales_1.1.1      cli_2.3.0         stringi_1.5.3    
-[49] farver_2.1.0      fs_1.5.0          snakecase_0.11.0  xml2_1.3.2       
-[53] ellipsis_0.3.1    generics_0.1.0    vctrs_0.3.6       tools_4.0.3      
-[57] glue_1.4.2        hms_1.0.0         yaml_2.2.1        colorspace_2.0-0 
-[61] rvest_0.3.6       haven_2.3.1      
+ [1] lattice_0.20-45   svglite_2.1.0     lubridate_1.8.0   assertthat_0.2.1 
+ [5] digest_0.6.29     utf8_1.2.2        R6_2.5.1          cellranger_1.1.0 
+ [9] backports_1.4.1   reprex_2.0.1      evaluate_0.15     highr_0.9        
+[13] httr_1.4.3        pillar_1.7.0      rlang_1.0.2       readxl_1.4.0     
+[17] rstudioapi_0.13   jquerylib_0.1.4   Matrix_1.4-1      rmarkdown_2.14   
+[21] labeling_0.4.2    splines_4.1.2     webshot_0.5.3     munsell_0.5.0    
+[25] broom_0.8.0       compiler_4.1.2    modelr_0.1.8      xfun_0.30        
+[29] pkgconfig_2.0.3   systemfonts_1.0.4 mgcv_1.8-40       htmltools_0.5.2  
+[33] tidyselect_1.1.2  bookdown_0.26     fansi_1.0.3       viridisLite_0.4.0
+[37] withr_2.5.0       crayon_1.5.1      tzdb_0.3.0        dbplyr_2.1.1     
+[41] grid_4.1.2        nlme_3.1-157      jsonlite_1.8.0    gtable_0.3.0     
+[45] lifecycle_1.0.1   DBI_1.1.2         magrittr_2.0.3    scales_1.2.0     
+[49] cli_3.3.0         stringi_1.7.6     farver_2.1.0      fs_1.5.2         
+[53] snakecase_0.11.0  xml2_1.3.3        bslib_0.3.1       ellipsis_0.3.2   
+[57] generics_0.1.2    vctrs_0.4.1       tools_4.1.2       glue_1.6.2       
+[61] hms_1.1.1         fastmap_1.1.0     yaml_2.3.5        colorspace_2.0-3 
+[65] rvest_1.0.2       haven_2.5.0       sass_0.4.1       
 ```

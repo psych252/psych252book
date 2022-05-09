@@ -1,15 +1,15 @@
-# Data wrangling 1 
+# Data wrangling 1
 
 In this lecture, we will take a look at how to wrangle data using the [dplyr](https://ggplot2.dplyr.org/) package. Again, getting our data into shape is something we'll need to do throughout the course, so it's worth spending some time getting a good sense for how this works. The nice thing about R is that (thanks to the `tidyverse`), both visualization and data wrangling are particularly powerful. 
 
-## Learning goals 
+## Learning goals
 
 - Review R basics (incl. variable modes, data types, operators, control flow, and functions). 
 - Learn how the pipe operator `%>%` works. 
 - See different ways for getting a sense of one's data. 
 - Master key data manipulation verbs from the `dplyr` package (incl. `filter()`, `arrange()`, `rename()`, `relocate()`, `select()`, `mutate()`) as well as the helper functions `across()` and `where()`.
 
-## Load packages 
+## Load packages
 
 Let's first load the packages that we need for this chapter. 
 
@@ -18,19 +18,18 @@ Let's first load the packages that we need for this chapter.
 library("knitr")        # for rendering the RMarkdown file
 library("skimr")        # for visualizing data 
 library("visdat")       # for visualizing data 
-library("summarytools") # for visualizing data 
 library("DT")           # for visualizing data 
 library("tidyverse")    # for data wrangling
 
 opts_chunk$set(comment = "",
-                      fig.show = "hold")
+               fig.show = "hold")
 ```
 
-## Some R basics 
+## Some R basics
 
 To test your knowledge of the R basics, I recommend taking the free interactive tutorial on datacamp: [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r). Here, I will just give a very quick overview of some of the basics. 
 
-### Modes 
+### Modes
 
 Variables in R can have different modes. Table \@ref(tab:variable-modes) shows the most common ones. 
 
@@ -109,7 +108,7 @@ Table: (\#tab:data-types)Most commonly used data types in R.
 | data frame|similar to matrix but with column names                       |
 |       list|flexible type that can contain different other variable types |
 
-#### Vectors 
+#### Vectors
 
 We build vectors using the concatenate function `c()`, and we use `[]` to access one or more elements of a vector.  
 
@@ -141,7 +140,7 @@ numbers[c(1, 3)] # access the first and last element
 
 In R (unlike in Python for example), 1 refers to the first element of a vector (or list). 
 
-#### Matrix 
+#### Matrix
 
 We build a matrix using the `matrix()` function, and we use `[]` to access its elements. 
 
@@ -196,11 +195,11 @@ matrix[-1, ] # a matrix which excludes the first row
 
 Note how we use an empty placeholder to indicate that we want to select all the values in a row or column, and `-` to indicate that we want to remove something.
 
-#### Array 
+#### Array
 
 Arrays work the same was as matrices with data of more than two dimensions. 
 
-#### Data frame 
+#### Data frame
 
 
 ```r
@@ -211,7 +210,7 @@ df # the complete data frame
 ```
 
 ```
-# A tibble: 3 x 2
+# A tibble: 3 × 2
   participant_id participant_name
            <dbl> <chr>           
 1              1 Leia            
@@ -224,7 +223,7 @@ df[1, 2] # a single element using numbers
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   participant_name
   <chr>           
 1 Leia            
@@ -266,7 +265,7 @@ We'll use data frames a lot. Data frames are like a matrix with column names. Da
 
 Here we used the `tibble()` function to create the data frame. A `tibble` is almost the same as a data frame but it has better defaults for formatting output in the console (more information on tibbles is [here](http://r4ds.had.co.nz/tibbles.html)). 
 
-#### Lists 
+#### Lists
 
 
 ```r
@@ -295,7 +294,7 @@ $matrix
 [2,]    2    4
 
 $df
-# A tibble: 2 x 2
+# A tibble: 2 × 2
       x     y
   <dbl> <dbl>
 1     1     3
@@ -368,7 +367,7 @@ c(3, 4) %in% x
 
 It's particularly useful for filtering data as we will see below. 
 
-### Control flow 
+### Control flow
 
 #### if-then {#if-else}
 
@@ -425,7 +424,7 @@ for(i in 1:length(sequence)){
 [1] 10
 ```
 
-#### while loop 
+#### while loop
 
 
 ```r
@@ -450,7 +449,7 @@ while(number <= 10){
 [1] 10
 ```
 
-### Functions 
+### Functions
 
 
 ```r
@@ -468,7 +467,7 @@ fun.add_two_numbers(1, 2)
 
 I've used the `str_c()` function here to concatenate the string with the number. (R converts the number `x` into a string for us.) Note, R functions can only return a single object. However, this object can be a list (which can contain anything). 
 
-#### Some often used functions 
+#### Some often used functions
 
 
 Table: (\#tab:unnamed-chunk-12)Some frequently used functions.
@@ -490,7 +489,7 @@ Table: (\#tab:unnamed-chunk-12)Some frequently used functions.
 |       `var()`|variance                                                  |
 |        `sd()`|standard deviation                                        |
 
-### The pipe operator `%>%` 
+### The pipe operator `%>%`
 
 <div class="figure">
 <img src="figures/pipe.jpg" alt="Inspiration for the `magrittr` package name." width="80%" />
@@ -517,9 +516,8 @@ eat(
           into = baking_form),
         into = oven),
       time = 30),
-    pieces = 6,
-    1)
-)
+    pieces = 6),
+  1)
 ```
 
 To see what's going on here, we need to read the code inside out. That is, we have to start in the innermost bracket, and then work our way outward. However, there is a natural causal ordering to these steps and wouldn't it be nice if we could just write code in that order? Thanks to the pipe operator `%>%` we can! Here is the same example using the pipe: 
@@ -694,7 +692,7 @@ The pipe operator `%>%` is similar to the `+` used in `ggplot2`. It allows us to
 
 A key advantage of using the pipe is that you don't have to save intermediate computations as new variables and this helps to keep your environment nice and clean! 
 
-#### Practice 1 
+#### Practice 1
 
 Let's practice the pipe operator. 
 
@@ -732,7 +730,7 @@ mean(round(sqrt(x), digits = 2))
 # the pipe way (write your code underneath)
 ```
 
-## A quick note on naming things 
+## A quick note on naming things
 
 Personally, I like to name things in a (pretty) consistent way so that I have no trouble finding stuff even when I open up a project that I haven't worked on for a while. I try to use the following naming conventions: 
 
@@ -780,15 +778,15 @@ head(df.starwars)
 ```
 
 ```
-# A tibble: 6 x 14
-  name  height  mass hair_color skin_color eye_color birth_year sex   gender
-  <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-1 Luke…    172    77 blond      fair       blue            19   male  mascu…
-2 C-3PO    167    75 <NA>       gold       yellow         112   none  mascu…
-3 R2-D2     96    32 <NA>       white, bl… red             33   none  mascu…
-4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
-5 Leia…    150    49 brown      light      brown           19   fema… femin…
-6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
+# A tibble: 6 × 14
+  name      height  mass hair_color skin_color eye_color birth_year sex   gender
+  <chr>      <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+1 Luke Sky…    172    77 blond      fair       blue            19   male  mascu…
+2 C-3PO        167    75 <NA>       gold       yellow         112   none  mascu…
+3 R2-D2         96    32 <NA>       white, bl… red             33   none  mascu…
+4 Darth Va…    202   136 none       white      yellow          41.9 male  mascu…
+5 Leia Org…    150    49 brown      light      brown           19   fema… femin…
+6 Owen Lars    178   120 brown, gr… light      blue            52   male  mascu…
 # … with 5 more variables: homeworld <chr>, species <chr>, films <list>,
 #   vehicles <list>, starships <list>
 ```
@@ -805,20 +803,20 @@ glimpse(df.starwars)
 ```
 Rows: 87
 Columns: 14
-$ name       <chr> "Luke Skywalker", "C-3PO", "R2-D2", "Darth Vader", "Leia O…
-$ height     <int> 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, …
-$ mass       <dbl> 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77…
-$ hair_color <chr> "blond", NA, NA, "none", "brown", "brown, grey", "brown", …
-$ skin_color <chr> "fair", "gold", "white, blue", "white", "light", "light", …
-$ eye_color  <chr> "blue", "yellow", "red", "yellow", "brown", "blue", "blue"…
-$ birth_year <dbl> 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57.0,…
-$ sex        <chr> "male", "none", "none", "male", "female", "male", "female"…
-$ gender     <chr> "masculine", "masculine", "masculine", "masculine", "femin…
-$ homeworld  <chr> "Tatooine", "Tatooine", "Naboo", "Tatooine", "Alderaan", "…
-$ species    <chr> "Human", "Droid", "Droid", "Human", "Human", "Human", "Hum…
-$ films      <list> [<"The Empire Strikes Back", "Revenge of the Sith", "Retu…
-$ vehicles   <list> [<"Snowspeeder", "Imperial Speeder Bike">, <>, <>, <>, "I…
-$ starships  <list> [<"X-wing", "Imperial shuttle">, <>, <>, "TIE Advanced x1…
+$ name       <chr> "Luke Skywalker", "C-3PO", "R2-D2", "Darth Vader", "Leia Or…
+$ height     <int> 172, 167, 96, 202, 150, 178, 165, 97, 183, 182, 188, 180, 2…
+$ mass       <dbl> 77.0, 75.0, 32.0, 136.0, 49.0, 120.0, 75.0, 32.0, 84.0, 77.…
+$ hair_color <chr> "blond", NA, NA, "none", "brown", "brown, grey", "brown", N…
+$ skin_color <chr> "fair", "gold", "white, blue", "white", "light", "light", "…
+$ eye_color  <chr> "blue", "yellow", "red", "yellow", "brown", "blue", "blue",…
+$ birth_year <dbl> 19.0, 112.0, 33.0, 41.9, 19.0, 52.0, 47.0, NA, 24.0, 57.0, …
+$ sex        <chr> "male", "none", "none", "male", "female", "male", "female",…
+$ gender     <chr> "masculine", "masculine", "masculine", "masculine", "femini…
+$ homeworld  <chr> "Tatooine", "Tatooine", "Naboo", "Tatooine", "Alderaan", "T…
+$ species    <chr> "Human", "Droid", "Droid", "Human", "Human", "Human", "Huma…
+$ films      <list> <"The Empire Strikes Back", "Revenge of the Sith", "Return…
+$ vehicles   <list> <"Snowspeeder", "Imperial Speeder Bike">, <>, <>, <>, "Imp…
+$ starships  <list> <"X-wing", "Imperial shuttle">, <>, <>, "TIE Advanced x1",…
 ```
 
 ### `distinct()`
@@ -832,7 +830,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 38 x 1
+# A tibble: 38 × 1
    species       
    <chr>         
  1 Human         
@@ -859,9 +857,9 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 15 x 2
+# A tibble: 15 × 2
    eye_color         n
- * <chr>         <int>
+   <chr>         <int>
  1 black            10
  2 blue             19
  3 blue-gray         1
@@ -889,7 +887,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 10 x 3
+# A tibble: 10 × 3
    eye_color gender        n
    <chr>     <chr>     <int>
  1 black     feminine      2
@@ -915,11 +913,11 @@ df.starwars %>%
 ```
 
 ```{=html}
-<div id="htmlwidget-27ee6456ba78a3784e6b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-27ee6456ba78a3784e6b">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87"],["Luke Skywalker","C-3PO","R2-D2","Darth Vader","Leia Organa","Owen Lars","Beru Whitesun lars","R5-D4","Biggs Darklighter","Obi-Wan Kenobi","Anakin Skywalker","Wilhuff Tarkin","Chewbacca","Han Solo","Greedo","Jabba Desilijic Tiure","Wedge Antilles","Jek Tono Porkins","Yoda","Palpatine","Boba Fett","IG-88","Bossk","Lando Calrissian","Lobot","Ackbar","Mon Mothma","Arvel Crynyd","Wicket Systri Warrick","Nien Nunb","Qui-Gon Jinn","Nute Gunray","Finis Valorum","Jar Jar Binks","Roos Tarpals","Rugor Nass","Ric Olié","Watto","Sebulba","Quarsh Panaka","Shmi Skywalker","Darth Maul","Bib Fortuna","Ayla Secura","Dud Bolt","Gasgano","Ben Quadinaros","Mace Windu","Ki-Adi-Mundi","Kit Fisto","Eeth Koth","Adi Gallia","Saesee Tiin","Yarael Poof","Plo Koon","Mas Amedda","Gregar Typho","Cordé","Cliegg Lars","Poggle the Lesser","Luminara Unduli","Barriss Offee","Dormé","Dooku","Bail Prestor Organa","Jango Fett","Zam Wesell","Dexter Jettster","Lama Su","Taun We","Jocasta Nu","Ratts Tyerell","R4-P17","Wat Tambor","San Hill","Shaak Ti","Grievous","Tarfful","Raymus Antilles","Sly Moore","Tion Medon","Finn","Rey","Poe Dameron","BB8","Captain Phasma","Padmé Amidala"],[172,167,96,202,150,178,165,97,183,182,188,180,228,180,173,175,170,180,66,170,183,200,190,177,175,180,150,null,88,160,193,191,170,196,224,206,183,137,112,183,163,175,180,178,94,122,163,188,198,196,171,184,188,264,188,196,185,157,183,183,170,166,165,193,191,183,168,198,229,213,167,79,96,193,191,178,216,234,188,178,206,null,null,null,null,null,165],[77,75,32,136,49,120,75,32,84,77,84,null,112,80,74,1358,77,110,17,75,78.2,140,113,79,79,83,null,null,20,68,89,90,null,66,82,null,null,null,40,null,null,80,null,55,45,null,65,84,82,87,null,50,null,null,80,null,85,null,null,80,56.2,50,null,80,null,79,55,102,88,null,null,15,null,48,null,57,159,136,79,48,80,null,null,null,null,null,45],["blond",null,null,"none","brown","brown, grey","brown",null,"black","auburn, white","blond","auburn, grey","brown","brown",null,null,"brown","brown","white","grey","black","none","none","black","none","none","auburn","brown","brown","none","brown","none","blond","none","none","none","brown","black","none","black","black","none","none","none","none","none","none","none","white","none","black","none","none","none","none","none","black","brown","brown","none","black","black","brown","white","black","black","blonde","none","none","none","white","none","none","none","none","none","none","brown","brown","none","none","black","brown","brown","none","unknown","brown"],["fair","gold","white, blue","white","light","light","light","white, red","light","fair","fair","fair","unknown","fair","green","green-tan, brown","fair","fair","green","pale","fair","metal","green","dark","light","brown mottle","fair","fair","brown","grey","fair","mottled green","fair","orange","grey","green","fair","blue, grey","grey, red","dark","fair","red","pale","blue","blue, grey","white, blue","grey, green, yellow","dark","pale","green","brown","dark","pale","white","orange","blue","dark","light","fair","green","yellow","yellow","light","fair","tan","tan","fair, green, yellow","brown","grey","grey","fair","grey, blue","silver, red","green, grey","grey","red, blue, white","brown, white","brown","light","pale","grey","dark","light","light","none","unknown","light"],["blue","yellow","red","yellow","brown","blue","blue","red","brown","blue-gray","blue","blue","blue","brown","black","orange","hazel","blue","brown","yellow","brown","red","red","brown","blue","orange","blue","brown","brown","black","blue","red","blue","orange","orange","orange","blue","yellow","orange","brown","brown","yellow","pink","hazel","yellow","black","orange","brown","yellow","black","brown","blue","orange","yellow","black","blue","brown","brown","blue","yellow","blue","blue","brown","brown","brown","brown","yellow","yellow","black","black","blue","unknown","red, blue","unknown","gold","black","green, yellow","blue","brown","white","black","dark","hazel","brown","black","unknown","brown"],[19,112,33,41.9,19,52,47,null,24,57,41.9,64,200,29,44,600,21,null,896,82,31.5,15,53,31,37,41,48,null,8,null,92,null,91,52,null,null,null,null,null,62,72,54,null,48,null,null,null,72,92,null,null,null,null,null,22,null,null,null,82,null,58,40,null,102,67,66,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,46],["male","none","none","male","female","male","female","none","male","male","male","male","male","male","male","hermaphroditic","male","male","male","male","male","none","male","male","male","male","female","male","male","male","male","male","male","male","male","male",null,"male","male",null,"female","male","male","female","male","male","male","male","male","male","male","female","male","male","male","male","male","female","male","male","female","female","female","male","male","male","female","male","male","female","female","male","none","male","male","female","male","male","male",null,"male","male","female","male","none",null,"female"],["masculine","masculine","masculine","masculine","feminine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine",null,"masculine","masculine",null,"feminine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","feminine","feminine","feminine","masculine","masculine","masculine","feminine","masculine","masculine","feminine","feminine","masculine","feminine","masculine","masculine","feminine","masculine","masculine","masculine",null,"masculine","masculine","feminine","masculine","masculine",null,"feminine"],["Tatooine","Tatooine","Naboo","Tatooine","Alderaan","Tatooine","Tatooine","Tatooine","Tatooine","Stewjon","Tatooine","Eriadu","Kashyyyk","Corellia","Rodia","Nal Hutta","Corellia","Bestine IV",null,"Naboo","Kamino",null,"Trandosha","Socorro","Bespin","Mon Cala","Chandrila",null,"Endor","Sullust",null,"Cato Neimoidia","Coruscant","Naboo","Naboo","Naboo","Naboo","Toydaria","Malastare","Naboo","Tatooine","Dathomir","Ryloth","Ryloth","Vulpter","Troiken","Tund","Haruun Kal","Cerea","Glee Anselm","Iridonia","Coruscant","Iktotch","Quermia","Dorin","Champala","Naboo","Naboo","Tatooine","Geonosis","Mirial","Mirial","Naboo","Serenno","Alderaan","Concord Dawn","Zolan","Ojom","Kamino","Kamino","Coruscant","Aleen Minor",null,"Skako","Muunilinst","Shili","Kalee","Kashyyyk","Alderaan","Umbara","Utapau",null,null,null,null,null,"Naboo"],["Human","Droid","Droid","Human","Human","Human","Human","Droid","Human","Human","Human","Human","Wookiee","Human","Rodian","Hutt","Human","Human","Yoda's species","Human","Human","Droid","Trandoshan","Human","Human","Mon Calamari","Human","Human","Ewok","Sullustan","Human","Neimodian","Human","Gungan","Gungan","Gungan",null,"Toydarian","Dug",null,"Human","Zabrak","Twi'lek","Twi'lek","Vulptereen","Xexto","Toong","Human","Cerean","Nautolan","Zabrak","Tholothian","Iktotchi","Quermian","Kel Dor","Chagrian","Human","Human","Human","Geonosian","Mirialan","Mirialan","Human","Human","Human","Human","Clawdite","Besalisk","Kaminoan","Kaminoan","Human","Aleena","Droid","Skakoan","Muun","Togruta","Kaleesh","Wookiee","Human",null,"Pau'an","Human","Human","Human","Droid",null,"Human"],[["The Empire Strikes Back","Revenge of the Sith","Return of the Jedi","A New Hope","The Force Awakens"],["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","A New Hope"],["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","A New Hope","The Force Awakens"],["The Empire Strikes Back","Revenge of the Sith","Return of the Jedi","A New Hope"],["The Empire Strikes Back","Revenge of the Sith","Return of the Jedi","A New Hope","The Force Awakens"],["Attack of the Clones","Revenge of the Sith","A New Hope"],["Attack of the Clones","Revenge of the Sith","A New Hope"],"A New Hope","A New Hope",["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","A New Hope"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Revenge of the Sith","A New Hope"],["The Empire Strikes Back","Revenge of the Sith","Return of the Jedi","A New Hope","The Force Awakens"],["The Empire Strikes Back","Return of the Jedi","A New Hope","The Force Awakens"],"A New Hope",["The Phantom Menace","Return of the Jedi","A New Hope"],["The Empire Strikes Back","Return of the Jedi","A New Hope"],"A New Hope",["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi"],["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi"],["The Empire Strikes Back","Attack of the Clones","Return of the Jedi"],"The Empire Strikes Back","The Empire Strikes Back",["The Empire Strikes Back","Return of the Jedi"],"The Empire Strikes Back",["Return of the Jedi","The Force Awakens"],"Return of the Jedi","Return of the Jedi","Return of the Jedi","Return of the Jedi","The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],"The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","Return of the Jedi",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],"The Phantom Menace","The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],"The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace"],"Attack of the Clones","Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","The Phantom Menace",["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],"Revenge of the Sith","Revenge of the Sith",["Revenge of the Sith","A New Hope"],["Attack of the Clones","Revenge of the Sith"],"Revenge of the Sith","The Force Awakens","The Force Awakens","The Force Awakens","The Force Awakens","The Force Awakens",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"]],[["Snowspeeder","Imperial Speeder Bike"],[],[],[],"Imperial Speeder Bike",[],[],[],[],"Tribubble bongo",["Zephyr-G swoop bike","XJ-6 airspeeder"],[],"AT-ST",[],[],[],"Snowspeeder",[],[],[],[],[],[],[],[],[],[],[],[],[],"Tribubble bongo",[],[],[],[],[],[],[],[],[],[],"Sith speeder",[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],"Flitknot speeder",[],[],"Koro-2 Exodrive airspeeder",[],[],[],[],[],[],[],[],[],"Tsmeu-6 personal wheel bike",[],[],[],[],[],[],[],[],[],[]],[["X-wing","Imperial shuttle"],[],[],"TIE Advanced x1",[],[],[],[],"X-wing",["Jedi starfighter","Trade Federation cruiser","Naboo star skiff","Jedi Interceptor","Belbullab-22 starfighter"],["Trade Federation cruiser","Jedi Interceptor","Naboo fighter"],[],["Millennium Falcon","Imperial shuttle"],["Millennium Falcon","Imperial shuttle"],[],[],"X-wing","X-wing",[],[],"Slave 1",[],[],"Millennium Falcon",[],[],[],"A-wing",[],"Millennium Falcon",[],[],[],[],[],[],"Naboo Royal Starship",[],[],[],[],"Scimitar",[],[],[],[],[],[],[],[],[],[],[],[],"Jedi starfighter",[],"Naboo fighter",[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],"Belbullab-22 starfighter",[],[],[],[],[],[],"T-70 X-wing fighter",[],[],["H-type Nubian yacht","Naboo star skiff","Naboo fighter"]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>height<\/th>\n      <th>mass<\/th>\n      <th>hair_color<\/th>\n      <th>skin_color<\/th>\n      <th>eye_color<\/th>\n      <th>birth_year<\/th>\n      <th>sex<\/th>\n      <th>gender<\/th>\n      <th>homeworld<\/th>\n      <th>species<\/th>\n      <th>films<\/th>\n      <th>vehicles<\/th>\n      <th>starships<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e9ad33cbd557bde132ef" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e9ad33cbd557bde132ef">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87"],["Luke Skywalker","C-3PO","R2-D2","Darth Vader","Leia Organa","Owen Lars","Beru Whitesun lars","R5-D4","Biggs Darklighter","Obi-Wan Kenobi","Anakin Skywalker","Wilhuff Tarkin","Chewbacca","Han Solo","Greedo","Jabba Desilijic Tiure","Wedge Antilles","Jek Tono Porkins","Yoda","Palpatine","Boba Fett","IG-88","Bossk","Lando Calrissian","Lobot","Ackbar","Mon Mothma","Arvel Crynyd","Wicket Systri Warrick","Nien Nunb","Qui-Gon Jinn","Nute Gunray","Finis Valorum","Jar Jar Binks","Roos Tarpals","Rugor Nass","Ric Olié","Watto","Sebulba","Quarsh Panaka","Shmi Skywalker","Darth Maul","Bib Fortuna","Ayla Secura","Dud Bolt","Gasgano","Ben Quadinaros","Mace Windu","Ki-Adi-Mundi","Kit Fisto","Eeth Koth","Adi Gallia","Saesee Tiin","Yarael Poof","Plo Koon","Mas Amedda","Gregar Typho","Cordé","Cliegg Lars","Poggle the Lesser","Luminara Unduli","Barriss Offee","Dormé","Dooku","Bail Prestor Organa","Jango Fett","Zam Wesell","Dexter Jettster","Lama Su","Taun We","Jocasta Nu","Ratts Tyerell","R4-P17","Wat Tambor","San Hill","Shaak Ti","Grievous","Tarfful","Raymus Antilles","Sly Moore","Tion Medon","Finn","Rey","Poe Dameron","BB8","Captain Phasma","Padmé Amidala"],[172,167,96,202,150,178,165,97,183,182,188,180,228,180,173,175,170,180,66,170,183,200,190,177,175,180,150,null,88,160,193,191,170,196,224,206,183,137,112,183,163,175,180,178,94,122,163,188,198,196,171,184,188,264,188,196,185,157,183,183,170,166,165,193,191,183,168,198,229,213,167,79,96,193,191,178,216,234,188,178,206,null,null,null,null,null,165],[77,75,32,136,49,120,75,32,84,77,84,null,112,80,74,1358,77,110,17,75,78.2,140,113,79,79,83,null,null,20,68,89,90,null,66,82,null,null,null,40,null,null,80,null,55,45,null,65,84,82,87,null,50,null,null,80,null,85,null,null,80,56.2,50,null,80,null,79,55,102,88,null,null,15,null,48,null,57,159,136,79,48,80,null,null,null,null,null,45],["blond",null,null,"none","brown","brown, grey","brown",null,"black","auburn, white","blond","auburn, grey","brown","brown",null,null,"brown","brown","white","grey","black","none","none","black","none","none","auburn","brown","brown","none","brown","none","blond","none","none","none","brown","black","none","black","black","none","none","none","none","none","none","none","white","none","black","none","none","none","none","none","black","brown","brown","none","black","black","brown","white","black","black","blonde","none","none","none","white","none","none","none","none","none","none","brown","brown","none","none","black","brown","brown","none","unknown","brown"],["fair","gold","white, blue","white","light","light","light","white, red","light","fair","fair","fair","unknown","fair","green","green-tan, brown","fair","fair","green","pale","fair","metal","green","dark","light","brown mottle","fair","fair","brown","grey","fair","mottled green","fair","orange","grey","green","fair","blue, grey","grey, red","dark","fair","red","pale","blue","blue, grey","white, blue","grey, green, yellow","dark","pale","green","brown","dark","pale","white","orange","blue","dark","light","fair","green","yellow","yellow","light","fair","tan","tan","fair, green, yellow","brown","grey","grey","fair","grey, blue","silver, red","green, grey","grey","red, blue, white","brown, white","brown","light","pale","grey","dark","light","light","none","unknown","light"],["blue","yellow","red","yellow","brown","blue","blue","red","brown","blue-gray","blue","blue","blue","brown","black","orange","hazel","blue","brown","yellow","brown","red","red","brown","blue","orange","blue","brown","brown","black","blue","red","blue","orange","orange","orange","blue","yellow","orange","brown","brown","yellow","pink","hazel","yellow","black","orange","brown","yellow","black","brown","blue","orange","yellow","black","blue","brown","brown","blue","yellow","blue","blue","brown","brown","brown","brown","yellow","yellow","black","black","blue","unknown","red, blue","unknown","gold","black","green, yellow","blue","brown","white","black","dark","hazel","brown","black","unknown","brown"],[19,112,33,41.9,19,52,47,null,24,57,41.9,64,200,29,44,600,21,null,896,82,31.5,15,53,31,37,41,48,null,8,null,92,null,91,52,null,null,null,null,null,62,72,54,null,48,null,null,null,72,92,null,null,null,null,null,22,null,null,null,82,null,58,40,null,102,67,66,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,46],["male","none","none","male","female","male","female","none","male","male","male","male","male","male","male","hermaphroditic","male","male","male","male","male","none","male","male","male","male","female","male","male","male","male","male","male","male","male","male",null,"male","male",null,"female","male","male","female","male","male","male","male","male","male","male","female","male","male","male","male","male","female","male","male","female","female","female","male","male","male","female","male","male","female","female","male","none","male","male","female","male","male","male",null,"male","male","female","male","none",null,"female"],["masculine","masculine","masculine","masculine","feminine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine",null,"masculine","masculine",null,"feminine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","feminine","feminine","feminine","masculine","masculine","masculine","feminine","masculine","masculine","feminine","feminine","masculine","feminine","masculine","masculine","feminine","masculine","masculine","masculine",null,"masculine","masculine","feminine","masculine","masculine",null,"feminine"],["Tatooine","Tatooine","Naboo","Tatooine","Alderaan","Tatooine","Tatooine","Tatooine","Tatooine","Stewjon","Tatooine","Eriadu","Kashyyyk","Corellia","Rodia","Nal Hutta","Corellia","Bestine IV",null,"Naboo","Kamino",null,"Trandosha","Socorro","Bespin","Mon Cala","Chandrila",null,"Endor","Sullust",null,"Cato Neimoidia","Coruscant","Naboo","Naboo","Naboo","Naboo","Toydaria","Malastare","Naboo","Tatooine","Dathomir","Ryloth","Ryloth","Vulpter","Troiken","Tund","Haruun Kal","Cerea","Glee Anselm","Iridonia","Coruscant","Iktotch","Quermia","Dorin","Champala","Naboo","Naboo","Tatooine","Geonosis","Mirial","Mirial","Naboo","Serenno","Alderaan","Concord Dawn","Zolan","Ojom","Kamino","Kamino","Coruscant","Aleen Minor",null,"Skako","Muunilinst","Shili","Kalee","Kashyyyk","Alderaan","Umbara","Utapau",null,null,null,null,null,"Naboo"],["Human","Droid","Droid","Human","Human","Human","Human","Droid","Human","Human","Human","Human","Wookiee","Human","Rodian","Hutt","Human","Human","Yoda's species","Human","Human","Droid","Trandoshan","Human","Human","Mon Calamari","Human","Human","Ewok","Sullustan","Human","Neimodian","Human","Gungan","Gungan","Gungan",null,"Toydarian","Dug",null,"Human","Zabrak","Twi'lek","Twi'lek","Vulptereen","Xexto","Toong","Human","Cerean","Nautolan","Zabrak","Tholothian","Iktotchi","Quermian","Kel Dor","Chagrian","Human","Human","Human","Geonosian","Mirialan","Mirialan","Human","Human","Human","Human","Clawdite","Besalisk","Kaminoan","Kaminoan","Human","Aleena","Droid","Skakoan","Muun","Togruta","Kaleesh","Wookiee","Human",null,"Pau'an","Human","Human","Human","Droid",null,"Human"],[["The Empire Strikes Back","Revenge of the Sith","Return of the Jedi","A New Hope","The Force Awakens"],["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","A New Hope"],["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","A New Hope","The Force Awakens"],["The Empire Strikes Back","Revenge of the Sith","Return of the Jedi","A New Hope"],["The Empire Strikes Back","Revenge of the Sith","Return of the Jedi","A New Hope","The Force Awakens"],["Attack of the Clones","Revenge of the Sith","A New Hope"],["Attack of the Clones","Revenge of the Sith","A New Hope"],"A New Hope","A New Hope",["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi","A New Hope"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Revenge of the Sith","A New Hope"],["The Empire Strikes Back","Revenge of the Sith","Return of the Jedi","A New Hope","The Force Awakens"],["The Empire Strikes Back","Return of the Jedi","A New Hope","The Force Awakens"],"A New Hope",["The Phantom Menace","Return of the Jedi","A New Hope"],["The Empire Strikes Back","Return of the Jedi","A New Hope"],"A New Hope",["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi"],["The Empire Strikes Back","Attack of the Clones","The Phantom Menace","Revenge of the Sith","Return of the Jedi"],["The Empire Strikes Back","Attack of the Clones","Return of the Jedi"],"The Empire Strikes Back","The Empire Strikes Back",["The Empire Strikes Back","Return of the Jedi"],"The Empire Strikes Back",["Return of the Jedi","The Force Awakens"],"Return of the Jedi","Return of the Jedi","Return of the Jedi","Return of the Jedi","The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],"The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace"],"The Phantom Menace","Return of the Jedi",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],"The Phantom Menace","The Phantom Menace","The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],"The Phantom Menace",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"],["Attack of the Clones","The Phantom Menace"],"Attack of the Clones","Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","Attack of the Clones","The Phantom Menace",["Attack of the Clones","Revenge of the Sith"],"Attack of the Clones","Attack of the Clones",["Attack of the Clones","Revenge of the Sith"],"Revenge of the Sith","Revenge of the Sith",["Revenge of the Sith","A New Hope"],["Attack of the Clones","Revenge of the Sith"],"Revenge of the Sith","The Force Awakens","The Force Awakens","The Force Awakens","The Force Awakens","The Force Awakens",["Attack of the Clones","The Phantom Menace","Revenge of the Sith"]],[["Snowspeeder","Imperial Speeder Bike"],[],[],[],"Imperial Speeder Bike",[],[],[],[],"Tribubble bongo",["Zephyr-G swoop bike","XJ-6 airspeeder"],[],"AT-ST",[],[],[],"Snowspeeder",[],[],[],[],[],[],[],[],[],[],[],[],[],"Tribubble bongo",[],[],[],[],[],[],[],[],[],[],"Sith speeder",[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],"Flitknot speeder",[],[],"Koro-2 Exodrive airspeeder",[],[],[],[],[],[],[],[],[],"Tsmeu-6 personal wheel bike",[],[],[],[],[],[],[],[],[],[]],[["X-wing","Imperial shuttle"],[],[],"TIE Advanced x1",[],[],[],[],"X-wing",["Jedi starfighter","Trade Federation cruiser","Naboo star skiff","Jedi Interceptor","Belbullab-22 starfighter"],["Trade Federation cruiser","Jedi Interceptor","Naboo fighter"],[],["Millennium Falcon","Imperial shuttle"],["Millennium Falcon","Imperial shuttle"],[],[],"X-wing","X-wing",[],[],"Slave 1",[],[],"Millennium Falcon",[],[],[],"A-wing",[],"Millennium Falcon",[],[],[],[],[],[],"Naboo Royal Starship",[],[],[],[],"Scimitar",[],[],[],[],[],[],[],[],[],[],[],[],"Jedi starfighter",[],"Naboo fighter",[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],"Belbullab-22 starfighter",[],[],[],[],[],[],"T-70 X-wing fighter",[],[],["H-type Nubian yacht","Naboo star skiff","Naboo fighter"]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>height<\/th>\n      <th>mass<\/th>\n      <th>hair_color<\/th>\n      <th>skin_color<\/th>\n      <th>eye_color<\/th>\n      <th>birth_year<\/th>\n      <th>sex<\/th>\n      <th>gender<\/th>\n      <th>homeworld<\/th>\n      <th>species<\/th>\n      <th>films<\/th>\n      <th>vehicles<\/th>\n      <th>starships<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 ```
 
-### Other tools for taking a quick look at data 
+### Other tools for taking a quick look at data
 
 #### `vis_dat()`
 
@@ -928,6 +926,13 @@ The `vis_dat()` function from the `visdat` package, gives a visual summary that 
 
 ```r
 visdat::vis_dat(df.starwars)
+```
+
+```
+Warning: `gather_()` was deprecated in tidyr 1.2.0.
+Please use `gather()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="04-data_wrangling1_files/figure-html/unnamed-chunk-35-1.png" width="672" />
@@ -1011,7 +1016,7 @@ df.starwars %>%
 
 Once we've taken a look at the data, the next step would be to visualize relationships between variables of interest. 
 
-## Wrangling data 
+## Wrangling data
 
 We use the functions in the package `dplyr` to manipulate our data. 
 
@@ -1026,19 +1031,19 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 66 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 <NA>       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 <NA>       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 6 R5-D4     97    32 <NA>       white, red red             NA   none  mascu…
- 7 Bigg…    183    84 black      light      brown           24   male  mascu…
- 8 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
- 9 Anak…    188    84 blond      fair       blue            41.9 male  mascu…
-10 Wilh…    180    NA auburn, g… fair       blue            64   male  mascu…
+# A tibble: 66 × 14
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+ 1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO       167    75 <NA>       gold       yellow         112   none  mascu…
+ 3 R2-D2        96    32 <NA>       white, bl… red             33   none  mascu…
+ 4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
+ 6 R5-D4        97    32 <NA>       white, red red             NA   none  mascu…
+ 7 Biggs D…    183    84 black      light      brown           24   male  mascu…
+ 8 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+ 9 Anakin …    188    84 blond      fair       blue            41.9 male  mascu…
+10 Wilhuff…    180    NA auburn, g… fair       blue            64   male  mascu…
 # … with 56 more rows, and 5 more variables: homeworld <chr>, species <chr>,
 #   films <list>, vehicles <list>, starships <list>
 ```
@@ -1054,19 +1059,19 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 27 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
- 1 Dart…    202 136   none       white      yellow          41.9 male  mascu…
- 2 Bigg…    183  84   black      light      brown           24   male  mascu…
- 3 Obi-…    182  77   auburn, w… fair       blue-gray       57   male  mascu…
- 4 Anak…    188  84   blond      fair       blue            41.9 male  mascu…
- 5 Chew…    228 112   brown      unknown    blue           200   male  mascu…
- 6 Boba…    183  78.2 black      fair       brown           31.5 male  mascu…
- 7 IG-88    200 140   none       metal      red             15   none  mascu…
- 8 Bossk    190 113   none       green      red             53   male  mascu…
- 9 Qui-…    193  89   brown      fair       blue            92   male  mascu…
-10 Nute…    191  90   none       mottled g… red             NA   male  mascu…
+# A tibble: 27 × 14
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+ 1 Darth V…    202 136   none       white      yellow          41.9 male  mascu…
+ 2 Biggs D…    183  84   black      light      brown           24   male  mascu…
+ 3 Obi-Wan…    182  77   auburn, w… fair       blue-gray       57   male  mascu…
+ 4 Anakin …    188  84   blond      fair       blue            41.9 male  mascu…
+ 5 Chewbac…    228 112   brown      unknown    blue           200   male  mascu…
+ 6 Boba Fe…    183  78.2 black      fair       brown           31.5 male  mascu…
+ 7 IG-88       200 140   none       metal      red             15   none  mascu…
+ 8 Bossk       190 113   none       green      red             53   male  mascu…
+ 9 Qui-Gon…    193  89   brown      fair       blue            92   male  mascu…
+10 Nute Gu…    191  90   none       mottled g… red             NA   male  mascu…
 # … with 17 more rows, and 5 more variables: homeworld <chr>, species <chr>,
 #   films <list>, vehicles <list>, starships <list>
 ```
@@ -1078,27 +1083,28 @@ You can use `,` and `&` interchangeably in `filter()`. Make sure to use parenthe
 
 ```r
 df.starwars %>% 
-  filter((skin_color %in% c("dark", "pale") | gender == "hermaphrodite") & height > 170)
+  filter((skin_color %in% c("dark", "pale") | sex == "hermaphroditic") & height > 170)
 ```
 
 ```
-# A tibble: 9 x 14
-  name  height  mass hair_color skin_color eye_color birth_year sex   gender
-  <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
-1 Land…    177    79 black      dark       brown             31 male  mascu…
-2 Quar…    183    NA black      dark       brown             62 <NA>  <NA>  
-3 Bib …    180    NA none       pale       pink              NA male  mascu…
-4 Mace…    188    84 none       dark       brown             72 male  mascu…
-5 Ki-A…    198    82 white      pale       yellow            92 male  mascu…
-6 Adi …    184    50 none       dark       blue              NA fema… femin…
-7 Saes…    188    NA none       pale       orange            NA male  mascu…
-8 Greg…    185    85 black      dark       brown             NA male  mascu…
-9 Sly …    178    48 none       pale       white             NA <NA>  <NA>  
+# A tibble: 10 × 14
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+ 1 Jabba D…    175  1358 <NA>       green-tan… orange           600 herm… mascu…
+ 2 Lando C…    177    79 black      dark       brown             31 male  mascu…
+ 3 Quarsh …    183    NA black      dark       brown             62 <NA>  <NA>  
+ 4 Bib For…    180    NA none       pale       pink              NA male  mascu…
+ 5 Mace Wi…    188    84 none       dark       brown             72 male  mascu…
+ 6 Ki-Adi-…    198    82 white      pale       yellow            92 male  mascu…
+ 7 Adi Gal…    184    50 none       dark       blue              NA fema… femin…
+ 8 Saesee …    188    NA none       pale       orange            NA male  mascu…
+ 9 Gregar …    185    85 black      dark       brown             NA male  mascu…
+10 Sly Moo…    178    48 none       pale       white             NA <NA>  <NA>  
 # … with 5 more variables: homeworld <chr>, species <chr>, films <list>,
 #   vehicles <list>, starships <list>
 ```
 
-The starwars characters that have either a `"dark"` or a `"pale"` skin tone, or whose gender is `"hermaphrodite"`, and whose height is at least `170` cm. The `%in%` operator is useful when there are multiple options. Instead of `skin_color %in% c("dark", "pale")`, I could have also written `skin_color == "dark" | skin_color == "pale"` but this gets cumbersome as the number of options increases. 
+The starwars characters that have either a `"dark"` or a `"pale"` skin tone, or whose sex is `"hermaphroditic"`, and whose height is at least `170` cm. The `%in%` operator is useful when there are multiple options. Instead of `skin_color %in% c("dark", "pale")`, I could have also written `skin_color == "dark" | skin_color == "pale"` but this gets cumbersome as the number of options increases. 
 
 ### `arrange()`
 
@@ -1111,19 +1117,19 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
- 1 Mon …    150  NA   auburn     fair       blue            48   fema… femin…
- 2 Wilh…    180  NA   auburn, g… fair       blue            64   male  mascu…
- 3 Obi-…    182  77   auburn, w… fair       blue-gray       57   male  mascu…
- 4 Bail…    191  NA   black      tan        brown           67   male  mascu…
- 5 Greg…    185  85   black      dark       brown           NA   male  mascu…
- 6 Bigg…    183  84   black      light      brown           24   male  mascu…
- 7 Boba…    183  78.2 black      fair       brown           31.5 male  mascu…
- 8 Quar…    183  NA   black      dark       brown           62   <NA>  <NA>  
- 9 Jang…    183  79   black      tan        brown           66   male  mascu…
-10 Land…    177  79   black      dark       brown           31   male  mascu…
+# A tibble: 87 × 14
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+ 1 Mon Mot…    150  NA   auburn     fair       blue            48   fema… femin…
+ 2 Wilhuff…    180  NA   auburn, g… fair       blue            64   male  mascu…
+ 3 Obi-Wan…    182  77   auburn, w… fair       blue-gray       57   male  mascu…
+ 4 Bail Pr…    191  NA   black      tan        brown           67   male  mascu…
+ 5 Gregar …    185  85   black      dark       brown           NA   male  mascu…
+ 6 Biggs D…    183  84   black      light      brown           24   male  mascu…
+ 7 Boba Fe…    183  78.2 black      fair       brown           31.5 male  mascu…
+ 8 Quarsh …    183  NA   black      dark       brown           62   <NA>  <NA>  
+ 9 Jango F…    183  79   black      tan        brown           66   male  mascu…
+10 Lando C…    177  79   black      dark       brown           31   male  mascu…
 # … with 77 more rows, and 5 more variables: homeworld <chr>, species <chr>,
 #   films <list>, vehicles <list>, starships <list>
 ```
@@ -1142,7 +1148,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 14
+# A tibble: 87 × 14
    person height mass_kg hair_color skin_color eye_color birth_year sex   gender
    <chr>   <int>   <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
  1 Luke …    172      77 blond      fair       blue            19   male  mascu…
@@ -1170,19 +1176,19 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 14
-   NAME  HEIGHT  MASS HAIR_COLOR SKIN_COLOR EYE_COLOR BIRTH_YEAR SEX   GENDER
-   <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 <NA>       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 <NA>       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 <NA>       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# A tibble: 87 × 14
+   NAME     HEIGHT  MASS HAIR_COLOR SKIN_COLOR EYE_COLOR BIRTH_YEAR SEX   GENDER
+   <chr>     <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+ 1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO       167    75 <NA>       gold       yellow         112   none  mascu…
+ 3 R2-D2        96    32 <NA>       white, bl… red             33   none  mascu…
+ 4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia Or…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4        97    32 <NA>       white, red red             NA   none  mascu…
+ 9 Biggs D…    183    84 black      light      brown           24   male  mascu…
+10 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
 # … with 77 more rows, and 5 more variables: HOMEWORLD <chr>, SPECIES <chr>,
 #   FILMS <list>, VEHICLES <list>, STARSHIPS <list>
 ```
@@ -1200,19 +1206,19 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 14
-   species name  height  mass hair_color skin_color eye_color birth_year sex  
-   <chr>   <chr>  <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr>
- 1 Human   Luke…    172    77 blond      fair       blue            19   male 
- 2 Droid   C-3PO    167    75 <NA>       gold       yellow         112   none 
- 3 Droid   R2-D2     96    32 <NA>       white, bl… red             33   none 
- 4 Human   Dart…    202   136 none       white      yellow          41.9 male 
- 5 Human   Leia…    150    49 brown      light      brown           19   fema…
- 6 Human   Owen…    178   120 brown, gr… light      blue            52   male 
- 7 Human   Beru…    165    75 brown      light      blue            47   fema…
- 8 Droid   R5-D4     97    32 <NA>       white, red red             NA   none 
- 9 Human   Bigg…    183    84 black      light      brown           24   male 
-10 Human   Obi-…    182    77 auburn, w… fair       blue-gray       57   male 
+# A tibble: 87 × 14
+   species name    height  mass hair_color skin_color eye_color birth_year sex  
+   <chr>   <chr>    <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr>
+ 1 Human   Luke S…    172    77 blond      fair       blue            19   male 
+ 2 Droid   C-3PO      167    75 <NA>       gold       yellow         112   none 
+ 3 Droid   R2-D2       96    32 <NA>       white, bl… red             33   none 
+ 4 Human   Darth …    202   136 none       white      yellow          41.9 male 
+ 5 Human   Leia O…    150    49 brown      light      brown           19   fema…
+ 6 Human   Owen L…    178   120 brown, gr… light      blue            52   male 
+ 7 Human   Beru W…    165    75 brown      light      blue            47   fema…
+ 8 Droid   R5-D4       97    32 <NA>       white, red red             NA   none 
+ 9 Human   Biggs …    183    84 black      light      brown           24   male 
+10 Human   Obi-Wa…    182    77 auburn, w… fair       blue-gray       57   male 
 # … with 77 more rows, and 5 more variables: gender <chr>, homeworld <chr>,
 #   films <list>, vehicles <list>, starships <list>
 ```
@@ -1226,24 +1232,24 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 14
-   name  species height  mass hair_color skin_color eye_color birth_year sex  
-   <chr> <chr>    <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr>
- 1 Luke… Human      172    77 blond      fair       blue            19   male 
- 2 C-3PO Droid      167    75 <NA>       gold       yellow         112   none 
- 3 R2-D2 Droid       96    32 <NA>       white, bl… red             33   none 
- 4 Dart… Human      202   136 none       white      yellow          41.9 male 
- 5 Leia… Human      150    49 brown      light      brown           19   fema…
- 6 Owen… Human      178   120 brown, gr… light      blue            52   male 
- 7 Beru… Human      165    75 brown      light      blue            47   fema…
- 8 R5-D4 Droid       97    32 <NA>       white, red red             NA   none 
- 9 Bigg… Human      183    84 black      light      brown           24   male 
-10 Obi-… Human      182    77 auburn, w… fair       blue-gray       57   male 
+# A tibble: 87 × 14
+   name    species height  mass hair_color skin_color eye_color birth_year sex  
+   <chr>   <chr>    <int> <dbl> <chr>      <chr>      <chr>          <dbl> <chr>
+ 1 Luke S… Human      172    77 blond      fair       blue            19   male 
+ 2 C-3PO   Droid      167    75 <NA>       gold       yellow         112   none 
+ 3 R2-D2   Droid       96    32 <NA>       white, bl… red             33   none 
+ 4 Darth … Human      202   136 none       white      yellow          41.9 male 
+ 5 Leia O… Human      150    49 brown      light      brown           19   fema…
+ 6 Owen L… Human      178   120 brown, gr… light      blue            52   male 
+ 7 Beru W… Human      165    75 brown      light      blue            47   fema…
+ 8 R5-D4   Droid       97    32 <NA>       white, red red             NA   none 
+ 9 Biggs … Human      183    84 black      light      brown           24   male 
+10 Obi-Wa… Human      182    77 auburn, w… fair       blue-gray       57   male 
 # … with 77 more rows, and 5 more variables: gender <chr>, homeworld <chr>,
 #   films <list>, vehicles <list>, starships <list>
 ```
 
-### `select()` 
+### `select()`
 
 `select()` allows us to select a subset of the columns in the data frame. 
 
@@ -1254,7 +1260,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 3
+# A tibble: 87 × 3
    name               height  mass
    <chr>               <int> <dbl>
  1 Luke Skywalker        172    77
@@ -1279,7 +1285,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 7
+# A tibble: 87 × 7
    name               height  mass hair_color    skin_color eye_color birth_year
    <chr>               <int> <dbl> <chr>         <chr>      <chr>          <dbl>
  1 Luke Skywalker        172    77 blond         fair       blue            19  
@@ -1306,7 +1312,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 3
+# A tibble: 87 × 3
    name               height species
    <chr>               <int> <chr>  
  1 Luke Skywalker        172 Human  
@@ -1331,7 +1337,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 6
+# A tibble: 87 × 6
    height  mass hair_color    skin_color  eye_color starships
     <int> <dbl> <chr>         <chr>       <chr>     <list>   
  1    172    77 blond         fair        blue      <chr [2]>
@@ -1356,7 +1362,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 4
+# A tibble: 87 × 4
    hair_color    skin_color  eye_color birth_year
    <chr>         <chr>       <chr>          <dbl>
  1 blond         fair        blue            19  
@@ -1379,7 +1385,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 3
+# A tibble: 87 × 3
    height hair_color    homeworld
     <int> <chr>         <chr>    
  1    172 blond         Tatooine 
@@ -1404,7 +1410,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 3
+# A tibble: 87 × 3
    person             height mass_kg
    <chr>               <int>   <dbl>
  1 Luke Skywalker        172      77
@@ -1431,7 +1437,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 3
+# A tibble: 87 × 3
    height  mass birth_year
     <int> <dbl>      <dbl>
  1    172    77       19  
@@ -1452,23 +1458,23 @@ The following selects all columns that are not numeric:
 
 ```r
 df.starwars %>% 
-  select(where(~ !is.numeric(.))) # selects all columns that are not numeric
+  select(where(fn = ~ !is.numeric(.))) # selects all columns that are not numeric
 ```
 
 ```
-# A tibble: 87 x 11
-   name  hair_color skin_color eye_color sex   gender homeworld species films
-   <chr> <chr>      <chr>      <chr>     <chr> <chr>  <chr>     <chr>   <lis>
- 1 Luke… blond      fair       blue      male  mascu… Tatooine  Human   <chr…
- 2 C-3PO <NA>       gold       yellow    none  mascu… Tatooine  Droid   <chr…
- 3 R2-D2 <NA>       white, bl… red       none  mascu… Naboo     Droid   <chr…
- 4 Dart… none       white      yellow    male  mascu… Tatooine  Human   <chr…
- 5 Leia… brown      light      brown     fema… femin… Alderaan  Human   <chr…
- 6 Owen… brown, gr… light      blue      male  mascu… Tatooine  Human   <chr…
- 7 Beru… brown      light      blue      fema… femin… Tatooine  Human   <chr…
- 8 R5-D4 <NA>       white, red red       none  mascu… Tatooine  Droid   <chr…
- 9 Bigg… black      light      brown     male  mascu… Tatooine  Human   <chr…
-10 Obi-… auburn, w… fair       blue-gray male  mascu… Stewjon   Human   <chr…
+# A tibble: 87 × 11
+   name     hair_color skin_color eye_color sex   gender homeworld species films
+   <chr>    <chr>      <chr>      <chr>     <chr> <chr>  <chr>     <chr>   <lis>
+ 1 Luke Sk… blond      fair       blue      male  mascu… Tatooine  Human   <chr>
+ 2 C-3PO    <NA>       gold       yellow    none  mascu… Tatooine  Droid   <chr>
+ 3 R2-D2    <NA>       white, bl… red       none  mascu… Naboo     Droid   <chr>
+ 4 Darth V… none       white      yellow    male  mascu… Tatooine  Human   <chr>
+ 5 Leia Or… brown      light      brown     fema… femin… Alderaan  Human   <chr>
+ 6 Owen La… brown, gr… light      blue      male  mascu… Tatooine  Human   <chr>
+ 7 Beru Wh… brown      light      blue      fema… femin… Tatooine  Human   <chr>
+ 8 R5-D4    <NA>       white, red red       none  mascu… Tatooine  Droid   <chr>
+ 9 Biggs D… black      light      brown     male  mascu… Tatooine  Human   <chr>
+10 Obi-Wan… auburn, w… fair       blue-gray male  mascu… Stewjon   Human   <chr>
 # … with 77 more rows, and 2 more variables: vehicles <list>, starships <list>
 ```
 
@@ -1483,19 +1489,19 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 11
-   name  hair_color skin_color eye_color sex   gender homeworld species films
-   <chr> <chr>      <chr>      <chr>     <chr> <chr>  <chr>     <chr>   <lis>
- 1 Luke… blond      fair       blue      male  mascu… Tatooine  Human   <chr…
- 2 C-3PO <NA>       gold       yellow    none  mascu… Tatooine  Droid   <chr…
- 3 R2-D2 <NA>       white, bl… red       none  mascu… Naboo     Droid   <chr…
- 4 Dart… none       white      yellow    male  mascu… Tatooine  Human   <chr…
- 5 Leia… brown      light      brown     fema… femin… Alderaan  Human   <chr…
- 6 Owen… brown, gr… light      blue      male  mascu… Tatooine  Human   <chr…
- 7 Beru… brown      light      blue      fema… femin… Tatooine  Human   <chr…
- 8 R5-D4 <NA>       white, red red       none  mascu… Tatooine  Droid   <chr…
- 9 Bigg… black      light      brown     male  mascu… Tatooine  Human   <chr…
-10 Obi-… auburn, w… fair       blue-gray male  mascu… Stewjon   Human   <chr…
+# A tibble: 87 × 11
+   name     hair_color skin_color eye_color sex   gender homeworld species films
+   <chr>    <chr>      <chr>      <chr>     <chr> <chr>  <chr>     <chr>   <lis>
+ 1 Luke Sk… blond      fair       blue      male  mascu… Tatooine  Human   <chr>
+ 2 C-3PO    <NA>       gold       yellow    none  mascu… Tatooine  Droid   <chr>
+ 3 R2-D2    <NA>       white, bl… red       none  mascu… Naboo     Droid   <chr>
+ 4 Darth V… none       white      yellow    male  mascu… Tatooine  Human   <chr>
+ 5 Leia Or… brown      light      brown     fema… femin… Alderaan  Human   <chr>
+ 6 Owen La… brown, gr… light      blue      male  mascu… Tatooine  Human   <chr>
+ 7 Beru Wh… brown      light      blue      fema… femin… Tatooine  Human   <chr>
+ 8 R5-D4    <NA>       white, red red       none  mascu… Tatooine  Droid   <chr>
+ 9 Biggs D… black      light      brown     male  mascu… Tatooine  Human   <chr>
+10 Obi-Wan… auburn, w… fair       blue-gray male  mascu… Stewjon   Human   <chr>
 # … with 77 more rows, and 2 more variables: vehicles <list>, starships <list>
 ```
 
@@ -1527,7 +1533,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 4
+# A tibble: 87 × 4
    name               height  mass   bmi
    <chr>               <dbl> <dbl> <dbl>
  1 Luke Skywalker       1.72    77  26.0
@@ -1557,7 +1563,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 3
+# A tibble: 87 × 3
    name               height height_categorical
    <chr>               <int> <chr>             
  1 Luke Skywalker        172 short             
@@ -1591,19 +1597,19 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 14
-   name  height[,1] mass[,1] hair_color skin_color eye_color birth_year[,1]
-   <chr>      <dbl>    <dbl> <chr>      <chr>      <chr>              <dbl>
- 1 Luke…    -0.0678  -0.120  blond      fair       blue              -0.443
- 2 C-3PO    -0.212   -0.132  <NA>       gold       yellow             0.158
- 3 R2-D2    -2.25    -0.385  <NA>       white, bl… red               -0.353
- 4 Dart…     0.795    0.228  none       white      yellow            -0.295
- 5 Leia…    -0.701   -0.285  brown      light      brown             -0.443
- 6 Owen…     0.105    0.134  brown, gr… light      blue              -0.230
- 7 Beru…    -0.269   -0.132  brown      light      blue              -0.262
- 8 R5-D4    -2.22    -0.385  <NA>       white, red red               NA    
- 9 Bigg…     0.249   -0.0786 black      light      brown             -0.411
-10 Obi-…     0.220   -0.120  auburn, w… fair       blue-gray         -0.198
+# A tibble: 87 × 14
+   name       height[,1] mass[,1] hair_color skin_color eye_color birth_year[,1]
+   <chr>           <dbl>    <dbl> <chr>      <chr>      <chr>              <dbl>
+ 1 Luke Skyw…    -0.0678  -0.120  blond      fair       blue              -0.443
+ 2 C-3PO         -0.212   -0.132  <NA>       gold       yellow             0.158
+ 3 R2-D2         -2.25    -0.385  <NA>       white, bl… red               -0.353
+ 4 Darth Vad…     0.795    0.228  none       white      yellow            -0.295
+ 5 Leia Orga…    -0.701   -0.285  brown      light      brown             -0.443
+ 6 Owen Lars      0.105    0.134  brown, gr… light      blue              -0.230
+ 7 Beru Whit…    -0.269   -0.132  brown      light      blue              -0.262
+ 8 R5-D4         -2.22    -0.385  <NA>       white, red red               NA    
+ 9 Biggs Dar…     0.249   -0.0786 black      light      brown             -0.411
+10 Obi-Wan K…     0.220   -0.120  auburn, w… fair       blue-gray         -0.198
 # … with 77 more rows, and 7 more variables: sex <chr>, gender <chr>,
 #   homeworld <chr>, species <chr>, films <list>, vehicles <list>,
 #   starships <list>
@@ -1627,7 +1633,7 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 7
+# A tibble: 87 × 7
    name         height height_z[,1]  mass mass_z[,1] birth_year birth_year_z[,1]
    <chr>         <int>        <dbl> <dbl>      <dbl>      <dbl>            <dbl>
  1 Luke Skywal…    172      -0.0678    77    -0.120        19             -0.443
@@ -1657,21 +1663,21 @@ df.starwars %>%
 ```
 
 ```
-# A tibble: 87 x 10
-   name  height height_z[,1] height_centered…  mass mass_z[,1] mass_centered[,…
-   <chr>  <int>        <dbl>            <dbl> <dbl>      <dbl>            <dbl>
- 1 Luke…    172      -0.0678            -2.36    77    -0.120             -20.3
- 2 C-3PO    167      -0.212             -7.36    75    -0.132             -22.3
- 3 R2-D2     96      -2.25             -78.4     32    -0.385             -65.3
- 4 Dart…    202       0.795             27.6    136     0.228              38.7
- 5 Leia…    150      -0.701            -24.4     49    -0.285             -48.3
- 6 Owen…    178       0.105              3.64   120     0.134              22.7
- 7 Beru…    165      -0.269             -9.36    75    -0.132             -22.3
- 8 R5-D4     97      -2.22             -77.4     32    -0.385             -65.3
- 9 Bigg…    183       0.249              8.64    84    -0.0786            -13.3
-10 Obi-…    182       0.220              7.64    77    -0.120             -20.3
+# A tibble: 87 × 10
+   name   height height_z[,1] height_centered…  mass mass_z[,1] mass_centered[,…
+   <chr>   <int>        <dbl>            <dbl> <dbl>      <dbl>            <dbl>
+ 1 Luke …    172      -0.0678            -2.36    77    -0.120             -20.3
+ 2 C-3PO     167      -0.212             -7.36    75    -0.132             -22.3
+ 3 R2-D2      96      -2.25             -78.4     32    -0.385             -65.3
+ 4 Darth…    202       0.795             27.6    136     0.228              38.7
+ 5 Leia …    150      -0.701            -24.4     49    -0.285             -48.3
+ 6 Owen …    178       0.105              3.64   120     0.134              22.7
+ 7 Beru …    165      -0.269             -9.36    75    -0.132             -22.3
+ 8 R5-D4      97      -2.22             -77.4     32    -0.385             -65.3
+ 9 Biggs…    183       0.249              8.64    84    -0.0786            -13.3
+10 Obi-W…    182       0.220              7.64    77    -0.120             -20.3
 # … with 77 more rows, and 3 more variables: birth_year <dbl>,
-#   birth_year_z[,1] <dbl>, birth_year_centered[,1] <dbl>
+#   birth_year_z <dbl[,1]>, birth_year_centered <dbl[,1]>
 ```
 
 Here, I've created z-scored and centered (i.e. only subtracted the mean but didn't divide by the standard deviation) versions of the `height`, `mass`, and `birth_year` columns in one go. 
@@ -1682,12 +1688,12 @@ You can use the `everything()` helper function if you want to apply a function t
 ```r
 df.starwars %>% 
   select(height, mass) %>%
-  mutate(across(everything(),
-                as.character)) # transform all columns to characters
+  mutate(across(.cols = everything(),
+                .fns = as.character)) # transform all columns to characters
 ```
 
 ```
-# A tibble: 87 x 2
+# A tibble: 87 × 2
    height mass 
    <chr>  <chr>
  1 172    77   
@@ -1712,23 +1718,24 @@ For example, the following code changes all the numeric columns to character col
 
 ```r
 df.starwars %>% 
-  mutate(across(where(~ is.numeric(.)), .fns = ~ as.character(.)))
+  mutate(across(.cols = where(~ is.numeric(.)),
+                .fns = ~ as.character(.)))
 ```
 
 ```
-# A tibble: 87 x 14
-   name  height mass  hair_color skin_color eye_color birth_year sex   gender
-   <chr> <chr>  <chr> <chr>      <chr>      <chr>     <chr>      <chr> <chr> 
- 1 Luke… 172    77    blond      fair       blue      19         male  mascu…
- 2 C-3PO 167    75    <NA>       gold       yellow    112        none  mascu…
- 3 R2-D2 96     32    <NA>       white, bl… red       33         none  mascu…
- 4 Dart… 202    136   none       white      yellow    41.9       male  mascu…
- 5 Leia… 150    49    brown      light      brown     19         fema… femin…
- 6 Owen… 178    120   brown, gr… light      blue      52         male  mascu…
- 7 Beru… 165    75    brown      light      blue      47         fema… femin…
- 8 R5-D4 97     32    <NA>       white, red red       <NA>       none  mascu…
- 9 Bigg… 183    84    black      light      brown     24         male  mascu…
-10 Obi-… 182    77    auburn, w… fair       blue-gray 57         male  mascu…
+# A tibble: 87 × 14
+   name     height mass  hair_color skin_color eye_color birth_year sex   gender
+   <chr>    <chr>  <chr> <chr>      <chr>      <chr>     <chr>      <chr> <chr> 
+ 1 Luke Sk… 172    77    blond      fair       blue      19         male  mascu…
+ 2 C-3PO    167    75    <NA>       gold       yellow    112        none  mascu…
+ 3 R2-D2    96     32    <NA>       white, bl… red       33         none  mascu…
+ 4 Darth V… 202    136   none       white      yellow    41.9       male  mascu…
+ 5 Leia Or… 150    49    brown      light      brown     19         fema… femin…
+ 6 Owen La… 178    120   brown, gr… light      blue      52         male  mascu…
+ 7 Beru Wh… 165    75    brown      light      blue      47         fema… femin…
+ 8 R5-D4    97     32    <NA>       white, red red       <NA>       none  mascu…
+ 9 Biggs D… 183    84    black      light      brown     24         male  mascu…
+10 Obi-Wan… 182    77    auburn, w… fair       blue-gray 57         male  mascu…
 # … with 77 more rows, and 5 more variables: homeworld <chr>, species <chr>,
 #   films <list>, vehicles <list>, starships <list>
 ```
@@ -1738,28 +1745,29 @@ Or we could round all the numeric columns to one digit:
 
 ```r
 df.starwars %>% 
-  mutate(across(where(~ is.numeric(.)), .fns = ~ round(., digits = 1)))
+  mutate(across(.cols = where(~ is.numeric(.)),
+                .fns = ~ round(., digits = 1)))
 ```
 
 ```
-# A tibble: 87 x 14
-   name  height  mass hair_color skin_color eye_color birth_year sex   gender
-   <chr>  <dbl> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
- 1 Luke…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO    167    75 <NA>       gold       yellow         112   none  mascu…
- 3 R2-D2     96    32 <NA>       white, bl… red             33   none  mascu…
- 4 Dart…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4     97    32 <NA>       white, red red             NA   none  mascu…
- 9 Bigg…    183    84 black      light      brown           24   male  mascu…
-10 Obi-…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# A tibble: 87 × 14
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   <chr>     <dbl> <dbl> <chr>      <chr>      <chr>          <dbl> <chr> <chr> 
+ 1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO       167    75 <NA>       gold       yellow         112   none  mascu…
+ 3 R2-D2        96    32 <NA>       white, bl… red             33   none  mascu…
+ 4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia Or…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4        97    32 <NA>       white, red red             NA   none  mascu…
+ 9 Biggs D…    183    84 black      light      brown           24   male  mascu…
+10 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
 # … with 77 more rows, and 5 more variables: homeworld <chr>, species <chr>,
 #   films <list>, vehicles <list>, starships <list>
 ```
 
-### Practice 3 
+### Practice 3
 
 Compute the body mass index for `masculine` characters who are `human`.
 
@@ -1773,9 +1781,9 @@ Compute the body mass index for `masculine` characters who are `human`.
 # write your code here 
 ```
 
-## Additional resources  
+## Additional resources
 
-### Cheatsheets 
+### Cheatsheets
 
 - [base R](figures/base-r.pdf) --> summary of how to use base R (we will mostly use the tidyverse but it's still important to know how to do things in base R)
 - [data transformation](figures/data-transformation.pdf) --> transforming data using `dplyr`
@@ -1796,7 +1804,7 @@ Compute the body mass index for `masculine` characters who are `human`.
 - [Chapters 9-15 in "R for Data Science"](https://r4ds.had.co.nz/wrangle-intro.html)
 - [Chapter 5 in "Data Visualization - A practical introduction"](http://socviz.co/workgeoms.html#workgeoms)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -1806,13 +1814,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1821,27 +1829,26 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.4        purrr_0.3.4       
- [5] readr_1.4.0        tidyr_1.1.2        tibble_3.0.6       ggplot2_3.3.3     
- [9] tidyverse_1.3.0    DT_0.17            summarytools_0.9.8 visdat_0.5.3      
-[13] skimr_2.1.2        knitr_1.31        
+ [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
+ [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    ggplot2_3.3.6  
+ [9] tidyverse_1.3.1 DT_0.22         visdat_0.5.3    skimr_2.1.4    
+[13] knitr_1.39     
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6         lubridate_1.7.9.2  ps_1.6.0           utf8_1.1.4        
- [5] assertthat_0.2.1   digest_0.6.27      R6_2.5.0           cellranger_1.1.0  
- [9] plyr_1.8.6         repr_1.1.3         backports_1.2.1    reprex_1.0.0      
-[13] evaluate_0.14      highr_0.8          httr_1.4.2         pillar_1.4.7      
-[17] rlang_0.4.10       readxl_1.3.1       rstudioapi_0.13    magick_2.6.0      
-[21] checkmate_2.0.0    rmarkdown_2.6      labeling_0.4.2     pander_0.6.3      
-[25] htmlwidgets_1.5.3  munsell_0.5.0      broom_0.7.3        compiler_4.0.3    
-[29] modelr_0.1.8       xfun_0.21          pkgconfig_2.0.3    base64enc_0.1-3   
-[33] htmltools_0.5.1.1  tcltk_4.0.3        tidyselect_1.1.0   bookdown_0.21     
-[37] codetools_0.2-18   matrixStats_0.57.0 fansi_0.4.2        withr_2.4.1       
-[41] crayon_1.4.1       dbplyr_2.0.0       grid_4.0.3         jsonlite_1.7.2    
-[45] gtable_0.3.0       lifecycle_1.0.0    DBI_1.1.1          magrittr_2.0.1    
-[49] scales_1.1.1       cli_2.3.0          stringi_1.5.3      farver_2.1.0      
-[53] pryr_0.1.4         fs_1.5.0           xml2_1.3.2         ellipsis_0.3.1    
-[57] rapportools_1.0    generics_0.1.0     vctrs_0.3.6        tools_4.0.3       
-[61] glue_1.4.2         crosstalk_1.1.1    hms_1.0.0          yaml_2.2.1        
-[65] colorspace_2.0-0   rvest_0.3.6        haven_2.3.1       
+ [1] lubridate_1.8.0   assertthat_0.2.1  digest_0.6.29     utf8_1.2.2       
+ [5] R6_2.5.1          cellranger_1.1.0  repr_1.1.4        backports_1.4.1  
+ [9] reprex_2.0.1      evaluate_0.15     highr_0.9         httr_1.4.3       
+[13] pillar_1.7.0      rlang_1.0.2       readxl_1.4.0      rstudioapi_0.13  
+[17] jquerylib_0.1.4   rmarkdown_2.14    labeling_0.4.2    htmlwidgets_1.5.4
+[21] munsell_0.5.0     broom_0.8.0       compiler_4.1.2    modelr_0.1.8     
+[25] xfun_0.30         pkgconfig_2.0.3   base64enc_0.1-3   htmltools_0.5.2  
+[29] tidyselect_1.1.2  bookdown_0.26     fansi_1.0.3       crayon_1.5.1     
+[33] tzdb_0.3.0        dbplyr_2.1.1      withr_2.5.0       grid_4.1.2       
+[37] jsonlite_1.8.0    gtable_0.3.0      lifecycle_1.0.1   DBI_1.1.2        
+[41] magrittr_2.0.3    scales_1.2.0      cli_3.3.0         stringi_1.7.6    
+[45] farver_2.1.0      fs_1.5.2          xml2_1.3.3        bslib_0.3.1      
+[49] ellipsis_0.3.2    generics_0.1.2    vctrs_0.4.1       tools_4.1.2      
+[53] glue_1.6.2        crosstalk_1.2.0   hms_1.1.1         fastmap_1.1.0    
+[57] yaml_2.3.5        colorspace_2.0-3  rvest_1.0.2       haven_2.5.0      
+[61] sass_0.4.1       
 ```

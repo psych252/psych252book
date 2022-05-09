@@ -12,7 +12,7 @@
 - Both continuous and categorical predictors. 
 - Interpreting interactions. 
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 
 ```r
@@ -39,7 +39,7 @@ opts_chunk$set(comment = "",
                fig.show = "hold")
 ```
 
-## Load data sets 
+## Load data sets
 
 Let's load the data sets that we'll explore in this class: 
 
@@ -47,13 +47,13 @@ Let's load the data sets that we'll explore in this class:
 ```r
 # credit data set
 df.credit = read_csv("data/credit.csv") %>% 
-  rename(index = X1) %>% 
+  rename(index = `...1`) %>% 
   clean_names()
 
 # advertising data set 
 df.ads = read_csv("data/advertising.csv") %>% 
-  clean_names() %>% 
-  rename(index = x1)
+  rename(index = `...1`) %>% 
+  clean_names()
 ```
 
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -111,11 +111,11 @@ df.ads = read_csv("data/advertising.csv") %>%
 </tbody>
 </table>
 
-## Multiple continuous variables 
+## Multiple continuous variables
 
 Let's take a look at a case where we have multiple continuous predictor variables. In this case, we want to make sure that our predictors are not too highly correlated with each other (as this makes the interpration of how much each variable explains the outcome difficult). So we first need to explore the pairwise correlations between variables. 
 
-### Explore correlations 
+### Explore correlations
 
 The `corrr` package is great for exploring correlations between variables. To find out more how `corrr` works, take a look at this vignette: 
 
@@ -373,7 +373,7 @@ fit_a %>%
 
 As we can see, the model almost explains 90% of the variance. That's very decent! 
 
-#### Visualizing the model fits 
+#### Visualizing the model fits
 
 Here is a way of visualizing how both tv ads and radio ads affect sales: 
 
@@ -777,7 +777,7 @@ mean of x mean of y
  480.3694  876.8250 
 ```
 
-### Dummy coding 
+### Dummy coding
 
 When we put a variable in a linear model that is coded as a character or as a factor, R automatically recodes this variable using dummy coding. It uses level 1 as the reference category for factors, or the value that comes first in the alphabet for characters. 
 
@@ -885,9 +885,9 @@ df.credit %>%
 ```
 
 ```
-# A tibble: 2 x 3
+# A tibble: 2 × 3
   student  mean    sd
-* <chr>   <dbl> <dbl>
+  <chr>   <dbl> <dbl>
 1 No       480.  439.
 2 Yes      877.  490 
 ```
@@ -1025,7 +1025,7 @@ Note that we just specified here that we want to have a linear model (via `geom_
 
 But is the interaction in the model worth it? That is, does a model that includes an interaction explain significantly more variance in the data, than a model that does not have an interaction. 
 
-### Hypothesis test 
+### Hypothesis test
 
 Let's check: 
 
@@ -1051,19 +1051,19 @@ Model 2: balance ~ income * student
 
 Nope, not worth it! The F-test comes out non-significant. 
 
-## Additional resources 
+## Additional resources
 
-### Datacamp 
+### Datacamp
 
 - [Statistical modeling 1](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
 - [Statistical modeling 2](https://www.datacamp.com/courses/statistical-modeling-in-r-part-2)
 - [Correlation and regression](https://www.datacamp.com/courses/correlation-and-regression)
 
-### Misc 
+### Misc
 
 - [Nice review of multiple regression in R](https://bookdown.org/roback/bookdown-bysh/ch-MLRreview.html)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -1073,13 +1073,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1088,41 +1088,44 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
- [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     tidyverse_1.3.0 
- [9] GGally_2.1.0     ggplot2_3.3.3    corrplot_0.84    corrr_0.4.3     
-[13] broom_0.7.3      janitor_2.1.0    kableExtra_1.3.1 knitr_1.31      
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
+ [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     tidyverse_1.3.1 
+ [9] GGally_2.1.2     ggplot2_3.3.6    corrplot_0.92    corrr_0.4.3     
+[13] broom_0.8.0      janitor_2.1.0    kableExtra_1.3.4 knitr_1.39      
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-151        fs_1.5.0            lubridate_1.7.9.2  
- [4] webshot_0.5.2       RColorBrewer_1.1-2  httr_1.4.2         
- [7] tools_4.0.3         backports_1.2.1     utf8_1.1.4         
-[10] R6_2.5.0            rpart_4.1-15        Hmisc_4.4-2        
-[13] DBI_1.1.1           mgcv_1.8-33         colorspace_2.0-0   
-[16] nnet_7.3-15         withr_2.4.1         gridExtra_2.3      
-[19] tidyselect_1.1.0    compiler_4.0.3      cli_2.3.0          
-[22] rvest_0.3.6         htmlTable_2.1.0     TSP_1.1-10         
-[25] xml2_1.3.2          labeling_0.4.2      bookdown_0.21      
-[28] checkmate_2.0.0     scales_1.1.1        digest_0.6.27      
-[31] foreign_0.8-81      rmarkdown_2.6       base64enc_0.1-3    
-[34] jpeg_0.1-8.1        pkgconfig_2.0.3     htmltools_0.5.1.1  
-[37] dbplyr_2.0.0        highr_0.8           htmlwidgets_1.5.3  
-[40] rlang_0.4.10        readxl_1.3.1        rstudioapi_0.13    
-[43] farver_2.1.0        generics_0.1.0      jsonlite_1.7.2     
-[46] magrittr_2.0.1      Formula_1.2-4       Matrix_1.3-2       
-[49] fansi_0.4.2         Rcpp_1.0.6          munsell_0.5.0      
-[52] lifecycle_1.0.0     stringi_1.5.3       yaml_2.2.1         
-[55] snakecase_0.11.0    plyr_1.8.6          grid_4.0.3         
-[58] crayon_1.4.1        lattice_0.20-41     haven_2.3.1        
-[61] splines_4.0.3       hms_1.0.0           ps_1.6.0           
-[64] pillar_1.4.7        codetools_0.2-18    reprex_1.0.0       
-[67] glue_1.4.2          evaluate_0.14       latticeExtra_0.6-29
-[70] data.table_1.13.6   modelr_0.1.8        vctrs_0.3.6        
-[73] png_0.1-7           foreach_1.5.1       cellranger_1.1.0   
-[76] gtable_0.3.0        reshape_0.8.8       assertthat_0.2.1   
-[79] xfun_0.21           survival_3.2-7      viridisLite_0.3.0  
-[82] seriation_1.2-9     iterators_1.0.13    registry_0.5-1     
-[85] cluster_2.1.0       ellipsis_0.3.1     
+ [1] nlme_3.1-157        fs_1.5.2            lubridate_1.8.0    
+ [4] bit64_4.0.5         webshot_0.5.3       RColorBrewer_1.1-3 
+ [7] httr_1.4.3          tools_4.1.2         backports_1.4.1    
+[10] bslib_0.3.1         utf8_1.2.2          R6_2.5.1           
+[13] rpart_4.1.16        Hmisc_4.7-0         DBI_1.1.2          
+[16] mgcv_1.8-40         colorspace_2.0-3    nnet_7.3-17        
+[19] withr_2.5.0         gridExtra_2.3       tidyselect_1.1.2   
+[22] bit_4.0.4           compiler_4.1.2      cli_3.3.0          
+[25] rvest_1.0.2         htmlTable_2.4.0     TSP_1.2-0          
+[28] xml2_1.3.3          labeling_0.4.2      bookdown_0.26      
+[31] sass_0.4.1          checkmate_2.1.0     scales_1.2.0       
+[34] systemfonts_1.0.4   digest_0.6.29       foreign_0.8-82     
+[37] rmarkdown_2.14      svglite_2.1.0       jpeg_0.1-9         
+[40] base64enc_0.1-3     pkgconfig_2.0.3     htmltools_0.5.2    
+[43] dbplyr_2.1.1        fastmap_1.1.0       highr_0.9          
+[46] htmlwidgets_1.5.4   rlang_1.0.2         readxl_1.4.0       
+[49] rstudioapi_0.13     jquerylib_0.1.4     farver_2.1.0       
+[52] generics_0.1.2      jsonlite_1.8.0      vroom_1.5.7        
+[55] magrittr_2.0.3      Formula_1.2-4       Matrix_1.4-1       
+[58] Rcpp_1.0.8.3        munsell_0.5.0       fansi_1.0.3        
+[61] lifecycle_1.0.1     stringi_1.7.6       yaml_2.3.5         
+[64] snakecase_0.11.0    plyr_1.8.7          grid_4.1.2         
+[67] parallel_4.1.2      crayon_1.5.1        lattice_0.20-45    
+[70] haven_2.5.0         splines_4.1.2       hms_1.1.1          
+[73] pillar_1.7.0        codetools_0.2-18    reprex_2.0.1       
+[76] glue_1.6.2          evaluate_0.15       latticeExtra_0.6-29
+[79] data.table_1.14.2   modelr_0.1.8        png_0.1-7          
+[82] vctrs_0.4.1         tzdb_0.3.0          foreach_1.5.2      
+[85] cellranger_1.1.0    gtable_0.3.0        reshape_0.8.9      
+[88] assertthat_0.2.1    xfun_0.30           survival_3.3-1     
+[91] viridisLite_0.4.0   seriation_1.3.5     iterators_1.0.14   
+[94] registry_0.5-1      cluster_2.1.3       ellipsis_0.3.2     
 ```
 
 ## References

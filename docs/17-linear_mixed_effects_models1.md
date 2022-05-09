@@ -1,6 +1,6 @@
 # Linear mixed effects models 1
 
-## Learning goals 
+## Learning goals
 
 - Understanding sources of dependence in data. 
   - fixed effects vs. random effects. 
@@ -8,7 +8,7 @@
 - Understanding the `lmer()` summary. 
 - Simulating data from an `lmer()`.
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 
 ```r
@@ -16,16 +16,6 @@ library("knitr")        # for knitting RMarkdown
 library("kableExtra")   # for making nice tables
 library("janitor")      # for cleaning column names
 library("broom.mixed")  # for tidying up linear models 
-```
-
-```
-## Warning in checkMatrixPackageVersion(): Package version inconsistency detected.
-## TMB was built with Matrix version 1.2.18
-## Current Matrix version is 1.3.2
-## Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package
-```
-
-```r
 library("patchwork")    # for making figure panels
 library("lme4")         # for linear mixed effects models
 library("tidyverse")    # for wrangling, plotting, etc. 
@@ -38,11 +28,9 @@ theme_set(theme_classic() + #set the theme
 
 opts_chunk$set(comment = "",
                fig.show = "hold")
-
-write_bib(.packages(), "packages.bib") 
 ```
 
-## Dependence 
+## Dependence
 
 Let's generate a data set in which two observations from the same participants are dependent, and then let's also shuffle this data set to see whether taking into account the dependence in the data matters. 
 
@@ -423,13 +411,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Yes, the likelihood of the data given the linear mixed effects model is significantly higher compared to its likelihood given the linear model. 
 
-## Additional resources 
+## Additional resources
 
-### Readings 
+### Readings
 
 - [Linear mixed effects models tutorial by Bodo Winter](https://arxiv.org/pdf/1308.5499.pdf)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -439,13 +427,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -454,30 +442,32 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1     stringr_1.4.0     dplyr_1.0.4       purrr_0.3.4      
- [5] readr_1.4.0       tidyr_1.1.2       tibble_3.0.6      ggplot2_3.3.3    
- [9] tidyverse_1.3.0   lme4_1.1-26       Matrix_1.3-2      patchwork_1.1.1  
-[13] broom.mixed_0.2.6 janitor_2.1.0     kableExtra_1.3.1  knitr_1.31       
+ [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.9        
+ [4] purrr_0.3.4         readr_2.1.2         tidyr_1.2.0        
+ [7] tibble_3.1.7        ggplot2_3.3.6       tidyverse_1.3.1    
+[10] lme4_1.1-29         Matrix_1.4-1        patchwork_1.1.1    
+[13] broom.mixed_0.2.9.4 janitor_2.1.0       kableExtra_1.3.4   
+[16] knitr_1.39         
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2         jsonlite_1.7.2     viridisLite_0.3.0  splines_4.0.3     
- [5] modelr_0.1.8       assertthat_0.2.1   statmod_1.4.35     highr_0.8         
- [9] cellranger_1.1.0   yaml_2.2.1         pillar_1.4.7       backports_1.2.1   
-[13] lattice_0.20-41    glue_1.4.2         digest_0.6.27      RColorBrewer_1.1-2
-[17] rvest_0.3.6        snakecase_0.11.0   minqa_1.2.4        colorspace_2.0-0  
-[21] htmltools_0.5.1.1  plyr_1.8.6         pkgconfig_2.0.3    broom_0.7.3       
-[25] haven_2.3.1        bookdown_0.21      scales_1.1.1       webshot_0.5.2     
-[29] mgcv_1.8-33        generics_0.1.0     farver_2.1.0       ellipsis_0.3.1    
-[33] withr_2.4.1        TMB_1.7.18         cli_2.3.0          magrittr_2.0.1    
-[37] crayon_1.4.1       readxl_1.3.1       evaluate_0.14      ps_1.6.0          
-[41] fs_1.5.0           nlme_3.1-151       MASS_7.3-53        xml2_1.3.2        
-[45] tools_4.0.3        hms_1.0.0          lifecycle_1.0.0    munsell_0.5.0     
-[49] reprex_1.0.0       compiler_4.0.3     rlang_0.4.10       grid_4.0.3        
-[53] nloptr_1.2.2.2     rstudioapi_0.13    labeling_0.4.2     rmarkdown_2.6     
-[57] boot_1.3-26        gtable_0.3.0       DBI_1.1.1          reshape2_1.4.4    
-[61] R6_2.5.0           lubridate_1.7.9.2  stringi_1.5.3      Rcpp_1.0.6        
-[65] vctrs_0.3.6        dbplyr_2.0.0       tidyselect_1.1.0   xfun_0.21         
-[69] coda_0.19-4       
+ [1] nlme_3.1-157       fs_1.5.2           lubridate_1.8.0    webshot_0.5.3     
+ [5] RColorBrewer_1.1-3 httr_1.4.3         tools_4.1.2        backports_1.4.1   
+ [9] bslib_0.3.1        utf8_1.2.2         R6_2.5.1           DBI_1.1.2         
+[13] mgcv_1.8-40        colorspace_2.0-3   withr_2.5.0        tidyselect_1.1.2  
+[17] compiler_4.1.2     cli_3.3.0          rvest_1.0.2        xml2_1.3.3        
+[21] labeling_0.4.2     bookdown_0.26      sass_0.4.1         scales_1.2.0      
+[25] systemfonts_1.0.4  digest_0.6.29      minqa_1.2.4        rmarkdown_2.14    
+[29] svglite_2.1.0      pkgconfig_2.0.3    htmltools_0.5.2    parallelly_1.31.1 
+[33] dbplyr_2.1.1       fastmap_1.1.0      highr_0.9          rlang_1.0.2       
+[37] readxl_1.4.0       rstudioapi_0.13    jquerylib_0.1.4    generics_0.1.2    
+[41] farver_2.1.0       jsonlite_1.8.0     magrittr_2.0.3     Rcpp_1.0.8.3      
+[45] munsell_0.5.0      fansi_1.0.3        lifecycle_1.0.1    furrr_0.3.0       
+[49] stringi_1.7.6      yaml_2.3.5         snakecase_0.11.0   MASS_7.3-57       
+[53] grid_4.1.2         parallel_4.1.2     listenv_0.8.0      crayon_1.5.1      
+[57] lattice_0.20-45    haven_2.5.0        splines_4.1.2      hms_1.1.1         
+[61] pillar_1.7.0       boot_1.3-28        codetools_0.2-18   reprex_2.0.1      
+[65] glue_1.6.2         evaluate_0.15      modelr_0.1.8       vctrs_0.4.1       
+[69] nloptr_2.0.0       tzdb_0.3.0         cellranger_1.1.0   gtable_0.3.0      
+[73] future_1.25.0      assertthat_0.2.1   xfun_0.30          broom_0.8.0       
+[77] viridisLite_0.4.0  globals_0.14.0     ellipsis_0.3.2    
 ```
-
-## References

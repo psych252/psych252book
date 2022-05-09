@@ -2,7 +2,7 @@
 
 In this lecture, we will lift our `ggplot2` skills to the next level! 
 
-## Learning objectives 
+## Learning objectives
 
 - Deciding what plot is appropriate for what kind of data.  
 - Customizing plots: Take a sad plot and make it better. 
@@ -18,7 +18,7 @@ Let's first install the new packages that you might not have yet.
 
 
 ```r
-install.packages(c("ggpol", "gganimate", "gapminder", "ggridges", "devtools", "png", "gifski", "patchwork"))
+install.packages(c("gganimate", "gapminder", "ggridges", "devtools", "png", "gifski", "patchwork"))
 ```
 
 Now, let's load the packages that we need for this chapter. 
@@ -27,7 +27,6 @@ Now, let's load the packages that we need for this chapter.
 ```r
 library("knitr")     # for rendering the RMarkdown file
 library("patchwork") # for making figure panels
-library("ggpol")     # for making fancy boxplots
 library("ggridges")  # for making joyplots 
 library("gganimate") # for making animations
 library("gapminder") # data available from Gapminder.org 
@@ -57,13 +56,13 @@ And let's load the diamonds data again.
 df.diamonds = diamonds
 ```
 
-## Overview of different plot types for different things 
+## Overview of different plot types for different things
 
 Different plots work best for different kinds of data. Let's take a look at some. 
 
-### Proportions 
+### Proportions
 
-#### Stacked bar charts 
+#### Stacked bar charts
 
 
 ```r
@@ -77,7 +76,7 @@ ggplot(data = df.diamonds,
 
 This bar chart shows for the different cuts (x-axis), the number of diamonds of different color. Stacked bar charts give a good general impression of the data. However, it's difficult to precisely compare different proportions. 
 
-#### Pie charts 
+#### Pie charts
 
 <div class="figure" style="text-align: center">
 <img src="figures/pie_chart.jpg" alt="Finally a pie chart that makes sense." width="90%" />
@@ -105,26 +104,29 @@ We can create a pie chart with `ggplot2` by changing the coordinate system using
 
 If we are interested in comparing proportions and we don't have too many data points, then tables are a good alternative to showing figures. 
 
-### Comparisons 
+### Comparisons
 
 Often we want to compare the data from many different conditions. And sometimes, it's also useful to get a sense for what the individual participant data look like. Here is a plot that achieves both. 
+
+#### Means and individual data points
 
 
 ```r
 ggplot(data = df.diamonds[1:150, ],
-       mapping = aes(x = color, y = price)) +
-  # individual data points (jittered horizontally)
-  geom_point(alpha = 0.2,
-             color = "blue",
-             position = position_jitter(width = 0.1, height = 0),
-             size = 2) +
+       mapping = aes(x = color,
+                     y = price)) +
   # means with confidence intervals 
   stat_summary(fun.data = "mean_cl_boot",
                geom = "pointrange",
                color = "black",
                fill = "yellow",
                shape = 21,
-               size = 1)
+               size = 1) + 
+  # individual data points (jittered horizontally)
+  geom_point(alpha = 0.2,
+             color = "blue",
+             position = position_jitter(width = 0.1, height = 0),
+             size = 2)
 ```
 
 <div class="figure">
@@ -187,29 +189,6 @@ If there is not too much data, I recommend to plot jittered individual data poin
 
 Figure \@ref(fig:box-plot-distributions2) shows the same raw data represented as jittered dots, boxplots, and violin plots.  
 
-The `ggpol` packages has a `geom_boxjitter()` function which displays a boxplot and the jittered data right next to each other. 
-
-```r
-set.seed(1) # used to make the example reproducible
-ggplot(data = df.diamonds %>% sample_n(1000),
-       mapping = aes(x = color, y = price)) +
-  ggpol::geom_boxjitter(jitter.shape = 1,
-                 jitter.color = "black", 
-                 jitter.alpha = 0.2,
-                 jitter.params = list(width = 0.04, height = 0),
-                 outlier.color = NA, 
-                 errorbar.draw = FALSE) +
-  # let's also add the means to the plot
-  stat_summary(fun = "mean",
-               geom = "point",
-               shape = 21,
-               color = "black",
-               fill = "yellow",
-               size = 4)
-```
-
-<img src="03-visualization2_files/figure-html/unnamed-chunk-10-1.png" width="672" />
-
 #### Violin plots
 
 We make violin plots like so: 
@@ -221,7 +200,7 @@ ggplot(data = df.diamonds,
   geom_violin()
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 Violin plots are good for detecting bimodal distributions. They work well when: 
 
@@ -246,7 +225,7 @@ ggplot(data = data,
              alpha = 0.05)
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 This represents a vase much better than it represents the data.
 
@@ -265,9 +244,9 @@ ggplot(data = df.diamonds,
 #> Picking joint bandwidth of 535
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
-#### Practice plot 1 
+#### Practice plot 1
 
 Try to make the plot shown in Figure \@ref(fig:visualization2-practice1). Here are some tips: 
 
@@ -276,26 +255,15 @@ Try to make the plot shown in Figure \@ref(fig:visualization2-practice1). Here a
 
 
 ```r
-ggplot(data = diamonds[1:10000, ], 
-       mapping = aes(x = cut, y = price)) +
-  geom_violin() +
-  geom_point(alpha = 0.1,
-             position = position_jitter(width = 0.1)) +
-  stat_summary(fun = "mean",
-               shape = 21,
-               geom = "point",
-               fill = "blue",
-               size = 5)
+# write your code here
 ```
-
-<img src="03-visualization2_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 <div class="figure">
 <img src="figures/vis2_practice_plot1.png" alt="Practice plot 1." width="700" />
-<p class="caption">(\#fig:unnamed-chunk-15)Practice plot 1.</p>
+<p class="caption">(\#fig:visualization2-practice1)Practice plot 1.</p>
 </div>
 
-### Relationships 
+### Relationships
 
 #### Scatter plots
 
@@ -310,9 +278,9 @@ ggplot(data = df.diamonds,
   geom_point()
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
-#### Raster plots 
+#### Raster plots
 
 These are useful for looking how a variable of interest varies as a function of two other variables. For example, when we are trying to fit a model with two parameters, we might be interested to see how well the model does for different combinations of these two parameters. Here, we'll plot what `carat` values diamonds of different `color` and `clarity` have. 
 
@@ -325,7 +293,7 @@ ggplot(data = df.diamonds,
   stat_summary_2d(fun = "mean", geom = "tile")
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 Not too bad. Let's add a few tweaks to make it look nicer. 
 
@@ -342,11 +310,11 @@ ggplot(data = df.diamonds,
   labs(fill = "carat")
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 I've added some outlines to the tiles by specifying `color = "black"` in `geom_tile()` and I've changed the scale for the fill gradient. I've defined the color for the low value to be "white", and for the high value to be "black." Finally, I've changed the lower and upper limit of the scale via the `limits` argument. Looks much better now! We see that diamonds with clarity `I1` and color `J` tend to have the highest `carat` values on average. 
 
-### Temporal data 
+### Temporal data
 
 Line plots are a good choice for temporal data. Here, I'll use the `txhousing` data that comes with the `ggplot2` package. The dataset contains information about housing sales in Texas. 
 
@@ -370,7 +338,7 @@ ggplot(data = df.plot,
   stat_summary(fun = "mean", geom = "point") 
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 Ignore the top part where I'm defining `df.plot` for now (we'll look into this in the next class). The other part is fairly straightforward. I've used `stat_summary()` three times: First, to define the confidence interval as a `geom = "ribbon"`. Second, to show the lines connecting the means, and third to put the means as data points points on top of the lines. 
 
@@ -413,6 +381,14 @@ ggplot(data = df.plot,
             mapping = aes(label = city),
             hjust = 0,
             size = 5) + 
+  # set the limits for the coordinates
+  coord_cartesian(xlim = c(1999, 2015),
+                  clip = "off",
+                  expand = F) + 
+  # set the x-axis labels
+  scale_x_continuous(breaks = seq(from = 2000,
+                                  to = 2015,
+                                  by = 5)) +
   # set the y-axis labels
   scale_y_continuous(breaks = seq(from = 100000,
                                   to = 250000,
@@ -422,14 +398,6 @@ ggplot(data = df.plot,
                                         to = 250,
                                         by = 50),
                                     "K")) + 
-  # set the x-axis labels
-  scale_x_continuous(breaks = seq(from = 2000,
-                                  to = 2015,
-                                  by = 5)) +
-  # set the limits for the coordinates
-  coord_cartesian(xlim = c(1999, 2015),
-                  clip = "off",
-                  expand = F) + 
   # set the plot title and axes titles
   labs(title = "Change of median house sale price in Texas",
        x = "Year",
@@ -441,11 +409,11 @@ ggplot(data = df.plot,
         plot.margin = margin(r = 1, unit = "in"))
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
-## Customizing plots 
+## Customizing plots
 
-So far, we've seen a number of different ways of plotting data. Now, let's look into how to customize the plots. For example, we may wanta to change the axis labels, add a title, increase the font size. `ggplot2` let's you customize almost anything. 
+So far, we've seen a number of different ways of plotting data. Now, let's look into how to customize the plots. For example, we may want to change the axis labels, add a title, increase the font size. `ggplot2` let's you customize almost anything. 
 
 Let's start simple. 
 
@@ -460,19 +428,25 @@ ggplot(data = df.diamonds,
                geom = "linerange")
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 This plot shows the average price for diamonds with a different quality of the cut, as well as the bootstrapped confidence intervals. Here are some things we can do to make it look nicer. 
 
 
 ```r
-ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
+ggplot(data = df.diamonds, 
+       mapping = aes(x = cut,
+                     y = price)) +
   # change color of the fill, make a little more space between bars by setting their width
   stat_summary(fun = "mean",
                geom = "bar",
                color = "black",
                fill = "lightblue",
                width = 0.85) + 
+  # adjust the range of both axes
+  coord_cartesian(xlim = c(0.25, 5.75),
+                  ylim = c(0, 5000),
+                  expand = F) + 
   # make error bars thicker
   stat_summary(fun.data = "mean_cl_boot",
                geom = "linerange",
@@ -480,16 +454,12 @@ ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
   # adjust what to show on the y-axis
   scale_y_continuous(breaks = seq(from = 0, to = 4000, by = 2000),
                      labels = seq(from = 0, to = 4000, by = 2000)) + 
-  # adjust the range of both axes
-  coord_cartesian(xlim = c(0.25, 5.75),
-                  ylim = c(0, 5000),
-                  expand = F) + 
   # add a title, subtitle, and changed axis labels 
   labs(title = "Price as a function of quality of cut", 
-    subtitle = "Note: The price is in US dollars",
-    tag = "A",
-    x = "Quality of the cut", 
-    y = "Price") + 
+       subtitle = "Note: The price is in US dollars",
+       tag = "A",
+       x = "Quality of the cut", 
+       y = "Price") + 
   theme(
     # adjust the text size 
     text = element_text(size = 20), 
@@ -503,11 +473,11 @@ ggplot(data = df.diamonds, mapping = aes(x = cut, y = price)) +
     # make the plot tag bold 
     plot.tag = element_text(face = "bold"), 
     # move the plot tag a little
-    plot.tag.position = c(0.05, 0.99) 
+    plot.tag.position = c(0.05, 0.99)
   )
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 I've tweaked quite a few things here (and I've added comments to explain what's happening). Take a quick look at the `theme()` function to see all the things you can change. 
 
@@ -529,9 +499,9 @@ ggplot(data = data,
   geom_text() + 
   annotate() + 
   # adjust axes and coordinates 
+  coord_cartesian() + 
   scale_x_continuous() + 
   scale_y_continuous() + 
-  coord_cartesian() + 
   # define plot title, and axis titles 
   labs(title = "Title",
        x = "Cause",
@@ -539,10 +509,11 @@ ggplot(data = data,
   # change global aspects of the plot 
   theme(text = element_text(size = 20),
         plot.margin = margin(t = 1, b = 1, l = 0.5, r = 0.5, unit = "cm")) +
-  # save the plot 
-  ggsave(filename = "super_nice_plot.pdf",
-         width = 8,
-         height = 6)
+
+# save the plot 
+ggsave(filename = "super_nice_plot.pdf",
+       width = 8,
+       height = 6)
 ```
 
 ### Changing the order of things
@@ -552,7 +523,8 @@ Sometimes we don't have a natural ordering of our independent variable. In that 
 
 ```r
 ggplot(data = df.diamonds,
-       mapping = aes(x = reorder(cut, price), y = price)) +
+       mapping = aes(x = reorder(cut, price),
+                     y = price)) +
        # mapping = aes(x = cut, y = price)) +
   stat_summary(fun = "mean",
                geom = "bar",
@@ -565,11 +537,11 @@ ggplot(data = df.diamonds,
   labs(x = "cut")
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 The `reorder()` function helps us to do just that. Now, the results are ordered according to price. To show the results in descending order, I would simply need to write `reorder(cut, -price)` instead.
 
-### Dealing with legends 
+### Dealing with legends
 
 Legends form an important part of many figures. However, it is often better to avoid legends if possible, and directly label the data. This way, the reader doesn't have to look back and forth between the plot and the legend to understand what's going on. 
 
@@ -585,10 +557,11 @@ ggplot(data = df.diamonds,
        mapping = aes(x = color,
                      y = price,
                      color = clarity)) +
-  stat_summary(fun = "mean", geom = "point")
+  stat_summary(fun = "mean",
+               geom = "point")
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 Let's move the legend to the bottom of the plot: 
 
@@ -598,11 +571,12 @@ ggplot(data = df.diamonds,
        mapping = aes(x = color,
                      y = price,
                      color = clarity)) +
-  stat_summary(fun = "mean", geom = "point") +
+  stat_summary(fun = "mean",
+               geom = "point") +
   theme(legend.position = "bottom")
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 
 Let's change a few more things in the legend using the `guides()` function: 
 
@@ -612,21 +586,26 @@ Let's change a few more things in the legend using the `guides()` function:
 
 
 ```r
-ggplot(data = df.diamonds, mapping = aes(x = color, y = price, color = clarity)) +
-  stat_summary(fun = "mean", geom = "point", size = 2) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = color,
+                     y = price,
+                     color = clarity)) +
+  stat_summary(fun = "mean",
+               geom = "point",
+               size = 2) +
   theme(legend.position = "bottom") +
   guides(color = guide_legend(nrow = 3, # 3 rows 
                               reverse = TRUE, # reversed order 
                               override.aes = list(size = 6))) # point size 
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
 ### Choosing good colors
 
 [Color brewer](http://colorbrewer2.org/) helps with finding colors that are colorblind safe and printfriendly. For more information on how to use color effectively see [here](http://socviz.co/refineplots.html#refineplots). 
 
-### Customizing themes 
+### Customizing themes
 
 For a given project, I often want all of my plots to share certain visual features such as the font type, font size, how the axes are displayed, etc. Instead of defining these for each individual plot, I can set a theme at the beginning of my project so that it applies to all the plots in this file. To do so, I use the `theme_set()` command: 
 
@@ -638,7 +617,7 @@ theme_set(theme_classic() + #classic theme
 
 Here, I've just defined that I want to use `theme_classic()` for all my plots, and that the text size should be 20. For any individual plot, I can still overwrite any of these defaults. 
 
-## Saving plots 
+## Saving plots
 
 To save plots, use the `ggsave()` command. Personally, I prefer to save my plots as pdf files. This way, the plot looks good no matter what size you need it to be. This means it'll look good both in presentations as well as in a paper. You can save the plot in any format that you like. 
 
@@ -675,13 +654,13 @@ ggsave(filename = "figures/diamond_plot.pdf",
        height = 6)
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 Here, I'm saving the plot in the `figures` folder and it's name is `diamond_plot.pdf`. I also specify the width and height as the plot in inches (which is the default unit). 
 
-## Creating figure panels 
+## Creating figure panels
 
-Sometimes, we want to create a figure with several subfigures, each of which is labeled with a), b), etc. We have already learned how to make separate panels using `facet_wrap()` or `facet_grid()`. The R package `patchwork` makes it very easy to combine multiple plots. 
+Sometimes, we want to create a figure with several subfigures, each of which is labeled with a), b), etc. We have already learned how to make separate panels using `facet_wrap()` or `facet_grid()`. The R package `patchwork` makes it very easy to combine multiple plots. You can find out more about the package [here](https://patchwork.data-imaginist.com/articles/patchwork.html). 
 
 Let's combine a few plots that we've made above into one. 
 
@@ -693,10 +672,9 @@ p1 = ggplot(data = df.diamonds,
   geom_density(bw = 0.2,
                show.legend = F) +
   facet_grid(cols = vars(color)) +
+  labs(title = "Width of differently colored diamonds") + 
   coord_cartesian(xlim = c(3, 10),
-                  expand = F) + #setting expand to FALSE removes any padding on x and y axes
-  labs(title = "Width of differently colored diamonds",
-       tag = "A")
+                  expand = F) #setting expand to FALSE removes any padding on x and y axes
 
 # second plot
 p2 = ggplot(data = df.diamonds,
@@ -707,8 +685,7 @@ p2 = ggplot(data = df.diamonds,
                   geom = "tile") +
   labs(title = "Carat values",
        subtitle = "For different color and clarity",
-       x = "Color",
-       tag = "B")
+       x = "Color")
 
 # third plot
 p3 = ggplot(data = df.diamonds,
@@ -724,7 +701,6 @@ p3 = ggplot(data = df.diamonds,
   scale_x_discrete(labels = c("fair", "good", "very\ngood", "premium", "ideal")) +
   labs(title = "Price as a function of cut", 
        subtitle = "Note: The price is in US dollars",
-       tag = "C",
        x = "Quality of the cut", 
        y = "Price") + 
   coord_cartesian(xlim = c(0.25, 5.75),
@@ -733,14 +709,15 @@ p3 = ggplot(data = df.diamonds,
 
 # combine the plots
 p1 + (p2 + p3) + 
-  plot_layout(ncol = 1) & 
-  theme_classic() & 
+  plot_layout(ncol = 1) &
+  plot_annotation(tag_levels = "A") & 
+  theme_classic() &
   theme(plot.tag = element_text(face = "bold", size = 20))
 
 # ggsave("figures/combined_plot.png", width = 10, height = 6)
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-28-1.png" width="672" />
 
 Not a perfect plot yet, but you get the idea. To combine the plots, we defined that we would like p2 and p3 to be displayed in the same row using the `()` syntax. And we specified that we only want one column via the `plot_layout()` function. We also applied the same `theme_classic()` to all the plots using the `&` operator, and formatted how the plot tags should be displayed. For more info on how to use `patchwork`, take a look at the [readme](https://github.com/thomasp85/patchwork) on the github page. 
 
@@ -753,7 +730,7 @@ An alternative way for making these plots is to use Adobe Illustrator, Powerpoin
 
 If possible, it's __much__ better to do everything in R though so that your plot can easily be reproduced by someone else. 
 
-## Peeking behind the scenes 
+## Peeking behind the scenes
 
 Sometimes it can be helpful for debugging to take a look behind the scenes. Silently, `ggplot()` computes a data frame based on the information you pass to it. We can take a look at the data frame that's underlying the plot. 
 
@@ -778,7 +755,7 @@ dim(df.plot_info) # data frame dimensions
 #> [1] 56 18
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-31-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 I've called the `ggplot_build()` function on the ggplot2 object that we saved as `p`. I've then printed out the data associated with that plot object. The first thing we note about the data frame is how many entries it has, 56. That's good. This means there is one value for each of the 7 x 8 grids. The columns tell us what color was used for the `fill`, the `value` associated with each row, where each row is being displayed (`x` and `y`), etc.   
 
@@ -803,11 +780,11 @@ dim(df.plot_info) # data frame dimensions
 #> [1] 53940    15
 ```
 
-<img src="03-visualization2_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+<img src="03-visualization2_files/figure-html/unnamed-chunk-30-1.png" width="672" />
 
 Why does this plot look different from the one before? What went wrong here? Notice that the data frame associated with the ggplot2 object has 53940 rows. So instead of plotting means here, we plotted all the individual data points. So what we are seeing here is just the top layer of many, many layers. 
 
-## Making animations 
+## Making animations
 
 Animated plots can be a great way to illustrate your data in presentations. The R package `gganimate` lets you do just that. 
 
@@ -821,7 +798,8 @@ ggplot(data = gapminder,
                      size = pop,
                      colour = country)) +
   geom_point(alpha = 0.7, show.legend = FALSE) +
-  geom_text(data = gapminder %>% filter(country %in% c("United States", "China", "India")), 
+  geom_text(data = gapminder %>% 
+              filter(country %in% c("United States", "China", "India")), 
             mapping = aes(label = country),
             color = "black",
             vjust = -0.75,
@@ -839,83 +817,89 @@ ggplot(data = gapminder,
 ```
 
 ```
-#> Rendering [>--------------------------------------------] at 11 fps ~ eta: 9s
-#> Rendering [=>-------------------------------------------] at 10 fps ~ eta: 9s
-#> Rendering [==>------------------------------------------] at 10 fps ~ eta: 9s
-#> Rendering [===>-----------------------------------------] at 10 fps ~ eta: 9s
-#> Rendering [====>----------------------------------------] at 10 fps ~ eta: 9s
-#> Rendering [=====>--------------------------------------] at 9.9 fps ~ eta: 9s
-#> Rendering [=====>---------------------------------------] at 10 fps ~ eta: 9s
-#> Rendering [======>-------------------------------------] at 9.9 fps ~ eta: 9s
-#> Rendering [======>-------------------------------------] at 9.8 fps ~ eta: 8s
-#> Rendering [=======>------------------------------------] at 9.8 fps ~ eta: 8s
-#> Rendering [========>-----------------------------------] at 9.8 fps ~ eta: 8s
-#> Rendering [=========>----------------------------------] at 9.8 fps ~ eta: 8s
-#> Rendering [==========>---------------------------------] at 9.8 fps ~ eta: 8s
-#> Rendering [==========>---------------------------------] at 9.9 fps ~ eta: 8s
-#> Rendering [===========>--------------------------------] at 9.8 fps ~ eta: 7s
-#> Rendering [============>-------------------------------] at 9.9 fps ~ eta: 7s
-#> Rendering [=============>------------------------------] at 9.8 fps ~ eta: 7s
-#> Rendering [=============>------------------------------] at 9.9 fps ~ eta: 7s
-#> Rendering [==============>-----------------------------] at 9.9 fps ~ eta: 7s
-#> Rendering [===============>----------------------------] at 9.9 fps ~ eta: 6s
-#> Rendering [================>---------------------------] at 9.9 fps ~ eta: 6s
-#> Rendering [=================>--------------------------] at 9.9 fps ~ eta: 6s
-#> Rendering [==================>-------------------------] at 9.9 fps ~ eta: 6s
-#> Rendering [===================>-------------------------] at 10 fps ~ eta: 6s
-#> Rendering [===================>------------------------] at 9.9 fps ~ eta: 5s
-#> Rendering [====================>------------------------] at 10 fps ~ eta: 5s
-#> Rendering [=====================>-----------------------] at 10 fps ~ eta: 5s
-#> Rendering [======================>----------------------] at 10 fps ~ eta: 5s
-#> Rendering [=======================>---------------------] at 10 fps ~ eta: 5s
-#> Rendering [========================>--------------------] at 10 fps ~ eta: 5s
-#> Rendering [========================>--------------------] at 10 fps ~ eta: 4s
-#> Rendering [========================>-------------------] at 9.9 fps ~ eta: 4s
-#> Rendering [=========================>------------------] at 9.9 fps ~ eta: 4s
-#> Rendering [==========================>------------------] at 10 fps ~ eta: 4s
-#> Rendering [==========================>-----------------] at 9.9 fps ~ eta: 4s
-#> Rendering [===========================>----------------] at 9.9 fps ~ eta: 4s
-#> Rendering [============================>---------------] at 9.9 fps ~ eta: 4s
-#> Rendering [============================>---------------] at 9.9 fps ~ eta: 3s
-#> Rendering [=============================>--------------] at 9.9 fps ~ eta: 3s
-#> Rendering [==============================>-------------] at 9.9 fps ~ eta: 3s
-#> Rendering [===============================>------------] at 9.9 fps ~ eta: 3s
-#> Rendering [================================>-----------] at 9.9 fps ~ eta: 3s
-#> Rendering [================================>-----------] at 9.8 fps ~ eta: 2s
-#> Rendering [=================================>----------] at 9.8 fps ~ eta: 2s
-#> Rendering [==================================>---------] at 9.8 fps ~ eta: 2s
-#> Rendering [===================================>--------] at 9.8 fps ~ eta: 2s
-#> Rendering [====================================>-------] at 9.8 fps ~ eta: 2s
-#> Rendering [====================================>-------] at 9.7 fps ~ eta: 2s
-#> Rendering [=====================================>------] at 9.7 fps ~ eta: 1s
-#> Rendering [======================================>-----] at 9.8 fps ~ eta: 1s
-#> Rendering [======================================>-----] at 9.7 fps ~ eta: 1s
-#> Rendering [=======================================>----] at 9.8 fps ~ eta: 1s
-#> Rendering [========================================>---] at 9.8 fps ~ eta: 1s
-#> Rendering [========================================>---] at 9.7 fps ~ eta: 1s
-#> Rendering [=========================================>--] at 9.7 fps ~ eta: 1s
-#> Rendering [=========================================>--] at 9.5 fps ~ eta: 0s
-#> Rendering [==========================================>-] at 9.6 fps ~ eta: 0s
-#> Rendering [===========================================>] at 9.6 fps ~ eta: 0s
-#> Rendering [============================================] at 9.6 fps ~ eta: 0s
+#> Rendering [>-------------------------------------------] at 9.9 fps ~ eta: 10s
+#> Rendering [>-------------------------------------------] at 9.7 fps ~ eta: 10s
+#> Rendering [=>------------------------------------------] at 9.6 fps ~ eta: 10s
+#> Rendering [=>------------------------------------------] at 9.5 fps ~ eta: 10s
+#> Rendering [==>-----------------------------------------] at 9.2 fps ~ eta: 10s
+#> Rendering [==>-----------------------------------------] at 8.9 fps ~ eta: 10s
+#> Rendering [===>------------------------------------------] at 9 fps ~ eta: 10s
+#> Rendering [===>----------------------------------------] at 8.8 fps ~ eta: 10s
+#> Rendering [===>----------------------------------------] at 8.9 fps ~ eta: 10s
+#> Rendering [====>---------------------------------------] at 8.8 fps ~ eta: 10s
+#> Rendering [====>---------------------------------------] at 8.7 fps ~ eta: 10s
+#> Rendering [=====>--------------------------------------] at 8.8 fps ~ eta: 10s
+#> Rendering [======>-------------------------------------] at 8.8 fps ~ eta: 10s
+#> Rendering [======>-------------------------------------] at 8.8 fps ~ eta: 9s
+#> Rendering [=======>------------------------------------] at 8.9 fps ~ eta: 9s
+#> Rendering [========>-----------------------------------] at 8.9 fps ~ eta: 9s
+#> Rendering [=========>------------------------------------] at 9 fps ~ eta: 9s
+#> Rendering [==========>-----------------------------------] at 9 fps ~ eta: 9s
+#> Rendering [==========>-----------------------------------] at 9 fps ~ eta: 8s
+#> Rendering [===========>----------------------------------] at 9 fps ~ eta: 8s
+#> Rendering [===========>--------------------------------] at 9.1 fps ~ eta: 8s
+#> Rendering [============>-------------------------------] at 9.1 fps ~ eta: 8s
+#> Rendering [=============>------------------------------] at 9.1 fps ~ eta: 8s
+#> Rendering [=============>------------------------------] at 9.1 fps ~ eta: 7s
+#> Rendering [==============>-----------------------------] at 9.1 fps ~ eta: 7s
+#> Rendering [===============>----------------------------] at 9.1 fps ~ eta: 7s
+#> Rendering [================>---------------------------] at 9.2 fps ~ eta: 7s
+#> Rendering [=================>--------------------------] at 9.1 fps ~ eta: 7s
+#> Rendering [=================>--------------------------] at 9.1 fps ~ eta: 6s
+#> Rendering [=================>--------------------------] at 9.2 fps ~ eta: 6s
+#> Rendering [==================>-------------------------] at 9.2 fps ~ eta: 6s
+#> Rendering [===================>------------------------] at 9.2 fps ~ eta: 6s
+#> Rendering [===================>------------------------] at 9.1 fps ~ eta: 6s
+#> Rendering [====================>-----------------------] at 9.1 fps ~ eta: 6s
+#> Rendering [=====================>----------------------] at 9.1 fps ~ eta: 6s
+#> Rendering [=====================>----------------------] at 9.1 fps ~ eta: 5s
+#> Rendering [======================>---------------------] at 9.1 fps ~ eta: 5s
+#> Rendering [=======================>--------------------] at 9.1 fps ~ eta: 5s
+#> Rendering [========================>-------------------] at 9.1 fps ~ eta: 5s
+#> Rendering [========================>-------------------] at 9.2 fps ~ eta: 5s
+#> Rendering [=========================>------------------] at 9.2 fps ~ eta: 5s
+#> Rendering [=========================>------------------] at 9.2 fps ~ eta: 4s
+#> Rendering [==========================>-----------------] at 9.2 fps ~ eta: 4s
+#> Rendering [===========================>----------------] at 9.2 fps ~ eta: 4s
+#> Rendering [============================>---------------] at 9.2 fps ~ eta: 4s
+#> Rendering [=============================>--------------] at 9.2 fps ~ eta: 3s
+#> Rendering [==============================>-------------] at 9.2 fps ~ eta: 3s
+#> Rendering [===============================>------------] at 9.2 fps ~ eta: 3s
+#> Rendering [================================>-----------] at 9.2 fps ~ eta: 3s
+#> Rendering [=================================>----------] at 9.2 fps ~ eta: 2s
+#> Rendering [=================================>----------] at 9.3 fps ~ eta: 2s
+#> Rendering [==================================>---------] at 9.2 fps ~ eta: 2s
+#> Rendering [===================================>--------] at 9.2 fps ~ eta: 2s
+#> Rendering [====================================>-------] at 9.2 fps ~ eta: 2s
+#> Rendering [=====================================>------] at 9.1 fps ~ eta: 2s
+#> Rendering [=====================================>------] at 9.1 fps ~ eta: 1s
+#> Rendering [======================================>-----] at 9.1 fps ~ eta: 1s
+#> Rendering [=======================================>----] at 9.1 fps ~ eta: 1s
+#> Rendering [========================================>---] at 9.1 fps ~ eta: 1s
+#> Rendering [=========================================>--] at 9.2 fps ~ eta: 1s
+#> Rendering [=========================================>--] at 9.2 fps ~ eta: 0s
+#> Rendering [==========================================>-] at 9.2 fps ~ eta: 0s
+#> Rendering [==========================================>-] at 9.1 fps ~ eta: 0s
+#> Rendering [===========================================>] at 9.1 fps ~ eta: 0s
+#> Rendering [============================================] at 9.2 fps ~ eta: 0s
 ```
 
 ```r
 # anim_save(filename = "figures/life_gdp_animation.gif") # to save the animation
 ```
 
-![](03-visualization2_files/figure-html/unnamed-chunk-33-1.gif)<!-- -->
+![](03-visualization2_files/figure-html/unnamed-chunk-31-1.gif)<!-- -->
 
 This takes a while to run but it's worth the wait. The plot shows the relationship between GDP per capita (on the x-axis) and life expectancy (on the y-axis) changes across different years for the countries of different continents. The size of each dot represents the population size of the respective country. And different countries are shown in different colors. This animation is not super useful yet in that we don't know which continents and countries the different dots represent. I've added a label to the United States, China, and India. 
 
 Note how little is required to define the `gganimate`-specific information! The `{frame_time}` variable changes the title for each frame. The `transition_time()` variable is set to `year`, and the kind of transition is set as 'linear' in `ease_aes()`. I've saved the animation as a gif in the figures folder. 
 We won't have time to go into more detail here but I encourage you to play around with `gganimate`. It's fun, looks cool, and (if done well) makes for a great slide in your next presentation! 
 
-## Shiny apps 
+## Shiny apps
 
 The package [`shiny`](https://shiny.rstudio.com/) makes it relatively easy to create interactive plots that can be hosted online. Here is a [gallery](https://shiny.rstudio.com/gallery/) with some examples. 
 
-## Defining snippets 
+## Defining snippets
 
 Often, we want to create similar plots over and over again. One way to achieve this is by finding the original plot, copy and pasting it, and changing the bits that need changing. Another more flexible and faster way to do this is by using snippets. Snippets are short pieces of code that 
 
@@ -923,18 +907,14 @@ Here are some snippets I use:
 
 
 ```r
-snippet snbar
-  ggplot(data = ${1:data}, mapping = aes(x = ${2:x}, y = ${3:y})) +
-    stat_summary(fun = "mean", geom = "bar", color = "black") +
-    stat_summary(fun.data = "mean_cl_boot", geom = "linerange")
-    
 snippet sngg
-  ggplot(data = ${1:data}, mapping = aes(${2:aes})) +
-    ${0}
+	ggplot(data = ${1:data},
+	       mapping = aes(${2:aes})) +
+		${0}
 
 snippet sndf
-  ${1:data} = ${1:data} %>% 
-    ${0}
+	${1:data} = ${1:data} %>% 
+		${0}
 ```
 
 To make a bar plot, I now only need to type `snbar` and then hit TAB to activate the snippet. I can then cycle through the bits in the code that are marked with `${Number:word}` by hitting TAB again. 
@@ -957,21 +937,21 @@ usethis::edit_rstudio_snippets()
 
 This command opens up a separate tab in RStudio called `r.snippets` so that you can make new snippets and adapt old ones more quickly. Take a look at the snippets that RStudio already comes with. And then, make some new ones! By using snippets you will be able to avoid typing the same code over and over again, and you won't have to memorize as much, too. 
 
-## Additional resources 
+## Additional resources
 
-### Cheatsheets 
+### Cheatsheets
 
 - [shiny](figures/shiny.pdf) --> interactive plots 
 
-### Data camp courses 
+### Data camp courses
 
 - [shiny](https://www.datacamp.com/courses/building-web-applications-in-r-with-shiny-case-studies)
 
 ### Books and chapters
 
 - [R for Data Science book](http://r4ds.had.co.nz/)
-  + [Data visualization](http://r4ds.had.co.nz/data-visualisation.html)
-  + [Graphics for communication](http://r4ds.had.co.nz/graphics-for-communication.html)
+	+ [Data visualization](http://r4ds.had.co.nz/data-visualisation.html)
+	+ [Graphics for communication](http://r4ds.had.co.nz/graphics-for-communication.html)
 - [Data Visualization -- A practical introduction (by Kieran Healy)](http://socviz.co/)
   + [Refine your plots](http://socviz.co/refineplots.html#refineplots)
 
@@ -983,7 +963,7 @@ This command opens up a separate tab in RStudio called `r.snippets` so that you 
 - [Color brewer](http://colorbrewer2.org/) --> for finding colors 
 - [shiny apps examples](https://sites.psu.edu/shinyapps/) --> shiny apps examples that focus on statistics teaching (made by students at PennState) 
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -993,13 +973,13 @@ sessionInfo()
 ```
 
 ```
-#> R version 4.0.3 (2020-10-10)
+#> R version 4.1.2 (2021-11-01)
 #> Platform: x86_64-apple-darwin17.0 (64-bit)
-#> Running under: macOS Catalina 10.15.7
+#> Running under: macOS Big Sur 10.16
 #> 
 #> Matrix products: default
-#> BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-#> LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+#> BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+#> LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 #> 
 #> locale:
 #> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1008,36 +988,38 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.4     purrr_0.3.4    
-#>  [5] readr_1.4.0     tidyr_1.1.2     tibble_3.0.6    tidyverse_1.3.0
-#>  [9] gapminder_0.3.0 gganimate_1.0.7 ggridges_0.5.3  ggpol_0.0.7    
-#> [13] ggplot2_3.3.3   patchwork_1.1.1 knitr_1.31     
+#>  [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
+#>  [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    tidyverse_1.3.1
+#>  [9] gapminder_0.3.0 gganimate_1.0.7 ggplot2_3.3.6   ggridges_0.5.3 
+#> [13] patchwork_1.1.1 knitr_1.39     
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] httr_1.4.2          jsonlite_1.7.2      viridisLite_0.3.0  
-#>  [4] splines_4.0.3       modelr_0.1.8        Formula_1.2-4      
-#>  [7] assertthat_0.2.1    highr_0.8           latticeExtra_0.6-29
-#> [10] cellranger_1.1.0    yaml_2.2.1          progress_1.2.2     
-#> [13] pillar_1.4.7        backports_1.2.1     lattice_0.20-41    
-#> [16] glue_1.4.2          digest_0.6.27       checkmate_2.0.0    
-#> [19] RColorBrewer_1.1-2  rvest_0.3.6         colorspace_2.0-0   
-#> [22] htmltools_0.5.1.1   Matrix_1.3-2        plyr_1.8.6         
-#> [25] pkgconfig_2.0.3     broom_0.7.3         gifski_0.8.6       
-#> [28] haven_2.3.1         bookdown_0.21       scales_1.1.1       
-#> [31] tweenr_1.0.1        jpeg_0.1-8.1        htmlTable_2.1.0    
-#> [34] generics_0.1.0      farver_2.1.0        ellipsis_0.3.1     
-#> [37] withr_2.4.1         nnet_7.3-15         cli_2.3.0          
-#> [40] survival_3.2-7      magrittr_2.0.1      crayon_1.4.1       
-#> [43] readxl_1.3.1        evaluate_0.14       ps_1.6.0           
-#> [46] fs_1.5.0            foreign_0.8-81      xml2_1.3.2         
-#> [49] data.table_1.13.6   tools_4.0.3         prettyunits_1.1.1  
-#> [52] hms_1.0.0           lifecycle_1.0.0     munsell_0.5.0      
-#> [55] reprex_1.0.0        cluster_2.1.0       compiler_4.0.3     
-#> [58] rlang_0.4.10        grid_4.0.3          rstudioapi_0.13    
-#> [61] htmlwidgets_1.5.3   base64enc_0.1-3     labeling_0.4.2     
-#> [64] rmarkdown_2.6       gtable_0.3.0        DBI_1.1.1          
-#> [67] R6_2.5.0            gridExtra_2.3       lubridate_1.7.9.2  
-#> [70] Hmisc_4.4-2         stringi_1.5.3       Rcpp_1.0.6         
-#> [73] rpart_4.1-15        vctrs_0.3.6         png_0.1-7          
-#> [76] dbplyr_2.0.0        tidyselect_1.1.0    xfun_0.21
+#>  [1] fs_1.5.2            lubridate_1.8.0     RColorBrewer_1.1-3 
+#>  [4] progress_1.2.2      httr_1.4.3          tools_4.1.2        
+#>  [7] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
+#> [10] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
+#> [13] DBI_1.1.2           colorspace_2.0-3    nnet_7.3-17        
+#> [16] withr_2.5.0         gridExtra_2.3       tidyselect_1.1.2   
+#> [19] prettyunits_1.1.1   compiler_4.1.2      cli_3.3.0          
+#> [22] rvest_1.0.2         htmlTable_2.4.0     xml2_1.3.3         
+#> [25] labeling_0.4.2      bookdown_0.26       sass_0.4.1         
+#> [28] checkmate_2.1.0     scales_1.2.0        digest_0.6.29      
+#> [31] foreign_0.8-82      rmarkdown_2.14      base64enc_0.1-3    
+#> [34] jpeg_0.1-9          pkgconfig_2.0.3     htmltools_0.5.2    
+#> [37] dbplyr_2.1.1        fastmap_1.1.0       highr_0.9          
+#> [40] htmlwidgets_1.5.4   rlang_1.0.2         readxl_1.4.0       
+#> [43] rstudioapi_0.13     jquerylib_0.1.4     farver_2.1.0       
+#> [46] generics_0.1.2      jsonlite_1.8.0      magrittr_2.0.3     
+#> [49] Formula_1.2-4       Matrix_1.4-1        Rcpp_1.0.8.3       
+#> [52] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.1    
+#> [55] stringi_1.7.6       yaml_2.3.5          plyr_1.8.7         
+#> [58] grid_4.1.2          crayon_1.5.1        lattice_0.20-45    
+#> [61] haven_2.5.0         splines_4.1.2       hms_1.1.1          
+#> [64] pillar_1.7.0        reprex_2.0.1        glue_1.6.2         
+#> [67] evaluate_0.15       latticeExtra_0.6-29 data.table_1.14.2  
+#> [70] gifski_1.6.6-1      modelr_0.1.8        vctrs_0.4.1        
+#> [73] png_0.1-7           tzdb_0.3.0          tweenr_1.0.2       
+#> [76] cellranger_1.1.0    gtable_0.3.0        assertthat_0.2.1   
+#> [79] xfun_0.30           broom_0.8.0         survival_3.3-1     
+#> [82] viridisLite_0.4.0   cluster_2.1.3       ellipsis_0.3.2
 ```

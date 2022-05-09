@@ -1,6 +1,6 @@
 # Modeling data
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 ```{r, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
@@ -17,9 +17,9 @@ opts_chunk$set(comment = "",
                fig.show = "hold")
 ```
 
-## Modeling data 
+## Modeling data
 
-### Simplicity vs. accuracy trade-off 
+### Simplicity vs. accuracy trade-off
 
 ```{r, warning=F, fig.cap="Tradeoff between fit and model simplicity."}
 # make example reproducible 
@@ -67,210 +67,7 @@ ggplot(data = df.pre,
         axis.text = element_blank())
 ```
 
-### Error definitions and best estimators
-
-Let's start with some simple data:
-
-```{r}
-df.data = tibble(observation = 1:5,
-                 value = c(1, 3, 5, 9, 14))
-```
-
-And plot the data
-
-```{r}
-ggplot(data = df.data,
-       mapping = aes(x = "1",
-                     y = value)) + 
-  geom_point(size = 3) + 
-  scale_y_continuous(breaks = seq(0, 16, 2),
-                     limits = c(0, 16)) +
-  theme(panel.grid.major.y = element_line(color = "gray80", linetype = 2),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        text = element_text(size = 24))
-```
-
-This is what the sum of absolute errors looks like for a given `value_predicted`. 
-
-```{r, warning=FALSE, fig.cap="Sum of absolute errors."}
-value_predicted = 7
-
-df.data = df.data %>% 
-  mutate(prediction = value_predicted,
-         error_absolute = abs(prediction - value))
-
-ggplot(data = df.data,
-       mapping = aes(x = observation, 
-                     y = value)) + 
-  geom_segment(mapping = aes(x = observation,
-                             xend = observation,
-                             y = value_predicted,
-                             yend = value
-                             ),
-               color = "blue",
-               size = 1) +
-  geom_line(data = tibble(x = c(1, 5),
-                   y = value_predicted),
-            mapping = aes(x = x,
-                y = y),
-            size = 1,
-            color = "green") +
-  geom_point(size = 4) +
-  annotate(x = 1,
-           y = 15.5,
-           geom = "text",
-           label = str_c("Prediction = ", value_predicted),
-           size = 8,
-           hjust = 0,
-           vjust = 1,
-           color = "green") +
-  annotate(x = 1,
-           y = 13.5,
-           geom = "text",
-           label = str_c("Sum of absolute errors = ", sum(df.data$error_absolute)),
-           size = 8,
-           hjust = 0,
-           vjust = 1,
-           color = "blue") +
-  annotate(x = 5,
-           y = value_predicted,
-           geom = "text",
-           label = parse(text = str_c("{hat(Y)","==b[0]}==", value_predicted)),
-           hjust = -0.1,
-           size = 8) +
-  scale_x_continuous(breaks = df.data$observation,
-                     labels = parse(text = str_c('e[',df.data$observation,']', "==", df.data$error_absolute)),
-                     limits = c(1, 6)) +
-  scale_y_continuous(breaks = seq(0, 16, 2),
-                     limits = c(0, 16)) +
-  theme(panel.grid.major.y = element_line(color = "gray80", linetype = 2),
-        axis.title.x = element_blank(),
-        text = element_text(size = 24))
-```
-
-Play around with the code below to see how using (1) the sum of absolute errors, or (2) the sum of squared errors affects what estimate minimizes the error. 
-
-```{r}
-value_predicted = seq(0, 50, 0.1)
-# value_predicted = seq(0, 10, 1)
-
-df.data = tibble(observation = 1:5,
-                 value = c(1, 3, 5, 9, 140))
-
-# function that calculates the sum absolute error
-fun.sum_absolute_error = function(prediction){
-  x = df.data$value
-  sum_absolute_error = sum(abs(x-prediction))
-  return(sum_absolute_error)
-}
-
-# function that calculates the sum squared error
-fun.sum_squared_error = function(prediction){
-  x = df.data$value
-  sum_squared_error = sum((x-prediction)^2)
-  return(sum_squared_error)
-}
-
-df.model = tibble(
-  estimate = value_predicted,
-  sum_absolute_error = map_dbl(value_predicted, fun.sum_absolute_error),
-  sum_squared_error = map_dbl(value_predicted, fun.sum_squared_error)
-)
-
-ggplot(data = df.model,
-       mapping = aes(x = estimate,
-                     # y = sum_absolute_error)) +
-                     y = sum_squared_error)) +
-  geom_line(size = 1) +
-  # labs(y = "Sum absolute error")
-  labs(y = "Sum of squared errors")
-```
-
-```{r, echo=F, fig.cap="Relationship between error definition and best estimators."}
-tibble(`Error definition` = c("Count of errors",
-                              "Sum of absolute errors",
-                              "Sum of squared errors"),
-       `Best estimator` = c("Mode = most frequent value",
-                            "Median = middle observation of all values",
-                            "Mean = average of all values")) %>% 
-  kable() %>% 
-  kable_styling(bootstrap_options = "striped",
-                full_width = F)
-```
-
-```{r, fig.cap="Mean, median, and mode on the normal distribution."}
-mu = 0 
-sigma = 1
-
-mean = mu
-median = mu
-mode = mu
-
-ggplot(data = tibble(x = c(-3, 3)),
-       mapping = aes(x = x)) + 
-  stat_function(fun = "dnorm",
-                size = 1) +
-  geom_segment(mapping = aes(x = median,
-                             xend = median,
-                             y = dnorm(median),
-                             yend = 0),
-               color = "green",
-               size = 2) +
-  geom_segment(mapping = aes(x = mode,
-                             xend = mode,
-                             y = dnorm(mode),
-                             yend = 0),
-               color = "red",
-               size = 2) +
-  geom_segment(mapping = aes(x = mean,
-                             xend = mean,
-                             y = dnorm(mean),
-                             yend = 0),
-               color = "blue",
-               size = 2) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = -2:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expansion(add = c(0.001, 0.1)))
-```
-
-```{r, fig.cap="Mean, median, and mode on the exponential distribution."}
-rate = 1 
-
-mean = rate
-median = rate * log(2)
-mode = 0
-
-ggplot(data = tibble(x = c(-0.1, 3)),
-            mapping = aes(x = x)) + 
-  stat_function(fun = "dexp",
-                size = 1) +
-  geom_segment(aes(x = median,
-                   xend = median,
-                   y = dexp(median),
-                   yend = 0),
-               color = "green",
-               size = 2) +
-  geom_segment(aes(x = mode,
-                   xend = mode,
-                   y = dexp(mode),
-                   yend = 0),
-               color = "red",
-               size = 2) +
-  geom_segment(aes(x = mean,
-                   xend = mean,
-                   y = dexp(mean),
-                   yend = 0),
-               color = "blue",
-               size = 2) +
-  labs(y = "density") +
-  scale_x_continuous(breaks = 0:2,
-                     expand = c(0, 0)) +
-  scale_y_continuous(expand = expansion(add = c(0.001, 0.1)))
-```
-
-### Sampling distributions for median and mean 
+### Sampling distributions for median and mean
 
 ```{r}
 # make example reproducible 
@@ -325,7 +122,42 @@ ggplot(data = df.sampling_distribution_summaries,
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
 
-## Hypothesis testing: "One-sample t-test" 
+### Residuals need to be normally distributed, not the data itself
+
+```{r}
+set.seed(1)
+
+n_participants = 1000
+
+df.normal = tibble(participant = 1:n_participants,
+                   condition = rep(c("control", "experimental"), each = n_participants/2)) %>% 
+  mutate(score = ifelse(condition == "control",
+                        rnorm(n = n_participants, mean = 5, sd = 2),
+                        rnorm(n = n_participants, mean = 15, sd = 3)))
+
+# distribution of the data 
+ggplot(data = df.normal,
+       mapping = aes(x = score)) + 
+  geom_density() +
+  geom_density(mapping = aes(group = condition,
+                             color = condition))
+  
+
+# distribution of the residuals after having fitted a linear model 
+# we'll learn how to do this later   
+
+fit = lm(formula = score ~ 1 + condition,
+         data = df.normal)
+
+
+ggplot(data = tibble(residuals = fit$residuals),
+                     mapping = aes(x = residuals)) + 
+  geom_density()
+  
+```
+
+
+## Hypothesis testing: "One-sample t-test"
 
 ```{r, warning=F}
 df.internet = read_table2(file = "data/internet_access.txt") %>% 
@@ -400,7 +232,7 @@ We've implemented a one sample t-test (compare the p-value here to the one I com
 t.test(df.internet$internet, mu = 75)
 ```
 
-## Building a sampling distribution of PRE 
+## Building a sampling distribution of PRE
 
 Here is the general procedure for building a sampling distribution of the proportional reduction in error (PRE). In this instance, I compare the following two models 
 
@@ -504,17 +336,68 @@ samples %>%
                 full_width = F)
 ```
 
-## Additional resources 
+## Misc
 
-### Reading 
+Some code to plot probability distributions together with values of interest highlighted. 
+
+```{r}
+value_mean = 3.73
+value_sd = 2.05/sqrt(40)
+q_low = qnorm(0.025, mean = value_mean, sd = value_sd)
+q_high = qnorm(0.975, mean = value_mean, sd = value_sd)
+qnorm(0.975) * value_sd
+
+# density function
+
+ggplot(data = tibble(x = c(2.73, 4.73)),
+       mapping = aes(x = x)) + 
+  stat_function(fun = ~ dnorm(.,
+                              mean = value_mean,
+                              sd = value_sd),
+                size = 2) + 
+  geom_vline(xintercept = c(q_low, q_high),
+             linetype = 2)
+
+
+# quantile function 
+df.paths = tibble(x = c(rep(c(0.025, 0.975), each = 2),
+                        -Inf, 0.025, -Inf, 0.975),
+                  y = c(2.9, q_low,
+                        2.9, q_high,
+                        q_low, q_low,
+                        q_high, q_high),
+                  group = rep(1:4, each = 2))
+
+ggplot(data = tibble(x = c(0, 1)),
+       mapping = aes(x = x)) + 
+  stat_function(fun = ~ qnorm(.,
+                              mean = value_mean,
+                              sd = value_sd)) + 
+  geom_path(data = df.paths,
+            mapping = aes(x = x,
+                          y = y,
+                          group = group),
+            color = "blue",
+            size = 2,
+            lineend = "round") + 
+  coord_cartesian(xlim = c(-0.05, 1.05),
+                  ylim = c(2.9, 4.5),
+                  expand = F)
+
+```
+
+
+## Additional resources
+
+### Reading
 
 - Judd, C. M., McClelland, G. H., & Ryan, C. S. (2011). Data analysis: A model comparison approach. Routledge. --> Chapters 1--4
 
-### Datacamp 
+### Datacamp
 
 - [Foundations of Inference](https://www.datacamp.com/courses/foundations-of-inference)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 

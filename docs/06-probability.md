@@ -25,7 +25,7 @@ opts_chunk$set(comment = "",
 ```
 
 
-## Counting 
+## Counting
 
 Imagine that there are three balls in an urn. The balls are labeled 1, 2, and 3. Let's consider a few possible situations. 
 
@@ -98,8 +98,8 @@ I've generated the figures below using the `DiagrammeR` package. It's a powerful
 <div class="figure">
 
 ```{=html}
-<div id="htmlwidget-78e3539d99749527ebfc" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-78e3539d99749527ebfc">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-03e8da7fbeba763d3d3e" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-03e8da7fbeba763d3d3e">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 <p class="caption">(\#fig:unnamed-chunk-4)Drawing two marbles out of an urn __with__ replacement.</p>
@@ -108,8 +108,8 @@ I've generated the figures below using the `DiagrammeR` package. It's a powerful
 <div class="figure">
 
 ```{=html}
-<div id="htmlwidget-f902b9c02f1e9bbc4aa0" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f902b9c02f1e9bbc4aa0">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d4cf974f18c62a4d2ccf" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d4cf974f18c62a4d2ccf">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 <p class="caption">(\#fig:unnamed-chunk-5)Drawing two marbles out of an urn __without__ replacement.</p>
@@ -133,7 +133,7 @@ df.letters %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   prob_3_correct
            <dbl>
 1              0
@@ -154,7 +154,7 @@ ggplot(data = df.letters,
 
 <img src="06-probability_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
-## Flipping a coin many times 
+## Flipping a coin many times
 
 
 ```r
@@ -186,7 +186,7 @@ ggplot(data = df.samples,
 <p class="caption">(\#fig:unnamed-chunk-8)A demonstration of the law of large numbers.</p>
 </div>
 
-## Clue guide to probability 
+## Clue guide to probability
 
 
 ```r
@@ -252,7 +252,7 @@ df.suspects %>%
 </tbody>
 </table>
 
-### Conditional probability 
+### Conditional probability
 
 
 ```r
@@ -264,7 +264,7 @@ df.suspects %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   p_prof_plum_given_male
                    <dbl>
 1                  0.333
@@ -280,7 +280,7 @@ df.suspects %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   p_prof_plum_given_male
                    <dbl>
 1                  0.333
@@ -290,11 +290,11 @@ df.suspects %>%
 
 
 ```{=html}
-<div id="htmlwidget-adfeeb7654af785d3a9d" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-adfeeb7654af785d3a9d">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f98833ada21feea2f263" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f98833ada21feea2f263">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
-## Probability operations 
+## Probability operations
 
 
 ```r
@@ -313,7 +313,7 @@ df.cards %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   p_hearts_given_queen
                  <dbl>
 1                 0.25
@@ -328,167 +328,147 @@ df.cards %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   p_hearts_given_queen
                  <dbl>
 1                 0.25
 ```
 
-## Bayesian reasoning example
+## Bayesian reasoning explained
 
 
 ```{=html}
-<div id="htmlwidget-c839ce22d5289c4c55d8" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c839ce22d5289c4c55d8">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-47571ed5789e766784a1" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-47571ed5789e766784a1">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
-## Bayesian networks 
+## Getting Bayes right matters
 
-### Sprinkler example
-
-
-```{=html}
-<div id="htmlwidget-be538c8c0bf30e2870c6" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-be538c8c0bf30e2870c6">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"\"]\n  1 -> 3 [label = \"\"]\n  2 -> 4 [label = \"\"] \n  3 -> 4 [label = \"\"]\n  \n  # labels for each node\n  1 [label = \"Cloudy\"]\n  2 [label = \"Sprinkler\"]\n  3 [label = \"Rain\"]\n  4 [label = \"Wet grass\"]\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-```
+### Bayesian reasoning example
 
 
 ```r
-# cloudy 
-df.cloudy = tibble(`p(C)` = 0.5)
+# prior probability of the disease
+p.D = 0.0001
 
-df.cloudy %>% 
-  kable() %>% 
-  kable_styling(bootstrap_options = "striped",
-                full_width = F,
-                font_size = 20)
+# sensitivity of the test 
+p.T_given_D = 0.999
+
+# specificity of the test 
+p.notT_given_notD = 0.999
+p.T_given_notD = (1 - p.notT_given_notD)
+
+# posterior given a positive test result 
+p.D_given_T = (p.T_given_D * p.D) / ((p.T_given_D * p.D) + (p.T_given_notD * (1-p.D)))
+
+p.D_given_T
 ```
 
-<table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> p(C) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.5 </td>
-  </tr>
-</tbody>
-</table>
+```
+[1] 0.0908347
+```
+
+### Bayesian reasoning example (COVID rapid test)
+
+https://pubmed.ncbi.nlm.nih.gov/34242764/#:~:text=The%20overall%20sensitivity%20of%20the,%25%20CI%2024.4%2D65.1).
+
 
 ```r
-# sprinkler given cloudy 
-df.sprinkler_given_cloudy = tibble(C = c("F", "T"),
-                                   `p(S)`= c(0.5, 0.1))
+# prior probability of the disease
+p.D = 0.1 
 
-df.sprinkler_given_cloudy %>% 
-  kable() %>% 
-  kable_styling(bootstrap_options = "striped",
-                full_width = F,
-                font_size = 20)
+# sensitivity covid rapid test
+p.T_given_D = 0.653
+
+# specificity of covid rapid test
+p.notT_given_notD = 0.999
+
+p.T_given_notD = (1 - p.notT_given_notD)
+
+# posterior given a positive test result 
+p.D_given_T = (p.T_given_D * p.D) / ((p.T_given_D * p.D) + (p.T_given_notD * (1-p.D)))
+
+# posterior given a negative test result 
+p.D_given_notT = ((1-p.T_given_D) * p.D) / (((1-p.T_given_D) * p.D) + ((1-p.T_given_notD) * (1-p.D)))
+
+str_c("Probability of COVID given a positive test: ", round(p.D_given_T * 100, 1), "%")
 ```
 
-<table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> C </th>
-   <th style="text-align:right;"> p(S) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 0.5 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 0.1 </td>
-  </tr>
-</tbody>
-</table>
+```
+[1] "Probability of COVID given a positive test: 98.6%"
+```
 
 ```r
-# rain given cloudy 
-df.rain_given_cloudy = tibble(C = c("F", "T"),
-                              `p(R)`= c(0.2, 0.8))
-
-df.rain_given_cloudy %>% 
-  kable() %>% 
-  kable_styling(bootstrap_options = "striped",
-                full_width = F,
-                font_size = 20)
+str_c("Probability of COVID given a negative test: ", round(p.D_given_notT * 100, 1), "%")
 ```
 
-<table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> C </th>
-   <th style="text-align:right;"> p(R) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 0.2 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 0.8 </td>
-  </tr>
-</tbody>
-</table>
+```
+[1] "Probability of COVID given a negative test: 3.7%"
+```
+
+### Most people in the hospital are vaccinated
+
 
 ```r
-# wet given sprinkler and rain  
-df.rain_given_sprinkler_and_rain = tibble(
-  S = rep(c("F", "T"), 2),
-  R = rep(c("F", "T"), each = 2),
-  `p(W)`= c(0, 0.9, 0.9, 0.99)
-)
+# probability of being vaccinated 
+p.V = 0.8 
 
-df.rain_given_sprinkler_and_rain %>% 
-  kable() %>% 
-  kable_styling(bootstrap_options = "striped",
-                full_width = F,
-                font_size = 20)
+# likelihood of hospital 
+p.H_given_V = 0.2
+p.H_given_notV = 0.5
+
+# posterior probability 
+p.V_given_H = (p.H_given_V * p.V) / ((p.H_given_V * p.V) + (p.H_given_notV * (1-p.V)))
+
+p.V_given_H
 ```
 
-<table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> S </th>
-   <th style="text-align:left;"> R </th>
-   <th style="text-align:right;"> p(W) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 0.90 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 0.90 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:left;"> T </td>
-   <td style="text-align:right;"> 0.99 </td>
-  </tr>
-</tbody>
-</table>
+```
+[1] 0.6153846
+```
 
-## Additional resources 
+## Building a Bayesis
 
-### Cheatsheets 
+### Dice example
+
+
+```r
+# prior
+p.four = 0.5
+p.six = 0.5
+
+# possibilities 
+df.possibilities = tibble(observation = 1:6,
+                          p.four = c(rep(1/4, 4), rep(0, 2)),
+                          p.six = c(rep(1/6, 6)))
+
+# data
+# data = c(4)
+# data = c(4, 2, 1)
+data = c(4, 2, 1, 3, 1)
+# data = c(4, 2, 1, 3, 1, 5)
+
+# likelihood
+p.data_given_four = prod(df.possibilities$p.four[data])
+p.data_given_six = prod(df.possibilities$p.six[data])
+
+# posterior
+p.four_given_data = (p.data_given_four * p.four) /  
+  ((p.data_given_four * p.four) + 
+     (p.data_given_six * p.six))
+
+p.four_given_data
+```
+
+```
+[1] 0.8836364
+```
+
+Given this data $d$ = [4, 2, 1, 3, 1], there is a 88% chance that the four sided die was rolled rather than the six sided die. 
+
+## Additional resources
+
+### Cheatsheets
 
 - [Probability cheatsheet](figures/probability.pdf)
 
@@ -497,26 +477,25 @@ df.rain_given_sprinkler_and_rain %>%
 - [Probability and Statistics with examples using R](http://www.isibang.ac.in/~athreya/psweur/)
 - [Learning statistics with R: Chapter 9 Introduction to probability](https://learningstatisticswithr-bookdown.netlify.com/probability.html#probstats)
 
-### Misc 
+### Misc
 
 - [Bayes' theorem in three panels](https://www.tjmahr.com/bayes-theorem-in-three-panels/)
 - [Statistics 110: Probability; course at Harvard](https://projects.iq.harvard.edu/stat110)  
 - [Bayes theorem and making probability intuitive](https://www.youtube.com/watch?v=HZGCoVF3YvM&feature=youtu.be)
-- [Causal inference with Bayes rule](https://gradientinstitute.org/blog/6/)
-  
-## Session info 
+
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -525,25 +504,27 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.4        purrr_0.3.4       
- [5] readr_1.4.0        tidyr_1.1.2        tibble_3.0.6       ggplot2_3.3.3     
- [9] tidyverse_1.3.0    DiagrammeR_1.0.6.1 arrangements_1.1.9 kableExtra_1.3.1  
-[13] knitr_1.31        
+ [1] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.9        purrr_0.3.4       
+ [5] readr_2.1.2        tidyr_1.2.0        tibble_3.1.7       ggplot2_3.3.6     
+ [9] tidyverse_1.3.1    DiagrammeR_1.0.9   arrangements_1.1.9 kableExtra_1.3.4  
+[13] knitr_1.39        
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6         lubridate_1.7.9.2  ps_1.6.0           visNetwork_2.0.9  
- [5] assertthat_0.2.1   digest_0.6.27      utf8_1.1.4         gmp_0.6-2         
- [9] R6_2.5.0           cellranger_1.1.0   backports_1.2.1    reprex_1.0.0      
-[13] evaluate_0.14      highr_0.8          httr_1.4.2         pillar_1.4.7      
-[17] rlang_0.4.10       readxl_1.3.1       rstudioapi_0.13    rmarkdown_2.6     
-[21] labeling_0.4.2     webshot_0.5.2      htmlwidgets_1.5.3  munsell_0.5.0     
-[25] broom_0.7.3        compiler_4.0.3     modelr_0.1.8       xfun_0.21         
-[29] pkgconfig_2.0.3    htmltools_0.5.1.1  tidyselect_1.1.0   bookdown_0.21     
-[33] fansi_0.4.2        viridisLite_0.3.0  crayon_1.4.1       dbplyr_2.0.0      
-[37] withr_2.4.1        grid_4.0.3         jsonlite_1.7.2     gtable_0.3.0      
-[41] lifecycle_1.0.0    DBI_1.1.1          magrittr_2.0.1     scales_1.1.1      
-[45] cli_2.3.0          stringi_1.5.3      farver_2.1.0       fs_1.5.0          
-[49] xml2_1.3.2         ellipsis_0.3.1     generics_0.1.0     vctrs_0.3.6       
-[53] RColorBrewer_1.1-2 tools_4.0.3        glue_1.4.2         hms_1.0.0         
-[57] yaml_2.2.1         colorspace_2.0-0   rvest_0.3.6        haven_2.3.1       
+ [1] svglite_2.1.0      lubridate_1.8.0    visNetwork_2.1.0   assertthat_0.2.1  
+ [5] digest_0.6.29      utf8_1.2.2         gmp_0.6-5          cellranger_1.1.0  
+ [9] R6_2.5.1           backports_1.4.1    reprex_2.0.1       evaluate_0.15     
+[13] highr_0.9          httr_1.4.3         pillar_1.7.0       rlang_1.0.2       
+[17] readxl_1.4.0       rstudioapi_0.13    jquerylib_0.1.4    rmarkdown_2.14    
+[21] labeling_0.4.2     webshot_0.5.3      htmlwidgets_1.5.4  munsell_0.5.0     
+[25] broom_0.8.0        compiler_4.1.2     modelr_0.1.8       xfun_0.30         
+[29] pkgconfig_2.0.3    systemfonts_1.0.4  htmltools_0.5.2    tidyselect_1.1.2  
+[33] bookdown_0.26      fansi_1.0.3        viridisLite_0.4.0  withr_2.5.0       
+[37] tzdb_0.3.0         crayon_1.5.1       dbplyr_2.1.1       grid_4.1.2        
+[41] jsonlite_1.8.0     gtable_0.3.0       lifecycle_1.0.1    DBI_1.1.2         
+[45] magrittr_2.0.3     scales_1.2.0       cli_3.3.0          stringi_1.7.6     
+[49] farver_2.1.0       fs_1.5.2           xml2_1.3.3         bslib_0.3.1       
+[53] ellipsis_0.3.2     generics_0.1.2     vctrs_0.4.1        RColorBrewer_1.1-3
+[57] tools_4.1.2        glue_1.6.2         hms_1.1.1          fastmap_1.1.0     
+[61] yaml_2.3.5         colorspace_2.0-3   rvest_1.0.2        haven_2.5.0       
+[65] sass_0.4.1        
 ```

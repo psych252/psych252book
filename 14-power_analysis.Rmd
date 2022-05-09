@@ -1,6 +1,6 @@
 # Power analysis
 
-## Learning goals 
+## Learning goals
 
 - Making decisions based on statistical inference.
 - The concept of statistical power. 
@@ -10,7 +10,7 @@
   - Understanding `map()` and its children. 
   - Understanding `nest()` and `unnest()`.
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 ```{r, message=FALSE}
 library("knitr")      # for knitting RMarkdown 
@@ -18,7 +18,6 @@ library("kableExtra") # for making nice tables
 library("broom")      # for tidying up model fits
 library("magrittr")   # for going all in with the pipe
 library("effectsize") # for computing effect size measures
-library("car")        # for Anova()
 library("pwr")        # for power calculations
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
@@ -31,20 +30,17 @@ theme_set(theme_classic() + #set the theme
 opts_chunk$set(comment = "",
                fig.show = "hold")
 
-# include references for used packages
-write_bib(.packages(), "packages.bib") 
-
 # suppress summary warnings 
 options(dplyr.summarise.inform = F)
 ```
 
-## Load data sets 
+## Load data sets
 
 ```{r, warning=F, message=F}
 df.poker = read_csv("data/poker.csv")
 ```
 
-## Decision-making 
+## Decision-making
 
 Figures to illustrate power: 
 
@@ -132,7 +128,7 @@ df.cohen = df.poker %>%
 print(df.cohen)
 ```
 
-## Determining sample size 
+## Determining sample size
 
 One way to determine sample size is by using the `pwr` package. While this packages is very convenient, we cannot compute power for all the hypotheses that we might be interested in testing. 
 
@@ -192,20 +188,22 @@ pwr.t.test(d = 0.3,
 
 So, to achieve a power of 0.8 for an effect size of d = 0.3, we would need to have 176 participants in each condition! 
 
-### Power analysis via simulation
+### Power analysis
 
 While the `pwr` package works great for relatively simple designs, it quickly reaches its limits. For example, you may be interested in the sample size required to achieve adequate power for detecting an interaction, or for a specific linear contrast. 
 
 Luckily, there is a very flexible approach to determining sample size: via simulation! 
 
-#### The general recipe 
+#### The general recipe
 
 - assume: significance level, n, effect size
 - simulate a large number of data sets of size n with the specified effect size
 - for each data set, run a statistical test to calculate the p-value
 - determine the probability of rejecting the H0 (given that H1 is true)
 
-#### Understanding `map()`
+#### Using `map()` and list columns
+
+##### Understanding `map()`
 
 `map()` is a powerful family of functions that's part of the `purrr` package (which is included in the `tidyverse`, so we don't have to load it separately). Using `map()` allows us to avoid nasty for-loops! 
 
@@ -244,14 +242,13 @@ str_c("Is tmp1 identical to tmp2? ", identical(tmp1, tmp2))
 str_c("Is tmp2 identical to tmp3? ", identical(tmp2, tmp3))
 ```
 
-##### Understanding `map()`'s children 
+###### Understanding `map()`'s children
 
 Notice that the output of `map()` is a list. 
 
 ```{r}
 map(.x = 1:3, .f = ~ .x^2)
 ```
-
 The `map()` function has many children that differ in what they output. For example, `map_dbl()` outputs a numeric vector instead of a list. 
 
 ```{r}
@@ -279,7 +276,8 @@ fun_make_df = function(x){
 }
 
 # bind data frames by row 
-map_dfr(1:3, ~ fun_make_df(.))
+map_dfr(.x = 1:3, 
+        .f = ~ fun_make_df(.))
 ```
 
 A nice use-case of the `map_dfr()` function can be to read in a number of csv files from individual participants into one larger data frame. Let's simulate some data first, and save the data of each participant as a separate csv file (using `map()` of course). 
@@ -294,7 +292,8 @@ fun_simulate_csv = function(x){
   write_csv(df, file = str_c("data/participant", x, ".csv"))
 }
 
-map(1:3, fun_simulate_csv)
+map(.x = 1:3, 
+    .f = ~ fun_simulate_csv(.))
 ```
 
 Now, let's read in the data from the three participants and combine it into a single data frame.
@@ -306,7 +305,7 @@ map_dfr(.x = 1:3,
 ```
 Notice how I used the `.id = ` argument of the function to add a `participant` column to my data frame in this case. 
 
-##### Use `map2()` for functions with more than one input 
+###### Use `map2()` for functions with more than one input
 
 If you have a function with more than one input, `map2()` is your friend. Here is a silly example: 
 
@@ -327,7 +326,7 @@ tibble(x = c(1.23, 2.13, 5.32),
                             .f = ~ round(.x, digits = .y)))
 ```
 
-##### Use pmap() to go all out (i.e. for functions with more than two arguments)
+###### Use pmap() to go all out (i.e. for functions with more than two arguments)
 
 `pmap()` is your friend for functions that have more than two arguments. Here is an example: 
 
@@ -335,31 +334,32 @@ tibble(x = c(1.23, 2.13, 5.32),
 tibble(x = c(1, 2, 3),
        y = c(23, 12, 1),
        z = c(4, 5, 4)) %>% 
-  mutate(result = pmap_dbl(.l = ., ~ ..1 * ..2 + ..3))
+  mutate(result = pmap_dbl(.l = ., 
+                           .f = ~ ..1 * ..2 + ..3))
 ```
 
 Notice than when using more than two arguments, we refer to each function argument with ..1, ..2, ..3, etc. 
 
-##### Practice 1 -- Having fun with `map()`
+###### Practice 1 -- Having fun with `map()`
 
 Use the `map2_dbl()` function to create a new variable in this data frame that's the maximum of each row across columns `a` and `b`. 
 
 ```{r}
-df = tibble(a = c(12, 14, 52, 23, 23),
-            b = c(29, 12, 4, 48, 37))
+df.practice = tibble(a = c(12, 14, 52, 23, 23),
+                     b = c(29, 12, 4, 48, 37))
 # write your code here 
 ```
 
 For the fast ones: For each row in the data frame, write a function that calculates the mean of columns `a` and `b`, and the rounds to the number of digits specified in column `d`. 
 
 ```{r}
-df = tibble(a = c(12.123, 53.234, 23.324, 54.232, 12.454),
-            b = c(12.456, 23.234, 6.736, 3.346, 7.232),
-            d = c(1, 2, 2, 3, 1))
+df.practice = tibble(a = c(12.123, 53.234, 23.324, 54.232, 12.454),
+                     b = c(12.456, 23.234, 6.736, 3.346, 7.232),
+                     d = c(1, 2, 2, 3, 1))
 # write your code here
 ```
 
-#### List columns 
+##### List columns
 
 `map()` becomes particularly powerful when combined with list columns. List columns allow you to put data frames into a column of your data frame. For example, you can do something like this: 
 
@@ -379,7 +379,7 @@ df.data %>%
   pluck("data", 1)
 ```
 
-##### `unnest()`
+###### `unnest()`
 
 For getting data frames out of list columns, we can use the `unnest()` function. 
 
@@ -388,7 +388,7 @@ df.data %>%
   unnest(cols = data)
 ```
 
-##### `nest()`
+###### `nest()`
 
 We can use the `nest()` function to create list columns. `nest()` works particularly well in combination with `group_by()`. For example, here I'm created three separate data sets where the size of each data set is determined by the `x` column.
 
@@ -415,7 +415,7 @@ print(df.data)
 
 And, of course, I can use unnest() to get back to my original data frame. 
 
-#### Combining `nest()` and `map()`
+##### Combining `nest()` and `map()`
 
 `nest()` and `map()` unfold their power together when it comes to fitting models. For example, consider that you want to fit a separate linear to subests of your data. Here is how you can do that using `nest()` and `map()`. 
 
@@ -432,7 +432,9 @@ What I want to do is to fit separate regression models predicting `mpg` (miles p
 df.data = mtcars %>%
   group_by(cyl) %>% 
   nest() %>% 
-  mutate(fit = map(data, ~ lm(mpg ~ 1 + wt, data = .)))
+  mutate(fit = map(.x = data,
+                   .f = ~ lm(formula = mpg ~ 1 + wt,
+                             data = .)))
 ```
 
 I first grouped by the `cyl` (the number of cylinders), used `nest()` to put the rest of the data into a list column, and then used `mutate()` to run a separate linear model on each data set and saved the modle result into the `fit` column. 
@@ -443,8 +445,10 @@ With some more wrangling, I could, for example, extract the coefficients of each
 mtcars %>%
   group_by(cyl) %>% 
   nest() %>% 
-  mutate(fit = map(data, ~ lm(mpg ~ 1 + wt, data = .)),
-         coef = map(fit, tidy)) %>% 
+  mutate(fit = map(.x = data, 
+                   .f = ~ lm(mpg ~ 1 + wt, data = .)),
+         coef = map(.x = fit, 
+                    .f = ~ tidy(.))) %>% 
   unnest(cols = coef) %>% 
   select(-c(data, fit))
 ```
@@ -453,29 +457,17 @@ Voila! A data frame that contains the coefficients for each of the three models.
 
 Base R has a number of functions like `apply()`, `sapply()`, `lapply()`, etc. that do similar things to `map()`. However, the `map()` family of functions works very well with the rest of the `tidyverse`, that's why we'll use it. 
 
-##### Practice 2 -- `map()`ping out the `nest()`
-
-In the `mtcars` data set, run separate linear models with `cyl` (number of cylinders) and `am` (whether the car has automatic or manual transmission) as predictors (including their interaction), and `mpg` (miles per galon), and `hp` (horse power) as dependent variables. Create a data frame that contains one column with the names of the dependent variables, one column with the names of the predictors, and one column with the p-value for each predictor. 
-
-Here is the general strategy for how to go about this: 
-
-- Make a data frame that only contains the dependent variables. 
-- Pass that data frame as a first argument to the `map()` function. 
-- The second argument in the `map()` function (the formula `f. = `) should be a linear model (`lm()`) for which you should use `.x` (the first argument from the `map()` function) as the dependent variable
-- Use the `Anova()` function to get the main effects for each of the predictors as well as the interaction effect. 
-- Use the `tidy()` function in combination with `map_dfr()` to extract the p-values
-
-```{r}
-# write your code here 
-```
-
 #### Power analysis via simulation
 
 So, after this long detour via `map()`, list columns, `nest()`, and `unnest()`, we can finally start doing some power analysis via simulation, yay! 
 
-##### Simulating the Binomial test 
+##### Simulating the Binomial test
 
 Let's start with the Binomial test that we played around with above. We want to use simulation to determine the sample size we need to have an 80% of detecting a difference between two proportions p = 0.75 and p = 0.5. 
+
+I'll first do it step by step, and then afterwards put all the code in one place together 
+
+###### Step by step
 
 Here is how we would go about this. First, I'll set up a simulation grid.
 
@@ -484,22 +476,27 @@ Here is how we would go about this. First, I'll set up a simulation grid.
 n_simulations = 10
 
 # set up simulation grid 
-df.power = crossing(n = seq(10, 40, 2),
-                    simulation = 1:n_simulations,
-                    p = 0.75) %>%
-  mutate(index = 1:n()) # add an index column
+df.power = expand_grid(n = seq(10, 40, 2),
+                       simulation = 1:n_simulations,
+                       p = 0.75) %>%
+  mutate(index = 1:n(),
+         .before = n) # add an index column
 
 df.power
 ```
 
-The `crossing()` function creates a data frame that contains all the combinations of the variables. 
+The `expand_grid()` function creates a data frame that contains all the combinations of the variables. 
 
 Now, let's generate data according to our hypothesis. 
 
 ```{r}
+set.seed(1)
+
 df.power = df.power %>% 
   group_by(index, n, simulation) %>% 
-  mutate(response = rbinom(n = n(), size = n, prob = p))
+  mutate(response = rbinom(n = 1,
+                           size = n,
+                           prob = p))
 
 df.power
 ```
@@ -508,13 +505,12 @@ The `response` variable now contains samples from the sample size `n` according 
 
 ```{r}
 df.power = df.power %>% # generate random data
-  group_by(index, simulation, p) %>% 
-  nest() %>% # put data in list column
-  mutate(fit = map(data, 
-                   ~ binom.test(x = .$response, # define formula
-                                n = .$n,
-                                p = 0.5,
-                                alternative = "two.sided")))
+  mutate(fit = map2(.x = response,
+                    .y = n,
+                    .f = ~ binom.test(x = .x, # define formula
+                                      n = .y,
+                                      p = 0.5,
+                                      alternative = "two.sided")))
 df.power
 ```
 
@@ -522,12 +518,14 @@ Now that we've fitted a bunch of binomial models, we only need to get at the p-v
 
 ```{r}
 df.power = df.power %>% 
-  mutate(coef = map(fit, tidy)) %>% 
+  mutate(coef = map(.x = fit,
+                    .f = ~ tidy(.))) %>% 
   select(simulation, p, index, coef) %>% 
   unnest(cols = coef) %>% 
-  rename(n = parameter)
+  select(index, n, simulation, p.value)
 df.power
 ```
+
 Finally, all that's left is to calculate power by looking at the proportion of times in which we rejected the null hypothesis. 
 
 ```{r}
@@ -551,13 +549,44 @@ ggplot(data = df.plot,
              linetype = 2,
              color = "gray50",
              size = 0.1) + 
-  geom_smooth(method = "loess") +
+  geom_smooth(method = "loess",
+              formula = "y ~ x") +
   geom_point()
 ```
 
 As expected, the power increases with the sample size n. 
 
-Now let's run the same simulation again, with a larger sample size, and also for two different alternative hypotheses: p1 = 0.75, and p2 = 0.9. 
+###### All in one
+
+Here is a slightly different way to run the same simulation we just did before in one go: 
+
+```{r}
+# make reproducible 
+set.seed(1)
+
+# number of simulations
+n_simulations = 5
+
+# run simulation 
+expand_grid(n = seq(10, 40, 2),
+            simulation = 1:n_simulations,
+            p = 0.75) %>% 
+  mutate(index = 1:n(),
+         .before = n) %>% 
+  group_by(index, n, p, simulation) %>% 
+  mutate(response = rbinom(n = 1,
+                           size = n,
+                           prob = p),
+         p.value = binom.test(x = response,
+                              n = n,
+                              p = 0.5,
+                              alternative = "two.sided")$p.value) %>% 
+  group_by(n, p) %>% 
+  summarize(power = sum(p.value < 0.05) / n()) %>% 
+  ungroup()
+```
+
+And another time with a larger sample size, and also for two different alternative hypotheses: p1 = 0.75, and p2 = 0.9. 
 
 ```{r, message=FALSE}
 # make reproducible 
@@ -567,23 +596,26 @@ set.seed(1)
 n_simulations = 100
 
 # run simulation 
-df.power = crossing(n = seq(10, 40, 2),
-                    simulation = 1:n_simulations,
-                    p = c(0.75, 0.9)) %>% # added another hypothesis here 
-  mutate(index = 1:n()) %>% 
-  group_by(index, n, simulation) %>% 
-  mutate(response = rbinom(n = n(), size = n, prob = p)) %>% 
-  group_by(index, simulation, p) %>% 
-  nest() %>% 
-  mutate(fit = map(data, 
-                   ~ binom.test(x = .$response,
-                          n = .$n,
-                          p = 0.5,
-                          alternative = "two.sided"))) %>% 
-  mutate(coef = map(fit, tidy)) %>% 
-  select(simulation, p, index, coef) %>% 
+df.power = expand_grid(n = seq(10, 40, 2),
+                       simulation = 1:n_simulations,
+                       p = c(0.75, 0.9)) %>% # added another hypothesis here 
+  mutate(index = 1:n(),
+         .before = n) %>% 
+  group_by(index, n, simulation) %>%
+  mutate(response = rbinom(n = 1,
+                           size = n,
+                           prob = p)) %>% 
+  ungroup() %>% 
+  mutate(fit = map2(.x = response,
+                    .y = n,
+                    .f = ~ binom.test(x = .x,
+                                      n = .y,
+                                      p = 0.5,
+                                      alternative = "two.sided"))) %>% 
+  mutate(coef = map(.x = fit,
+                    .f = ~ tidy(.))) %>% 
   unnest(cols = coef) %>% 
-  rename(n = parameter) %>% 
+  select(index, n, p, p.value) %>% 
   group_by(n, p) %>% 
   summarize(power = sum(p.value < 0.05) / n()) %>% 
   ungroup()
@@ -599,6 +631,7 @@ ggplot(data = df.power,
              color = "gray50",
              size = 0.1) + 
   geom_smooth(method = "loess",
+              formula = "y ~ x",
               color = "black") +
   geom_point(shape = 21) +
   labs(fill = "alternative") +
@@ -611,10 +644,11 @@ Let's simulate data for an independent samples t-test. To do so, we need to make
 
 The procedure will be very similar to the Binomial test above. The only thing that changes really is how we generate the data (and then some small wrangling differences). 
 
-Let's say that we collected the following pilotdata set: 
+Let's say that we collected the following pilot data set: 
 
 ```{r}
 set.seed(1)
+
 # parameters
 n = 10 
 mean1 = 10 
@@ -628,17 +662,20 @@ df.ttest = tibble(group1 = rnorm(n = n,
                   group2 = rnorm(n = n,
                                  mean = mean2,
                                  sd = sd2)) %>% 
-  pivot_longer(cols = everything())
+  pivot_longer(cols = everything()) %>% 
+  arrange(name)
 ```
 
 The two groups in our sample don't differ significantly from each other. 
 
 ```{r, message=FALSE}
+# visualize the data 
 ggplot(data = df.ttest,
        mapping = aes(x = name,
                      y = value)) + 
   stat_summary(fun.data = "mean_cl_boot")
 
+# compute a t-test
 t.test(formula = value ~ name, 
          data = df.ttest)
 ```
@@ -654,16 +691,18 @@ $$s_p = \sqrt\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}$$
 In our sample, the effect size Cohen's d was: 
 
 ```{r}
-df = df.ttest %>% 
+df.sample = df.ttest %>% 
   group_by(name) %>% 
   summarize(mean = mean(value),
             sd = sd(value),
             n = n()) %>% 
   ungroup()
 
-sp = sqrt(((df$n[1] - 1) * df$sd[1]^2 + (df$n[2] - 1) * df$sd[2]^2) / (df$n[1] + df$n[2] - 2))
+# compute the pooled standard deviation 
+sp = sqrt(((df.sample$n[1] - 1) * df.sample$sd[1]^2 + (df.sample$n[2] - 1) * 
+             df.sample$sd[2]^2) / (df.sample$n[1] + df.sample$n[2] - 2))
 
-d = abs(df$mean[1] - df$mean[2]) / sp
+d = abs(df.sample$mean[1] - df.sample$mean[2]) / sp
 
 d
 ```
@@ -684,19 +723,20 @@ So let's now calculate the means and standard deviations based on our pilot data
 set.seed(1)
 
 # parameters 
-mean1 = df$mean[1]
-mean2 = df$mean[2]
-sd1 = df$sd[1]
-sd2 = df$sd[2]
+mean1 = df.sample$mean[1]
+mean2 = df.sample$mean[2]
+sd1 = df.sample$sd[1]
+sd2 = df.sample$sd[2]
 
 # number of simulations
 n_simulations = 10
-# n_simulations = 50
+# n_simulations = 100
 
 # run simulation 
-df.power2 = crossing(n = seq(from = 10, to = 60, by = 2),
-                     simulation = 1:n_simulations) %>%
-  mutate(index = 1:n()) %>% 
+df.power2 = expand_grid(n = seq(from = 10, to = 60, by = 5),
+                        simulation = 1:n_simulations) %>%
+  mutate(index = 1:n(),
+         .before = n) %>% 
   group_by(index, n, simulation) %>% 
   mutate(data = list(tibble(group1 = rnorm(n = n,
                                            mean = mean1,
@@ -705,13 +745,15 @@ df.power2 = crossing(n = seq(from = 10, to = 60, by = 2),
                                            mean = mean2,
                                            sd = sd2)) %>% 
                        pivot_longer(cols = everything()))) %>% 
-  group_by(index, n, simulation) %>% 
-  mutate(p.value = map(data,
-                   ~ t.test(formula = value ~ name,
-                              data = .x)$p.value)) %>%
-  # mutate(coef = map(fit, tidy)) %>%
-  # select(simulation, n, index, coef) %>%
-  # unnest(cols = coef) %>%
+  mutate(fit = map(.x = data,
+                   .f = ~ lm(formula = value ~ 1 + name,
+                             data = .)),
+         parameters = map(.x = fit,
+                          .f = ~ tidy(.))) %>%
+  select(index, n, simulation,  parameters) %>% 
+  unnest(cols = parameters) %>% 
+  filter(term != "(Intercept)") %>% 
+  select(index, n, simulation, p.value) %>% 
   group_by(n) %>% 
   summarize(power = sum(p.value < 0.05) / n()) %>% 
   ungroup()
@@ -725,9 +767,13 @@ ggplot(data = df.power2,
              color = "gray50",
              size = 0.1) + 
   geom_smooth(method = "loess",
-              color = "black") +
+              color = "black",
+              formula = "y ~ x") +
   geom_point(shape = 21) + 
-  scale_x_discrete()
+  scale_x_continuous(breaks = seq(10, 60, 10),
+                     labels = seq(10, 60, 10)) + 
+  scale_y_continuous(breaks = seq(0, 1, 0.1),
+                     labels = seq(0, 1, 0.1))
 ```
 
 Let's compare to what we'd get from the `pwr` package. 
@@ -741,7 +787,7 @@ pwr.t.test(d = 0.5874251,
 
 Looks pretty similar! 
 
-##### Practice 3 -- Simulation of an interaction effect
+##### Practice 2 -- Simulation of an interaction effect
 
 Try to run a simulation to determine how many participants you would need to have an 80% chance of rejecting the null hypothesis that there is no interaction based on the following pilot data set:  
 
@@ -816,17 +862,17 @@ set.seed(1)
 # write your code here 
 ```
 
-## Additional resources 
+## Additional resources
 
-### Datacamp 
+### Datacamp
 
 - [Functional programming with purrr](https://www.datacamp.com/courses/foundations-of-functional-programming-with-purrr)
 
-### Cheatsheets 
+### Cheatsheets
 
 - [purrr](figures/purrr.pdf) 
 
-### Misc 
+### Misc
 
 - [Getting started with `pwr`](https://cran.r-project.org/web/packages/pwr/vignettes/pwr-vignette.html)
 - [Visualize power](https://rpsychologist.com/d3/NHST/)
@@ -836,13 +882,10 @@ set.seed(1)
 - [simglm](https://cran.r-project.org/web/packages/simglm/index.html): Alternative R package for running power analysis via simulation. 
 - [cautionary tale about using pilot studies for power calculations](https://nccih.nih.gov/grants/whatnccihfunds/pilot_studies)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 ```{r}
 sessionInfo()
 ```
-
-## References 
-

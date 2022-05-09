@@ -1,6 +1,6 @@
 # Linear model 1
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 
 ```r
@@ -20,7 +20,7 @@ opts_chunk$set(comment = "",
                fig.show = "hold")            
 ```
 
-## Correlation 
+## Correlation
 
 
 ```r
@@ -44,7 +44,7 @@ ggplot(data = df.correlation,
 
 <img src="10-linear_model1_files/figure-html/unnamed-chunk-3-1.png" width="672" />
 
-#### Variance 
+#### Variance
 
 Variance is the average squared difference between each data point and the mean: 
 
@@ -81,7 +81,7 @@ Warning: Use of `df.variance$y` is discouraged. Use `y` instead.
 
 <img src="10-linear_model1_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
-#### Covariance 
+#### Covariance
 
 Covariance is defined in the following way: 
 
@@ -251,7 +251,7 @@ df.spearman %>%
 ```
 
 ```
-# A tibble: 1 x 3
+# A tibble: 1 × 3
       r spearman r_ranks
   <dbl>    <dbl>   <dbl>
 1 0.851    0.836   0.836
@@ -367,10 +367,10 @@ df.example %>%
 ```
 
 ```
-# A tibble: 1 x 3
+# A tibble: 1 × 3
       r spearman r_ranks
   <dbl>    <dbl>   <dbl>
-1 0.878     1.00    1.00
+1 0.878        1       1
 ```
 
 ```r
@@ -405,7 +405,7 @@ df.example2 %>%
 ```
 
 ```
-# A tibble: 1 x 3
+# A tibble: 1 × 3
       r spearman r_ranks
   <dbl>    <dbl>   <dbl>
 1 0.919    0.467   0.467
@@ -422,7 +422,7 @@ ggplot(df.example2,
 
 <img src="10-linear_model1_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
-## Regression 
+## Regression
 
 
 ```r
@@ -527,7 +527,7 @@ df.compact_model %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
     SSE
   <dbl>
 1 5215.
@@ -569,7 +569,7 @@ df.augmented_model %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
     SSE
   <dbl>
 1 2397.
@@ -652,7 +652,6 @@ Let's load the credit card data:
 
 ```r
 df.credit = read_csv("data/credit.csv") %>% 
-  rename(index = X1) %>% 
   clean_names()
 ```
 
@@ -806,7 +805,7 @@ fit %>%
 ```
 
 ```
-# A tibble: 1 x 6
+# A tibble: 1 × 6
     min first_quantile median third_quantile   max  rmse
   <dbl>          <dbl>  <dbl>          <dbl> <dbl> <dbl>
 1 -804.          -349.  -54.4           332. 1100.  407.
@@ -956,7 +955,7 @@ fit %>%
 ```
 
 ```
-# A tibble: 1 x 2
+# A tibble: 1 × 2
   income .fitted
    <dbl>   <dbl>
 1    130   1033.
@@ -1019,19 +1018,19 @@ Here are some examples of what the residuals could look like when things go wron
 
 
 
-## Additional resources 
+## Additional resources
 
-### Datacamp 
+### Datacamp
 
 - [Statistical modeling 1](https://www.datacamp.com/courses/statistical-modeling-in-r-part-1)
 - [Statistical modeling 2](https://www.datacamp.com/courses/statistical-modeling-in-r-part-2)
 - [Correlation and regression](https://www.datacamp.com/courses/correlation-and-regression)
 
-### Misc 
+### Misc
 
 - [Spurious correlations](http://www.tylervigen.com/spurious-correlations)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -1041,13 +1040,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1056,26 +1055,28 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
- [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     ggplot2_3.3.3   
- [9] tidyverse_1.3.0  broom_0.7.3      janitor_2.1.0    kableExtra_1.3.1
-[13] knitr_1.31      
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
+ [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
+ [9] tidyverse_1.3.1  broom_0.8.0      janitor_2.1.0    kableExtra_1.3.4
+[13] knitr_1.39      
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6        lattice_0.20-41   lubridate_1.7.9.2 png_0.1-7        
- [5] ps_1.6.0          assertthat_0.2.1  digest_0.6.27     utf8_1.1.4       
- [9] R6_2.5.0          cellranger_1.1.0  backports_1.2.1   reprex_1.0.0     
-[13] evaluate_0.14     httr_1.4.2        highr_0.8         pillar_1.4.7     
-[17] rlang_0.4.10      readxl_1.3.1      rstudioapi_0.13   Matrix_1.3-2     
-[21] rmarkdown_2.6     splines_4.0.3     labeling_0.4.2    webshot_0.5.2    
-[25] munsell_0.5.0     compiler_4.0.3    modelr_0.1.8      xfun_0.21        
-[29] pkgconfig_2.0.3   mgcv_1.8-33       htmltools_0.5.1.1 tidyselect_1.1.0 
-[33] bookdown_0.21     fansi_0.4.2       viridisLite_0.3.0 crayon_1.4.1     
-[37] dbplyr_2.0.0      withr_2.4.1       grid_4.0.3        nlme_3.1-151     
-[41] jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0   DBI_1.1.1        
-[45] magrittr_2.0.1    scales_1.1.1      cli_2.3.0         stringi_1.5.3    
-[49] farver_2.1.0      fs_1.5.0          snakecase_0.11.0  xml2_1.3.2       
-[53] ellipsis_0.3.1    generics_0.1.0    vctrs_0.3.6       tools_4.0.3      
-[57] glue_1.4.2        hms_1.0.0         yaml_2.2.1        colorspace_2.0-0 
-[61] rvest_0.3.6       haven_2.3.1      
+ [1] httr_1.4.3        sass_0.4.1        bit64_4.0.5       vroom_1.5.7      
+ [5] jsonlite_1.8.0    viridisLite_0.4.0 splines_4.1.2     modelr_0.1.8     
+ [9] bslib_0.3.1       assertthat_0.2.1  highr_0.9         cellranger_1.1.0 
+[13] yaml_2.3.5        pillar_1.7.0      backports_1.4.1   lattice_0.20-45  
+[17] glue_1.6.2        digest_0.6.29     rvest_1.0.2       snakecase_0.11.0 
+[21] colorspace_2.0-3  htmltools_0.5.2   Matrix_1.4-1      pkgconfig_2.0.3  
+[25] haven_2.5.0       bookdown_0.26     scales_1.2.0      webshot_0.5.3    
+[29] svglite_2.1.0     tzdb_0.3.0        mgcv_1.8-40       generics_0.1.2   
+[33] farver_2.1.0      ellipsis_0.3.2    withr_2.5.0       cli_3.3.0        
+[37] magrittr_2.0.3    crayon_1.5.1      readxl_1.4.0      evaluate_0.15    
+[41] fs_1.5.2          fansi_1.0.3       nlme_3.1-157      xml2_1.3.3       
+[45] tools_4.1.2       hms_1.1.1         lifecycle_1.0.1   munsell_0.5.0    
+[49] reprex_2.0.1      compiler_4.1.2    jquerylib_0.1.4   systemfonts_1.0.4
+[53] rlang_1.0.2       grid_4.1.2        rstudioapi_0.13   labeling_0.4.2   
+[57] rmarkdown_2.14    gtable_0.3.0      DBI_1.1.2         R6_2.5.1         
+[61] lubridate_1.8.0   fastmap_1.1.0     bit_4.0.4         utf8_1.2.2       
+[65] stringi_1.7.6     parallel_4.1.2    png_0.1-7         vctrs_0.4.1      
+[69] dbplyr_2.1.1      tidyselect_1.1.2  xfun_0.30        
 ```

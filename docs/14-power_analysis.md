@@ -1,6 +1,6 @@
 # Power analysis
 
-## Learning goals 
+## Learning goals
 
 - Making decisions based on statistical inference.
 - The concept of statistical power. 
@@ -10,7 +10,7 @@
   - Understanding `map()` and its children. 
   - Understanding `nest()` and `unnest()`.
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 
 ```r
@@ -19,7 +19,6 @@ library("kableExtra") # for making nice tables
 library("broom")      # for tidying up model fits
 library("magrittr")   # for going all in with the pipe
 library("effectsize") # for computing effect size measures
-library("car")        # for Anova()
 library("pwr")        # for power calculations
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
@@ -33,28 +32,18 @@ theme_set(theme_classic() + #set the theme
 opts_chunk$set(comment = "",
                fig.show = "hold")
 
-# include references for used packages
-write_bib(.packages(), "packages.bib") 
-```
-
-```
-## Warning in utils::citation(..., lib.loc = lib.loc): no date field in DESCRIPTION
-## file of package 'effectsize'
-```
-
-```r
 # suppress summary warnings 
 options(dplyr.summarise.inform = F)
 ```
 
-## Load data sets 
+## Load data sets
 
 
 ```r
 df.poker = read_csv("data/poker.csv")
 ```
 
-## Decision-making 
+## Decision-making
 
 Figures to illustrate power: 
 
@@ -156,13 +145,13 @@ print(df.cohen)
 ```
 
 ```
-# A tibble: 1 x 8
+# A tibble: 1 × 8
   mean1 mean2  var1  var2    n1    n2    sp     d
   <dbl> <dbl> <dbl> <dbl> <int> <int> <dbl> <dbl>
 1  10.1  9.41  20.3  30.3   150   150  5.03 0.144
 ```
 
-## Determining sample size 
+## Determining sample size
 
 One way to determine sample size is by using the `pwr` package. While this packages is very convenient, we cannot compute power for all the hypotheses that we might be interested in testing. 
 
@@ -254,20 +243,22 @@ NOTE: n is number in *each* group
 
 So, to achieve a power of 0.8 for an effect size of d = 0.3, we would need to have 176 participants in each condition! 
 
-### Power analysis via simulation
+### Power analysis
 
 While the `pwr` package works great for relatively simple designs, it quickly reaches its limits. For example, you may be interested in the sample size required to achieve adequate power for detecting an interaction, or for a specific linear contrast. 
 
 Luckily, there is a very flexible approach to determining sample size: via simulation! 
 
-#### The general recipe 
+#### The general recipe
 
 - assume: significance level, n, effect size
 - simulate a large number of data sets of size n with the specified effect size
 - for each data set, run a statistical test to calculate the p-value
 - determine the probability of rejecting the H0 (given that H1 is true)
 
-#### Understanding `map()`
+#### Using `map()` and list columns
+
+##### Understanding `map()`
 
 `map()` is a powerful family of functions that's part of the `purrr` package (which is included in the `tidyverse`, so we don't have to load it separately). Using `map()` allows us to avoid nasty for-loops! 
 
@@ -311,7 +302,7 @@ As with many R functions, you can achieve the same outcome in many different way
 [1] "Is tmp2 identical to tmp3? TRUE"
 ```
 
-##### Understanding `map()`'s children 
+###### Understanding `map()`'s children
 
 Notice that the output of `map()` is a list. 
 
@@ -330,7 +321,6 @@ map(.x = 1:3, .f = ~ .x^2)
 [[3]]
 [1] 9
 ```
-
 The `map()` function has many children that differ in what they output. For example, `map_dbl()` outputs a numeric vector instead of a list. 
 
 
@@ -369,11 +359,12 @@ fun_make_df = function(x){
 }
 
 # bind data frames by row 
-map_dfr(1:3, ~ fun_make_df(.))
+map_dfr(.x = 1:3, 
+        .f = ~ fun_make_df(.))
 ```
 
 ```
-# A tibble: 9 x 3
+# A tibble: 9 × 3
   number group  value
    <int> <chr>  <dbl>
 1      1 A      1.33 
@@ -400,12 +391,13 @@ fun_simulate_csv = function(x){
   write_csv(df, file = str_c("data/participant", x, ".csv"))
 }
 
-map(1:3, fun_simulate_csv)
+map(.x = 1:3, 
+    .f = ~ fun_simulate_csv(.))
 ```
 
 ```
 [[1]]
-# A tibble: 3 x 2
+# A tibble: 3 × 2
     age responses
   <int>     <dbl>
 1    85      91.6
@@ -413,7 +405,7 @@ map(1:3, fun_simulate_csv)
 3    18     103. 
 
 [[2]]
-# A tibble: 5 x 2
+# A tibble: 5 × 2
     age responses
   <int>     <dbl>
 1    68     115. 
@@ -423,7 +415,7 @@ map(1:3, fun_simulate_csv)
 5    24     111. 
 
 [[3]]
-# A tibble: 4 x 2
+# A tibble: 4 × 2
     age responses
   <int>     <dbl>
 1    61      106.
@@ -442,7 +434,7 @@ map_dfr(.x = 1:3,
 ```
 
 ```
-# A tibble: 12 x 3
+# A tibble: 12 × 3
    participant   age responses
    <chr>       <dbl>     <dbl>
  1 1              85      91.6
@@ -460,7 +452,7 @@ map_dfr(.x = 1:3,
 ```
 Notice how I used the `.id = ` argument of the function to add a `participant` column to my data frame in this case. 
 
-##### Use `map2()` for functions with more than one input 
+###### Use `map2()` for functions with more than one input
 
 If you have a function with more than one input, `map2()` is your friend. Here is a silly example: 
 
@@ -488,7 +480,7 @@ tibble(x = c(1.23, 2.13, 5.32),
 ```
 
 ```
-# A tibble: 3 x 3
+# A tibble: 3 × 3
       x     n rounded
   <dbl> <dbl>   <dbl>
 1  1.23     0    1   
@@ -496,7 +488,7 @@ tibble(x = c(1.23, 2.13, 5.32),
 3  5.32     2    5.32
 ```
 
-##### Use pmap() to go all out (i.e. for functions with more than two arguments)
+###### Use pmap() to go all out (i.e. for functions with more than two arguments)
 
 `pmap()` is your friend for functions that have more than two arguments. Here is an example: 
 
@@ -505,11 +497,12 @@ tibble(x = c(1.23, 2.13, 5.32),
 tibble(x = c(1, 2, 3),
        y = c(23, 12, 1),
        z = c(4, 5, 4)) %>% 
-  mutate(result = pmap_dbl(.l = ., ~ ..1 * ..2 + ..3))
+  mutate(result = pmap_dbl(.l = ., 
+                           .f = ~ ..1 * ..2 + ..3))
 ```
 
 ```
-# A tibble: 3 x 4
+# A tibble: 3 × 4
       x     y     z result
   <dbl> <dbl> <dbl>  <dbl>
 1     1    23     4     27
@@ -519,14 +512,14 @@ tibble(x = c(1, 2, 3),
 
 Notice than when using more than two arguments, we refer to each function argument with ..1, ..2, ..3, etc. 
 
-##### Practice 1 -- Having fun with `map()`
+###### Practice 1 -- Having fun with `map()`
 
 Use the `map2_dbl()` function to create a new variable in this data frame that's the maximum of each row across columns `a` and `b`. 
 
 
 ```r
-df = tibble(a = c(12, 14, 52, 23, 23),
-            b = c(29, 12, 4, 48, 37))
+df.practice = tibble(a = c(12, 14, 52, 23, 23),
+                     b = c(29, 12, 4, 48, 37))
 # write your code here 
 ```
 
@@ -534,13 +527,13 @@ For the fast ones: For each row in the data frame, write a function that calcula
 
 
 ```r
-df = tibble(a = c(12.123, 53.234, 23.324, 54.232, 12.454),
-            b = c(12.456, 23.234, 6.736, 3.346, 7.232),
-            d = c(1, 2, 2, 3, 1))
+df.practice = tibble(a = c(12.123, 53.234, 23.324, 54.232, 12.454),
+                     b = c(12.456, 23.234, 6.736, 3.346, 7.232),
+                     d = c(1, 2, 2, 3, 1))
 # write your code here
 ```
 
-#### List columns 
+##### List columns
 
 `map()` becomes particularly powerful when combined with list columns. List columns allow you to put data frames into a column of your data frame. For example, you can do something like this: 
 
@@ -555,7 +548,7 @@ print(df.data)
 ```
 
 ```
-# A tibble: 1 x 3
+# A tibble: 1 × 3
   participant   age data            
         <dbl> <dbl> <list>          
 1           1    23 <tibble [3 × 2]>
@@ -570,7 +563,7 @@ df.data %>%
 ```
 
 ```
-# A tibble: 3 x 2
+# A tibble: 3 × 2
   trial response
   <dbl>    <dbl>
 1     1       23
@@ -578,7 +571,7 @@ df.data %>%
 3     3       37
 ```
 
-##### `unnest()`
+###### `unnest()`
 
 For getting data frames out of list columns, we can use the `unnest()` function. 
 
@@ -589,7 +582,7 @@ df.data %>%
 ```
 
 ```
-# A tibble: 3 x 4
+# A tibble: 3 × 4
   participant   age trial response
         <dbl> <dbl> <dbl>    <dbl>
 1           1    23     1       23
@@ -597,7 +590,7 @@ df.data %>%
 3           1    23     3       37
 ```
 
-##### `nest()`
+###### `nest()`
 
 We can use the `nest()` function to create list columns. `nest()` works particularly well in combination with `group_by()`. For example, here I'm created three separate data sets where the size of each data set is determined by the `x` column.
 
@@ -611,7 +604,7 @@ print(df.data)
 ```
 
 ```
-# A tibble: 6 x 3
+# A tibble: 6 × 3
   participant response1 response2
         <dbl>     <int>     <int>
 1           1         1         6
@@ -633,7 +626,7 @@ print(df.data)
 ```
 
 ```
-# A tibble: 3 x 2
+# A tibble: 3 × 2
   participant data            
         <dbl> <list>          
 1           1 <tibble [3 × 2]>
@@ -649,7 +642,7 @@ print(df.data)
 ```
 
 ```
-# A tibble: 6 x 3
+# A tibble: 6 × 3
   participant response1 response2
         <dbl>     <int>     <int>
 1           1         1         6
@@ -662,7 +655,7 @@ print(df.data)
 
 And, of course, I can use unnest() to get back to my original data frame. 
 
-#### Combining `nest()` and `map()`
+##### Combining `nest()` and `map()`
 
 `nest()` and `map()` unfold their power together when it comes to fitting models. For example, consider that you want to fit a separate linear to subests of your data. Here is how you can do that using `nest()` and `map()`. 
 
@@ -695,7 +688,9 @@ What I want to do is to fit separate regression models predicting `mpg` (miles p
 df.data = mtcars %>%
   group_by(cyl) %>% 
   nest() %>% 
-  mutate(fit = map(data, ~ lm(mpg ~ 1 + wt, data = .)))
+  mutate(fit = map(.x = data,
+                   .f = ~ lm(formula = mpg ~ 1 + wt,
+                             data = .)))
 ```
 
 I first grouped by the `cyl` (the number of cylinders), used `nest()` to put the rest of the data into a list column, and then used `mutate()` to run a separate linear model on each data set and saved the modle result into the `fit` column. 
@@ -707,14 +702,16 @@ With some more wrangling, I could, for example, extract the coefficients of each
 mtcars %>%
   group_by(cyl) %>% 
   nest() %>% 
-  mutate(fit = map(data, ~ lm(mpg ~ 1 + wt, data = .)),
-         coef = map(fit, tidy)) %>% 
+  mutate(fit = map(.x = data, 
+                   .f = ~ lm(mpg ~ 1 + wt, data = .)),
+         coef = map(.x = fit, 
+                    .f = ~ tidy(.))) %>% 
   unnest(cols = coef) %>% 
   select(-c(data, fit))
 ```
 
 ```
-# A tibble: 6 x 6
+# A tibble: 6 × 6
 # Groups:   cyl [3]
     cyl term        estimate std.error statistic    p.value
   <dbl> <chr>          <dbl>     <dbl>     <dbl>      <dbl>
@@ -730,30 +727,17 @@ Voila! A data frame that contains the coefficients for each of the three models.
 
 Base R has a number of functions like `apply()`, `sapply()`, `lapply()`, etc. that do similar things to `map()`. However, the `map()` family of functions works very well with the rest of the `tidyverse`, that's why we'll use it. 
 
-##### Practice 2 -- `map()`ping out the `nest()`
-
-In the `mtcars` data set, run separate linear models with `cyl` (number of cylinders) and `am` (whether the car has automatic or manual transmission) as predictors (including their interaction), and `mpg` (miles per galon), and `hp` (horse power) as dependent variables. Create a data frame that contains one column with the names of the dependent variables, one column with the names of the predictors, and one column with the p-value for each predictor. 
-
-Here is the general strategy for how to go about this: 
-
-- Make a data frame that only contains the dependent variables. 
-- Pass that data frame as a first argument to the `map()` function. 
-- The second argument in the `map()` function (the formula `f. = `) should be a linear model (`lm()`) for which you should use `.x` (the first argument from the `map()` function) as the dependent variable
-- Use the `Anova()` function to get the main effects for each of the predictors as well as the interaction effect. 
-- Use the `tidy()` function in combination with `map_dfr()` to extract the p-values
-
-
-```r
-# write your code here 
-```
-
 #### Power analysis via simulation
 
 So, after this long detour via `map()`, list columns, `nest()`, and `unnest()`, we can finally start doing some power analysis via simulation, yay! 
 
-##### Simulating the Binomial test 
+##### Simulating the Binomial test
 
 Let's start with the Binomial test that we played around with above. We want to use simulation to determine the sample size we need to have an 80% of detecting a difference between two proportions p = 0.75 and p = 0.5. 
+
+I'll first do it step by step, and then afterwards put all the code in one place together 
+
+###### Step by step
 
 Here is how we would go about this. First, I'll set up a simulation grid.
 
@@ -763,59 +747,64 @@ Here is how we would go about this. First, I'll set up a simulation grid.
 n_simulations = 10
 
 # set up simulation grid 
-df.power = crossing(n = seq(10, 40, 2),
-                    simulation = 1:n_simulations,
-                    p = 0.75) %>%
-  mutate(index = 1:n()) # add an index column
+df.power = expand_grid(n = seq(10, 40, 2),
+                       simulation = 1:n_simulations,
+                       p = 0.75) %>%
+  mutate(index = 1:n(),
+         .before = n) # add an index column
 
 df.power
 ```
 
 ```
-# A tibble: 160 x 4
-       n simulation     p index
-   <dbl>      <int> <dbl> <int>
- 1    10          1  0.75     1
- 2    10          2  0.75     2
- 3    10          3  0.75     3
- 4    10          4  0.75     4
- 5    10          5  0.75     5
- 6    10          6  0.75     6
- 7    10          7  0.75     7
- 8    10          8  0.75     8
- 9    10          9  0.75     9
-10    10         10  0.75    10
+# A tibble: 160 × 4
+   index     n simulation     p
+   <int> <dbl>      <int> <dbl>
+ 1     1    10          1  0.75
+ 2     2    10          2  0.75
+ 3     3    10          3  0.75
+ 4     4    10          4  0.75
+ 5     5    10          5  0.75
+ 6     6    10          6  0.75
+ 7     7    10          7  0.75
+ 8     8    10          8  0.75
+ 9     9    10          9  0.75
+10    10    10         10  0.75
 # … with 150 more rows
 ```
 
-The `crossing()` function creates a data frame that contains all the combinations of the variables. 
+The `expand_grid()` function creates a data frame that contains all the combinations of the variables. 
 
 Now, let's generate data according to our hypothesis. 
 
 
 ```r
+set.seed(1)
+
 df.power = df.power %>% 
   group_by(index, n, simulation) %>% 
-  mutate(response = rbinom(n = n(), size = n, prob = p))
+  mutate(response = rbinom(n = 1,
+                           size = n,
+                           prob = p))
 
 df.power
 ```
 
 ```
-# A tibble: 160 x 5
+# A tibble: 160 × 5
 # Groups:   index, n, simulation [160]
-       n simulation     p index response
-   <dbl>      <int> <dbl> <int>    <int>
- 1    10          1  0.75     1        7
- 2    10          2  0.75     2        9
- 3    10          3  0.75     3        6
- 4    10          4  0.75     4        8
- 5    10          5  0.75     5        6
- 6    10          6  0.75     6        8
- 7    10          7  0.75     7        8
- 8    10          8  0.75     8        8
- 9    10          9  0.75     9        6
-10    10         10  0.75    10        6
+   index     n simulation     p response
+   <int> <dbl>      <int> <dbl>    <int>
+ 1     1    10          1  0.75        8
+ 2     2    10          2  0.75        8
+ 3     3    10          3  0.75        7
+ 4     4    10          4  0.75        6
+ 5     5    10          5  0.75        9
+ 6     6    10          6  0.75        6
+ 7     7    10          7  0.75        5
+ 8     8    10          8  0.75        7
+ 9     9    10          9  0.75        7
+10    10    10         10  0.75        9
 # … with 150 more rows
 ```
 
@@ -824,31 +813,30 @@ The `response` variable now contains samples from the sample size `n` according 
 
 ```r
 df.power = df.power %>% # generate random data
-  group_by(index, simulation, p) %>% 
-  nest() %>% # put data in list column
-  mutate(fit = map(data, 
-                   ~ binom.test(x = .$response, # define formula
-                                n = .$n,
-                                p = 0.5,
-                                alternative = "two.sided")))
+  mutate(fit = map2(.x = response,
+                    .y = n,
+                    .f = ~ binom.test(x = .x, # define formula
+                                      n = .y,
+                                      p = 0.5,
+                                      alternative = "two.sided")))
 df.power
 ```
 
 ```
-# A tibble: 160 x 5
-# Groups:   simulation, p, index [160]
-   simulation     p index data             fit    
-        <int> <dbl> <int> <list>           <list> 
- 1          1  0.75     1 <tibble [1 × 2]> <htest>
- 2          2  0.75     2 <tibble [1 × 2]> <htest>
- 3          3  0.75     3 <tibble [1 × 2]> <htest>
- 4          4  0.75     4 <tibble [1 × 2]> <htest>
- 5          5  0.75     5 <tibble [1 × 2]> <htest>
- 6          6  0.75     6 <tibble [1 × 2]> <htest>
- 7          7  0.75     7 <tibble [1 × 2]> <htest>
- 8          8  0.75     8 <tibble [1 × 2]> <htest>
- 9          9  0.75     9 <tibble [1 × 2]> <htest>
-10         10  0.75    10 <tibble [1 × 2]> <htest>
+# A tibble: 160 × 6
+# Groups:   index, n, simulation [160]
+   index     n simulation     p response fit    
+   <int> <dbl>      <int> <dbl>    <int> <list> 
+ 1     1    10          1  0.75        8 <htest>
+ 2     2    10          2  0.75        8 <htest>
+ 3     3    10          3  0.75        7 <htest>
+ 4     4    10          4  0.75        6 <htest>
+ 5     5    10          5  0.75        9 <htest>
+ 6     6    10          6  0.75        6 <htest>
+ 7     7    10          7  0.75        5 <htest>
+ 8     8    10          8  0.75        7 <htest>
+ 9     9    10          9  0.75        7 <htest>
+10    10    10         10  0.75        9 <htest>
 # … with 150 more rows
 ```
 
@@ -857,30 +845,39 @@ Now that we've fitted a bunch of binomial models, we only need to get at the p-v
 
 ```r
 df.power = df.power %>% 
-  mutate(coef = map(fit, tidy)) %>% 
+  mutate(coef = map(.x = fit,
+                    .f = ~ tidy(.))) %>% 
   select(simulation, p, index, coef) %>% 
   unnest(cols = coef) %>% 
-  rename(n = parameter)
+  select(index, n, simulation, p.value)
+```
+
+```
+Adding missing grouping variables: `n`
+```
+
+```r
 df.power
 ```
 
 ```
-# A tibble: 160 x 11
-# Groups:   simulation, p, index [160]
-   simulation     p index estimate statistic p.value     n conf.low conf.high
-        <int> <dbl> <int>    <dbl>     <dbl>   <dbl> <dbl>    <dbl>     <dbl>
- 1          1  0.75     1      0.7         7  0.344     10    0.348     0.933
- 2          2  0.75     2      0.9         9  0.0215    10    0.555     0.997
- 3          3  0.75     3      0.6         6  0.754     10    0.262     0.878
- 4          4  0.75     4      0.8         8  0.109     10    0.444     0.975
- 5          5  0.75     5      0.6         6  0.754     10    0.262     0.878
- 6          6  0.75     6      0.8         8  0.109     10    0.444     0.975
- 7          7  0.75     7      0.8         8  0.109     10    0.444     0.975
- 8          8  0.75     8      0.8         8  0.109     10    0.444     0.975
- 9          9  0.75     9      0.6         6  0.754     10    0.262     0.878
-10         10  0.75    10      0.6         6  0.754     10    0.262     0.878
-# … with 150 more rows, and 2 more variables: method <chr>, alternative <chr>
+# A tibble: 160 × 4
+# Groups:   index, n, simulation [160]
+   index     n simulation p.value
+   <int> <dbl>      <int>   <dbl>
+ 1     1    10          1  0.109 
+ 2     2    10          2  0.109 
+ 3     3    10          3  0.344 
+ 4     4    10          4  0.754 
+ 5     5    10          5  0.0215
+ 6     6    10          6  0.754 
+ 7     7    10          7  1     
+ 8     8    10          8  0.344 
+ 9     9    10          9  0.344 
+10    10    10         10  0.0215
+# … with 150 more rows
 ```
+
 Finally, all that's left is to calculate power by looking at the proportion of times in which we rejected the null hypothesis. 
 
 
@@ -891,25 +888,25 @@ df.power %>%
 ```
 
 ```
-# A tibble: 16 x 2
+# A tibble: 16 × 2
        n power
- * <dbl> <dbl>
- 1    10   0.1
- 2    12   0.3
- 3    14   0.5
- 4    16   0.4
- 5    18   0.5
- 6    20   0.7
- 7    22   0.4
- 8    24   0.7
- 9    26   0.8
-10    28   0.7
-11    30   0.7
-12    32   0.5
-13    34   0.8
-14    36   0.9
-15    38   0.8
-16    40   0.7
+   <dbl> <dbl>
+ 1    10   0.2
+ 2    12   0.4
+ 3    14   0.4
+ 4    16   0.2
+ 5    18   0.2
+ 6    20   0.8
+ 7    22   0.6
+ 8    24   0.5
+ 9    26   0.7
+10    28   0.6
+11    30   0.8
+12    32   0.9
+13    34   0.9
+14    36   0.8
+15    38   1  
+16    40   1  
 ```
 
 Notice here that the power values fluctuate quite a bit. This is because we only ran 10 simulations for each sample size. To have more robust results, we need to increase the number of simulations. 
@@ -928,15 +925,69 @@ ggplot(data = df.plot,
              linetype = 2,
              color = "gray50",
              size = 0.1) + 
-  geom_smooth(method = "loess") +
+  geom_smooth(method = "loess",
+              formula = "y ~ x") +
   geom_point()
 ```
 
-<img src="14-power_analysis_files/figure-html/unnamed-chunk-37-1.png" width="672" />
+<img src="14-power_analysis_files/figure-html/unnamed-chunk-36-1.png" width="672" />
 
 As expected, the power increases with the sample size n. 
 
-Now let's run the same simulation again, with a larger sample size, and also for two different alternative hypotheses: p1 = 0.75, and p2 = 0.9. 
+###### All in one
+
+Here is a slightly different way to run the same simulation we just did before in one go: 
+
+
+```r
+# make reproducible 
+set.seed(1)
+
+# number of simulations
+n_simulations = 5
+
+# run simulation 
+expand_grid(n = seq(10, 40, 2),
+            simulation = 1:n_simulations,
+            p = 0.75) %>% 
+  mutate(index = 1:n(),
+         .before = n) %>% 
+  group_by(index, n, p, simulation) %>% 
+  mutate(response = rbinom(n = 1,
+                           size = n,
+                           prob = p),
+         p.value = binom.test(x = response,
+                              n = n,
+                              p = 0.5,
+                              alternative = "two.sided")$p.value) %>% 
+  group_by(n, p) %>% 
+  summarize(power = sum(p.value < 0.05) / n()) %>% 
+  ungroup()
+```
+
+```
+# A tibble: 16 × 3
+       n     p power
+   <dbl> <dbl> <dbl>
+ 1    10  0.75   0.2
+ 2    12  0.75   0.2
+ 3    14  0.75   0.4
+ 4    16  0.75   0.2
+ 5    18  0.75   0.6
+ 6    20  0.75   0.8
+ 7    22  0.75   0.6
+ 8    24  0.75   0.4
+ 9    26  0.75   0.6
+10    28  0.75   0.8
+11    30  0.75   0.8
+12    32  0.75   1  
+13    34  0.75   0.8
+14    36  0.75   0.8
+15    38  0.75   1  
+16    40  0.75   0.8
+```
+
+And another time with a larger sample size, and also for two different alternative hypotheses: p1 = 0.75, and p2 = 0.9. 
 
 
 ```r
@@ -947,23 +998,26 @@ set.seed(1)
 n_simulations = 100
 
 # run simulation 
-df.power = crossing(n = seq(10, 40, 2),
-                    simulation = 1:n_simulations,
-                    p = c(0.75, 0.9)) %>% # added another hypothesis here 
-  mutate(index = 1:n()) %>% 
-  group_by(index, n, simulation) %>% 
-  mutate(response = rbinom(n = n(), size = n, prob = p)) %>% 
-  group_by(index, simulation, p) %>% 
-  nest() %>% 
-  mutate(fit = map(data, 
-                   ~ binom.test(x = .$response,
-                          n = .$n,
-                          p = 0.5,
-                          alternative = "two.sided"))) %>% 
-  mutate(coef = map(fit, tidy)) %>% 
-  select(simulation, p, index, coef) %>% 
+df.power = expand_grid(n = seq(10, 40, 2),
+                       simulation = 1:n_simulations,
+                       p = c(0.75, 0.9)) %>% # added another hypothesis here 
+  mutate(index = 1:n(),
+         .before = n) %>% 
+  group_by(index, n, simulation) %>%
+  mutate(response = rbinom(n = 1,
+                           size = n,
+                           prob = p)) %>% 
+  ungroup() %>% 
+  mutate(fit = map2(.x = response,
+                    .y = n,
+                    .f = ~ binom.test(x = .x,
+                                      n = .y,
+                                      p = 0.5,
+                                      alternative = "two.sided"))) %>% 
+  mutate(coef = map(.x = fit,
+                    .f = ~ tidy(.))) %>% 
   unnest(cols = coef) %>% 
-  rename(n = parameter) %>% 
+  select(index, n, p, p.value) %>% 
   group_by(n, p) %>% 
   summarize(power = sum(p.value < 0.05) / n()) %>% 
   ungroup()
@@ -979,6 +1033,7 @@ ggplot(data = df.power,
              color = "gray50",
              size = 0.1) + 
   geom_smooth(method = "loess",
+              formula = "y ~ x",
               color = "black") +
   geom_point(shape = 21) +
   labs(fill = "alternative") +
@@ -993,11 +1048,12 @@ Let's simulate data for an independent samples t-test. To do so, we need to make
 
 The procedure will be very similar to the Binomial test above. The only thing that changes really is how we generate the data (and then some small wrangling differences). 
 
-Let's say that we collected the following pilotdata set: 
+Let's say that we collected the following pilot data set: 
 
 
 ```r
 set.seed(1)
+
 # parameters
 n = 10 
 mean1 = 10 
@@ -1011,18 +1067,21 @@ df.ttest = tibble(group1 = rnorm(n = n,
                   group2 = rnorm(n = n,
                                  mean = mean2,
                                  sd = sd2)) %>% 
-  pivot_longer(cols = everything())
+  pivot_longer(cols = everything()) %>% 
+  arrange(name)
 ```
 
 The two groups in our sample don't differ significantly from each other. 
 
 
 ```r
+# visualize the data 
 ggplot(data = df.ttest,
        mapping = aes(x = name,
                      y = value)) + 
   stat_summary(fun.data = "mean_cl_boot")
 
+# compute a t-test
 t.test(formula = value ~ name, 
          data = df.ttest)
 ```
@@ -1033,7 +1092,7 @@ t.test(formula = value ~ name,
 
 data:  value by name
 t = -1.3135, df = 13.035, p-value = 0.2117
-alternative hypothesis: true difference in means is not equal to 0
+alternative hypothesis: true difference in means between group group1 and group group2 is not equal to 0
 95 percent confidence interval:
  -3.9191375  0.9548788
 sample estimates:
@@ -1055,16 +1114,18 @@ In our sample, the effect size Cohen's d was:
 
 
 ```r
-df = df.ttest %>% 
+df.sample = df.ttest %>% 
   group_by(name) %>% 
   summarize(mean = mean(value),
             sd = sd(value),
             n = n()) %>% 
   ungroup()
 
-sp = sqrt(((df$n[1] - 1) * df$sd[1]^2 + (df$n[2] - 1) * df$sd[2]^2) / (df$n[1] + df$n[2] - 2))
+# compute the pooled standard deviation 
+sp = sqrt(((df.sample$n[1] - 1) * df.sample$sd[1]^2 + (df.sample$n[2] - 1) * 
+             df.sample$sd[2]^2) / (df.sample$n[1] + df.sample$n[2] - 2))
 
-d = abs(df$mean[1] - df$mean[2]) / sp
+d = abs(df.sample$mean[1] - df.sample$mean[2]) / sp
 
 d
 ```
@@ -1099,19 +1160,20 @@ So let's now calculate the means and standard deviations based on our pilot data
 set.seed(1)
 
 # parameters 
-mean1 = df$mean[1]
-mean2 = df$mean[2]
-sd1 = df$sd[1]
-sd2 = df$sd[2]
+mean1 = df.sample$mean[1]
+mean2 = df.sample$mean[2]
+sd1 = df.sample$sd[1]
+sd2 = df.sample$sd[2]
 
 # number of simulations
 n_simulations = 10
-# n_simulations = 50
+# n_simulations = 100
 
 # run simulation 
-df.power2 = crossing(n = seq(from = 10, to = 60, by = 2),
-                     simulation = 1:n_simulations) %>%
-  mutate(index = 1:n()) %>% 
+df.power2 = expand_grid(n = seq(from = 10, to = 60, by = 5),
+                        simulation = 1:n_simulations) %>%
+  mutate(index = 1:n(),
+         .before = n) %>% 
   group_by(index, n, simulation) %>% 
   mutate(data = list(tibble(group1 = rnorm(n = n,
                                            mean = mean1,
@@ -1120,13 +1182,15 @@ df.power2 = crossing(n = seq(from = 10, to = 60, by = 2),
                                            mean = mean2,
                                            sd = sd2)) %>% 
                        pivot_longer(cols = everything()))) %>% 
-  group_by(index, n, simulation) %>% 
-  mutate(p.value = map(data,
-                   ~ t.test(formula = value ~ name,
-                              data = .x)$p.value)) %>%
-  # mutate(coef = map(fit, tidy)) %>%
-  # select(simulation, n, index, coef) %>%
-  # unnest(cols = coef) %>%
+  mutate(fit = map(.x = data,
+                   .f = ~ lm(formula = value ~ 1 + name,
+                             data = .)),
+         parameters = map(.x = fit,
+                          .f = ~ tidy(.))) %>%
+  select(index, n, simulation,  parameters) %>% 
+  unnest(cols = parameters) %>% 
+  filter(term != "(Intercept)") %>% 
+  select(index, n, simulation, p.value) %>% 
   group_by(n) %>% 
   summarize(power = sum(p.value < 0.05) / n()) %>% 
   ungroup()
@@ -1140,9 +1204,13 @@ ggplot(data = df.power2,
              color = "gray50",
              size = 0.1) + 
   geom_smooth(method = "loess",
-              color = "black") +
+              color = "black",
+              formula = "y ~ x") +
   geom_point(shape = 21) + 
-  scale_x_discrete()
+  scale_x_continuous(breaks = seq(10, 60, 10),
+                     labels = seq(10, 60, 10)) + 
+  scale_y_continuous(breaks = seq(0, 1, 0.1),
+                     labels = seq(0, 1, 0.1))
 ```
 
 <img src="14-power_analysis_files/figure-html/unnamed-chunk-43-1.png" width="672" />
@@ -1172,7 +1240,7 @@ NOTE: n is number in *each* group
 
 Looks pretty similar! 
 
-##### Practice 3 -- Simulation of an interaction effect
+##### Practice 2 -- Simulation of an interaction effect
 
 Try to run a simulation to determine how many participants you would need to have an 80% chance of rejecting the null hypothesis that there is no interaction based on the following pilot data set:  
 
@@ -1254,17 +1322,17 @@ set.seed(1)
 # write your code here 
 ```
 
-## Additional resources 
+## Additional resources
 
-### Datacamp 
+### Datacamp
 
 - [Functional programming with purrr](https://www.datacamp.com/courses/foundations-of-functional-programming-with-purrr)
 
-### Cheatsheets 
+### Cheatsheets
 
 - [purrr](figures/purrr.pdf) 
 
-### Misc 
+### Misc
 
 - [Getting started with `pwr`](https://cran.r-project.org/web/packages/pwr/vignettes/pwr-vignette.html)
 - [Visualize power](https://rpsychologist.com/d3/NHST/)
@@ -1274,7 +1342,7 @@ set.seed(1)
 - [simglm](https://cran.r-project.org/web/packages/simglm/index.html): Alternative R package for running power analysis via simulation. 
 - [cautionary tale about using pilot studies for power calculations](https://nccih.nih.gov/grants/whatnccihfunds/pilot_studies)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -1284,13 +1352,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1299,46 +1367,44 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.4        purrr_0.3.4       
- [5] readr_1.4.0        tidyr_1.1.2        tibble_3.0.6       ggplot2_3.3.3     
- [9] tidyverse_1.3.0    pwr_1.3-0          car_3.0-10         carData_3.0-4     
-[13] effectsize_0.4.3-1 magrittr_2.0.1     broom_0.7.3        kableExtra_1.3.1  
-[17] knitr_1.31        
+ [1] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.9        purrr_0.3.4       
+ [5] readr_2.1.2        tidyr_1.2.0        tibble_3.1.7       ggplot2_3.3.6     
+ [9] tidyverse_1.3.1    pwr_1.3-0          effectsize_0.6.0.1 magrittr_2.0.3    
+[13] broom_0.8.0        kableExtra_1.3.4   knitr_1.39        
 
 loaded via a namespace (and not attached):
- [1] TH.data_1.0-10      colorspace_2.0-0    ellipsis_0.3.1     
- [4] rio_0.5.16          estimability_1.3    htmlTable_2.1.0    
- [7] parameters_0.12.0.1 base64enc_0.1-3     fs_1.5.0           
-[10] rstudioapi_0.13     farver_2.1.0        fansi_0.4.2        
-[13] mvtnorm_1.1-1       lubridate_1.7.9.2   xml2_1.3.2         
-[16] codetools_0.2-18    splines_4.0.3       Formula_1.2-4      
-[19] jsonlite_1.7.2      cluster_2.1.0       dbplyr_2.0.0       
-[22] png_0.1-7           compiler_4.0.3      httr_1.4.2         
-[25] emmeans_1.5.3       backports_1.2.1     assertthat_0.2.1   
-[28] Matrix_1.3-2        cli_2.3.0           htmltools_0.5.1.1  
-[31] tools_4.0.3         coda_0.19-4         gtable_0.3.0       
-[34] glue_1.4.2          Rcpp_1.0.6          cellranger_1.1.0   
-[37] vctrs_0.3.6         nlme_3.1-151        insight_0.13.1.1   
-[40] xfun_0.21           ps_1.6.0            openxlsx_4.2.3     
-[43] rvest_0.3.6         lifecycle_1.0.0     MASS_7.3-53        
-[46] zoo_1.8-8           scales_1.1.1        hms_1.0.0          
-[49] sandwich_3.0-0      RColorBrewer_1.1-2  yaml_2.2.1         
-[52] curl_4.3            gridExtra_2.3       rpart_4.1-15       
-[55] latticeExtra_0.6-29 stringi_1.5.3       highr_0.8          
-[58] bayestestR_0.8.3.1  checkmate_2.0.0     zip_2.1.1          
-[61] rlang_0.4.10        pkgconfig_2.0.3     evaluate_0.14      
-[64] lattice_0.20-41     htmlwidgets_1.5.3   labeling_0.4.2     
-[67] tidyselect_1.1.0    bookdown_0.21       R6_2.5.0           
-[70] generics_0.1.0      Hmisc_4.4-2         multcomp_1.4-15    
-[73] DBI_1.1.1           pillar_1.4.7        haven_2.3.1        
-[76] foreign_0.8-81      withr_2.4.1         mgcv_1.8-33        
-[79] survival_3.2-7      abind_1.4-5         nnet_7.3-15        
-[82] modelr_0.1.8        crayon_1.4.1        utf8_1.1.4         
-[85] rmarkdown_2.6       jpeg_0.1-8.1        grid_4.0.3         
-[88] readxl_1.3.1        data.table_1.13.6   reprex_1.0.0       
-[91] digest_0.6.27       webshot_0.5.2       xtable_1.8-4       
-[94] munsell_0.5.0       viridisLite_0.3.0  
+  [1] nlme_3.1-157        fs_1.5.2            lubridate_1.8.0    
+  [4] bit64_4.0.5         RColorBrewer_1.1-3  insight_0.17.0     
+  [7] webshot_0.5.3       httr_1.4.3          tools_4.1.2        
+ [10] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
+ [13] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
+ [16] mgcv_1.8-40         DBI_1.1.2           colorspace_2.0-3   
+ [19] nnet_7.3-17         withr_2.5.0         gridExtra_2.3      
+ [22] tidyselect_1.1.2    emmeans_1.7.3       bit_4.0.4          
+ [25] compiler_4.1.2      performance_0.9.0   cli_3.3.0          
+ [28] rvest_1.0.2         htmlTable_2.4.0     xml2_1.3.3         
+ [31] sandwich_3.0-1      labeling_0.4.2      bookdown_0.26      
+ [34] bayestestR_0.12.1   sass_0.4.1          checkmate_2.1.0    
+ [37] scales_1.2.0        mvtnorm_1.1-3       systemfonts_1.0.4  
+ [40] digest_0.6.29       foreign_0.8-82      rmarkdown_2.14     
+ [43] svglite_2.1.0       jpeg_0.1-9          base64enc_0.1-3    
+ [46] pkgconfig_2.0.3     htmltools_0.5.2     highr_0.9          
+ [49] dbplyr_2.1.1        fastmap_1.1.0       htmlwidgets_1.5.4  
+ [52] rlang_1.0.2         readxl_1.4.0        rstudioapi_0.13    
+ [55] jquerylib_0.1.4     generics_0.1.2      farver_2.1.0       
+ [58] zoo_1.8-10          jsonlite_1.8.0      vroom_1.5.7        
+ [61] Formula_1.2-4       parameters_0.17.0   Matrix_1.4-1       
+ [64] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.1    
+ [67] stringi_1.7.6       multcomp_1.4-19     yaml_2.3.5         
+ [70] MASS_7.3-57         grid_4.1.2          parallel_4.1.2     
+ [73] crayon_1.5.1        lattice_0.20-45     haven_2.5.0        
+ [76] splines_4.1.2       hms_1.1.1           pillar_1.7.0       
+ [79] estimability_1.3    codetools_0.2-18    reprex_2.0.1       
+ [82] glue_1.6.2          evaluate_0.15       latticeExtra_0.6-29
+ [85] data.table_1.14.2   modelr_0.1.8        png_0.1-7          
+ [88] vctrs_0.4.1         tzdb_0.3.0          cellranger_1.1.0   
+ [91] gtable_0.3.0        assertthat_0.2.1    datawizard_0.4.0   
+ [94] xfun_0.30           xtable_1.8-4        coda_0.19-4        
+ [97] survival_3.3-1      viridisLite_0.4.0   cluster_2.1.3      
+[100] TH.data_1.1-1       ellipsis_0.3.2     
 ```
-
-## References 
-

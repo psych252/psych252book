@@ -1,6 +1,6 @@
-# Simulation 1 
+# Simulation 1
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 ```{r, message=FALSE}
 library("knitr")
@@ -18,9 +18,9 @@ opts_chunk$set(comment = "",
                fig.show = "hold")
 ```
 
-## Sampling 
+## Sampling
 
-### Drawing numbers from a vector 
+### Drawing numbers from a vector
 
 ```{r}
 numbers = 1:3
@@ -62,7 +62,7 @@ numbers %>%
   sample(5)
 ```
 
-### Drawing rows from a data frame 
+### Drawing rows from a data frame
 
 Generate a data frame. 
 
@@ -96,7 +96,7 @@ help(slice)
 ```
 
 
-## Working with distributions 
+## Working with distributions
 
 Every distribution that R handles has four functions. There is a root name, for example, the root name for the normal distribution is `norm`. This root is prefixed by one of the letters here:
 
@@ -116,7 +116,7 @@ For the normal distribution, these functions are `dnorm`, `pnorm`, `qnorm`, and 
 
 You can get more info about the distributions that come with R via running `help(Distributions)` in your console. If you need a distribution that doesn't already come with R, then take a look [here](https://cran.r-project.org/web/views/Distributions.html) for many more distributions that can be loaded with different R packages. 
 
-### Plotting distributions 
+### Plotting distributions
 
 Here's an easy way to plot distributions in `ggplot2` using the `stat_function()` function. We take a look at a normal distribution of height (in cm) with `mean = 180` and `sd = 10` (as this is the example we run with in class).
 
@@ -146,7 +146,7 @@ ggplot(data = tibble(x = c(-5, 5)),
 Here, I defined a breakpoint function. If the value of `x` is below the breakpoint, `y` equals the value of the breakpoint. If the value of `x` is greater than the breakpoint, then `y` equals `x`. 
 
 
-### Sampling from distributions 
+### Sampling from distributions
 
 For each distribution, R provides a way of sampling random number from this distribution. For the normal distribution, we can use the `rnorm()` function to take random samples. 
 
@@ -453,7 +453,7 @@ ggplot(data = tibble(height = c(150, 210)),
   coord_cartesian(xlim = c(150, 210))
 ```
 
-### Inverse cumulative distribution 
+### Inverse cumulative distribution
 
 ```{r}
 ggplot(data = tibble(probability = c(0, 1)),
@@ -509,7 +509,7 @@ ggplot(data = tibble(probability = c(0, 1)),
 rm(list = str_subset(string = ls(), pattern = "tmp."))
 ```
 
-### Computing probabilities 
+### Computing probabilities
 
 #### Via probability distributions
 
@@ -546,7 +546,7 @@ rm(list = str_subset(string = ls(), pattern = "tmp."))
 
 We find that ~34% of the heights are between 170 and 180 cm. 
 
-#### Via sampling 
+#### Via sampling
 
 We can also compute the probability of observing certain events using sampling. We first generate samples from the desired probability distribution, and then use these samples to compute our statistic of interest. 
 
@@ -596,9 +596,9 @@ ggplot(data = df.samples,
 # remove all variables with tmp in their name 
 rm(list = str_subset(string = ls(), pattern = "tmp."))
 ```
-## Breakout room exercise 
+## Breakout room exercise
 
-### Make the plot 
+### Make the plot
 
 ```{r}
 ggplot(data = tibble(height = c(30, 70)),
@@ -606,7 +606,7 @@ ggplot(data = tibble(height = c(30, 70)),
   stat_function(fun = ~ dgamma(., shape = 50, rate = 1))
 ```
 
-### Analytic solutions 
+### Analytic solutions
 
 #### Question: A 60cm tall Penguin claims that no more than 10% are taller than her. Is she correct?
 
@@ -635,7 +635,7 @@ qgamma(0.75, shape = 50, rate = 1)
 
 Answer: A Penguin who is ~54.6cm tall is taller than 75% of the rest. 
 
-### Sampling solution 
+### Sampling solution
 
 Let's just simulate a bunch of Penguins, yay! 
 
@@ -648,7 +648,6 @@ df.penguins = tibble(height = rgamma(n = 100000, shape = 50, rate = 1))
 
 ```{r}
 df.penguins %>% 
-  # mutate(taller_than_60 = height > 60)
   summarize(probability = sum(height > 60) / n())
 ```
 
@@ -794,8 +793,8 @@ tmp.margin = 1
 
 df.camp %>% 
   filter(between(height,
-          left = tmp.height - tmp.margin,
-          right = tmp.height + tmp.margin)) %>% 
+                 left = tmp.height - tmp.margin,
+                 right = tmp.height + tmp.margin)) %>% 
   count(sport) %>% 
   pivot_wider(names_from = sport,
               values_from = n) %>% 
@@ -804,17 +803,13 @@ df.camp %>%
 
 Here, I've used the `between()` function which is a shortcut for otherwise writing `x >= left & x <= right`. You can play around with the margin to see how the result changes. 
 
-## Additional resources 
+## Additional resources
 
-### Cheatsheets 
-
-- [Probability cheatsheet](figures/probability.pdf)
-
-### Datacamp 
+### Datacamp
 
 - [Foundations of probability in R](https://www.datacamp.com/courses/foundations-of-probability-in-r)
   
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 

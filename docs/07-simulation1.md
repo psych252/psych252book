@@ -1,6 +1,6 @@
-# Simulation 1 
+# Simulation 1
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 
 ```r
@@ -20,9 +20,9 @@ opts_chunk$set(comment = "",
                fig.show = "hold")
 ```
 
-## Sampling 
+## Sampling
 
-### Drawing numbers from a vector 
+### Drawing numbers from a vector
 
 
 ```r
@@ -34,7 +34,7 @@ numbers %>%
 ```
 
 ```
- [1] 3 1 2 3 3 1 2 3 3 3
+ [1] 2 2 1 1 2 3 3 2 2 1
 ```
 
 Use the `prob = ` argument to change the probability with which each number should be drawn. 
@@ -50,7 +50,7 @@ numbers %>%
 ```
 
 ```
- [1] 1 1 1 1 1 1 1 3 1 1
+ [1] 3 1 1 2 1 1 1 1 2 1
 ```
 
 Make sure to set the seed in order to make your code reproducible. The code chunk below may give a different outcome each time is run. 
@@ -65,7 +65,7 @@ numbers %>%
 ```
 
 ```
-[1] 2 3 4 1 5
+[1] 5 2 1 4 3
 ```
 
 The chunk below will produce the same outcome every time it's run. 
@@ -84,7 +84,7 @@ numbers %>%
 [1] 1 4 3 5 2
 ```
 
-### Drawing rows from a data frame 
+### Drawing rows from a data frame
 
 Generate a data frame. 
 
@@ -108,7 +108,7 @@ df.data %>%
 ```
 
 ```
-# A tibble: 6 x 3
+# A tibble: 6 × 3
   trial stimulus rating
   <int> <chr>     <int>
 1     9 pet           9
@@ -127,7 +127,7 @@ df.data %>%
 ```
 
 ```
-# A tibble: 5 x 3
+# A tibble: 5 × 3
   trial stimulus rating
   <int> <chr>     <int>
 1     9 pet           9
@@ -145,7 +145,7 @@ help(slice)
 ```
 
 
-## Working with distributions 
+## Working with distributions
 
 Every distribution that R handles has four functions. There is a root name, for example, the root name for the normal distribution is `norm`. This root is prefixed by one of the letters here:
 
@@ -185,7 +185,7 @@ For the normal distribution, these functions are `dnorm`, `pnorm`, `qnorm`, and 
 
 You can get more info about the distributions that come with R via running `help(Distributions)` in your console. If you need a distribution that doesn't already come with R, then take a look [here](https://cran.r-project.org/web/views/Distributions.html) for many more distributions that can be loaded with different R packages. 
 
-### Plotting distributions 
+### Plotting distributions
 
 Here's an easy way to plot distributions in `ggplot2` using the `stat_function()` function. We take a look at a normal distribution of height (in cm) with `mean = 180` and `sd = 10` (as this is the example we run with in class).
 
@@ -221,7 +221,7 @@ ggplot(data = tibble(x = c(-5, 5)),
 Here, I defined a breakpoint function. If the value of `x` is below the breakpoint, `y` equals the value of the breakpoint. If the value of `x` is greater than the breakpoint, then `y` equals `x`. 
 
 
-### Sampling from distributions 
+### Sampling from distributions
 
 For each distribution, R provides a way of sampling random number from this distribution. For the normal distribution, we can use the `rnorm()` function to take random samples. 
 
@@ -671,7 +671,7 @@ ggplot(data = tibble(height = c(150, 210)),
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
-### Inverse cumulative distribution 
+### Inverse cumulative distribution
 
 
 ```r
@@ -739,7 +739,7 @@ rm(list = str_subset(string = ls(), pattern = "tmp."))
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
-### Computing probabilities 
+### Computing probabilities
 
 #### Via probability distributions
 
@@ -785,7 +785,7 @@ rm(list = str_subset(string = ls(), pattern = "tmp."))
 
 We find that ~34% of the heights are between 170 and 180 cm. 
 
-#### Via sampling 
+#### Via sampling
 
 We can also compute the probability of observing certain events using sampling. We first generate samples from the desired probability distribution, and then use these samples to compute our statistic of interest. 
 
@@ -838,9 +838,9 @@ rm(list = str_subset(string = ls(), pattern = "tmp."))
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-25-1.png" width="672" />
-## Breakout room exercise 
+## Breakout room exercise
 
-### Make the plot 
+### Make the plot
 
 
 ```r
@@ -851,7 +851,7 @@ ggplot(data = tibble(height = c(30, 70)),
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-26-1.png" width="672" />
 
-### Analytic solutions 
+### Analytic solutions
 
 #### Question: A 60cm tall Penguin claims that no more than 10% are taller than her. Is she correct?
 
@@ -895,7 +895,7 @@ qgamma(0.75, shape = 50, rate = 1)
 
 Answer: A Penguin who is ~54.6cm tall is taller than 75% of the rest. 
 
-### Sampling solution 
+### Sampling solution
 
 Let's just simulate a bunch of Penguins, yay! 
 
@@ -910,12 +910,11 @@ df.penguins = tibble(height = rgamma(n = 100000, shape = 50, rate = 1))
 
 ```r
 df.penguins %>% 
-  # mutate(taller_than_60 = height > 60)
   summarize(probability = sum(height > 60) / n())
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   probability
         <dbl>
 1      0.0835
@@ -932,7 +931,7 @@ df.penguins %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   probability
         <dbl>
 1      0.0387
@@ -951,7 +950,7 @@ df.penguins %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   height
    <dbl>
 1   54.6
@@ -1038,7 +1037,7 @@ df.camp %>% print()
 ```
 
 ```
-# A tibble: 10,000 x 3
+# A tibble: 10,000 × 3
      kid sport      height
    <int> <chr>       <dbl>
  1     1 basketball   165.
@@ -1105,8 +1104,8 @@ tmp.margin = 1
 
 df.camp %>% 
   filter(between(height,
-          left = tmp.height - tmp.margin,
-          right = tmp.height + tmp.margin)) %>% 
+                 left = tmp.height - tmp.margin,
+                 right = tmp.height + tmp.margin)) %>% 
   count(sport) %>% 
   pivot_wider(names_from = sport,
               values_from = n) %>% 
@@ -1114,7 +1113,7 @@ df.camp %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   prob_basketball
             <dbl>
 1           0.632
@@ -1122,17 +1121,13 @@ df.camp %>%
 
 Here, I've used the `between()` function which is a shortcut for otherwise writing `x >= left & x <= right`. You can play around with the margin to see how the result changes. 
 
-## Additional resources 
+## Additional resources
 
-### Cheatsheets 
-
-- [Probability cheatsheet](figures/probability.pdf)
-
-### Datacamp 
+### Datacamp
 
 - [Foundations of probability in R](https://www.datacamp.com/courses/foundations-of-probability-in-r)
   
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -1142,13 +1137,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1157,24 +1152,26 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
- [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     ggplot2_3.3.3   
- [9] tidyverse_1.3.0  patchwork_1.1.1  MASS_7.3-53      kableExtra_1.3.1
-[13] knitr_1.31      
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
+ [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
+ [9] tidyverse_1.3.1  patchwork_1.1.1  MASS_7.3-57      kableExtra_1.3.4
+[13] knitr_1.39      
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.1.0  xfun_0.21         haven_2.3.1       colorspace_2.0-0 
- [5] vctrs_0.3.6       generics_0.1.0    htmltools_0.5.1.1 viridisLite_0.3.0
- [9] yaml_2.2.1        utf8_1.1.4        rlang_0.4.10      pillar_1.4.7     
-[13] withr_2.4.1       glue_1.4.2        DBI_1.1.1         dbplyr_2.0.0     
-[17] modelr_0.1.8      readxl_1.3.1      lifecycle_1.0.0   cellranger_1.1.0 
-[21] munsell_0.5.0     gtable_0.3.0      rvest_0.3.6       evaluate_0.14    
-[25] labeling_0.4.2    ps_1.6.0          fansi_0.4.2       highr_0.8        
-[29] broom_0.7.3       Rcpp_1.0.6        scales_1.1.1      backports_1.2.1  
-[33] webshot_0.5.2     jsonlite_1.7.2    farver_2.1.0      fs_1.5.0         
-[37] hms_1.0.0         digest_0.6.27     stringi_1.5.3     bookdown_0.21    
-[41] grid_4.0.3        cli_2.3.0         tools_4.0.3       magrittr_2.0.1   
-[45] crayon_1.4.1      pkgconfig_2.0.3   ellipsis_0.3.1    xml2_1.3.2       
-[49] reprex_1.0.0      lubridate_1.7.9.2 assertthat_0.2.1  rmarkdown_2.6    
-[53] httr_1.4.2        rstudioapi_0.13   R6_2.5.0          compiler_4.0.3   
+ [1] svglite_2.1.0     lubridate_1.8.0   assertthat_0.2.1  digest_0.6.29    
+ [5] utf8_1.2.2        R6_2.5.1          cellranger_1.1.0  backports_1.4.1  
+ [9] reprex_2.0.1      evaluate_0.15     httr_1.4.3        highr_0.9        
+[13] pillar_1.7.0      rlang_1.0.2       readxl_1.4.0      rstudioapi_0.13  
+[17] jquerylib_0.1.4   rmarkdown_2.14    labeling_0.4.2    webshot_0.5.3    
+[21] munsell_0.5.0     broom_0.8.0       compiler_4.1.2    modelr_0.1.8     
+[25] xfun_0.30         pkgconfig_2.0.3   systemfonts_1.0.4 htmltools_0.5.2  
+[29] tidyselect_1.1.2  bookdown_0.26     fansi_1.0.3       viridisLite_0.4.0
+[33] crayon_1.5.1      tzdb_0.3.0        dbplyr_2.1.1      withr_2.5.0      
+[37] grid_4.1.2        jsonlite_1.8.0    gtable_0.3.0      lifecycle_1.0.1  
+[41] DBI_1.1.2         magrittr_2.0.3    scales_1.2.0      cli_3.3.0        
+[45] stringi_1.7.6     farver_2.1.0      fs_1.5.2          xml2_1.3.3       
+[49] bslib_0.3.1       ellipsis_0.3.2    generics_0.1.2    vctrs_0.4.1      
+[53] tools_4.1.2       glue_1.6.2        hms_1.1.1         fastmap_1.1.0    
+[57] yaml_2.3.5        colorspace_2.0-3  rvest_1.0.2       haven_2.5.0      
+[61] sass_0.4.1       
 ```

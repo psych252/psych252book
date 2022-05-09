@@ -1,6 +1,6 @@
 # Linear mixed effects models 2
 
-## Learning goals 
+## Learning goals
 
 - An `lmer()` worked example
   - complete pooling vs. no pooling vs. partial pooling
@@ -11,7 +11,7 @@
   - non-homogeneity of variance 
   - Simpson's paradox 
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 
 ```r
@@ -20,7 +20,7 @@ library("kableExtra")  # for making nice tables
 library("janitor")     # for cleaning column names
 library("broom.mixed") # for tidying up linear models 
 library("ggeffects")   # for plotting marginal effects
-library("afex")        # for the mixed() function 
+library("emmeans")     # for the joint_tests() function 
 library("lme4")        # for linear mixed effects models
 library("performance") # for assessing model performance
 library("see")         # for assessing model performance
@@ -34,9 +34,6 @@ theme_set(theme_classic() + #set the theme
 
 opts_chunk$set(comment = "",
                fig.show = "hold")
-
-# include references for used packages
-write_bib(.packages(), "packages.bib") 
 ```
 
 ## A worked example
@@ -85,7 +82,7 @@ ggplot(data = df.sleep,
 
 The plot shows the effect of the number of days of sleep deprivation on the average reaction time (presumably in an experiment). Note that for participant 373 and 374 we only have one and two data points respectively. 
 
-### Complete pooling 
+### Complete pooling
 
 Let's first fit a model the simply combines all the data points. This model ignores the dependence structure in the data (i.e. the fact that we have repeated observations from the same participants). 
 
@@ -96,8 +93,7 @@ fit.complete = lm(formula = reaction ~ days,
 
 fit.params = tidy(fit.complete)
 
-fit.complete %>% 
-  summary()
+summary(fit.complete)
 ```
 
 ```
@@ -164,7 +160,7 @@ ggplot(data = df.sleep,
 
 The model predicts the same relationship between sleep deprivation and reaction time for each participant (not surprising since we didn't even tell the model that this data is based on different participants). 
 
-### No pooling 
+### No pooling
 
 We could also fit separate regressions for each participant. Let's do that.
 
@@ -210,7 +206,7 @@ ggplot(data = df.sleep,
 
 When we fit separate regression, no information is shared between participants. 
 
-### Partial pooling 
+### Partial pooling
 
 By usign linear mixed effects models, we are partially pooling information. That is, the estimates for one participant are influenced by the rest of the participants.
 
@@ -253,7 +249,7 @@ ggplot(data = .,
 
 As we can see, the lines for each participant are different. We've allowed for the intercept as well as the relationship between sleep deprivation and reaction time to be different between participants. 
 
-#### Only random intercepts 
+#### Only random intercepts
 
 Let's fit a model that only allows for the intercepts to vary between participants. 
 
@@ -288,7 +284,7 @@ ggplot(data = .,
 
 Now, all the lines are parallel but the intercept differs between participants. 
 
-#### Only random slopes 
+#### Only random slopes
 
 Finally, let's compare a model that only allows for the slopes to differ but not the intercepts. 
 
@@ -323,7 +319,7 @@ ggplot(data = .,
 
 Here, all the lines have the same starting point (i.e. the same intercept) but the slopes are different. 
 
-### Compare results 
+### Compare results
 
 Let's compare the results of the different methods -- complete pooling, no pooling, and partial pooling (with random intercepts and slopes). 
 
@@ -366,8 +362,10 @@ df.partial_pooling = fit.lmer %>%
 
 # combine results
 df.pooling = df.partial_pooling %>% 
-  left_join(df.complete_pooling) %>% 
-  left_join(df.no_pooling)
+  left_join(df.complete_pooling,
+            by = c("reaction", "days")) %>% 
+  left_join(df.no_pooling,
+            by = c("subject", "reaction", "days"))
 ```
 
 Let's compare the predictions of the different models visually: 
@@ -424,14 +422,13 @@ ggplot(data = df.pooling %>%
 
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
-#### Coefficients 
+#### Coefficients
 
 One good way to get a sense for what the different models are doing is by taking a look at the coefficients: 
 
 
 ```r
-fit.complete_pooling %>% 
-  coef()
+coef(fit.complete_pooling)
 ```
 
 ```
@@ -441,8 +438,7 @@ fit.complete_pooling %>%
 
 
 ```r
-fit.random_intercept %>% 
-  coef()
+coef(fit.random_intercept)
 ```
 
 ```
@@ -475,8 +471,7 @@ attr(,"class")
 
 
 ```r
-fit.random_slope %>% 
-  coef()
+coef(fit.random_slope)
 ```
 
 ```
@@ -509,8 +504,7 @@ attr(,"class")
 
 
 ```r
-fit.random_intercept_slope %>% 
-  coef()
+coef(fit.random_intercept_slope)
 ```
 
 ```
@@ -541,7 +535,7 @@ attr(,"class")
 [1] "coef.mer"
 ```
 
-#### Shrinkage 
+#### Shrinkage
 
 In mixed effects models, the variance of parameter estimates across participants shrinks compared to a no pooling model (where we fit a different regression to each participant). Expressed differently, individual parameter estimates are borrowing strength from the overall data set in mixed effects models. 
 
@@ -550,7 +544,7 @@ In mixed effects models, the variance of parameter estimates across participants
 # get estimates from partial pooling model
 df.partial_pooling = fit.random_intercept_slope %>% 
   coef() %>% 
-  .[[1]] %>% 
+  .$subject %>% 
   rownames_to_column("subject") %>% 
   clean_names()
 
@@ -573,7 +567,6 @@ df.plot = df.sleep %>%
                values_to = "value") %>% 
   mutate(index = factor(index, levels = c("intercept", "days")))
 
-
 # visualize the results  
 ggplot(data = df.plot,
        mapping = aes(x = value,
@@ -593,117 +586,24 @@ Warning: Removed 1 rows containing non-finite values (stat_density).
 
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 
-### Getting p-values 
+### Getting p-values
 
-To get p-values for mixed effects models, I recommend using the `mixed()` function from the `afex` package.
+To get p-values for mixed effects models, I recommend using the `joint_tests()` function from the `emmeans` package.
 
 
 ```r
 lmer(formula = reaction ~ 1 + days + (1 + days | subject),
      data = df.sleep) %>% 
-  summary()
+  joint_tests()
 ```
 
 ```
-Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-lmerModLmerTest]
-Formula: reaction ~ 1 + days + (1 + days | subject)
-   Data: df.sleep
-
-REML criterion at convergence: 1771.4
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--3.9707 -0.4703  0.0276  0.4594  5.2009 
-
-Random effects:
- Groups   Name        Variance Std.Dev. Corr
- subject  (Intercept) 582.72   24.140       
-          days         35.03    5.919   0.07
- Residual             649.36   25.483       
-Number of obs: 183, groups:  subject, 20
-
-Fixed effects:
-            Estimate Std. Error      df t value Pr(>|t|)    
-(Intercept)  252.543      6.433  19.295  39.257  < 2e-16 ***
-days          10.452      1.542  17.163   6.778 3.06e-06 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-     (Intr)
-days -0.137
-```
-
-```r
-mixed(formula = reaction ~ 1 + days + (1 + days | subject),
-      data = df.sleep,
-      method = "KR")
-```
-
-```
-Contrasts set to contr.sum for the following variables: subject
-```
-
-```
-Numerical variables NOT centered on 0: days
-If in interactions, interpretation of lower order (e.g., main) effects difficult.
-```
-
-```
-Fitting one lmer() model. [DONE]
-Calculating p-values. [DONE]
-```
-
-```
-Mixed Model Anova Table (Type 3 tests, KR-method)
-
-Model: reaction ~ 1 + days + (1 + days | subject)
-Data: df.sleep
-  Effect       df         F p.value
-1   days 1, 17.08 45.53 ***   <.001
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+ model term df1   df2 F.ratio p.value
+ days         1 17.08  45.531  <.0001
 ```
 
 Our good ol' model comparison approach produces a Likelihood ratio test in this case: 
 
-
-```r
-mixed(formula = reaction ~ 1 + days + (1 + days | subject),
-      data = df.sleep,
-      method = "LRT")
-```
-
-```
-Contrasts set to contr.sum for the following variables: subject
-```
-
-```
-Numerical variables NOT centered on 0: days
-If in interactions, interpretation of lower order (e.g., main) effects difficult.
-```
-
-```
-REML argument to lmer() set to FALSE for method = 'PB' or 'LRT'
-```
-
-```
-Fitting 2 (g)lmer() models:
-[..]
-```
-
-```
-Mixed Model Anova Table (Type 3 tests, LRT-method)
-
-Model: reaction ~ 1 + days + (1 + days | subject)
-Data: df.sleep
-Df full model: 6
-  Effect df     Chisq p.value
-1   days  1 23.60 ***   <.001
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
-```
 
 ```r
 fit1 = lmer(formula = reaction ~ 1 + days + (1 + days | subject),
@@ -733,7 +633,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ### Reporting results
 
-#### Plotting marginal effects 
+#### Plotting marginal effects
 
 
 ```r
@@ -761,7 +661,7 @@ ggplot(data = df.plot,
 
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-27-1.png" width="672" /><img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-27-2.png" width="672" />
 
-#### Checking model performance 
+#### Checking model performance
 
 
 ```r
@@ -771,7 +671,8 @@ lmer(formula = reaction ~ 1 + days + (1 + days | subject),
 ```
 
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-28-1.png" width="672" />
-## Simulating a linear mixed effects model 
+
+## Simulating a linear mixed effects model
 
 To generate some data for a linear mixed effects model with random intercepts, we do pretty much what we are used to doing when we generated data for a linear model. However, this time, we have an additional parameter that captures the variance in the intercepts between participants. So, we draw a separate (offset from the global) intercept for each participant from this distribution.  
 
@@ -787,84 +688,34 @@ b1 = 2
 sd_residual = 1
 sd_participant = 0.5 
 
-# randomly draw intercepts for each participant
-intercepts = rnorm(sample_size, sd = sd_participant)
-
 # generate the data 
-df.mixed = tibble(condition = rep(0:1, each = sample_size), 
-                  participant = rep(1:sample_size, 2)) %>% 
-  group_by(condition) %>% 
+df.mixed = tibble(participant = rep(1:sample_size, 2),
+                  condition = rep(0:1, each = sample_size)) %>% 
+  group_by(participant) %>% 
+  mutate(intercepts = rnorm(n = 1, sd = sd_participant)) %>% 
+  ungroup() %>% 
   mutate(value = b0 + b1 * condition + intercepts + rnorm(n(), sd = sd_residual)) %>% 
-  ungroup %>% 
-  mutate(condition = as.factor(condition),
-         participant = as.factor(participant))
+  arrange(participant, condition)
+
+df.mixed
 ```
 
-Let's take a look at the simulated data set: 
-
-
-```r
-df.mixed %>% 
-  select(participant, condition, value) %>% 
-  arrange(participant) %>% 
-  head(8) %>% 
-  kable(digits = 2) %>% 
-  kable_styling(bootstrap_options = "striped",
-                full_width = F)
 ```
-
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> participant </th>
-   <th style="text-align:left;"> condition </th>
-   <th style="text-align:right;"> value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 0 </td>
-   <td style="text-align:right;"> 0.07 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 3.10 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 2 </td>
-   <td style="text-align:left;"> 0 </td>
-   <td style="text-align:right;"> 1.13 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 2 </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 4.78 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 3 </td>
-   <td style="text-align:left;"> 0 </td>
-   <td style="text-align:right;"> -0.33 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 3 </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 4.17 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 4 </td>
-   <td style="text-align:left;"> 0 </td>
-   <td style="text-align:right;"> 1.96 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 4 </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:right;"> 3.47 </td>
-  </tr>
-</tbody>
-</table>
-
+# A tibble: 200 × 4
+   participant condition intercepts   value
+         <int>     <int>      <dbl>   <dbl>
+ 1           1         0    -0.313   0.0664
+ 2           1         1    -0.313   3.10  
+ 3           2         0     0.0918  1.13  
+ 4           2         1     0.0918  4.78  
+ 5           3         0    -0.418  -0.329 
+ 6           3         1    -0.418   4.17  
+ 7           4         0     0.798   1.96  
+ 8           4         1     0.798   3.47  
+ 9           5         0     0.165   0.510 
+10           5         1     0.165   0.880 
+# … with 190 more rows
+```
 
 Let's fit a model to this data now and take a look at the summary output: 
 
@@ -874,13 +725,11 @@ Let's fit a model to this data now and take a look at the summary output:
 fit.mixed = lmer(formula = value ~ 1 + condition + (1 | participant),
                 data = df.mixed)
 
-fit.mixed %>% 
-  summary()
+summary(fit.mixed)
 ```
 
 ```
-Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-lmerModLmerTest]
+Linear mixed model fit by REML ['lmerMod']
 Formula: value ~ 1 + condition + (1 | participant)
    Data: df.mixed
 
@@ -897,15 +746,13 @@ Random effects:
 Number of obs: 200, groups:  participant, 100
 
 Fixed effects:
-            Estimate Std. Error       df t value Pr(>|t|)    
-(Intercept)   1.0166     0.1097 194.5301   9.267   <2e-16 ***
-condition1    2.0675     0.1444  99.0000  14.317   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)   1.0166     0.1097   9.267
+condition     2.0675     0.1444  14.317
 
 Correlation of Fixed Effects:
-           (Intr)
-condition1 -0.658
+          (Intr)
+condition -0.658
 ```
 
 Let's visualize the model's predictions: 
@@ -927,7 +774,7 @@ fit.mixed %>%
              color = "red")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-31-1.png" width="672" />
 
 Let's simulate some data from this fitted model: 
 
@@ -945,7 +792,7 @@ fit.mixed %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-33-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 
 Even though we only fitted random intercepts in this model, when we simulate from the model, we get different slopes since, when simulating new data, the model takes our uncertainty in the residuals into account as well. 
 
@@ -979,7 +826,7 @@ fit.augmented    4 608.8 621.99 -300.4    600.8 1.7999  1     0.1797
 
 Nope, it's not worth it in this case. That said, even though having random intercepts does not increase the likelihood of the data given the model significantly, we should still include random intercepts to capture the dependence in the data. 
 
-### The effect of outliers 
+### The effect of outliers
 
 Let's take 20 participants from our `df.mixed` data set, and make one of the participants be an outlier: 
 
@@ -1001,13 +848,11 @@ Let's fit the model and look at the summary:
 fit.outlier = lmer(formula = value ~ 1 + condition + (1 | participant),
                    data = df.outlier)
 
-fit.outlier %>% 
-  summary()
+summary(fit.outlier)
 ```
 
 ```
-Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-lmerModLmerTest]
+Linear mixed model fit by REML ['lmerMod']
 Formula: value ~ 1 + condition + (1 | participant)
    Data: df.outlier
 
@@ -1024,18 +869,15 @@ Random effects:
 Number of obs: 40, groups:  participant, 20
 
 Fixed effects:
-            Estimate Std. Error      df t value Pr(>|t|)    
-(Intercept)   2.7091     1.5134 19.2815   1.790   0.0892 .  
-condition1    2.1512     0.2596 19.0000   8.287 9.89e-08 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)   2.7091     1.5134   1.790
+condition     2.1512     0.2596   8.287
 
 Correlation of Fixed Effects:
-           (Intr)
-condition1 -0.086
+          (Intr)
+condition -0.086
 ```
-
-The variance for the participants' intercepts has increased dramatically! 
+The variance of the participants' intercepts has increased dramatically! 
 
 Let's visualize the data together with the model's predictions: 
 
@@ -1056,7 +898,7 @@ fit.outlier %>%
              color = "red")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-37-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-36-1.png" width="672" />
 
 The model is still able to capture the participants quite well. But note what its simulated data looks like now: 
 
@@ -1074,11 +916,11 @@ fit.outlier %>%
   geom_point(alpha = 0.5)
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-38-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-37-1.png" width="672" />
 
 The simulated data doesn't look like our original data. This is because one normal distribution is used to model the variance in the intercepts between participants. 
 
-### Different slopes 
+### Different slopes
 
 Let's generate data where the effect of condition is different for participants: 
 
@@ -1108,16 +950,15 @@ fit.slopes = lmer(formula = value ~ 1 + condition + (1 | participant),
 ```
 
 ```
-boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see help('isSingular')
 ```
 
 ```r
-fit.slopes %>% summary()
+summary(fit.slopes)
 ```
 
 ```
-Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-lmerModLmerTest]
+Linear mixed model fit by REML ['lmerMod']
 Formula: value ~ 1 + condition + (1 | participant)
    Data: df.slopes
 
@@ -1134,15 +975,15 @@ Random effects:
 Number of obs: 40, groups:  participant, 20
 
 Fixed effects:
-             Estimate Std. Error        df t value Pr(>|t|)
-(Intercept)  0.190524   0.150197 38.000000   1.268    0.212
-condition2  -0.001941   0.212411 38.000000  -0.009    0.993
+             Estimate Std. Error t value
+(Intercept)  0.190524   0.150197   1.268
+condition2  -0.001941   0.212411  -0.009
 
 Correlation of Fixed Effects:
            (Intr)
 condition2 -0.707
 optimizer (nloptwrap) convergence code: 0 (OK)
-boundary (singular) fit: see ?isSingular
+boundary (singular) fit: see help('isSingular')
 ```
 
 Note how the summary says "singular fit", and how the variance for random intercepts is 0. Here, fitting random intercepts did not help the model fit at all, so the lmer gave up ... 
@@ -1158,7 +999,7 @@ lmer(formula = value ~ 1 + condition + (1 + condition | participant),
 
 This won't work because the model has more parameters than there are data points. To fit random slopes, we need more than 2 observations per participants. 
 
-### Simpson's paradox 
+### Simpson's paradox
 
 Taking dependence in the data into account is extremely important. The Simpson's paradox is an instructive example for what can go wrong when we ignore the dependence in the data. 
 
@@ -1196,7 +1037,7 @@ ggplot(data = df.simpson,
               color = "black")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-43-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-42-1.png" width="672" />
 
 As we see, overall, there is a positive relationship between `x` and `y`.
 
@@ -1245,7 +1086,7 @@ ggplot(data = df.simpson,
   theme(legend.position = "none")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-45-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-44-1.png" width="672" />
 
 And let's fit a different regression for each participant:
 
@@ -1263,7 +1104,7 @@ ggplot(data = df.simpson,
   theme(legend.position = "none")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-46-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-45-1.png" width="672" />
 
 What this plot shows, is that for almost all individual participants, the relationship between `x` and `y` is negative. The different participants where along the `x` spectrum they are. 
 
@@ -1279,8 +1120,7 @@ fit.lmer %>%
 ```
 
 ```
-Linear mixed model fit by REML. t-tests use Satterthwaite's method [
-lmerModLmerTest]
+Linear mixed model fit by REML ['lmerMod']
 Formula: y ~ 1 + x + (1 | participant)
    Data: df.simpson
 
@@ -1297,11 +1137,9 @@ Random effects:
 Number of obs: 200, groups:  participant, 20
 
 Fixed effects:
-            Estimate Std. Error       df t value Pr(>|t|)    
-(Intercept)  -0.1577     1.3230  22.4259  -0.119    0.906    
-x            -7.6678     1.6572 141.6084  -4.627  8.3e-06 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value
+(Intercept)  -0.1577     1.3230  -0.119
+x            -7.6678     1.6572  -4.627
 
 Correlation of Fixed Effects:
   (Intr)
@@ -1327,20 +1165,20 @@ fit.lmer %>%
   theme(legend.position = "none")
 ```
 
-<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-48-1.png" width="672" />
+<img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-47-1.png" width="672" />
 
 Lesson learned: taking dependence into account is critical for drawing correct inferences! 
 
 
-## Additional resources 
+## Additional resources
 
-### Readings 
+### Readings
 
 - [Linear mixed effects models tutorial by Bodo Winter](https://arxiv.org/pdf/1308.5499.pdf)
 - [Simpson's paradox](https://paulvanderlaken.com/2017/09/27/simpsons-paradox-two-hr-examples-with-r-code/)
 - [Tutorial on pooling](https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -1350,13 +1188,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1365,48 +1203,37 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.4        
- [4] purrr_0.3.4         readr_1.4.0         tidyr_1.1.2        
- [7] tibble_3.0.6        ggplot2_3.3.3       tidyverse_1.3.0    
-[10] see_0.6.2           performance_0.7.0.1 afex_0.28-1        
-[13] lme4_1.1-26         Matrix_1.3-2        ggeffects_1.0.1    
-[16] broom.mixed_0.2.6   janitor_2.1.0       kableExtra_1.3.1   
-[19] knitr_1.31         
+ [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.9        
+ [4] purrr_0.3.4         readr_2.1.2         tidyr_1.2.0        
+ [7] tibble_3.1.7        ggplot2_3.3.6       tidyverse_1.3.1    
+[10] see_0.7.0           performance_0.9.0   lme4_1.1-29        
+[13] Matrix_1.4-1        emmeans_1.7.3       ggeffects_1.1.2    
+[16] broom.mixed_0.2.9.4 janitor_2.1.0       kableExtra_1.3.4   
+[19] knitr_1.39         
 
 loaded via a namespace (and not attached):
- [1] TH.data_1.0-10      minqa_1.2.4         colorspace_2.0-0   
- [4] ellipsis_0.3.1      rio_0.5.16          ggridges_0.5.3     
- [7] sjlabelled_1.1.7    estimability_1.3    snakecase_0.11.0   
-[10] parameters_0.12.0.1 fs_1.5.0            rstudioapi_0.13    
-[13] farver_2.1.0        ggrepel_0.9.1       mvtnorm_1.1-1      
-[16] lubridate_1.7.9.2   xml2_1.3.2          codetools_0.2-18   
-[19] splines_4.0.3       jsonlite_1.7.2      nloptr_1.2.2.2     
-[22] pbkrtest_0.5-0.1    broom_0.7.3         dbplyr_2.0.0       
-[25] effectsize_0.4.3-1  compiler_4.0.3      httr_1.4.2         
-[28] emmeans_1.5.3       backports_1.2.1     assertthat_0.2.1   
-[31] cli_2.3.0           htmltools_0.5.1.1   tools_4.0.3        
-[34] lmerTest_3.1-3      coda_0.19-4         gtable_0.3.0       
-[37] glue_1.4.2          reshape2_1.4.4      Rcpp_1.0.6         
-[40] carData_3.0-4       cellranger_1.1.0    vctrs_0.3.6        
-[43] nlme_3.1-151        insight_0.13.1.1    xfun_0.21          
-[46] ps_1.6.0            openxlsx_4.2.3      rvest_0.3.6        
-[49] lifecycle_1.0.0     statmod_1.4.35      MASS_7.3-53        
-[52] zoo_1.8-8           scales_1.1.1        hms_1.0.0          
-[55] parallel_4.0.3      sandwich_3.0-0      TMB_1.7.18         
-[58] yaml_2.2.1          curl_4.3            gridExtra_2.3      
-[61] stringi_1.5.3       highr_0.8           bayestestR_0.8.3.1 
-[64] boot_1.3-26         zip_2.1.1           rlang_0.4.10       
-[67] pkgconfig_2.0.3     evaluate_0.14       lattice_0.20-41    
-[70] labeling_0.4.2      tidyselect_1.1.0    plyr_1.8.6         
-[73] magrittr_2.0.1      bookdown_0.21       R6_2.5.0           
-[76] generics_0.1.0      multcomp_1.4-15     DBI_1.1.1          
-[79] mgcv_1.8-33         withr_2.4.1         pillar_1.4.7       
-[82] haven_2.3.1         foreign_0.8-81      survival_3.2-7     
-[85] abind_1.4-5         modelr_0.1.8        crayon_1.4.1       
-[88] car_3.0-10          rmarkdown_2.6       grid_4.0.3         
-[91] readxl_1.3.1        data.table_1.13.6   reprex_1.0.0       
-[94] digest_0.6.27       webshot_0.5.2       xtable_1.8-4       
-[97] numDeriv_2016.8-1.1 munsell_0.5.0       viridisLite_0.3.0  
+ [1] nlme_3.1-157      pbkrtest_0.5.1    fs_1.5.2          lubridate_1.8.0  
+ [5] insight_0.17.0    webshot_0.5.3     httr_1.4.3        tools_4.1.2      
+ [9] backports_1.4.1   bslib_0.3.1       sjlabelled_1.2.0  utf8_1.2.2       
+[13] R6_2.5.1          mgcv_1.8-40       DBI_1.1.2         colorspace_2.0-3 
+[17] withr_2.5.0       tidyselect_1.1.2  compiler_4.1.2    cli_3.3.0        
+[21] rvest_1.0.2       xml2_1.3.3        sandwich_3.0-1    bayestestR_0.12.1
+[25] labeling_0.4.2    bookdown_0.26     sass_0.4.1        scales_1.2.0     
+[29] mvtnorm_1.1-3     systemfonts_1.0.4 digest_0.6.29     minqa_1.2.4      
+[33] rmarkdown_2.14    svglite_2.1.0     pkgconfig_2.0.3   htmltools_0.5.2  
+[37] parallelly_1.31.1 highr_0.9         dbplyr_2.1.1      fastmap_1.1.0    
+[41] rlang_1.0.2       readxl_1.4.0      rstudioapi_0.13   farver_2.1.0     
+[45] jquerylib_0.1.4   generics_0.1.2    zoo_1.8-10        jsonlite_1.8.0   
+[49] magrittr_2.0.3    patchwork_1.1.1   Rcpp_1.0.8.3      munsell_0.5.0    
+[53] fansi_1.0.3       lifecycle_1.0.1   furrr_0.3.0       stringi_1.7.6    
+[57] multcomp_1.4-19   yaml_2.3.5        snakecase_0.11.0  MASS_7.3-57      
+[61] grid_4.1.2        ggrepel_0.9.1     parallel_4.1.2    listenv_0.8.0    
+[65] crayon_1.5.1      lattice_0.20-45   haven_2.5.0       splines_4.1.2    
+[69] hms_1.1.1         pillar_1.7.0      boot_1.3-28       estimability_1.3 
+[73] codetools_0.2-18  reprex_2.0.1      glue_1.6.2        evaluate_0.15    
+[77] modelr_0.1.8      vctrs_0.4.1       nloptr_2.0.0      tzdb_0.3.0       
+[81] cellranger_1.1.0  gtable_0.3.0      datawizard_0.4.0  future_1.25.0    
+[85] assertthat_0.2.1  xfun_0.30         xtable_1.8-4      broom_0.8.0      
+[89] coda_0.19-4       survival_3.3-1    viridisLite_0.4.0 globals_0.14.0   
+[93] TH.data_1.1-1     ellipsis_0.3.2   
 ```
-
-## References

@@ -1,4 +1,4 @@
-# Simulation 2 
+# Simulation 2
 
 In which we figure out some key statistical concepts through simulation and plotting. On the menu we have: 
 
@@ -7,7 +7,7 @@ In which we figure out some key statistical concepts through simulation and plot
 - Confidence interval
 - Bootstrapping 
 
-## Load packages and set plotting theme  
+## Load packages and set plotting theme
 
 
 ```r
@@ -28,7 +28,7 @@ opts_chunk$set(comment = "",
 
 ## Making statistical inferences (frequentist style)
 
-### Population distribution 
+### Population distribution
 
 Let's first put the information we need for our population distribution in a data frame. 
 
@@ -87,7 +87,7 @@ df.population %>%
 </tbody>
 </table>
 
-### Distribution of a single sample 
+### Distribution of a single sample
 
 Let's draw a single sample of size $n = 40$ from the population distribution and plot it: 
 
@@ -150,7 +150,6 @@ df.sample %>%
 
 And let's now create the sampling distribution (making the unrealistic assumption that we know the population distribution). 
 
-
 ```r
 # make example reproducible 
 set.seed(1)
@@ -195,9 +194,10 @@ And plot it:
 
 
 ```r
+set.seed(1)
+
 # plot a histogram of the means with density overlaid 
-df.plot = df.sampling_distribution_means %>% 
-  sample_frac(size = 1, replace = T)
+df.plot = df.sampling_distribution_means
 
 ggplot(data = df.plot,
        mapping = aes(x = mean)) + 
@@ -213,7 +213,7 @@ ggplot(data = df.plot,
 
 <img src="08-simulation2_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
-Even though our population distribution was far from normal (and much more heavy-metal like), the means of the sampling  distribution are normally distributed. 
+Even though our population distribution was far from normal (and much more heavy-metal like), the means of the sampling distribution are normally distributed. 
 
 And here are the mean and standard deviation of the sampling distribution: 
 
@@ -411,9 +411,15 @@ ggplot(data = df.bootstrap,
                  color = "black",
                  fill = "lightblue",
                  binwidth = 0.05) + 
-  stat_density(geom = "line",
-               size = 1.5,
-               bw = 0.1) +
+  # stat_density(geom = "line",
+  #              size = 1.5,
+  #              bw = 0.1,
+  #              color = "blue",
+  #              linetype = 2) +
+  stat_function(fun = ~ dnorm(.,
+                              mean = mean(df.sample$number),
+                              sd = sd(df.sample$number / sqrt(nrow(df.sample)))),
+                size = 2) +
   labs(x = "mean") +
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
@@ -450,7 +456,7 @@ df.bootstrap %>%
 
 Neat, as we can see, the mean and standard deviation of the bootstrapped sampling distribution are very close to the sampling distribution that we generated from the population distribution. 
 
-## Understanding p-values 
+## Understanding p-values
 
 > The p-value is the probability of finding the observed, or more extreme, results when the null hypothesis ($H_0$) is true.
 
@@ -463,7 +469,7 @@ Instead, we define a null hypothesis, construct a sampling distribution that tel
 
 An intutive way for illustrating (this rather unintuitive procedure) is the permutation test. 
 
-### Permutation test 
+### Permutation test
 
 Let's start by generating some random data from two different normal distributions (simulating a possible experiment). 
 
@@ -575,7 +581,7 @@ df.permutation %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
      diff
     <dbl>
 1 -0.0105
@@ -587,10 +593,20 @@ After randomly shuffling the condition labels, this is how the results would loo
 
 
 ```r
-ggplot(data = df.permutation, aes(x = permutation, y = performance))+
-  geom_point(aes(color = condition), position = position_jitter(height = 0, width = 0.1)) +
-  stat_summary(fun.data = mean_cl_boot, geom = 'linerange', size = 1) +
-  stat_summary(fun = "mean", geom = 'point', shape = 21, color = "black", fill = "white", size = 4) + 
+ggplot(data = df.permutation, 
+       mapping = aes(x = permutation, y = performance))+
+  geom_point(mapping = aes(color = condition),
+             position = position_jitter(height = 0,
+                                        width = 0.1)) +
+  stat_summary(fun.data = mean_cl_boot,
+               geom = "linerange",
+               size = 1) +
+  stat_summary(fun = "mean",
+               geom = "point",
+               shape = 21,
+               color = "black",
+               fill = "white",
+               size = 4) + 
   scale_y_continuous(breaks = 0:10,
                      labels = 0:10,
                      limits = c(0, 10))
@@ -653,13 +669,13 @@ df.permutations %>%
 ```
 
 ```
-# A tibble: 1 x 1
+# A tibble: 1 × 1
   p_value
     <dbl>
 1   0.002
 ```
 
-### t-test by hand 
+### t-test by hand
 
 Examining the t-distribution. 
 
@@ -690,7 +706,7 @@ df.ttest
 ```
 
 ```
-# A tibble: 1,000 x 5
+# A tibble: 1,000 × 5
    simulation sample1 sample2 difference tstatistic
         <int>   <dbl>   <dbl>      <dbl>      <dbl>
  1          1    5.22    4.99     0.225      0.796 
@@ -758,7 +774,7 @@ ggplot(data = df.ttest,
 <img src="08-simulation2_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 
-## Confidence intervals 
+## Confidence intervals
 
 The definition of the confidence interval is the following: 
 
@@ -768,7 +784,7 @@ If we assume normally distributed data (and a large enough sample size), then we
 
 For smaller sample sizes, we can use the $t$-distribution instead with $n-1$ degrees of freedom. For larger $n$ the $t$-distribution closely approximates the normal distribution. 
 
-So let's run a a simulation to check whether the definition of the confidence interval seems right. We will use our heavy metal distribution from above, take samples from the distribution, calculate the mean and confidende interval, and check how often the true mean of the population ($M = 3.5$) is contained within the confidence interval. 
+So let's run a a simulation to check whether the definition of the confidence interval seems right. We will use our heavy metal distribution from above, take samples from the distribution, calculate the mean and confidence interval, and check how often the true mean of the population ($M = 3.5$) is contained within the confidence interval. 
 
 
 ```r
@@ -981,13 +997,13 @@ ggplot(data = as_tibble(bootstraps),
 
 <img src="08-simulation2_files/figure-html/unnamed-chunk-31-1.png" width="672" />
 
-## Additional resources 
+## Additional resources
 
-### Datacamp 
+### Datacamp
 
 - [Foundations of Inference](https://www.datacamp.com/courses/foundations-of-inference)
 
-## Session info 
+## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
@@ -997,13 +1013,13 @@ sessionInfo()
 ```
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1012,35 +1028,37 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.4      purrr_0.3.4     
- [5] readr_1.4.0      tidyr_1.1.2      tibble_3.0.6     ggplot2_3.3.3   
- [9] tidyverse_1.3.0  janitor_2.1.0    kableExtra_1.3.1 knitr_1.31      
+ [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
+ [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
+ [9] tidyverse_1.3.1  janitor_2.1.0    kableExtra_1.3.4 knitr_1.39      
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2          jsonlite_1.7.2      viridisLite_0.3.0  
- [4] splines_4.0.3       modelr_0.1.8        Formula_1.2-4      
- [7] assertthat_0.2.1    highr_0.8           latticeExtra_0.6-29
-[10] cellranger_1.1.0    yaml_2.2.1          pillar_1.4.7       
-[13] backports_1.2.1     lattice_0.20-41     glue_1.4.2         
-[16] digest_0.6.27       checkmate_2.0.0     RColorBrewer_1.1-2 
-[19] rvest_0.3.6         snakecase_0.11.0    colorspace_2.0-0   
-[22] htmltools_0.5.1.1   Matrix_1.3-2        pkgconfig_2.0.3    
-[25] broom_0.7.3         haven_2.3.1         bookdown_0.21      
-[28] scales_1.1.1        webshot_0.5.2       jpeg_0.1-8.1       
-[31] htmlTable_2.1.0     generics_0.1.0      farver_2.1.0       
-[34] ellipsis_0.3.1      withr_2.4.1         nnet_7.3-15        
-[37] cli_2.3.0           survival_3.2-7      magrittr_2.0.1     
-[40] crayon_1.4.1        readxl_1.3.1        evaluate_0.14      
-[43] ps_1.6.0            fansi_0.4.2         fs_1.5.0           
-[46] xml2_1.3.2          foreign_0.8-81      data.table_1.13.6  
-[49] tools_4.0.3         hms_1.0.0           lifecycle_1.0.0    
-[52] munsell_0.5.0       reprex_1.0.0        cluster_2.1.0      
-[55] compiler_4.0.3      rlang_0.4.10        grid_4.0.3         
-[58] rstudioapi_0.13     htmlwidgets_1.5.3   base64enc_0.1-3    
-[61] labeling_0.4.2      rmarkdown_2.6       gtable_0.3.0       
-[64] DBI_1.1.1           R6_2.5.0            gridExtra_2.3      
-[67] lubridate_1.7.9.2   utf8_1.1.4          Hmisc_4.4-2        
-[70] stringi_1.5.3       Rcpp_1.0.6          rpart_4.1-15       
-[73] vctrs_0.3.6         png_0.1-7           dbplyr_2.0.0       
-[76] tidyselect_1.1.0    xfun_0.21          
+ [1] fs_1.5.2            lubridate_1.8.0     webshot_0.5.3      
+ [4] RColorBrewer_1.1-3  httr_1.4.3          tools_4.1.2        
+ [7] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
+[10] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
+[13] DBI_1.1.2           colorspace_2.0-3    nnet_7.3-17        
+[16] withr_2.5.0         tidyselect_1.1.2    gridExtra_2.3      
+[19] compiler_4.1.2      cli_3.3.0           rvest_1.0.2        
+[22] htmlTable_2.4.0     xml2_1.3.3          labeling_0.4.2     
+[25] bookdown_0.26       sass_0.4.1          scales_1.2.0       
+[28] checkmate_2.1.0     systemfonts_1.0.4   digest_0.6.29      
+[31] foreign_0.8-82      rmarkdown_2.14      svglite_2.1.0      
+[34] base64enc_0.1-3     jpeg_0.1-9          pkgconfig_2.0.3    
+[37] htmltools_0.5.2     dbplyr_2.1.1        fastmap_1.1.0      
+[40] highr_0.9           htmlwidgets_1.5.4   rlang_1.0.2        
+[43] readxl_1.4.0        rstudioapi_0.13     jquerylib_0.1.4    
+[46] farver_2.1.0        generics_0.1.2      jsonlite_1.8.0     
+[49] magrittr_2.0.3      Formula_1.2-4       Matrix_1.4-1       
+[52] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.1    
+[55] stringi_1.7.6       yaml_2.3.5          snakecase_0.11.0   
+[58] grid_4.1.2          crayon_1.5.1        lattice_0.20-45    
+[61] haven_2.5.0         splines_4.1.2       hms_1.1.1          
+[64] pillar_1.7.0        reprex_2.0.1        glue_1.6.2         
+[67] evaluate_0.15       latticeExtra_0.6-29 data.table_1.14.2  
+[70] modelr_0.1.8        vctrs_0.4.1         png_0.1-7          
+[73] tzdb_0.3.0          cellranger_1.1.0    gtable_0.3.0       
+[76] assertthat_0.2.1    xfun_0.30           broom_0.8.0        
+[79] survival_3.3-1      viridisLite_0.4.0   cluster_2.1.3      
+[82] ellipsis_0.3.2     
 ```

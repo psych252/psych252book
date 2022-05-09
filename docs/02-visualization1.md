@@ -99,7 +99,8 @@ You may want to write it this way instead:
 
 ```r
 ggplot(data = diamonds, 
-       mapping = aes(x = cut, y = price)) +
+       mapping = aes(x = cut,
+                     y = price)) +
   # display the means
   stat_summary(fun = "mean",
                geom = "bar",
@@ -150,7 +151,7 @@ R help files can sometimes look a little cryptic. Most R help files have the fol
 
 __Title__: A one-sentence overview of the function.
 
-__Description__: An introduction to the high-level objectives of the function, typically about one paragraph long.
+__Description__: An introduction to the high-level objectives of the function.
 
 __Usage__: A description of the syntax of the function (in other words, how the function is called). This is where you find all the arguments that you can supply to the function, as well as any default values of these arguments.
 
@@ -178,17 +179,17 @@ Here is the help file for the `print()` function:
 An RMarkdown file has four key components: 
 
 1. YAML header 
-2. Headings to structure the document 3
+2. Headings to structure the document
 3. Text 
 4. Code chunks 
 
-The YAML (*Y*et *A*nother *M*arkdown *L*anguage) header specifies general options such as whether you'd like to have a table of content displayed, and in what output format you want to create your report (e.g. html or pdf). Notice that the YAML header cares about indentation, so make sure to get that right!  
+The **YAML** (*Y*et *A*nother *M*arkdown *L*anguage) header specifies general options such as whether you'd like to have a table of content displayed, and in what output format you want to create your report (e.g. html or pdf). Notice that the YAML header cares about indentation, so make sure to get that right!  
 
-Headings are very useful for structuring your RMarkdown file. For your reports, it's often a good idea to have one header for each code chunk. The outline viewer here on the right is great for navigating large analysis files. 
+**Headings** are very useful for structuring your RMarkdown file. For your reports, it's often a good idea to have one header for each code chunk. The outline viewer here on the right is great for navigating large analysis files. 
 
-Text is self-explanatory. 
+**Text** is self-explanatory. 
 
-Code chunks is where the coding happens. You can add one via the Insert button above, or via the shortcut `cmd + option + i` (the much cooler way of doing it!)
+**Code chunks** is where the coding happens. You can add one via the Insert button above, or via the shortcut `cmd + option + i` (the much cooler way of doing it!)
 
 
 
@@ -237,7 +238,7 @@ Above, we assigned the `diamonds` dataset to the variable `df.diamonds` so that 
 
 Let's take a look at the full dataset by clicking on it in the explorer.
 
->__Tip__: You can view a data frame by highlighting the text in the editor (or simply moving the mouse above the text), and then press `F2`.
+>__Tip__: You can view a data frame by highlighting the text in the editor (or simply moving the mouse above the text), and then pressing `F2`.
 
 The `df.diamonds` data frame contains information about almost 60,000 diamonds, including their `price`, `carat` value, size, etc. Let's use visualization to get a better sense for this dataset.
 
@@ -468,7 +469,7 @@ ggplot(data = df.diamonds,
        mapping = aes(x = clarity,
                      y = price)) +
   stat_summary(fun.data = "mean_cl_boot",
-               geom = "pointrange") 
+               geom = "pointrange")
 ```
 
 <div class="figure">
@@ -491,9 +492,9 @@ The order in which we add geoms to a ggplot matters! Generally, we want to plot 
 
 
 ```r
-ggplot(df.diamonds,
-       aes(x = clarity,
-           y = price)) +
+ggplot(data = df.diamonds,
+       mapping = aes(x = clarity,
+                     y = price)) +
   stat_summary(fun.data = "mean_cl_boot",
                geom = "linerange") +
   stat_summary(fun = "mean",
@@ -960,8 +961,8 @@ Here, I've set `color = "black"` within the `geom_smooth()` function, and now on
 - [R graphics cookbook](http://www.cookbook-r.com/Graphs/) --> quick intro to the the most common graphs
 - [ggplot2 book](https://ggplot2-book.org/) 
 - [R for Data Science book](http://r4ds.had.co.nz/)
-  + [Data visualization](http://r4ds.had.co.nz/data-visualisation.html)
-  + [Graphics for communication](http://r4ds.had.co.nz/graphics-for-communication.html)
+	+ [Data visualization](http://r4ds.had.co.nz/data-visualisation.html)
+	+ [Graphics for communication](http://r4ds.had.co.nz/graphics-for-communication.html)
 - [Data Visualization -- A practical introduction (by Kieran Healy)](http://socviz.co/)
   + [Look at data](http://socviz.co/lookatdata.html#lookatdata)
   + [Make a plot](http://socviz.co/makeplot.html#makeplot)
@@ -979,13 +980,13 @@ Here, I've set `color = "black"` within the `geom_smooth()` function, and now on
 
 
 ```
-R version 4.0.3 (2020-10-10)
+R version 4.1.2 (2021-11-01)
 Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Catalina 10.15.7
+Running under: macOS Big Sur 10.16
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -994,36 +995,38 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.4     purrr_0.3.4    
- [5] readr_1.4.0     tidyr_1.1.2     tibble_3.0.6    ggplot2_3.3.3  
- [9] tidyverse_1.3.0 knitr_1.31     
+ [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
+ [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    ggplot2_3.3.6  
+ [9] tidyverse_1.3.1 knitr_1.39     
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2          jsonlite_1.7.2      viridisLite_0.3.0  
- [4] splines_4.0.3       modelr_0.1.8        Formula_1.2-4      
- [7] assertthat_0.2.1    highr_0.8           latticeExtra_0.6-29
-[10] cellranger_1.1.0    yaml_2.2.1          pillar_1.4.7       
-[13] backports_1.2.1     lattice_0.20-41     glue_1.4.2         
-[16] digest_0.6.27       RColorBrewer_1.1-2  checkmate_2.0.0    
-[19] rvest_0.3.6         colorspace_2.0-0    htmltools_0.5.1.1  
-[22] Matrix_1.3-2        pkgconfig_2.0.3     broom_0.7.3        
-[25] haven_2.3.1         bookdown_0.21       scales_1.1.1       
-[28] jpeg_0.1-8.1        htmlTable_2.1.0     mgcv_1.8-33        
-[31] generics_0.1.0      farver_2.1.0        ellipsis_0.3.1     
-[34] withr_2.4.1         nnet_7.3-15         cli_2.3.0          
-[37] survival_3.2-7      magrittr_2.0.1      crayon_1.4.1       
-[40] readxl_1.3.1        evaluate_0.14       ps_1.6.0           
-[43] fs_1.5.0            nlme_3.1-151        xml2_1.3.2         
-[46] foreign_0.8-81      data.table_1.13.6   tools_4.0.3        
-[49] hms_1.0.0           lifecycle_1.0.0     munsell_0.5.0      
-[52] reprex_1.0.0        cluster_2.1.0       compiler_4.0.3     
-[55] rlang_0.4.10        grid_4.0.3          rstudioapi_0.13    
-[58] htmlwidgets_1.5.3   base64enc_0.1-3     labeling_0.4.2     
-[61] rmarkdown_2.6       gtable_0.3.0        DBI_1.1.1          
-[64] R6_2.5.0            gridExtra_2.3       lubridate_1.7.9.2  
-[67] Hmisc_4.4-2         stringi_1.5.3       Rcpp_1.0.6         
-[70] vctrs_0.3.6         rpart_4.1-15        png_0.1-7          
-[73] dbplyr_2.0.0        tidyselect_1.1.0    xfun_0.21          
+ [1] nlme_3.1-157        fs_1.5.2            lubridate_1.8.0    
+ [4] RColorBrewer_1.1-3  httr_1.4.3          tools_4.1.2        
+ [7] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
+[10] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
+[13] DBI_1.1.2           mgcv_1.8-40         colorspace_2.0-3   
+[16] nnet_7.3-17         withr_2.5.0         tidyselect_1.1.2   
+[19] gridExtra_2.3       compiler_4.1.2      cli_3.3.0          
+[22] rvest_1.0.2         htmlTable_2.4.0     xml2_1.3.3         
+[25] labeling_0.4.2      bookdown_0.26       sass_0.4.1         
+[28] scales_1.2.0        checkmate_2.1.0     digest_0.6.29      
+[31] foreign_0.8-82      rmarkdown_2.14      base64enc_0.1-3    
+[34] jpeg_0.1-9          pkgconfig_2.0.3     htmltools_0.5.2    
+[37] dbplyr_2.1.1        fastmap_1.1.0       highr_0.9          
+[40] htmlwidgets_1.5.4   rlang_1.0.2         readxl_1.4.0       
+[43] rstudioapi_0.13     jquerylib_0.1.4     farver_2.1.0       
+[46] generics_0.1.2      jsonlite_1.8.0      magrittr_2.0.3     
+[49] Formula_1.2-4       Matrix_1.4-1        munsell_0.5.0      
+[52] fansi_1.0.3         lifecycle_1.0.1     stringi_1.7.6      
+[55] yaml_2.3.5          grid_4.1.2          crayon_1.5.1       
+[58] lattice_0.20-45     haven_2.5.0         splines_4.1.2      
+[61] hms_1.1.1           pillar_1.7.0        reprex_2.0.1       
+[64] glue_1.6.2          evaluate_0.15       latticeExtra_0.6-29
+[67] data.table_1.14.2   modelr_0.1.8        png_0.1-7          
+[70] vctrs_0.4.1         tzdb_0.3.0          cellranger_1.1.0   
+[73] gtable_0.3.0        assertthat_0.2.1    xfun_0.30          
+[76] broom_0.8.0         survival_3.3-1      viridisLite_0.4.0  
+[79] cluster_2.1.3       ellipsis_0.3.2     
 ```
 
 <div class="figure">
