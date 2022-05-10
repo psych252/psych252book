@@ -4,28 +4,33 @@
 
 Various people have helped in the process of putting together these materials (either knowingly, or unknowingly). Big thanks go to: 
 
-- Alexandra Chouldechova
-- Ben Baumer
-- Benoit Monin
-- David Lagnado
-- Ewart Thomas
-- Henrik Singmann
-- Julian Jara-Ettinger
-- Justin Gardner
-- Kevin Smith
-- Maarten Speekenbrink
-- Matthew Kay
-- Matthew Salganik
-- Mika Braginsky 
-- Mike Frank 
-- Mine Çetinkaya-Rundel
-- Patrick Mair
-- Peter Cushner Mohanty
-- Richard McElreath
-- Russ Poldrack 
-- Stephen Dewitt
-- Tom Hardwicke
-- Tristan Mahr
+- [Alexandra Chouldechova](https://www.andrew.cmu.edu/user/achoulde/)
+- [Andrew Heiss](https://www.andrewheiss.com/)
+- [Ben Baumer](https://www.smith.edu/academics/faculty/ben-baumer)
+- [Benoit Monin](https://www.gsb.stanford.edu/faculty-research/faculty/benoit-monin)
+- [David Lagnado](https://www.ucl.ac.uk/pals/research/experimental-psychology/person/david-lagnado/)
+- [Ewart Thomas](https://profiles.stanford.edu/ewart-thomas)
+- [Henrik Singmann](http://singmann.org/)
+- [Julian Jara-Ettinger](https://psychology.yale.edu/people/julian-jara-ettinger)
+- [Justin Gardner](https://profiles.stanford.edu/justin-gardner)
+- [Kevin Smith](http://www.mit.edu/~k2smith/)
+- [Lisa DeBruine](https://debruine.github.io/)
+- [Maarten Speekenbrink](https://www.ucl.ac.uk/pals/research/experimental-psychology/person/maarten-speekenbrink/)
+- [Matthew Kay](https://www.mjskay.com/)
+- [Matthew Salganik](http://www.princeton.edu/~mjs3/)
+- [Mika Braginsky](https://mikabr.io/) 
+- [Mike Frank](https://web.stanford.edu/~mcfrank/) 
+- [Mine Çetinkaya-Rundel](https://mine-cr.com/)
+- [Nick C. Huntington-Klein](https://www.nickchk.com/)
+- [Patrick Mair](https://psychology.fas.harvard.edu/people/patrick-mair)
+- [Paul-Christian Bürkner](https://paul-buerkner.github.io/about/) 
+- [Peter Cushner Mohanty](https://explorecourses.stanford.edu/instructor/pmohanty)
+- [Richard McElreath](https://xcelab.net/rm/)
+- [Russ Poldrack](https://profiles.stanford.edu/russell-poldrack) 
+- [Stephen Dewitt](https://www.ucl.ac.uk/pals/research/experimental-psychology/person/stephen-dewitt/)
+- [Solomon Kurz](https://solomonkurz.netlify.app/) 
+- [Tom Hardwicke](https://tomhardwicke.netlify.app/)
+- [Tristan Mahr](https://www.tjmahr.com/) 
 
 Special thanks go to my teaching teams: 
 
@@ -108,11 +113,6 @@ library("stargazer")    # for regression tables
 library("sjPlot")       # for regression tables
 library("xtable")       # for tables
 ```
-
-## Installing packages 
-
-
-
 
 ## Session info
 

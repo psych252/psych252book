@@ -1,7 +1,7 @@
 --- 
 title: "Psych 252: Statistical Methods for Behavioral and Social Sciences"
 author: "Tobias Gerstenberg"
-date: "2022-05-08"
+date: "2022-05-10"
 book_filename: "psych252"
 language:
   ui:

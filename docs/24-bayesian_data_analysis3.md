@@ -963,6 +963,10 @@ fit.brm_ordinal          -340.2      27.0
 - [Visual MCMC diagnostics](https://cran.r-project.org/web/packages/bayesplot/vignettes/visual-mcmc-diagnostics.html#general-mcmc-diagnostics)
 - [Visualiztion of different MCMC algorithms](https://chi-feng.github.io/mcmc-demo/)
 
+
+For additional resources, I highly recommend the brms and tidyverse implementations of the Statistical rethinking book [@mcelreath2020statistical], as well as of the Doing Bayesian Data analysis book [@kruschke2014doing], by Solomon Kurz [@kurz2020statistical; @kurz2022doingbayesian]. 
+
+
 ## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded.

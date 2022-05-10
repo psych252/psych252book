@@ -1,6 +1,6 @@
 
 
-# Bayesian data analysis
+# Bayesian data analysis 1
 
 ## Learning goals
 

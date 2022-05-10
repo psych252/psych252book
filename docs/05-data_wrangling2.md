@@ -1019,7 +1019,7 @@ df.csv = read_csv("data/movies.csv")
 
 ```
 Rows: 2961 Columns: 11
-── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 Delimiter: ","
 chr (3): title, genre, director
 dbl (8): year, duration, gross, budget, cast_facebook_likes, votes, reviews,...

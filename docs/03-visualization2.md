@@ -38,8 +38,8 @@ And set some settings:
 
 ```r
 # these options here change the formatting of how comments are rendered
-opts_chunk$set(comment = "#>",
-                      fig.show = "hold")
+opts_chunk$set(comment = "",
+               fig.show = "hold")
 
 # this just suppresses an unnecessary message about grouping 
 options(dplyr.summarise.inform = F)
@@ -241,17 +241,16 @@ ggplot(data = df.diamonds,
 ```
 
 ```
-#> Picking joint bandwidth of 535
+Picking joint bandwidth of 535
 ```
 
 <img src="03-visualization2_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
 #### Practice plot 1
 
-Try to make the plot shown in Figure \@ref(fig:visualization2-practice1). Here are some tips: 
+Try to make the plot shown in Figure \@ref(fig:visualization2-practice1). Here is a tip: 
 
 - For the data argument in `ggplot()` use: `df.diamonds[1:10000, ]` (this selects the first 10000 rows).
-- Figure \@ref(fig:visualization2-08) will help you with figuring out the other components
 
 
 ```r
@@ -752,7 +751,7 @@ dim(df.plot_info) # data frame dimensions
 ```
 
 ```
-#> [1] 56 18
+[1] 56 18
 ```
 
 <img src="03-visualization2_files/figure-html/unnamed-chunk-29-1.png" width="672" />
@@ -777,7 +776,7 @@ dim(df.plot_info) # data frame dimensions
 ```
 
 ```
-#> [1] 53940    15
+[1] 53940    15
 ```
 
 <img src="03-visualization2_files/figure-html/unnamed-chunk-30-1.png" width="672" />
@@ -817,71 +816,62 @@ ggplot(data = gapminder,
 ```
 
 ```
-#> Rendering [>-------------------------------------------] at 9.9 fps ~ eta: 10s
-#> Rendering [>-------------------------------------------] at 9.7 fps ~ eta: 10s
-#> Rendering [=>------------------------------------------] at 9.6 fps ~ eta: 10s
-#> Rendering [=>------------------------------------------] at 9.5 fps ~ eta: 10s
-#> Rendering [==>-----------------------------------------] at 9.2 fps ~ eta: 10s
-#> Rendering [==>-----------------------------------------] at 8.9 fps ~ eta: 10s
-#> Rendering [===>------------------------------------------] at 9 fps ~ eta: 10s
-#> Rendering [===>----------------------------------------] at 8.8 fps ~ eta: 10s
-#> Rendering [===>----------------------------------------] at 8.9 fps ~ eta: 10s
-#> Rendering [====>---------------------------------------] at 8.8 fps ~ eta: 10s
-#> Rendering [====>---------------------------------------] at 8.7 fps ~ eta: 10s
-#> Rendering [=====>--------------------------------------] at 8.8 fps ~ eta: 10s
-#> Rendering [======>-------------------------------------] at 8.8 fps ~ eta: 10s
-#> Rendering [======>-------------------------------------] at 8.8 fps ~ eta: 9s
-#> Rendering [=======>------------------------------------] at 8.9 fps ~ eta: 9s
-#> Rendering [========>-----------------------------------] at 8.9 fps ~ eta: 9s
-#> Rendering [=========>------------------------------------] at 9 fps ~ eta: 9s
-#> Rendering [==========>-----------------------------------] at 9 fps ~ eta: 9s
-#> Rendering [==========>-----------------------------------] at 9 fps ~ eta: 8s
-#> Rendering [===========>----------------------------------] at 9 fps ~ eta: 8s
-#> Rendering [===========>--------------------------------] at 9.1 fps ~ eta: 8s
-#> Rendering [============>-------------------------------] at 9.1 fps ~ eta: 8s
-#> Rendering [=============>------------------------------] at 9.1 fps ~ eta: 8s
-#> Rendering [=============>------------------------------] at 9.1 fps ~ eta: 7s
-#> Rendering [==============>-----------------------------] at 9.1 fps ~ eta: 7s
-#> Rendering [===============>----------------------------] at 9.1 fps ~ eta: 7s
-#> Rendering [================>---------------------------] at 9.2 fps ~ eta: 7s
-#> Rendering [=================>--------------------------] at 9.1 fps ~ eta: 7s
-#> Rendering [=================>--------------------------] at 9.1 fps ~ eta: 6s
-#> Rendering [=================>--------------------------] at 9.2 fps ~ eta: 6s
-#> Rendering [==================>-------------------------] at 9.2 fps ~ eta: 6s
-#> Rendering [===================>------------------------] at 9.2 fps ~ eta: 6s
-#> Rendering [===================>------------------------] at 9.1 fps ~ eta: 6s
-#> Rendering [====================>-----------------------] at 9.1 fps ~ eta: 6s
-#> Rendering [=====================>----------------------] at 9.1 fps ~ eta: 6s
-#> Rendering [=====================>----------------------] at 9.1 fps ~ eta: 5s
-#> Rendering [======================>---------------------] at 9.1 fps ~ eta: 5s
-#> Rendering [=======================>--------------------] at 9.1 fps ~ eta: 5s
-#> Rendering [========================>-------------------] at 9.1 fps ~ eta: 5s
-#> Rendering [========================>-------------------] at 9.2 fps ~ eta: 5s
-#> Rendering [=========================>------------------] at 9.2 fps ~ eta: 5s
-#> Rendering [=========================>------------------] at 9.2 fps ~ eta: 4s
-#> Rendering [==========================>-----------------] at 9.2 fps ~ eta: 4s
-#> Rendering [===========================>----------------] at 9.2 fps ~ eta: 4s
-#> Rendering [============================>---------------] at 9.2 fps ~ eta: 4s
-#> Rendering [=============================>--------------] at 9.2 fps ~ eta: 3s
-#> Rendering [==============================>-------------] at 9.2 fps ~ eta: 3s
-#> Rendering [===============================>------------] at 9.2 fps ~ eta: 3s
-#> Rendering [================================>-----------] at 9.2 fps ~ eta: 3s
-#> Rendering [=================================>----------] at 9.2 fps ~ eta: 2s
-#> Rendering [=================================>----------] at 9.3 fps ~ eta: 2s
-#> Rendering [==================================>---------] at 9.2 fps ~ eta: 2s
-#> Rendering [===================================>--------] at 9.2 fps ~ eta: 2s
-#> Rendering [====================================>-------] at 9.2 fps ~ eta: 2s
-#> Rendering [=====================================>------] at 9.1 fps ~ eta: 2s
-#> Rendering [=====================================>------] at 9.1 fps ~ eta: 1s
-#> Rendering [======================================>-----] at 9.1 fps ~ eta: 1s
-#> Rendering [=======================================>----] at 9.1 fps ~ eta: 1s
-#> Rendering [========================================>---] at 9.1 fps ~ eta: 1s
-#> Rendering [=========================================>--] at 9.2 fps ~ eta: 1s
-#> Rendering [=========================================>--] at 9.2 fps ~ eta: 0s
-#> Rendering [==========================================>-] at 9.2 fps ~ eta: 0s
-#> Rendering [==========================================>-] at 9.1 fps ~ eta: 0s
-#> Rendering [===========================================>] at 9.1 fps ~ eta: 0s
-#> Rendering [============================================] at 9.2 fps ~ eta: 0s
+Rendering [>--------------------------------------------] at 10 fps ~ eta: 9s
+Rendering [=>-------------------------------------------] at 10 fps ~ eta: 9s
+Rendering [==>-----------------------------------------] at 9.9 fps ~ eta: 10s
+Rendering [==>-----------------------------------------] at 9.9 fps ~ eta: 9s
+Rendering [===>----------------------------------------] at 9.8 fps ~ eta: 9s
+Rendering [===>----------------------------------------] at 9.9 fps ~ eta: 9s
+Rendering [====>---------------------------------------] at 9.8 fps ~ eta: 9s
+Rendering [=====>--------------------------------------] at 9.7 fps ~ eta: 9s
+Rendering [======>-------------------------------------] at 9.7 fps ~ eta: 9s
+Rendering [======>-------------------------------------] at 9.6 fps ~ eta: 9s
+Rendering [=======>------------------------------------] at 9.6 fps ~ eta: 9s
+Rendering [=======>------------------------------------] at 9.6 fps ~ eta: 8s
+Rendering [========>-----------------------------------] at 9.5 fps ~ eta: 8s
+Rendering [=========>----------------------------------] at 9.5 fps ~ eta: 8s
+Rendering [==========>---------------------------------] at 9.5 fps ~ eta: 8s
+Rendering [==========>---------------------------------] at 9.4 fps ~ eta: 8s
+Rendering [===========>--------------------------------] at 9.5 fps ~ eta: 8s
+Rendering [============>-------------------------------] at 9.4 fps ~ eta: 8s
+Rendering [============>-------------------------------] at 9.4 fps ~ eta: 7s
+Rendering [=============>------------------------------] at 9.3 fps ~ eta: 7s
+Rendering [==============>-----------------------------] at 9.4 fps ~ eta: 7s
+Rendering [===============>----------------------------] at 9.4 fps ~ eta: 7s
+Rendering [================>---------------------------] at 9.4 fps ~ eta: 7s
+Rendering [================>---------------------------] at 9.3 fps ~ eta: 7s
+Rendering [=================>--------------------------] at 9.3 fps ~ eta: 6s
+Rendering [=================>--------------------------] at 9.4 fps ~ eta: 6s
+Rendering [==================>-------------------------] at 9.4 fps ~ eta: 6s
+Rendering [===================>------------------------] at 9.4 fps ~ eta: 6s
+Rendering [====================>-----------------------] at 9.4 fps ~ eta: 6s
+Rendering [=====================>----------------------] at 9.4 fps ~ eta: 5s
+Rendering [======================>---------------------] at 9.2 fps ~ eta: 5s
+Rendering [=======================>--------------------] at 9.2 fps ~ eta: 5s
+Rendering [========================>-------------------] at 9.2 fps ~ eta: 5s
+Rendering [=========================>------------------] at 9.2 fps ~ eta: 5s
+Rendering [=========================>------------------] at 9.2 fps ~ eta: 4s
+Rendering [==========================>-----------------] at 9.3 fps ~ eta: 4s
+Rendering [===========================>----------------] at 9.3 fps ~ eta: 4s
+Rendering [============================>---------------] at 9.3 fps ~ eta: 4s
+Rendering [=============================>--------------] at 9.3 fps ~ eta: 3s
+Rendering [==============================>-------------] at 9.3 fps ~ eta: 3s
+Rendering [===============================>------------] at 9.4 fps ~ eta: 3s
+Rendering [================================>-----------] at 9.4 fps ~ eta: 3s
+Rendering [=================================>----------] at 9.4 fps ~ eta: 2s
+Rendering [==================================>---------] at 9.4 fps ~ eta: 2s
+Rendering [===================================>--------] at 9.4 fps ~ eta: 2s
+Rendering [====================================>-------] at 9.4 fps ~ eta: 2s
+Rendering [====================================>-------] at 9.5 fps ~ eta: 2s
+Rendering [=====================================>------] at 9.5 fps ~ eta: 1s
+Rendering [======================================>-----] at 9.5 fps ~ eta: 1s
+Rendering [=======================================>----] at 9.5 fps ~ eta: 1s
+Rendering [========================================>---] at 9.5 fps ~ eta: 1s
+Rendering [=========================================>--] at 9.5 fps ~ eta: 1s
+Rendering [=========================================>--] at 9.4 fps ~ eta: 0s
+Rendering [==========================================>-] at 9.4 fps ~ eta: 0s
+Rendering [===========================================>] at 9.4 fps ~ eta: 0s
+Rendering [============================================] at 9.4 fps ~ eta: 0s
 ```
 
 ```r
@@ -973,53 +963,53 @@ sessionInfo()
 ```
 
 ```
-#> R version 4.1.2 (2021-11-01)
-#> Platform: x86_64-apple-darwin17.0 (64-bit)
-#> Running under: macOS Big Sur 10.16
-#> 
-#> Matrix products: default
-#> BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-#> LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
-#> 
-#> locale:
-#> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
-#> 
-#> attached base packages:
-#> [1] stats     graphics  grDevices utils     datasets  methods   base     
-#> 
-#> other attached packages:
-#>  [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
-#>  [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    tidyverse_1.3.1
-#>  [9] gapminder_0.3.0 gganimate_1.0.7 ggplot2_3.3.6   ggridges_0.5.3 
-#> [13] patchwork_1.1.1 knitr_1.39     
-#> 
-#> loaded via a namespace (and not attached):
-#>  [1] fs_1.5.2            lubridate_1.8.0     RColorBrewer_1.1-3 
-#>  [4] progress_1.2.2      httr_1.4.3          tools_4.1.2        
-#>  [7] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
-#> [10] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
-#> [13] DBI_1.1.2           colorspace_2.0-3    nnet_7.3-17        
-#> [16] withr_2.5.0         gridExtra_2.3       tidyselect_1.1.2   
-#> [19] prettyunits_1.1.1   compiler_4.1.2      cli_3.3.0          
-#> [22] rvest_1.0.2         htmlTable_2.4.0     xml2_1.3.3         
-#> [25] labeling_0.4.2      bookdown_0.26       sass_0.4.1         
-#> [28] checkmate_2.1.0     scales_1.2.0        digest_0.6.29      
-#> [31] foreign_0.8-82      rmarkdown_2.14      base64enc_0.1-3    
-#> [34] jpeg_0.1-9          pkgconfig_2.0.3     htmltools_0.5.2    
-#> [37] dbplyr_2.1.1        fastmap_1.1.0       highr_0.9          
-#> [40] htmlwidgets_1.5.4   rlang_1.0.2         readxl_1.4.0       
-#> [43] rstudioapi_0.13     jquerylib_0.1.4     farver_2.1.0       
-#> [46] generics_0.1.2      jsonlite_1.8.0      magrittr_2.0.3     
-#> [49] Formula_1.2-4       Matrix_1.4-1        Rcpp_1.0.8.3       
-#> [52] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.1    
-#> [55] stringi_1.7.6       yaml_2.3.5          plyr_1.8.7         
-#> [58] grid_4.1.2          crayon_1.5.1        lattice_0.20-45    
-#> [61] haven_2.5.0         splines_4.1.2       hms_1.1.1          
-#> [64] pillar_1.7.0        reprex_2.0.1        glue_1.6.2         
-#> [67] evaluate_0.15       latticeExtra_0.6-29 data.table_1.14.2  
-#> [70] gifski_1.6.6-1      modelr_0.1.8        vctrs_0.4.1        
-#> [73] png_0.1-7           tzdb_0.3.0          tweenr_1.0.2       
-#> [76] cellranger_1.1.0    gtable_0.3.0        assertthat_0.2.1   
-#> [79] xfun_0.30           broom_0.8.0         survival_3.3-1     
-#> [82] viridisLite_0.4.0   cluster_2.1.3       ellipsis_0.3.2
+R version 4.1.2 (2021-11-01)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Big Sur 10.16
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
+ [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    tidyverse_1.3.1
+ [9] gapminder_0.3.0 gganimate_1.0.7 ggplot2_3.3.6   ggridges_0.5.3 
+[13] patchwork_1.1.1 knitr_1.39     
+
+loaded via a namespace (and not attached):
+ [1] fs_1.5.2            lubridate_1.8.0     RColorBrewer_1.1-3 
+ [4] progress_1.2.2      httr_1.4.3          tools_4.1.2        
+ [7] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
+[10] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
+[13] DBI_1.1.2           colorspace_2.0-3    nnet_7.3-17        
+[16] withr_2.5.0         gridExtra_2.3       tidyselect_1.1.2   
+[19] prettyunits_1.1.1   compiler_4.1.2      cli_3.3.0          
+[22] rvest_1.0.2         htmlTable_2.4.0     xml2_1.3.3         
+[25] labeling_0.4.2      bookdown_0.26       sass_0.4.1         
+[28] checkmate_2.1.0     scales_1.2.0        digest_0.6.29      
+[31] foreign_0.8-82      rmarkdown_2.14      base64enc_0.1-3    
+[34] jpeg_0.1-9          pkgconfig_2.0.3     htmltools_0.5.2    
+[37] dbplyr_2.1.1        fastmap_1.1.0       highr_0.9          
+[40] htmlwidgets_1.5.4   rlang_1.0.2         readxl_1.4.0       
+[43] rstudioapi_0.13     jquerylib_0.1.4     farver_2.1.0       
+[46] generics_0.1.2      jsonlite_1.8.0      magrittr_2.0.3     
+[49] Formula_1.2-4       Matrix_1.4-1        Rcpp_1.0.8.3       
+[52] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.1    
+[55] stringi_1.7.6       yaml_2.3.5          plyr_1.8.7         
+[58] grid_4.1.2          crayon_1.5.1        lattice_0.20-45    
+[61] haven_2.5.0         splines_4.1.2       hms_1.1.1          
+[64] pillar_1.7.0        reprex_2.0.1        glue_1.6.2         
+[67] evaluate_0.15       latticeExtra_0.6-29 data.table_1.14.2  
+[70] gifski_1.6.6-1      modelr_0.1.8        vctrs_0.4.1        
+[73] png_0.1-7           tzdb_0.3.0          tweenr_1.0.2       
+[76] cellranger_1.1.0    gtable_0.3.0        assertthat_0.2.1   
+[79] xfun_0.30           broom_0.8.0         survival_3.3-1     
+[82] viridisLite_0.4.0   cluster_2.1.3       ellipsis_0.3.2     
 ```
