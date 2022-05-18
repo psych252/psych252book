@@ -1030,6 +1030,6 @@ loaded via a namespace (and not attached):
 ```
 
 <div class="figure">
-<img src="figures/reproducibility_court.jpg" alt="Defense at the reproducibility court." width="95%" />
-<p class="caption">(\#fig:unnamed-chunk-46)Defense at the reproducibility court.</p>
+<img src="figures/reproducibility_court.jpg" alt="Defense at the reproducibility court (graphic by [Allison Horst](https://github.com/allisonhorst))." width="95%" />
+<p class="caption">(\#fig:unnamed-chunk-46)Defense at the reproducibility court (graphic by [Allison Horst](https://github.com/allisonhorst)).</p>
 </div>

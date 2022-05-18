@@ -699,15 +699,15 @@ nframes and fps adjusted to match transition
 ```
 
 ```
-Rendering [========>-----------------------------------] at 7.6 fps ~ eta: 1s
-Rendering [============>-------------------------------] at 7.6 fps ~ eta: 1s
-Rendering [=================>--------------------------] at 7.7 fps ~ eta: 1s
-Rendering [=====================>----------------------] at 7.8 fps ~ eta: 1s
-Rendering [=========================>------------------] at 7.9 fps ~ eta: 1s
-Rendering [==============================>-------------] at 7.9 fps ~ eta: 0s
-Rendering [==================================>---------] at 7.9 fps ~ eta: 0s
-Rendering [========================================>-----] at 8 fps ~ eta: 0s
-Rendering [==============================================] at 8 fps ~ eta: 0s
+Rendering [========>-----------------------------------] at 8.1 fps ~ eta: 1s
+Rendering [============>-------------------------------] at 8.4 fps ~ eta: 1s
+Rendering [=================>--------------------------] at 8.5 fps ~ eta: 1s
+Rendering [=====================>----------------------] at 8.4 fps ~ eta: 1s
+Rendering [=========================>------------------] at 8.6 fps ~ eta: 0s
+Rendering [==============================>-------------] at 8.7 fps ~ eta: 0s
+Rendering [==================================>---------] at 8.6 fps ~ eta: 0s
+Rendering [=======================================>----] at 8.6 fps ~ eta: 0s
+Rendering [============================================] at 8.7 fps ~ eta: 0s
 ```
 
 ![](23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-23-1.gif)<!-- -->
@@ -763,15 +763,15 @@ nframes and fps adjusted to match transition
 ```
 
 ```
-Rendering [========>-----------------------------------] at 8.5 fps ~ eta: 1s
-Rendering [============>-------------------------------] at 8.4 fps ~ eta: 1s
-Rendering [=================>--------------------------] at 8.3 fps ~ eta: 1s
-Rendering [=====================>----------------------] at 8.3 fps ~ eta: 1s
-Rendering [=========================>------------------] at 8.2 fps ~ eta: 0s
-Rendering [==============================>-------------] at 8.2 fps ~ eta: 0s
-Rendering [==================================>---------] at 8.2 fps ~ eta: 0s
-Rendering [=======================================>----] at 8.2 fps ~ eta: 0s
-Rendering [============================================] at 8.2 fps ~ eta: 0s
+Rendering [========>-------------------------------------] at 9 fps ~ eta: 1s
+Rendering [============>-------------------------------] at 8.9 fps ~ eta: 1s
+Rendering [=================>--------------------------] at 8.8 fps ~ eta: 1s
+Rendering [=====================>----------------------] at 8.8 fps ~ eta: 1s
+Rendering [=========================>------------------] at 8.9 fps ~ eta: 0s
+Rendering [==============================>-------------] at 8.9 fps ~ eta: 0s
+Rendering [==================================>---------] at 8.9 fps ~ eta: 0s
+Rendering [=======================================>----] at 8.9 fps ~ eta: 0s
+Rendering [============================================] at 8.9 fps ~ eta: 0s
 ```
 
 ```r
@@ -1664,16 +1664,16 @@ animate(p, nframes = 10, fps = 1, width = 800, height = 600, res = 96, type = "c
 ```
 
 ```
-Rendering [===>----------------------------------------] at 2.4 fps ~ eta: 4s
-Rendering [========>-----------------------------------] at 2.4 fps ~ eta: 3s
-Rendering [============>-------------------------------] at 2.3 fps ~ eta: 3s
-Rendering [=================>--------------------------] at 2.3 fps ~ eta: 3s
-Rendering [=====================>----------------------] at 2.3 fps ~ eta: 2s
-Rendering [=========================>------------------] at 2.3 fps ~ eta: 2s
-Rendering [==============================>-------------] at 2.3 fps ~ eta: 1s
-Rendering [==================================>---------] at 2.2 fps ~ eta: 1s
-Rendering [=======================================>----] at 2.2 fps ~ eta: 0s
-Rendering [============================================] at 2.2 fps ~ eta: 0s
+Rendering [===>----------------------------------------] at 1.9 fps ~ eta: 5s
+Rendering [========>-------------------------------------] at 2 fps ~ eta: 4s
+Rendering [============>-------------------------------] at 2.1 fps ~ eta: 3s
+Rendering [=================>--------------------------] at 2.1 fps ~ eta: 3s
+Rendering [=====================>----------------------] at 2.1 fps ~ eta: 2s
+Rendering [=========================>------------------] at 2.1 fps ~ eta: 2s
+Rendering [==============================>-------------] at 2.1 fps ~ eta: 1s
+Rendering [==================================>---------] at 2.1 fps ~ eta: 1s
+Rendering [=======================================>----] at 2.1 fps ~ eta: 0s
+Rendering [============================================] at 2.1 fps ~ eta: 0s
 ```
 
 ```r
@@ -1965,6 +1965,8 @@ ggplot(data = df.titanic,
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-69-1.png" width="672" />
 
 ## Politeness data
+
+The data is drawn from @winter2012phonetic, and this section follows the excellent tutorial by @franke2019bayesian.
 
 (I'm skipping some of the steps of our recipe for Bayesian data analysis here.)
 

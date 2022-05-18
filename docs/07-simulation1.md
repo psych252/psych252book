@@ -34,7 +34,7 @@ numbers %>%
 ```
 
 ```
- [1] 3 1 3 1 2 3 1 3 3 3
+ [1] 1 3 1 3 1 1 3 2 3 1
 ```
 
 Use the `prob = ` argument to change the probability with which each number should be drawn. 
@@ -50,7 +50,7 @@ numbers %>%
 ```
 
 ```
- [1] 1 1 1 1 2 1 1 1 1 1
+ [1] 1 3 1 1 1 1 1 3 1 1
 ```
 
 Make sure to set the seed in order to make your code reproducible. The code chunk below may give a different outcome each time is run. 
@@ -65,7 +65,7 @@ numbers %>%
 ```
 
 ```
-[1] 3 1 4 5 2
+[1] 4 5 3 1 2
 ```
 
 The chunk below will produce the same outcome every time it's run. 
