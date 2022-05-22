@@ -390,7 +390,7 @@ Looking mostly good!
 To check whether the model did a good job capturing the data, we can simulate what future data the Bayesian model predicts, now that it has learned from the data we feed into it.  
 
 ```{r}
-pp_check(fit.brm_poker, nsamples = 100)
+pp_check(fit.brm_poker, ndraws = 100)
 ```
 
 This looks good! The predicted shaped of the data based on samples from the posterior distribution looks very similar to the shape of the actual data.  
@@ -790,7 +790,7 @@ fit.brm_sleep %>%
 
 ```{r}
 pp_check(fit.brm_sleep,
-         nsamples = 100)
+         ndraws = 100)
 ```
 
 ### 4. Interpret the parameters
@@ -1033,7 +1033,7 @@ fit.brm_titanic %>%
 
 ```{r}
 pp_check(fit.brm_titanic,
-         nsamples = 100)
+         ndraws = 100)
 ```
 
 Let's visualize what the posterior predictive would have looked like for a linear model (instead of a logistic model). 
@@ -1045,7 +1045,7 @@ fit.brm_titanic_linear = brm(formula = survived ~ 1 + fare * sex,
                              seed = 1)
 
 pp_check(fit.brm_titanic_linear,
-         nsamples = 100)
+         ndraws = 100)
 ```
 
 ### 4. Interpret the parameters

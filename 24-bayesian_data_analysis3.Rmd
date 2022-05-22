@@ -76,14 +76,22 @@ fit.brm_bayes = brm(s | trials(k) ~ 0 + Intercept,
 
 Visualize the prior and posterior samples: 
 
-```{r}
-fit.brm_bayes %>% 
-  posterior_samples(pars = "b") %>% 
-  pivot_longer(cols = everything()) %>% 
+```{r, warning=FALSE}
+fit.brm_bayes %>%
+  as_draws_df(variable = "[b]",
+              regex = T) %>%
+  pivot_longer(cols = -contains(".")) %>% 
   ggplot(mapping = aes(x = value,
                        fill = name)) + 
   geom_density(alpha = 0.5) + 
   scale_fill_brewer(palette = "Set1")
+```
+
+
+```{r}
+fit.brm_bayes %>% 
+  as_draws_df(variable = "[b]",
+              regex = T)
 ```
 
 
@@ -238,14 +246,21 @@ fit.brm_variance %>%
 ```{r}
 df.variance %>%
   expand(group) %>% 
-  add_fitted_draws(fit.brm_variance, dpar = TRUE) %>%
-  select(group, .row, .draw, posterior = .value, mu, sigma) %>% 
+  add_epred_draws(object = fit.brm_variance,
+                  dpar = TRUE ) %>%
+  select(group,
+         .row,
+         .draw,
+         posterior = .epred,
+         mu,
+         sigma) %>%
   pivot_longer(cols = c(mu, sigma),
                names_to = "index",
                values_to = "value") %>% 
   ggplot(aes(x = value, y = group)) +
-  geom_halfeyeh() +
-  geom_vline(xintercept = 0, linetype = "dashed") +
+  stat_halfeye() +
+  geom_vline(xintercept = 0,
+             linetype = "dashed") +
   facet_grid(cols = vars(index))
 ```
 
@@ -338,12 +353,14 @@ ggplot(data = tibble(x = c(-3, 3)),
 
 ```{r, fig.height=20, fig.width=8}
 fit.brm_ordinal %>% 
-  plot(N = 9)
+  plot(N = 9,
+       variable = "^b_",
+       regex = T)
 ```
 
 ```{r}
 fit.brm_ordinal %>% 
-  pp_check(nsamples = 20)
+  pp_check(ndraws = 20)
 ```
 
 
@@ -356,9 +373,9 @@ conditional_effects(fit.brm_ordinal,
 ```
 
 ```{r}
-df.model = add_fitted_draws(newdata = expand_grid(id = 1:6),
-                            model = fit.brm_ordinal,
-                            n = 10)
+df.model = add_epred_draws(newdata = expand_grid(id = 1:6),
+                           object = fit.brm_ordinal,
+                           ndraws = 10)
 
 df.plot = df.movies %>% 
   count(id, stars) %>% 
@@ -373,7 +390,7 @@ ggplot(data = df.plot,
            fill = "lightblue") +
   geom_point(data = df.model,
              mapping = aes(x = .category,
-                           y = .value),
+                           y = .epred),
              alpha = 0.3,
              position = position_jitter(width = 0.3)) +
   facet_wrap(~id, ncol = 6) 
@@ -409,15 +426,18 @@ df.model = fit.brm_metric %>%
   mutate(across(.cols = id2:id6,
                 .fns = ~ . + intercept)) %>% 
   rename_with(.fn = ~ c(str_c("mu_", 1:6), "sigma")) %>% 
-  pivot_longer(cols = everything(),
+  pivot_longer(cols = contains("mu"),
                names_to = c("parameter", "movie"),
                names_sep = "_",
                values_to = "value") %>% 
   pivot_wider(names_from = parameter, 
               values_from = value) %>% 
-  mutate(data = map(.x = mu, 
-                    .f = ~ tibble(x = 1:5,
-                                  y  = dnorm(x, mean = .x)))) %>% 
+  mutate(data = map2(.x = mu, 
+                     .y = sigma,
+                     .f = ~ tibble(x = 1:5,
+                                   y  = dnorm(x,
+                                              mean = .x,
+                                              sd = .y)))) %>% 
   select(movie, data) %>% 
   unnest(c(data)) %>% 
   group_by(movie) %>% 
@@ -486,9 +506,9 @@ ggplot(data = tibble(x = c(-3, 3)),
 ##### Model predictions
 
 ```{r}
-df.model = add_fitted_draws(newdata = expand_grid(id = 1:6),
-                            model = fit.brm_ordinal_variance,
-                            n = 10)
+df.model = add_epred_draws(newdata = expand_grid(id = 1:6),
+                           object = fit.brm_ordinal_variance,
+                           ndraws = 10)
 
 df.plot = df.movies %>% 
   count(id, stars) %>% 
@@ -503,7 +523,7 @@ ggplot(data = df.plot,
            fill = "lightblue") +
   geom_point(data = df.model,
              mapping = aes(x = .category,
-                           y = .value),
+                           y = .epred),
              alpha = 0.3,
              position = position_jitter(width = 0.3)) +
   facet_wrap(~id, ncol = 6) 
