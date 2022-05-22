@@ -454,6 +454,7 @@ fit %>%
   summary()
 
 df.data %>% 
+  head(10) %>% 
   kable(digits = 2) %>% 
   kable_styling(bootstrap_options = "striped",
                 full_width = F)
@@ -473,7 +474,7 @@ ggplot(data = df.data,
   labs(y = "p(response)")
 ```
 
-#### Calculate the model's likelihood
+### Calculate the model's likelihood
 
 To calculate the likelihood of the data for a given logistic model, we look at the actual response, and the probability of the predicted response, and then determine the likelihood of the observation assuming a Bernoulli process. To get the overall likelihood of the data, we then multiply the likelihood of each data point (or take the logs first and then the sum to get the log-likelihood). 
 
