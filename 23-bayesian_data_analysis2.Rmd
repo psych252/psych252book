@@ -279,7 +279,7 @@ variables = fit.brm_poker %>%
   .[1:4]
 
 fit.brm_poker %>% 
-  posterior_samples() %>% 
+  as_draws() %>% 
   mcmc_acf(pars = variables,
            lags = 4)
 ```
@@ -480,10 +480,9 @@ animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
 Let's visualize what the posterior for the different parameters looks like. We use the `stat_halfeye()` function from the "tidybayes" package to do so: 
 
 
-```{r}
+```{r, warning=FALSE}
 fit.brm_poker %>% 
-  posterior_samples() %>% 
-  clean_names() %>% 
+  as_draws_df() %>%
   select(starts_with("b_"), sigma) %>%
   pivot_longer(cols = everything(),
                names_to = "variable",
@@ -499,10 +498,9 @@ fit.brm_poker %>%
 
 To compute the MAP (maximum a posteriori probability) estimate and highest density interval, we use the `mean_hdi()` function that comes with the "tidybayes" package.
 
-```{r}
+```{r, warning=FALSE}
 fit.brm_poker %>% 
-  posterior_samples() %>% 
-  clean_names() %>% 
+  as_draws_df() %>%
   select(starts_with("b_"), sigma) %>% 
   mean_hdi() %>% 
   pivot_longer(cols = -c(.width:.interval),
@@ -523,9 +521,9 @@ One key advantage of Bayesian over frequentist analysis is that we can test hypo
 
 We may ask, for example, what the probability is that the parameter for the difference between a bad hand and a neutral hand (`b_handneutral`) is greater than 0. Let's plot the posterior distribution together with the criterion: 
 
-```{r}
+```{r,warning=FALSE}
 fit.brm_poker %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   select(b_handneutral) %>% 
   pivot_longer(cols = everything(),
                names_to = "variable",
@@ -579,7 +577,7 @@ Let's double check one example, and calculate the result directly based on the p
 
 ```{r}
 df.hypothesis = fit.brm_poker %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   clean_names() %>% 
   select(starts_with("b_")) %>% 
   mutate(neutral = b_intercept + b_handneutral,
@@ -650,7 +648,7 @@ fit.brm_poker %>%
 
 # directly computing from the posterior
 fit.brm_poker %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   clean_names() %>% 
   mutate(contrast = (b_intercept + b_handneutral) * 2 - (b_intercept + b_intercept + b_handgood)) %>% 
   summarize(contrast = mean(contrast))
@@ -802,10 +800,10 @@ fit.brm_sleep %>%
 
 #### Summary of posterior distributions
 
-```{r}
+```{r, warning=FALSE}
 # all parameters
 fit.brm_sleep %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   select(-c(lp__, contains("["))) %>%
   pivot_longer(cols = everything(),
                names_to = "variable",
@@ -821,7 +819,7 @@ fit.brm_sleep %>%
 
 # just the parameter of interest
 fit.brm_sleep %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   select(b_days) %>%
   ggplot(data = .,
          mapping = aes(x = b_days)) +
@@ -977,7 +975,7 @@ animate(p, nframes = 10, fps = 1, width = 800, height = 600, res = 96, type = "c
 
 ## Titanic study
 
-### 1. Visualize that data
+### 1. Visualize the data
 
 ```{r, message=FALSE}
 df.titanic %>% 
@@ -1050,9 +1048,9 @@ pp_check(fit.brm_titanic_linear,
 
 ### 4. Interpret the parameters
 
-```{r}
+```{r,warning=FALSE}
 fit.brm_titanic %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   select(-lp__) %>%
   pivot_longer(cols = everything(),
                names_to = "variable",
