@@ -34,7 +34,7 @@ numbers %>%
 ```
 
 ```
- [1] 1 3 1 3 1 1 3 2 3 1
+ [1] 3 2 1 2 1 3 2 3 2 2
 ```
 
 Use the `prob = ` argument to change the probability with which each number should be drawn. 
@@ -50,7 +50,7 @@ numbers %>%
 ```
 
 ```
- [1] 1 3 1 1 1 1 1 3 1 1
+ [1] 1 1 1 1 1 1 2 1 1 2
 ```
 
 Make sure to set the seed in order to make your code reproducible. The code chunk below may give a different outcome each time is run. 
@@ -65,7 +65,7 @@ numbers %>%
 ```
 
 ```
-[1] 4 5 3 1 2
+[1] 3 2 5 4 1
 ```
 
 The chunk below will produce the same outcome every time it's run. 
@@ -298,7 +298,16 @@ ggplot(data = df.plot,
            family = "Courier New") +
   scale_x_continuous(breaks = c(160, 180, 200)) +
   coord_cartesian(xlim = c(150, 210), expand = F)
+```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
+```r
 # remove all variables with tmp in their name 
 rm(list = ls() %>% str_subset(pattern = "tmp."))
 ```
@@ -517,6 +526,36 @@ p = p +
 p # print the figure
 ```
 
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
 <img src="07-simulation1_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 Here are the same results when specifying a different bandwidth: 
@@ -578,6 +617,36 @@ p = p +
             color = "red",
             linetype = 2)
 p
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-18-1.png" width="672" />
@@ -1050,7 +1119,7 @@ df.camp %>% print()
  8     8 basketball   193.
  9     9 basketball   172.
 10    10 basketball   177.
-# … with 9,990 more rows
+# ℹ 9,990 more rows
 ```
 
 Now we have a data frame with kids whose height was randomly sampled depending on which sport they do. I've used the `sample()` function to assign a sport to each kid first using the `prob = ` argument to make sure that a kid is more likely to be assigned the sport "basketball" than "chess". 
@@ -1137,41 +1206,41 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
- [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
- [9] tidyverse_1.3.1  patchwork_1.1.1  MASS_7.3-57      kableExtra_1.3.4
-[13] knitr_1.39      
+ [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
+ [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
+ [9] ggplot2_3.4.4    tidyverse_2.0.0  patchwork_1.1.3  MASS_7.3-60     
+[13] kableExtra_1.3.4 knitr_1.45      
 
 loaded via a namespace (and not attached):
- [1] svglite_2.1.0     lubridate_1.8.0   assertthat_0.2.1  digest_0.6.29    
- [5] utf8_1.2.2        R6_2.5.1          cellranger_1.1.0  backports_1.4.1  
- [9] reprex_2.0.1      evaluate_0.15     httr_1.4.3        highr_0.9        
-[13] pillar_1.7.0      rlang_1.0.2       readxl_1.4.0      rstudioapi_0.13  
-[17] jquerylib_0.1.4   rmarkdown_2.14    labeling_0.4.2    webshot_0.5.3    
-[21] munsell_0.5.0     broom_0.8.0       compiler_4.1.2    modelr_0.1.8     
-[25] xfun_0.30         pkgconfig_2.0.3   systemfonts_1.0.4 htmltools_0.5.2  
-[29] tidyselect_1.1.2  bookdown_0.26     fansi_1.0.3       viridisLite_0.4.0
-[33] crayon_1.5.1      tzdb_0.3.0        dbplyr_2.1.1      withr_2.5.0      
-[37] grid_4.1.2        jsonlite_1.8.0    gtable_0.3.0      lifecycle_1.0.1  
-[41] DBI_1.1.2         magrittr_2.0.3    scales_1.2.0      cli_3.3.0        
-[45] stringi_1.7.6     farver_2.1.0      fs_1.5.2          xml2_1.3.3       
-[49] bslib_0.3.1       ellipsis_0.3.2    generics_0.1.2    vctrs_0.4.1      
-[53] tools_4.1.2       glue_1.6.2        hms_1.1.1         fastmap_1.1.0    
-[57] yaml_2.3.5        colorspace_2.0-3  rvest_1.0.2       haven_2.5.0      
-[61] sass_0.4.1       
+ [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
+ [5] stringi_1.8.3     hms_1.1.3         digest_0.6.33     magrittr_2.0.3   
+ [9] timechange_0.2.0  evaluate_0.23     grid_4.3.2        bookdown_0.37    
+[13] fastmap_1.1.1     jsonlite_1.8.8    httr_1.4.7        rvest_1.0.3      
+[17] fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4  
+[21] cli_3.6.2         crayon_1.5.2      rlang_1.1.2       munsell_0.5.0    
+[25] withr_2.5.2       cachem_1.0.8      yaml_2.3.8        tools_4.3.2      
+[29] tzdb_0.4.0        colorspace_2.1-0  webshot_0.5.5     vctrs_0.6.5      
+[33] R6_2.5.1          lifecycle_1.0.4   pkgconfig_2.0.3   pillar_1.9.0     
+[37] bslib_0.6.1       gtable_0.3.4      glue_1.6.2        systemfonts_1.0.5
+[41] highr_0.10        xfun_0.41         tidyselect_1.2.0  rstudioapi_0.15.0
+[45] farver_2.1.1      htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25   
+[49] svglite_2.1.3     compiler_4.3.2   
 ```

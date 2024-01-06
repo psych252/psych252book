@@ -581,7 +581,7 @@ ggplot(data = df.plot,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (stat_density).
+Warning: Removed 1 rows containing non-finite values (`stat_density()`).
 ```
 
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-24-1.png" width="672" />
@@ -659,6 +659,13 @@ ggplot(data = df.plot,
   geom_line(size = 1)
 ```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-27-1.png" width="672" /><img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-27-2.png" width="672" />
 
 #### Checking model performance
@@ -714,7 +721,7 @@ df.mixed
  8           4         1     0.798   3.47  
  9           5         0     0.165   0.510 
 10           5         1     0.165   0.880 
-# … with 190 more rows
+# ℹ 190 more rows
 ```
 
 Let's fit a model to this data now and take a look at the summary output: 
@@ -1188,52 +1195,52 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.9        
- [4] purrr_0.3.4         readr_2.1.2         tidyr_1.2.0        
- [7] tibble_3.1.7        ggplot2_3.3.6       tidyverse_1.3.1    
-[10] see_0.7.0           performance_0.9.0   lme4_1.1-29        
-[13] Matrix_1.4-1        emmeans_1.7.3       ggeffects_1.1.2    
-[16] broom.mixed_0.2.9.4 janitor_2.1.0       kableExtra_1.3.4   
-[19] knitr_1.39         
+ [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
+ [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.4        
+ [7] tidyr_1.3.0         tibble_3.2.1        ggplot2_3.4.4      
+[10] tidyverse_2.0.0     see_0.8.1           performance_0.10.8 
+[13] lme4_1.1-35.1       Matrix_1.6-4        emmeans_1.9.0      
+[16] ggeffects_1.3.4     broom.mixed_0.2.9.4 janitor_2.2.0      
+[19] kableExtra_1.3.4    knitr_1.45         
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-157      pbkrtest_0.5.1    fs_1.5.2          lubridate_1.8.0  
- [5] insight_0.17.0    webshot_0.5.3     httr_1.4.3        tools_4.1.2      
- [9] backports_1.4.1   bslib_0.3.1       sjlabelled_1.2.0  utf8_1.2.2       
-[13] R6_2.5.1          mgcv_1.8-40       DBI_1.1.2         colorspace_2.0-3 
-[17] withr_2.5.0       tidyselect_1.1.2  compiler_4.1.2    cli_3.3.0        
-[21] rvest_1.0.2       xml2_1.3.3        sandwich_3.0-1    bayestestR_0.12.1
-[25] labeling_0.4.2    bookdown_0.26     sass_0.4.1        scales_1.2.0     
-[29] mvtnorm_1.1-3     systemfonts_1.0.4 digest_0.6.29     minqa_1.2.4      
-[33] rmarkdown_2.14    svglite_2.1.0     pkgconfig_2.0.3   htmltools_0.5.2  
-[37] parallelly_1.31.1 highr_0.9         dbplyr_2.1.1      fastmap_1.1.0    
-[41] rlang_1.0.2       readxl_1.4.0      rstudioapi_0.13   farver_2.1.0     
-[45] jquerylib_0.1.4   generics_0.1.2    zoo_1.8-10        jsonlite_1.8.0   
-[49] magrittr_2.0.3    patchwork_1.1.1   Rcpp_1.0.8.3      munsell_0.5.0    
-[53] fansi_1.0.3       lifecycle_1.0.1   furrr_0.3.0       stringi_1.7.6    
-[57] multcomp_1.4-19   yaml_2.3.5        snakecase_0.11.0  MASS_7.3-57      
-[61] grid_4.1.2        ggrepel_0.9.1     parallel_4.1.2    listenv_0.8.0    
-[65] crayon_1.5.1      lattice_0.20-45   haven_2.5.0       splines_4.1.2    
-[69] hms_1.1.1         pillar_1.7.0      boot_1.3-28       estimability_1.3 
-[73] codetools_0.2-18  reprex_2.0.1      glue_1.6.2        evaluate_0.15    
-[77] modelr_0.1.8      vctrs_0.4.1       nloptr_2.0.0      tzdb_0.3.0       
-[81] cellranger_1.1.0  gtable_0.3.0      datawizard_0.4.0  future_1.25.0    
-[85] assertthat_0.2.1  xfun_0.30         xtable_1.8-4      broom_0.8.0      
-[89] coda_0.19-4       survival_3.3-1    viridisLite_0.4.0 globals_0.14.0   
-[93] TH.data_1.1-1     ellipsis_0.3.2   
+ [1] sjlabelled_1.2.0   tidyselect_1.2.0   viridisLite_0.4.2  farver_2.1.1      
+ [5] fastmap_1.1.1      bayestestR_0.13.1  digest_0.6.33      estimability_1.4.1
+ [9] timechange_0.2.0   lifecycle_1.0.4    magrittr_2.0.3     compiler_4.3.2    
+[13] rlang_1.1.2        sass_0.4.8         tools_4.3.2        utf8_1.2.4        
+[17] yaml_2.3.8         labeling_0.4.3     xml2_1.3.6         withr_2.5.2       
+[21] datawizard_0.9.1   grid_4.3.2         fansi_1.0.6        xtable_1.8-4      
+[25] colorspace_2.1-0   future_1.33.1      globals_0.16.2     scales_1.3.0      
+[29] MASS_7.3-60        insight_0.19.7     cli_3.6.2          mvtnorm_1.2-4     
+[33] crayon_1.5.2       rmarkdown_2.25     generics_0.1.3     rstudioapi_0.15.0 
+[37] httr_1.4.7         tzdb_0.4.0         minqa_1.2.6        cachem_1.0.8      
+[41] splines_4.3.2      rvest_1.0.3        parallel_4.3.2     vctrs_0.6.5       
+[45] boot_1.3-28.1      webshot_0.5.5      jsonlite_1.8.8     bookdown_0.37     
+[49] patchwork_1.1.3    hms_1.1.3          ggrepel_0.9.4      pbkrtest_0.5.2    
+[53] listenv_0.9.0      systemfonts_1.0.5  jquerylib_0.1.4    glue_1.6.2        
+[57] parallelly_1.36.0  nloptr_2.0.3       codetools_0.2-19   stringi_1.8.3     
+[61] gtable_0.3.4       munsell_0.5.0      furrr_0.3.1        pillar_1.9.0      
+[65] htmltools_0.5.7    R6_2.5.1           evaluate_0.23      lattice_0.22-5    
+[69] haven_2.5.4        highr_0.10         backports_1.4.1    broom_1.0.5       
+[73] snakecase_0.11.1   bslib_0.6.1        Rcpp_1.0.11        svglite_2.1.3     
+[77] coda_0.19-4        nlme_3.1-164       mgcv_1.9-1         xfun_0.41         
+[81] pkgconfig_2.0.3   
 ```

@@ -578,7 +578,7 @@ fit %>%
   r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
       <dbl>         <dbl> <dbl>     <dbl>   <dbl> <dbl>  <dbl> <dbl> <dbl>
 1     0.255         0.214  1.45      6.16  0.0232     1  -34.7  75.5  78.5
-# … with 3 more variables: deviance <dbl>, df.residual <int>, nobs <int>
+# ℹ 3 more variables: deviance <dbl>, df.residual <int>, nobs <int>
 ```
 
 Both AIC and BIC take the number of parameters and the model's likelihood into account. BIC additionally considers the number of observations. But how is the likelihood of a linear model determined? 
@@ -706,6 +706,12 @@ ggplot(data = tibble(x = c(0, 1)),
         axis.title = element_text(size = 26))
 ```
 
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
 <img src="15-model_comparison_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 
@@ -730,43 +736,43 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
- [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
- [9] tidyverse_1.3.1  modelr_0.1.8     patchwork_1.1.1  broom_0.8.0     
-[13] janitor_2.1.0    kableExtra_1.3.4 knitr_1.39      
+ [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
+ [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
+ [9] ggplot2_3.4.4    tidyverse_2.0.0  modelr_0.1.11    patchwork_1.1.3 
+[13] broom_1.0.5      janitor_2.2.0    kableExtra_1.3.4 knitr_1.45      
 
 loaded via a namespace (and not attached):
- [1] lattice_0.20-45   svglite_2.1.0     lubridate_1.8.0   assertthat_0.2.1 
- [5] digest_0.6.29     utf8_1.2.2        R6_2.5.1          cellranger_1.1.0 
- [9] backports_1.4.1   reprex_2.0.1      evaluate_0.15     highr_0.9        
-[13] httr_1.4.3        pillar_1.7.0      rlang_1.0.2       readxl_1.4.0     
-[17] rstudioapi_0.13   jquerylib_0.1.4   Matrix_1.4-1      rmarkdown_2.14   
-[21] labeling_0.4.2    splines_4.1.2     webshot_0.5.3     munsell_0.5.0    
-[25] compiler_4.1.2    xfun_0.30         pkgconfig_2.0.3   systemfonts_1.0.4
-[29] mgcv_1.8-40       htmltools_0.5.2   tidyselect_1.1.2  bookdown_0.26    
-[33] fansi_1.0.3       viridisLite_0.4.0 withr_2.5.0       crayon_1.5.1     
-[37] tzdb_0.3.0        dbplyr_2.1.1      grid_4.1.2        nlme_3.1-157     
-[41] jsonlite_1.8.0    gtable_0.3.0      lifecycle_1.0.1   DBI_1.1.2        
-[45] magrittr_2.0.3    scales_1.2.0      cli_3.3.0         stringi_1.7.6    
-[49] farver_2.1.0      fs_1.5.2          snakecase_0.11.0  xml2_1.3.3       
-[53] bslib_0.3.1       ellipsis_0.3.2    generics_0.1.2    vctrs_0.4.1      
-[57] tools_4.1.2       glue_1.6.2        hms_1.1.1         fastmap_1.1.0    
-[61] yaml_2.3.5        colorspace_2.0-3  rvest_1.0.2       haven_2.5.0      
-[65] sass_0.4.1       
+ [1] gtable_0.3.4      xfun_0.41         bslib_0.6.1       lattice_0.22-5   
+ [5] tzdb_0.4.0        vctrs_0.6.5       tools_4.3.2       generics_0.1.3   
+ [9] fansi_1.0.6       highr_0.10        pkgconfig_2.0.3   Matrix_1.6-4     
+[13] webshot_0.5.5     lifecycle_1.0.4   compiler_4.3.2    farver_2.1.1     
+[17] munsell_0.5.0     snakecase_0.11.1  htmltools_0.5.7   sass_0.4.8       
+[21] yaml_2.3.8        pillar_1.9.0      jquerylib_0.1.4   cachem_1.0.8     
+[25] nlme_3.1-164      tidyselect_1.2.0  rvest_1.0.3       digest_0.6.33    
+[29] stringi_1.8.3     bookdown_0.37     labeling_0.4.3    splines_4.3.2    
+[33] fastmap_1.1.1     grid_4.3.2        colorspace_2.1-0  cli_3.6.2        
+[37] magrittr_2.0.3    utf8_1.2.4        withr_2.5.2       scales_1.3.0     
+[41] backports_1.4.1   timechange_0.2.0  rmarkdown_2.25    httr_1.4.7       
+[45] hms_1.1.3         evaluate_0.23     viridisLite_0.4.2 mgcv_1.9-1       
+[49] rlang_1.1.2       glue_1.6.2        xml2_1.3.6        svglite_2.1.3    
+[53] rstudioapi_0.15.0 jsonlite_1.8.8    R6_2.5.1          systemfonts_1.0.5
 ```
 

@@ -228,13 +228,13 @@ Formula: balance ~ 1 + hand
 
 Population-Level Effects: 
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept       5.94      0.41     5.10     6.73 1.00     3385     2517
-handneutral     4.40      0.58     3.28     5.59 1.00     3607     2612
-handgood        7.08      0.59     5.94     8.23 1.00     3719     2923
+Intercept       5.94      0.42     5.11     6.76 1.00     3434     2747
+handneutral     4.41      0.60     3.22     5.60 1.00     3669     2860
+handgood        7.09      0.61     5.91     8.27 1.00     3267     2841
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     4.12      0.17     3.80     4.48 1.00     3893     3019
+sigma     4.12      0.17     3.82     4.48 1.00     3378     3010
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -347,13 +347,13 @@ Formula: balance ~ 1 + hand
 
 Population-Level Effects: 
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept       5.96      0.41     5.17     6.78 1.00     9472     7929
-handneutral     4.37      0.59     3.21     5.49 1.00    10221     9046
-handgood        7.05      0.59     5.89     8.20 1.00    10521     8934
+Intercept       5.96      0.41     5.15     6.76 1.00    10533     8949
+handneutral     4.39      0.58     3.26     5.52 1.00    11458     9173
+handgood        7.06      0.58     5.91     8.20 1.00    10754     8753
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     4.13      0.17     3.81     4.47 1.00    10744     8408
+sigma     4.13      0.17     3.81     4.48 1.00    11877     8882
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -369,7 +369,7 @@ fit.brm_poker_full %>%
 ```
 
 ```
-// generated with brms 2.14.4
+// generated with brms 2.20.4
 functions {
 }
 data {
@@ -377,10 +377,10 @@ data {
   vector[N] Y;  // response variable
   int<lower=1> K;  // number of population-level effects
   matrix[N, K] X;  // population-level design matrix
+  int<lower=1> Kc;  // number of population-level effects after centering
   int prior_only;  // should the likelihood be ignored?
 }
 transformed data {
-  int Kc = K - 1;
   matrix[N, Kc] Xc;  // centered version of X without an intercept
   vector[Kc] means_X;  // column means of X before centering
   for (i in 2:K) {
@@ -389,23 +389,25 @@ transformed data {
   }
 }
 parameters {
-  vector[Kc] b;  // population-level effects
+  vector[Kc] b;  // regression coefficients
   real Intercept;  // temporary intercept for centered predictors
-  real<lower=0> sigma;  // residual SD
+  real<lower=0> sigma;  // dispersion parameter
 }
 transformed parameters {
+  real lprior = 0;  // prior contributions to the log posterior
+  lprior += normal_lpdf(b[1] | 0, 10);
+  lprior += normal_lpdf(b[2] | 0, 10);
+  lprior += student_t_lpdf(Intercept | 3, 3, 10);
+  lprior += student_t_lpdf(sigma | 3, 0, 10)
+    - 1 * student_t_lccdf(0 | 3, 0, 10);
 }
 model {
-  // likelihood including all constants
+  // likelihood including constants
   if (!prior_only) {
     target += normal_id_glm_lpdf(Y | Xc, Intercept, b, sigma);
   }
-  // priors including all constants
-  target += normal_lpdf(b[1] | 0, 10);
-  target += normal_lpdf(b[2] | 0, 10);
-  target += student_t_lpdf(Intercept | 3, 3, 10);
-  target += student_t_lpdf(sigma | 3, 0, 10)
-    - 1 * student_t_lccdf(0 | 3, 0, 10);
+  // priors including constants
+  target += lprior;
 }
 generated quantities {
   // actual population-level intercept
@@ -460,14 +462,18 @@ variables = fit.brm_poker %>%
   .[1:4]
 
 fit.brm_poker %>% 
-  posterior_samples() %>% 
+  as_draws() %>% 
   mcmc_acf(pars = variables,
            lags = 4)
 ```
 
 ```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
+Warning: The `facets` argument of `facet_grid()` is deprecated as of ggplot2 2.2.0.
+ℹ Please use the `rows` argument instead.
+ℹ The deprecated feature was likely used in the bayesplot package.
+  Please report the issue at <https://github.com/stan-dev/bayesplot/issues/>.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-13-1.png" width="672" />
@@ -503,15 +509,9 @@ summary(fit.brm_wrong)
 ```
 
 ```
-Warning: Parts of the model have not converged (some Rhats are > 1.05). Be
-careful when analysing the results! We recommend running more iterations and/or
-setting stronger priors.
-```
-
-```
-Warning: There were 1348 divergent transitions after warmup.
-Increasing adapt_delta above 0.8 may help. See http://mc-stan.org/misc/
-warnings.html#divergent-transitions-after-warmup
+Warning: There were 1396 divergent transitions after warmup. Increasing
+adapt_delta above 0.8 may help. See
+http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
 ```
 
 ```
@@ -523,14 +523,14 @@ Formula: y ~ 1
          total post-warmup draws = 6000
 
 Population-Level Effects: 
-              Estimate     Est.Error       l-95% CI      u-95% CI Rhat Bulk_ESS
-Intercept -44780254.01 1085496757.06 -3091150221.00 2498148317.09 1.73      218
+              Estimate    Est.Error      l-95% CI      u-95% CI Rhat Bulk_ESS
+Intercept 228357056.15 984976734.30 -616012010.65 4388257793.68 1.04       45
           Tail_ESS
-Intercept      113
+Intercept       59
 
 Family Specific Parameters: 
-          Estimate     Est.Error l-95% CI      u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma 924899544.31 1859482970.46 22790.00 6962912540.71 1.69        3       64
+          Estimate     Est.Error  l-95% CI      u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma 812525872.95 1745959463.85 282591.91 6739518200.93 1.04       44       63
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -599,11 +599,11 @@ Formula: y ~ 1
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept    -0.03      1.72    -3.62     3.50 1.00     1240     1015
+Intercept    -0.05      1.55    -3.35     3.11 1.00     1730     1300
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     2.07      2.03     0.59     6.69 1.00     1180     1608
+sigma     2.01      1.84     0.62     6.81 1.00     1206     1568
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -651,12 +651,7 @@ To check whether the model did a good job capturing the data, we can simulate wh
 
 
 ```r
-pp_check(fit.brm_poker, nsamples = 100)
-```
-
-```
-Warning: Argument 'nsamples' is deprecated. Please use argument 'ndraws'
-instead.
+pp_check(fit.brm_poker, ndraws = 100)
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-22-1.png" width="672" />
@@ -695,22 +690,9 @@ animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
 ```
 
 ```
-nframes and fps adjusted to match transition
+Warning: No renderer available. Please install the gifski, av, or magick
+package to create animated output
 ```
-
-```
-Rendering [========>-----------------------------------] at 8.1 fps ~ eta: 1s
-Rendering [============>-------------------------------] at 8.4 fps ~ eta: 1s
-Rendering [=================>--------------------------] at 8.5 fps ~ eta: 1s
-Rendering [=====================>----------------------] at 8.4 fps ~ eta: 1s
-Rendering [=========================>------------------] at 8.6 fps ~ eta: 0s
-Rendering [==============================>-------------] at 8.7 fps ~ eta: 0s
-Rendering [==================================>---------] at 8.6 fps ~ eta: 0s
-Rendering [=======================================>----] at 8.6 fps ~ eta: 0s
-Rendering [============================================] at 8.7 fps ~ eta: 0s
-```
-
-![](23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-23-1.gif)<!-- -->
 
 ##### Prior predictive check
 
@@ -759,26 +741,13 @@ animate(p, nframes = 120, width = 800, height = 600, res = 96, type = "cairo")
 ```
 
 ```
-nframes and fps adjusted to match transition
-```
-
-```
-Rendering [========>-------------------------------------] at 9 fps ~ eta: 1s
-Rendering [============>-------------------------------] at 8.9 fps ~ eta: 1s
-Rendering [=================>--------------------------] at 8.8 fps ~ eta: 1s
-Rendering [=====================>----------------------] at 8.8 fps ~ eta: 1s
-Rendering [=========================>------------------] at 8.9 fps ~ eta: 0s
-Rendering [==============================>-------------] at 8.9 fps ~ eta: 0s
-Rendering [==================================>---------] at 8.9 fps ~ eta: 0s
-Rendering [=======================================>----] at 8.9 fps ~ eta: 0s
-Rendering [============================================] at 8.9 fps ~ eta: 0s
+Warning: No renderer available. Please install the gifski, av, or magick
+package to create animated output
 ```
 
 ```r
 # anim_save("poker_prior_predictive.gif")
 ```
-
-![](23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-24-1.gif)<!-- -->
 
 
 ### 4. Interpret the model parameters
@@ -791,8 +760,7 @@ Let's visualize what the posterior for the different parameters looks like. We u
 
 ```r
 fit.brm_poker %>% 
-  posterior_samples() %>% 
-  clean_names() %>% 
+  as_draws_df() %>%
   select(starts_with("b_"), sigma) %>%
   pivot_longer(cols = everything(),
                names_to = "variable",
@@ -804,11 +772,6 @@ fit.brm_poker %>%
   theme(axis.title.y = element_blank())
 ```
 
-```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
-```
-
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
 #### Compute highest density intervals
@@ -818,8 +781,7 @@ To compute the MAP (maximum a posteriori probability) estimate and highest densi
 
 ```r
 fit.brm_poker %>% 
-  posterior_samples() %>% 
-  clean_names() %>% 
+  as_draws_df() %>%
   select(starts_with("b_"), sigma) %>% 
   mean_hdi() %>% 
   pivot_longer(cols = -c(.width:.interval),
@@ -833,18 +795,13 @@ fit.brm_poker %>%
 ```
 
 ```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
-```
-
-```
 # A tibble: 4 × 4
   parameter      mean lower upper
   <chr>         <dbl> <dbl> <dbl>
-1 b_intercept    5.94  5.16  6.78
-2 b_handneutral  4.40  3.24  5.52
-3 b_handgood     7.08  5.92  8.20
-4 sigma          4.12  3.79  4.45
+1 b_Intercept    5.94  5.10  6.75
+2 b_handneutral  4.41  3.21  5.58
+3 b_handgood     7.09  5.92  8.27
+4 sigma          4.12  3.80  4.46
 ```
 
 ### 5. Test specific hypotheses
@@ -858,7 +815,7 @@ We may ask, for example, what the probability is that the parameter for the diff
 
 ```r
 fit.brm_poker %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   select(b_handneutral) %>% 
   pivot_longer(cols = everything(),
                names_to = "variable",
@@ -868,11 +825,6 @@ fit.brm_poker %>%
   stat_halfeye(fill = "lightblue") + 
   geom_vline(xintercept = 0,
              color = "red")
-```
-
-```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-27-1.png" width="672" />
@@ -891,7 +843,7 @@ hypothesis(fit.brm_poker,
 ```
 Hypothesis Tests for class b:
          Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob
-1 (handneutral) < 0      4.4      0.58     3.47     5.38          0         0
+1 (handneutral) < 0     4.41       0.6      3.4     5.37          0         0
   Star
 1     
 ---
@@ -921,9 +873,9 @@ hypothesis(fit.brm_poker,
 ```
 Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (Intercept+handgo... > 0     1.14      0.92    -0.37     2.68       8.55
+1 (Intercept+handgo... > 0     1.15      0.96     -0.4     2.73       7.93
   Post.Prob Star
-1       0.9     
+1      0.89     
 ---
 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -953,9 +905,9 @@ hypothesis(fit.brm_poker,
 ```
 Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (Intercept+handne... < 0     0.86      0.51     0.02      1.7       0.05
+1 (Intercept+handne... < 0     0.86      0.52     0.01     1.72       0.05
   Post.Prob Star
-1      0.04     
+1      0.05     
 ---
 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -968,7 +920,7 @@ Let's double check one example, and calculate the result directly based on the p
 
 ```r
 df.hypothesis = fit.brm_poker %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   clean_names() %>% 
   select(starts_with("b_")) %>% 
   mutate(neutral = b_intercept + b_handneutral,
@@ -977,8 +929,7 @@ df.hypothesis = fit.brm_poker %>%
 ```
 
 ```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
+Warning: Dropping 'draws_df' class as required metadata was removed.
 ```
 
 ```r
@@ -987,8 +938,10 @@ df.hypothesis %>%
 ```
 
 ```
-      p
-1 0.045
+# A tibble: 1 × 1
+       p
+   <dbl>
+1 0.0485
 ```
 
 #### with `emmeans()`
@@ -1008,17 +961,17 @@ Loading required namespace: rstanarm
 ```
 $emmeans
  hand    emmean lower.HPD upper.HPD
- bad       5.94      5.16      6.78
- neutral  10.34      9.55     11.15
- good     13.02     12.22     13.82
+ bad       5.94      5.10      6.74
+ neutral  10.34      9.58     11.24
+ good     13.03     12.19     13.87
 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
 
 $contrasts
  contrast       estimate lower.HPD upper.HPD
- neutral - bad      4.38      3.24      5.52
- good - neutral     2.69      1.51      3.78
+ neutral - bad      4.41      3.21      5.58
+ good - neutral     2.67      1.56      3.92
 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
@@ -1075,7 +1028,7 @@ fit.brm_poker %>%
 # A tibble: 1 × 7
   contrast        .value .lower .upper .width .point .interval
   <chr>            <dbl>  <dbl>  <dbl>  <dbl> <chr>  <chr>    
-1 neutral_vs_rest   1.72 -0.298   3.63   0.95 mean   hdi      
+1 neutral_vs_rest   1.72 -0.247   3.82   0.95 mean   hdi      
 ```
 
 Here, the HDP does not exclude 0. 
@@ -1092,9 +1045,9 @@ fit.brm_poker %>%
 ```
 Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 ((Intercept+handn... < 0     1.72      1.02     0.05     3.41       0.05
+1 ((Intercept+handn... < 0     1.72      1.03     0.01     3.43       0.05
   Post.Prob Star
-1      0.04     
+1      0.05     
 ---
 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -1105,20 +1058,17 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.
 ```r
 # directly computing from the posterior
 fit.brm_poker %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   clean_names() %>% 
   mutate(contrast = (b_intercept + b_handneutral) * 2 - (b_intercept + b_intercept + b_handgood)) %>% 
   summarize(contrast = mean(contrast))
 ```
 
 ```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
-```
-
-```
+# A tibble: 1 × 1
   contrast
-1 1.724884
+     <dbl>
+1     1.72
 ```
 
 The `emmeans()` function becomes particularly useful when our model has several categorical predictors, and we are interested in comparing differences along one predictor while marginalizing over the values of the other predictor. 
@@ -1139,30 +1089,30 @@ fit.brm_poker2 %>%
 ```
  Family: gaussian 
   Links: mu = identity; sigma = identity 
-Formula: balance ~ hand * skill 
+Formula: balance ~ 1 + hand * skill 
    Data: df.poker (Number of observations: 300) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
 Population-Level Effects: 
                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
-Intercept                   4.59      0.57     3.46     5.73 1.00     1870
-handneutral                 5.24      0.81     3.66     6.84 1.00     2163
-handgood                    9.20      0.81     7.61    10.76 1.00     2027
-skillexpert                 2.71      0.81     1.09     4.26 1.00     1785
-handneutral:skillexpert    -1.69      1.16    -3.96     0.57 1.00     1826
-handgood:skillexpert       -4.26      1.14    -6.52    -2.05 1.00     1822
+Intercept                   4.58      0.56     3.48     5.69 1.00     2402
+handneutral                 5.26      0.79     3.72     6.86 1.00     2617
+handgood                    9.23      0.80     7.65    10.77 1.00     2251
+skillexpert                 2.73      0.78     1.17     4.25 1.00     2125
+handneutral:skillexpert    -1.71      1.11    -3.84     0.46 1.00     2238
+handgood:skillexpert       -4.28      1.12    -6.43    -2.05 1.00     2024
                         Tail_ESS
-Intercept                   2429
-handneutral                 2747
-handgood                    2805
-skillexpert                 2506
-handneutral:skillexpert     2488
-handgood:skillexpert        2495
+Intercept                   2615
+handneutral                 2925
+handgood                    2504
+skillexpert                 2476
+handneutral:skillexpert     3040
+handgood:skillexpert        2295
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     4.03      0.17     3.72     4.37 1.00     3665     2627
+sigma     4.03      0.17     3.72     4.38 1.00     3369     2728
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1184,16 +1134,18 @@ NOTE: Results may be misleading due to involvement in interactions
 ```
 $emmeans
  skill   emmean lower.HPD upper.HPD
- average   9.41      8.74      10.0
- expert   10.14      9.45      10.7
+ average   9.41      8.77      10.0
+ expert   10.14      9.48      10.8
 
+Results are averaged over the levels of: hand 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
 
 $contrasts
  contrast         estimate lower.HPD upper.HPD
- average - expert    -0.73      -1.6     0.207
+ average - expert   -0.722     -1.68    0.0885
 
+Results are averaged over the levels of: hand 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
 ```
@@ -1208,10 +1160,10 @@ joint_tests(fit.brm_poker2)
 ```
 
 ```
- model term df1 df2 F.ratio p.value
- hand         2 Inf  78.554  <.0001
- skill        1 Inf   2.450  0.1176
- hand:skill   2 Inf   7.040  0.0009
+ model term df1 df2 F.ratio   Chisq p.value
+ hand         2 Inf  82.446 164.892  <.0001
+ skill        1 Inf   2.549   2.549  0.1103
+ hand:skill   2 Inf   7.347  14.694  0.0006
 ```
 
 The values we get here are very similar to what we would get from a frequentist ANOVA: 
@@ -1274,10 +1226,11 @@ Iteration: 1
 Iteration: 2
 Iteration: 3
 Iteration: 4
+Iteration: 5
 ```
 
 ```
-Estimated Bayes factor in favor of fit.brm_poker_bf2 over fit.brm_poker_bf1: 3.80995
+Estimated Bayes factor in favor of fit.brm_poker_bf2 over fit.brm_poker_bf1: 3.82034
 ```
 
 Bayes factors don't have a very good reputation (see here and here). Instead, the way to go these days appears to be via approximate leave one out cross-validation. 
@@ -1303,7 +1256,7 @@ loo_compare(fit.brm_poker_bf1,
 ```
                   elpd_diff se_diff
 fit.brm_poker_bf2  0.0       0.0   
-fit.brm_poker_bf1 -0.2       1.5   
+fit.brm_poker_bf1 -0.3       1.5   
 ```
 
 
@@ -1402,18 +1355,18 @@ Formula: reaction ~ 1 + days + (1 + days | subject)
 Group-Level Effects: 
 ~subject (Number of levels: 20) 
                     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)          26.14      6.37    15.50    40.39 1.00     1988     2693
-sd(days)                6.55      1.54     4.12    10.02 1.00     1341     1613
-cor(Intercept,days)     0.09      0.30    -0.48     0.67 1.00      943     1403
+sd(Intercept)          26.15      6.51    15.13    40.55 1.00     1511     2248
+sd(days)                6.57      1.52     4.12     9.90 1.00     1419     2223
+cor(Intercept,days)     0.09      0.29    -0.48     0.65 1.00      888     1670
 
 Population-Level Effects: 
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept   252.39      7.00   238.22   266.40 1.00     1631     2124
-days         10.34      1.72     6.88    13.70 1.00     1240     1911
+Intercept   252.18      6.95   238.65   265.96 1.00     1755     2235
+days         10.47      1.75     7.07    14.00 1.00     1259     1608
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma    25.80      1.54    23.01    29.10 1.00     3592     2762
+sigma    25.82      1.54    22.96    29.05 1.00     3254     2958
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1432,12 +1385,7 @@ fit.brm_sleep %>%
 
 ```r
 pp_check(fit.brm_sleep,
-         nsamples = 100)
-```
-
-```
-Warning: Argument 'nsamples' is deprecated. Please use argument 'ndraws'
-instead.
+         ndraws = 100)
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-50-1.png" width="672" />
@@ -1454,12 +1402,12 @@ fit.brm_sleep %>%
 # A tibble: 6 × 8
   effect   component group    term         estimate std.error conf.low conf.high
   <chr>    <chr>     <chr>    <chr>           <dbl>     <dbl>    <dbl>     <dbl>
-1 fixed    cond      <NA>     (Intercept)  252.         7.00   239.      267.   
-2 fixed    cond      <NA>     days          10.3        1.72     7.05     13.8  
-3 ran_pars cond      subject  sd__(Interc…  26.1        6.37    15.0      39.3  
-4 ran_pars cond      subject  sd__days       6.55       1.54     3.92      9.50 
-5 ran_pars cond      subject  cor__(Inter…   0.0909     0.298   -0.467     0.677
-6 ran_pars cond      Residual sd__Observa…  25.8        1.54    22.9      28.9  
+1 fixed    cond      <NA>     (Intercept)  252.         6.95   238.      266.   
+2 fixed    cond      <NA>     days          10.5        1.75     6.82     13.6  
+3 ran_pars cond      subject  sd__(Interc…  26.2        6.51    14.3      39.4  
+4 ran_pars cond      subject  sd__days       6.57       1.52     4.00      9.67 
+5 ran_pars cond      subject  cor__(Inter…   0.0909     0.293   -0.491     0.635
+6 ran_pars cond      Residual sd__Observa…  25.8        1.54    22.7      28.7  
 ```
 
 #### Summary of posterior distributions
@@ -1468,7 +1416,7 @@ fit.brm_sleep %>%
 ```r
 # all parameters
 fit.brm_sleep %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   select(-c(lp__, contains("["))) %>%
   pivot_longer(cols = everything(),
                names_to = "variable",
@@ -1481,28 +1429,16 @@ fit.brm_sleep %>%
              ncol = 2,
              scales = "free") +
   theme(text = element_text(size = 12))
-```
 
-```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
-```
-
-```r
 # just the parameter of interest
 fit.brm_sleep %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   select(b_days) %>%
   ggplot(data = .,
          mapping = aes(x = b_days)) +
   stat_halfeye(point_interval = mode_hdi,
                fill = "lightblue") + 
   theme(text = element_text(size = 12))
-```
-
-```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-52-1.png" width="672" /><img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-52-2.png" width="672" />
@@ -1567,6 +1503,13 @@ ggplot(data = df.sleep,
             size = 1) +
   stat_summary(fun.data = "mean_cl_boot") +
   scale_x_continuous(breaks = 0:9)
+```
+
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-54-1.png" width="672" />
@@ -1664,27 +1607,17 @@ animate(p, nframes = 10, fps = 1, width = 800, height = 600, res = 96, type = "c
 ```
 
 ```
-Rendering [===>----------------------------------------] at 1.9 fps ~ eta: 5s
-Rendering [========>-------------------------------------] at 2 fps ~ eta: 4s
-Rendering [============>-------------------------------] at 2.1 fps ~ eta: 3s
-Rendering [=================>--------------------------] at 2.1 fps ~ eta: 3s
-Rendering [=====================>----------------------] at 2.1 fps ~ eta: 2s
-Rendering [=========================>------------------] at 2.1 fps ~ eta: 2s
-Rendering [==============================>-------------] at 2.1 fps ~ eta: 1s
-Rendering [==================================>---------] at 2.1 fps ~ eta: 1s
-Rendering [=======================================>----] at 2.1 fps ~ eta: 0s
-Rendering [============================================] at 2.1 fps ~ eta: 0s
+Warning: No renderer available. Please install the gifski, av, or magick
+package to create animated output
 ```
 
 ```r
 # anim_save("sleep_posterior_predictive.gif")
 ```
 
-![](23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-57-1.gif)<!-- -->
-
 ## Titanic study
 
-### 1. Visualize that data
+### 1. Visualize the data
 
 
 ```r
@@ -1723,10 +1656,6 @@ fit.glm_titanic %>%
 Call:
 glm(formula = survived ~ 1 + fare * sex, family = "binomial", 
     data = df.titanic)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.6280  -0.6279  -0.5991   0.8172   1.9288  
 
 Coefficients:
               Estimate Std. Error z value Pr(>|z|)    
@@ -1777,10 +1706,10 @@ Formula: survived ~ 1 + fare * sex
 
 Population-Level Effects: 
              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept        0.39      0.19     0.03     0.76 1.00     2010     2625
-fare             0.02      0.01     0.01     0.03 1.00     1545     2124
-sexmale         -2.09      0.23    -2.54    -1.65 1.00     1754     1984
-fare:sexmale    -0.01      0.01    -0.02    -0.00 1.00     1479     2041
+Intercept        0.40      0.19     0.03     0.76 1.00     1900     2394
+fare             0.02      0.01     0.01     0.03 1.00     1414     1684
+sexmale         -2.10      0.23    -2.54    -1.64 1.00     1562     1841
+fare:sexmale    -0.01      0.01    -0.02    -0.00 1.00     1399     1585
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1799,12 +1728,7 @@ fit.brm_titanic %>%
 
 ```r
 pp_check(fit.brm_titanic,
-         nsamples = 100)
-```
-
-```
-Warning: Argument 'nsamples' is deprecated. Please use argument 'ndraws'
-instead.
+         ndraws = 100)
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-62-1.png" width="672" />
@@ -1819,12 +1743,7 @@ fit.brm_titanic_linear = brm(formula = survived ~ 1 + fare * sex,
                              seed = 1)
 
 pp_check(fit.brm_titanic_linear,
-         nsamples = 100)
-```
-
-```
-Warning: Argument 'nsamples' is deprecated. Please use argument 'ndraws'
-instead.
+         ndraws = 100)
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-63-1.png" width="672" />
@@ -1834,7 +1753,7 @@ instead.
 
 ```r
 fit.brm_titanic %>% 
-  posterior_samples() %>% 
+  as_draws_df() %>% 
   select(-lp__) %>%
   pivot_longer(cols = everything(),
                names_to = "variable",
@@ -1844,17 +1763,6 @@ fit.brm_titanic %>%
                        x = value)) +
   stat_intervalh() + 
   scale_color_brewer()
-```
-
-```
-Warning: Method 'posterior_samples' is deprecated. Please see ?as_draws for
-recommended alternatives.
-```
-
-```
-Warning: 'stat_intervalh' is deprecated.
-Use 'stat_interval' instead.
-See help("Deprecated") and help("tidybayes-deprecated").
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-64-1.png" width="672" />
@@ -1893,8 +1801,8 @@ NOTE: Results may be misleading due to involvement in interactions
 ```
 $emmeans
  sex    response lower.HPD upper.HPD
- female    0.743      0.69     0.795
- male      0.194      0.16     0.225
+ female    0.744     0.691     0.794
+ male      0.194     0.164     0.229
 
 Point estimate displayed: median 
 Results are back-transformed from the logit scale 
@@ -1902,7 +1810,7 @@ HPD interval probability: 0.95
 
 $contrasts
  contrast      odds.ratio lower.HPD upper.HPD
- female / male       12.1      8.39      16.6
+ female / male       12.1      8.43      16.9
 
 Point estimate displayed: median 
 Results are back-transformed from the log odds ratio scale 
@@ -1921,15 +1829,15 @@ fit.brm_titanic %>%
 ```
 $emtrends
  sex    fare.trend lower.HPD upper.HPD
- female    0.02083   0.01129    0.0316
- male      0.00845   0.00385    0.0135
+ female     0.0206   0.01065    0.0311
+ male       0.0085   0.00346    0.0135
 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
 
 $contrasts
  contrast      estimate lower.HPD upper.HPD
- female - male   0.0124  0.000884    0.0232
+ female - male   0.0121    0.0011    0.0242
 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
@@ -1988,11 +1896,11 @@ ggplot(data = df.politeness,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (stat_summary).
+Warning: Removed 1 rows containing non-finite values (`stat_summary()`).
 ```
 
 ```
-Warning: Removed 1 rows containing missing values (geom_point).
+Warning: Removed 1 rows containing missing values (`geom_point()`).
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-70-1.png" width="672" />
@@ -2076,8 +1984,9 @@ NOTE: Results may be misleading due to involvement in interactions
 
 ```
  contrast estimate lower.HPD upper.HPD
- F - M         108      94.1       124
+ F - M         108      91.7       124
 
+Results are averaged over the levels of: attitude 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
 ```
@@ -2127,7 +2036,7 @@ NOTE: Results may be misleading due to involvement in interactions
 # A tibble: 1 × 7
   contrast .value .lower .upper .width .point .interval
   <chr>     <dbl>  <dbl>  <dbl>  <dbl> <chr>  <chr>    
-1 F - M      108.   94.1   124.   0.95 mean   hdi      
+1 F - M      108.   91.9   124.   0.95 mean   hdi      
 ```
 
 ```r
@@ -2140,8 +2049,8 @@ fit.brm_polite_gender %>%
 # A tibble: 2 × 5
   term      Estimate Est.Error  Q2.5 Q97.5
   <chr>        <dbl>     <dbl> <dbl> <dbl>
-1 Intercept     247.      5.68  236. 258. 
-2 genderM      -108.      8.08 -124. -92.1
+1 Intercept     247.      5.72  236. 258. 
+2 genderM      -108.      8.16 -124. -92.3
 ```
 
 Yip, both of these methods give us the same result (the sign is flipped but that's just because emmeans computed F-M, whereas the other method computed M-F)! Again, the `emmeans()` route is more convenient because we can more easily check for several main effects (and take a look at specific contrast, too). 
@@ -2160,8 +2069,9 @@ NOTE: Results may be misleading due to involvement in interactions
 
 ```
  contrast  estimate lower.HPD upper.HPD
- inf - pol     19.7      4.49      35.4
+ inf - pol     19.8      5.16      35.9
 
+Results are averaged over the levels of: gender 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
 ```
@@ -2176,11 +2086,11 @@ fit.brm_polite %>%
 ```
 gender = F:
  contrast  estimate lower.HPD upper.HPD
- inf - pol     27.4      4.69      49.3
+ inf - pol     27.9      5.96      49.5
 
 gender = M:
  contrast  estimate lower.HPD upper.HPD
- inf - pol     11.6    -10.06      33.9
+ inf - pol     12.0     -9.29      34.2
 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
@@ -2199,8 +2109,8 @@ fit.brm_polite %>%
 # A tibble: 2 × 8
   contrast  gender .value .lower .upper .width .point .interval
   <fct>     <fct>   <dbl>  <dbl>  <dbl>  <dbl> <chr>  <chr>    
-1 inf - pol F        27.5   4.69   49.3   0.95 mean   hdi      
-2 inf - pol M        11.6 -10.1    33.9   0.95 mean   hdi      
+1 inf - pol F        27.8   5.96   49.5   0.95 mean   hdi      
+2 inf - pol M        11.9  -9.29   34.2   0.95 mean   hdi      
 ```
 
 Here is a way to visualize the contrasts: 
@@ -2221,6 +2131,13 @@ fit.brm_polite %>%
   scale_fill_manual(values = c("gray80", "skyblue"))
 ```
 
+```
+Warning: `stat(x > 0)` was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(x > 0)` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-79-1.png" width="672" />
 
 Here is one way to check whether there was an interaction between attitude and gender (see [this vignette](https://cran.r-project.org/web/packages/emmeans/vignettes/interactions.html) for more info).
@@ -2236,7 +2153,7 @@ fit.brm_polite %>%
 
 ```
  attitude_consec gender_consec estimate lower.HPD upper.HPD
- pol - inf       M - F             16.2     -17.2      46.9
+ pol - inf       M - F             16.1     -15.1      47.2
 
 Point estimate displayed: median 
 HPD interval probability: 0.95 
@@ -2245,6 +2162,7 @@ HPD interval probability: 0.95
 
 ## Additional resources
 
+- [Bayesian regression: Theory & Practice](https://michael-franke.github.io/Bayesian-Regression/)
 - [Tutorial on visualizing brms posteriors with tidybayes](https://mjskay.github.io/tidybayes/articles/tidy-brms.html)
 - [Hypothetical outcome plots](https://mucollective.northwestern.edu/files/2018-HOPsTrends-InfoVis.pdf)
 - [Visual MCMC diagnostics](https://cran.r-project.org/web/packages/bayesplot/vignettes/visual-mcmc-diagnostics.html#general-mcmc-diagnostics)
@@ -2261,88 +2179,86 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.9        
- [4] purrr_0.3.4         readr_2.1.2         tidyr_1.2.0        
- [7] tibble_3.1.7        tidyverse_1.3.1     transformr_0.1.3   
-[10] parameters_0.17.0   gganimate_1.0.7     titanic_0.1.0      
-[13] ggeffects_1.1.2     emmeans_1.7.3       car_3.0-13         
-[16] carData_3.0-5       afex_1.1-1          lme4_1.1-29        
-[19] Matrix_1.4-1        modelr_0.1.8        bayesplot_1.9.0    
-[22] broom.mixed_0.2.9.4 GGally_2.1.2        ggplot2_3.3.6      
-[25] patchwork_1.1.1     brms_2.17.0         Rcpp_1.0.8.3       
-[28] tidybayes_3.0.2     janitor_2.1.0       kableExtra_1.3.4   
-[31] knitr_1.39         
+ [1] lubridate_1.9.3       forcats_1.0.0         stringr_1.5.1        
+ [4] dplyr_1.1.4           purrr_1.0.2           readr_2.1.4          
+ [7] tidyr_1.3.0           tibble_3.2.1          tidyverse_2.0.0      
+[10] transformr_0.1.4.9000 parameters_0.21.3     gganimate_1.0.8      
+[13] titanic_0.1.0         ggeffects_1.3.4       emmeans_1.9.0        
+[16] car_3.1-2             carData_3.0-5         afex_1.3-0           
+[19] lme4_1.1-35.1         Matrix_1.6-4          modelr_0.1.11        
+[22] bayesplot_1.10.0      broom.mixed_0.2.9.4   GGally_2.2.0         
+[25] ggplot2_3.4.4         patchwork_1.1.3       brms_2.20.4          
+[28] Rcpp_1.0.11           tidybayes_3.0.6       janitor_2.2.0        
+[31] kableExtra_1.3.4      knitr_1.45           
 
 loaded via a namespace (and not attached):
-  [1] utf8_1.2.2           tidyselect_1.1.2     htmlwidgets_1.5.4   
-  [4] grid_4.1.2           lpSolve_5.6.15       munsell_0.5.0       
-  [7] codetools_0.2-18     units_0.8-0          DT_0.22             
- [10] future_1.25.0        gifski_1.6.6-1       miniUI_0.1.1.1      
- [13] withr_2.5.0          Brobdingnag_1.2-7    colorspace_2.0-3    
- [16] highr_0.9            rstudioapi_0.13      stats4_4.1.2        
- [19] listenv_0.8.0        labeling_0.4.2       rstan_2.21.5        
- [22] bit64_4.0.5          farver_2.1.0         datawizard_0.4.0    
- [25] bridgesampling_1.1-2 coda_0.19-4          parallelly_1.31.1   
- [28] vctrs_0.4.1          generics_0.1.2       TH.data_1.1-1       
- [31] xfun_0.30            R6_2.5.1             markdown_1.1        
- [34] HDInterval_0.2.2     rstanarm_2.21.3      reshape_0.8.9       
- [37] assertthat_0.2.1     vroom_1.5.7          promises_1.2.0.1    
- [40] scales_1.2.0         nnet_7.3-17          multcomp_1.4-19     
- [43] gtable_0.3.0         globals_0.14.0       processx_3.5.3      
- [46] sandwich_3.0-1       rlang_1.0.2          systemfonts_1.0.4   
- [49] splines_4.1.2        broom_0.8.0          checkmate_2.1.0     
- [52] inline_0.3.19        yaml_2.3.5           reshape2_1.4.4      
- [55] abind_1.4-5          threejs_0.3.3        crosstalk_1.2.0     
- [58] backports_1.4.1      httpuv_1.6.5         Hmisc_4.7-0         
- [61] tensorA_0.36.2       tools_4.1.2          bookdown_0.26       
- [64] ellipsis_0.3.2       jquerylib_0.1.4      posterior_1.2.1     
- [67] RColorBrewer_1.1-3   proxy_0.4-26         ggridges_0.5.3      
- [70] plyr_1.8.7           base64enc_0.1-3      progress_1.2.2      
- [73] classInt_0.4-3       ps_1.7.0             prettyunits_1.1.1   
- [76] rpart_4.1.16         zoo_1.8-10           cluster_2.1.3       
- [79] haven_2.5.0          fs_1.5.2             furrr_0.3.0         
- [82] magrittr_2.0.3       data.table_1.14.2    ggdist_3.1.1        
- [85] lmerTest_3.1-3       reprex_2.0.1         colourpicker_1.1.1  
- [88] mvtnorm_1.1-3        matrixStats_0.62.0   hms_1.1.1           
- [91] shinyjs_2.1.0        mime_0.12            evaluate_0.15       
- [94] arrayhelpers_1.1-0   xtable_1.8-4         shinystan_2.6.0     
- [97] jpeg_0.1-9           readxl_1.4.0         gridExtra_2.3       
-[100] rstantools_2.2.0     compiler_4.1.2       KernSmooth_2.23-20  
-[103] crayon_1.5.1         minqa_1.2.4          StanHeaders_2.21.0-7
-[106] htmltools_0.5.2      mgcv_1.8-40          tzdb_0.3.0          
-[109] later_1.3.0          Formula_1.2-4        RcppParallel_5.1.5  
-[112] lubridate_1.8.0      DBI_1.1.2            sjlabelled_1.2.0    
-[115] tweenr_1.0.2         dbplyr_2.1.1         MASS_7.3-57         
-[118] sf_1.0-7             boot_1.3-28          cli_3.3.0           
-[121] parallel_4.1.2       insight_0.17.0       igraph_1.3.1        
-[124] pkgconfig_2.0.3      foreign_0.8-82       numDeriv_2016.8-1.1 
-[127] xml2_1.3.3           svUnit_1.0.6         dygraphs_1.1.1.6    
-[130] svglite_2.1.0        bslib_0.3.1          webshot_0.5.3       
-[133] estimability_1.3     rvest_1.0.2          snakecase_0.11.0    
-[136] distributional_0.3.0 callr_3.7.0          digest_0.6.29       
-[139] cellranger_1.1.0     rmarkdown_2.14       htmlTable_2.4.0     
-[142] shiny_1.7.1          gtools_3.9.2         nloptr_2.0.0        
-[145] lifecycle_1.0.1      nlme_3.1-157         jsonlite_1.8.0      
-[148] viridisLite_0.4.0    fansi_1.0.3          pillar_1.7.0        
-[151] lattice_0.20-45      loo_2.5.1            fastmap_1.1.0       
-[154] httr_1.4.3           pkgbuild_1.3.1       survival_3.3-1      
-[157] glue_1.6.2           xts_0.12.1           bayestestR_0.12.1   
-[160] png_0.1-7            shinythemes_1.2.0    bit_4.0.4           
-[163] class_7.3-20         stringi_1.7.6        sass_0.4.1          
-[166] latticeExtra_0.6-29  e1071_1.7-9         
+  [1] svUnit_1.0.6         shinythemes_1.2.0    splines_4.3.2       
+  [4] later_1.3.2          datawizard_0.9.1     rpart_4.1.23        
+  [7] xts_0.13.1           lifecycle_1.0.4      sf_1.0-15           
+ [10] StanHeaders_2.26.28  vroom_1.6.5          globals_0.16.2      
+ [13] lattice_0.22-5       MASS_7.3-60          insight_0.19.7      
+ [16] crosstalk_1.2.1      ggdist_3.3.1         backports_1.4.1     
+ [19] magrittr_2.0.3       Hmisc_5.1-1          sass_0.4.8          
+ [22] rmarkdown_2.25       jquerylib_0.1.4      yaml_2.3.8          
+ [25] httpuv_1.6.13        pkgbuild_1.4.3       DBI_1.2.0           
+ [28] minqa_1.2.6          RColorBrewer_1.1-3   abind_1.4-5         
+ [31] rvest_1.0.3          nnet_7.3-19          tensorA_0.36.2.1    
+ [34] tweenr_2.0.2         inline_0.3.19        listenv_0.9.0       
+ [37] units_0.8-5          bridgesampling_1.1-2 parallelly_1.36.0   
+ [40] svglite_2.1.3        codetools_0.2-19     DT_0.31             
+ [43] xml2_1.3.6           tidyselect_1.2.0     rstanarm_2.26.1     
+ [46] farver_2.1.1         matrixStats_1.2.0    stats4_4.3.2        
+ [49] base64enc_0.1-3      webshot_0.5.5        jsonlite_1.8.8      
+ [52] e1071_1.7-14         Formula_1.2-5        ellipsis_0.3.2      
+ [55] survival_3.5-7       systemfonts_1.0.5    tools_4.3.2         
+ [58] progress_1.2.3       glue_1.6.2           gridExtra_2.3       
+ [61] mgcv_1.9-1           xfun_0.41            distributional_0.3.2
+ [64] loo_2.6.0            withr_2.5.2          numDeriv_2016.8-1.1 
+ [67] fastmap_1.1.1        boot_1.3-28.1        fansi_1.0.6         
+ [70] shinyjs_2.1.0        digest_0.6.33        timechange_0.2.0    
+ [73] R6_2.5.1             mime_0.12            estimability_1.4.1  
+ [76] colorspace_2.1-0     lpSolve_5.6.20       gtools_3.9.5        
+ [79] markdown_1.12        threejs_0.3.3        utf8_1.2.4          
+ [82] generics_0.1.3       data.table_1.14.10   class_7.3-22        
+ [85] prettyunits_1.2.0    httr_1.4.7           htmlwidgets_1.6.4   
+ [88] ggstats_0.5.1        pkgconfig_2.0.3      dygraphs_1.1.1.6    
+ [91] gtable_0.3.4         furrr_0.3.1          htmltools_0.5.7     
+ [94] bookdown_0.37        scales_1.3.0         posterior_1.5.0     
+ [97] snakecase_0.11.1     rstudioapi_0.15.0    tzdb_0.4.0          
+[100] reshape2_1.4.4       coda_0.19-4          checkmate_2.3.1     
+[103] nlme_3.1-164         curl_5.2.0           nloptr_2.0.3        
+[106] proxy_0.4-27         cachem_1.0.8         zoo_1.8-12          
+[109] sjlabelled_1.2.0     KernSmooth_2.23-22   parallel_4.3.2      
+[112] miniUI_0.1.1.1       foreign_0.8-86       pillar_1.9.0        
+[115] grid_4.3.2           vctrs_0.6.5          shinystan_2.6.0     
+[118] promises_1.2.1       arrayhelpers_1.1-0   cluster_2.1.6       
+[121] xtable_1.8-4         htmlTable_2.4.2      evaluate_0.23       
+[124] mvtnorm_1.2-4        cli_3.6.2            compiler_4.3.2      
+[127] rlang_1.1.2          crayon_1.5.2         rstantools_2.3.1.1  
+[130] labeling_0.4.3       classInt_0.4-10      plyr_1.8.9          
+[133] stringi_1.8.3        rstan_2.32.3         viridisLite_0.4.2   
+[136] QuickJSR_1.0.9       lmerTest_3.1-3       munsell_0.5.0       
+[139] colourpicker_1.3.0   Brobdingnag_1.2-9    bayestestR_0.13.1   
+[142] V8_4.4.1             hms_1.1.3            bit64_4.0.5         
+[145] future_1.33.1        shiny_1.8.0          haven_2.5.4         
+[148] highr_0.10           igraph_1.6.0         broom_1.0.5         
+[151] RcppParallel_5.1.7   bslib_0.6.1          bit_4.0.5           
 ```

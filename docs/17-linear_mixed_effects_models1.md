@@ -241,12 +241,12 @@ t.test(df.original$value[df.original$condition == "1"],
 
 data:  df.original$value[df.original$condition == "1"] and df.original$value[df.original$condition == "2"]
 t = -10.231, df = 19, p-value = 3.636e-09
-alternative hypothesis: true difference in means is not equal to 0
+alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
  -0.2401340 -0.1585717
 sample estimates:
-mean of the differences 
-             -0.1993528 
+mean difference 
+     -0.1993528 
 ```
 
 But, unlike in the paired samples t-test, the linear mixed effects model explicitly models the variation between participants, and it's a much more flexible approach for modeling dependence in data. 
@@ -427,47 +427,48 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.9        
- [4] purrr_0.3.4         readr_2.1.2         tidyr_1.2.0        
- [7] tibble_3.1.7        ggplot2_3.3.6       tidyverse_1.3.1    
-[10] lme4_1.1-29         Matrix_1.4-1        patchwork_1.1.1    
-[13] broom.mixed_0.2.9.4 janitor_2.1.0       kableExtra_1.3.4   
-[16] knitr_1.39         
+ [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
+ [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.4        
+ [7] tidyr_1.3.0         tibble_3.2.1        ggplot2_3.4.4      
+[10] tidyverse_2.0.0     lme4_1.1-35.1       Matrix_1.6-4       
+[13] patchwork_1.1.3     broom.mixed_0.2.9.4 janitor_2.2.0      
+[16] kableExtra_1.3.4    knitr_1.45         
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-157       fs_1.5.2           lubridate_1.8.0    webshot_0.5.3     
- [5] RColorBrewer_1.1-3 httr_1.4.3         tools_4.1.2        backports_1.4.1   
- [9] bslib_0.3.1        utf8_1.2.2         R6_2.5.1           DBI_1.1.2         
-[13] mgcv_1.8-40        colorspace_2.0-3   withr_2.5.0        tidyselect_1.1.2  
-[17] compiler_4.1.2     cli_3.3.0          rvest_1.0.2        xml2_1.3.3        
-[21] labeling_0.4.2     bookdown_0.26      sass_0.4.1         scales_1.2.0      
-[25] systemfonts_1.0.4  digest_0.6.29      minqa_1.2.4        rmarkdown_2.14    
-[29] svglite_2.1.0      pkgconfig_2.0.3    htmltools_0.5.2    parallelly_1.31.1 
-[33] dbplyr_2.1.1       fastmap_1.1.0      highr_0.9          rlang_1.0.2       
-[37] readxl_1.4.0       rstudioapi_0.13    jquerylib_0.1.4    generics_0.1.2    
-[41] farver_2.1.0       jsonlite_1.8.0     magrittr_2.0.3     Rcpp_1.0.8.3      
-[45] munsell_0.5.0      fansi_1.0.3        lifecycle_1.0.1    furrr_0.3.0       
-[49] stringi_1.7.6      yaml_2.3.5         snakecase_0.11.0   MASS_7.3-57       
-[53] grid_4.1.2         parallel_4.1.2     listenv_0.8.0      crayon_1.5.1      
-[57] lattice_0.20-45    haven_2.5.0        splines_4.1.2      hms_1.1.1         
-[61] pillar_1.7.0       boot_1.3-28        codetools_0.2-18   reprex_2.0.1      
-[65] glue_1.6.2         evaluate_0.15      modelr_0.1.8       vctrs_0.4.1       
-[69] nloptr_2.0.0       tzdb_0.3.0         cellranger_1.1.0   gtable_0.3.0      
-[73] future_1.25.0      assertthat_0.2.1   xfun_0.30          broom_0.8.0       
-[77] viridisLite_0.4.0  globals_0.14.0     ellipsis_0.3.2    
+ [1] gtable_0.3.4       xfun_0.41          bslib_0.6.1        lattice_0.22-5    
+ [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.3.2        generics_0.1.3    
+ [9] parallel_4.3.2     fansi_1.0.6        highr_0.10         pkgconfig_2.0.3   
+[13] RColorBrewer_1.1-3 webshot_0.5.5      lifecycle_1.0.4    farver_2.1.1      
+[17] compiler_4.3.2     munsell_0.5.0      codetools_0.2-19   snakecase_0.11.1  
+[21] htmltools_0.5.7    sass_0.4.8         yaml_2.3.8         nloptr_2.0.3      
+[25] pillar_1.9.0       furrr_0.3.1        jquerylib_0.1.4    MASS_7.3-60       
+[29] cachem_1.0.8       boot_1.3-28.1      nlme_3.1-164       parallelly_1.36.0 
+[33] tidyselect_1.2.0   rvest_1.0.3        digest_0.6.33      stringi_1.8.3     
+[37] future_1.33.1      bookdown_0.37      listenv_0.9.0      labeling_0.4.3    
+[41] splines_4.3.2      fastmap_1.1.1      grid_4.3.2         colorspace_2.1-0  
+[45] cli_3.6.2          magrittr_2.0.3     utf8_1.2.4         broom_1.0.5       
+[49] withr_2.5.2        scales_1.3.0       backports_1.4.1    timechange_0.2.0  
+[53] rmarkdown_2.25     httr_1.4.7         globals_0.16.2     hms_1.1.3         
+[57] evaluate_0.23      viridisLite_0.4.2  mgcv_1.9-1         rlang_1.1.2       
+[61] Rcpp_1.0.11        glue_1.6.2         xml2_1.3.6         minqa_1.2.6       
+[65] svglite_2.1.3      rstudioapi_0.15.0  jsonlite_1.8.8     R6_2.5.1          
+[69] systemfonts_1.0.5 
 ```

@@ -57,7 +57,7 @@ df.starwars %>%
 # A tibble: 1 × 3
   height_mean height_max     n
         <dbl>      <int> <int>
-1        174.        264    87
+1        175.        264    87
 ```
 
 Here, I computed the mean height, the maximum height, and the total number of observations (using the function `n()`). 
@@ -84,7 +84,7 @@ df.starwars %>%
  8 Ewok              88 
  9 Geonosian        183 
 10 Gungan           209.
-# … with 28 more rows
+# ℹ 28 more rows
 ```
 
 I've first used `group_by()` to group our data frame by the different species, and then used `summarize()` to calculate the mean height of each species.
@@ -104,9 +104,9 @@ df.starwars %>%
 # A tibble: 38 × 3
    species  height_mean group_size
    <chr>          <dbl>      <int>
- 1 Human           177.         35
+ 1 Human           178          35
  2 Droid           131.          6
- 3 <NA>            181.          4
+ 3 <NA>            175           4
  4 Gungan          209.          3
  5 Kaminoan        221           2
  6 Mirialan        168           2
@@ -114,7 +114,7 @@ df.starwars %>%
  8 Wookiee         231           2
  9 Zabrak          173           2
 10 Aleena           79           1
-# … with 28 more rows
+# ℹ 28 more rows
 ```
 
 Here, I've used the `n()` function to get the number of observations in each group, and then I've arranged the data frame according to group size in descending order. 
@@ -206,11 +206,11 @@ df.starwars %>%
  4 Darth Vader           202   136             142.
  5 Leia Organa           150    49             142.
  6 Owen Lars             178   120             142.
- 7 Beru Whitesun lars    165    75             142.
+ 7 Beru Whitesun Lars    165    75             142.
  8 R5-D4                  97    32             142.
  9 Biggs Darklighter     183    84             142.
 10 Obi-Wan Kenobi        182    77             142.
-# … with 77 more rows
+# ℹ 77 more rows
 ```
 
 Note that all the values are the same. The value shown here is just the mean of all the values in `height` and `mass`.
@@ -224,7 +224,7 @@ df.starwars %>%
 ```
 
 ```
-[1] 141.8886
+[1] 142.0314
 ```
 
 To get the mean by row, we can either spell out the arithmetic
@@ -246,11 +246,11 @@ df.starwars %>%
  4 Darth Vader           202   136            169  
  5 Leia Organa           150    49             99.5
  6 Owen Lars             178   120            149  
- 7 Beru Whitesun lars    165    75            120  
+ 7 Beru Whitesun Lars    165    75            120  
  8 R5-D4                  97    32             64.5
  9 Biggs Darklighter     183    84            134. 
 10 Obi-Wan Kenobi        182    77            130. 
-# … with 77 more rows
+# ℹ 77 more rows
 ```
 
 or use the `rowwise()` helper function which is like `group_by()` but treats each row like a group: 
@@ -274,11 +274,11 @@ df.starwars %>%
  4 Darth Vader           202   136            169  
  5 Leia Organa           150    49             99.5
  6 Owen Lars             178   120            149  
- 7 Beru Whitesun lars    165    75            120  
+ 7 Beru Whitesun Lars    165    75            120  
  8 R5-D4                  97    32             64.5
  9 Biggs Darklighter     183    84            134. 
 10 Obi-Wan Kenobi        182    77            130. 
-# … with 77 more rows
+# ℹ 77 more rows
 ```
 
 #### Practice 1
@@ -409,7 +409,7 @@ df.reshape2 = tibble(participant = c(1, 2),
         <dbl> <chr>              <dbl> <chr>              <dbl> <chr>     
 1           1 flower                10 house                100 car       
 2           2 car                   25 flower                63 house     
-# … with 1 more variable: observation_3 <dbl>
+# ℹ 1 more variable: observation_3 <dbl>
 ```
 
 The data frame contains in each row: which stimuli a participant saw, and what rating she gave. The participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of `pivot_longer()`, and `pivot_wider()` to turn this into a data frame in long format. 
@@ -651,7 +651,7 @@ df.practice2 = tibble(participant = 1:10,
 - Make the `df.practice2` data frame tidy (by turning into a long format).
 - Compute the z-score of each participants' judgments (using the `scale()` function).
 - Calculate the mean and standard deviation of each participants' z-scored judgments. 
-- Notice anything interesting? Think about what [z-scoring](https://www.statisticshowto.datasciencecentral.com/probability-and-statistics/z-score/) does ... 
+- Notice anything interesting? Think about what [z-scoring](https://www.statisticshowto.com/probability-and-statistics/z-score/) does ... 
 
 
 ```r
@@ -1019,7 +1019,7 @@ df.csv = read_csv("data/movies.csv")
 
 ```
 Rows: 2961 Columns: 11
-── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 Delimiter: ","
 chr (3): title, genre, director
 dbl (8): year, duration, gross, budget, cast_facebook_likes, votes, reviews,...
@@ -1142,39 +1142,38 @@ save(df.test, df.starwars, file = "data/test_starwars.RData")
 
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
- [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    ggplot2_3.3.6  
- [9] tidyverse_1.3.1 knitr_1.39     
+ [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
+ [5] purrr_1.0.2     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
+ [9] ggplot2_3.4.4   tidyverse_2.0.0 knitr_1.45     
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.1.2 xfun_0.30        bslib_0.3.1      haven_2.5.0     
- [5] colorspace_2.0-3 vctrs_0.4.1      generics_0.1.2   htmltools_0.5.2 
- [9] yaml_2.3.5       utf8_1.2.2       rlang_1.0.2      jquerylib_0.1.4 
-[13] pillar_1.7.0     withr_2.5.0      glue_1.6.2       DBI_1.1.2       
-[17] bit64_4.0.5      dbplyr_2.1.1     modelr_0.1.8     readxl_1.4.0    
-[21] lifecycle_1.0.1  munsell_0.5.0    gtable_0.3.0     cellranger_1.1.0
-[25] rvest_1.0.2      evaluate_0.15    tzdb_0.3.0       fastmap_1.1.0   
-[29] parallel_4.1.2   fansi_1.0.3      highr_0.9        broom_0.8.0     
-[33] backports_1.4.1  scales_1.2.0     vroom_1.5.7      jsonlite_1.8.0  
-[37] bit_4.0.4        fs_1.5.2         hms_1.1.1        digest_0.6.29   
-[41] stringi_1.7.6    bookdown_0.26    grid_4.1.2       cli_3.3.0       
-[45] tools_4.1.2      magrittr_2.0.3   sass_0.4.1       crayon_1.5.1    
-[49] pkgconfig_2.0.3  ellipsis_0.3.2   xml2_1.3.3       reprex_2.0.1    
-[53] lubridate_1.8.0  rstudioapi_0.13  assertthat_0.2.1 rmarkdown_2.14  
-[57] httr_1.4.3       R6_2.5.1         compiler_4.1.2  
+ [1] bit_4.0.5        gtable_0.3.4     jsonlite_1.8.8   crayon_1.5.2    
+ [5] compiler_4.3.2   tidyselect_1.2.0 parallel_4.3.2   jquerylib_0.1.4 
+ [9] scales_1.3.0     yaml_2.3.8       fastmap_1.1.1    R6_2.5.1        
+[13] generics_0.1.3   bookdown_0.37    munsell_0.5.0    bslib_0.6.1     
+[17] pillar_1.9.0     tzdb_0.4.0       rlang_1.1.2      utf8_1.2.4      
+[21] stringi_1.8.3    cachem_1.0.8     xfun_0.41        sass_0.4.8      
+[25] bit64_4.0.5      timechange_0.2.0 cli_3.6.2        withr_2.5.2     
+[29] magrittr_2.0.3   digest_0.6.33    grid_4.3.2       vroom_1.6.5     
+[33] hms_1.1.3        lifecycle_1.0.4  vctrs_0.6.5      evaluate_0.23   
+[37] glue_1.6.2       fansi_1.0.6      colorspace_2.1-0 rmarkdown_2.25  
+[41] tools_4.3.2      pkgconfig_2.0.3  htmltools_0.5.7 
 ```

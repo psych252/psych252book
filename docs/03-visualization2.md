@@ -476,6 +476,13 @@ ggplot(data = df.diamonds,
   )
 ```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="03-visualization2_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 I've tweaked quite a few things here (and I've added comments to explain what's happening). Take a quick look at the `theme()` function to see all the things you can change. 
@@ -816,67 +823,17 @@ ggplot(data = gapminder,
 ```
 
 ```
-Rendering [>--------------------------------------------] at 11 fps ~ eta: 9s
-Rendering [=>-------------------------------------------] at 11 fps ~ eta: 9s
-Rendering [==>------------------------------------------] at 11 fps ~ eta: 9s
-Rendering [===>-----------------------------------------] at 11 fps ~ eta: 9s
-Rendering [===>-----------------------------------------] at 11 fps ~ eta: 8s
-Rendering [====>----------------------------------------] at 11 fps ~ eta: 8s
-Rendering [=====>---------------------------------------] at 11 fps ~ eta: 8s
-Rendering [=====>---------------------------------------] at 10 fps ~ eta: 8s
-Rendering [======>--------------------------------------] at 10 fps ~ eta: 8s
-Rendering [=======>-------------------------------------] at 10 fps ~ eta: 8s
-Rendering [========>------------------------------------] at 10 fps ~ eta: 8s
-Rendering [=========>-----------------------------------] at 10 fps ~ eta: 8s
-Rendering [==========>---------------------------------] at 9.8 fps ~ eta: 8s
-Rendering [===========>--------------------------------] at 9.8 fps ~ eta: 7s
-Rendering [============>-------------------------------] at 9.8 fps ~ eta: 7s
-Rendering [=============>------------------------------] at 9.8 fps ~ eta: 7s
-Rendering [==============>-----------------------------] at 9.9 fps ~ eta: 7s
-Rendering [===============>----------------------------] at 9.9 fps ~ eta: 6s
-Rendering [================>---------------------------] at 9.9 fps ~ eta: 6s
-Rendering [=================>--------------------------] at 9.9 fps ~ eta: 6s
-Rendering [==================>-------------------------] at 9.9 fps ~ eta: 6s
-Rendering [===================>------------------------] at 9.9 fps ~ eta: 6s
-Rendering [===================>------------------------] at 9.9 fps ~ eta: 5s
-Rendering [====================>-----------------------] at 9.9 fps ~ eta: 5s
-Rendering [=====================>----------------------] at 9.9 fps ~ eta: 5s
-Rendering [======================>---------------------] at 9.9 fps ~ eta: 5s
-Rendering [=======================>--------------------] at 9.9 fps ~ eta: 5s
-Rendering [========================>-------------------] at 9.9 fps ~ eta: 4s
-Rendering [=========================>------------------] at 9.9 fps ~ eta: 4s
-Rendering [=========================>------------------] at 9.8 fps ~ eta: 4s
-Rendering [==========================>-----------------] at 9.8 fps ~ eta: 4s
-Rendering [===========================>----------------] at 9.8 fps ~ eta: 4s
-Rendering [============================>---------------] at 9.8 fps ~ eta: 4s
-Rendering [============================>---------------] at 9.8 fps ~ eta: 3s
-Rendering [=============================>--------------] at 9.8 fps ~ eta: 3s
-Rendering [==============================>-------------] at 9.8 fps ~ eta: 3s
-Rendering [===============================>------------] at 9.8 fps ~ eta: 3s
-Rendering [================================>-----------] at 9.8 fps ~ eta: 3s
-Rendering [================================>-----------] at 9.8 fps ~ eta: 2s
-Rendering [=================================>----------] at 9.8 fps ~ eta: 2s
-Rendering [==================================>---------] at 9.8 fps ~ eta: 2s
-Rendering [===================================>--------] at 9.7 fps ~ eta: 2s
-Rendering [===================================>--------] at 9.8 fps ~ eta: 2s
-Rendering [====================================>-------] at 9.7 fps ~ eta: 2s
-Rendering [====================================>-------] at 9.8 fps ~ eta: 2s
-Rendering [=====================================>------] at 9.7 fps ~ eta: 1s
-Rendering [======================================>-----] at 9.7 fps ~ eta: 1s
-Rendering [=======================================>----] at 9.7 fps ~ eta: 1s
-Rendering [========================================>---] at 9.7 fps ~ eta: 1s
-Rendering [=========================================>--] at 9.7 fps ~ eta: 1s
-Rendering [=========================================>--] at 9.7 fps ~ eta: 0s
-Rendering [==========================================>-] at 9.7 fps ~ eta: 0s
-Rendering [===========================================>] at 9.7 fps ~ eta: 0s
-Rendering [============================================] at 9.7 fps ~ eta: 0s
+Warning: No renderer available. Please install the gifski, av, or magick
+package to create animated output
+```
+
+```
+NULL
 ```
 
 ```r
 # anim_save(filename = "figures/life_gdp_animation.gif") # to save the animation
 ```
-
-![](03-visualization2_files/figure-html/unnamed-chunk-31-1.gif)<!-- -->
 
 This takes a while to run but it's worth the wait. The plot shows the relationship between GDP per capita (on the x-axis) and life expectancy (on the y-axis) changes across different years for the countries of different continents. The size of each dot represents the population size of the respective country. And different countries are shown in different colors. This animation is not super useful yet in that we don't know which continents and countries the different dots represent. I've added a label to the United States, China, and India. 
 
@@ -945,7 +902,7 @@ This command opens up a separate tab in RStudio called `r.snippets` so that you 
 
 ### Misc
 
-- [ggplot2 extensions](http://www.ggplot2-exts.org/gallery/) --> gallery of ggplot2 extension packages 
+- [ggplot2 extensions](https://z3tt.github.io/exciting-extensions/slides.html?s=09#/layers) --> gallery of ggplot2 extension packages 
 - [ggplot2 gui](https://github.com/dreamRs/esquisse) --> ggplot2 extension package 
 - [ggplot2 visualizations with code](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html) --> gallery of plots with code
 - [Color brewer](http://colorbrewer2.org/) --> for finding colors 
@@ -961,53 +918,44 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
- [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    tidyverse_1.3.1
- [9] gapminder_0.3.0 gganimate_1.0.7 ggplot2_3.3.6   ggridges_0.5.3 
-[13] patchwork_1.1.1 knitr_1.39     
+ [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
+ [5] purrr_1.0.2     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
+ [9] tidyverse_2.0.0 gapminder_1.0.0 gganimate_1.0.8 ggplot2_3.4.4  
+[13] ggridges_0.5.5  patchwork_1.1.3 knitr_1.45     
 
 loaded via a namespace (and not attached):
- [1] fs_1.5.2            lubridate_1.8.0     RColorBrewer_1.1-3 
- [4] progress_1.2.2      httr_1.4.3          tools_4.1.2        
- [7] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
-[10] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
-[13] DBI_1.1.2           colorspace_2.0-3    nnet_7.3-17        
-[16] withr_2.5.0         gridExtra_2.3       tidyselect_1.1.2   
-[19] prettyunits_1.1.1   compiler_4.1.2      cli_3.3.0          
-[22] rvest_1.0.2         htmlTable_2.4.0     xml2_1.3.3         
-[25] labeling_0.4.2      bookdown_0.26       sass_0.4.1         
-[28] checkmate_2.1.0     scales_1.2.0        digest_0.6.29      
-[31] foreign_0.8-82      rmarkdown_2.14      base64enc_0.1-3    
-[34] jpeg_0.1-9          pkgconfig_2.0.3     htmltools_0.5.2    
-[37] dbplyr_2.1.1        fastmap_1.1.0       highr_0.9          
-[40] htmlwidgets_1.5.4   rlang_1.0.2         readxl_1.4.0       
-[43] rstudioapi_0.13     jquerylib_0.1.4     farver_2.1.0       
-[46] generics_0.1.2      jsonlite_1.8.0      magrittr_2.0.3     
-[49] Formula_1.2-4       Matrix_1.4-1        Rcpp_1.0.8.3       
-[52] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.1    
-[55] stringi_1.7.6       yaml_2.3.5          plyr_1.8.7         
-[58] grid_4.1.2          crayon_1.5.1        lattice_0.20-45    
-[61] haven_2.5.0         splines_4.1.2       hms_1.1.1          
-[64] pillar_1.7.0        reprex_2.0.1        glue_1.6.2         
-[67] evaluate_0.15       latticeExtra_0.6-29 data.table_1.14.2  
-[70] gifski_1.6.6-1      modelr_0.1.8        vctrs_0.4.1        
-[73] png_0.1-7           tzdb_0.3.0          tweenr_1.0.2       
-[76] cellranger_1.1.0    gtable_0.3.0        assertthat_0.2.1   
-[79] xfun_0.30           broom_0.8.0         survival_3.3-1     
-[82] viridisLite_0.4.0   cluster_2.1.3       ellipsis_0.3.2     
+ [1] gtable_0.3.4       xfun_0.41          bslib_0.6.1        htmlwidgets_1.6.4 
+ [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.3.2        generics_0.1.3    
+ [9] fansi_1.0.6        highr_0.10         cluster_2.1.6      pkgconfig_2.0.3   
+[13] data.table_1.14.10 checkmate_2.3.1    lifecycle_1.0.4    compiler_4.3.2    
+[17] farver_2.1.1       textshaping_0.3.7  progress_1.2.3     munsell_0.5.0     
+[21] htmltools_0.5.7    sass_0.4.8         yaml_2.3.8         htmlTable_2.4.2   
+[25] Formula_1.2-5      pillar_1.9.0       crayon_1.5.2       jquerylib_0.1.4   
+[29] cachem_1.0.8       Hmisc_5.1-1        rpart_4.1.23       tidyselect_1.2.0  
+[33] digest_0.6.33      stringi_1.8.3      bookdown_0.37      labeling_0.4.3    
+[37] fastmap_1.1.1      grid_4.3.2         colorspace_2.1-0   cli_3.6.2         
+[41] magrittr_2.0.3     base64enc_0.1-3    utf8_1.2.4         foreign_0.8-86    
+[45] withr_2.5.2        prettyunits_1.2.0  scales_1.3.0       backports_1.4.1   
+[49] timechange_0.2.0   rmarkdown_2.25     nnet_7.3-19        gridExtra_2.3     
+[53] ragg_1.2.7         png_0.1-8          hms_1.1.3          evaluate_0.23     
+[57] viridisLite_0.4.2  rlang_1.1.2        glue_1.6.2         tweenr_2.0.2      
+[61] rstudioapi_0.15.0  jsonlite_1.8.8     R6_2.5.1           systemfonts_1.0.5 
 ```

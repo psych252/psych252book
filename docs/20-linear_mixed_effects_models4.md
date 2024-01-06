@@ -92,7 +92,7 @@ df.politeness = read_csv("data/politeness_data.csv") %>%
 
 ```
 Rows: 84 Columns: 5
-── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 Delimiter: ","
 chr (3): subject, gender, attitude
 dbl (2): scenario, frequency
@@ -294,11 +294,11 @@ ggplot(data = df.politeness,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (stat_summary).
+Warning: Removed 1 rows containing non-finite values (`stat_summary()`).
 ```
 
 ```
-Warning: Removed 1 rows containing missing values (geom_point).
+Warning: Removed 1 rows containing missing values (`geom_point()`).
 ```
 
 ```r
@@ -313,8 +313,8 @@ ggplot(data = df.politeness,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (stat_summary).
-Removed 1 rows containing missing values (geom_point).
+Warning: Removed 1 rows containing non-finite values (`stat_summary()`).
+Removed 1 rows containing missing values (`geom_point()`).
 ```
 
 ```r
@@ -329,8 +329,8 @@ ggplot(data = df.politeness,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (stat_summary).
-Removed 1 rows containing missing values (geom_point).
+Warning: Removed 1 rows containing non-finite values (`stat_summary()`).
+Removed 1 rows containing missing values (`geom_point()`).
 ```
 
 <img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-11-1.png" width="672" /><img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-11-2.png" width="672" /><img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-11-3.png" width="672" />
@@ -393,9 +393,11 @@ To turn off this warning, pass `fun_aggregate = mean` explicitly.
 ```
 
 ```
-Warning: Missing values for following ID(s):
+Warning: Missing values for 1 ID(s), which were removed before analysis:
 M4
-Removing those cases from the analysis.
+Below the first few rows (in wide format) of the removed cases with missing data.
+    subject gender pol   inf
+# 5      M4      M  NA 146.3
 ```
 
 ```
@@ -889,67 +891,65 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.9        
- [4] purrr_0.3.4         readr_2.1.2         tidyr_1.2.0        
- [7] tibble_3.1.7        ggplot2_3.3.6       tidyverse_1.3.1    
-[10] emmeans_1.7.3       ggeffects_1.1.2     boot_1.3-28        
-[13] modelr_0.1.8        datarium_0.1.0      car_3.0-13         
-[16] carData_3.0-5       afex_1.1-1          lme4_1.1-29        
-[19] Matrix_1.4-1        broom.mixed_0.2.9.4 janitor_2.1.0      
-[22] kableExtra_1.3.4    knitr_1.39         
+ [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
+ [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.4        
+ [7] tidyr_1.3.0         tibble_3.2.1        ggplot2_3.4.4      
+[10] tidyverse_2.0.0     emmeans_1.9.0       ggeffects_1.3.4    
+[13] boot_1.3-28.1       modelr_0.1.11       datarium_0.1.0     
+[16] car_3.1-2           carData_3.0-5       afex_1.3-0         
+[19] lme4_1.1-35.1       Matrix_1.6-4        broom.mixed_0.2.9.4
+[22] janitor_2.2.0       kableExtra_1.3.4    knitr_1.45         
 
 loaded via a namespace (and not attached):
-  [1] TH.data_1.1-1       minqa_1.2.4         colorspace_2.0-3   
-  [4] ellipsis_0.3.2      sjlabelled_1.2.0    htmlTable_2.4.0    
-  [7] estimability_1.3    snakecase_0.11.0    base64enc_0.1-3    
- [10] fs_1.5.2            rstudioapi_0.13     farver_2.1.0       
- [13] listenv_0.8.0       furrr_0.3.0         bit64_4.0.5        
- [16] fansi_1.0.3         mvtnorm_1.1-3       lubridate_1.8.0    
- [19] xml2_1.3.3          codetools_0.2-18    splines_4.1.2      
- [22] Formula_1.2-4       jsonlite_1.8.0      nloptr_2.0.0       
- [25] pbkrtest_0.5.1      broom_0.8.0         cluster_2.1.3      
- [28] dbplyr_2.1.1        png_0.1-7           compiler_4.1.2     
- [31] httr_1.4.3          backports_1.4.1     assertthat_0.2.1   
- [34] fastmap_1.1.0       cli_3.3.0           htmltools_0.5.2    
- [37] tools_4.1.2         lmerTest_3.1-3      coda_0.19-4        
- [40] gtable_0.3.0        glue_1.6.2          reshape2_1.4.4     
- [43] Rcpp_1.0.8.3        cellranger_1.1.0    jquerylib_0.1.4    
- [46] vctrs_0.4.1         svglite_2.1.0       nlme_3.1-157       
- [49] insight_0.17.0      xfun_0.30           globals_0.14.0     
- [52] rvest_1.0.2         lifecycle_1.0.1     future_1.25.0      
- [55] MASS_7.3-57         zoo_1.8-10          scales_1.2.0       
- [58] vroom_1.5.7         hms_1.1.1           parallel_4.1.2     
- [61] sandwich_3.0-1      RColorBrewer_1.1-3  yaml_2.3.5         
- [64] gridExtra_2.3       sass_0.4.1          rpart_4.1.16       
- [67] latticeExtra_0.6-29 stringi_1.7.6       highr_0.9          
- [70] checkmate_2.1.0     rlang_1.0.2         pkgconfig_2.0.3    
- [73] systemfonts_1.0.4   evaluate_0.15       lattice_0.20-45    
- [76] labeling_0.4.2      htmlwidgets_1.5.4   bit_4.0.4          
- [79] tidyselect_1.1.2    parallelly_1.31.1   plyr_1.8.7         
- [82] magrittr_2.0.3      bookdown_0.26       R6_2.5.1           
- [85] generics_0.1.2      Hmisc_4.7-0         multcomp_1.4-19    
- [88] DBI_1.1.2           mgcv_1.8-40         foreign_0.8-82     
- [91] pillar_1.7.0        haven_2.5.0         withr_2.5.0        
- [94] nnet_7.3-17         survival_3.3-1      abind_1.4-5        
- [97] crayon_1.5.1        utf8_1.2.2          tzdb_0.3.0         
-[100] rmarkdown_2.14      jpeg_0.1-9          grid_4.1.2         
-[103] readxl_1.4.0        data.table_1.14.2   reprex_2.0.1       
-[106] digest_0.6.29       webshot_0.5.3       xtable_1.8-4       
-[109] numDeriv_2016.8-1.1 munsell_0.5.0       viridisLite_0.4.0  
-[112] bslib_0.3.1        
+ [1] gridExtra_2.3       rlang_1.1.2         magrittr_2.0.3     
+ [4] snakecase_0.11.1    furrr_0.3.1         compiler_4.3.2     
+ [7] mgcv_1.9-1          systemfonts_1.0.5   vctrs_0.6.5        
+[10] reshape2_1.4.4      rvest_1.0.3         pkgconfig_2.0.3    
+[13] crayon_1.5.2        fastmap_1.1.1       backports_1.4.1    
+[16] labeling_0.4.3      utf8_1.2.4          rmarkdown_2.25     
+[19] tzdb_0.4.0          haven_2.5.4         nloptr_2.0.3       
+[22] bit_4.0.5           xfun_0.41           cachem_1.0.8       
+[25] jsonlite_1.8.8      highr_0.10          broom_1.0.5        
+[28] parallel_4.3.2      cluster_2.1.6       R6_2.5.1           
+[31] RColorBrewer_1.1-3  bslib_0.6.1         stringi_1.8.3      
+[34] parallelly_1.36.0   rpart_4.1.23        jquerylib_0.1.4    
+[37] numDeriv_2016.8-1.1 estimability_1.4.1  Rcpp_1.0.11        
+[40] bookdown_0.37       base64enc_0.1-3     splines_4.3.2      
+[43] nnet_7.3-19         timechange_0.2.0    tidyselect_1.2.0   
+[46] rstudioapi_0.15.0   abind_1.4-5         yaml_2.3.8         
+[49] sjlabelled_1.2.0    codetools_0.2-19    listenv_0.9.0      
+[52] lattice_0.22-5      lmerTest_3.1-3      plyr_1.8.9         
+[55] withr_2.5.2         coda_0.19-4         evaluate_0.23      
+[58] foreign_0.8-86      future_1.33.1       xml2_1.3.6         
+[61] pillar_1.9.0        checkmate_2.3.1     insight_0.19.7     
+[64] generics_0.1.3      vroom_1.6.5         hms_1.1.3          
+[67] munsell_0.5.0       scales_1.3.0        minqa_1.2.6        
+[70] globals_0.16.2      xtable_1.8-4        glue_1.6.2         
+[73] Hmisc_5.1-1         tools_4.3.2         data.table_1.14.10 
+[76] webshot_0.5.5       mvtnorm_1.2-4       grid_4.3.2         
+[79] datawizard_0.9.1    colorspace_2.1-0    nlme_3.1-164       
+[82] htmlTable_2.4.2     Formula_1.2-5       cli_3.6.2          
+[85] fansi_1.0.6         viridisLite_0.4.2   svglite_2.1.3      
+[88] gtable_0.3.4        sass_0.4.8          digest_0.6.33      
+[91] pbkrtest_0.5.2      farver_2.1.1        htmlwidgets_1.6.4  
+[94] htmltools_0.5.7     lifecycle_1.0.4     httr_1.4.7         
+[97] bit64_4.0.5         MASS_7.3-60        
 ```

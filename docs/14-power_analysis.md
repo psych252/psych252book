@@ -93,6 +93,37 @@ ggplot(data = tibble(x = c(0, 30)),
   coord_cartesian(expand = F)
 ```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
+```
+Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function "fun"
+```
+
 <img src="14-power_analysis_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 ## Effect sizes
@@ -770,7 +801,7 @@ df.power
  8     8    10          8  0.75
  9     9    10          9  0.75
 10    10    10         10  0.75
-# … with 150 more rows
+# ℹ 150 more rows
 ```
 
 The `expand_grid()` function creates a data frame that contains all the combinations of the variables. 
@@ -805,7 +836,7 @@ df.power
  8     8    10          8  0.75        7
  9     9    10          9  0.75        7
 10    10    10         10  0.75        9
-# … with 150 more rows
+# ℹ 150 more rows
 ```
 
 The `response` variable now contains samples from the sample size `n` according to the probability specified in `p`. Now it's time for `group_by()` and `nest()` because we want to calculate the p-value for observing this response if in fact the null hypothesis was true (i.e. p = 0.5). 
@@ -837,7 +868,7 @@ df.power
  8     8    10          8  0.75        7 <htest>
  9     9    10          9  0.75        7 <htest>
 10    10    10         10  0.75        9 <htest>
-# … with 150 more rows
+# ℹ 150 more rows
 ```
 
 Now that we've fitted a bunch of binomial models, we only need to get at the p-values. Again, we can use the `tidy()` function from the `broom` package for help, like so: 
@@ -875,7 +906,7 @@ df.power
  8     8    10          8  0.344 
  9     9    10          9  0.344 
 10    10    10         10  0.0215
-# … with 150 more rows
+# ℹ 150 more rows
 ```
 
 Finally, all that's left is to calculate power by looking at the proportion of times in which we rejected the null hypothesis. 
@@ -1352,59 +1383,48 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.9        purrr_0.3.4       
- [5] readr_2.1.2        tidyr_1.2.0        tibble_3.1.7       ggplot2_3.3.6     
- [9] tidyverse_1.3.1    pwr_1.3-0          effectsize_0.6.0.1 magrittr_2.0.3    
-[13] broom_0.8.0        kableExtra_1.3.4   knitr_1.39        
+ [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
+ [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
+ [9] ggplot2_3.4.4    tidyverse_2.0.0  pwr_1.3-0        effectsize_0.8.6
+[13] magrittr_2.0.3   broom_1.0.5      kableExtra_1.3.4 knitr_1.45      
 
 loaded via a namespace (and not attached):
-  [1] nlme_3.1-157        fs_1.5.2            lubridate_1.8.0    
-  [4] bit64_4.0.5         RColorBrewer_1.1-3  insight_0.17.0     
-  [7] webshot_0.5.3       httr_1.4.3          tools_4.1.2        
- [10] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
- [13] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
- [16] mgcv_1.8-40         DBI_1.1.2           colorspace_2.0-3   
- [19] nnet_7.3-17         withr_2.5.0         gridExtra_2.3      
- [22] tidyselect_1.1.2    emmeans_1.7.3       bit_4.0.4          
- [25] compiler_4.1.2      performance_0.9.0   cli_3.3.0          
- [28] rvest_1.0.2         htmlTable_2.4.0     xml2_1.3.3         
- [31] sandwich_3.0-1      labeling_0.4.2      bookdown_0.26      
- [34] bayestestR_0.12.1   sass_0.4.1          checkmate_2.1.0    
- [37] scales_1.2.0        mvtnorm_1.1-3       systemfonts_1.0.4  
- [40] digest_0.6.29       foreign_0.8-82      rmarkdown_2.14     
- [43] svglite_2.1.0       jpeg_0.1-9          base64enc_0.1-3    
- [46] pkgconfig_2.0.3     htmltools_0.5.2     highr_0.9          
- [49] dbplyr_2.1.1        fastmap_1.1.0       htmlwidgets_1.5.4  
- [52] rlang_1.0.2         readxl_1.4.0        rstudioapi_0.13    
- [55] jquerylib_0.1.4     generics_0.1.2      farver_2.1.0       
- [58] zoo_1.8-10          jsonlite_1.8.0      vroom_1.5.7        
- [61] Formula_1.2-4       parameters_0.17.0   Matrix_1.4-1       
- [64] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.1    
- [67] stringi_1.7.6       multcomp_1.4-19     yaml_2.3.5         
- [70] MASS_7.3-57         grid_4.1.2          parallel_4.1.2     
- [73] crayon_1.5.1        lattice_0.20-45     haven_2.5.0        
- [76] splines_4.1.2       hms_1.1.1           pillar_1.7.0       
- [79] estimability_1.3    codetools_0.2-18    reprex_2.0.1       
- [82] glue_1.6.2          evaluate_0.15       latticeExtra_0.6-29
- [85] data.table_1.14.2   modelr_0.1.8        png_0.1-7          
- [88] vctrs_0.4.1         tzdb_0.3.0          cellranger_1.1.0   
- [91] gtable_0.3.0        assertthat_0.2.1    datawizard_0.4.0   
- [94] xfun_0.30           xtable_1.8-4        coda_0.19-4        
- [97] survival_3.3-1      viridisLite_0.4.0   cluster_2.1.3      
-[100] TH.data_1.1-1       ellipsis_0.3.2     
+ [1] tidyselect_1.2.0   viridisLite_0.4.2  farver_2.1.1       fastmap_1.1.1     
+ [5] bayestestR_0.13.1  digest_0.6.33      rpart_4.1.23       estimability_1.4.1
+ [9] timechange_0.2.0   lifecycle_1.0.4    cluster_2.1.6      compiler_4.3.2    
+[13] rlang_1.1.2        Hmisc_5.1-1        sass_0.4.8         tools_4.3.2       
+[17] utf8_1.2.4         yaml_2.3.8         data.table_1.14.10 htmlwidgets_1.6.4 
+[21] labeling_0.4.3     bit_4.0.5          xml2_1.3.6         withr_2.5.2       
+[25] foreign_0.8-86     nnet_7.3-19        grid_4.3.2         datawizard_0.9.1  
+[29] fansi_1.0.6        xtable_1.8-4       colorspace_2.1-0   emmeans_1.9.0     
+[33] scales_1.3.0       insight_0.19.7     cli_3.6.2          mvtnorm_1.2-4     
+[37] rmarkdown_2.25     crayon_1.5.2       generics_0.1.3     rstudioapi_0.15.0 
+[41] httr_1.4.7         tzdb_0.4.0         parameters_0.21.3  cachem_1.0.8      
+[45] splines_4.3.2      rvest_1.0.3        parallel_4.3.2     base64enc_0.1-3   
+[49] vctrs_0.6.5        webshot_0.5.5      Matrix_1.6-4       jsonlite_1.8.8    
+[53] bookdown_0.37      hms_1.1.3          bit64_4.0.5        htmlTable_2.4.2   
+[57] Formula_1.2-5      systemfonts_1.0.5  jquerylib_0.1.4    glue_1.6.2        
+[61] stringi_1.8.3      gtable_0.3.4       munsell_0.5.0      pillar_1.9.0      
+[65] htmltools_0.5.7    R6_2.5.1           vroom_1.6.5        evaluate_0.23     
+[69] lattice_0.22-5     highr_0.10         backports_1.4.1    bslib_0.6.1       
+[73] checkmate_2.3.1    svglite_2.1.3      coda_0.19-4        gridExtra_2.3     
+[77] nlme_3.1-164       mgcv_1.9-1         xfun_0.41          pkgconfig_2.0.3   
 ```

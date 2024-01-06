@@ -93,13 +93,13 @@ combinations(balls, ndraws)
 [3,]    2    3
 ```
 
-I've generated the figures below using the `DiagrammeR` package. It's a powerful package for drawing diagrams in R. See information on how to use the DiagrammeR package [here](http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html). 
+I've generated the figures below using the `DiagrammeR` package. It's a powerful package for drawing diagrams in R. See information on how to use the DiagrammeR package [here](https://rich-iannone.github.io/DiagrammeR/). 
 
 <div class="figure">
 
 ```{=html}
-<div id="htmlwidget-f30f3d154219851c728a" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f30f3d154219851c728a">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-0599bffa3bedbd72878a" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-0599bffa3bedbd72878a">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 <p class="caption">(\#fig:unnamed-chunk-4)Drawing two marbles out of an urn __with__ replacement.</p>
@@ -108,8 +108,8 @@ I've generated the figures below using the `DiagrammeR` package. It's a powerful
 <div class="figure">
 
 ```{=html}
-<div id="htmlwidget-cae6cfbb83da3d5af0a6" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cae6cfbb83da3d5af0a6">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-5164df9ca8412f9e007f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5164df9ca8412f9e007f">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 <p class="caption">(\#fig:unnamed-chunk-5)Drawing two marbles out of an urn __without__ replacement.</p>
@@ -150,6 +150,13 @@ ggplot(data = df.letters,
                      expand = c(0, 0)) + 
   labs(x = "number correct",
        y = "probability")
+```
+
+```
+Warning: `stat(count)` was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="06-probability_files/figure-html/unnamed-chunk-7-1.png" width="672" />
@@ -290,8 +297,8 @@ df.suspects %>%
 
 
 ```{=html}
-<div id="htmlwidget-41fc88f1430ec342b692" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-41fc88f1430ec342b692">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-734f83c7284ac2c88ab1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-734f83c7284ac2c88ab1">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## Probability operations
@@ -338,8 +345,8 @@ df.cards %>%
 
 
 ```{=html}
-<div id="htmlwidget-cd108f3fcf1a7b8c1ecd" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cd108f3fcf1a7b8c1ecd">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-839bab2ca0490a2892a5" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-839bab2ca0490a2892a5">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## Getting Bayes right matters
@@ -489,42 +496,42 @@ Information about this R session including which version of R was used, and what
 
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.9        purrr_0.3.4       
- [5] readr_2.1.2        tidyr_1.2.0        tibble_3.1.7       ggplot2_3.3.6     
- [9] tidyverse_1.3.1    DiagrammeR_1.0.9   arrangements_1.1.9 kableExtra_1.3.4  
-[13] knitr_1.39        
+ [1] lubridate_1.9.3    forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4       
+ [5] purrr_1.0.2        readr_2.1.4        tidyr_1.3.0        tibble_3.2.1      
+ [9] ggplot2_3.4.4      tidyverse_2.0.0    DiagrammeR_1.0.10  arrangements_1.1.9
+[13] kableExtra_1.3.4   knitr_1.45        
 
 loaded via a namespace (and not attached):
- [1] svglite_2.1.0      lubridate_1.8.0    visNetwork_2.1.0   assertthat_0.2.1  
- [5] digest_0.6.29      utf8_1.2.2         gmp_0.6-5          cellranger_1.1.0  
- [9] R6_2.5.1           backports_1.4.1    reprex_2.0.1       evaluate_0.15     
-[13] highr_0.9          httr_1.4.3         pillar_1.7.0       rlang_1.0.2       
-[17] readxl_1.4.0       rstudioapi_0.13    jquerylib_0.1.4    rmarkdown_2.14    
-[21] labeling_0.4.2     webshot_0.5.3      htmlwidgets_1.5.4  munsell_0.5.0     
-[25] broom_0.8.0        compiler_4.1.2     modelr_0.1.8       xfun_0.30         
-[29] pkgconfig_2.0.3    systemfonts_1.0.4  htmltools_0.5.2    tidyselect_1.1.2  
-[33] bookdown_0.26      fansi_1.0.3        viridisLite_0.4.0  withr_2.5.0       
-[37] tzdb_0.3.0         crayon_1.5.1       dbplyr_2.1.1       grid_4.1.2        
-[41] jsonlite_1.8.0     gtable_0.3.0       lifecycle_1.0.1    DBI_1.1.2         
-[45] magrittr_2.0.3     scales_1.2.0       cli_3.3.0          stringi_1.7.6     
-[49] farver_2.1.0       fs_1.5.2           xml2_1.3.3         bslib_0.3.1       
-[53] ellipsis_0.3.2     generics_0.1.2     vctrs_0.4.1        RColorBrewer_1.1-3
-[57] tools_4.1.2        glue_1.6.2         hms_1.1.1          fastmap_1.1.0     
-[61] yaml_2.3.5         colorspace_2.0-3   rvest_1.0.2        haven_2.5.0       
-[65] sass_0.4.1        
+ [1] gmp_0.7-3          sass_0.4.8         utf8_1.2.4         generics_0.1.3    
+ [5] xml2_1.3.6         stringi_1.8.3      hms_1.1.3          digest_0.6.33     
+ [9] magrittr_2.0.3     timechange_0.2.0   evaluate_0.23      grid_4.3.2        
+[13] RColorBrewer_1.1-3 bookdown_0.37      fastmap_1.1.1      jsonlite_1.8.8    
+[17] httr_1.4.7         rvest_1.0.3        fansi_1.0.6        viridisLite_0.4.2 
+[21] scales_1.3.0       jquerylib_0.1.4    cli_3.6.2          crayon_1.5.2      
+[25] rlang_1.1.2        visNetwork_2.1.2   ellipsis_0.3.2     munsell_0.5.0     
+[29] withr_2.5.2        cachem_1.0.8       yaml_2.3.8         tools_4.3.2       
+[33] tzdb_0.4.0         colorspace_2.1-0   webshot_0.5.5      vctrs_0.6.5       
+[37] R6_2.5.1           lifecycle_1.0.4    htmlwidgets_1.6.4  pkgconfig_2.0.3   
+[41] bslib_0.6.1        pillar_1.9.0       gtable_0.3.4       glue_1.6.2        
+[45] systemfonts_1.0.5  highr_0.10         xfun_0.41          tidyselect_1.2.0  
+[49] rstudioapi_0.15.0  farver_2.1.1       htmltools_0.5.7    labeling_0.4.3    
+[53] rmarkdown_2.25     svglite_2.1.3      compiler_4.3.2    
 ```

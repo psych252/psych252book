@@ -1,9 +1,7 @@
 ```{r, eval=FALSE, include=FALSE}
 # Note: To get greta to work on my mac, I had to run the following commands 
 devtools::install_github("greta-dev/greta")
-greta::install_tensorflow(method = "conda",
-                          version = "1.14.0",
-                          extra_packages = "tensorflow-probability==0.7.0")
+greta::install_greta_deps()
 ```
 
 # Bayesian data analysis 1
@@ -54,7 +52,7 @@ failure = c(0, cumsum(1 - data))
 fun.plot_beta = function(success, failure){
   ggplot(data = tibble(x = c(0, 1)),
          mapping = aes(x = x)) +
-    stat_function(fun = "dbeta",
+    stat_function(fun = dbeta,
                   args = list(shape1 = success + 1, shape2 = failure + 1),
                   geom = "area",
                   color = "black",
@@ -341,7 +339,7 @@ ggplot(data = df.attitude,
 
 #### Fit the model
 
-```{r}
+```{r, eval=FALSE}
 set.seed(1)
 
 # variables & priors
@@ -361,14 +359,14 @@ m = model(b0, b1, sd)
 
 Visualize the model as graph: 
 
-```{r}
+```{r, eval=FALSE}
 # plotting
 plot(m)
 ```
 
 Draw samples from the posterior distribution: 
 
-```{r, message=FALSE, cache=TRUE}
+```{r, message=FALSE, cache=TRUE, eval=FALSE}
 set.seed(1)
 
 # sampling
@@ -383,7 +381,7 @@ df.draws = tidy_draws(draws) %>%
 
 These are the priors I used for the intercept, regression weights, and the standard deviation of the Gaussian likelihood function:  
 
-```{r}
+```{r, eval=FALSE}
 # Gaussian
 ggplot(tibble(x = c(-30, 30)),
        aes(x = x)) +
@@ -404,7 +402,7 @@ ggplot(tibble(x = c(0, 30)),
 
 This is what the posterior looks like for the three parameters in the model: 
 
-```{r}
+```{r, eval=FALSE}
 df.draws %>% 
   select(draw:sd) %>% 
   pivot_longer(cols = -draw,
@@ -427,9 +425,10 @@ df.draws %>%
         axis.line = element_blank(),
         strip.text.x = element_blank())
 ```
+
 #### Credible interval vs. confidence interval
 
-```{r}
+```{r, eval=FALSE}
 fit.lm %>% 
   tidy(conf.int = T) %>% 
   ggplot(mapping = aes(y = term,
@@ -441,12 +440,11 @@ fit.lm %>%
 ```
 
 
-
 #### Visualize model predictions
 
 Let's take some samples from the posterior to visualize the model predictions: 
 
-```{r}
+```{r, eval=FALSE}
 ggplot(data = df.attitude,
        mapping = aes(x = complaints, 
                      y = rating)) + 
@@ -463,7 +461,7 @@ ggplot(data = df.attitude,
 
 Let's make an animation that illustrates what predicted data sets (based on samples from the posterior) would look like: 
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 p = df.draws %>% 
   slice_sample(n = 10) %>%  
   mutate(complaints = list(seq(min(df.attitude$complaints),
@@ -495,7 +493,7 @@ animate(p,
 
 And let's illustrate what data we would have expected to see just based on the information that we encoded in our priors. 
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 sample_size = 10
 
 p = tibble(b0 = rnorm(sample_size, mean = 0, sd = 10),
@@ -524,6 +522,13 @@ animate(p,
 
 # anim_save("prior_predictive.gif")
 ```
+
+## Additional resources
+
+### Books and chapters
+
+- [Bayes rules book](https://www.bayesrulesbook.com/)
+
 
 ## Session info
 

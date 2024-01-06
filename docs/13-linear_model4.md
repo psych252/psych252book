@@ -316,6 +316,13 @@ ggplot(data = df.plot,
         axis.title.x = element_blank())
 ```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="13-linear_model4_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 ### Hypothetical data
@@ -440,7 +447,17 @@ df.tidy = fit %>%
   tidy() %>% 
   select(where(is.numeric)) %>% 
   mutate(across(.fns = ~ round(. , 2)))
+```
 
+```
+Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `across(.fns = ~round(., 2))`.
+Caused by warning:
+! Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.
+ℹ Please supply `.cols` instead.
+```
+
+```r
 df.augment = fit %>% 
   augment() %>%
   clean_names() %>% 
@@ -827,6 +844,12 @@ model.matrix(fit) %>%
 </tbody>
 </table>
 
+## Additional resources
+
+### Misc
+
+- [Overview of different regression models in R](https://strengejacke.github.io/regressionmodels/?s=09)
+
 ## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
@@ -837,61 +860,60 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
- [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
- [9] tidyverse_1.3.1  car_3.0-13       carData_3.0-5    emmeans_1.7.3   
-[13] afex_1.1-1       lme4_1.1-29      Matrix_1.4-1     broom_0.8.0     
-[17] janitor_2.1.0    kableExtra_1.3.4 knitr_1.39      
+ [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
+ [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
+ [9] ggplot2_3.4.4    tidyverse_2.0.0  car_3.1-2        carData_3.0-5   
+[13] emmeans_1.9.0    afex_1.3-0       lme4_1.1-35.1    Matrix_1.6-4    
+[17] broom_1.0.5      janitor_2.2.0    kableExtra_1.3.4 knitr_1.45      
 
 loaded via a namespace (and not attached):
-  [1] TH.data_1.1-1       minqa_1.2.4         colorspace_2.0-3   
-  [4] ellipsis_0.3.2      htmlTable_2.4.0     estimability_1.3   
-  [7] snakecase_0.11.0    base64enc_0.1-3     fs_1.5.2           
- [10] rstudioapi_0.13     farver_2.1.0        bit64_4.0.5        
- [13] fansi_1.0.3         mvtnorm_1.1-3       lubridate_1.8.0    
- [16] xml2_1.3.3          codetools_0.2-18    splines_4.1.2      
- [19] Formula_1.2-4       jsonlite_1.8.0      nloptr_2.0.0       
- [22] cluster_2.1.3       dbplyr_2.1.1        png_0.1-7          
- [25] compiler_4.1.2      httr_1.4.3          backports_1.4.1    
- [28] assertthat_0.2.1    fastmap_1.1.0       cli_3.3.0          
- [31] htmltools_0.5.2     tools_4.1.2         lmerTest_3.1-3     
- [34] coda_0.19-4         gtable_0.3.0        glue_1.6.2         
- [37] reshape2_1.4.4      Rcpp_1.0.8.3        cellranger_1.1.0   
- [40] jquerylib_0.1.4     vctrs_0.4.1         svglite_2.1.0      
- [43] nlme_3.1-157        xfun_0.30           rvest_1.0.2        
- [46] lifecycle_1.0.1     MASS_7.3-57         zoo_1.8-10         
- [49] scales_1.2.0        vroom_1.5.7         hms_1.1.1          
- [52] parallel_4.1.2      sandwich_3.0-1      RColorBrewer_1.1-3 
- [55] yaml_2.3.5          gridExtra_2.3       sass_0.4.1         
- [58] rpart_4.1.16        latticeExtra_0.6-29 stringi_1.7.6      
- [61] highr_0.9           checkmate_2.1.0     boot_1.3-28        
- [64] rlang_1.0.2         pkgconfig_2.0.3     systemfonts_1.0.4  
- [67] evaluate_0.15       lattice_0.20-45     htmlwidgets_1.5.4  
- [70] labeling_0.4.2      bit_4.0.4           tidyselect_1.1.2   
- [73] plyr_1.8.7          magrittr_2.0.3      bookdown_0.26      
- [76] R6_2.5.1            generics_0.1.2      Hmisc_4.7-0        
- [79] multcomp_1.4-19     DBI_1.1.2           foreign_0.8-82     
- [82] pillar_1.7.0        haven_2.5.0         withr_2.5.0        
- [85] nnet_7.3-17         survival_3.3-1      abind_1.4-5        
- [88] modelr_0.1.8        crayon_1.5.1        utf8_1.2.2         
- [91] tzdb_0.3.0          rmarkdown_2.14      jpeg_0.1-9         
- [94] grid_4.1.2          readxl_1.4.0        data.table_1.14.2  
- [97] reprex_2.0.1        digest_0.6.29       webshot_0.5.3      
-[100] xtable_1.8-4        numDeriv_2016.8-1.1 munsell_0.5.0      
-[103] viridisLite_0.4.0   bslib_0.3.1        
+ [1] tidyselect_1.2.0    viridisLite_0.4.2   farver_2.1.1       
+ [4] fastmap_1.1.1       rpart_4.1.23        digest_0.6.33      
+ [7] timechange_0.2.0    estimability_1.4.1  lifecycle_1.0.4    
+[10] cluster_2.1.6       magrittr_2.0.3      compiler_4.3.2     
+[13] Hmisc_5.1-1         rlang_1.1.2         sass_0.4.8         
+[16] tools_4.3.2         utf8_1.2.4          yaml_2.3.8         
+[19] data.table_1.14.10  htmlwidgets_1.6.4   labeling_0.4.3     
+[22] bit_4.0.5           plyr_1.8.9          xml2_1.3.6         
+[25] abind_1.4-5         foreign_0.8-86      withr_2.5.2        
+[28] numDeriv_2016.8-1.1 nnet_7.3-19         grid_4.3.2         
+[31] fansi_1.0.6         xtable_1.8-4        colorspace_2.1-0   
+[34] scales_1.3.0        MASS_7.3-60         cli_3.6.2          
+[37] mvtnorm_1.2-4       rmarkdown_2.25      crayon_1.5.2       
+[40] generics_0.1.3      rstudioapi_0.15.0   httr_1.4.7         
+[43] reshape2_1.4.4      tzdb_0.4.0          minqa_1.2.6        
+[46] cachem_1.0.8        splines_4.3.2       rvest_1.0.3        
+[49] parallel_4.3.2      base64enc_0.1-3     vctrs_0.6.5        
+[52] boot_1.3-28.1       webshot_0.5.5       jsonlite_1.8.8     
+[55] bookdown_0.37       hms_1.1.3           bit64_4.0.5        
+[58] htmlTable_2.4.2     Formula_1.2-5       systemfonts_1.0.5  
+[61] jquerylib_0.1.4     glue_1.6.2          nloptr_2.0.3       
+[64] stringi_1.8.3       gtable_0.3.4        lmerTest_3.1-3     
+[67] munsell_0.5.0       pillar_1.9.0        htmltools_0.5.7    
+[70] R6_2.5.1            vroom_1.6.5         evaluate_0.23      
+[73] lattice_0.22-5      highr_0.10          backports_1.4.1    
+[76] snakecase_0.11.1    bslib_0.6.1         Rcpp_1.0.11        
+[79] checkmate_2.3.1     gridExtra_2.3       svglite_2.1.3      
+[82] coda_0.19-4         nlme_3.1-164        xfun_0.41          
+[85] pkgconfig_2.0.3    
 ```
+
+

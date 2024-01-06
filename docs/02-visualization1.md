@@ -2,7 +2,7 @@
 
 In this lecture, we will take a look at how to visualize data using the powerful [ggplot2](https://ggplot2.tidyverse.org/) package. We will use `ggplot2` a lot throughout the rest of the course! 
 
-## Learning goals 
+## Learning goals
 
 - Take a look at some suboptimal plots, and think about how to make them better.
 - Get familiar with the RStudio interface.
@@ -174,7 +174,7 @@ Here is the help file for the `print()` function:
 <p class="caption">(\#fig:unnamed-chunk-7)Help file for the print() function.</p>
 </div>
 
-### R Markdown infos 
+### R Markdown infos
 
 An RMarkdown file has four key components: 
 
@@ -195,7 +195,7 @@ The **YAML** (*Y*et *A*nother *M*arkdown *L*anguage) header specifies general op
 
 Code chunks can have code chunk options which we can set by clicking on the cog symbol on the right. You can also give code chunks a name, so that we can refer to it in text. I've named the one above "another-code-chunk". Make sure to have no white space or underscore in a code chunk name. 
 
-### Helpful keyboard shortcuts 
+### Helpful keyboard shortcuts
 
 - `cmd + enter`: run selected code 
 - `cmd + shift + enter`: run code chunk 
@@ -268,7 +268,7 @@ ggplot(data = df.diamonds,
 
 Here, we specified that we want to plot `color` on the x-axis, and `price` on the y-axis. As you can see, `ggplot2` has already figured out how to label the axes. However, we still need to specify _how_ to plot it. 
 
-### Bar plot 
+### Bar plot
 
 Let's make a __bar graph__:
 
@@ -435,8 +435,8 @@ ggplot(data = df.diamonds,
 ```
 
 ```
-geom_path: Each group consists of only one observation. Do you need to adjust
-the group aesthetic?
+`geom_line()`: Each group consists of only one observation.
+ℹ Do you need to adjust the group aesthetic?
 ```
 
 <img src="02-visualization1_files/figure-html/unnamed-chunk-21-1.png" width="672" />
@@ -601,6 +601,13 @@ ggplot(data = df.diamonds,
   stat_summary(fun = "mean",
                geom = "line",
                size = 2)
+```
+
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="02-visualization1_files/figure-html/unnamed-chunk-27-1.png" width="672" />
@@ -839,15 +846,15 @@ ggplot(data = df.diamonds,
 ```
 
 ```
-Warning: Removed 1 rows containing missing values (geom_segment).
+Warning: Removed 1 rows containing missing values (`geom_segment()`).
 ```
 
 ```
-Warning: Removed 3 rows containing missing values (geom_segment).
+Warning: Removed 3 rows containing missing values (`geom_segment()`).
 ```
 
 ```
-Warning: Removed 1 rows containing missing values (geom_segment).
+Warning: Removed 1 rows containing missing values (`geom_segment()`).
 ```
 
 <div class="figure">
@@ -892,7 +899,7 @@ ggplot(data = df.diamonds,
 ```
 
 ```
-`geom_smooth()` using formula 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
 ```
 
 <img src="02-visualization1_files/figure-html/unnamed-chunk-42-1.png" width="672" />
@@ -913,7 +920,7 @@ ggplot(data = df.diamonds,
 ```
 
 ```
-`geom_smooth()` using formula 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
 ```
 
 <img src="02-visualization1_files/figure-html/unnamed-chunk-43-1.png" width="672" />
@@ -932,7 +939,7 @@ ggplot(data = df.diamonds,
 ```
 
 ```
-`geom_smooth()` using formula 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
 ```
 
 <img src="02-visualization1_files/figure-html/unnamed-chunk-44-1.png" width="672" />
@@ -973,60 +980,52 @@ Here, I've set `color = "black"` within the `geom_smooth()` function, and now on
 
 - [nice online ggplot tutorial](https://evamaerey.github.io/ggplot2_grammar_guide/about)
 - [how to read R help files](https://socviz.co/appendix.html#a-little-more-about-r)
-- [ggplot2 extensions](http://www.ggplot2-exts.org/gallery/) --> gallery of ggplot2 extension packages
+- [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/gallery/) --> gallery of ggplot2 extension packages
 - [ggplot2 visualizations with code](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html) --> gallery of plots with code
 
 ## Session info
 
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4    
- [5] readr_2.1.2     tidyr_1.2.0     tibble_3.1.7    ggplot2_3.3.6  
- [9] tidyverse_1.3.1 knitr_1.39     
+ [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
+ [5] purrr_1.0.2     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
+ [9] ggplot2_3.4.4   tidyverse_2.0.0 knitr_1.45     
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-157        fs_1.5.2            lubridate_1.8.0    
- [4] RColorBrewer_1.1-3  httr_1.4.3          tools_4.1.2        
- [7] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
-[10] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
-[13] DBI_1.1.2           mgcv_1.8-40         colorspace_2.0-3   
-[16] nnet_7.3-17         withr_2.5.0         tidyselect_1.1.2   
-[19] gridExtra_2.3       compiler_4.1.2      cli_3.3.0          
-[22] rvest_1.0.2         htmlTable_2.4.0     xml2_1.3.3         
-[25] labeling_0.4.2      bookdown_0.26       sass_0.4.1         
-[28] scales_1.2.0        checkmate_2.1.0     digest_0.6.29      
-[31] foreign_0.8-82      rmarkdown_2.14      base64enc_0.1-3    
-[34] jpeg_0.1-9          pkgconfig_2.0.3     htmltools_0.5.2    
-[37] dbplyr_2.1.1        fastmap_1.1.0       highr_0.9          
-[40] htmlwidgets_1.5.4   rlang_1.0.2         readxl_1.4.0       
-[43] rstudioapi_0.13     jquerylib_0.1.4     farver_2.1.0       
-[46] generics_0.1.2      jsonlite_1.8.0      magrittr_2.0.3     
-[49] Formula_1.2-4       Matrix_1.4-1        munsell_0.5.0      
-[52] fansi_1.0.3         lifecycle_1.0.1     stringi_1.7.6      
-[55] yaml_2.3.5          grid_4.1.2          crayon_1.5.1       
-[58] lattice_0.20-45     haven_2.5.0         splines_4.1.2      
-[61] hms_1.1.1           pillar_1.7.0        reprex_2.0.1       
-[64] glue_1.6.2          evaluate_0.15       latticeExtra_0.6-29
-[67] data.table_1.14.2   modelr_0.1.8        png_0.1-7          
-[70] vctrs_0.4.1         tzdb_0.3.0          cellranger_1.1.0   
-[73] gtable_0.3.0        assertthat_0.2.1    xfun_0.30          
-[76] broom_0.8.0         survival_3.3-1      viridisLite_0.4.0  
-[79] cluster_2.1.3       ellipsis_0.3.2     
+ [1] sass_0.4.8         utf8_1.2.4         generics_0.1.3     lattice_0.22-5    
+ [5] stringi_1.8.3      hms_1.1.3          digest_0.6.33      magrittr_2.0.3    
+ [9] evaluate_0.23      grid_4.3.2         timechange_0.2.0   bookdown_0.37     
+[13] fastmap_1.1.1      Matrix_1.6-4       jsonlite_1.8.8     backports_1.4.1   
+[17] nnet_7.3-19        Formula_1.2-5      gridExtra_2.3      mgcv_1.9-1        
+[21] fansi_1.0.6        viridisLite_0.4.2  scales_1.3.0       jquerylib_0.1.4   
+[25] cli_3.6.2          crayon_1.5.2       rlang_1.1.2        splines_4.3.2     
+[29] munsell_0.5.0      Hmisc_5.1-1        base64enc_0.1-3    withr_2.5.2       
+[33] cachem_1.0.8       yaml_2.3.8         tools_4.3.2        tzdb_0.4.0        
+[37] checkmate_2.3.1    htmlTable_2.4.2    colorspace_2.1-0   rpart_4.1.23      
+[41] vctrs_0.6.5        R6_2.5.1           lifecycle_1.0.4    htmlwidgets_1.6.4 
+[45] foreign_0.8-86     cluster_2.1.6      pkgconfig_2.0.3    pillar_1.9.0      
+[49] bslib_0.6.1        gtable_0.3.4       data.table_1.14.10 glue_1.6.2        
+[53] xfun_0.41          tidyselect_1.2.0   highr_0.10         rstudioapi_0.15.0 
+[57] farver_2.1.1       nlme_3.1-164       htmltools_0.5.7    rmarkdown_2.25    
+[61] labeling_0.4.3     compiler_4.3.2    
 ```
 
 <div class="figure">

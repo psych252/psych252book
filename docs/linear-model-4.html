@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Linear model 4 | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
   <meta name="description" content="Course notes for Psych 252." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Linear model 4 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2022-05-17" />
+<meta name="date" content="2024-01-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,24 +51,24 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.22/datatables.js"></script>
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<script src="libs/datatables-binding-0.31/datatables.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.9/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -104,7 +104,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -117,7 +117,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -132,10 +132,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -174,6 +179,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-description"><i class="fa fa-check"></i>Course description</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-homepage"><i class="fa fa-check"></i>Course homepage</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license-and-citation"><i class="fa fa-check"></i>License and citation</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
@@ -521,7 +527,11 @@ div.csl-indent {
 <li class="chapter" data-level="13.5.4" data-path="linear-model-4.html"><a href="linear-model-4.html#understanding-dummy-coding"><i class="fa fa-check"></i><b>13.5.4</b> Understanding dummy coding</a></li>
 <li class="chapter" data-level="13.5.5" data-path="linear-model-4.html"><a href="linear-model-4.html#understanding-sum-coding"><i class="fa fa-check"></i><b>13.5.5</b> Understanding sum coding</a></li>
 </ul></li>
-<li class="chapter" data-level="13.6" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-12"><i class="fa fa-check"></i><b>13.6</b> Session info</a></li>
+<li class="chapter" data-level="13.6" data-path="linear-model-4.html"><a href="linear-model-4.html#additional-resources-11"><i class="fa fa-check"></i><b>13.6</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="linear-model-4.html"><a href="linear-model-4.html#misc-7"><i class="fa fa-check"></i><b>13.6.1</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-12"><i class="fa fa-check"></i><b>13.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a>
 <ul>
@@ -538,11 +548,11 @@ div.csl-indent {
 <li class="chapter" data-level="14.6.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>14.6.1</b> <code>pwr</code> package</a></li>
 <li class="chapter" data-level="14.6.2" data-path="power-analysis.html"><a href="power-analysis.html#power-analysis-1"><i class="fa fa-check"></i><b>14.6.2</b> Power analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-11"><i class="fa fa-check"></i><b>14.7</b> Additional resources</a>
+<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-12"><i class="fa fa-check"></i><b>14.7</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="14.7.1" data-path="power-analysis.html"><a href="power-analysis.html#datacamp-6"><i class="fa fa-check"></i><b>14.7.1</b> Datacamp</a></li>
 <li class="chapter" data-level="14.7.2" data-path="power-analysis.html"><a href="power-analysis.html#cheatsheets-5"><i class="fa fa-check"></i><b>14.7.2</b> Cheatsheets</a></li>
-<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-7"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
+<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-8"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-13"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
 </ul></li>
@@ -558,7 +568,7 @@ div.csl-indent {
 <li class="chapter" data-level="15.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>15.3.4</b> Bootstrap</a></li>
 <li class="chapter" data-level="15.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>15.3.5</b> AIC and BIC</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-12"><i class="fa fa-check"></i><b>15.4</b> Additional resources</a>
+<li class="chapter" data-level="15.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-13"><i class="fa fa-check"></i><b>15.4</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>15.4.1</b> Datacamp course</a></li>
 <li class="chapter" data-level="15.4.2" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>15.4.2</b> Reading</a></li>
@@ -593,11 +603,11 @@ div.csl-indent {
 <li class="chapter" data-level="16.7.1" data-path="causation.html"><a href="causation.html#generate-data-1"><i class="fa fa-check"></i><b>16.7.1</b> Generate data</a></li>
 <li class="chapter" data-level="16.7.2" data-path="causation.html"><a href="causation.html#moderation-analysis"><i class="fa fa-check"></i><b>16.7.2</b> Moderation analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="16.8" data-path="causation.html"><a href="causation.html#additional-resources-13"><i class="fa fa-check"></i><b>16.8</b> Additional resources</a>
+<li class="chapter" data-level="16.8" data-path="causation.html"><a href="causation.html#additional-resources-14"><i class="fa fa-check"></i><b>16.8</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="16.8.1" data-path="causation.html"><a href="causation.html#books"><i class="fa fa-check"></i><b>16.8.1</b> Books</a></li>
 <li class="chapter" data-level="16.8.2" data-path="causation.html"><a href="causation.html#tutorials-1"><i class="fa fa-check"></i><b>16.8.2</b> Tutorials</a></li>
-<li class="chapter" data-level="16.8.3" data-path="causation.html"><a href="causation.html#misc-8"><i class="fa fa-check"></i><b>16.8.3</b> Misc</a></li>
+<li class="chapter" data-level="16.8.3" data-path="causation.html"><a href="causation.html#misc-9"><i class="fa fa-check"></i><b>16.8.3</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="16.9" data-path="causation.html"><a href="causation.html#session-info-15"><i class="fa fa-check"></i><b>16.9</b> Session info</a></li>
 </ul></li>
@@ -606,7 +616,7 @@ div.csl-indent {
 <li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#learning-goals-8"><i class="fa fa-check"></i><b>17.1</b> Learning goals</a></li>
 <li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.3</b> Dependence</a></li>
-<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-14"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a>
+<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-15"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="17.4.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.4.1</b> Readings</a></li>
 </ul></li>
@@ -631,7 +641,7 @@ div.csl-indent {
 <li class="chapter" data-level="18.4.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.4.2</b> Different slopes</a></li>
 <li class="chapter" data-level="18.4.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.4.3</b> Simpson’s paradox</a></li>
 </ul></li>
-<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-15"><i class="fa fa-check"></i><b>18.5</b> Additional resources</a>
+<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-16"><i class="fa fa-check"></i><b>18.5</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="18.5.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.5.1</b> Readings</a></li>
 </ul></li>
@@ -694,12 +704,16 @@ div.csl-indent {
 <li class="chapter" data-level="21.4.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#several-predictors"><i class="fa fa-check"></i><b>21.4.4</b> Several predictors</a></li>
 <li class="chapter" data-level="21.4.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#using-the-ggeffects-package"><i class="fa fa-check"></i><b>21.4.5</b> Using the “ggeffects” package</a></li>
 </ul></li>
-<li class="chapter" data-level="21.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>21.5</b> Simulate a logistic regression</a></li>
+<li class="chapter" data-level="21.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>21.5</b> Simulate a logistic regression</a>
+<ul>
+<li class="chapter" data-level="21.5.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#calculate-the-models-likelihood"><i class="fa fa-check"></i><b>21.5.1</b> Calculate the model’s likelihood</a></li>
+</ul></li>
 <li class="chapter" data-level="21.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>21.6</b> Testing hypotheses</a></li>
 <li class="chapter" data-level="21.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>21.7</b> Logistic mixed effects model</a></li>
 <li class="chapter" data-level="21.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>21.8</b> Additional information</a>
 <ul>
-<li class="chapter" data-level="21.8.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-7"><i class="fa fa-check"></i><b>21.8.1</b> Datacamp</a></li>
+<li class="chapter" data-level="21.8.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#misc-10"><i class="fa fa-check"></i><b>21.8.1</b> Misc</a></li>
+<li class="chapter" data-level="21.8.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-7"><i class="fa fa-check"></i><b>21.8.2</b> Datacamp</a></li>
 </ul></li>
 <li class="chapter" data-level="21.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-20"><i class="fa fa-check"></i><b>21.9</b> Session info</a></li>
 </ul></li>
@@ -719,7 +733,11 @@ div.csl-indent {
 <li class="chapter" data-level="22.4.2" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.4.2</b> Frequentist analysis</a></li>
 <li class="chapter" data-level="22.4.3" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#bayesian-regression"><i class="fa fa-check"></i><b>22.4.3</b> Bayesian regression</a></li>
 </ul></li>
-<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#session-info-21"><i class="fa fa-check"></i><b>22.5</b> Session info</a></li>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#additional-resources-17"><i class="fa fa-check"></i><b>22.5</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#books-and-chapters-5"><i class="fa fa-check"></i><b>22.5.1</b> Books and chapters</a></li>
+</ul></li>
+<li class="chapter" data-level="22.6" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#session-info-21"><i class="fa fa-check"></i><b>22.6</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 2</a>
 <ul>
@@ -745,7 +763,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#titanic-study"><i class="fa fa-check"></i><b>23.6</b> Titanic study</a>
 <ul>
-<li class="chapter" data-level="23.6.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-that-data"><i class="fa fa-check"></i><b>23.6.1</b> 1. Visualize that data</a></li>
+<li class="chapter" data-level="23.6.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data-2"><i class="fa fa-check"></i><b>23.6.1</b> 1. Visualize the data</a></li>
 <li class="chapter" data-level="23.6.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model-2"><i class="fa fa-check"></i><b>23.6.2</b> 2. Specify and fit the model</a></li>
 <li class="chapter" data-level="23.6.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#model-evaluation-2"><i class="fa fa-check"></i><b>23.6.3</b> 3. Model evaluation</a></li>
 <li class="chapter" data-level="23.6.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#interpret-the-parameters-1"><i class="fa fa-check"></i><b>23.6.4</b> 4. Interpret the parameters</a></li>
@@ -754,11 +772,11 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#politeness-data"><i class="fa fa-check"></i><b>23.7</b> Politeness data</a>
 <ul>
-<li class="chapter" data-level="23.7.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data-2"><i class="fa fa-check"></i><b>23.7.1</b> 1. Visualize the data</a></li>
+<li class="chapter" data-level="23.7.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data-3"><i class="fa fa-check"></i><b>23.7.1</b> 1. Visualize the data</a></li>
 <li class="chapter" data-level="23.7.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model-3"><i class="fa fa-check"></i><b>23.7.2</b> 2. Specify and fit the model</a></li>
 <li class="chapter" data-level="23.7.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#test-specific-hypotheses-3"><i class="fa fa-check"></i><b>23.7.3</b> 5. Test specific hypotheses</a></li>
 </ul></li>
-<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-16"><i class="fa fa-check"></i><b>23.8</b> Additional resources</a></li>
+<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-18"><i class="fa fa-check"></i><b>23.8</b> Additional resources</a></li>
 <li class="chapter" data-level="23.9" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-22"><i class="fa fa-check"></i><b>23.9</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>24</b> Bayesian data analysis 3</a>
@@ -772,7 +790,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="24.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>24.4</b> Dealing with heteroscedasticity</a>
 <ul>
-<li class="chapter" data-level="24.4.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualize-the-data-3"><i class="fa fa-check"></i><b>24.4.1</b> Visualize the data</a></li>
+<li class="chapter" data-level="24.4.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualize-the-data-4"><i class="fa fa-check"></i><b>24.4.1</b> Visualize the data</a></li>
 <li class="chapter" data-level="24.4.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#frequentist-analysis-4"><i class="fa fa-check"></i><b>24.4.2</b> Frequentist analysis</a></li>
 <li class="chapter" data-level="24.4.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-analysis-3"><i class="fa fa-check"></i><b>24.4.3</b> Bayesian analysis</a></li>
 </ul></li>
@@ -785,7 +803,7 @@ div.csl-indent {
 <li class="chapter" data-level="24.6.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#gaussian-regression-unequal-variance"><i class="fa fa-check"></i><b>24.6.4</b> Gaussian regression (unequal variance)</a></li>
 <li class="chapter" data-level="24.6.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#model-comparison-2"><i class="fa fa-check"></i><b>24.6.5</b> Model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-17"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
+<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-19"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
 <li class="chapter" data-level="24.8" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-23"><i class="fa fa-check"></i><b>24.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>25</b> Model assumptions</a>
@@ -800,7 +818,7 @@ div.csl-indent {
 <li class="chapter" data-level="25.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#non-parametric-tests"><i class="fa fa-check"></i><b>25.3.4</b> Non-parametric tests</a></li>
 <li class="chapter" data-level="25.3.5" data-path="model-assumptions.html"><a href="model-assumptions.html#bootstrapping-regressions"><i class="fa fa-check"></i><b>25.3.5</b> Bootstrapping regressions</a></li>
 </ul></li>
-<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-18"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
+<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-20"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
 <li class="chapter" data-level="25.5" data-path="model-assumptions.html"><a href="model-assumptions.html#session-info-24"><i class="fa fa-check"></i><b>25.5</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="26" data-path="reporting-statistics.html"><a href="reporting-statistics.html"><i class="fa fa-check"></i><b>26</b> Reporting statistics</a>
@@ -849,43 +867,43 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 13</span> Linear model 4<a href="linear-model-4.html#linear-model-4" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="load-packages-and-set-plotting-theme-6" class="section level2 hasAnchor" number="13.1">
 <h2><span class="header-section-number">13.1</span> Load packages and set plotting theme<a href="linear-model-4.html#load-packages-and-set-plotting-theme-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="linear-model-4.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span></span>
-<span id="cb664-2"><a href="linear-model-4.html#cb664-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span></span>
-<span id="cb664-3"><a href="linear-model-4.html#cb664-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span></span>
-<span id="cb664-4"><a href="linear-model-4.html#cb664-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># for tidying up linear models </span></span>
-<span id="cb664-5"><a href="linear-model-4.html#cb664-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;afex&quot;</span>)       <span class="co"># for running ANOVAs</span></span>
-<span id="cb664-6"><a href="linear-model-4.html#cb664-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;emmeans&quot;</span>)    <span class="co"># for calculating contrasts</span></span>
-<span id="cb664-7"><a href="linear-model-4.html#cb664-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;car&quot;</span>)        <span class="co"># for calculating ANOVAs</span></span>
-<span id="cb664-8"><a href="linear-model-4.html#cb664-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc.</span></span></code></pre></div>
-<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="linear-model-4.html#cb665-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(</span>
-<span id="cb665-2"><a href="linear-model-4.html#cb665-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
-<span id="cb665-3"><a href="linear-model-4.html#cb665-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span></span>
-<span id="cb665-4"><a href="linear-model-4.html#cb665-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb665-5"><a href="linear-model-4.html#cb665-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb665-6"><a href="linear-model-4.html#cb665-6" aria-hidden="true" tabindex="-1"></a><span class="co"># these options here change the formatting of how comments are rendered</span></span>
-<span id="cb665-7"><a href="linear-model-4.html#cb665-7" aria-hidden="true" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb665-8"><a href="linear-model-4.html#cb665-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">fig.show =</span> <span class="st">&quot;hold&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="linear-model-4.html#cb690-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span></span>
+<span id="cb690-2"><a href="linear-model-4.html#cb690-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span></span>
+<span id="cb690-3"><a href="linear-model-4.html#cb690-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span></span>
+<span id="cb690-4"><a href="linear-model-4.html#cb690-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># for tidying up linear models </span></span>
+<span id="cb690-5"><a href="linear-model-4.html#cb690-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;afex&quot;</span>)       <span class="co"># for running ANOVAs</span></span>
+<span id="cb690-6"><a href="linear-model-4.html#cb690-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;emmeans&quot;</span>)    <span class="co"># for calculating contrasts</span></span>
+<span id="cb690-7"><a href="linear-model-4.html#cb690-7" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;car&quot;</span>)        <span class="co"># for calculating ANOVAs</span></span>
+<span id="cb690-8"><a href="linear-model-4.html#cb690-8" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc.</span></span></code></pre></div>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="linear-model-4.html#cb691-1" tabindex="-1"></a><span class="fu">theme_set</span>(</span>
+<span id="cb691-2"><a href="linear-model-4.html#cb691-2" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
+<span id="cb691-3"><a href="linear-model-4.html#cb691-3" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="co">#set the default text size</span></span>
+<span id="cb691-4"><a href="linear-model-4.html#cb691-4" tabindex="-1"></a>)</span>
+<span id="cb691-5"><a href="linear-model-4.html#cb691-5" tabindex="-1"></a></span>
+<span id="cb691-6"><a href="linear-model-4.html#cb691-6" tabindex="-1"></a><span class="co"># these options here change the formatting of how comments are rendered</span></span>
+<span id="cb691-7"><a href="linear-model-4.html#cb691-7" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb691-8"><a href="linear-model-4.html#cb691-8" tabindex="-1"></a>               <span class="at">fig.show =</span> <span class="st">&quot;hold&quot;</span>)</span></code></pre></div>
 </div>
 <div id="load-data-sets-2" class="section level2 hasAnchor" number="13.2">
 <h2><span class="header-section-number">13.2</span> Load data sets<a href="linear-model-4.html#load-data-sets-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Read in the data:</p>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="linear-model-4.html#cb666-1" aria-hidden="true" tabindex="-1"></a>df.poker <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/poker.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb666-2"><a href="linear-model-4.html#cb666-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">skill =</span> <span class="fu">factor</span>(skill,</span>
-<span id="cb666-3"><a href="linear-model-4.html#cb666-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb666-4"><a href="linear-model-4.html#cb666-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;expert&quot;</span>, <span class="st">&quot;average&quot;</span>)),</span>
-<span id="cb666-5"><a href="linear-model-4.html#cb666-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">skill =</span> <span class="fu">fct_relevel</span>(skill, <span class="st">&quot;average&quot;</span>, <span class="st">&quot;expert&quot;</span>),</span>
-<span id="cb666-6"><a href="linear-model-4.html#cb666-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">hand =</span> <span class="fu">factor</span>(hand,</span>
-<span id="cb666-7"><a href="linear-model-4.html#cb666-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb666-8"><a href="linear-model-4.html#cb666-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)),</span>
-<span id="cb666-9"><a href="linear-model-4.html#cb666-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">limit =</span> <span class="fu">factor</span>(limit,</span>
-<span id="cb666-10"><a href="linear-model-4.html#cb666-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb666-11"><a href="linear-model-4.html#cb666-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;fixed&quot;</span>, <span class="st">&quot;none&quot;</span>)),</span>
-<span id="cb666-12"><a href="linear-model-4.html#cb666-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb666-13"><a href="linear-model-4.html#cb666-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(participant, <span class="fu">everything</span>())</span>
-<span id="cb666-14"><a href="linear-model-4.html#cb666-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb666-15"><a href="linear-model-4.html#cb666-15" aria-hidden="true" tabindex="-1"></a><span class="co"># creating an unbalanced data set by removing the first 10 participants </span></span>
-<span id="cb666-16"><a href="linear-model-4.html#cb666-16" aria-hidden="true" tabindex="-1"></a>df.poker.unbalanced <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
-<span id="cb666-17"><a href="linear-model-4.html#cb666-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>participant <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="linear-model-4.html#cb692-1" tabindex="-1"></a>df.poker <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/poker.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb692-2"><a href="linear-model-4.html#cb692-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">skill =</span> <span class="fu">factor</span>(skill,</span>
+<span id="cb692-3"><a href="linear-model-4.html#cb692-3" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb692-4"><a href="linear-model-4.html#cb692-4" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;expert&quot;</span>, <span class="st">&quot;average&quot;</span>)),</span>
+<span id="cb692-5"><a href="linear-model-4.html#cb692-5" tabindex="-1"></a>         <span class="at">skill =</span> <span class="fu">fct_relevel</span>(skill, <span class="st">&quot;average&quot;</span>, <span class="st">&quot;expert&quot;</span>),</span>
+<span id="cb692-6"><a href="linear-model-4.html#cb692-6" tabindex="-1"></a>         <span class="at">hand =</span> <span class="fu">factor</span>(hand,</span>
+<span id="cb692-7"><a href="linear-model-4.html#cb692-7" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb692-8"><a href="linear-model-4.html#cb692-8" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)),</span>
+<span id="cb692-9"><a href="linear-model-4.html#cb692-9" tabindex="-1"></a>         <span class="at">limit =</span> <span class="fu">factor</span>(limit,</span>
+<span id="cb692-10"><a href="linear-model-4.html#cb692-10" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb692-11"><a href="linear-model-4.html#cb692-11" tabindex="-1"></a>                        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;fixed&quot;</span>, <span class="st">&quot;none&quot;</span>)),</span>
+<span id="cb692-12"><a href="linear-model-4.html#cb692-12" tabindex="-1"></a>         <span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb692-13"><a href="linear-model-4.html#cb692-13" tabindex="-1"></a>  <span class="fu">select</span>(participant, <span class="fu">everything</span>())</span>
+<span id="cb692-14"><a href="linear-model-4.html#cb692-14" tabindex="-1"></a></span>
+<span id="cb692-15"><a href="linear-model-4.html#cb692-15" tabindex="-1"></a><span class="co"># creating an unbalanced data set by removing the first 10 participants </span></span>
+<span id="cb692-16"><a href="linear-model-4.html#cb692-16" tabindex="-1"></a>df.poker.unbalanced <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
+<span id="cb692-17"><a href="linear-model-4.html#cb692-17" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>participant <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 </div>
 <div id="anova-with-unbalanced-design" class="section level2 hasAnchor" number="13.3">
 <h2><span class="header-section-number">13.3</span> ANOVA with unbalanced design<a href="linear-model-4.html#anova-with-unbalanced-design" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -896,10 +914,10 @@ div.csl-indent {
 <li>The standard <code>anova()</code> function computes Type I (sequential) sums of squares.</li>
 </ol>
 <p>Sequential sums of squares means that the predictors are added to the model in the order in which the are specified.</p>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="linear-model-4.html#cb667-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one order </span></span>
-<span id="cb667-2"><a href="linear-model-4.html#cb667-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> skill <span class="sc">+</span> hand, </span>
-<span id="cb667-3"><a href="linear-model-4.html#cb667-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
-<span id="cb667-4"><a href="linear-model-4.html#cb667-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="linear-model-4.html#cb693-1" tabindex="-1"></a><span class="co"># one order </span></span>
+<span id="cb693-2"><a href="linear-model-4.html#cb693-2" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> skill <span class="sc">+</span> hand, </span>
+<span id="cb693-3"><a href="linear-model-4.html#cb693-3" tabindex="-1"></a>         <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
+<span id="cb693-4"><a href="linear-model-4.html#cb693-4" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: balance
@@ -909,10 +927,10 @@ hand        2 2385.1 1192.57 68.8827 &lt; 2e-16 ***
 Residuals 286 4951.5   17.31                    
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="linear-model-4.html#cb669-1" aria-hidden="true" tabindex="-1"></a><span class="co"># another order </span></span>
-<span id="cb669-2"><a href="linear-model-4.html#cb669-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand <span class="sc">+</span> skill, </span>
-<span id="cb669-3"><a href="linear-model-4.html#cb669-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
-<span id="cb669-4"><a href="linear-model-4.html#cb669-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="linear-model-4.html#cb695-1" tabindex="-1"></a><span class="co"># another order </span></span>
+<span id="cb695-2"><a href="linear-model-4.html#cb695-2" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand <span class="sc">+</span> skill, </span>
+<span id="cb695-3"><a href="linear-model-4.html#cb695-3" tabindex="-1"></a>         <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
+<span id="cb695-4"><a href="linear-model-4.html#cb695-4" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: balance
@@ -923,36 +941,36 @@ Residuals 286 4951.5   17.31
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>We should compute an ANOVA with type 3 sums of squares, and set the contrast to sum contrasts. I like to use the <code>joint_tests()</code> function from the “emmeans” package for doing so. It does both of these things for us.</p>
-<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="linear-model-4.html#cb671-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one order</span></span>
-<span id="cb671-2"><a href="linear-model-4.html#cb671-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand <span class="sc">*</span> skill,</span>
-<span id="cb671-3"><a href="linear-model-4.html#cb671-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
-<span id="cb671-4"><a href="linear-model-4.html#cb671-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">joint_tests</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="linear-model-4.html#cb697-1" tabindex="-1"></a><span class="co"># one order</span></span>
+<span id="cb697-2"><a href="linear-model-4.html#cb697-2" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand <span class="sc">*</span> skill,</span>
+<span id="cb697-3"><a href="linear-model-4.html#cb697-3" tabindex="-1"></a>   <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
+<span id="cb697-4"><a href="linear-model-4.html#cb697-4" tabindex="-1"></a>  <span class="fu">joint_tests</span>()</span></code></pre></div>
 <pre><code> model term df1 df2 F.ratio p.value
  hand         2 284  68.973  &lt;.0001
  skill        1 284   2.954  0.0868
  hand:skill   2 284   7.440  0.0007</code></pre>
-<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="linear-model-4.html#cb673-1" aria-hidden="true" tabindex="-1"></a><span class="co"># another order</span></span>
-<span id="cb673-2"><a href="linear-model-4.html#cb673-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> skill <span class="sc">+</span> hand,</span>
-<span id="cb673-3"><a href="linear-model-4.html#cb673-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
-<span id="cb673-4"><a href="linear-model-4.html#cb673-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">joint_tests</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="linear-model-4.html#cb699-1" tabindex="-1"></a><span class="co"># another order</span></span>
+<span id="cb699-2"><a href="linear-model-4.html#cb699-2" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> skill <span class="sc">+</span> hand,</span>
+<span id="cb699-3"><a href="linear-model-4.html#cb699-3" tabindex="-1"></a>   <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
+<span id="cb699-4"><a href="linear-model-4.html#cb699-4" tabindex="-1"></a>  <span class="fu">joint_tests</span>()</span></code></pre></div>
 <pre><code> model term df1 df2 F.ratio p.value
  skill        1 286   2.287  0.1316
  hand         2 286  68.883  &lt;.0001</code></pre>
 <p>Now, the order of the independent variables doesn’t matter anymore.</p>
 <p>Alternatively,we can also use the <code>aov_ez()</code> function from the <code>afex</code> package.</p>
-<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="linear-model-4.html#cb675-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> skill <span class="sc">*</span> hand,</span>
-<span id="cb675-2"><a href="linear-model-4.html#cb675-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
-<span id="cb675-3"><a href="linear-model-4.html#cb675-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">joint_tests</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="linear-model-4.html#cb701-1" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> skill <span class="sc">*</span> hand,</span>
+<span id="cb701-2"><a href="linear-model-4.html#cb701-2" tabindex="-1"></a>   <span class="at">data =</span> df.poker.unbalanced) <span class="sc">%&gt;%</span> </span>
+<span id="cb701-3"><a href="linear-model-4.html#cb701-3" tabindex="-1"></a>  <span class="fu">joint_tests</span>()</span></code></pre></div>
 <pre><code> model term df1 df2 F.ratio p.value
  skill        1 284   2.954  0.0868
  hand         2 284  68.973  &lt;.0001
  skill:hand   2 284   7.440  0.0007</code></pre>
-<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="linear-model-4.html#cb677-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">aov_ez</span>(<span class="at">id =</span> <span class="st">&quot;participant&quot;</span>,</span>
-<span id="cb677-2"><a href="linear-model-4.html#cb677-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">dv =</span> <span class="st">&quot;balance&quot;</span>,</span>
-<span id="cb677-3"><a href="linear-model-4.html#cb677-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> df.poker.unbalanced,</span>
-<span id="cb677-4"><a href="linear-model-4.html#cb677-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">between =</span> <span class="fu">c</span>(<span class="st">&quot;hand&quot;</span>, <span class="st">&quot;skill&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="linear-model-4.html#cb703-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">aov_ez</span>(<span class="at">id =</span> <span class="st">&quot;participant&quot;</span>,</span>
+<span id="cb703-2"><a href="linear-model-4.html#cb703-2" tabindex="-1"></a>             <span class="at">dv =</span> <span class="st">&quot;balance&quot;</span>,</span>
+<span id="cb703-3"><a href="linear-model-4.html#cb703-3" tabindex="-1"></a>             <span class="at">data =</span> df.poker.unbalanced,</span>
+<span id="cb703-4"><a href="linear-model-4.html#cb703-4" tabindex="-1"></a>             <span class="at">between =</span> <span class="fu">c</span>(<span class="st">&quot;hand&quot;</span>, <span class="st">&quot;skill&quot;</span>))</span></code></pre></div>
 <pre><code>Contrasts set to contr.sum for the following variables: hand, skill</code></pre>
-<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="linear-model-4.html#cb679-1" aria-hidden="true" tabindex="-1"></a>fit<span class="sc">$</span>Anova</span></code></pre></div>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="linear-model-4.html#cb705-1" tabindex="-1"></a>fit<span class="sc">$</span>Anova</span></code></pre></div>
 <pre><code>Anova Table (Type III tests)
 
 Response: dv
@@ -967,11 +985,11 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 </div>
 <div id="interpreting-parameters-very-important" class="section level2 hasAnchor" number="13.4">
 <h2><span class="header-section-number">13.4</span> Interpreting parameters (very important!)<a href="linear-model-4.html#interpreting-parameters-very-important" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="linear-model-4.html#cb681-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> skill <span class="sc">*</span> hand,</span>
-<span id="cb681-2"><a href="linear-model-4.html#cb681-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
-<span id="cb681-3"><a href="linear-model-4.html#cb681-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb681-4"><a href="linear-model-4.html#cb681-4" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb681-5"><a href="linear-model-4.html#cb681-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="linear-model-4.html#cb707-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> skill <span class="sc">*</span> hand,</span>
+<span id="cb707-2"><a href="linear-model-4.html#cb707-2" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
+<span id="cb707-3"><a href="linear-model-4.html#cb707-3" tabindex="-1"></a></span>
+<span id="cb707-4"><a href="linear-model-4.html#cb707-4" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb707-5"><a href="linear-model-4.html#cb707-5" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = balance ~ skill * hand, data = df.poker)
@@ -998,13 +1016,13 @@ F-statistic: 34.99 on 5 and 294 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Important: The t-statistic for <code>skillexpert</code> is not telling us that there is a main effect of skill. Instead, it shows the difference between <code>skill = average</code> and <code>skill = expert</code> when all other predictors in the model are 0!!</p>
 </blockquote>
 <p>Here, this parameter just captures whether there is a significant difference between average and skilled players <strong>when they have a bad hand</strong> (because that’s the reference category here). Let’s check that this is true.</p>
-<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="linear-model-4.html#cb683-1" aria-hidden="true" tabindex="-1"></a>df.poker <span class="sc">%&gt;%</span> </span>
-<span id="cb683-2"><a href="linear-model-4.html#cb683-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(skill, hand) <span class="sc">%&gt;%</span> </span>
-<span id="cb683-3"><a href="linear-model-4.html#cb683-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(balance)) <span class="sc">%&gt;%</span> </span>
-<span id="cb683-4"><a href="linear-model-4.html#cb683-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(hand <span class="sc">==</span> <span class="st">&quot;bad&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb683-5"><a href="linear-model-4.html#cb683-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> skill,</span>
-<span id="cb683-6"><a href="linear-model-4.html#cb683-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> mean) <span class="sc">%&gt;%</span> </span>
-<span id="cb683-7"><a href="linear-model-4.html#cb683-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference =</span> expert <span class="sc">-</span> average)</span></code></pre></div>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="linear-model-4.html#cb709-1" tabindex="-1"></a>df.poker <span class="sc">%&gt;%</span> </span>
+<span id="cb709-2"><a href="linear-model-4.html#cb709-2" tabindex="-1"></a>  <span class="fu">group_by</span>(skill, hand) <span class="sc">%&gt;%</span> </span>
+<span id="cb709-3"><a href="linear-model-4.html#cb709-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(balance)) <span class="sc">%&gt;%</span> </span>
+<span id="cb709-4"><a href="linear-model-4.html#cb709-4" tabindex="-1"></a>  <span class="fu">filter</span>(hand <span class="sc">==</span> <span class="st">&quot;bad&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb709-5"><a href="linear-model-4.html#cb709-5" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> skill,</span>
+<span id="cb709-6"><a href="linear-model-4.html#cb709-6" tabindex="-1"></a>              <span class="at">values_from =</span> mean) <span class="sc">%&gt;%</span> </span>
+<span id="cb709-7"><a href="linear-model-4.html#cb709-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference =</span> expert <span class="sc">-</span> average)</span></code></pre></div>
 <pre><code>`summarise()` has grouped output by &#39;skill&#39;. You can override using the
 `.groups` argument.</code></pre>
 <pre><code># A tibble: 1 × 4
@@ -1016,116 +1034,120 @@ F-statistic: 34.99 on 5 and 294 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div id="linear-contrasts" class="section level2 hasAnchor" number="13.5">
 <h2><span class="header-section-number">13.5</span> Linear contrasts<a href="linear-model-4.html#linear-contrasts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Here is a linear contrast that assumes that there is a linear relationship between the quality of one’s hand, and the final balance.</p>
-<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="linear-model-4.html#cb686-1" aria-hidden="true" tabindex="-1"></a>df.poker <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
-<span id="cb686-2"><a href="linear-model-4.html#cb686-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hand_contrast =</span> <span class="fu">factor</span>(hand,</span>
-<span id="cb686-3"><a href="linear-model-4.html#cb686-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>),</span>
-<span id="cb686-4"><a href="linear-model-4.html#cb686-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">labels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)),</span>
-<span id="cb686-5"><a href="linear-model-4.html#cb686-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">hand_contrast =</span> hand_contrast <span class="sc">%&gt;%</span> </span>
-<span id="cb686-6"><a href="linear-model-4.html#cb686-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">as.character</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb686-7"><a href="linear-model-4.html#cb686-7" aria-hidden="true" tabindex="-1"></a>           <span class="fu">as.numeric</span>())</span>
-<span id="cb686-8"><a href="linear-model-4.html#cb686-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb686-9"><a href="linear-model-4.html#cb686-9" aria-hidden="true" tabindex="-1"></a>fit.contrast <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand_contrast,</span>
-<span id="cb686-10"><a href="linear-model-4.html#cb686-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> df.poker)</span></code></pre></div>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="linear-model-4.html#cb712-1" tabindex="-1"></a>df.poker <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
+<span id="cb712-2"><a href="linear-model-4.html#cb712-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hand_contrast =</span> <span class="fu">factor</span>(hand,</span>
+<span id="cb712-3"><a href="linear-model-4.html#cb712-3" tabindex="-1"></a>                                <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>),</span>
+<span id="cb712-4"><a href="linear-model-4.html#cb712-4" tabindex="-1"></a>                                <span class="at">labels =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)),</span>
+<span id="cb712-5"><a href="linear-model-4.html#cb712-5" tabindex="-1"></a>         <span class="at">hand_contrast =</span> hand_contrast <span class="sc">%&gt;%</span> </span>
+<span id="cb712-6"><a href="linear-model-4.html#cb712-6" tabindex="-1"></a>           <span class="fu">as.character</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb712-7"><a href="linear-model-4.html#cb712-7" tabindex="-1"></a>           <span class="fu">as.numeric</span>())</span>
+<span id="cb712-8"><a href="linear-model-4.html#cb712-8" tabindex="-1"></a></span>
+<span id="cb712-9"><a href="linear-model-4.html#cb712-9" tabindex="-1"></a>fit.contrast <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand_contrast,</span>
+<span id="cb712-10"><a href="linear-model-4.html#cb712-10" tabindex="-1"></a>                  <span class="at">data =</span> df.poker)</span></code></pre></div>
 <p>Here is a visualization of the model prediction together with the residuals.</p>
-<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="linear-model-4.html#cb687-1" aria-hidden="true" tabindex="-1"></a>df.plot <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
-<span id="cb687-2"><a href="linear-model-4.html#cb687-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hand_jitter =</span> hand <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(),</span>
-<span id="cb687-3"><a href="linear-model-4.html#cb687-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">hand_jitter =</span> hand_jitter <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.4</span>, <span class="at">max =</span> <span class="fl">0.4</span>))</span>
-<span id="cb687-4"><a href="linear-model-4.html#cb687-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb687-5"><a href="linear-model-4.html#cb687-5" aria-hidden="true" tabindex="-1"></a>df.tidy <span class="ot">=</span> fit.contrast <span class="sc">%&gt;%</span> </span>
-<span id="cb687-6"><a href="linear-model-4.html#cb687-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb687-7"><a href="linear-model-4.html#cb687-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span> </span>
-<span id="cb687-8"><a href="linear-model-4.html#cb687-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_all</span>(<span class="sc">~</span> <span class="fu">round</span>(., <span class="dv">2</span>))</span>
-<span id="cb687-9"><a href="linear-model-4.html#cb687-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb687-10"><a href="linear-model-4.html#cb687-10" aria-hidden="true" tabindex="-1"></a>df.augment <span class="ot">=</span> fit.contrast <span class="sc">%&gt;%</span> </span>
-<span id="cb687-11"><a href="linear-model-4.html#cb687-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb687-12"><a href="linear-model-4.html#cb687-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb687-13"><a href="linear-model-4.html#cb687-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> <span class="fu">select</span>(hand_jitter))</span>
-<span id="cb687-14"><a href="linear-model-4.html#cb687-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb687-15"><a href="linear-model-4.html#cb687-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
-<span id="cb687-16"><a href="linear-model-4.html#cb687-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hand_jitter,</span>
-<span id="cb687-17"><a href="linear-model-4.html#cb687-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> balance,</span>
-<span id="cb687-18"><a href="linear-model-4.html#cb687-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="fu">as.factor</span>(hand_contrast))) <span class="sc">+</span> </span>
-<span id="cb687-19"><a href="linear-model-4.html#cb687-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb687-20"><a href="linear-model-4.html#cb687-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb687-21"><a href="linear-model-4.html#cb687-21" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.6</span>,</span>
-<span id="cb687-22"><a href="linear-model-4.html#cb687-22" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">1.4</span>,</span>
-<span id="cb687-23"><a href="linear-model-4.html#cb687-23" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]<span class="sc">-</span>df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
-<span id="cb687-24"><a href="linear-model-4.html#cb687-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]<span class="sc">-</span>df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
-<span id="cb687-25"><a href="linear-model-4.html#cb687-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb687-26"><a href="linear-model-4.html#cb687-26" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb687-27"><a href="linear-model-4.html#cb687-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb687-28"><a href="linear-model-4.html#cb687-28" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.6</span>,</span>
-<span id="cb687-29"><a href="linear-model-4.html#cb687-29" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">2.4</span>,</span>
-<span id="cb687-30"><a href="linear-model-4.html#cb687-30" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
-<span id="cb687-31"><a href="linear-model-4.html#cb687-31" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]),</span>
-<span id="cb687-32"><a href="linear-model-4.html#cb687-32" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>,</span>
-<span id="cb687-33"><a href="linear-model-4.html#cb687-33" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb687-34"><a href="linear-model-4.html#cb687-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb687-35"><a href="linear-model-4.html#cb687-35" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">2.6</span>,</span>
-<span id="cb687-36"><a href="linear-model-4.html#cb687-36" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">3.4</span>,</span>
-<span id="cb687-37"><a href="linear-model-4.html#cb687-37" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
-<span id="cb687-38"><a href="linear-model-4.html#cb687-38" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
-<span id="cb687-39"><a href="linear-model-4.html#cb687-39" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;green&quot;</span>,</span>
-<span id="cb687-40"><a href="linear-model-4.html#cb687-40" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb687-41"><a href="linear-model-4.html#cb687-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
-<span id="cb687-42"><a href="linear-model-4.html#cb687-42" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">xend =</span> hand_jitter,</span>
-<span id="cb687-43"><a href="linear-model-4.html#cb687-43" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> balance,</span>
-<span id="cb687-44"><a href="linear-model-4.html#cb687-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
-<span id="cb687-45"><a href="linear-model-4.html#cb687-45" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb687-46"><a href="linear-model-4.html#cb687-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;balance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb687-47"><a href="linear-model-4.html#cb687-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb687-48"><a href="linear-model-4.html#cb687-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb687-49"><a href="linear-model-4.html#cb687-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb687-50"><a href="linear-model-4.html#cb687-50" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="linear-model-4.html#cb713-1" tabindex="-1"></a>df.plot <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
+<span id="cb713-2"><a href="linear-model-4.html#cb713-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hand_jitter =</span> hand <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(),</span>
+<span id="cb713-3"><a href="linear-model-4.html#cb713-3" tabindex="-1"></a>         <span class="at">hand_jitter =</span> hand_jitter <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.4</span>, <span class="at">max =</span> <span class="fl">0.4</span>))</span>
+<span id="cb713-4"><a href="linear-model-4.html#cb713-4" tabindex="-1"></a></span>
+<span id="cb713-5"><a href="linear-model-4.html#cb713-5" tabindex="-1"></a>df.tidy <span class="ot">=</span> fit.contrast <span class="sc">%&gt;%</span> </span>
+<span id="cb713-6"><a href="linear-model-4.html#cb713-6" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb713-7"><a href="linear-model-4.html#cb713-7" tabindex="-1"></a>  <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span> </span>
+<span id="cb713-8"><a href="linear-model-4.html#cb713-8" tabindex="-1"></a>  <span class="fu">mutate_all</span>(<span class="sc">~</span> <span class="fu">round</span>(., <span class="dv">2</span>))</span>
+<span id="cb713-9"><a href="linear-model-4.html#cb713-9" tabindex="-1"></a></span>
+<span id="cb713-10"><a href="linear-model-4.html#cb713-10" tabindex="-1"></a>df.augment <span class="ot">=</span> fit.contrast <span class="sc">%&gt;%</span> </span>
+<span id="cb713-11"><a href="linear-model-4.html#cb713-11" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb713-12"><a href="linear-model-4.html#cb713-12" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb713-13"><a href="linear-model-4.html#cb713-13" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> <span class="fu">select</span>(hand_jitter))</span>
+<span id="cb713-14"><a href="linear-model-4.html#cb713-14" tabindex="-1"></a></span>
+<span id="cb713-15"><a href="linear-model-4.html#cb713-15" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
+<span id="cb713-16"><a href="linear-model-4.html#cb713-16" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hand_jitter,</span>
+<span id="cb713-17"><a href="linear-model-4.html#cb713-17" tabindex="-1"></a>                       <span class="at">y =</span> balance,</span>
+<span id="cb713-18"><a href="linear-model-4.html#cb713-18" tabindex="-1"></a>                       <span class="at">color =</span> <span class="fu">as.factor</span>(hand_contrast))) <span class="sc">+</span> </span>
+<span id="cb713-19"><a href="linear-model-4.html#cb713-19" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb713-20"><a href="linear-model-4.html#cb713-20" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb713-21"><a href="linear-model-4.html#cb713-21" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.6</span>,</span>
+<span id="cb713-22"><a href="linear-model-4.html#cb713-22" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">1.4</span>,</span>
+<span id="cb713-23"><a href="linear-model-4.html#cb713-23" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]<span class="sc">-</span>df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb713-24"><a href="linear-model-4.html#cb713-24" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]<span class="sc">-</span>df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
+<span id="cb713-25"><a href="linear-model-4.html#cb713-25" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb713-26"><a href="linear-model-4.html#cb713-26" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb713-27"><a href="linear-model-4.html#cb713-27" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb713-28"><a href="linear-model-4.html#cb713-28" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.6</span>,</span>
+<span id="cb713-29"><a href="linear-model-4.html#cb713-29" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">2.4</span>,</span>
+<span id="cb713-30"><a href="linear-model-4.html#cb713-30" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
+<span id="cb713-31"><a href="linear-model-4.html#cb713-31" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]),</span>
+<span id="cb713-32"><a href="linear-model-4.html#cb713-32" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>,</span>
+<span id="cb713-33"><a href="linear-model-4.html#cb713-33" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb713-34"><a href="linear-model-4.html#cb713-34" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb713-35"><a href="linear-model-4.html#cb713-35" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">2.6</span>,</span>
+<span id="cb713-36"><a href="linear-model-4.html#cb713-36" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">3.4</span>,</span>
+<span id="cb713-37"><a href="linear-model-4.html#cb713-37" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb713-38"><a href="linear-model-4.html#cb713-38" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
+<span id="cb713-39"><a href="linear-model-4.html#cb713-39" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb713-40"><a href="linear-model-4.html#cb713-40" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb713-41"><a href="linear-model-4.html#cb713-41" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
+<span id="cb713-42"><a href="linear-model-4.html#cb713-42" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">xend =</span> hand_jitter,</span>
+<span id="cb713-43"><a href="linear-model-4.html#cb713-43" tabindex="-1"></a>                   <span class="at">y =</span> balance,</span>
+<span id="cb713-44"><a href="linear-model-4.html#cb713-44" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
+<span id="cb713-45"><a href="linear-model-4.html#cb713-45" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb713-46"><a href="linear-model-4.html#cb713-46" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;balance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb713-47"><a href="linear-model-4.html#cb713-47" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb713-48"><a href="linear-model-4.html#cb713-48" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb713-49"><a href="linear-model-4.html#cb713-49" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb713-50"><a href="linear-model-4.html#cb713-50" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <p><img src="13-linear_model4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <div id="hypothetical-data" class="section level3 hasAnchor" number="13.5.1">
 <h3><span class="header-section-number">13.5.1</span> Hypothetical data<a href="linear-model-4.html#hypothetical-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here is some code to generate a hypothetical developmental data set.</p>
-<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="linear-model-4.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb688-2"><a href="linear-model-4.html#cb688-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb688-3"><a href="linear-model-4.html#cb688-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb688-4"><a href="linear-model-4.html#cb688-4" aria-hidden="true" tabindex="-1"></a><span class="co"># means = c(5, 10, 5)</span></span>
-<span id="cb688-5"><a href="linear-model-4.html#cb688-5" aria-hidden="true" tabindex="-1"></a>means <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">20</span>)</span>
-<span id="cb688-6"><a href="linear-model-4.html#cb688-6" aria-hidden="true" tabindex="-1"></a><span class="co"># means = c(3, 5, 7)</span></span>
-<span id="cb688-7"><a href="linear-model-4.html#cb688-7" aria-hidden="true" tabindex="-1"></a><span class="co"># means = c(3, 7, 12)</span></span>
-<span id="cb688-8"><a href="linear-model-4.html#cb688-8" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">=</span> <span class="dv">2</span></span>
-<span id="cb688-9"><a href="linear-model-4.html#cb688-9" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">20</span></span>
-<span id="cb688-10"><a href="linear-model-4.html#cb688-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb688-11"><a href="linear-model-4.html#cb688-11" aria-hidden="true" tabindex="-1"></a><span class="co"># generate data </span></span>
-<span id="cb688-12"><a href="linear-model-4.html#cb688-12" aria-hidden="true" tabindex="-1"></a>df.development <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb688-13"><a href="linear-model-4.html#cb688-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;3-4&quot;</span>, <span class="st">&quot;5-6&quot;</span>, <span class="st">&quot;7-8&quot;</span>), <span class="at">each =</span> sample_size),</span>
-<span id="cb688-14"><a href="linear-model-4.html#cb688-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">performance =</span> <span class="cn">NA</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb688-15"><a href="linear-model-4.html#cb688-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">performance =</span> <span class="fu">ifelse</span>(group <span class="sc">==</span> <span class="st">&quot;3-4&quot;</span>,</span>
-<span id="cb688-16"><a href="linear-model-4.html#cb688-16" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">rnorm</span>(sample_size,</span>
-<span id="cb688-17"><a href="linear-model-4.html#cb688-17" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">mean =</span> means[<span class="dv">1</span>],</span>
-<span id="cb688-18"><a href="linear-model-4.html#cb688-18" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">sd =</span> sd),</span>
-<span id="cb688-19"><a href="linear-model-4.html#cb688-19" aria-hidden="true" tabindex="-1"></a>                              performance),</span>
-<span id="cb688-20"><a href="linear-model-4.html#cb688-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">performance =</span> <span class="fu">ifelse</span>(group <span class="sc">==</span> <span class="st">&quot;5-6&quot;</span>,</span>
-<span id="cb688-21"><a href="linear-model-4.html#cb688-21" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">rnorm</span>(sample_size,</span>
-<span id="cb688-22"><a href="linear-model-4.html#cb688-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">mean =</span> means[<span class="dv">2</span>],</span>
-<span id="cb688-23"><a href="linear-model-4.html#cb688-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">sd =</span> sd),</span>
-<span id="cb688-24"><a href="linear-model-4.html#cb688-24" aria-hidden="true" tabindex="-1"></a>                              performance),</span>
-<span id="cb688-25"><a href="linear-model-4.html#cb688-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">performance =</span> <span class="fu">ifelse</span>(group <span class="sc">==</span> <span class="st">&quot;7-8&quot;</span>,</span>
-<span id="cb688-26"><a href="linear-model-4.html#cb688-26" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">rnorm</span>(sample_size,</span>
-<span id="cb688-27"><a href="linear-model-4.html#cb688-27" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">mean =</span> means[<span class="dv">3</span>],</span>
-<span id="cb688-28"><a href="linear-model-4.html#cb688-28" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">sd =</span> sd),</span>
-<span id="cb688-29"><a href="linear-model-4.html#cb688-29" aria-hidden="true" tabindex="-1"></a>                              performance),</span>
-<span id="cb688-30"><a href="linear-model-4.html#cb688-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;3-4&quot;</span>, <span class="st">&quot;5-6&quot;</span>, <span class="st">&quot;7-8&quot;</span>)),</span>
-<span id="cb688-31"><a href="linear-model-4.html#cb688-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">group_contrast =</span> group <span class="sc">%&gt;%</span> </span>
-<span id="cb688-32"><a href="linear-model-4.html#cb688-32" aria-hidden="true" tabindex="-1"></a>           <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">-1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;3-4&quot;</span>,</span>
-<span id="cb688-33"><a href="linear-model-4.html#cb688-33" aria-hidden="true" tabindex="-1"></a>                      <span class="st">`</span><span class="at">0</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;5-6&quot;</span>,</span>
-<span id="cb688-34"><a href="linear-model-4.html#cb688-34" aria-hidden="true" tabindex="-1"></a>                      <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;7-8&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb688-35"><a href="linear-model-4.html#cb688-35" aria-hidden="true" tabindex="-1"></a>           <span class="fu">as.character</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb688-36"><a href="linear-model-4.html#cb688-36" aria-hidden="true" tabindex="-1"></a>           <span class="fu">as.numeric</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="linear-model-4.html#cb715-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
+<span id="cb715-2"><a href="linear-model-4.html#cb715-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb715-3"><a href="linear-model-4.html#cb715-3" tabindex="-1"></a></span>
+<span id="cb715-4"><a href="linear-model-4.html#cb715-4" tabindex="-1"></a><span class="co"># means = c(5, 10, 5)</span></span>
+<span id="cb715-5"><a href="linear-model-4.html#cb715-5" tabindex="-1"></a>means <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">20</span>)</span>
+<span id="cb715-6"><a href="linear-model-4.html#cb715-6" tabindex="-1"></a><span class="co"># means = c(3, 5, 7)</span></span>
+<span id="cb715-7"><a href="linear-model-4.html#cb715-7" tabindex="-1"></a><span class="co"># means = c(3, 7, 12)</span></span>
+<span id="cb715-8"><a href="linear-model-4.html#cb715-8" tabindex="-1"></a>sd <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb715-9"><a href="linear-model-4.html#cb715-9" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">20</span></span>
+<span id="cb715-10"><a href="linear-model-4.html#cb715-10" tabindex="-1"></a></span>
+<span id="cb715-11"><a href="linear-model-4.html#cb715-11" tabindex="-1"></a><span class="co"># generate data </span></span>
+<span id="cb715-12"><a href="linear-model-4.html#cb715-12" tabindex="-1"></a>df.development <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb715-13"><a href="linear-model-4.html#cb715-13" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;3-4&quot;</span>, <span class="st">&quot;5-6&quot;</span>, <span class="st">&quot;7-8&quot;</span>), <span class="at">each =</span> sample_size),</span>
+<span id="cb715-14"><a href="linear-model-4.html#cb715-14" tabindex="-1"></a>  <span class="at">performance =</span> <span class="cn">NA</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb715-15"><a href="linear-model-4.html#cb715-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">performance =</span> <span class="fu">ifelse</span>(group <span class="sc">==</span> <span class="st">&quot;3-4&quot;</span>,</span>
+<span id="cb715-16"><a href="linear-model-4.html#cb715-16" tabindex="-1"></a>                              <span class="fu">rnorm</span>(sample_size,</span>
+<span id="cb715-17"><a href="linear-model-4.html#cb715-17" tabindex="-1"></a>                                    <span class="at">mean =</span> means[<span class="dv">1</span>],</span>
+<span id="cb715-18"><a href="linear-model-4.html#cb715-18" tabindex="-1"></a>                                    <span class="at">sd =</span> sd),</span>
+<span id="cb715-19"><a href="linear-model-4.html#cb715-19" tabindex="-1"></a>                              performance),</span>
+<span id="cb715-20"><a href="linear-model-4.html#cb715-20" tabindex="-1"></a>         <span class="at">performance =</span> <span class="fu">ifelse</span>(group <span class="sc">==</span> <span class="st">&quot;5-6&quot;</span>,</span>
+<span id="cb715-21"><a href="linear-model-4.html#cb715-21" tabindex="-1"></a>                              <span class="fu">rnorm</span>(sample_size,</span>
+<span id="cb715-22"><a href="linear-model-4.html#cb715-22" tabindex="-1"></a>                                    <span class="at">mean =</span> means[<span class="dv">2</span>],</span>
+<span id="cb715-23"><a href="linear-model-4.html#cb715-23" tabindex="-1"></a>                                    <span class="at">sd =</span> sd),</span>
+<span id="cb715-24"><a href="linear-model-4.html#cb715-24" tabindex="-1"></a>                              performance),</span>
+<span id="cb715-25"><a href="linear-model-4.html#cb715-25" tabindex="-1"></a>         <span class="at">performance =</span> <span class="fu">ifelse</span>(group <span class="sc">==</span> <span class="st">&quot;7-8&quot;</span>,</span>
+<span id="cb715-26"><a href="linear-model-4.html#cb715-26" tabindex="-1"></a>                              <span class="fu">rnorm</span>(sample_size,</span>
+<span id="cb715-27"><a href="linear-model-4.html#cb715-27" tabindex="-1"></a>                                    <span class="at">mean =</span> means[<span class="dv">3</span>],</span>
+<span id="cb715-28"><a href="linear-model-4.html#cb715-28" tabindex="-1"></a>                                    <span class="at">sd =</span> sd),</span>
+<span id="cb715-29"><a href="linear-model-4.html#cb715-29" tabindex="-1"></a>                              performance),</span>
+<span id="cb715-30"><a href="linear-model-4.html#cb715-30" tabindex="-1"></a>         <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;3-4&quot;</span>, <span class="st">&quot;5-6&quot;</span>, <span class="st">&quot;7-8&quot;</span>)),</span>
+<span id="cb715-31"><a href="linear-model-4.html#cb715-31" tabindex="-1"></a>         <span class="at">group_contrast =</span> group <span class="sc">%&gt;%</span> </span>
+<span id="cb715-32"><a href="linear-model-4.html#cb715-32" tabindex="-1"></a>           <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">-1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;3-4&quot;</span>,</span>
+<span id="cb715-33"><a href="linear-model-4.html#cb715-33" tabindex="-1"></a>                      <span class="st">`</span><span class="at">0</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;5-6&quot;</span>,</span>
+<span id="cb715-34"><a href="linear-model-4.html#cb715-34" tabindex="-1"></a>                      <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;7-8&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb715-35"><a href="linear-model-4.html#cb715-35" tabindex="-1"></a>           <span class="fu">as.character</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb715-36"><a href="linear-model-4.html#cb715-36" tabindex="-1"></a>           <span class="fu">as.numeric</span>())</span></code></pre></div>
 <p>Let’s define a linear contrast using the <code>emmeans</code> package, and test whether it’s significant.</p>
-<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="linear-model-4.html#cb689-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> performance <span class="sc">~</span> group,</span>
-<span id="cb689-2"><a href="linear-model-4.html#cb689-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.development)</span>
-<span id="cb689-3"><a href="linear-model-4.html#cb689-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb689-4"><a href="linear-model-4.html#cb689-4" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb689-5"><a href="linear-model-4.html#cb689-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(<span class="st">&quot;group&quot;</span>,</span>
-<span id="cb689-6"><a href="linear-model-4.html#cb689-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">contr =</span> <span class="fu">list</span>(<span class="at">linear =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)),</span>
-<span id="cb689-7"><a href="linear-model-4.html#cb689-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb689-8"><a href="linear-model-4.html#cb689-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="linear-model-4.html#cb716-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> performance <span class="sc">~</span> group,</span>
+<span id="cb716-2"><a href="linear-model-4.html#cb716-2" tabindex="-1"></a>         <span class="at">data =</span> df.development)</span>
+<span id="cb716-3"><a href="linear-model-4.html#cb716-3" tabindex="-1"></a></span>
+<span id="cb716-4"><a href="linear-model-4.html#cb716-4" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb716-5"><a href="linear-model-4.html#cb716-5" tabindex="-1"></a>  <span class="fu">emmeans</span>(<span class="st">&quot;group&quot;</span>,</span>
+<span id="cb716-6"><a href="linear-model-4.html#cb716-6" tabindex="-1"></a>          <span class="at">contr =</span> <span class="fu">list</span>(<span class="at">linear =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)),</span>
+<span id="cb716-7"><a href="linear-model-4.html#cb716-7" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb716-8"><a href="linear-model-4.html#cb716-8" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
 <pre><code> contrast estimate    SE df t.ratio p.value
  linear       8.45 0.274 57  30.856  &lt;.0001</code></pre>
 <p>Yes, we see that there is a significant positive linear contrast with an estimate of 8.45. This means, it predicts a difference of 8.45 in performance between each of the consecutive age groups. For a visualization of the predictions of this model, see Figure @ref{fig:linear-contrast-model}.</p>
@@ -1133,93 +1155,97 @@ F-statistic: 34.99 on 5 and 294 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div id="visualization-6" class="section level3 hasAnchor" number="13.5.2">
 <h3><span class="header-section-number">13.5.2</span> Visualization<a href="linear-model-4.html#visualization-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Total variance:</p>
-<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="linear-model-4.html#cb691-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb691-2"><a href="linear-model-4.html#cb691-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb691-3"><a href="linear-model-4.html#cb691-3" aria-hidden="true" tabindex="-1"></a>fit_c <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> performance <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb691-4"><a href="linear-model-4.html#cb691-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> df.development)</span>
-<span id="cb691-5"><a href="linear-model-4.html#cb691-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb691-6"><a href="linear-model-4.html#cb691-6" aria-hidden="true" tabindex="-1"></a>df.plot <span class="ot">=</span> df.development <span class="sc">%&gt;%</span> </span>
-<span id="cb691-7"><a href="linear-model-4.html#cb691-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group_jitter =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(),</span>
-<span id="cb691-8"><a href="linear-model-4.html#cb691-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.25</span>,</span>
-<span id="cb691-9"><a href="linear-model-4.html#cb691-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">max =</span> <span class="fl">0.25</span>))</span>
-<span id="cb691-10"><a href="linear-model-4.html#cb691-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb691-11"><a href="linear-model-4.html#cb691-11" aria-hidden="true" tabindex="-1"></a>df.augment <span class="ot">=</span> fit_c <span class="sc">%&gt;%</span> </span>
-<span id="cb691-12"><a href="linear-model-4.html#cb691-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb691-13"><a href="linear-model-4.html#cb691-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb691-14"><a href="linear-model-4.html#cb691-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> <span class="fu">select</span>(group, group_jitter))</span>
-<span id="cb691-15"><a href="linear-model-4.html#cb691-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb691-16"><a href="linear-model-4.html#cb691-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot, </span>
-<span id="cb691-17"><a href="linear-model-4.html#cb691-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group_jitter,</span>
-<span id="cb691-18"><a href="linear-model-4.html#cb691-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> performance,</span>
-<span id="cb691-19"><a href="linear-model-4.html#cb691-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> group)) <span class="sc">+</span> </span>
-<span id="cb691-20"><a href="linear-model-4.html#cb691-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(df.development<span class="sc">$</span>performance)) <span class="sc">+</span></span>
-<span id="cb691-21"><a href="linear-model-4.html#cb691-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb691-22"><a href="linear-model-4.html#cb691-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
-<span id="cb691-23"><a href="linear-model-4.html#cb691-23" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">xend =</span> group_jitter,</span>
-<span id="cb691-24"><a href="linear-model-4.html#cb691-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
-<span id="cb691-25"><a href="linear-model-4.html#cb691-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb691-26"><a href="linear-model-4.html#cb691-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;performance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb691-27"><a href="linear-model-4.html#cb691-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb691-28"><a href="linear-model-4.html#cb691-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb691-29"><a href="linear-model-4.html#cb691-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="linear-model-4.html#cb718-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb718-2"><a href="linear-model-4.html#cb718-2" tabindex="-1"></a></span>
+<span id="cb718-3"><a href="linear-model-4.html#cb718-3" tabindex="-1"></a>fit_c <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> performance <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb718-4"><a href="linear-model-4.html#cb718-4" tabindex="-1"></a>           <span class="at">data =</span> df.development)</span>
+<span id="cb718-5"><a href="linear-model-4.html#cb718-5" tabindex="-1"></a></span>
+<span id="cb718-6"><a href="linear-model-4.html#cb718-6" tabindex="-1"></a>df.plot <span class="ot">=</span> df.development <span class="sc">%&gt;%</span> </span>
+<span id="cb718-7"><a href="linear-model-4.html#cb718-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group_jitter =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(),</span>
+<span id="cb718-8"><a href="linear-model-4.html#cb718-8" tabindex="-1"></a>                                  <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.25</span>,</span>
+<span id="cb718-9"><a href="linear-model-4.html#cb718-9" tabindex="-1"></a>                                  <span class="at">max =</span> <span class="fl">0.25</span>))</span>
+<span id="cb718-10"><a href="linear-model-4.html#cb718-10" tabindex="-1"></a></span>
+<span id="cb718-11"><a href="linear-model-4.html#cb718-11" tabindex="-1"></a>df.augment <span class="ot">=</span> fit_c <span class="sc">%&gt;%</span> </span>
+<span id="cb718-12"><a href="linear-model-4.html#cb718-12" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb718-13"><a href="linear-model-4.html#cb718-13" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb718-14"><a href="linear-model-4.html#cb718-14" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> <span class="fu">select</span>(group, group_jitter))</span>
+<span id="cb718-15"><a href="linear-model-4.html#cb718-15" tabindex="-1"></a></span>
+<span id="cb718-16"><a href="linear-model-4.html#cb718-16" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot, </span>
+<span id="cb718-17"><a href="linear-model-4.html#cb718-17" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group_jitter,</span>
+<span id="cb718-18"><a href="linear-model-4.html#cb718-18" tabindex="-1"></a>                       <span class="at">y =</span> performance,</span>
+<span id="cb718-19"><a href="linear-model-4.html#cb718-19" tabindex="-1"></a>                       <span class="at">fill =</span> group)) <span class="sc">+</span> </span>
+<span id="cb718-20"><a href="linear-model-4.html#cb718-20" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(df.development<span class="sc">$</span>performance)) <span class="sc">+</span></span>
+<span id="cb718-21"><a href="linear-model-4.html#cb718-21" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb718-22"><a href="linear-model-4.html#cb718-22" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
+<span id="cb718-23"><a href="linear-model-4.html#cb718-23" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">xend =</span> group_jitter,</span>
+<span id="cb718-24"><a href="linear-model-4.html#cb718-24" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
+<span id="cb718-25"><a href="linear-model-4.html#cb718-25" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb718-26"><a href="linear-model-4.html#cb718-26" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;performance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb718-27"><a href="linear-model-4.html#cb718-27" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb718-28"><a href="linear-model-4.html#cb718-28" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb718-29"><a href="linear-model-4.html#cb718-29" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="13-linear_model4_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>With contrast</p>
-<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="linear-model-4.html#cb692-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb692-2"><a href="linear-model-4.html#cb692-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb692-3"><a href="linear-model-4.html#cb692-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-4"><a href="linear-model-4.html#cb692-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> performance <span class="sc">~</span> group_contrast,</span>
-<span id="cb692-5"><a href="linear-model-4.html#cb692-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.development)</span>
-<span id="cb692-6"><a href="linear-model-4.html#cb692-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-7"><a href="linear-model-4.html#cb692-7" aria-hidden="true" tabindex="-1"></a>df.plot <span class="ot">=</span> df.development <span class="sc">%&gt;%</span> </span>
-<span id="cb692-8"><a href="linear-model-4.html#cb692-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group_jitter =</span> group <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(),</span>
-<span id="cb692-9"><a href="linear-model-4.html#cb692-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">group_jitter =</span> group_jitter <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.4</span>, <span class="at">max =</span> <span class="fl">0.4</span>))</span>
-<span id="cb692-10"><a href="linear-model-4.html#cb692-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-11"><a href="linear-model-4.html#cb692-11" aria-hidden="true" tabindex="-1"></a>df.tidy <span class="ot">=</span> fit <span class="sc">%&gt;%</span> </span>
-<span id="cb692-12"><a href="linear-model-4.html#cb692-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb692-13"><a href="linear-model-4.html#cb692-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> </span>
-<span id="cb692-14"><a href="linear-model-4.html#cb692-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">round</span>(. , <span class="dv">2</span>)))</span>
-<span id="cb692-15"><a href="linear-model-4.html#cb692-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-16"><a href="linear-model-4.html#cb692-16" aria-hidden="true" tabindex="-1"></a>df.augment <span class="ot">=</span> fit <span class="sc">%&gt;%</span> </span>
-<span id="cb692-17"><a href="linear-model-4.html#cb692-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb692-18"><a href="linear-model-4.html#cb692-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb692-19"><a href="linear-model-4.html#cb692-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> <span class="fu">select</span>(group_jitter))</span>
-<span id="cb692-20"><a href="linear-model-4.html#cb692-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-21"><a href="linear-model-4.html#cb692-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
-<span id="cb692-22"><a href="linear-model-4.html#cb692-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group_jitter,</span>
-<span id="cb692-23"><a href="linear-model-4.html#cb692-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> performance,</span>
-<span id="cb692-24"><a href="linear-model-4.html#cb692-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="fu">as.factor</span>(group_contrast))) <span class="sc">+</span> </span>
-<span id="cb692-25"><a href="linear-model-4.html#cb692-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb692-26"><a href="linear-model-4.html#cb692-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb692-27"><a href="linear-model-4.html#cb692-27" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.6</span>,</span>
-<span id="cb692-28"><a href="linear-model-4.html#cb692-28" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">1.4</span>,</span>
-<span id="cb692-29"><a href="linear-model-4.html#cb692-29" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]<span class="sc">-</span>df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
-<span id="cb692-30"><a href="linear-model-4.html#cb692-30" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]<span class="sc">-</span>df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
-<span id="cb692-31"><a href="linear-model-4.html#cb692-31" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb692-32"><a href="linear-model-4.html#cb692-32" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb692-33"><a href="linear-model-4.html#cb692-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb692-34"><a href="linear-model-4.html#cb692-34" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.6</span>,</span>
-<span id="cb692-35"><a href="linear-model-4.html#cb692-35" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">2.4</span>,</span>
-<span id="cb692-36"><a href="linear-model-4.html#cb692-36" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
-<span id="cb692-37"><a href="linear-model-4.html#cb692-37" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]),</span>
-<span id="cb692-38"><a href="linear-model-4.html#cb692-38" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>,</span>
-<span id="cb692-39"><a href="linear-model-4.html#cb692-39" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb692-40"><a href="linear-model-4.html#cb692-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb692-41"><a href="linear-model-4.html#cb692-41" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">2.6</span>,</span>
-<span id="cb692-42"><a href="linear-model-4.html#cb692-42" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">3.4</span>,</span>
-<span id="cb692-43"><a href="linear-model-4.html#cb692-43" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
-<span id="cb692-44"><a href="linear-model-4.html#cb692-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
-<span id="cb692-45"><a href="linear-model-4.html#cb692-45" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;green&quot;</span>,</span>
-<span id="cb692-46"><a href="linear-model-4.html#cb692-46" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb692-47"><a href="linear-model-4.html#cb692-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
-<span id="cb692-48"><a href="linear-model-4.html#cb692-48" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">xend =</span> group_jitter,</span>
-<span id="cb692-49"><a href="linear-model-4.html#cb692-49" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> performance,</span>
-<span id="cb692-50"><a href="linear-model-4.html#cb692-50" aria-hidden="true" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
-<span id="cb692-51"><a href="linear-model-4.html#cb692-51" aria-hidden="true" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb692-52"><a href="linear-model-4.html#cb692-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;performance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb692-53"><a href="linear-model-4.html#cb692-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb692-54"><a href="linear-model-4.html#cb692-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">levels</span>(df.development<span class="sc">$</span>group)) <span class="sc">+</span></span>
-<span id="cb692-55"><a href="linear-model-4.html#cb692-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb692-56"><a href="linear-model-4.html#cb692-56" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="linear-model-4.html#cb719-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
+<span id="cb719-2"><a href="linear-model-4.html#cb719-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb719-3"><a href="linear-model-4.html#cb719-3" tabindex="-1"></a></span>
+<span id="cb719-4"><a href="linear-model-4.html#cb719-4" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> performance <span class="sc">~</span> group_contrast,</span>
+<span id="cb719-5"><a href="linear-model-4.html#cb719-5" tabindex="-1"></a>         <span class="at">data =</span> df.development)</span>
+<span id="cb719-6"><a href="linear-model-4.html#cb719-6" tabindex="-1"></a></span>
+<span id="cb719-7"><a href="linear-model-4.html#cb719-7" tabindex="-1"></a>df.plot <span class="ot">=</span> df.development <span class="sc">%&gt;%</span> </span>
+<span id="cb719-8"><a href="linear-model-4.html#cb719-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group_jitter =</span> group <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(),</span>
+<span id="cb719-9"><a href="linear-model-4.html#cb719-9" tabindex="-1"></a>         <span class="at">group_jitter =</span> group_jitter <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.4</span>, <span class="at">max =</span> <span class="fl">0.4</span>))</span>
+<span id="cb719-10"><a href="linear-model-4.html#cb719-10" tabindex="-1"></a></span>
+<span id="cb719-11"><a href="linear-model-4.html#cb719-11" tabindex="-1"></a>df.tidy <span class="ot">=</span> fit <span class="sc">%&gt;%</span> </span>
+<span id="cb719-12"><a href="linear-model-4.html#cb719-12" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb719-13"><a href="linear-model-4.html#cb719-13" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> </span>
+<span id="cb719-14"><a href="linear-model-4.html#cb719-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">round</span>(. , <span class="dv">2</span>)))</span></code></pre></div>
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `across(.fns = ~round(., 2))`.
+Caused by warning:
+! Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.
+ℹ Please supply `.cols` instead.</code></pre>
+<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="linear-model-4.html#cb721-1" tabindex="-1"></a>df.augment <span class="ot">=</span> fit <span class="sc">%&gt;%</span> </span>
+<span id="cb721-2"><a href="linear-model-4.html#cb721-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb721-3"><a href="linear-model-4.html#cb721-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb721-4"><a href="linear-model-4.html#cb721-4" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> <span class="fu">select</span>(group_jitter))</span>
+<span id="cb721-5"><a href="linear-model-4.html#cb721-5" tabindex="-1"></a></span>
+<span id="cb721-6"><a href="linear-model-4.html#cb721-6" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
+<span id="cb721-7"><a href="linear-model-4.html#cb721-7" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group_jitter,</span>
+<span id="cb721-8"><a href="linear-model-4.html#cb721-8" tabindex="-1"></a>                       <span class="at">y =</span> performance,</span>
+<span id="cb721-9"><a href="linear-model-4.html#cb721-9" tabindex="-1"></a>                       <span class="at">color =</span> <span class="fu">as.factor</span>(group_contrast))) <span class="sc">+</span> </span>
+<span id="cb721-10"><a href="linear-model-4.html#cb721-10" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb721-11"><a href="linear-model-4.html#cb721-11" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb721-12"><a href="linear-model-4.html#cb721-12" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.6</span>,</span>
+<span id="cb721-13"><a href="linear-model-4.html#cb721-13" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">1.4</span>,</span>
+<span id="cb721-14"><a href="linear-model-4.html#cb721-14" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]<span class="sc">-</span>df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb721-15"><a href="linear-model-4.html#cb721-15" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]<span class="sc">-</span>df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
+<span id="cb721-16"><a href="linear-model-4.html#cb721-16" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb721-17"><a href="linear-model-4.html#cb721-17" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb721-18"><a href="linear-model-4.html#cb721-18" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb721-19"><a href="linear-model-4.html#cb721-19" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.6</span>,</span>
+<span id="cb721-20"><a href="linear-model-4.html#cb721-20" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">2.4</span>,</span>
+<span id="cb721-21"><a href="linear-model-4.html#cb721-21" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
+<span id="cb721-22"><a href="linear-model-4.html#cb721-22" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]),</span>
+<span id="cb721-23"><a href="linear-model-4.html#cb721-23" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>,</span>
+<span id="cb721-24"><a href="linear-model-4.html#cb721-24" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb721-25"><a href="linear-model-4.html#cb721-25" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb721-26"><a href="linear-model-4.html#cb721-26" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">2.6</span>,</span>
+<span id="cb721-27"><a href="linear-model-4.html#cb721-27" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">3.4</span>,</span>
+<span id="cb721-28"><a href="linear-model-4.html#cb721-28" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb721-29"><a href="linear-model-4.html#cb721-29" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
+<span id="cb721-30"><a href="linear-model-4.html#cb721-30" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb721-31"><a href="linear-model-4.html#cb721-31" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb721-32"><a href="linear-model-4.html#cb721-32" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
+<span id="cb721-33"><a href="linear-model-4.html#cb721-33" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">xend =</span> group_jitter,</span>
+<span id="cb721-34"><a href="linear-model-4.html#cb721-34" tabindex="-1"></a>                   <span class="at">y =</span> performance,</span>
+<span id="cb721-35"><a href="linear-model-4.html#cb721-35" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
+<span id="cb721-36"><a href="linear-model-4.html#cb721-36" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb721-37"><a href="linear-model-4.html#cb721-37" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;performance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb721-38"><a href="linear-model-4.html#cb721-38" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb721-39"><a href="linear-model-4.html#cb721-39" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">levels</span>(df.development<span class="sc">$</span>group)) <span class="sc">+</span></span>
+<span id="cb721-40"><a href="linear-model-4.html#cb721-40" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb721-41"><a href="linear-model-4.html#cb721-41" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:linear-contrast-model"></span>
 <img src="13-linear_model4_files/figure-html/linear-contrast-model-1.png" alt="Predictions of the linear contrast model" width="672" />
 <p class="caption">
@@ -1227,35 +1253,35 @@ Figure 13.1: Predictions of the linear contrast model
 </p>
 </div>
 <p>Results figure</p>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="linear-model-4.html#cb693-1" aria-hidden="true" tabindex="-1"></a>df.development <span class="sc">%&gt;%</span> </span>
-<span id="cb693-2"><a href="linear-model-4.html#cb693-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group,</span>
-<span id="cb693-3"><a href="linear-model-4.html#cb693-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> performance)) <span class="sc">+</span> </span>
-<span id="cb693-4"><a href="linear-model-4.html#cb693-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, </span>
-<span id="cb693-5"><a href="linear-model-4.html#cb693-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb693-6"><a href="linear-model-4.html#cb693-6" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">height =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
-<span id="cb693-7"><a href="linear-model-4.html#cb693-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>,</span>
-<span id="cb693-8"><a href="linear-model-4.html#cb693-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">21</span>, </span>
-<span id="cb693-9"><a href="linear-model-4.html#cb693-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>,</span>
-<span id="cb693-10"><a href="linear-model-4.html#cb693-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="linear-model-4.html#cb722-1" tabindex="-1"></a>df.development <span class="sc">%&gt;%</span> </span>
+<span id="cb722-2"><a href="linear-model-4.html#cb722-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group,</span>
+<span id="cb722-3"><a href="linear-model-4.html#cb722-3" tabindex="-1"></a>                       <span class="at">y =</span> performance)) <span class="sc">+</span> </span>
+<span id="cb722-4"><a href="linear-model-4.html#cb722-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, </span>
+<span id="cb722-5"><a href="linear-model-4.html#cb722-5" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb722-6"><a href="linear-model-4.html#cb722-6" tabindex="-1"></a>                                        <span class="at">height =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb722-7"><a href="linear-model-4.html#cb722-7" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>,</span>
+<span id="cb722-8"><a href="linear-model-4.html#cb722-8" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">21</span>, </span>
+<span id="cb722-9"><a href="linear-model-4.html#cb722-9" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;white&quot;</span>,</span>
+<span id="cb722-10"><a href="linear-model-4.html#cb722-10" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">0.75</span>)</span></code></pre></div>
 <p><img src="13-linear_model4_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Here we test some more specific hypotheses: the the two youngest groups of children are different from the oldest group, and that the 3 year olds are different from the 5 year olds.</p>
-<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="linear-model-4.html#cb694-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  fit the linear model </span></span>
-<span id="cb694-2"><a href="linear-model-4.html#cb694-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> performance <span class="sc">~</span> group,</span>
-<span id="cb694-3"><a href="linear-model-4.html#cb694-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.development)</span>
-<span id="cb694-4"><a href="linear-model-4.html#cb694-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb694-5"><a href="linear-model-4.html#cb694-5" aria-hidden="true" tabindex="-1"></a><span class="co"># check factor levels </span></span>
-<span id="cb694-6"><a href="linear-model-4.html#cb694-6" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(df.development<span class="sc">$</span>group)</span></code></pre></div>
+<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="linear-model-4.html#cb723-1" tabindex="-1"></a><span class="co">#  fit the linear model </span></span>
+<span id="cb723-2"><a href="linear-model-4.html#cb723-2" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> performance <span class="sc">~</span> group,</span>
+<span id="cb723-3"><a href="linear-model-4.html#cb723-3" tabindex="-1"></a>         <span class="at">data =</span> df.development)</span>
+<span id="cb723-4"><a href="linear-model-4.html#cb723-4" tabindex="-1"></a></span>
+<span id="cb723-5"><a href="linear-model-4.html#cb723-5" tabindex="-1"></a><span class="co"># check factor levels </span></span>
+<span id="cb723-6"><a href="linear-model-4.html#cb723-6" tabindex="-1"></a><span class="fu">levels</span>(df.development<span class="sc">$</span>group)</span></code></pre></div>
 <pre><code>[1] &quot;3-4&quot; &quot;5-6&quot; &quot;7-8&quot;</code></pre>
-<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="linear-model-4.html#cb696-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define the contrasts of interest </span></span>
-<span id="cb696-2"><a href="linear-model-4.html#cb696-2" aria-hidden="true" tabindex="-1"></a>contrasts <span class="ot">=</span> <span class="fu">list</span>(<span class="at">young_vs_old =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">1</span>),</span>
-<span id="cb696-3"><a href="linear-model-4.html#cb696-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">three_vs_five =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">0</span>))</span>
-<span id="cb696-4"><a href="linear-model-4.html#cb696-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb696-5"><a href="linear-model-4.html#cb696-5" aria-hidden="true" tabindex="-1"></a><span class="co"># compute significance test on contrasts </span></span>
-<span id="cb696-6"><a href="linear-model-4.html#cb696-6" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb696-7"><a href="linear-model-4.html#cb696-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(<span class="st">&quot;group&quot;</span>,</span>
-<span id="cb696-8"><a href="linear-model-4.html#cb696-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">contr =</span> contrasts,</span>
-<span id="cb696-9"><a href="linear-model-4.html#cb696-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb696-10"><a href="linear-model-4.html#cb696-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="linear-model-4.html#cb725-1" tabindex="-1"></a><span class="co"># define the contrasts of interest </span></span>
+<span id="cb725-2"><a href="linear-model-4.html#cb725-2" tabindex="-1"></a>contrasts <span class="ot">=</span> <span class="fu">list</span>(<span class="at">young_vs_old =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">1</span>),</span>
+<span id="cb725-3"><a href="linear-model-4.html#cb725-3" tabindex="-1"></a>                 <span class="at">three_vs_five =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="dv">0</span>))</span>
+<span id="cb725-4"><a href="linear-model-4.html#cb725-4" tabindex="-1"></a></span>
+<span id="cb725-5"><a href="linear-model-4.html#cb725-5" tabindex="-1"></a><span class="co"># compute significance test on contrasts </span></span>
+<span id="cb725-6"><a href="linear-model-4.html#cb725-6" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb725-7"><a href="linear-model-4.html#cb725-7" tabindex="-1"></a>  <span class="fu">emmeans</span>(<span class="st">&quot;group&quot;</span>,</span>
+<span id="cb725-8"><a href="linear-model-4.html#cb725-8" tabindex="-1"></a>          <span class="at">contr =</span> contrasts,</span>
+<span id="cb725-9"><a href="linear-model-4.html#cb725-9" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb725-10"><a href="linear-model-4.html#cb725-10" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
 <pre><code> contrast      estimate    SE df t.ratio p.value
  young_vs_old    16.094 0.474 57  33.936  &lt;.0001
  three_vs_five    0.803 0.274 57   2.933  0.0097
@@ -1265,14 +1291,14 @@ P value adjustment: bonferroni method for 2 tests </code></pre>
 <div id="post-hoc-tests" class="section level3 hasAnchor" number="13.5.3">
 <h3><span class="header-section-number">13.5.3</span> Post-hoc tests<a href="linear-model-4.html#post-hoc-tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Post-hoc tests for a single predictor (using the poker data set).</p>
-<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb698-1"><a href="linear-model-4.html#cb698-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand,</span>
-<span id="cb698-2"><a href="linear-model-4.html#cb698-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
-<span id="cb698-3"><a href="linear-model-4.html#cb698-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb698-4"><a href="linear-model-4.html#cb698-4" aria-hidden="true" tabindex="-1"></a><span class="co"># post hoc tests </span></span>
-<span id="cb698-5"><a href="linear-model-4.html#cb698-5" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb698-6"><a href="linear-model-4.html#cb698-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> hand,</span>
-<span id="cb698-7"><a href="linear-model-4.html#cb698-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb698-8"><a href="linear-model-4.html#cb698-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="linear-model-4.html#cb727-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand,</span>
+<span id="cb727-2"><a href="linear-model-4.html#cb727-2" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
+<span id="cb727-3"><a href="linear-model-4.html#cb727-3" tabindex="-1"></a></span>
+<span id="cb727-4"><a href="linear-model-4.html#cb727-4" tabindex="-1"></a><span class="co"># post hoc tests </span></span>
+<span id="cb727-5"><a href="linear-model-4.html#cb727-5" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb727-6"><a href="linear-model-4.html#cb727-6" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> hand,</span>
+<span id="cb727-7"><a href="linear-model-4.html#cb727-7" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb727-8"><a href="linear-model-4.html#cb727-8" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
 <pre><code> contrast       estimate    SE  df t.ratio p.value
  bad - neutral     -4.41 0.581 297  -7.576  &lt;.0001
  bad - good        -7.08 0.581 297 -12.185  &lt;.0001
@@ -1280,15 +1306,15 @@ P value adjustment: bonferroni method for 2 tests </code></pre>
 
 P value adjustment: bonferroni method for 3 tests </code></pre>
 <p>Post-hoc tests for two predictors (:</p>
-<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="linear-model-4.html#cb700-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model</span></span>
-<span id="cb700-2"><a href="linear-model-4.html#cb700-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand <span class="sc">+</span> skill,</span>
-<span id="cb700-3"><a href="linear-model-4.html#cb700-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
-<span id="cb700-4"><a href="linear-model-4.html#cb700-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb700-5"><a href="linear-model-4.html#cb700-5" aria-hidden="true" tabindex="-1"></a><span class="co"># post hoc tests </span></span>
-<span id="cb700-6"><a href="linear-model-4.html#cb700-6" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb700-7"><a href="linear-model-4.html#cb700-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> hand <span class="sc">+</span> skill,</span>
-<span id="cb700-8"><a href="linear-model-4.html#cb700-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb700-9"><a href="linear-model-4.html#cb700-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="linear-model-4.html#cb729-1" tabindex="-1"></a><span class="co"># fit the model</span></span>
+<span id="cb729-2"><a href="linear-model-4.html#cb729-2" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand <span class="sc">+</span> skill,</span>
+<span id="cb729-3"><a href="linear-model-4.html#cb729-3" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
+<span id="cb729-4"><a href="linear-model-4.html#cb729-4" tabindex="-1"></a></span>
+<span id="cb729-5"><a href="linear-model-4.html#cb729-5" tabindex="-1"></a><span class="co"># post hoc tests </span></span>
+<span id="cb729-6"><a href="linear-model-4.html#cb729-6" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb729-7"><a href="linear-model-4.html#cb729-7" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> hand <span class="sc">+</span> skill,</span>
+<span id="cb729-8"><a href="linear-model-4.html#cb729-8" tabindex="-1"></a>          <span class="at">adjust =</span> <span class="st">&quot;bonferroni&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb729-9"><a href="linear-model-4.html#cb729-9" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
 <pre><code> contrast                         estimate    SE  df t.ratio p.value
  bad average - neutral average      -4.405 0.580 296  -7.593  &lt;.0001
  bad average - good average         -7.085 0.580 296 -12.212  &lt;.0001
@@ -1307,23 +1333,23 @@ P value adjustment: bonferroni method for 3 tests </code></pre>
  neutral expert - good expert       -2.680 0.580 296  -4.619  0.0001
 
 P value adjustment: bonferroni method for 15 tests </code></pre>
-<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="linear-model-4.html#cb702-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand,</span>
-<span id="cb702-2"><a href="linear-model-4.html#cb702-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
-<span id="cb702-3"><a href="linear-model-4.html#cb702-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb702-4"><a href="linear-model-4.html#cb702-4" aria-hidden="true" tabindex="-1"></a><span class="co"># comparing each to the mean </span></span>
-<span id="cb702-5"><a href="linear-model-4.html#cb702-5" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb702-6"><a href="linear-model-4.html#cb702-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(eff <span class="sc">~</span> hand) <span class="sc">%&gt;%</span> </span>
-<span id="cb702-7"><a href="linear-model-4.html#cb702-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="linear-model-4.html#cb731-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand,</span>
+<span id="cb731-2"><a href="linear-model-4.html#cb731-2" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
+<span id="cb731-3"><a href="linear-model-4.html#cb731-3" tabindex="-1"></a></span>
+<span id="cb731-4"><a href="linear-model-4.html#cb731-4" tabindex="-1"></a><span class="co"># comparing each to the mean </span></span>
+<span id="cb731-5"><a href="linear-model-4.html#cb731-5" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb731-6"><a href="linear-model-4.html#cb731-6" tabindex="-1"></a>  <span class="fu">emmeans</span>(eff <span class="sc">~</span> hand) <span class="sc">%&gt;%</span> </span>
+<span id="cb731-7"><a href="linear-model-4.html#cb731-7" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
 <pre><code> contrast       estimate    SE  df t.ratio p.value
  bad effect       -3.830 0.336 297 -11.409  &lt;.0001
  neutral effect    0.575 0.336 297   1.713  0.0877
  good effect       3.255 0.336 297   9.696  &lt;.0001
 
 P value adjustment: fdr method for 3 tests </code></pre>
-<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="linear-model-4.html#cb704-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one vs. all others </span></span>
-<span id="cb704-2"><a href="linear-model-4.html#cb704-2" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb704-3"><a href="linear-model-4.html#cb704-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(del.eff <span class="sc">~</span> hand) <span class="sc">%&gt;%</span> </span>
-<span id="cb704-4"><a href="linear-model-4.html#cb704-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="linear-model-4.html#cb733-1" tabindex="-1"></a><span class="co"># one vs. all others </span></span>
+<span id="cb733-2"><a href="linear-model-4.html#cb733-2" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb733-3"><a href="linear-model-4.html#cb733-3" tabindex="-1"></a>  <span class="fu">emmeans</span>(del.eff <span class="sc">~</span> hand) <span class="sc">%&gt;%</span> </span>
+<span id="cb733-4"><a href="linear-model-4.html#cb733-4" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">&quot;contrasts&quot;</span>)</span></code></pre></div>
 <pre><code> contrast       estimate    SE  df t.ratio p.value
  bad effect       -5.745 0.504 297 -11.409  &lt;.0001
  neutral effect    0.863 0.504 297   1.713  0.0877
@@ -1333,11 +1359,11 @@ P value adjustment: fdr method for 3 tests </code></pre>
 </div>
 <div id="understanding-dummy-coding" class="section level3 hasAnchor" number="13.5.4">
 <h3><span class="header-section-number">13.5.4</span> Understanding dummy coding<a href="linear-model-4.html#understanding-dummy-coding" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="linear-model-4.html#cb706-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> hand,</span>
-<span id="cb706-2"><a href="linear-model-4.html#cb706-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
-<span id="cb706-3"><a href="linear-model-4.html#cb706-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb706-4"><a href="linear-model-4.html#cb706-4" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb706-5"><a href="linear-model-4.html#cb706-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="linear-model-4.html#cb735-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> hand,</span>
+<span id="cb735-2"><a href="linear-model-4.html#cb735-2" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
+<span id="cb735-3"><a href="linear-model-4.html#cb735-3" tabindex="-1"></a></span>
+<span id="cb735-4"><a href="linear-model-4.html#cb735-4" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb735-5"><a href="linear-model-4.html#cb735-5" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = balance ~ 1 + hand, data = df.poker)
@@ -1357,22 +1383,22 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 4.111 on 297 degrees of freedom
 Multiple R-squared:  0.3377,    Adjusted R-squared:  0.3332 
 F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="linear-model-4.html#cb708-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(fit) <span class="sc">%&gt;%</span> </span>
-<span id="cb708-2"><a href="linear-model-4.html#cb708-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb708-3"><a href="linear-model-4.html#cb708-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="linear-model-4.html#cb737-1" tabindex="-1"></a><span class="fu">model.matrix</span>(fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb737-2"><a href="linear-model-4.html#cb737-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb737-3"><a href="linear-model-4.html#cb737-3" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code></pre></div>
 <pre><code># A tibble: 3 × 3
   `(Intercept)` handneutral handgood
           &lt;dbl&gt;       &lt;dbl&gt;    &lt;dbl&gt;
 1             1           0        0
 2             1           1        0
 3             1           0        1</code></pre>
-<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="linear-model-4.html#cb710-1" aria-hidden="true" tabindex="-1"></a>df.poker <span class="sc">%&gt;%</span> </span>
-<span id="cb710-2"><a href="linear-model-4.html#cb710-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(participant, hand, balance) <span class="sc">%&gt;%</span> </span>
-<span id="cb710-3"><a href="linear-model-4.html#cb710-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(hand) <span class="sc">%&gt;%</span> </span>
-<span id="cb710-4"><a href="linear-model-4.html#cb710-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">3</span>, <span class="at">wt =</span> <span class="sc">-</span>participant) <span class="sc">%&gt;%</span> </span>
-<span id="cb710-5"><a href="linear-model-4.html#cb710-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb710-6"><a href="linear-model-4.html#cb710-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb710-7"><a href="linear-model-4.html#cb710-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="linear-model-4.html#cb739-1" tabindex="-1"></a>df.poker <span class="sc">%&gt;%</span> </span>
+<span id="cb739-2"><a href="linear-model-4.html#cb739-2" tabindex="-1"></a>  <span class="fu">select</span>(participant, hand, balance) <span class="sc">%&gt;%</span> </span>
+<span id="cb739-3"><a href="linear-model-4.html#cb739-3" tabindex="-1"></a>  <span class="fu">group_by</span>(hand) <span class="sc">%&gt;%</span> </span>
+<span id="cb739-4"><a href="linear-model-4.html#cb739-4" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">3</span>, <span class="at">wt =</span> <span class="sc">-</span>participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb739-5"><a href="linear-model-4.html#cb739-5" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb739-6"><a href="linear-model-4.html#cb739-6" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
+<span id="cb739-7"><a href="linear-model-4.html#cb739-7" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1492,12 +1518,12 @@ good
 </div>
 <div id="understanding-sum-coding" class="section level3 hasAnchor" number="13.5.5">
 <h3><span class="header-section-number">13.5.5</span> Understanding sum coding<a href="linear-model-4.html#understanding-sum-coding" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="linear-model-4.html#cb711-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> hand,</span>
-<span id="cb711-2"><a href="linear-model-4.html#cb711-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">hand =</span> <span class="st">&quot;contr.sum&quot;</span>),</span>
-<span id="cb711-3"><a href="linear-model-4.html#cb711-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
-<span id="cb711-4"><a href="linear-model-4.html#cb711-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb711-5"><a href="linear-model-4.html#cb711-5" aria-hidden="true" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb711-6"><a href="linear-model-4.html#cb711-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="linear-model-4.html#cb740-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> hand,</span>
+<span id="cb740-2"><a href="linear-model-4.html#cb740-2" tabindex="-1"></a>         <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">hand =</span> <span class="st">&quot;contr.sum&quot;</span>),</span>
+<span id="cb740-3"><a href="linear-model-4.html#cb740-3" tabindex="-1"></a>         <span class="at">data =</span> df.poker)</span>
+<span id="cb740-4"><a href="linear-model-4.html#cb740-4" tabindex="-1"></a></span>
+<span id="cb740-5"><a href="linear-model-4.html#cb740-5" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb740-6"><a href="linear-model-4.html#cb740-6" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = balance ~ 1 + hand, data = df.poker, contrasts = list(hand = &quot;contr.sum&quot;))
@@ -1517,12 +1543,12 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 4.111 on 297 degrees of freedom
 Multiple R-squared:  0.3377,    Adjusted R-squared:  0.3332 
 F-statistic:  75.7 on 2 and 297 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="linear-model-4.html#cb713-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(fit) <span class="sc">%&gt;%</span> </span>
-<span id="cb713-2"><a href="linear-model-4.html#cb713-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb713-3"><a href="linear-model-4.html#cb713-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb713-4"><a href="linear-model-4.html#cb713-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb713-5"><a href="linear-model-4.html#cb713-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb713-6"><a href="linear-model-4.html#cb713-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb742-1"><a href="linear-model-4.html#cb742-1" tabindex="-1"></a><span class="fu">model.matrix</span>(fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb742-2"><a href="linear-model-4.html#cb742-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb742-3"><a href="linear-model-4.html#cb742-3" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb742-4"><a href="linear-model-4.html#cb742-4" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb742-5"><a href="linear-model-4.html#cb742-5" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
+<span id="cb742-6"><a href="linear-model-4.html#cb742-6" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1575,67 +1601,73 @@ hand2
 </table>
 </div>
 </div>
-<div id="session-info-12" class="section level2 hasAnchor" number="13.6">
-<h2><span class="header-section-number">13.6</span> Session info<a href="linear-model-4.html#session-info-12" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="additional-resources-11" class="section level2 hasAnchor" number="13.6">
+<h2><span class="header-section-number">13.6</span> Additional resources<a href="linear-model-4.html#additional-resources-11" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="misc-7" class="section level3 hasAnchor" number="13.6.1">
+<h3><span class="header-section-number">13.6.1</span> Misc<a href="linear-model-4.html#misc-7" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><a href="https://strengejacke.github.io/regressionmodels/?s=09">Overview of different regression models in R</a></li>
+</ul>
+</div>
+</div>
+<div id="session-info-12" class="section level2 hasAnchor" number="13.7">
+<h2><span class="header-section-number">13.7</span> Session info<a href="linear-model-4.html#session-info-12" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Information about this R session including which version of R was used, and what packages were loaded.</p>
-<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="linear-model-4.html#cb714-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="linear-model-4.html#cb743-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
- [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
- [9] tidyverse_1.3.1  car_3.0-13       carData_3.0-5    emmeans_1.7.3   
-[13] afex_1.1-1       lme4_1.1-29      Matrix_1.4-1     broom_0.8.0     
-[17] janitor_2.1.0    kableExtra_1.3.4 knitr_1.39      
+ [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
+ [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
+ [9] ggplot2_3.4.4    tidyverse_2.0.0  car_3.1-2        carData_3.0-5   
+[13] emmeans_1.9.0    afex_1.3-0       lme4_1.1-35.1    Matrix_1.6-4    
+[17] broom_1.0.5      janitor_2.2.0    kableExtra_1.3.4 knitr_1.45      
 
 loaded via a namespace (and not attached):
-  [1] TH.data_1.1-1       minqa_1.2.4         colorspace_2.0-3   
-  [4] ellipsis_0.3.2      htmlTable_2.4.0     estimability_1.3   
-  [7] snakecase_0.11.0    base64enc_0.1-3     fs_1.5.2           
- [10] rstudioapi_0.13     farver_2.1.0        bit64_4.0.5        
- [13] fansi_1.0.3         mvtnorm_1.1-3       lubridate_1.8.0    
- [16] xml2_1.3.3          codetools_0.2-18    splines_4.1.2      
- [19] Formula_1.2-4       jsonlite_1.8.0      nloptr_2.0.0       
- [22] cluster_2.1.3       dbplyr_2.1.1        png_0.1-7          
- [25] compiler_4.1.2      httr_1.4.3          backports_1.4.1    
- [28] assertthat_0.2.1    fastmap_1.1.0       cli_3.3.0          
- [31] htmltools_0.5.2     tools_4.1.2         lmerTest_3.1-3     
- [34] coda_0.19-4         gtable_0.3.0        glue_1.6.2         
- [37] reshape2_1.4.4      Rcpp_1.0.8.3        cellranger_1.1.0   
- [40] jquerylib_0.1.4     vctrs_0.4.1         svglite_2.1.0      
- [43] nlme_3.1-157        xfun_0.30           rvest_1.0.2        
- [46] lifecycle_1.0.1     MASS_7.3-57         zoo_1.8-10         
- [49] scales_1.2.0        vroom_1.5.7         hms_1.1.1          
- [52] parallel_4.1.2      sandwich_3.0-1      RColorBrewer_1.1-3 
- [55] yaml_2.3.5          gridExtra_2.3       sass_0.4.1         
- [58] rpart_4.1.16        latticeExtra_0.6-29 stringi_1.7.6      
- [61] highr_0.9           checkmate_2.1.0     boot_1.3-28        
- [64] rlang_1.0.2         pkgconfig_2.0.3     systemfonts_1.0.4  
- [67] evaluate_0.15       lattice_0.20-45     htmlwidgets_1.5.4  
- [70] labeling_0.4.2      bit_4.0.4           tidyselect_1.1.2   
- [73] plyr_1.8.7          magrittr_2.0.3      bookdown_0.26      
- [76] R6_2.5.1            generics_0.1.2      Hmisc_4.7-0        
- [79] multcomp_1.4-19     DBI_1.1.2           foreign_0.8-82     
- [82] pillar_1.7.0        haven_2.5.0         withr_2.5.0        
- [85] nnet_7.3-17         survival_3.3-1      abind_1.4-5        
- [88] modelr_0.1.8        crayon_1.5.1        utf8_1.2.2         
- [91] tzdb_0.3.0          rmarkdown_2.14      jpeg_0.1-9         
- [94] grid_4.1.2          readxl_1.4.0        data.table_1.14.2  
- [97] reprex_2.0.1        digest_0.6.29       webshot_0.5.3      
-[100] xtable_1.8-4        numDeriv_2016.8-1.1 munsell_0.5.0      
-[103] viridisLite_0.4.0   bslib_0.3.1        </code></pre>
+ [1] tidyselect_1.2.0    viridisLite_0.4.2   farver_2.1.1       
+ [4] fastmap_1.1.1       rpart_4.1.23        digest_0.6.33      
+ [7] timechange_0.2.0    estimability_1.4.1  lifecycle_1.0.4    
+[10] cluster_2.1.6       magrittr_2.0.3      compiler_4.3.2     
+[13] Hmisc_5.1-1         rlang_1.1.2         sass_0.4.8         
+[16] tools_4.3.2         utf8_1.2.4          yaml_2.3.8         
+[19] data.table_1.14.10  htmlwidgets_1.6.4   labeling_0.4.3     
+[22] bit_4.0.5           plyr_1.8.9          xml2_1.3.6         
+[25] abind_1.4-5         foreign_0.8-86      withr_2.5.2        
+[28] numDeriv_2016.8-1.1 nnet_7.3-19         grid_4.3.2         
+[31] fansi_1.0.6         xtable_1.8-4        colorspace_2.1-0   
+[34] scales_1.3.0        MASS_7.3-60         cli_3.6.2          
+[37] mvtnorm_1.2-4       rmarkdown_2.25      crayon_1.5.2       
+[40] generics_0.1.3      rstudioapi_0.15.0   httr_1.4.7         
+[43] reshape2_1.4.4      tzdb_0.4.0          minqa_1.2.6        
+[46] cachem_1.0.8        splines_4.3.2       rvest_1.0.3        
+[49] parallel_4.3.2      base64enc_0.1-3     vctrs_0.6.5        
+[52] boot_1.3-28.1       webshot_0.5.5       jsonlite_1.8.8     
+[55] bookdown_0.37       hms_1.1.3           bit64_4.0.5        
+[58] htmlTable_2.4.2     Formula_1.2-5       systemfonts_1.0.5  
+[61] jquerylib_0.1.4     glue_1.6.2          nloptr_2.0.3       
+[64] stringi_1.8.3       gtable_0.3.4        lmerTest_3.1-3     
+[67] munsell_0.5.0       pillar_1.9.0        htmltools_0.5.7    
+[70] R6_2.5.1            vroom_1.6.5         evaluate_0.23      
+[73] lattice_0.22-5      highr_0.10          backports_1.4.1    
+[76] snakecase_0.11.1    bslib_0.6.1         Rcpp_1.0.11        
+[79] checkmate_2.3.1     gridExtra_2.3       svglite_2.1.3      
+[82] coda_0.19-4         nlme_3.1-164        xfun_0.41          
+[85] pkgconfig_2.0.3    </code></pre>
 
 </div>
 </div>
@@ -1705,7 +1737,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

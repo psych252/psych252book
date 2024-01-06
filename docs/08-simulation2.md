@@ -116,6 +116,13 @@ ggplot(data = df.sample,
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
 
+```
+Warning: `stat(density)` was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="08-simulation2_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 Here are the sample mean and standard deviation:
@@ -209,6 +216,13 @@ ggplot(data = df.plot,
                size = 2,
                geom = "line") + 
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
+```
+
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="08-simulation2_files/figure-html/unnamed-chunk-9-1.png" width="672" />
@@ -654,7 +668,7 @@ ggplot(data = df.permutations, aes(x = mean_difference)) +
 ```
 
 ```
-Warning: Removed 2 rows containing missing values (geom_bar).
+Warning: Removed 2 rows containing missing values (`geom_bar()`).
 ```
 
 <img src="08-simulation2_files/figure-html/unnamed-chunk-22-1.png" width="672" />
@@ -719,7 +733,7 @@ df.ttest
  8          8    5.00    5.01    -0.0113    -0.0401
  9          9    5.02    5.10    -0.0773    -0.273 
 10         10    5.01    4.98     0.0267     0.0945
-# … with 990 more rows
+# ℹ 990 more rows
 ```
 
 Population distribution 
@@ -900,6 +914,7 @@ build$data[[2]] %>%
    <th style="text-align:left;"> flipped_aes </th>
    <th style="text-align:left;"> colour </th>
    <th style="text-align:right;"> size </th>
+   <th style="text-align:right;"> linewidth </th>
    <th style="text-align:right;"> linetype </th>
    <th style="text-align:right;"> shape </th>
    <th style="text-align:left;"> fill </th>
@@ -918,6 +933,7 @@ build$data[[2]] %>%
    <td style="text-align:left;"> FALSE </td>
    <td style="text-align:left;"> black </td>
    <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.5 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 21 </td>
    <td style="text-align:left;"> lightblue </td>
@@ -934,6 +950,7 @@ build$data[[2]] %>%
    <td style="text-align:left;"> FALSE </td>
    <td style="text-align:left;"> black </td>
    <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.5 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 21 </td>
    <td style="text-align:left;"> lightblue </td>
@@ -950,6 +967,7 @@ build$data[[2]] %>%
    <td style="text-align:left;"> FALSE </td>
    <td style="text-align:left;"> black </td>
    <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.5 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 21 </td>
    <td style="text-align:left;"> lightblue </td>
@@ -1013,52 +1031,44 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
- [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
- [9] tidyverse_1.3.1  janitor_2.1.0    kableExtra_1.3.4 knitr_1.39      
+ [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
+ [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
+ [9] ggplot2_3.4.4    tidyverse_2.0.0  janitor_2.2.0    kableExtra_1.3.4
+[13] knitr_1.45      
 
 loaded via a namespace (and not attached):
- [1] fs_1.5.2            lubridate_1.8.0     webshot_0.5.3      
- [4] RColorBrewer_1.1-3  httr_1.4.3          tools_4.1.2        
- [7] backports_1.4.1     bslib_0.3.1         utf8_1.2.2         
-[10] R6_2.5.1            rpart_4.1.16        Hmisc_4.7-0        
-[13] DBI_1.1.2           colorspace_2.0-3    nnet_7.3-17        
-[16] withr_2.5.0         tidyselect_1.1.2    gridExtra_2.3      
-[19] compiler_4.1.2      cli_3.3.0           rvest_1.0.2        
-[22] htmlTable_2.4.0     xml2_1.3.3          labeling_0.4.2     
-[25] bookdown_0.26       sass_0.4.1          scales_1.2.0       
-[28] checkmate_2.1.0     systemfonts_1.0.4   digest_0.6.29      
-[31] foreign_0.8-82      rmarkdown_2.14      svglite_2.1.0      
-[34] base64enc_0.1-3     jpeg_0.1-9          pkgconfig_2.0.3    
-[37] htmltools_0.5.2     dbplyr_2.1.1        fastmap_1.1.0      
-[40] highr_0.9           htmlwidgets_1.5.4   rlang_1.0.2        
-[43] readxl_1.4.0        rstudioapi_0.13     jquerylib_0.1.4    
-[46] farver_2.1.0        generics_0.1.2      jsonlite_1.8.0     
-[49] magrittr_2.0.3      Formula_1.2-4       Matrix_1.4-1       
-[52] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.1    
-[55] stringi_1.7.6       yaml_2.3.5          snakecase_0.11.0   
-[58] grid_4.1.2          crayon_1.5.1        lattice_0.20-45    
-[61] haven_2.5.0         splines_4.1.2       hms_1.1.1          
-[64] pillar_1.7.0        reprex_2.0.1        glue_1.6.2         
-[67] evaluate_0.15       latticeExtra_0.6-29 data.table_1.14.2  
-[70] modelr_0.1.8        vctrs_0.4.1         png_0.1-7          
-[73] tzdb_0.3.0          cellranger_1.1.0    gtable_0.3.0       
-[76] assertthat_0.2.1    xfun_0.30           broom_0.8.0        
-[79] survival_3.3-1      viridisLite_0.4.0   cluster_2.1.3      
-[82] ellipsis_0.3.2     
+ [1] gtable_0.3.4       xfun_0.41          bslib_0.6.1        htmlwidgets_1.6.4 
+ [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.3.2        generics_0.1.3    
+ [9] fansi_1.0.6        highr_0.10         cluster_2.1.6      pkgconfig_2.0.3   
+[13] data.table_1.14.10 checkmate_2.3.1    webshot_0.5.5      lifecycle_1.0.4   
+[17] compiler_4.3.2     farver_2.1.1       munsell_0.5.0      snakecase_0.11.1  
+[21] htmltools_0.5.7    sass_0.4.8         yaml_2.3.8         htmlTable_2.4.2   
+[25] Formula_1.2-5      pillar_1.9.0       crayon_1.5.2       jquerylib_0.1.4   
+[29] cachem_1.0.8       Hmisc_5.1-1        rpart_4.1.23       tidyselect_1.2.0  
+[33] rvest_1.0.3        digest_0.6.33      stringi_1.8.3      bookdown_0.37     
+[37] labeling_0.4.3     fastmap_1.1.1      grid_4.3.2         colorspace_2.1-0  
+[41] cli_3.6.2          magrittr_2.0.3     base64enc_0.1-3    utf8_1.2.4        
+[45] foreign_0.8-86     withr_2.5.2        backports_1.4.1    scales_1.3.0      
+[49] timechange_0.2.0   rmarkdown_2.25     httr_1.4.7         nnet_7.3-19       
+[53] gridExtra_2.3      hms_1.1.3          evaluate_0.23      viridisLite_0.4.2 
+[57] rlang_1.1.2        glue_1.6.2         xml2_1.3.6         svglite_2.1.3     
+[61] rstudioapi_0.15.0  jsonlite_1.8.8     R6_2.5.1           systemfonts_1.0.5 
 ```

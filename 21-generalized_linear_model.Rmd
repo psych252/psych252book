@@ -395,7 +395,7 @@ The "ggeffects" package helps with the interpretation of the results. It applies
 ```{r}
 # show effects 
 ggeffect(model = fit.glm,
-         terms = "fare [0, 100, 200, 300, 400, 500]")
+         terms = "fare [1, 100, 200, 300, 400, 500]")
 ```
 
 I've used the `[]` construction to specify for what values of the predictor `fare`, I'd like get the predicted values. Here, the prediction is marginalized across both women and men. 
@@ -404,7 +404,7 @@ We can also get a plot of the model predictions like so:
 
 ```{r}
 ggeffect(model = fit.glm,
-         terms = "fare [0, 100, 200, 300, 400, 500]") %>% 
+         terms = "fare [1, 100, 200, 300, 400, 500]") %>% 
   plot()
 ```
 
@@ -623,6 +623,11 @@ anova(fit_a, fit_c, test = "LRT")
 
 
 ## Additional information
+
+### Misc 
+
+- [Nice logistic regression explainer](https://cims.nyu.edu/~brenden/courses/labincp/chapters/14/00-logisticregression.html)
+- [StatQuest: Logistic regression](https://www.youtube.com/watch?v=yIYKR4sgzI8)
 
 ### Datacamp
 

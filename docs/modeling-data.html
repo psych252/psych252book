@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Modeling data | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
   <meta name="description" content="Course notes for Psych 252." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Modeling data | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2022-05-17" />
+<meta name="date" content="2024-01-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,24 +51,24 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.22/datatables.js"></script>
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<script src="libs/datatables-binding-0.31/datatables.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.9/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -104,7 +104,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -117,7 +117,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -132,10 +132,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 <style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -174,6 +179,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-description"><i class="fa fa-check"></i>Course description</a></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#course-homepage"><i class="fa fa-check"></i>Course homepage</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#license-and-citation"><i class="fa fa-check"></i>License and citation</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
 <ul>
@@ -521,7 +527,11 @@ div.csl-indent {
 <li class="chapter" data-level="13.5.4" data-path="linear-model-4.html"><a href="linear-model-4.html#understanding-dummy-coding"><i class="fa fa-check"></i><b>13.5.4</b> Understanding dummy coding</a></li>
 <li class="chapter" data-level="13.5.5" data-path="linear-model-4.html"><a href="linear-model-4.html#understanding-sum-coding"><i class="fa fa-check"></i><b>13.5.5</b> Understanding sum coding</a></li>
 </ul></li>
-<li class="chapter" data-level="13.6" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-12"><i class="fa fa-check"></i><b>13.6</b> Session info</a></li>
+<li class="chapter" data-level="13.6" data-path="linear-model-4.html"><a href="linear-model-4.html#additional-resources-11"><i class="fa fa-check"></i><b>13.6</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="linear-model-4.html"><a href="linear-model-4.html#misc-7"><i class="fa fa-check"></i><b>13.6.1</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-12"><i class="fa fa-check"></i><b>13.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a>
 <ul>
@@ -538,11 +548,11 @@ div.csl-indent {
 <li class="chapter" data-level="14.6.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>14.6.1</b> <code>pwr</code> package</a></li>
 <li class="chapter" data-level="14.6.2" data-path="power-analysis.html"><a href="power-analysis.html#power-analysis-1"><i class="fa fa-check"></i><b>14.6.2</b> Power analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-11"><i class="fa fa-check"></i><b>14.7</b> Additional resources</a>
+<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-12"><i class="fa fa-check"></i><b>14.7</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="14.7.1" data-path="power-analysis.html"><a href="power-analysis.html#datacamp-6"><i class="fa fa-check"></i><b>14.7.1</b> Datacamp</a></li>
 <li class="chapter" data-level="14.7.2" data-path="power-analysis.html"><a href="power-analysis.html#cheatsheets-5"><i class="fa fa-check"></i><b>14.7.2</b> Cheatsheets</a></li>
-<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-7"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
+<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-8"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-13"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
 </ul></li>
@@ -558,7 +568,7 @@ div.csl-indent {
 <li class="chapter" data-level="15.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>15.3.4</b> Bootstrap</a></li>
 <li class="chapter" data-level="15.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>15.3.5</b> AIC and BIC</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-12"><i class="fa fa-check"></i><b>15.4</b> Additional resources</a>
+<li class="chapter" data-level="15.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-13"><i class="fa fa-check"></i><b>15.4</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="15.4.1" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>15.4.1</b> Datacamp course</a></li>
 <li class="chapter" data-level="15.4.2" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>15.4.2</b> Reading</a></li>
@@ -593,11 +603,11 @@ div.csl-indent {
 <li class="chapter" data-level="16.7.1" data-path="causation.html"><a href="causation.html#generate-data-1"><i class="fa fa-check"></i><b>16.7.1</b> Generate data</a></li>
 <li class="chapter" data-level="16.7.2" data-path="causation.html"><a href="causation.html#moderation-analysis"><i class="fa fa-check"></i><b>16.7.2</b> Moderation analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="16.8" data-path="causation.html"><a href="causation.html#additional-resources-13"><i class="fa fa-check"></i><b>16.8</b> Additional resources</a>
+<li class="chapter" data-level="16.8" data-path="causation.html"><a href="causation.html#additional-resources-14"><i class="fa fa-check"></i><b>16.8</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="16.8.1" data-path="causation.html"><a href="causation.html#books"><i class="fa fa-check"></i><b>16.8.1</b> Books</a></li>
 <li class="chapter" data-level="16.8.2" data-path="causation.html"><a href="causation.html#tutorials-1"><i class="fa fa-check"></i><b>16.8.2</b> Tutorials</a></li>
-<li class="chapter" data-level="16.8.3" data-path="causation.html"><a href="causation.html#misc-8"><i class="fa fa-check"></i><b>16.8.3</b> Misc</a></li>
+<li class="chapter" data-level="16.8.3" data-path="causation.html"><a href="causation.html#misc-9"><i class="fa fa-check"></i><b>16.8.3</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="16.9" data-path="causation.html"><a href="causation.html#session-info-15"><i class="fa fa-check"></i><b>16.9</b> Session info</a></li>
 </ul></li>
@@ -606,7 +616,7 @@ div.csl-indent {
 <li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#learning-goals-8"><i class="fa fa-check"></i><b>17.1</b> Learning goals</a></li>
 <li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.3</b> Dependence</a></li>
-<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-14"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a>
+<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-15"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="17.4.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.4.1</b> Readings</a></li>
 </ul></li>
@@ -631,7 +641,7 @@ div.csl-indent {
 <li class="chapter" data-level="18.4.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.4.2</b> Different slopes</a></li>
 <li class="chapter" data-level="18.4.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.4.3</b> Simpson’s paradox</a></li>
 </ul></li>
-<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-15"><i class="fa fa-check"></i><b>18.5</b> Additional resources</a>
+<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-16"><i class="fa fa-check"></i><b>18.5</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="18.5.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.5.1</b> Readings</a></li>
 </ul></li>
@@ -694,12 +704,16 @@ div.csl-indent {
 <li class="chapter" data-level="21.4.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#several-predictors"><i class="fa fa-check"></i><b>21.4.4</b> Several predictors</a></li>
 <li class="chapter" data-level="21.4.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#using-the-ggeffects-package"><i class="fa fa-check"></i><b>21.4.5</b> Using the “ggeffects” package</a></li>
 </ul></li>
-<li class="chapter" data-level="21.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>21.5</b> Simulate a logistic regression</a></li>
+<li class="chapter" data-level="21.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>21.5</b> Simulate a logistic regression</a>
+<ul>
+<li class="chapter" data-level="21.5.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#calculate-the-models-likelihood"><i class="fa fa-check"></i><b>21.5.1</b> Calculate the model’s likelihood</a></li>
+</ul></li>
 <li class="chapter" data-level="21.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>21.6</b> Testing hypotheses</a></li>
 <li class="chapter" data-level="21.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>21.7</b> Logistic mixed effects model</a></li>
 <li class="chapter" data-level="21.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>21.8</b> Additional information</a>
 <ul>
-<li class="chapter" data-level="21.8.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-7"><i class="fa fa-check"></i><b>21.8.1</b> Datacamp</a></li>
+<li class="chapter" data-level="21.8.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#misc-10"><i class="fa fa-check"></i><b>21.8.1</b> Misc</a></li>
+<li class="chapter" data-level="21.8.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-7"><i class="fa fa-check"></i><b>21.8.2</b> Datacamp</a></li>
 </ul></li>
 <li class="chapter" data-level="21.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-20"><i class="fa fa-check"></i><b>21.9</b> Session info</a></li>
 </ul></li>
@@ -719,7 +733,11 @@ div.csl-indent {
 <li class="chapter" data-level="22.4.2" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.4.2</b> Frequentist analysis</a></li>
 <li class="chapter" data-level="22.4.3" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#bayesian-regression"><i class="fa fa-check"></i><b>22.4.3</b> Bayesian regression</a></li>
 </ul></li>
-<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#session-info-21"><i class="fa fa-check"></i><b>22.5</b> Session info</a></li>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#additional-resources-17"><i class="fa fa-check"></i><b>22.5</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#books-and-chapters-5"><i class="fa fa-check"></i><b>22.5.1</b> Books and chapters</a></li>
+</ul></li>
+<li class="chapter" data-level="22.6" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#session-info-21"><i class="fa fa-check"></i><b>22.6</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="23" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html"><i class="fa fa-check"></i><b>23</b> Bayesian data analysis 2</a>
 <ul>
@@ -745,7 +763,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="23.6" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#titanic-study"><i class="fa fa-check"></i><b>23.6</b> Titanic study</a>
 <ul>
-<li class="chapter" data-level="23.6.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-that-data"><i class="fa fa-check"></i><b>23.6.1</b> 1. Visualize that data</a></li>
+<li class="chapter" data-level="23.6.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data-2"><i class="fa fa-check"></i><b>23.6.1</b> 1. Visualize the data</a></li>
 <li class="chapter" data-level="23.6.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model-2"><i class="fa fa-check"></i><b>23.6.2</b> 2. Specify and fit the model</a></li>
 <li class="chapter" data-level="23.6.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#model-evaluation-2"><i class="fa fa-check"></i><b>23.6.3</b> 3. Model evaluation</a></li>
 <li class="chapter" data-level="23.6.4" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#interpret-the-parameters-1"><i class="fa fa-check"></i><b>23.6.4</b> 4. Interpret the parameters</a></li>
@@ -754,11 +772,11 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="23.7" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#politeness-data"><i class="fa fa-check"></i><b>23.7</b> Politeness data</a>
 <ul>
-<li class="chapter" data-level="23.7.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data-2"><i class="fa fa-check"></i><b>23.7.1</b> 1. Visualize the data</a></li>
+<li class="chapter" data-level="23.7.1" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#visualize-the-data-3"><i class="fa fa-check"></i><b>23.7.1</b> 1. Visualize the data</a></li>
 <li class="chapter" data-level="23.7.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model-3"><i class="fa fa-check"></i><b>23.7.2</b> 2. Specify and fit the model</a></li>
 <li class="chapter" data-level="23.7.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#test-specific-hypotheses-3"><i class="fa fa-check"></i><b>23.7.3</b> 5. Test specific hypotheses</a></li>
 </ul></li>
-<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-16"><i class="fa fa-check"></i><b>23.8</b> Additional resources</a></li>
+<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-18"><i class="fa fa-check"></i><b>23.8</b> Additional resources</a></li>
 <li class="chapter" data-level="23.9" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-22"><i class="fa fa-check"></i><b>23.9</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>24</b> Bayesian data analysis 3</a>
@@ -772,7 +790,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="24.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#dealing-with-heteroscedasticity"><i class="fa fa-check"></i><b>24.4</b> Dealing with heteroscedasticity</a>
 <ul>
-<li class="chapter" data-level="24.4.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualize-the-data-3"><i class="fa fa-check"></i><b>24.4.1</b> Visualize the data</a></li>
+<li class="chapter" data-level="24.4.1" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#visualize-the-data-4"><i class="fa fa-check"></i><b>24.4.1</b> Visualize the data</a></li>
 <li class="chapter" data-level="24.4.2" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#frequentist-analysis-4"><i class="fa fa-check"></i><b>24.4.2</b> Frequentist analysis</a></li>
 <li class="chapter" data-level="24.4.3" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#bayesian-analysis-3"><i class="fa fa-check"></i><b>24.4.3</b> Bayesian analysis</a></li>
 </ul></li>
@@ -785,7 +803,7 @@ div.csl-indent {
 <li class="chapter" data-level="24.6.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#gaussian-regression-unequal-variance"><i class="fa fa-check"></i><b>24.6.4</b> Gaussian regression (unequal variance)</a></li>
 <li class="chapter" data-level="24.6.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#model-comparison-2"><i class="fa fa-check"></i><b>24.6.5</b> Model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-17"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
+<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-19"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
 <li class="chapter" data-level="24.8" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-23"><i class="fa fa-check"></i><b>24.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>25</b> Model assumptions</a>
@@ -800,7 +818,7 @@ div.csl-indent {
 <li class="chapter" data-level="25.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#non-parametric-tests"><i class="fa fa-check"></i><b>25.3.4</b> Non-parametric tests</a></li>
 <li class="chapter" data-level="25.3.5" data-path="model-assumptions.html"><a href="model-assumptions.html#bootstrapping-regressions"><i class="fa fa-check"></i><b>25.3.5</b> Bootstrapping regressions</a></li>
 </ul></li>
-<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-18"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
+<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-20"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
 <li class="chapter" data-level="25.5" data-path="model-assumptions.html"><a href="model-assumptions.html#session-info-24"><i class="fa fa-check"></i><b>25.5</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="26" data-path="reporting-statistics.html"><a href="reporting-statistics.html"><i class="fa fa-check"></i><b>26</b> Reporting statistics</a>
@@ -849,66 +867,66 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 9</span> Modeling data<a href="modeling-data.html#modeling-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="load-packages-and-set-plotting-theme-2" class="section level2 hasAnchor" number="9.1">
 <h2><span class="header-section-number">9.1</span> Load packages and set plotting theme<a href="modeling-data.html#load-packages-and-set-plotting-theme-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="modeling-data.html#cb486-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span></span>
-<span id="cb486-2"><a href="modeling-data.html#cb486-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span></span>
-<span id="cb486-3"><a href="modeling-data.html#cb486-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span></span>
-<span id="cb486-4"><a href="modeling-data.html#cb486-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></span></code></pre></div>
-<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="modeling-data.html#cb487-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
-<span id="cb487-2"><a href="modeling-data.html#cb487-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))) <span class="co">#set the default text size</span></span>
-<span id="cb487-3"><a href="modeling-data.html#cb487-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb487-4"><a href="modeling-data.html#cb487-4" aria-hidden="true" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb487-5"><a href="modeling-data.html#cb487-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">fig.show =</span> <span class="st">&quot;hold&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="modeling-data.html#cb504-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span></span>
+<span id="cb504-2"><a href="modeling-data.html#cb504-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span></span>
+<span id="cb504-3"><a href="modeling-data.html#cb504-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span></span>
+<span id="cb504-4"><a href="modeling-data.html#cb504-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></span></code></pre></div>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="modeling-data.html#cb505-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
+<span id="cb505-2"><a href="modeling-data.html#cb505-2" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))) <span class="co">#set the default text size</span></span>
+<span id="cb505-3"><a href="modeling-data.html#cb505-3" tabindex="-1"></a></span>
+<span id="cb505-4"><a href="modeling-data.html#cb505-4" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb505-5"><a href="modeling-data.html#cb505-5" tabindex="-1"></a>               <span class="at">fig.show =</span> <span class="st">&quot;hold&quot;</span>)</span></code></pre></div>
 </div>
 <div id="modeling-data-1" class="section level2 hasAnchor" number="9.2">
 <h2><span class="header-section-number">9.2</span> Modeling data<a href="modeling-data.html#modeling-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="simplicity-vs.-accuracy-trade-off" class="section level3 hasAnchor" number="9.2.1">
 <h3><span class="header-section-number">9.2.1</span> Simplicity vs. accuracy trade-off<a href="modeling-data.html#simplicity-vs.-accuracy-trade-off" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="modeling-data.html#cb488-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb488-2"><a href="modeling-data.html#cb488-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb488-3"><a href="modeling-data.html#cb488-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb488-4"><a href="modeling-data.html#cb488-4" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">20</span> <span class="co"># sample size </span></span>
-<span id="cb488-5"><a href="modeling-data.html#cb488-5" aria-hidden="true" tabindex="-1"></a>n_parameters <span class="ot">=</span> <span class="dv">2</span> <span class="co"># number of parameters in the polynomial regression</span></span>
-<span id="cb488-6"><a href="modeling-data.html#cb488-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb488-7"><a href="modeling-data.html#cb488-7" aria-hidden="true" tabindex="-1"></a><span class="co"># generate data </span></span>
-<span id="cb488-8"><a href="modeling-data.html#cb488-8" aria-hidden="true" tabindex="-1"></a>df.data <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(n_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>), </span>
-<span id="cb488-9"><a href="modeling-data.html#cb488-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_samples, <span class="at">sd =</span> <span class="dv">20</span>))</span>
-<span id="cb488-10"><a href="modeling-data.html#cb488-10" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb488-11"><a href="modeling-data.html#cb488-11" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a fit to the data</span></span>
-<span id="cb488-12"><a href="modeling-data.html#cb488-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.data,</span>
-<span id="cb488-13"><a href="modeling-data.html#cb488-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb488-14"><a href="modeling-data.html#cb488-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb488-15"><a href="modeling-data.html#cb488-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb488-16"><a href="modeling-data.html#cb488-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_hline(yintercept = mean(df.data$y), color = &quot;blue&quot;) +</span></span>
-<span id="cb488-17"><a href="modeling-data.html#cb488-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> F,</span>
-<span id="cb488-18"><a href="modeling-data.html#cb488-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="at">degree =</span> n_parameters, <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb488-19"><a href="modeling-data.html#cb488-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb488-20"><a href="modeling-data.html#cb488-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb488-21"><a href="modeling-data.html#cb488-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="modeling-data.html#cb506-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
+<span id="cb506-2"><a href="modeling-data.html#cb506-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb506-3"><a href="modeling-data.html#cb506-3" tabindex="-1"></a></span>
+<span id="cb506-4"><a href="modeling-data.html#cb506-4" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">20</span> <span class="co"># sample size </span></span>
+<span id="cb506-5"><a href="modeling-data.html#cb506-5" tabindex="-1"></a>n_parameters <span class="ot">=</span> <span class="dv">2</span> <span class="co"># number of parameters in the polynomial regression</span></span>
+<span id="cb506-6"><a href="modeling-data.html#cb506-6" tabindex="-1"></a></span>
+<span id="cb506-7"><a href="modeling-data.html#cb506-7" tabindex="-1"></a><span class="co"># generate data </span></span>
+<span id="cb506-8"><a href="modeling-data.html#cb506-8" tabindex="-1"></a>df.data <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(n_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>), </span>
+<span id="cb506-9"><a href="modeling-data.html#cb506-9" tabindex="-1"></a>                 <span class="at">y =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_samples, <span class="at">sd =</span> <span class="dv">20</span>))</span>
+<span id="cb506-10"><a href="modeling-data.html#cb506-10" tabindex="-1"></a> </span>
+<span id="cb506-11"><a href="modeling-data.html#cb506-11" tabindex="-1"></a><span class="co"># plot a fit to the data</span></span>
+<span id="cb506-12"><a href="modeling-data.html#cb506-12" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.data,</span>
+<span id="cb506-13"><a href="modeling-data.html#cb506-13" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb506-14"><a href="modeling-data.html#cb506-14" tabindex="-1"></a>                     <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb506-15"><a href="modeling-data.html#cb506-15" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb506-16"><a href="modeling-data.html#cb506-16" tabindex="-1"></a>  <span class="co"># geom_hline(yintercept = mean(df.data$y), color = &quot;blue&quot;) +</span></span>
+<span id="cb506-17"><a href="modeling-data.html#cb506-17" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> F,</span>
+<span id="cb506-18"><a href="modeling-data.html#cb506-18" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="at">degree =</span> n_parameters, <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb506-19"><a href="modeling-data.html#cb506-19" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb506-20"><a href="modeling-data.html#cb506-20" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb506-21"><a href="modeling-data.html#cb506-21" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
 <img src="09-modeling_data_files/figure-html/unnamed-chunk-3-1.png" alt="Tradeoff between fit and model simplicity." width="672" />
 <p class="caption">
 Figure 2.5: Tradeoff between fit and model simplicity.
 </p>
 </div>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="modeling-data.html#cb489-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb489-2"><a href="modeling-data.html#cb489-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb489-3"><a href="modeling-data.html#cb489-3" aria-hidden="true" tabindex="-1"></a><span class="co"># n_samples = 20</span></span>
-<span id="cb489-4"><a href="modeling-data.html#cb489-4" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb489-5"><a href="modeling-data.html#cb489-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb489-6"><a href="modeling-data.html#cb489-6" aria-hidden="true" tabindex="-1"></a>df.pre <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(n_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>), </span>
-<span id="cb489-7"><a href="modeling-data.html#cb489-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n_samples, <span class="at">sd =</span> <span class="dv">1</span>))</span>
-<span id="cb489-8"><a href="modeling-data.html#cb489-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb489-9"><a href="modeling-data.html#cb489-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a fit to the data</span></span>
-<span id="cb489-10"><a href="modeling-data.html#cb489-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.pre,</span>
-<span id="cb489-11"><a href="modeling-data.html#cb489-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb489-12"><a href="modeling-data.html#cb489-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb489-13"><a href="modeling-data.html#cb489-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb489-14"><a href="modeling-data.html#cb489-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_hline(yintercept = mean(df.pre$y), color = &quot;blue&quot;) +</span></span>
-<span id="cb489-15"><a href="modeling-data.html#cb489-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> F,</span>
-<span id="cb489-16"><a href="modeling-data.html#cb489-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">1</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb489-17"><a href="modeling-data.html#cb489-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb489-18"><a href="modeling-data.html#cb489-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb489-19"><a href="modeling-data.html#cb489-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="modeling-data.html#cb507-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
+<span id="cb507-2"><a href="modeling-data.html#cb507-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb507-3"><a href="modeling-data.html#cb507-3" tabindex="-1"></a><span class="co"># n_samples = 20</span></span>
+<span id="cb507-4"><a href="modeling-data.html#cb507-4" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb507-5"><a href="modeling-data.html#cb507-5" tabindex="-1"></a></span>
+<span id="cb507-6"><a href="modeling-data.html#cb507-6" tabindex="-1"></a>df.pre <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(n_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>), </span>
+<span id="cb507-7"><a href="modeling-data.html#cb507-7" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n_samples, <span class="at">sd =</span> <span class="dv">1</span>))</span>
+<span id="cb507-8"><a href="modeling-data.html#cb507-8" tabindex="-1"></a></span>
+<span id="cb507-9"><a href="modeling-data.html#cb507-9" tabindex="-1"></a><span class="co"># plot a fit to the data</span></span>
+<span id="cb507-10"><a href="modeling-data.html#cb507-10" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.pre,</span>
+<span id="cb507-11"><a href="modeling-data.html#cb507-11" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb507-12"><a href="modeling-data.html#cb507-12" tabindex="-1"></a>                     <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb507-13"><a href="modeling-data.html#cb507-13" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb507-14"><a href="modeling-data.html#cb507-14" tabindex="-1"></a>  <span class="co"># geom_hline(yintercept = mean(df.pre$y), color = &quot;blue&quot;) +</span></span>
+<span id="cb507-15"><a href="modeling-data.html#cb507-15" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> F,</span>
+<span id="cb507-16"><a href="modeling-data.html#cb507-16" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">1</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb507-17"><a href="modeling-data.html#cb507-17" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb507-18"><a href="modeling-data.html#cb507-18" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb507-19"><a href="modeling-data.html#cb507-19" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
 <img src="09-modeling_data_files/figure-html/unnamed-chunk-4-1.png" alt="Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive." width="672" />
 <p class="caption">
@@ -918,93 +936,97 @@ Figure 6.1: Figure that I used to illustrate that fitting more data points with 
 </div>
 <div id="sampling-distributions-for-median-and-mean" class="section level3 hasAnchor" number="9.2.2">
 <h3><span class="header-section-number">9.2.2</span> Sampling distributions for median and mean<a href="modeling-data.html#sampling-distributions-for-median-and-mean" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="modeling-data.html#cb490-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb490-2"><a href="modeling-data.html#cb490-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb490-3"><a href="modeling-data.html#cb490-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb490-4"><a href="modeling-data.html#cb490-4" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">40</span> <span class="co"># size of each sample</span></span>
-<span id="cb490-5"><a href="modeling-data.html#cb490-5" aria-hidden="true" tabindex="-1"></a>sample_n <span class="ot">=</span> <span class="dv">1000</span> <span class="co"># number of samples </span></span>
-<span id="cb490-6"><a href="modeling-data.html#cb490-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb490-7"><a href="modeling-data.html#cb490-7" aria-hidden="true" tabindex="-1"></a><span class="co"># draw sample</span></span>
-<span id="cb490-8"><a href="modeling-data.html#cb490-8" aria-hidden="true" tabindex="-1"></a>fun.draw_sample <span class="ot">=</span> <span class="cf">function</span>(sample_size, distribution){</span>
-<span id="cb490-9"><a href="modeling-data.html#cb490-9" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="dv">50</span> <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size)</span>
-<span id="cb490-10"><a href="modeling-data.html#cb490-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb490-11"><a href="modeling-data.html#cb490-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb490-12"><a href="modeling-data.html#cb490-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb490-13"><a href="modeling-data.html#cb490-13" aria-hidden="true" tabindex="-1"></a><span class="co"># generate many samples </span></span>
-<span id="cb490-14"><a href="modeling-data.html#cb490-14" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">=</span> <span class="fu">replicate</span>(<span class="at">n =</span> sample_n,</span>
-<span id="cb490-15"><a href="modeling-data.html#cb490-15" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">fun.draw_sample</span>(sample_size, df.population))</span>
-<span id="cb490-16"><a href="modeling-data.html#cb490-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb490-17"><a href="modeling-data.html#cb490-17" aria-hidden="true" tabindex="-1"></a><span class="co"># set up a data frame with samples </span></span>
-<span id="cb490-18"><a href="modeling-data.html#cb490-18" aria-hidden="true" tabindex="-1"></a>df.sampling_distribution <span class="ot">=</span> <span class="fu">matrix</span>(samples, <span class="at">ncol =</span> sample_n) <span class="sc">%&gt;%</span></span>
-<span id="cb490-19"><a href="modeling-data.html#cb490-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">str_c</span>(<span class="dv">1</span><span class="sc">:</span>sample_n)) <span class="sc">%&gt;%</span></span>
-<span id="cb490-20"><a href="modeling-data.html#cb490-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb490-21"><a href="modeling-data.html#cb490-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;sample&quot;</span>,</span>
-<span id="cb490-22"><a href="modeling-data.html#cb490-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;number&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb490-23"><a href="modeling-data.html#cb490-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">as.numeric</span>(sample)) <span class="sc">%&gt;%</span> </span>
-<span id="cb490-24"><a href="modeling-data.html#cb490-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb490-25"><a href="modeling-data.html#cb490-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">draw =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb490-26"><a href="modeling-data.html#cb490-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sample, draw, number) <span class="sc">%&gt;%</span> </span>
-<span id="cb490-27"><a href="modeling-data.html#cb490-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb490-28"><a href="modeling-data.html#cb490-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb490-29"><a href="modeling-data.html#cb490-29" aria-hidden="true" tabindex="-1"></a><span class="co"># turn the data frame into long format and calculate the mean and median of each sample</span></span>
-<span id="cb490-30"><a href="modeling-data.html#cb490-30" aria-hidden="true" tabindex="-1"></a>df.sampling_distribution_summaries <span class="ot">=</span> df.sampling_distribution <span class="sc">%&gt;%</span> </span>
-<span id="cb490-31"><a href="modeling-data.html#cb490-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb490-32"><a href="modeling-data.html#cb490-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(number),</span>
-<span id="cb490-33"><a href="modeling-data.html#cb490-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(number)) <span class="sc">%&gt;%</span> </span>
-<span id="cb490-34"><a href="modeling-data.html#cb490-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb490-35"><a href="modeling-data.html#cb490-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
-<span id="cb490-36"><a href="modeling-data.html#cb490-36" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb490-37"><a href="modeling-data.html#cb490-37" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="modeling-data.html#cb508-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
+<span id="cb508-2"><a href="modeling-data.html#cb508-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb508-3"><a href="modeling-data.html#cb508-3" tabindex="-1"></a></span>
+<span id="cb508-4"><a href="modeling-data.html#cb508-4" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">40</span> <span class="co"># size of each sample</span></span>
+<span id="cb508-5"><a href="modeling-data.html#cb508-5" tabindex="-1"></a>sample_n <span class="ot">=</span> <span class="dv">1000</span> <span class="co"># number of samples </span></span>
+<span id="cb508-6"><a href="modeling-data.html#cb508-6" tabindex="-1"></a></span>
+<span id="cb508-7"><a href="modeling-data.html#cb508-7" tabindex="-1"></a><span class="co"># draw sample</span></span>
+<span id="cb508-8"><a href="modeling-data.html#cb508-8" tabindex="-1"></a>fun.draw_sample <span class="ot">=</span> <span class="cf">function</span>(sample_size, distribution){</span>
+<span id="cb508-9"><a href="modeling-data.html#cb508-9" tabindex="-1"></a>  x <span class="ot">=</span> <span class="dv">50</span> <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size)</span>
+<span id="cb508-10"><a href="modeling-data.html#cb508-10" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb508-11"><a href="modeling-data.html#cb508-11" tabindex="-1"></a>}</span>
+<span id="cb508-12"><a href="modeling-data.html#cb508-12" tabindex="-1"></a></span>
+<span id="cb508-13"><a href="modeling-data.html#cb508-13" tabindex="-1"></a><span class="co"># generate many samples </span></span>
+<span id="cb508-14"><a href="modeling-data.html#cb508-14" tabindex="-1"></a>samples <span class="ot">=</span> <span class="fu">replicate</span>(<span class="at">n =</span> sample_n,</span>
+<span id="cb508-15"><a href="modeling-data.html#cb508-15" tabindex="-1"></a>                    <span class="fu">fun.draw_sample</span>(sample_size, df.population))</span>
+<span id="cb508-16"><a href="modeling-data.html#cb508-16" tabindex="-1"></a></span>
+<span id="cb508-17"><a href="modeling-data.html#cb508-17" tabindex="-1"></a><span class="co"># set up a data frame with samples </span></span>
+<span id="cb508-18"><a href="modeling-data.html#cb508-18" tabindex="-1"></a>df.sampling_distribution <span class="ot">=</span> <span class="fu">matrix</span>(samples, <span class="at">ncol =</span> sample_n) <span class="sc">%&gt;%</span></span>
+<span id="cb508-19"><a href="modeling-data.html#cb508-19" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">str_c</span>(<span class="dv">1</span><span class="sc">:</span>sample_n)) <span class="sc">%&gt;%</span></span>
+<span id="cb508-20"><a href="modeling-data.html#cb508-20" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb508-21"><a href="modeling-data.html#cb508-21" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;sample&quot;</span>,</span>
+<span id="cb508-22"><a href="modeling-data.html#cb508-22" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;number&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb508-23"><a href="modeling-data.html#cb508-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">as.numeric</span>(sample)) <span class="sc">%&gt;%</span> </span>
+<span id="cb508-24"><a href="modeling-data.html#cb508-24" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb508-25"><a href="modeling-data.html#cb508-25" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">draw =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb508-26"><a href="modeling-data.html#cb508-26" tabindex="-1"></a>  <span class="fu">select</span>(sample, draw, number) <span class="sc">%&gt;%</span> </span>
+<span id="cb508-27"><a href="modeling-data.html#cb508-27" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb508-28"><a href="modeling-data.html#cb508-28" tabindex="-1"></a></span>
+<span id="cb508-29"><a href="modeling-data.html#cb508-29" tabindex="-1"></a><span class="co"># turn the data frame into long format and calculate the mean and median of each sample</span></span>
+<span id="cb508-30"><a href="modeling-data.html#cb508-30" tabindex="-1"></a>df.sampling_distribution_summaries <span class="ot">=</span> df.sampling_distribution <span class="sc">%&gt;%</span> </span>
+<span id="cb508-31"><a href="modeling-data.html#cb508-31" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb508-32"><a href="modeling-data.html#cb508-32" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(number),</span>
+<span id="cb508-33"><a href="modeling-data.html#cb508-33" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(number)) <span class="sc">%&gt;%</span> </span>
+<span id="cb508-34"><a href="modeling-data.html#cb508-34" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb508-35"><a href="modeling-data.html#cb508-35" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
+<span id="cb508-36"><a href="modeling-data.html#cb508-36" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb508-37"><a href="modeling-data.html#cb508-37" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
 <p>And plot it:</p>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="modeling-data.html#cb491-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a histogram of the means with density overlaid </span></span>
-<span id="cb491-2"><a href="modeling-data.html#cb491-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb491-3"><a href="modeling-data.html#cb491-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.sampling_distribution_summaries,</span>
-<span id="cb491-4"><a href="modeling-data.html#cb491-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">color =</span> index)) <span class="sc">+</span> </span>
-<span id="cb491-5"><a href="modeling-data.html#cb491-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">bw =</span> <span class="fl">0.1</span>,</span>
-<span id="cb491-6"><a href="modeling-data.html#cb491-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb491-7"><a href="modeling-data.html#cb491-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb491-8"><a href="modeling-data.html#cb491-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="modeling-data.html#cb509-1" tabindex="-1"></a><span class="co"># plot a histogram of the means with density overlaid </span></span>
+<span id="cb509-2"><a href="modeling-data.html#cb509-2" tabindex="-1"></a></span>
+<span id="cb509-3"><a href="modeling-data.html#cb509-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.sampling_distribution_summaries,</span>
+<span id="cb509-4"><a href="modeling-data.html#cb509-4" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">color =</span> index)) <span class="sc">+</span> </span>
+<span id="cb509-5"><a href="modeling-data.html#cb509-5" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">bw =</span> <span class="fl">0.1</span>,</span>
+<span id="cb509-6"><a href="modeling-data.html#cb509-6" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb509-7"><a href="modeling-data.html#cb509-7" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb509-8"><a href="modeling-data.html#cb509-8" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>)))</span></code></pre></div>
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <p><img src="09-modeling_data_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="residuals-need-to-be-normally-distributed-not-the-data-itself" class="section level3 hasAnchor" number="9.2.3">
 <h3><span class="header-section-number">9.2.3</span> Residuals need to be normally distributed, not the data itself<a href="modeling-data.html#residuals-need-to-be-normally-distributed-not-the-data-itself" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="modeling-data.html#cb492-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb492-2"><a href="modeling-data.html#cb492-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb492-3"><a href="modeling-data.html#cb492-3" aria-hidden="true" tabindex="-1"></a>n_participants <span class="ot">=</span> <span class="dv">1000</span></span>
-<span id="cb492-4"><a href="modeling-data.html#cb492-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb492-5"><a href="modeling-data.html#cb492-5" aria-hidden="true" tabindex="-1"></a>df.normal <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span>n_participants,</span>
-<span id="cb492-6"><a href="modeling-data.html#cb492-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">condition =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;control&quot;</span>, <span class="st">&quot;experimental&quot;</span>), <span class="at">each =</span> n_participants<span class="sc">/</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb492-7"><a href="modeling-data.html#cb492-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">ifelse</span>(condition <span class="sc">==</span> <span class="st">&quot;control&quot;</span>,</span>
-<span id="cb492-8"><a href="modeling-data.html#cb492-8" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">rnorm</span>(<span class="at">n =</span> n_participants, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
-<span id="cb492-9"><a href="modeling-data.html#cb492-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">rnorm</span>(<span class="at">n =</span> n_participants, <span class="at">mean =</span> <span class="dv">15</span>, <span class="at">sd =</span> <span class="dv">3</span>)))</span>
-<span id="cb492-10"><a href="modeling-data.html#cb492-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb492-11"><a href="modeling-data.html#cb492-11" aria-hidden="true" tabindex="-1"></a><span class="co"># distribution of the data </span></span>
-<span id="cb492-12"><a href="modeling-data.html#cb492-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.normal,</span>
-<span id="cb492-13"><a href="modeling-data.html#cb492-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> score)) <span class="sc">+</span> </span>
-<span id="cb492-14"><a href="modeling-data.html#cb492-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb492-15"><a href="modeling-data.html#cb492-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">group =</span> condition,</span>
-<span id="cb492-16"><a href="modeling-data.html#cb492-16" aria-hidden="true" tabindex="-1"></a>                             <span class="at">color =</span> condition))</span>
-<span id="cb492-17"><a href="modeling-data.html#cb492-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb492-18"><a href="modeling-data.html#cb492-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb492-19"><a href="modeling-data.html#cb492-19" aria-hidden="true" tabindex="-1"></a><span class="co"># distribution of the residuals after having fitted a linear model </span></span>
-<span id="cb492-20"><a href="modeling-data.html#cb492-20" aria-hidden="true" tabindex="-1"></a><span class="co"># we&#39;ll learn how to do this later   </span></span>
-<span id="cb492-21"><a href="modeling-data.html#cb492-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb492-22"><a href="modeling-data.html#cb492-22" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> score <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition,</span>
-<span id="cb492-23"><a href="modeling-data.html#cb492-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> df.normal)</span>
-<span id="cb492-24"><a href="modeling-data.html#cb492-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb492-25"><a href="modeling-data.html#cb492-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb492-26"><a href="modeling-data.html#cb492-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">residuals =</span> fit<span class="sc">$</span>residuals),</span>
-<span id="cb492-27"><a href="modeling-data.html#cb492-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> residuals)) <span class="sc">+</span> </span>
-<span id="cb492-28"><a href="modeling-data.html#cb492-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="modeling-data.html#cb511-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb511-2"><a href="modeling-data.html#cb511-2" tabindex="-1"></a></span>
+<span id="cb511-3"><a href="modeling-data.html#cb511-3" tabindex="-1"></a>n_participants <span class="ot">=</span> <span class="dv">1000</span></span>
+<span id="cb511-4"><a href="modeling-data.html#cb511-4" tabindex="-1"></a></span>
+<span id="cb511-5"><a href="modeling-data.html#cb511-5" tabindex="-1"></a>df.normal <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span>n_participants,</span>
+<span id="cb511-6"><a href="modeling-data.html#cb511-6" tabindex="-1"></a>                   <span class="at">condition =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;control&quot;</span>, <span class="st">&quot;experimental&quot;</span>), <span class="at">each =</span> n_participants<span class="sc">/</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb511-7"><a href="modeling-data.html#cb511-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">ifelse</span>(condition <span class="sc">==</span> <span class="st">&quot;control&quot;</span>,</span>
+<span id="cb511-8"><a href="modeling-data.html#cb511-8" tabindex="-1"></a>                        <span class="fu">rnorm</span>(<span class="at">n =</span> n_participants, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
+<span id="cb511-9"><a href="modeling-data.html#cb511-9" tabindex="-1"></a>                        <span class="fu">rnorm</span>(<span class="at">n =</span> n_participants, <span class="at">mean =</span> <span class="dv">15</span>, <span class="at">sd =</span> <span class="dv">3</span>)))</span>
+<span id="cb511-10"><a href="modeling-data.html#cb511-10" tabindex="-1"></a></span>
+<span id="cb511-11"><a href="modeling-data.html#cb511-11" tabindex="-1"></a><span class="co"># distribution of the data </span></span>
+<span id="cb511-12"><a href="modeling-data.html#cb511-12" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.normal,</span>
+<span id="cb511-13"><a href="modeling-data.html#cb511-13" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> score)) <span class="sc">+</span> </span>
+<span id="cb511-14"><a href="modeling-data.html#cb511-14" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb511-15"><a href="modeling-data.html#cb511-15" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">group =</span> condition,</span>
+<span id="cb511-16"><a href="modeling-data.html#cb511-16" tabindex="-1"></a>                             <span class="at">color =</span> condition))</span>
+<span id="cb511-17"><a href="modeling-data.html#cb511-17" tabindex="-1"></a>  </span>
+<span id="cb511-18"><a href="modeling-data.html#cb511-18" tabindex="-1"></a></span>
+<span id="cb511-19"><a href="modeling-data.html#cb511-19" tabindex="-1"></a><span class="co"># distribution of the residuals after having fitted a linear model </span></span>
+<span id="cb511-20"><a href="modeling-data.html#cb511-20" tabindex="-1"></a><span class="co"># we&#39;ll learn how to do this later   </span></span>
+<span id="cb511-21"><a href="modeling-data.html#cb511-21" tabindex="-1"></a></span>
+<span id="cb511-22"><a href="modeling-data.html#cb511-22" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> score <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition,</span>
+<span id="cb511-23"><a href="modeling-data.html#cb511-23" tabindex="-1"></a>         <span class="at">data =</span> df.normal)</span>
+<span id="cb511-24"><a href="modeling-data.html#cb511-24" tabindex="-1"></a></span>
+<span id="cb511-25"><a href="modeling-data.html#cb511-25" tabindex="-1"></a></span>
+<span id="cb511-26"><a href="modeling-data.html#cb511-26" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">residuals =</span> fit<span class="sc">$</span>residuals),</span>
+<span id="cb511-27"><a href="modeling-data.html#cb511-27" tabindex="-1"></a>                     <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> residuals)) <span class="sc">+</span> </span>
+<span id="cb511-28"><a href="modeling-data.html#cb511-28" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
 <p><img src="09-modeling_data_files/figure-html/unnamed-chunk-7-1.png" width="672" /><img src="09-modeling_data_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
 </div>
 </div>
 <div id="hypothesis-testing-one-sample-t-test" class="section level2 hasAnchor" number="9.3">
 <h2><span class="header-section-number">9.3</span> Hypothesis testing: “One-sample t-test”<a href="modeling-data.html#hypothesis-testing-one-sample-t-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="modeling-data.html#cb493-1" aria-hidden="true" tabindex="-1"></a>df.internet <span class="ot">=</span> <span class="fu">read_table2</span>(<span class="at">file =</span> <span class="st">&quot;data/internet_access.txt&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb493-2"><a href="modeling-data.html#cb493-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="modeling-data.html#cb512-1" tabindex="-1"></a>df.internet <span class="ot">=</span> <span class="fu">read_table2</span>(<span class="at">file =</span> <span class="st">&quot;data/internet_access.txt&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb512-2"><a href="modeling-data.html#cb512-2" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code></pre></div>
 <pre><code>
-── Column specification ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 cols(
   State = col_character(),
   Internet = col_double(),
@@ -1012,13 +1034,13 @@ cols(
   Auto = col_double(),
   Density = col_double()
 )</code></pre>
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="modeling-data.html#cb495-1" aria-hidden="true" tabindex="-1"></a>df.internet <span class="sc">%&gt;%</span> </span>
-<span id="cb495-2"><a href="modeling-data.html#cb495-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb495-3"><a href="modeling-data.html#cb495-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(i, internet, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb495-4"><a href="modeling-data.html#cb495-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb495-5"><a href="modeling-data.html#cb495-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb495-6"><a href="modeling-data.html#cb495-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb495-7"><a href="modeling-data.html#cb495-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="modeling-data.html#cb514-1" tabindex="-1"></a>df.internet <span class="sc">%&gt;%</span> </span>
+<span id="cb514-2"><a href="modeling-data.html#cb514-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb514-3"><a href="modeling-data.html#cb514-3" tabindex="-1"></a>  <span class="fu">select</span>(i, internet, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb514-4"><a href="modeling-data.html#cb514-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb514-5"><a href="modeling-data.html#cb514-5" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb514-6"><a href="modeling-data.html#cb514-6" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
+<span id="cb514-7"><a href="modeling-data.html#cb514-7" tabindex="-1"></a>              <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1245,30 +1267,30 @@ GA
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="modeling-data.html#cb496-1" aria-hidden="true" tabindex="-1"></a><span class="co"># parameters per model </span></span>
-<span id="cb496-2"><a href="modeling-data.html#cb496-2" aria-hidden="true" tabindex="-1"></a>pa <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb496-3"><a href="modeling-data.html#cb496-3" aria-hidden="true" tabindex="-1"></a>pc <span class="ot">=</span> <span class="dv">0</span> </span>
-<span id="cb496-4"><a href="modeling-data.html#cb496-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb496-5"><a href="modeling-data.html#cb496-5" aria-hidden="true" tabindex="-1"></a>df.model <span class="ot">=</span> df.internet <span class="sc">%&gt;%</span></span>
-<span id="cb496-6"><a href="modeling-data.html#cb496-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(internet, state) <span class="sc">%&gt;%</span> </span>
-<span id="cb496-7"><a href="modeling-data.html#cb496-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(),</span>
-<span id="cb496-8"><a href="modeling-data.html#cb496-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">compact_b =</span> <span class="dv">75</span>,</span>
-<span id="cb496-9"><a href="modeling-data.html#cb496-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">augmented_b =</span> <span class="fu">mean</span>(internet),</span>
-<span id="cb496-10"><a href="modeling-data.html#cb496-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">compact_se =</span> (internet<span class="sc">-</span>compact_b)<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb496-11"><a href="modeling-data.html#cb496-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">augmented_se =</span> (internet<span class="sc">-</span>augmented_b)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb496-12"><a href="modeling-data.html#cb496-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(i, state, internet, <span class="fu">contains</span>(<span class="st">&quot;compact&quot;</span>), <span class="fu">contains</span>(<span class="st">&quot;augmented&quot;</span>))</span>
-<span id="cb496-13"><a href="modeling-data.html#cb496-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb496-14"><a href="modeling-data.html#cb496-14" aria-hidden="true" tabindex="-1"></a>df.model <span class="sc">%&gt;%</span> </span>
-<span id="cb496-15"><a href="modeling-data.html#cb496-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">augmented_sse =</span> <span class="fu">sum</span>(augmented_se),</span>
-<span id="cb496-16"><a href="modeling-data.html#cb496-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">compact_sse =</span> <span class="fu">sum</span>(compact_se),</span>
-<span id="cb496-17"><a href="modeling-data.html#cb496-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> augmented_sse<span class="sc">/</span>compact_sse,</span>
-<span id="cb496-18"><a href="modeling-data.html#cb496-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">f =</span> (pre<span class="sc">/</span>(pa<span class="sc">-</span>pc))<span class="sc">/</span>((<span class="dv">1</span><span class="sc">-</span>pre)<span class="sc">/</span>(<span class="fu">nrow</span>(df.model)<span class="sc">-</span>pa)),</span>
-<span id="cb496-19"><a href="modeling-data.html#cb496-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">p_value =</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(f, pa<span class="sc">-</span>pc, <span class="fu">nrow</span>(df.model)<span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb496-20"><a href="modeling-data.html#cb496-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(internet),</span>
-<span id="cb496-21"><a href="modeling-data.html#cb496-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(internet)) <span class="sc">%&gt;%</span> </span>
-<span id="cb496-22"><a href="modeling-data.html#cb496-22" aria-hidden="true" tabindex="-1"></a>              <span class="fu">kable</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb496-23"><a href="modeling-data.html#cb496-23" aria-hidden="true" tabindex="-1"></a>              <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb496-24"><a href="modeling-data.html#cb496-24" aria-hidden="true" tabindex="-1"></a>                          <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="modeling-data.html#cb515-1" tabindex="-1"></a><span class="co"># parameters per model </span></span>
+<span id="cb515-2"><a href="modeling-data.html#cb515-2" tabindex="-1"></a>pa <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb515-3"><a href="modeling-data.html#cb515-3" tabindex="-1"></a>pc <span class="ot">=</span> <span class="dv">0</span> </span>
+<span id="cb515-4"><a href="modeling-data.html#cb515-4" tabindex="-1"></a></span>
+<span id="cb515-5"><a href="modeling-data.html#cb515-5" tabindex="-1"></a>df.model <span class="ot">=</span> df.internet <span class="sc">%&gt;%</span></span>
+<span id="cb515-6"><a href="modeling-data.html#cb515-6" tabindex="-1"></a>  <span class="fu">select</span>(internet, state) <span class="sc">%&gt;%</span> </span>
+<span id="cb515-7"><a href="modeling-data.html#cb515-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(),</span>
+<span id="cb515-8"><a href="modeling-data.html#cb515-8" tabindex="-1"></a>         <span class="at">compact_b =</span> <span class="dv">75</span>,</span>
+<span id="cb515-9"><a href="modeling-data.html#cb515-9" tabindex="-1"></a>         <span class="at">augmented_b =</span> <span class="fu">mean</span>(internet),</span>
+<span id="cb515-10"><a href="modeling-data.html#cb515-10" tabindex="-1"></a>         <span class="at">compact_se =</span> (internet<span class="sc">-</span>compact_b)<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb515-11"><a href="modeling-data.html#cb515-11" tabindex="-1"></a>         <span class="at">augmented_se =</span> (internet<span class="sc">-</span>augmented_b)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb515-12"><a href="modeling-data.html#cb515-12" tabindex="-1"></a>  <span class="fu">select</span>(i, state, internet, <span class="fu">contains</span>(<span class="st">&quot;compact&quot;</span>), <span class="fu">contains</span>(<span class="st">&quot;augmented&quot;</span>))</span>
+<span id="cb515-13"><a href="modeling-data.html#cb515-13" tabindex="-1"></a>  </span>
+<span id="cb515-14"><a href="modeling-data.html#cb515-14" tabindex="-1"></a>df.model <span class="sc">%&gt;%</span> </span>
+<span id="cb515-15"><a href="modeling-data.html#cb515-15" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">augmented_sse =</span> <span class="fu">sum</span>(augmented_se),</span>
+<span id="cb515-16"><a href="modeling-data.html#cb515-16" tabindex="-1"></a>            <span class="at">compact_sse =</span> <span class="fu">sum</span>(compact_se),</span>
+<span id="cb515-17"><a href="modeling-data.html#cb515-17" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> augmented_sse<span class="sc">/</span>compact_sse,</span>
+<span id="cb515-18"><a href="modeling-data.html#cb515-18" tabindex="-1"></a>            <span class="at">f =</span> (pre<span class="sc">/</span>(pa<span class="sc">-</span>pc))<span class="sc">/</span>((<span class="dv">1</span><span class="sc">-</span>pre)<span class="sc">/</span>(<span class="fu">nrow</span>(df.model)<span class="sc">-</span>pa)),</span>
+<span id="cb515-19"><a href="modeling-data.html#cb515-19" tabindex="-1"></a>            <span class="at">p_value =</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(f, pa<span class="sc">-</span>pc, <span class="fu">nrow</span>(df.model)<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb515-20"><a href="modeling-data.html#cb515-20" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(internet),</span>
+<span id="cb515-21"><a href="modeling-data.html#cb515-21" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(internet)) <span class="sc">%&gt;%</span> </span>
+<span id="cb515-22"><a href="modeling-data.html#cb515-22" tabindex="-1"></a>              <span class="fu">kable</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb515-23"><a href="modeling-data.html#cb515-23" tabindex="-1"></a>              <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
+<span id="cb515-24"><a href="modeling-data.html#cb515-24" tabindex="-1"></a>                          <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1321,26 +1343,29 @@ sd
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="modeling-data.html#cb497-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb497-2"><a href="modeling-data.html#cb497-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">=</span> <span class="dv">49</span></span>
-<span id="cb497-3"><a href="modeling-data.html#cb497-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb497-4"><a href="modeling-data.html#cb497-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>)),</span>
-<span id="cb497-5"><a href="modeling-data.html#cb497-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
-<span id="cb497-6"><a href="modeling-data.html#cb497-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="st">&quot;df&quot;</span>,</span>
-<span id="cb497-7"><a href="modeling-data.html#cb497-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">geom =</span> <span class="st">&quot;area&quot;</span>,</span>
-<span id="cb497-8"><a href="modeling-data.html#cb497-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb497-9"><a href="modeling-data.html#cb497-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<span id="cb497-10"><a href="modeling-data.html#cb497-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df1 =</span> df1,</span>
-<span id="cb497-11"><a href="modeling-data.html#cb497-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">df2 =</span> df2),</span>
-<span id="cb497-12"><a href="modeling-data.html#cb497-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>,</span>
-<span id="cb497-13"><a href="modeling-data.html#cb497-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> df1, <span class="at">df2 =</span> df2), <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb497-14"><a href="modeling-data.html#cb497-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">df</span>(<span class="at">x =</span> .,</span>
-<span id="cb497-15"><a href="modeling-data.html#cb497-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">df1 =</span> df1,</span>
-<span id="cb497-16"><a href="modeling-data.html#cb497-16" aria-hidden="true" tabindex="-1"></a>                           <span class="at">df2 =</span> df2),</span>
-<span id="cb497-17"><a href="modeling-data.html#cb497-17" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb497-18"><a href="modeling-data.html#cb497-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">add =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>))) <span class="sc">+</span></span>
-<span id="cb497-19"><a href="modeling-data.html#cb497-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Density&quot;</span>,</span>
-<span id="cb497-20"><a href="modeling-data.html#cb497-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Proportional reduction in error&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="modeling-data.html#cb516-1" tabindex="-1"></a>df1 <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb516-2"><a href="modeling-data.html#cb516-2" tabindex="-1"></a>df2 <span class="ot">=</span> <span class="dv">49</span></span>
+<span id="cb516-3"><a href="modeling-data.html#cb516-3" tabindex="-1"></a></span>
+<span id="cb516-4"><a href="modeling-data.html#cb516-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>)),</span>
+<span id="cb516-5"><a href="modeling-data.html#cb516-5" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
+<span id="cb516-6"><a href="modeling-data.html#cb516-6" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="st">&quot;df&quot;</span>,</span>
+<span id="cb516-7"><a href="modeling-data.html#cb516-7" tabindex="-1"></a>                <span class="at">geom =</span> <span class="st">&quot;area&quot;</span>,</span>
+<span id="cb516-8"><a href="modeling-data.html#cb516-8" tabindex="-1"></a>                <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb516-9"><a href="modeling-data.html#cb516-9" tabindex="-1"></a>                <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb516-10"><a href="modeling-data.html#cb516-10" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df1 =</span> df1,</span>
+<span id="cb516-11"><a href="modeling-data.html#cb516-11" tabindex="-1"></a>                            <span class="at">df2 =</span> df2),</span>
+<span id="cb516-12"><a href="modeling-data.html#cb516-12" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>,</span>
+<span id="cb516-13"><a href="modeling-data.html#cb516-13" tabindex="-1"></a>                <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> df1, <span class="at">df2 =</span> df2), <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb516-14"><a href="modeling-data.html#cb516-14" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">df</span>(<span class="at">x =</span> .,</span>
+<span id="cb516-15"><a href="modeling-data.html#cb516-15" tabindex="-1"></a>                           <span class="at">df1 =</span> df1,</span>
+<span id="cb516-16"><a href="modeling-data.html#cb516-16" tabindex="-1"></a>                           <span class="at">df2 =</span> df2),</span>
+<span id="cb516-17"><a href="modeling-data.html#cb516-17" tabindex="-1"></a>                <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb516-18"><a href="modeling-data.html#cb516-18" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">add =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>))) <span class="sc">+</span></span>
+<span id="cb516-19"><a href="modeling-data.html#cb516-19" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Density&quot;</span>,</span>
+<span id="cb516-20"><a href="modeling-data.html#cb516-20" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Proportional reduction in error&quot;</span>)</span></code></pre></div>
+<pre><code>Warning: Computation failed in `stat_function()`
+Caused by error in `fun()`:
+! could not find function &quot;fun&quot;</code></pre>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-11"></span>
 <img src="09-modeling_data_files/figure-html/unnamed-chunk-11-1.png" alt="F-distribution" width="672" />
 <p class="caption">
@@ -1348,7 +1373,7 @@ Figure 9.1: F-distribution
 </p>
 </div>
 <p>We’ve implemented a one sample t-test (compare the p-value here to the one I computed above using PRE and the F statistic).</p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="modeling-data.html#cb498-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(df.internet<span class="sc">$</span>internet, <span class="at">mu =</span> <span class="dv">75</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="modeling-data.html#cb518-1" tabindex="-1"></a><span class="fu">t.test</span>(df.internet<span class="sc">$</span>internet, <span class="at">mu =</span> <span class="dv">75</span>)</span></code></pre></div>
 <pre><code>
     One Sample t-test
 
@@ -1370,92 +1395,92 @@ mean of x
 </ul>
 <p>whereby I assume that <span class="math inline">\(\epsilon_i \sim \mathcal{N}(0, \sigma)\)</span>.</p>
 <p>For this example, I assume that I know the population distribution. I first draw a sample from that distribution, and then calculate PRE.</p>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="modeling-data.html#cb500-1" aria-hidden="true" tabindex="-1"></a><span class="co"># make example reproducible</span></span>
-<span id="cb500-2"><a href="modeling-data.html#cb500-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb500-3"><a href="modeling-data.html#cb500-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb500-4"><a href="modeling-data.html#cb500-4" aria-hidden="true" tabindex="-1"></a><span class="co"># set the sample size </span></span>
-<span id="cb500-5"><a href="modeling-data.html#cb500-5" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">50</span> </span>
-<span id="cb500-6"><a href="modeling-data.html#cb500-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb500-7"><a href="modeling-data.html#cb500-7" aria-hidden="true" tabindex="-1"></a><span class="co"># draw sample from the population distribution (I&#39;ve fixed sigma -- the standard deviation</span></span>
-<span id="cb500-8"><a href="modeling-data.html#cb500-8" aria-hidden="true" tabindex="-1"></a><span class="co"># of the population distribution to be 5)</span></span>
-<span id="cb500-9"><a href="modeling-data.html#cb500-9" aria-hidden="true" tabindex="-1"></a>df.sample <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">observation =</span> <span class="dv">1</span><span class="sc">:</span>sample_size,</span>
-<span id="cb500-10"><a href="modeling-data.html#cb500-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">value =</span> <span class="dv">75</span> <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>))</span>
-<span id="cb500-11"><a href="modeling-data.html#cb500-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb500-12"><a href="modeling-data.html#cb500-12" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate SSE for each model, and then PRE based on that </span></span>
-<span id="cb500-13"><a href="modeling-data.html#cb500-13" aria-hidden="true" tabindex="-1"></a>df.summary <span class="ot">=</span> df.sample <span class="sc">%&gt;%</span> </span>
-<span id="cb500-14"><a href="modeling-data.html#cb500-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> <span class="dv">75</span>,</span>
-<span id="cb500-15"><a href="modeling-data.html#cb500-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
-<span id="cb500-16"><a href="modeling-data.html#cb500-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sse_compact =</span> <span class="fu">sum</span>((value <span class="sc">-</span> compact)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb500-17"><a href="modeling-data.html#cb500-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">sse_augmented =</span> <span class="fu">sum</span>((value <span class="sc">-</span> augmented)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb500-18"><a href="modeling-data.html#cb500-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> (sse_augmented<span class="sc">/</span>sse_compact))</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="modeling-data.html#cb520-1" tabindex="-1"></a><span class="co"># make example reproducible</span></span>
+<span id="cb520-2"><a href="modeling-data.html#cb520-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb520-3"><a href="modeling-data.html#cb520-3" tabindex="-1"></a></span>
+<span id="cb520-4"><a href="modeling-data.html#cb520-4" tabindex="-1"></a><span class="co"># set the sample size </span></span>
+<span id="cb520-5"><a href="modeling-data.html#cb520-5" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">50</span> </span>
+<span id="cb520-6"><a href="modeling-data.html#cb520-6" tabindex="-1"></a></span>
+<span id="cb520-7"><a href="modeling-data.html#cb520-7" tabindex="-1"></a><span class="co"># draw sample from the population distribution (I&#39;ve fixed sigma -- the standard deviation</span></span>
+<span id="cb520-8"><a href="modeling-data.html#cb520-8" tabindex="-1"></a><span class="co"># of the population distribution to be 5)</span></span>
+<span id="cb520-9"><a href="modeling-data.html#cb520-9" tabindex="-1"></a>df.sample <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">observation =</span> <span class="dv">1</span><span class="sc">:</span>sample_size,</span>
+<span id="cb520-10"><a href="modeling-data.html#cb520-10" tabindex="-1"></a>                   <span class="at">value =</span> <span class="dv">75</span> <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>))</span>
+<span id="cb520-11"><a href="modeling-data.html#cb520-11" tabindex="-1"></a></span>
+<span id="cb520-12"><a href="modeling-data.html#cb520-12" tabindex="-1"></a><span class="co"># calculate SSE for each model, and then PRE based on that </span></span>
+<span id="cb520-13"><a href="modeling-data.html#cb520-13" tabindex="-1"></a>df.summary <span class="ot">=</span> df.sample <span class="sc">%&gt;%</span> </span>
+<span id="cb520-14"><a href="modeling-data.html#cb520-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> <span class="dv">75</span>,</span>
+<span id="cb520-15"><a href="modeling-data.html#cb520-15" tabindex="-1"></a>         <span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
+<span id="cb520-16"><a href="modeling-data.html#cb520-16" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sse_compact =</span> <span class="fu">sum</span>((value <span class="sc">-</span> compact)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb520-17"><a href="modeling-data.html#cb520-17" tabindex="-1"></a>            <span class="at">sse_augmented =</span> <span class="fu">sum</span>((value <span class="sc">-</span> augmented)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb520-18"><a href="modeling-data.html#cb520-18" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> (sse_augmented<span class="sc">/</span>sse_compact))</span></code></pre></div>
 <p>To generate the sampling distribution, I assume that the null hypothesis is true, and then take a look at what values for PRE we could expect by chance for our given sample size.</p>
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="modeling-data.html#cb501-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simulation parameters</span></span>
-<span id="cb501-2"><a href="modeling-data.html#cb501-2" aria-hidden="true" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">1000</span></span>
-<span id="cb501-3"><a href="modeling-data.html#cb501-3" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">50</span> </span>
-<span id="cb501-4"><a href="modeling-data.html#cb501-4" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">=</span> <span class="dv">75</span> <span class="co"># true mean of the distribution </span></span>
-<span id="cb501-5"><a href="modeling-data.html#cb501-5" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="dv">5</span> <span class="co"># true standard deviation of the errors </span></span>
-<span id="cb501-6"><a href="modeling-data.html#cb501-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb501-7"><a href="modeling-data.html#cb501-7" aria-hidden="true" tabindex="-1"></a><span class="co"># function to draw samples from the population distribution </span></span>
-<span id="cb501-8"><a href="modeling-data.html#cb501-8" aria-hidden="true" tabindex="-1"></a>fun.draw_sample <span class="ot">=</span> <span class="cf">function</span>(sample_size, mu, sigma){</span>
-<span id="cb501-9"><a href="modeling-data.html#cb501-9" aria-hidden="true" tabindex="-1"></a>  sample <span class="ot">=</span> mu <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size,</span>
-<span id="cb501-10"><a href="modeling-data.html#cb501-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">mean =</span> <span class="dv">0</span>,</span>
-<span id="cb501-11"><a href="modeling-data.html#cb501-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sd =</span> sigma)</span>
-<span id="cb501-12"><a href="modeling-data.html#cb501-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(sample)</span>
-<span id="cb501-13"><a href="modeling-data.html#cb501-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb501-14"><a href="modeling-data.html#cb501-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb501-15"><a href="modeling-data.html#cb501-15" aria-hidden="true" tabindex="-1"></a><span class="co"># draw samples</span></span>
-<span id="cb501-16"><a href="modeling-data.html#cb501-16" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">=</span> n_samples <span class="sc">%&gt;%</span> </span>
-<span id="cb501-17"><a href="modeling-data.html#cb501-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replicate</span>(<span class="fu">fun.draw_sample</span>(sample_size, mu, sigma)) <span class="sc">%&gt;%</span> </span>
-<span id="cb501-18"><a href="modeling-data.html#cb501-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>() <span class="co"># transpose the resulting matrix (i.e. flip rows and columns)</span></span>
-<span id="cb501-19"><a href="modeling-data.html#cb501-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb501-20"><a href="modeling-data.html#cb501-20" aria-hidden="true" tabindex="-1"></a><span class="co"># put samples in data frame and compute PRE </span></span>
-<span id="cb501-21"><a href="modeling-data.html#cb501-21" aria-hidden="true" tabindex="-1"></a>df.samples <span class="ot">=</span> samples <span class="sc">%&gt;%</span> </span>
-<span id="cb501-22"><a href="modeling-data.html#cb501-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">str_c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(samples))) <span class="sc">%&gt;%</span> </span>
-<span id="cb501-23"><a href="modeling-data.html#cb501-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb501-24"><a href="modeling-data.html#cb501-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
-<span id="cb501-25"><a href="modeling-data.html#cb501-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb501-26"><a href="modeling-data.html#cb501-26" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb501-27"><a href="modeling-data.html#cb501-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> mu) <span class="sc">%&gt;%</span> </span>
-<span id="cb501-28"><a href="modeling-data.html#cb501-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb501-29"><a href="modeling-data.html#cb501-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
-<span id="cb501-30"><a href="modeling-data.html#cb501-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sse_compact =</span> <span class="fu">sum</span>((value <span class="sc">-</span> compact)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb501-31"><a href="modeling-data.html#cb501-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">sse_augmented =</span> <span class="fu">sum</span>((value <span class="sc">-</span> augmented)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb501-32"><a href="modeling-data.html#cb501-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> sse_augmented<span class="sc">/</span>sse_compact)</span>
-<span id="cb501-33"><a href="modeling-data.html#cb501-33" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb501-34"><a href="modeling-data.html#cb501-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb501-35"><a href="modeling-data.html#cb501-35" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the sampling distribution for PRE </span></span>
-<span id="cb501-36"><a href="modeling-data.html#cb501-36" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.samples,</span>
-<span id="cb501-37"><a href="modeling-data.html#cb501-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> pre)) <span class="sc">+</span></span>
-<span id="cb501-38"><a href="modeling-data.html#cb501-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb501-39"><a href="modeling-data.html#cb501-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Proportional reduction in error&quot;</span>)</span>
-<span id="cb501-40"><a href="modeling-data.html#cb501-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb501-41"><a href="modeling-data.html#cb501-41" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p-value for our sample </span></span>
-<span id="cb501-42"><a href="modeling-data.html#cb501-42" aria-hidden="true" tabindex="-1"></a>df.samples <span class="sc">%&gt;%</span> </span>
-<span id="cb501-43"><a href="modeling-data.html#cb501-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">sum</span>(pre <span class="sc">&gt;=</span> df.summary<span class="sc">$</span>pre)<span class="sc">/</span><span class="fu">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="modeling-data.html#cb521-1" tabindex="-1"></a><span class="co"># simulation parameters</span></span>
+<span id="cb521-2"><a href="modeling-data.html#cb521-2" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">1000</span></span>
+<span id="cb521-3"><a href="modeling-data.html#cb521-3" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">50</span> </span>
+<span id="cb521-4"><a href="modeling-data.html#cb521-4" tabindex="-1"></a>mu <span class="ot">=</span> <span class="dv">75</span> <span class="co"># true mean of the distribution </span></span>
+<span id="cb521-5"><a href="modeling-data.html#cb521-5" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="dv">5</span> <span class="co"># true standard deviation of the errors </span></span>
+<span id="cb521-6"><a href="modeling-data.html#cb521-6" tabindex="-1"></a></span>
+<span id="cb521-7"><a href="modeling-data.html#cb521-7" tabindex="-1"></a><span class="co"># function to draw samples from the population distribution </span></span>
+<span id="cb521-8"><a href="modeling-data.html#cb521-8" tabindex="-1"></a>fun.draw_sample <span class="ot">=</span> <span class="cf">function</span>(sample_size, mu, sigma){</span>
+<span id="cb521-9"><a href="modeling-data.html#cb521-9" tabindex="-1"></a>  sample <span class="ot">=</span> mu <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size,</span>
+<span id="cb521-10"><a href="modeling-data.html#cb521-10" tabindex="-1"></a>                      <span class="at">mean =</span> <span class="dv">0</span>,</span>
+<span id="cb521-11"><a href="modeling-data.html#cb521-11" tabindex="-1"></a>                      <span class="at">sd =</span> sigma)</span>
+<span id="cb521-12"><a href="modeling-data.html#cb521-12" tabindex="-1"></a>  <span class="fu">return</span>(sample)</span>
+<span id="cb521-13"><a href="modeling-data.html#cb521-13" tabindex="-1"></a>}</span>
+<span id="cb521-14"><a href="modeling-data.html#cb521-14" tabindex="-1"></a></span>
+<span id="cb521-15"><a href="modeling-data.html#cb521-15" tabindex="-1"></a><span class="co"># draw samples</span></span>
+<span id="cb521-16"><a href="modeling-data.html#cb521-16" tabindex="-1"></a>samples <span class="ot">=</span> n_samples <span class="sc">%&gt;%</span> </span>
+<span id="cb521-17"><a href="modeling-data.html#cb521-17" tabindex="-1"></a>  <span class="fu">replicate</span>(<span class="fu">fun.draw_sample</span>(sample_size, mu, sigma)) <span class="sc">%&gt;%</span> </span>
+<span id="cb521-18"><a href="modeling-data.html#cb521-18" tabindex="-1"></a>  <span class="fu">t</span>() <span class="co"># transpose the resulting matrix (i.e. flip rows and columns)</span></span>
+<span id="cb521-19"><a href="modeling-data.html#cb521-19" tabindex="-1"></a></span>
+<span id="cb521-20"><a href="modeling-data.html#cb521-20" tabindex="-1"></a><span class="co"># put samples in data frame and compute PRE </span></span>
+<span id="cb521-21"><a href="modeling-data.html#cb521-21" tabindex="-1"></a>df.samples <span class="ot">=</span> samples <span class="sc">%&gt;%</span> </span>
+<span id="cb521-22"><a href="modeling-data.html#cb521-22" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">str_c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(samples))) <span class="sc">%&gt;%</span> </span>
+<span id="cb521-23"><a href="modeling-data.html#cb521-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb521-24"><a href="modeling-data.html#cb521-24" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
+<span id="cb521-25"><a href="modeling-data.html#cb521-25" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb521-26"><a href="modeling-data.html#cb521-26" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb521-27"><a href="modeling-data.html#cb521-27" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> mu) <span class="sc">%&gt;%</span> </span>
+<span id="cb521-28"><a href="modeling-data.html#cb521-28" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb521-29"><a href="modeling-data.html#cb521-29" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
+<span id="cb521-30"><a href="modeling-data.html#cb521-30" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sse_compact =</span> <span class="fu">sum</span>((value <span class="sc">-</span> compact)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb521-31"><a href="modeling-data.html#cb521-31" tabindex="-1"></a>            <span class="at">sse_augmented =</span> <span class="fu">sum</span>((value <span class="sc">-</span> augmented)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb521-32"><a href="modeling-data.html#cb521-32" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> sse_augmented<span class="sc">/</span>sse_compact)</span>
+<span id="cb521-33"><a href="modeling-data.html#cb521-33" tabindex="-1"></a>            </span>
+<span id="cb521-34"><a href="modeling-data.html#cb521-34" tabindex="-1"></a></span>
+<span id="cb521-35"><a href="modeling-data.html#cb521-35" tabindex="-1"></a><span class="co"># plot the sampling distribution for PRE </span></span>
+<span id="cb521-36"><a href="modeling-data.html#cb521-36" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.samples,</span>
+<span id="cb521-37"><a href="modeling-data.html#cb521-37" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> pre)) <span class="sc">+</span></span>
+<span id="cb521-38"><a href="modeling-data.html#cb521-38" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb521-39"><a href="modeling-data.html#cb521-39" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Proportional reduction in error&quot;</span>)</span>
+<span id="cb521-40"><a href="modeling-data.html#cb521-40" tabindex="-1"></a></span>
+<span id="cb521-41"><a href="modeling-data.html#cb521-41" tabindex="-1"></a><span class="co"># calculate the p-value for our sample </span></span>
+<span id="cb521-42"><a href="modeling-data.html#cb521-42" tabindex="-1"></a>df.samples <span class="sc">%&gt;%</span> </span>
+<span id="cb521-43"><a href="modeling-data.html#cb521-43" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">sum</span>(pre <span class="sc">&gt;=</span> df.summary<span class="sc">$</span>pre)<span class="sc">/</span><span class="fu">n</span>())</span></code></pre></div>
 <pre><code># A tibble: 1 × 1
   p_value
     &lt;dbl&gt;
 1   0.394</code></pre>
 <p><img src="09-modeling_data_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Some code I wrote to show a subset of the samples.</p>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="modeling-data.html#cb503-1" aria-hidden="true" tabindex="-1"></a>samples <span class="sc">%&gt;%</span> </span>
-<span id="cb503-2"><a href="modeling-data.html#cb503-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="st">&quot;unique&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-3"><a href="modeling-data.html#cb503-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-4"><a href="modeling-data.html#cb503-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
-<span id="cb503-5"><a href="modeling-data.html#cb503-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb503-6"><a href="modeling-data.html#cb503-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-7"><a href="modeling-data.html#cb503-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> mu) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-8"><a href="modeling-data.html#cb503-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-9"><a href="modeling-data.html#cb503-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-10"><a href="modeling-data.html#cb503-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb503-11"><a href="modeling-data.html#cb503-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">str_extract</span>(index, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">-*</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">.*</span><span class="sc">\\</span><span class="st">d*&quot;</span>),</span>
-<span id="cb503-12"><a href="modeling-data.html#cb503-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">index =</span> <span class="fu">as.numeric</span>(index)) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-13"><a href="modeling-data.html#cb503-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(index <span class="sc">&lt;</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-14"><a href="modeling-data.html#cb503-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(sample, index) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-15"><a href="modeling-data.html#cb503-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">15</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-16"><a href="modeling-data.html#cb503-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb503-17"><a href="modeling-data.html#cb503-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb503-18"><a href="modeling-data.html#cb503-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="modeling-data.html#cb523-1" tabindex="-1"></a>samples <span class="sc">%&gt;%</span> </span>
+<span id="cb523-2"><a href="modeling-data.html#cb523-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="st">&quot;unique&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-3"><a href="modeling-data.html#cb523-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-4"><a href="modeling-data.html#cb523-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
+<span id="cb523-5"><a href="modeling-data.html#cb523-5" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb523-6"><a href="modeling-data.html#cb523-6" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-7"><a href="modeling-data.html#cb523-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> mu) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-8"><a href="modeling-data.html#cb523-8" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-9"><a href="modeling-data.html#cb523-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-10"><a href="modeling-data.html#cb523-10" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb523-11"><a href="modeling-data.html#cb523-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">str_extract</span>(index, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">-*</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">.*</span><span class="sc">\\</span><span class="st">d*&quot;</span>),</span>
+<span id="cb523-12"><a href="modeling-data.html#cb523-12" tabindex="-1"></a>         <span class="at">index =</span> <span class="fu">as.numeric</span>(index)) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-13"><a href="modeling-data.html#cb523-13" tabindex="-1"></a>  <span class="fu">filter</span>(index <span class="sc">&lt;</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-14"><a href="modeling-data.html#cb523-14" tabindex="-1"></a>  <span class="fu">arrange</span>(sample, index) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-15"><a href="modeling-data.html#cb523-15" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">15</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-16"><a href="modeling-data.html#cb523-16" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb523-17"><a href="modeling-data.html#cb523-17" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
+<span id="cb523-18"><a href="modeling-data.html#cb523-18" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1738,48 +1763,48 @@ augmented
 <div id="misc-3" class="section level2 hasAnchor" number="9.5">
 <h2><span class="header-section-number">9.5</span> Misc<a href="modeling-data.html#misc-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Some code to plot probability distributions together with values of interest highlighted.</p>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="modeling-data.html#cb504-1" aria-hidden="true" tabindex="-1"></a>value_mean <span class="ot">=</span> <span class="fl">3.73</span></span>
-<span id="cb504-2"><a href="modeling-data.html#cb504-2" aria-hidden="true" tabindex="-1"></a>value_sd <span class="ot">=</span> <span class="fl">2.05</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">40</span>)</span>
-<span id="cb504-3"><a href="modeling-data.html#cb504-3" aria-hidden="true" tabindex="-1"></a>q_low <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean =</span> value_mean, <span class="at">sd =</span> value_sd)</span>
-<span id="cb504-4"><a href="modeling-data.html#cb504-4" aria-hidden="true" tabindex="-1"></a>q_high <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>, <span class="at">mean =</span> value_mean, <span class="at">sd =</span> value_sd)</span>
-<span id="cb504-5"><a href="modeling-data.html#cb504-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> value_sd</span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="modeling-data.html#cb524-1" tabindex="-1"></a>value_mean <span class="ot">=</span> <span class="fl">3.73</span></span>
+<span id="cb524-2"><a href="modeling-data.html#cb524-2" tabindex="-1"></a>value_sd <span class="ot">=</span> <span class="fl">2.05</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">40</span>)</span>
+<span id="cb524-3"><a href="modeling-data.html#cb524-3" tabindex="-1"></a>q_low <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean =</span> value_mean, <span class="at">sd =</span> value_sd)</span>
+<span id="cb524-4"><a href="modeling-data.html#cb524-4" tabindex="-1"></a>q_high <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>, <span class="at">mean =</span> value_mean, <span class="at">sd =</span> value_sd)</span>
+<span id="cb524-5"><a href="modeling-data.html#cb524-5" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> value_sd</span></code></pre></div>
 <pre><code>[1] 0.6352899</code></pre>
-<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="modeling-data.html#cb506-1" aria-hidden="true" tabindex="-1"></a><span class="co"># density function</span></span>
-<span id="cb506-2"><a href="modeling-data.html#cb506-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb506-3"><a href="modeling-data.html#cb506-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fl">2.73</span>, <span class="fl">4.73</span>)),</span>
-<span id="cb506-4"><a href="modeling-data.html#cb506-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
-<span id="cb506-5"><a href="modeling-data.html#cb506-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">dnorm</span>(.,</span>
-<span id="cb506-6"><a href="modeling-data.html#cb506-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">mean =</span> value_mean,</span>
-<span id="cb506-7"><a href="modeling-data.html#cb506-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sd =</span> value_sd),</span>
-<span id="cb506-8"><a href="modeling-data.html#cb506-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb506-9"><a href="modeling-data.html#cb506-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(q_low, q_high),</span>
-<span id="cb506-10"><a href="modeling-data.html#cb506-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>)</span>
-<span id="cb506-11"><a href="modeling-data.html#cb506-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb506-12"><a href="modeling-data.html#cb506-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb506-13"><a href="modeling-data.html#cb506-13" aria-hidden="true" tabindex="-1"></a><span class="co"># quantile function </span></span>
-<span id="cb506-14"><a href="modeling-data.html#cb506-14" aria-hidden="true" tabindex="-1"></a>df.paths <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
-<span id="cb506-15"><a href="modeling-data.html#cb506-15" aria-hidden="true" tabindex="-1"></a>                        <span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">0.025</span>, <span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">0.975</span>),</span>
-<span id="cb506-16"><a href="modeling-data.html#cb506-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">2.9</span>, q_low,</span>
-<span id="cb506-17"><a href="modeling-data.html#cb506-17" aria-hidden="true" tabindex="-1"></a>                        <span class="fl">2.9</span>, q_high,</span>
-<span id="cb506-18"><a href="modeling-data.html#cb506-18" aria-hidden="true" tabindex="-1"></a>                        q_low, q_low,</span>
-<span id="cb506-19"><a href="modeling-data.html#cb506-19" aria-hidden="true" tabindex="-1"></a>                        q_high, q_high),</span>
-<span id="cb506-20"><a href="modeling-data.html#cb506-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">group =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">each =</span> <span class="dv">2</span>))</span>
-<span id="cb506-21"><a href="modeling-data.html#cb506-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb506-22"><a href="modeling-data.html#cb506-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
-<span id="cb506-23"><a href="modeling-data.html#cb506-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
-<span id="cb506-24"><a href="modeling-data.html#cb506-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">qnorm</span>(.,</span>
-<span id="cb506-25"><a href="modeling-data.html#cb506-25" aria-hidden="true" tabindex="-1"></a>                              <span class="at">mean =</span> value_mean,</span>
-<span id="cb506-26"><a href="modeling-data.html#cb506-26" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sd =</span> value_sd)) <span class="sc">+</span> </span>
-<span id="cb506-27"><a href="modeling-data.html#cb506-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> df.paths,</span>
-<span id="cb506-28"><a href="modeling-data.html#cb506-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb506-29"><a href="modeling-data.html#cb506-29" aria-hidden="true" tabindex="-1"></a>                          <span class="at">y =</span> y,</span>
-<span id="cb506-30"><a href="modeling-data.html#cb506-30" aria-hidden="true" tabindex="-1"></a>                          <span class="at">group =</span> group),</span>
-<span id="cb506-31"><a href="modeling-data.html#cb506-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>,</span>
-<span id="cb506-32"><a href="modeling-data.html#cb506-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb506-33"><a href="modeling-data.html#cb506-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">lineend =</span> <span class="st">&quot;round&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb506-34"><a href="modeling-data.html#cb506-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>),</span>
-<span id="cb506-35"><a href="modeling-data.html#cb506-35" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">2.9</span>, <span class="fl">4.5</span>),</span>
-<span id="cb506-36"><a href="modeling-data.html#cb506-36" aria-hidden="true" tabindex="-1"></a>                  <span class="at">expand =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="modeling-data.html#cb526-1" tabindex="-1"></a><span class="co"># density function</span></span>
+<span id="cb526-2"><a href="modeling-data.html#cb526-2" tabindex="-1"></a></span>
+<span id="cb526-3"><a href="modeling-data.html#cb526-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fl">2.73</span>, <span class="fl">4.73</span>)),</span>
+<span id="cb526-4"><a href="modeling-data.html#cb526-4" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
+<span id="cb526-5"><a href="modeling-data.html#cb526-5" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">dnorm</span>(.,</span>
+<span id="cb526-6"><a href="modeling-data.html#cb526-6" tabindex="-1"></a>                              <span class="at">mean =</span> value_mean,</span>
+<span id="cb526-7"><a href="modeling-data.html#cb526-7" tabindex="-1"></a>                              <span class="at">sd =</span> value_sd),</span>
+<span id="cb526-8"><a href="modeling-data.html#cb526-8" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb526-9"><a href="modeling-data.html#cb526-9" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(q_low, q_high),</span>
+<span id="cb526-10"><a href="modeling-data.html#cb526-10" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>)</span>
+<span id="cb526-11"><a href="modeling-data.html#cb526-11" tabindex="-1"></a></span>
+<span id="cb526-12"><a href="modeling-data.html#cb526-12" tabindex="-1"></a></span>
+<span id="cb526-13"><a href="modeling-data.html#cb526-13" tabindex="-1"></a><span class="co"># quantile function </span></span>
+<span id="cb526-14"><a href="modeling-data.html#cb526-14" tabindex="-1"></a>df.paths <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb526-15"><a href="modeling-data.html#cb526-15" tabindex="-1"></a>                        <span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">0.025</span>, <span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">0.975</span>),</span>
+<span id="cb526-16"><a href="modeling-data.html#cb526-16" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">2.9</span>, q_low,</span>
+<span id="cb526-17"><a href="modeling-data.html#cb526-17" tabindex="-1"></a>                        <span class="fl">2.9</span>, q_high,</span>
+<span id="cb526-18"><a href="modeling-data.html#cb526-18" tabindex="-1"></a>                        q_low, q_low,</span>
+<span id="cb526-19"><a href="modeling-data.html#cb526-19" tabindex="-1"></a>                        q_high, q_high),</span>
+<span id="cb526-20"><a href="modeling-data.html#cb526-20" tabindex="-1"></a>                  <span class="at">group =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">each =</span> <span class="dv">2</span>))</span>
+<span id="cb526-21"><a href="modeling-data.html#cb526-21" tabindex="-1"></a></span>
+<span id="cb526-22"><a href="modeling-data.html#cb526-22" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
+<span id="cb526-23"><a href="modeling-data.html#cb526-23" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
+<span id="cb526-24"><a href="modeling-data.html#cb526-24" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">qnorm</span>(.,</span>
+<span id="cb526-25"><a href="modeling-data.html#cb526-25" tabindex="-1"></a>                              <span class="at">mean =</span> value_mean,</span>
+<span id="cb526-26"><a href="modeling-data.html#cb526-26" tabindex="-1"></a>                              <span class="at">sd =</span> value_sd)) <span class="sc">+</span> </span>
+<span id="cb526-27"><a href="modeling-data.html#cb526-27" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> df.paths,</span>
+<span id="cb526-28"><a href="modeling-data.html#cb526-28" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb526-29"><a href="modeling-data.html#cb526-29" tabindex="-1"></a>                          <span class="at">y =</span> y,</span>
+<span id="cb526-30"><a href="modeling-data.html#cb526-30" tabindex="-1"></a>                          <span class="at">group =</span> group),</span>
+<span id="cb526-31"><a href="modeling-data.html#cb526-31" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>,</span>
+<span id="cb526-32"><a href="modeling-data.html#cb526-32" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">2</span>,</span>
+<span id="cb526-33"><a href="modeling-data.html#cb526-33" tabindex="-1"></a>            <span class="at">lineend =</span> <span class="st">&quot;round&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb526-34"><a href="modeling-data.html#cb526-34" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>),</span>
+<span id="cb526-35"><a href="modeling-data.html#cb526-35" tabindex="-1"></a>                  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">2.9</span>, <span class="fl">4.5</span>),</span>
+<span id="cb526-36"><a href="modeling-data.html#cb526-36" tabindex="-1"></a>                  <span class="at">expand =</span> F)</span></code></pre></div>
 <p><img src="09-modeling_data_files/figure-html/unnamed-chunk-16-1.png" width="672" /><img src="09-modeling_data_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
 </div>
 <div id="additional-resources-7" class="section level2 hasAnchor" number="9.6">
@@ -1800,44 +1825,45 @@ augmented
 <div id="session-info-8" class="section level2 hasAnchor" number="9.7">
 <h2><span class="header-section-number">9.7</span> Session info<a href="modeling-data.html#session-info-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Information about this R session including which version of R was used, and what packages were loaded.</p>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="modeling-data.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="modeling-data.html#cb527-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
- [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     ggplot2_3.3.6   
- [9] tidyverse_1.3.1  janitor_2.1.0    kableExtra_1.3.4 knitr_1.39      
+ [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
+ [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
+ [9] ggplot2_3.4.4    tidyverse_2.0.0  janitor_2.2.0    kableExtra_1.3.4
+[13] knitr_1.45      
 
 loaded via a namespace (and not attached):
- [1] lattice_0.20-45   svglite_2.1.0     lubridate_1.8.0   assertthat_0.2.1 
- [5] digest_0.6.29     utf8_1.2.2        R6_2.5.1          cellranger_1.1.0 
- [9] backports_1.4.1   reprex_2.0.1      evaluate_0.15     highr_0.9        
-[13] httr_1.4.3        pillar_1.7.0      rlang_1.0.2       readxl_1.4.0     
-[17] rstudioapi_0.13   jquerylib_0.1.4   Matrix_1.4-1      rmarkdown_2.14   
-[21] labeling_0.4.2    splines_4.1.2     webshot_0.5.3     munsell_0.5.0    
-[25] broom_0.8.0       compiler_4.1.2    modelr_0.1.8      xfun_0.30        
-[29] pkgconfig_2.0.3   systemfonts_1.0.4 mgcv_1.8-40       htmltools_0.5.2  
-[33] tidyselect_1.1.2  bookdown_0.26     fansi_1.0.3       viridisLite_0.4.0
-[37] withr_2.5.0       crayon_1.5.1      tzdb_0.3.0        dbplyr_2.1.1     
-[41] grid_4.1.2        nlme_3.1-157      jsonlite_1.8.0    gtable_0.3.0     
-[45] lifecycle_1.0.1   DBI_1.1.2         magrittr_2.0.3    scales_1.2.0     
-[49] cli_3.3.0         stringi_1.7.6     farver_2.1.0      fs_1.5.2         
-[53] snakecase_0.11.0  xml2_1.3.3        bslib_0.3.1       ellipsis_0.3.2   
-[57] generics_0.1.2    vctrs_0.4.1       tools_4.1.2       glue_1.6.2       
-[61] hms_1.1.1         fastmap_1.1.0     yaml_2.3.5        colorspace_2.0-3 
-[65] rvest_1.0.2       haven_2.5.0       sass_0.4.1       </code></pre>
+ [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
+ [5] lattice_0.22-5    stringi_1.8.3     hms_1.1.3         digest_0.6.33    
+ [9] magrittr_2.0.3    evaluate_0.23     grid_4.3.2        timechange_0.2.0 
+[13] bookdown_0.37     fastmap_1.1.1     Matrix_1.6-4      jsonlite_1.8.8   
+[17] mgcv_1.9-1        httr_1.4.7        rvest_1.0.3       fansi_1.0.6      
+[21] viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4   cli_3.6.2        
+[25] crayon_1.5.2      rlang_1.1.2       splines_4.3.2     munsell_0.5.0    
+[29] withr_2.5.2       cachem_1.0.8      yaml_2.3.8        tools_4.3.2      
+[33] tzdb_0.4.0        colorspace_2.1-0  webshot_0.5.5     vctrs_0.6.5      
+[37] R6_2.5.1          lifecycle_1.0.4   snakecase_0.11.1  pkgconfig_2.0.3  
+[41] bslib_0.6.1       pillar_1.9.0      gtable_0.3.4      glue_1.6.2       
+[45] systemfonts_1.0.5 highr_0.10        xfun_0.41         tidyselect_1.2.0 
+[49] rstudioapi_0.15.0 farver_2.1.1      nlme_3.1-164      htmltools_0.5.7  
+[53] labeling_0.4.3    rmarkdown_2.25    svglite_2.1.3     compiler_4.3.2   </code></pre>
 
 </div>
 </div>
@@ -1907,7 +1933,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

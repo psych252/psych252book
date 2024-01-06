@@ -51,7 +51,7 @@ failure = c(0, cumsum(1 - data))
 fun.plot_beta = function(success, failure){
   ggplot(data = tibble(x = c(0, 1)),
          mapping = aes(x = x)) +
-    stat_function(fun = "dbeta",
+    stat_function(fun = dbeta,
                   args = list(shape1 = success + 1, shape2 = failure + 1),
                   geom = "area",
                   color = "black",
@@ -190,6 +190,13 @@ df.prior_effect %>%
         axis.ticks.y = element_blank(),
         axis.text.x = element_text(size = 10),
         axis.line = element_blank())
+```
+
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <div class="figure">
@@ -392,13 +399,6 @@ set.seed(1)
 
 # variables & priors
 b0 = normal(0, 10)
-```
-
-```
-ℹ Initialising python and checking dependencies, this may take a moment.[K✔ Initialising python and checking dependencies ... done![K
-```
-
-```r
 b1 = normal(0, 10)
 sd = cauchy(0, 3, truncation = c(0, Inf))
 
@@ -420,11 +420,6 @@ Visualize the model as graph:
 plot(m)
 ```
 
-```{=html}
-<div id="htmlwidget-466d62322b30683bf1b7" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-466d62322b30683bf1b7">{"x":{"diagram":"digraph {\n\ngraph [layout = \"dot\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\",\n       rankdir = \"LR\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"b0\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"2\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"3\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"4\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"5\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"6\" [label = \"mu\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"7\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"8\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"9\" [label = \"sd\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"10\" [label = \"cauchy\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"11\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"12\" [label = \"3\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"13\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"14\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"15\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"16\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"17\" [label = \"b1\n\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"#E0D2EE\", width = \"0.6\", height = \"0.48\", fillcolor = \"#F4F0F9\"] \n  \"18\" [label = \"normal\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"diamond\", color = \"#B797D7\", width = \"1\", height = \"0.8\", fillcolor = \"#E0D2EE\"] \n  \"19\" [label = \"0\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"20\" [label = \"10\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n  \"21\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"circle\", color = \"lightgray\", width = \"0.2\", height = \"0.16\", fillcolor = \"#D3D3D3\"] \n  \"22\" [label = \"\", fontcolor = \"#8960B3\", fontsize = \"12\", penwidth = \"2\", shape = \"square\", color = \"#E0D2EE\", width = \"0.5\", height = \"0.4\", fillcolor = \"#FFFFFF\"] \n\"1\"->\"5\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"expand_dim\", style = \"solid\"] \n\"2\"->\"1\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"3\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"4\"->\"2\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"5\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"6\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"7\"->\"13\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"8\"->\"7\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"9\"->\"8\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"expand_dim\", style = \"solid\"] \n\"10\"->\"9\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"11\"->\"10\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"location\", style = \"solid\"] \n\"12\"->\"10\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"scale\", style = \"solid\"] \n\"14\"->\"6\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"add\", style = \"solid\"] \n\"15\"->\"14\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"set_dim\", style = \"solid\"] \n\"16\"->\"15\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"17\"->\"16\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"expand_dim\", style = \"solid\"] \n\"18\"->\"17\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", penwidth = \"3\", style = \"dashed\"] \n\"19\"->\"18\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"mean\", style = \"solid\"] \n\"20\"->\"18\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"sd\", style = \"solid\"] \n\"21\"->\"15\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"multiply\", style = \"solid\"] \n\"22\"->\"21\" [color = \"Gainsboro\", fontname = \"Helvetica\", fontcolor = \"gray\", fontsize = \"11\", penwidth = \"3\", label = \"set_dim\", style = \"solid\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-```
-
 Draw samples from the posterior distribution: 
 
 
@@ -433,9 +428,7 @@ set.seed(1)
 
 # sampling
 draws = mcmc(m, n_samples = 1000)
-```
 
-```r
 # tidy up the draws
 df.draws = tidy_draws(draws) %>% 
   clean_names()
@@ -462,8 +455,6 @@ ggplot(tibble(x = c(0, 30)),
                 args = list(location = 0,
                             scale = 3))
 ```
-
-<img src="22-bayesian_data_analysis1_files/figure-html/unnamed-chunk-17-1.png" width="672" /><img src="22-bayesian_data_analysis1_files/figure-html/unnamed-chunk-17-2.png" width="672" />
 
 #### Visualize the posteriors
 
@@ -494,7 +485,6 @@ df.draws %>%
         strip.text.x = element_blank())
 ```
 
-<img src="22-bayesian_data_analysis1_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 #### Credible interval vs. confidence interval
 
 
@@ -507,9 +497,6 @@ fit.lm %>%
                        xmax = conf.high)) +
   geom_pointrange()
 ```
-
-<img src="22-bayesian_data_analysis1_files/figure-html/unnamed-chunk-19-1.png" width="672" />
-
 
 
 #### Visualize model predictions
@@ -529,8 +516,6 @@ ggplot(data = df.attitude,
               color = "lightblue") + 
   geom_point() 
 ```
-
-<img src="22-bayesian_data_analysis1_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 #### Posterior predictive check
 
@@ -564,8 +549,6 @@ animate(p,
 
 # anim_save("posterior_predictive.gif")
 ```
-
-![](22-bayesian_data_analysis1_files/figure-html/unnamed-chunk-21-1.gif)<!-- -->
 
 #### Prior predictive check
 
@@ -602,7 +585,12 @@ animate(p,
 # anim_save("prior_predictive.gif")
 ```
 
-![](22-bayesian_data_analysis1_files/figure-html/unnamed-chunk-22-1.gif)<!-- -->
+## Additional resources
+
+### Books and chapters
+
+- [Bayes rules book](https://www.bayesrulesbook.com/)
+
 
 ## Session info
 
@@ -614,60 +602,55 @@ sessionInfo()
 ```
 
 ```
-R version 4.1.2 (2021-11-01)
-Platform: x86_64-apple-darwin17.0 (64-bit)
-Running under: macOS Big Sur 10.16
+R version 4.3.2 (2023-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Sonoma 14.1.2
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
-LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
+BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9      purrr_0.3.4     
- [5] readr_2.1.2      tidyr_1.2.0      tibble_3.1.7     tidyverse_1.3.1 
- [9] broom_0.8.0      extraDistr_1.9.1 gganimate_1.0.7  ggplot2_3.3.6   
-[13] greta_0.4.2      tidybayes_3.0.2  patchwork_1.1.1  janitor_2.1.0   
-[17] knitr_1.39      
+ [1] lubridate_1.9.3   forcats_1.0.0     stringr_1.5.1     dplyr_1.1.4      
+ [5] purrr_1.0.2       readr_2.1.4       tidyr_1.3.0       tibble_3.2.1     
+ [9] tidyverse_2.0.0   broom_1.0.5       extraDistr_1.10.0 gganimate_1.0.8  
+[13] ggplot2_3.4.4     greta_0.4.3       tidybayes_3.0.6   patchwork_1.1.3  
+[17] janitor_2.2.0     knitr_1.45       
 
 loaded via a namespace (and not attached):
-  [1] nlme_3.1-157         fs_1.5.2             lubridate_1.8.0     
-  [4] RColorBrewer_1.1-3   progress_1.2.2       httr_1.4.3          
-  [7] rprojroot_2.0.3      tensorA_0.36.2       DiagrammeRsvg_0.1   
- [10] tools_4.1.2          backports_1.4.1      bslib_0.3.1         
- [13] utf8_1.2.2           R6_2.5.1             mgcv_1.8-40         
- [16] DBI_1.1.2            colorspace_2.0-3     ggdist_3.1.1        
- [19] withr_2.5.0          tidyselect_1.1.2     prettyunits_1.1.1   
- [22] processx_3.5.3       curl_4.3.2           compiler_4.1.2      
- [25] rvest_1.0.2          cli_3.3.0            arrayhelpers_1.1-0  
- [28] xml2_1.3.3           labeling_0.4.2       bookdown_0.26       
- [31] posterior_1.2.1      sass_0.4.1           scales_1.2.0        
- [34] checkmate_2.1.0      callr_3.7.0          tfruns_1.5.0        
- [37] digest_0.6.29        rmarkdown_2.14       base64enc_0.1-3     
- [40] pkgconfig_2.0.3      htmltools_0.5.2      parallelly_1.31.1   
- [43] highr_0.9            dbplyr_2.1.1         fastmap_1.1.0       
- [46] htmlwidgets_1.5.4    rlang_1.0.2          readxl_1.4.0        
- [49] rstudioapi_0.13      visNetwork_2.1.0     jquerylib_0.1.4     
- [52] farver_2.1.0         generics_0.1.2       svUnit_1.0.6        
- [55] jsonlite_1.8.0       tensorflow_2.8.0     distributional_0.3.0
- [58] magrittr_2.0.3       Matrix_1.4-1         Rcpp_1.0.8.3        
- [61] munsell_0.5.0        fansi_1.0.3          abind_1.4-5         
- [64] reticulate_1.24      lifecycle_1.0.1      stringi_1.7.6       
- [67] whisker_0.4          yaml_2.3.5           snakecase_0.11.0    
- [70] plyr_1.8.7           grid_4.1.2           parallel_4.1.2      
- [73] listenv_0.8.0        crayon_1.5.1         lattice_0.20-45     
- [76] splines_4.1.2        haven_2.5.0          hms_1.1.1           
- [79] ps_1.7.0             pillar_1.7.0         igraph_1.3.1        
- [82] codetools_0.2-18     reprex_2.0.1         glue_1.6.2          
- [85] evaluate_0.15        V8_4.1.0             gifski_1.6.6-1      
- [88] modelr_0.1.8         png_0.1-7            vctrs_0.4.1         
- [91] tzdb_0.3.0           tweenr_1.0.2         cellranger_1.1.0    
- [94] gtable_0.3.0         future_1.25.0        assertthat_0.2.1    
- [97] xfun_0.30            coda_0.19-4          DiagrammeR_1.0.9    
-[100] globals_0.14.0       ellipsis_0.3.2       here_1.0.1          
+ [1] svUnit_1.0.6         tidyselect_1.2.0     farver_2.1.1        
+ [4] tensorflow_2.14.0    fastmap_1.1.1        tensorA_0.36.2.1    
+ [7] tweenr_2.0.2         digest_0.6.33        timechange_0.2.0    
+[10] lifecycle_1.0.4      processx_3.8.3       magrittr_2.0.3      
+[13] posterior_1.5.0      compiler_4.3.2       rlang_1.1.2         
+[16] sass_0.4.8           progress_1.2.3       tools_4.3.2         
+[19] utf8_1.2.4           yaml_2.3.8           labeling_0.4.3      
+[22] prettyunits_1.2.0    reticulate_1.34.0    abind_1.4-5         
+[25] withr_2.5.2          grid_4.3.2           fansi_1.0.6         
+[28] colorspace_2.1-0     future_1.33.1        globals_0.16.2      
+[31] scales_1.3.0         cli_3.6.2            rmarkdown_2.25      
+[34] crayon_1.5.2         generics_0.1.3       tzdb_0.4.0          
+[37] tfruns_1.5.1         cachem_1.0.8         splines_4.3.2       
+[40] parallel_4.3.2       base64enc_0.1-3      vctrs_0.6.5         
+[43] Matrix_1.6-4         jsonlite_1.8.8       bookdown_0.37       
+[46] callr_3.7.3          hms_1.1.3            arrayhelpers_1.1-0  
+[49] listenv_0.9.0        ggdist_3.3.1         jquerylib_0.1.4     
+[52] glue_1.6.2           parallelly_1.36.0    codetools_0.2-19    
+[55] ps_1.7.5             distributional_0.3.2 stringi_1.8.3       
+[58] gtable_0.3.4         munsell_0.5.0        pillar_1.9.0        
+[61] htmltools_0.5.7      R6_2.5.1             evaluate_0.23       
+[64] lattice_0.22-5       highr_0.10           png_0.1-8           
+[67] backports_1.4.1      snakecase_0.11.1     bslib_0.6.1         
+[70] Rcpp_1.0.11          nlme_3.1-164         coda_0.19-4         
+[73] checkmate_2.3.1      mgcv_1.9-1           whisker_0.4.1       
+[76] xfun_0.41            pkgconfig_2.0.3     
 ```

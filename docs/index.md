@@ -1,7 +1,7 @@
 --- 
 title: "Psych 252: Statistical Methods for Behavioral and Social Sciences"
 author: "Tobias Gerstenberg"
-date: "2022-05-17"
+date: "2024-01-06"
 book_filename: "psych252"
 language:
   ui:
@@ -30,6 +30,23 @@ This course offers an introduction to advanced topics in statistics with the foc
 ## Course homepage {-}
 
 https://psych252.github.io/
+
+
+## License and citation {-}
+
+This book is licensed under the [Creative Commons Zero v1.0 Universal license](https://github.com/psych252/psych252book/blob/master/LICENSE). If you find these materials helpful for your work, I'd appreciate you citing the book: 
+
+```
+@book{gerstenberg2022methods,
+  title = {Statistical methods for the behavioral and social sciences},
+  author = {Tobias Gerstenberg},
+  year = {2022},
+  url = {https://psych252.github.io/psych252book/}
+}
+```
+
+
+
 
 
 
