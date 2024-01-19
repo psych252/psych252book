@@ -310,8 +310,10 @@ ggplot(data = df.plot,
                geom = "ribbon",
                alpha = 0.2,
                linetype = 0) +
-  stat_summary(fun = "mean", geom = "line") +
-  stat_summary(fun = "mean", geom = "point") 
+  stat_summary(fun = "mean",
+               geom = "line") +
+  stat_summary(fun = "mean",
+               geom = "point") 
 ```
 
 Ignore the top part where I'm defining `df.plot` for now (we'll look into this in the next class). The other part is fairly straightforward. I've used `stat_summary()` three times: First, to define the confidence interval as a `geom = "ribbon"`. Second, to show the lines connecting the means, and third to put the means as data points points on top of the lines. 

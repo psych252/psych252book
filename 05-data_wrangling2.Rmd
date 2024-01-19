@@ -83,7 +83,9 @@ Sometimes `group_by()` is also useful without summarizing the data. For example,
 set.seed(1) # to make this reproducible 
 
 df.summarize = tibble(participant = rep(1:3, each = 5),
-                      judgment = sample(0:100, size = 15, replace = TRUE)) %>% 
+                      judgment = sample(x = 0:100,
+                                        size = 15,
+                                        replace = TRUE)) %>% 
   print()
 ```
 
@@ -233,7 +235,7 @@ df.reshape2 %>%
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_transform = list(rating = as.character)) %>% 
+               values_transform = as.character) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating") %>% 
   mutate(across(.cols = c(order, observation),
@@ -251,7 +253,7 @@ df.reshape2 %>%
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_transform = list(rating = as.character))
+               values_transform = as.character)
 ```
 
 Notice how I've used a combination of the `names_to = ` and `names_sep = ` arguments to create two columns. Because I'm combining data of two different types ("character" and "numeric"), I needed to specify what I want the resulting data type to be via the `values_transform = ` argument. 
@@ -264,7 +266,7 @@ df.reshape2 %>%
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_transform = list(rating = as.character)) %>% 
+               values_transform = as.character) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating")
 ```
@@ -277,11 +279,11 @@ df.reshape2 %>%
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_transform = list(rating = as.character)) %>% 
+               values_transform = as.character) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating") %>% 
   mutate(across(.cols = c(order, observation),
-                .fns = ~ as.numeric(.))) %>% 
+                .fns = as.numeric)) %>% 
   select(participant, order, stimulus, rating = observation)
 ```
 
@@ -302,7 +304,7 @@ df.reshape2 %>%
   pivot_longer(cols = -participant,
                names_to = "index",
                values_to = "rating",
-               values_transform = list(rating = as.character)) %>% 
+               values_transform = as.character) %>% 
   separate(col = index,
            into = c("index", "order"),
            sep = "_")
@@ -643,10 +645,8 @@ save(df.test, df.starwars, file = "data/test_starwars.RData")
 ### Tutorials
 
 -   **Joining data**:
-
     -   [Two-table verbs](https://dplyr.tidyverse.org/articles/two-table.html)
     -   [Tutorial by Jenny Bryan](http://stat545.com/bit001_dplyr-cheatsheet.html)
-
 -   [tidyexplain](https://github.com/gadenbuie/tidyexplain): Animations that illustrate how `pivot_longer()`, `pivot_wider()`, `left_join()`, etc. work
 
 ## Session info
