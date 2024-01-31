@@ -130,7 +130,8 @@ set.seed(1)
 n_participants = 1000
 
 df.normal = tibble(participant = 1:n_participants,
-                   condition = rep(c("control", "experimental"), each = n_participants/2)) %>% 
+                   condition = rep(c("control", "experimental"),
+                                   each = n_participants/2)) %>% 
   mutate(score = ifelse(condition == "control",
                         rnorm(n = n_participants, mean = 5, sd = 2),
                         rnorm(n = n_participants, mean = 15, sd = 3)))

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Modeling data | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
+  <title>Chapter 6 Probability | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
   <meta name="description" content="Course notes for Psych 252." />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Modeling data | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta property="og:title" content="Chapter 6 Probability | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Course notes for Psych 252." />
   <meta name="github-repo" content="psych252/psych252book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Modeling data | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
+  <meta name="twitter:title" content="Chapter 6 Probability | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   
   <meta name="twitter:description" content="Course notes for Psych 252." />
   
@@ -23,15 +23,15 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2024-01-28" />
+<meta name="date" content="2024-01-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="simulation-2.html"/>
-<link rel="next" href="linear-model-1.html"/>
+<link rel="prev" href="data-wrangling-2.html"/>
+<link rel="next" href="simulation-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,6 +51,10 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -342,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.5" data-path="simulation-1.html"><a href="simulation-1.html#inverse-cumulative-distribution"><i class="fa fa-check"></i><b>7.3.5</b> Inverse cumulative distribution</a></li>
 <li class="chapter" data-level="7.3.6" data-path="simulation-1.html"><a href="simulation-1.html#computing-probabilities"><i class="fa fa-check"></i><b>7.3.6</b> Computing probabilities</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#pinguin-exercise"><i class="fa fa-check"></i><b>7.4</b> Pinguin exercise</a>
+<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#breakout-room-exercise"><i class="fa fa-check"></i><b>7.4</b> Breakout room exercise</a>
 <ul>
 <li class="chapter" data-level="7.4.1" data-path="simulation-1.html"><a href="simulation-1.html#make-the-plot"><i class="fa fa-check"></i><b>7.4.1</b> Make the plot</a></li>
 <li class="chapter" data-level="7.4.2" data-path="simulation-1.html"><a href="simulation-1.html#analytic-solutions"><i class="fa fa-check"></i><b>7.4.2</b> Analytic solutions</a></li>
@@ -837,971 +841,406 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="modeling-data" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Modeling data<a href="modeling-data.html#modeling-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="load-packages-and-set-plotting-theme-2" class="section level2 hasAnchor" number="9.1">
-<h2><span class="header-section-number">9.1</span> Load packages and set plotting theme<a href="modeling-data.html#load-packages-and-set-plotting-theme-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="modeling-data.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span></span>
-<span id="cb1-2"><a href="modeling-data.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for making nice tables</span></span>
-<span id="cb1-3"><a href="modeling-data.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning column names</span></span>
-<span id="cb1-4"><a href="modeling-data.html#cb1-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="modeling-data.html#cb2-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
-<span id="cb2-2"><a href="modeling-data.html#cb2-2" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))) <span class="co">#set the default text size</span></span>
-<span id="cb2-3"><a href="modeling-data.html#cb2-3" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="modeling-data.html#cb2-4" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb2-5"><a href="modeling-data.html#cb2-5" tabindex="-1"></a>               <span class="at">fig.show =</span> <span class="st">&quot;hold&quot;</span>)</span></code></pre></div>
+<div id="probability" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Probability<a href="probability.html#probability" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="load-packages-load-data-set-theme" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Load packages, load data, set theme<a href="probability.html#load-packages-load-data-set-theme" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s load the packages that we need for this chapter.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="probability.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)        <span class="co"># for rendering the RMarkdown file</span></span>
+<span id="cb1-2"><a href="probability.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>)   <span class="co"># for nicely formatted tables</span></span>
+<span id="cb1-3"><a href="probability.html#cb1-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;arrangements&quot;</span>) <span class="co"># fast generators and iterators for creating combinations</span></span>
+<span id="cb1-4"><a href="probability.html#cb1-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;DiagrammeR&quot;</span>)   <span class="co"># for drawing diagrams</span></span>
+<span id="cb1-5"><a href="probability.html#cb1-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)    <span class="co"># for data wrangling </span></span></code></pre></div>
+<p>Set the plotting theme.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="probability.html#cb2-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="probability.html#cb2-2" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)))</span>
+<span id="cb2-3"><a href="probability.html#cb2-3" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="probability.html#cb2-4" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb2-5"><a href="probability.html#cb2-5" tabindex="-1"></a>               <span class="at">fig.show =</span> <span class="st">&quot;hold&quot;</span>)</span></code></pre></div>
 </div>
-<div id="modeling-data-1" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> Modeling data<a href="modeling-data.html#modeling-data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="simplicity-vs.-accuracy-trade-off" class="section level3 hasAnchor" number="9.2.1">
-<h3><span class="header-section-number">9.2.1</span> Simplicity vs. accuracy trade-off<a href="modeling-data.html#simplicity-vs.-accuracy-trade-off" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="modeling-data.html#cb3-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb3-2"><a href="modeling-data.html#cb3-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb3-3"><a href="modeling-data.html#cb3-3" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="modeling-data.html#cb3-4" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">20</span> <span class="co"># sample size </span></span>
-<span id="cb3-5"><a href="modeling-data.html#cb3-5" tabindex="-1"></a>n_parameters <span class="ot">=</span> <span class="dv">2</span> <span class="co"># number of parameters in the polynomial regression</span></span>
-<span id="cb3-6"><a href="modeling-data.html#cb3-6" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="modeling-data.html#cb3-7" tabindex="-1"></a><span class="co"># generate data </span></span>
-<span id="cb3-8"><a href="modeling-data.html#cb3-8" tabindex="-1"></a>df.data <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(n_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>), </span>
-<span id="cb3-9"><a href="modeling-data.html#cb3-9" tabindex="-1"></a>                 <span class="at">y =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> x<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n_samples, <span class="at">sd =</span> <span class="dv">20</span>))</span>
-<span id="cb3-10"><a href="modeling-data.html#cb3-10" tabindex="-1"></a> </span>
-<span id="cb3-11"><a href="modeling-data.html#cb3-11" tabindex="-1"></a><span class="co"># plot a fit to the data</span></span>
-<span id="cb3-12"><a href="modeling-data.html#cb3-12" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.data,</span>
-<span id="cb3-13"><a href="modeling-data.html#cb3-13" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb3-14"><a href="modeling-data.html#cb3-14" tabindex="-1"></a>                     <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="modeling-data.html#cb3-15" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb3-16"><a href="modeling-data.html#cb3-16" tabindex="-1"></a>  <span class="co"># geom_hline(yintercept = mean(df.data$y), color = &quot;blue&quot;) +</span></span>
-<span id="cb3-17"><a href="modeling-data.html#cb3-17" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> F,</span>
-<span id="cb3-18"><a href="modeling-data.html#cb3-18" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="at">degree =</span> n_parameters, <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb3-19"><a href="modeling-data.html#cb3-19" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-20"><a href="modeling-data.html#cb3-20" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-21"><a href="modeling-data.html#cb3-21" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
-<img src="psych252_files/figure-html/unnamed-chunk-3-1.png" alt="Tradeoff between fit and model simplicity." width="672" />
-<p class="caption">
-Figure 9.1: Tradeoff between fit and model simplicity.
-</p>
-</div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="modeling-data.html#cb4-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb4-2"><a href="modeling-data.html#cb4-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb4-3"><a href="modeling-data.html#cb4-3" tabindex="-1"></a><span class="co"># n_samples = 20</span></span>
-<span id="cb4-4"><a href="modeling-data.html#cb4-4" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb4-5"><a href="modeling-data.html#cb4-5" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="modeling-data.html#cb4-6" tabindex="-1"></a>df.pre <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(n_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>), </span>
-<span id="cb4-7"><a href="modeling-data.html#cb4-7" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n_samples, <span class="at">sd =</span> <span class="dv">1</span>))</span>
-<span id="cb4-8"><a href="modeling-data.html#cb4-8" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="modeling-data.html#cb4-9" tabindex="-1"></a><span class="co"># plot a fit to the data</span></span>
-<span id="cb4-10"><a href="modeling-data.html#cb4-10" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.pre,</span>
-<span id="cb4-11"><a href="modeling-data.html#cb4-11" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb4-12"><a href="modeling-data.html#cb4-12" tabindex="-1"></a>                     <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="modeling-data.html#cb4-13" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="modeling-data.html#cb4-14" tabindex="-1"></a>  <span class="co"># geom_hline(yintercept = mean(df.pre$y), color = &quot;blue&quot;) +</span></span>
-<span id="cb4-15"><a href="modeling-data.html#cb4-15" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> F,</span>
-<span id="cb4-16"><a href="modeling-data.html#cb4-16" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">1</span>, <span class="at">raw =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
-<span id="cb4-17"><a href="modeling-data.html#cb4-17" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-18"><a href="modeling-data.html#cb4-18" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-19"><a href="modeling-data.html#cb4-19" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div id="counting" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Counting<a href="probability.html#counting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Imagine that there are three balls in an urn. The balls are labeled 1, 2, and 3. Let’s consider a few possible situations.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="probability.html#cb3-1" tabindex="-1"></a>balls <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="co"># number of balls in urn </span></span>
+<span id="cb3-2"><a href="probability.html#cb3-2" tabindex="-1"></a>ndraws <span class="ot">=</span> <span class="dv">2</span> <span class="co"># number of draws</span></span>
+<span id="cb3-3"><a href="probability.html#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="probability.html#cb3-4" tabindex="-1"></a><span class="co"># order matters, without replacement</span></span>
+<span id="cb3-5"><a href="probability.html#cb3-5" tabindex="-1"></a><span class="fu">permutations</span>(balls, ndraws)</span></code></pre></div>
+<pre><code>     [,1] [,2]
+[1,]    1    2
+[2,]    1    3
+[3,]    2    1
+[4,]    2    3
+[5,]    3    1
+[6,]    3    2</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="probability.html#cb5-1" tabindex="-1"></a><span class="co"># order matters, with replacement</span></span>
+<span id="cb5-2"><a href="probability.html#cb5-2" tabindex="-1"></a><span class="fu">permutations</span>(balls, ndraws, <span class="at">replace =</span> T)</span></code></pre></div>
+<pre><code>      [,1] [,2]
+ [1,]    1    1
+ [2,]    1    2
+ [3,]    1    3
+ [4,]    2    1
+ [5,]    2    2
+ [6,]    2    3
+ [7,]    3    1
+ [8,]    3    2
+ [9,]    3    3</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="probability.html#cb7-1" tabindex="-1"></a><span class="co"># order doesn&#39;t matter, with replacement </span></span>
+<span id="cb7-2"><a href="probability.html#cb7-2" tabindex="-1"></a><span class="fu">combinations</span>(balls, ndraws, <span class="at">replace =</span> T)</span></code></pre></div>
+<pre><code>     [,1] [,2]
+[1,]    1    1
+[2,]    1    2
+[3,]    1    3
+[4,]    2    2
+[5,]    2    3
+[6,]    3    3</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="probability.html#cb9-1" tabindex="-1"></a><span class="co"># order doesn&#39;t matter, without replacement </span></span>
+<span id="cb9-2"><a href="probability.html#cb9-2" tabindex="-1"></a><span class="fu">combinations</span>(balls, ndraws)</span></code></pre></div>
+<pre><code>     [,1] [,2]
+[1,]    1    2
+[2,]    1    3
+[3,]    2    3</code></pre>
+<p>I’ve generated the figures below using the <code>DiagrammeR</code> package. It’s a powerful package for drawing diagrams in R. See information on how to use the DiagrammeR package <a href="https://rich-iannone.github.io/DiagrammeR/">here</a>.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
-<img src="psych252_files/figure-html/unnamed-chunk-4-1.png" alt="Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive." width="672" />
+<div class="grViz html-widget html-fill-item" id="htmlwidget-dfd2a78ad550df5da6be" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-dfd2a78ad550df5da6be">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p class="caption">
-Figure 9.2: Figure that I used to illustrate that fitting more data points with fewer parameter is more impressive.
+Figure 6.1: Drawing two marbles out of an urn <strong>with</strong> replacement.
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-8bf6093ac8b1a46f9a82" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-8bf6093ac8b1a46f9a82">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 6.2: Drawing two marbles out of an urn <strong>without</strong> replacement.
 </p>
 </div>
 </div>
-<div id="sampling-distributions-for-median-and-mean" class="section level3 hasAnchor" number="9.2.2">
-<h3><span class="header-section-number">9.2.2</span> Sampling distributions for median and mean<a href="modeling-data.html#sampling-distributions-for-median-and-mean" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="modeling-data.html#cb5-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb5-2"><a href="modeling-data.html#cb5-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb5-3"><a href="modeling-data.html#cb5-3" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="modeling-data.html#cb5-4" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">40</span> <span class="co"># size of each sample</span></span>
-<span id="cb5-5"><a href="modeling-data.html#cb5-5" tabindex="-1"></a>sample_n <span class="ot">=</span> <span class="dv">1000</span> <span class="co"># number of samples </span></span>
-<span id="cb5-6"><a href="modeling-data.html#cb5-6" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="modeling-data.html#cb5-7" tabindex="-1"></a><span class="co"># draw sample</span></span>
-<span id="cb5-8"><a href="modeling-data.html#cb5-8" tabindex="-1"></a>fun.draw_sample <span class="ot">=</span> <span class="cf">function</span>(sample_size, distribution){</span>
-<span id="cb5-9"><a href="modeling-data.html#cb5-9" tabindex="-1"></a>  x <span class="ot">=</span> <span class="dv">50</span> <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size)</span>
-<span id="cb5-10"><a href="modeling-data.html#cb5-10" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb5-11"><a href="modeling-data.html#cb5-11" tabindex="-1"></a>}</span>
-<span id="cb5-12"><a href="modeling-data.html#cb5-12" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="modeling-data.html#cb5-13" tabindex="-1"></a><span class="co"># generate many samples </span></span>
-<span id="cb5-14"><a href="modeling-data.html#cb5-14" tabindex="-1"></a>samples <span class="ot">=</span> <span class="fu">replicate</span>(<span class="at">n =</span> sample_n,</span>
-<span id="cb5-15"><a href="modeling-data.html#cb5-15" tabindex="-1"></a>                    <span class="fu">fun.draw_sample</span>(sample_size, df.population))</span>
-<span id="cb5-16"><a href="modeling-data.html#cb5-16" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="modeling-data.html#cb5-17" tabindex="-1"></a><span class="co"># set up a data frame with samples </span></span>
-<span id="cb5-18"><a href="modeling-data.html#cb5-18" tabindex="-1"></a>df.sampling_distribution <span class="ot">=</span> <span class="fu">matrix</span>(samples, <span class="at">ncol =</span> sample_n) <span class="sc">%&gt;%</span></span>
-<span id="cb5-19"><a href="modeling-data.html#cb5-19" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">str_c</span>(<span class="dv">1</span><span class="sc">:</span>sample_n)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-20"><a href="modeling-data.html#cb5-20" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="cb5-21"><a href="modeling-data.html#cb5-21" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;sample&quot;</span>,</span>
-<span id="cb5-22"><a href="modeling-data.html#cb5-22" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;number&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-23"><a href="modeling-data.html#cb5-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="fu">as.numeric</span>(sample)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-24"><a href="modeling-data.html#cb5-24" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-25"><a href="modeling-data.html#cb5-25" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">draw =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-26"><a href="modeling-data.html#cb5-26" tabindex="-1"></a>  <span class="fu">select</span>(sample, draw, number) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-27"><a href="modeling-data.html#cb5-27" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb5-28"><a href="modeling-data.html#cb5-28" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="modeling-data.html#cb5-29" tabindex="-1"></a><span class="co"># turn the data frame into long format and calculate the mean and median of each sample</span></span>
-<span id="cb5-30"><a href="modeling-data.html#cb5-30" tabindex="-1"></a>df.sampling_distribution_summaries <span class="ot">=</span> df.sampling_distribution <span class="sc">%&gt;%</span> </span>
-<span id="cb5-31"><a href="modeling-data.html#cb5-31" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-32"><a href="modeling-data.html#cb5-32" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(number),</span>
-<span id="cb5-33"><a href="modeling-data.html#cb5-33" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(number)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-34"><a href="modeling-data.html#cb5-34" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb5-35"><a href="modeling-data.html#cb5-35" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
-<span id="cb5-36"><a href="modeling-data.html#cb5-36" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb5-37"><a href="modeling-data.html#cb5-37" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
-<p>And plot it:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="modeling-data.html#cb6-1" tabindex="-1"></a><span class="co"># plot a histogram of the means with density overlaid </span></span>
-<span id="cb6-2"><a href="modeling-data.html#cb6-2" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="modeling-data.html#cb6-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.sampling_distribution_summaries,</span>
-<span id="cb6-4"><a href="modeling-data.html#cb6-4" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> value, <span class="at">color =</span> index)) <span class="sc">+</span> </span>
-<span id="cb6-5"><a href="modeling-data.html#cb6-5" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">bw =</span> <span class="fl">0.1</span>,</span>
-<span id="cb6-6"><a href="modeling-data.html#cb6-6" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb6-7"><a href="modeling-data.html#cb6-7" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb6-8"><a href="modeling-data.html#cb6-8" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.01</span>)))</span></code></pre></div>
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
+<div id="the-random-secretary" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> The random secretary<a href="probability.html#the-random-secretary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A secretary types four letters to four people and addresses the four envelopes. If he inserts the letters at random, each in a different envelope, what is the probability that exactly three letters will go into the right envelope?</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="probability.html#cb11-1" tabindex="-1"></a>df.letters <span class="ot">=</span> <span class="fu">permutations</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">k =</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="probability.html#cb11-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">str_c</span>(<span class="st">&quot;person_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="probability.html#cb11-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_correct =</span> (person_1 <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb11-4"><a href="probability.html#cb11-4" tabindex="-1"></a>           (person_2 <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb11-5"><a href="probability.html#cb11-5" tabindex="-1"></a>           (person_3 <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="probability.html#cb11-6" tabindex="-1"></a>           (person_4 <span class="sc">==</span> <span class="dv">4</span>))</span>
+<span id="cb11-7"><a href="probability.html#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="probability.html#cb11-8" tabindex="-1"></a>df.letters <span class="sc">%&gt;%</span> </span>
+<span id="cb11-9"><a href="probability.html#cb11-9" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">prob_3_correct =</span> <span class="fu">sum</span>(n_correct <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">/</span> <span class="fu">n</span>())</span></code></pre></div>
+<pre><code># A tibble: 1 × 1
+  prob_3_correct
+           &lt;dbl&gt;
+1              0</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="probability.html#cb13-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.letters,</span>
+<span id="cb13-2"><a href="probability.html#cb13-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> n_correct)) <span class="sc">+</span> </span>
+<span id="cb13-3"><a href="probability.html#cb13-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">stat</span>(count)<span class="sc">/</span><span class="fu">sum</span>(count)),</span>
+<span id="cb13-4"><a href="probability.html#cb13-4" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb13-5"><a href="probability.html#cb13-5" tabindex="-1"></a>           <span class="at">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="probability.html#cb13-6" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
+<span id="cb13-7"><a href="probability.html#cb13-7" tabindex="-1"></a>                     <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb13-8"><a href="probability.html#cb13-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;number correct&quot;</span>,</span>
+<span id="cb13-9"><a href="probability.html#cb13-9" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;probability&quot;</span>)</span></code></pre></div>
+<pre><code>Warning: `stat(count)` was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(count)` instead.
 This warning is displayed once every 8 hours.
 Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 generated.</code></pre>
-<p><img src="psych252_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="psych252_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
-<div id="residuals-need-to-be-normally-distributed-not-the-data-itself" class="section level3 hasAnchor" number="9.2.3">
-<h3><span class="header-section-number">9.2.3</span> Residuals need to be normally distributed, not the data itself<a href="modeling-data.html#residuals-need-to-be-normally-distributed-not-the-data-itself" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="modeling-data.html#cb8-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb8-2"><a href="modeling-data.html#cb8-2" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="modeling-data.html#cb8-3" tabindex="-1"></a>n_participants <span class="ot">=</span> <span class="dv">1000</span></span>
-<span id="cb8-4"><a href="modeling-data.html#cb8-4" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="modeling-data.html#cb8-5" tabindex="-1"></a>df.normal <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span>n_participants,</span>
-<span id="cb8-6"><a href="modeling-data.html#cb8-6" tabindex="-1"></a>                   <span class="at">condition =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;control&quot;</span>, <span class="st">&quot;experimental&quot;</span>),</span>
-<span id="cb8-7"><a href="modeling-data.html#cb8-7" tabindex="-1"></a>                                   <span class="at">each =</span> n_participants<span class="sc">/</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-8"><a href="modeling-data.html#cb8-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">ifelse</span>(condition <span class="sc">==</span> <span class="st">&quot;control&quot;</span>,</span>
-<span id="cb8-9"><a href="modeling-data.html#cb8-9" tabindex="-1"></a>                        <span class="fu">rnorm</span>(<span class="at">n =</span> n_participants, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
-<span id="cb8-10"><a href="modeling-data.html#cb8-10" tabindex="-1"></a>                        <span class="fu">rnorm</span>(<span class="at">n =</span> n_participants, <span class="at">mean =</span> <span class="dv">15</span>, <span class="at">sd =</span> <span class="dv">3</span>)))</span>
-<span id="cb8-11"><a href="modeling-data.html#cb8-11" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="modeling-data.html#cb8-12" tabindex="-1"></a><span class="co"># distribution of the data </span></span>
-<span id="cb8-13"><a href="modeling-data.html#cb8-13" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.normal,</span>
-<span id="cb8-14"><a href="modeling-data.html#cb8-14" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> score)) <span class="sc">+</span> </span>
-<span id="cb8-15"><a href="modeling-data.html#cb8-15" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb8-16"><a href="modeling-data.html#cb8-16" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">group =</span> condition,</span>
-<span id="cb8-17"><a href="modeling-data.html#cb8-17" tabindex="-1"></a>                             <span class="at">color =</span> condition))</span>
-<span id="cb8-18"><a href="modeling-data.html#cb8-18" tabindex="-1"></a>  </span>
-<span id="cb8-19"><a href="modeling-data.html#cb8-19" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="modeling-data.html#cb8-20" tabindex="-1"></a><span class="co"># distribution of the residuals after having fitted a linear model </span></span>
-<span id="cb8-21"><a href="modeling-data.html#cb8-21" tabindex="-1"></a><span class="co"># we&#39;ll learn how to do this later   </span></span>
-<span id="cb8-22"><a href="modeling-data.html#cb8-22" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="modeling-data.html#cb8-23" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> score <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition,</span>
-<span id="cb8-24"><a href="modeling-data.html#cb8-24" tabindex="-1"></a>         <span class="at">data =</span> df.normal)</span>
-<span id="cb8-25"><a href="modeling-data.html#cb8-25" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="modeling-data.html#cb8-26" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="modeling-data.html#cb8-27" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">residuals =</span> fit<span class="sc">$</span>residuals),</span>
-<span id="cb8-28"><a href="modeling-data.html#cb8-28" tabindex="-1"></a>                     <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> residuals)) <span class="sc">+</span> </span>
-<span id="cb8-29"><a href="modeling-data.html#cb8-29" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<p><img src="psych252_files/figure-html/unnamed-chunk-7-1.png" width="672" /><img src="psych252_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
-</div>
-</div>
-<div id="hypothesis-testing-one-sample-t-test" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Hypothesis testing: “One-sample t-test”<a href="modeling-data.html#hypothesis-testing-one-sample-t-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="modeling-data.html#cb9-1" tabindex="-1"></a>df.internet <span class="ot">=</span> <span class="fu">read_table2</span>(<span class="at">file =</span> <span class="st">&quot;data/internet_access.txt&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="modeling-data.html#cb9-2" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code></pre></div>
-<pre><code>
-── Column specification ────────────────────────────────────────────────────────
-cols(
-  State = col_character(),
-  Internet = col_double(),
-  College = col_double(),
-  Auto = col_double(),
-  Density = col_double()
-)</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="modeling-data.html#cb11-1" tabindex="-1"></a>df.internet <span class="sc">%&gt;%</span> </span>
-<span id="cb11-2"><a href="modeling-data.html#cb11-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-3"><a href="modeling-data.html#cb11-3" tabindex="-1"></a>  <span class="fu">select</span>(i, internet, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-4"><a href="modeling-data.html#cb11-4" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-5"><a href="modeling-data.html#cb11-5" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-6"><a href="modeling-data.html#cb11-6" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb11-7"><a href="modeling-data.html#cb11-7" tabindex="-1"></a>              <span class="at">full_width =</span> F)</span></code></pre></div>
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-i
-</th>
-<th style="text-align:right;">
-internet
-</th>
-<th style="text-align:left;">
-state
-</th>
-<th style="text-align:right;">
-college
-</th>
-<th style="text-align:right;">
-auto
-</th>
-<th style="text-align:right;">
-density
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-79.0
-</td>
-<td style="text-align:left;">
-AK
-</td>
-<td style="text-align:right;">
-28.0
-</td>
-<td style="text-align:right;">
-1.2
-</td>
-<td style="text-align:right;">
-1.2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-63.5
-</td>
-<td style="text-align:left;">
-AL
-</td>
-<td style="text-align:right;">
-23.5
-</td>
-<td style="text-align:right;">
-1.3
-</td>
-<td style="text-align:right;">
-94.4
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-60.9
-</td>
-<td style="text-align:left;">
-AR
-</td>
-<td style="text-align:right;">
-20.6
-</td>
-<td style="text-align:right;">
-1.7
-</td>
-<td style="text-align:right;">
-56.0
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-73.9
-</td>
-<td style="text-align:left;">
-AZ
-</td>
-<td style="text-align:right;">
-27.4
-</td>
-<td style="text-align:right;">
-1.3
-</td>
-<td style="text-align:right;">
-56.3
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-77.9
-</td>
-<td style="text-align:left;">
-CA
-</td>
-<td style="text-align:right;">
-31.0
-</td>
-<td style="text-align:right;">
-0.8
-</td>
-<td style="text-align:right;">
-239.1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-79.4
-</td>
-<td style="text-align:left;">
-CO
-</td>
-<td style="text-align:right;">
-37.8
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-48.5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-77.5
-</td>
-<td style="text-align:left;">
-CT
-</td>
-<td style="text-align:right;">
-37.2
-</td>
-<td style="text-align:right;">
-1.0
-</td>
-<td style="text-align:right;">
-738.1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-74.5
-</td>
-<td style="text-align:left;">
-DE
-</td>
-<td style="text-align:right;">
-29.8
-</td>
-<td style="text-align:right;">
-1.1
-</td>
-<td style="text-align:right;">
-460.8
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-74.3
-</td>
-<td style="text-align:left;">
-FL
-</td>
-<td style="text-align:right;">
-27.2
-</td>
-<td style="text-align:right;">
-1.2
-</td>
-<td style="text-align:right;">
-350.6
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-72.2
-</td>
-<td style="text-align:left;">
-GA
-</td>
-<td style="text-align:right;">
-28.3
-</td>
-<td style="text-align:right;">
-1.1
-</td>
-<td style="text-align:right;">
-168.4
-</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="modeling-data.html#cb12-1" tabindex="-1"></a><span class="co"># parameters per model </span></span>
-<span id="cb12-2"><a href="modeling-data.html#cb12-2" tabindex="-1"></a>pa <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb12-3"><a href="modeling-data.html#cb12-3" tabindex="-1"></a>pc <span class="ot">=</span> <span class="dv">0</span> </span>
-<span id="cb12-4"><a href="modeling-data.html#cb12-4" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="modeling-data.html#cb12-5" tabindex="-1"></a>df.model <span class="ot">=</span> df.internet <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="modeling-data.html#cb12-6" tabindex="-1"></a>  <span class="fu">select</span>(internet, state) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-7"><a href="modeling-data.html#cb12-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">i =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(),</span>
-<span id="cb12-8"><a href="modeling-data.html#cb12-8" tabindex="-1"></a>         <span class="at">compact_b =</span> <span class="dv">75</span>,</span>
-<span id="cb12-9"><a href="modeling-data.html#cb12-9" tabindex="-1"></a>         <span class="at">augmented_b =</span> <span class="fu">mean</span>(internet),</span>
-<span id="cb12-10"><a href="modeling-data.html#cb12-10" tabindex="-1"></a>         <span class="at">compact_se =</span> (internet<span class="sc">-</span>compact_b)<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb12-11"><a href="modeling-data.html#cb12-11" tabindex="-1"></a>         <span class="at">augmented_se =</span> (internet<span class="sc">-</span>augmented_b)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-12"><a href="modeling-data.html#cb12-12" tabindex="-1"></a>  <span class="fu">select</span>(i, state, internet, <span class="fu">contains</span>(<span class="st">&quot;compact&quot;</span>), <span class="fu">contains</span>(<span class="st">&quot;augmented&quot;</span>))</span>
-<span id="cb12-13"><a href="modeling-data.html#cb12-13" tabindex="-1"></a>  </span>
-<span id="cb12-14"><a href="modeling-data.html#cb12-14" tabindex="-1"></a>df.model <span class="sc">%&gt;%</span> </span>
-<span id="cb12-15"><a href="modeling-data.html#cb12-15" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">augmented_sse =</span> <span class="fu">sum</span>(augmented_se),</span>
-<span id="cb12-16"><a href="modeling-data.html#cb12-16" tabindex="-1"></a>            <span class="at">compact_sse =</span> <span class="fu">sum</span>(compact_se),</span>
-<span id="cb12-17"><a href="modeling-data.html#cb12-17" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> augmented_sse<span class="sc">/</span>compact_sse,</span>
-<span id="cb12-18"><a href="modeling-data.html#cb12-18" tabindex="-1"></a>            <span class="at">f =</span> (pre<span class="sc">/</span>(pa<span class="sc">-</span>pc))<span class="sc">/</span>((<span class="dv">1</span><span class="sc">-</span>pre)<span class="sc">/</span>(<span class="fu">nrow</span>(df.model)<span class="sc">-</span>pa)),</span>
-<span id="cb12-19"><a href="modeling-data.html#cb12-19" tabindex="-1"></a>            <span class="at">p_value =</span> <span class="dv">1</span><span class="sc">-</span><span class="fu">pf</span>(f, pa<span class="sc">-</span>pc, <span class="fu">nrow</span>(df.model)<span class="sc">-</span><span class="dv">1</span>),</span>
-<span id="cb12-20"><a href="modeling-data.html#cb12-20" tabindex="-1"></a>            <span class="at">mean =</span> <span class="fu">mean</span>(internet),</span>
-<span id="cb12-21"><a href="modeling-data.html#cb12-21" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(internet)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-22"><a href="modeling-data.html#cb12-22" tabindex="-1"></a>              <span class="fu">kable</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb12-23"><a href="modeling-data.html#cb12-23" tabindex="-1"></a>              <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb12-24"><a href="modeling-data.html#cb12-24" tabindex="-1"></a>                          <span class="at">full_width =</span> F)</span></code></pre></div>
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-augmented_sse
-</th>
-<th style="text-align:right;">
-compact_sse
-</th>
-<th style="text-align:right;">
-pre
-</th>
-<th style="text-align:right;">
-f
-</th>
-<th style="text-align:right;">
-p_value
-</th>
-<th style="text-align:right;">
-mean
-</th>
-<th style="text-align:right;">
-sd
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1355.028
-</td>
-<td style="text-align:right;">
-1595.71
-</td>
-<td style="text-align:right;">
-0.1508305
-</td>
-<td style="text-align:right;">
-8.703441
-</td>
-<td style="text-align:right;">
-0.0048592
-</td>
-<td style="text-align:right;">
-72.806
-</td>
-<td style="text-align:right;">
-5.258673
-</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="modeling-data.html#cb13-1" tabindex="-1"></a>df1 <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb13-2"><a href="modeling-data.html#cb13-2" tabindex="-1"></a>df2 <span class="ot">=</span> <span class="dv">49</span></span>
-<span id="cb13-3"><a href="modeling-data.html#cb13-3" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="modeling-data.html#cb13-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>)),</span>
-<span id="cb13-5"><a href="modeling-data.html#cb13-5" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
-<span id="cb13-6"><a href="modeling-data.html#cb13-6" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="st">&quot;df&quot;</span>,</span>
-<span id="cb13-7"><a href="modeling-data.html#cb13-7" tabindex="-1"></a>                <span class="at">geom =</span> <span class="st">&quot;area&quot;</span>,</span>
-<span id="cb13-8"><a href="modeling-data.html#cb13-8" tabindex="-1"></a>                <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb13-9"><a href="modeling-data.html#cb13-9" tabindex="-1"></a>                <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
-<span id="cb13-10"><a href="modeling-data.html#cb13-10" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df1 =</span> df1,</span>
-<span id="cb13-11"><a href="modeling-data.html#cb13-11" tabindex="-1"></a>                            <span class="at">df2 =</span> df2),</span>
-<span id="cb13-12"><a href="modeling-data.html#cb13-12" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>,</span>
-<span id="cb13-13"><a href="modeling-data.html#cb13-13" tabindex="-1"></a>                <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="at">df1 =</span> df1, <span class="at">df2 =</span> df2), <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb13-14"><a href="modeling-data.html#cb13-14" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">df</span>(<span class="at">x =</span> .,</span>
-<span id="cb13-15"><a href="modeling-data.html#cb13-15" tabindex="-1"></a>                           <span class="at">df1 =</span> df1,</span>
-<span id="cb13-16"><a href="modeling-data.html#cb13-16" tabindex="-1"></a>                           <span class="at">df2 =</span> df2),</span>
-<span id="cb13-17"><a href="modeling-data.html#cb13-17" tabindex="-1"></a>                <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb13-18"><a href="modeling-data.html#cb13-18" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">add =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.1</span>))) <span class="sc">+</span></span>
-<span id="cb13-19"><a href="modeling-data.html#cb13-19" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Density&quot;</span>,</span>
-<span id="cb13-20"><a href="modeling-data.html#cb13-20" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Proportional reduction in error&quot;</span>)</span></code></pre></div>
-<pre><code>Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function &quot;fun&quot;</code></pre>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-11"></span>
-<img src="psych252_files/figure-html/unnamed-chunk-11-1.png" alt="F-distribution" width="672" />
+<div id="flipping-a-coin-many-times" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Flipping a coin many times<a href="probability.html#flipping-a-coin-many-times" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="probability.html#cb15-1" tabindex="-1"></a><span class="co"># Example taken from here: http://statsthinking21.org/probability.html#empirical-frequency</span></span>
+<span id="cb15-2"><a href="probability.html#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="probability.html#cb15-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>) <span class="co"># set the seed so that the outcome is consistent</span></span>
+<span id="cb15-4"><a href="probability.html#cb15-4" tabindex="-1"></a>nsamples <span class="ot">=</span> <span class="dv">50000</span> <span class="co"># how many flips do we want to make?</span></span>
+<span id="cb15-5"><a href="probability.html#cb15-5" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="probability.html#cb15-6" tabindex="-1"></a><span class="co"># create some random coin flips using the rbinom() function with</span></span>
+<span id="cb15-7"><a href="probability.html#cb15-7" tabindex="-1"></a><span class="co"># a true probability of 0.5</span></span>
+<span id="cb15-8"><a href="probability.html#cb15-8" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="probability.html#cb15-9" tabindex="-1"></a>df.samples <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">trial_number =</span> <span class="fu">seq</span>(nsamples), </span>
+<span id="cb15-10"><a href="probability.html#cb15-10" tabindex="-1"></a>                    <span class="at">outcomes =</span> <span class="fu">rbinom</span>(nsamples, <span class="dv">1</span>, <span class="fl">0.5</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-11"><a href="probability.html#cb15-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_probability =</span> <span class="fu">cumsum</span>(outcomes) <span class="sc">/</span> <span class="fu">seq_along</span>(outcomes)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-12"><a href="probability.html#cb15-12" tabindex="-1"></a>  <span class="fu">filter</span>(trial_number <span class="sc">&gt;=</span> <span class="dv">10</span>) <span class="co"># start with a minimum sample of 10 flips</span></span>
+<span id="cb15-13"><a href="probability.html#cb15-13" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="probability.html#cb15-14" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.samples, </span>
+<span id="cb15-15"><a href="probability.html#cb15-15" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> trial_number, <span class="at">y =</span> mean_probability)) <span class="sc">+</span></span>
+<span id="cb15-16"><a href="probability.html#cb15-16" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb15-17"><a href="probability.html#cb15-17" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb15-18"><a href="probability.html#cb15-18" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Number of trials&quot;</span>,</span>
+<span id="cb15-19"><a href="probability.html#cb15-19" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Estimated probability of heads&quot;</span>) <span class="sc">+</span></span>
+<span id="cb15-20"><a href="probability.html#cb15-20" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb15-21"><a href="probability.html#cb15-21" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-8"></span>
+<img src="psych252_files/figure-html/unnamed-chunk-8-1.png" alt="A demonstration of the law of large numbers." width="672" />
 <p class="caption">
-Figure 9.3: F-distribution
+Figure 6.3: A demonstration of the law of large numbers.
 </p>
 </div>
-<p>We’ve implemented a one sample t-test (compare the p-value here to the one I computed above using PRE and the F statistic).</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="modeling-data.html#cb15-1" tabindex="-1"></a><span class="fu">t.test</span>(df.internet<span class="sc">$</span>internet, <span class="at">mu =</span> <span class="dv">75</span>)</span></code></pre></div>
-<pre><code>
-    One Sample t-test
-
-data:  df.internet$internet
-t = -2.9502, df = 49, p-value = 0.004859
-alternative hypothesis: true mean is not equal to 75
-95 percent confidence interval:
- 71.3115 74.3005
-sample estimates:
-mean of x 
-   72.806 </code></pre>
 </div>
-<div id="building-a-sampling-distribution-of-pre" class="section level2 hasAnchor" number="9.4">
-<h2><span class="header-section-number">9.4</span> Building a sampling distribution of PRE<a href="modeling-data.html#building-a-sampling-distribution-of-pre" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Here is the general procedure for building a sampling distribution of the proportional reduction in error (PRE). In this instance, I compare the following two models</p>
-<ul>
-<li>Model C (compact): <span class="math inline">\(Y_i = 75 + \epsilon_i\)</span></li>
-<li>Model A (augmented): <span class="math inline">\(Y_i = \overline Y + \epsilon_i\)</span></li>
-</ul>
-<p>whereby I assume that <span class="math inline">\(\epsilon_i \sim \mathcal{N}(0, \sigma)\)</span>.</p>
-<p>For this example, I assume that I know the population distribution. I first draw a sample from that distribution, and then calculate PRE.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="modeling-data.html#cb17-1" tabindex="-1"></a><span class="co"># make example reproducible</span></span>
-<span id="cb17-2"><a href="modeling-data.html#cb17-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb17-3"><a href="modeling-data.html#cb17-3" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="modeling-data.html#cb17-4" tabindex="-1"></a><span class="co"># set the sample size </span></span>
-<span id="cb17-5"><a href="modeling-data.html#cb17-5" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">50</span> </span>
-<span id="cb17-6"><a href="modeling-data.html#cb17-6" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="modeling-data.html#cb17-7" tabindex="-1"></a><span class="co"># draw sample from the population distribution (I&#39;ve fixed sigma -- the standard deviation</span></span>
-<span id="cb17-8"><a href="modeling-data.html#cb17-8" tabindex="-1"></a><span class="co"># of the population distribution to be 5)</span></span>
-<span id="cb17-9"><a href="modeling-data.html#cb17-9" tabindex="-1"></a>df.sample <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">observation =</span> <span class="dv">1</span><span class="sc">:</span>sample_size,</span>
-<span id="cb17-10"><a href="modeling-data.html#cb17-10" tabindex="-1"></a>                   <span class="at">value =</span> <span class="dv">75</span> <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>))</span>
-<span id="cb17-11"><a href="modeling-data.html#cb17-11" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="modeling-data.html#cb17-12" tabindex="-1"></a><span class="co"># calculate SSE for each model, and then PRE based on that </span></span>
-<span id="cb17-13"><a href="modeling-data.html#cb17-13" tabindex="-1"></a>df.summary <span class="ot">=</span> df.sample <span class="sc">%&gt;%</span> </span>
-<span id="cb17-14"><a href="modeling-data.html#cb17-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> <span class="dv">75</span>,</span>
-<span id="cb17-15"><a href="modeling-data.html#cb17-15" tabindex="-1"></a>         <span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-16"><a href="modeling-data.html#cb17-16" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sse_compact =</span> <span class="fu">sum</span>((value <span class="sc">-</span> compact)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb17-17"><a href="modeling-data.html#cb17-17" tabindex="-1"></a>            <span class="at">sse_augmented =</span> <span class="fu">sum</span>((value <span class="sc">-</span> augmented)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb17-18"><a href="modeling-data.html#cb17-18" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> (sse_augmented<span class="sc">/</span>sse_compact))</span></code></pre></div>
-<p>To generate the sampling distribution, I assume that the null hypothesis is true, and then take a look at what values for PRE we could expect by chance for our given sample size.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="modeling-data.html#cb18-1" tabindex="-1"></a><span class="co"># simulation parameters</span></span>
-<span id="cb18-2"><a href="modeling-data.html#cb18-2" tabindex="-1"></a>n_samples <span class="ot">=</span> <span class="dv">1000</span></span>
-<span id="cb18-3"><a href="modeling-data.html#cb18-3" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">50</span> </span>
-<span id="cb18-4"><a href="modeling-data.html#cb18-4" tabindex="-1"></a>mu <span class="ot">=</span> <span class="dv">75</span> <span class="co"># true mean of the distribution </span></span>
-<span id="cb18-5"><a href="modeling-data.html#cb18-5" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="dv">5</span> <span class="co"># true standard deviation of the errors </span></span>
-<span id="cb18-6"><a href="modeling-data.html#cb18-6" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="modeling-data.html#cb18-7" tabindex="-1"></a><span class="co"># function to draw samples from the population distribution </span></span>
-<span id="cb18-8"><a href="modeling-data.html#cb18-8" tabindex="-1"></a>fun.draw_sample <span class="ot">=</span> <span class="cf">function</span>(sample_size, mu, sigma){</span>
-<span id="cb18-9"><a href="modeling-data.html#cb18-9" tabindex="-1"></a>  sample <span class="ot">=</span> mu <span class="sc">+</span> <span class="fu">rnorm</span>(sample_size,</span>
-<span id="cb18-10"><a href="modeling-data.html#cb18-10" tabindex="-1"></a>                      <span class="at">mean =</span> <span class="dv">0</span>,</span>
-<span id="cb18-11"><a href="modeling-data.html#cb18-11" tabindex="-1"></a>                      <span class="at">sd =</span> sigma)</span>
-<span id="cb18-12"><a href="modeling-data.html#cb18-12" tabindex="-1"></a>  <span class="fu">return</span>(sample)</span>
-<span id="cb18-13"><a href="modeling-data.html#cb18-13" tabindex="-1"></a>}</span>
-<span id="cb18-14"><a href="modeling-data.html#cb18-14" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="modeling-data.html#cb18-15" tabindex="-1"></a><span class="co"># draw samples</span></span>
-<span id="cb18-16"><a href="modeling-data.html#cb18-16" tabindex="-1"></a>samples <span class="ot">=</span> n_samples <span class="sc">%&gt;%</span> </span>
-<span id="cb18-17"><a href="modeling-data.html#cb18-17" tabindex="-1"></a>  <span class="fu">replicate</span>(<span class="fu">fun.draw_sample</span>(sample_size, mu, sigma)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-18"><a href="modeling-data.html#cb18-18" tabindex="-1"></a>  <span class="fu">t</span>() <span class="co"># transpose the resulting matrix (i.e. flip rows and columns)</span></span>
-<span id="cb18-19"><a href="modeling-data.html#cb18-19" tabindex="-1"></a></span>
-<span id="cb18-20"><a href="modeling-data.html#cb18-20" tabindex="-1"></a><span class="co"># put samples in data frame and compute PRE </span></span>
-<span id="cb18-21"><a href="modeling-data.html#cb18-21" tabindex="-1"></a>df.samples <span class="ot">=</span> samples <span class="sc">%&gt;%</span> </span>
-<span id="cb18-22"><a href="modeling-data.html#cb18-22" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">str_c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(samples))) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-23"><a href="modeling-data.html#cb18-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-24"><a href="modeling-data.html#cb18-24" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
-<span id="cb18-25"><a href="modeling-data.html#cb18-25" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb18-26"><a href="modeling-data.html#cb18-26" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-27"><a href="modeling-data.html#cb18-27" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> mu) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-28"><a href="modeling-data.html#cb18-28" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-29"><a href="modeling-data.html#cb18-29" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-30"><a href="modeling-data.html#cb18-30" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sse_compact =</span> <span class="fu">sum</span>((value <span class="sc">-</span> compact)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb18-31"><a href="modeling-data.html#cb18-31" tabindex="-1"></a>            <span class="at">sse_augmented =</span> <span class="fu">sum</span>((value <span class="sc">-</span> augmented)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb18-32"><a href="modeling-data.html#cb18-32" tabindex="-1"></a>            <span class="at">pre =</span> <span class="dv">1</span> <span class="sc">-</span> sse_augmented<span class="sc">/</span>sse_compact)</span>
-<span id="cb18-33"><a href="modeling-data.html#cb18-33" tabindex="-1"></a>            </span>
-<span id="cb18-34"><a href="modeling-data.html#cb18-34" tabindex="-1"></a></span>
-<span id="cb18-35"><a href="modeling-data.html#cb18-35" tabindex="-1"></a><span class="co"># plot the sampling distribution for PRE </span></span>
-<span id="cb18-36"><a href="modeling-data.html#cb18-36" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.samples,</span>
-<span id="cb18-37"><a href="modeling-data.html#cb18-37" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> pre)) <span class="sc">+</span></span>
-<span id="cb18-38"><a href="modeling-data.html#cb18-38" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb18-39"><a href="modeling-data.html#cb18-39" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Proportional reduction in error&quot;</span>)</span>
-<span id="cb18-40"><a href="modeling-data.html#cb18-40" tabindex="-1"></a></span>
-<span id="cb18-41"><a href="modeling-data.html#cb18-41" tabindex="-1"></a><span class="co"># calculate the p-value for our sample </span></span>
-<span id="cb18-42"><a href="modeling-data.html#cb18-42" tabindex="-1"></a>df.samples <span class="sc">%&gt;%</span> </span>
-<span id="cb18-43"><a href="modeling-data.html#cb18-43" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">sum</span>(pre <span class="sc">&gt;=</span> df.summary<span class="sc">$</span>pre)<span class="sc">/</span><span class="fu">n</span>())</span></code></pre></div>
-<pre><code># A tibble: 1 × 1
-  p_value
-    &lt;dbl&gt;
-1   0.394</code></pre>
-<p><img src="psych252_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>Some code I wrote to show a subset of the samples.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="modeling-data.html#cb20-1" tabindex="-1"></a>samples <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="modeling-data.html#cb20-2" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="st">&quot;unique&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="modeling-data.html#cb20-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sample =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-4"><a href="modeling-data.html#cb20-4" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>sample,</span>
-<span id="cb20-5"><a href="modeling-data.html#cb20-5" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb20-6"><a href="modeling-data.html#cb20-6" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-7"><a href="modeling-data.html#cb20-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">compact =</span> mu) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-8"><a href="modeling-data.html#cb20-8" tabindex="-1"></a>  <span class="fu">group_by</span>(sample) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-9"><a href="modeling-data.html#cb20-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">augmented =</span> <span class="fu">mean</span>(value)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-10"><a href="modeling-data.html#cb20-10" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb20-11"><a href="modeling-data.html#cb20-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">str_extract</span>(index, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">-*</span><span class="sc">\\</span><span class="st">d+</span><span class="sc">\\</span><span class="st">.*</span><span class="sc">\\</span><span class="st">d*&quot;</span>),</span>
-<span id="cb20-12"><a href="modeling-data.html#cb20-12" tabindex="-1"></a>         <span class="at">index =</span> <span class="fu">as.numeric</span>(index)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-13"><a href="modeling-data.html#cb20-13" tabindex="-1"></a>  <span class="fu">filter</span>(index <span class="sc">&lt;</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-14"><a href="modeling-data.html#cb20-14" tabindex="-1"></a>  <span class="fu">arrange</span>(sample, index) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-15"><a href="modeling-data.html#cb20-15" tabindex="-1"></a>    <span class="fu">head</span>(<span class="dv">15</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-16"><a href="modeling-data.html#cb20-16" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-17"><a href="modeling-data.html#cb20-17" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb20-18"><a href="modeling-data.html#cb20-18" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
+<div id="clue-guide-to-probability" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Clue guide to probability<a href="probability.html#clue-guide-to-probability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="probability.html#cb16-1" tabindex="-1"></a>who <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;ms_scarlet&quot;</span>, <span class="st">&quot;col_mustard&quot;</span>, <span class="st">&quot;mrs_white&quot;</span>,</span>
+<span id="cb16-2"><a href="probability.html#cb16-2" tabindex="-1"></a>        <span class="st">&quot;mr_green&quot;</span>, <span class="st">&quot;mrs_peacock&quot;</span>, <span class="st">&quot;prof_plum&quot;</span>)</span>
+<span id="cb16-3"><a href="probability.html#cb16-3" tabindex="-1"></a>what <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;candlestick&quot;</span>, <span class="st">&quot;knife&quot;</span>, <span class="st">&quot;lead_pipe&quot;</span>,</span>
+<span id="cb16-4"><a href="probability.html#cb16-4" tabindex="-1"></a>         <span class="st">&quot;revolver&quot;</span>, <span class="st">&quot;rope&quot;</span>, <span class="st">&quot;wrench&quot;</span>)</span>
+<span id="cb16-5"><a href="probability.html#cb16-5" tabindex="-1"></a>where <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;study&quot;</span>, <span class="st">&quot;kitchen&quot;</span>, <span class="st">&quot;conservatory&quot;</span>,</span>
+<span id="cb16-6"><a href="probability.html#cb16-6" tabindex="-1"></a>          <span class="st">&quot;lounge&quot;</span>, <span class="st">&quot;billiard_room&quot;</span>, <span class="st">&quot;hall&quot;</span>,</span>
+<span id="cb16-7"><a href="probability.html#cb16-7" tabindex="-1"></a>          <span class="st">&quot;dining_room&quot;</span>, <span class="st">&quot;ballroom&quot;</span>, <span class="st">&quot;library&quot;</span>)</span>
+<span id="cb16-8"><a href="probability.html#cb16-8" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="probability.html#cb16-9" tabindex="-1"></a>df.clue <span class="ot">=</span> <span class="fu">expand_grid</span>(<span class="at">who =</span> who,</span>
+<span id="cb16-10"><a href="probability.html#cb16-10" tabindex="-1"></a>                      <span class="at">what =</span> what,</span>
+<span id="cb16-11"><a href="probability.html#cb16-11" tabindex="-1"></a>                      <span class="at">where =</span> where)</span>
+<span id="cb16-12"><a href="probability.html#cb16-12" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="probability.html#cb16-13" tabindex="-1"></a>df.suspects <span class="ot">=</span> df.clue <span class="sc">%&gt;%</span> </span>
+<span id="cb16-14"><a href="probability.html#cb16-14" tabindex="-1"></a>  <span class="fu">distinct</span>(who) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-15"><a href="probability.html#cb16-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">ifelse</span>(<span class="at">test =</span> who <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;ms_scarlet&quot;</span>, <span class="st">&quot;mrs_white&quot;</span>, <span class="st">&quot;mrs_peacock&quot;</span>), </span>
+<span id="cb16-16"><a href="probability.html#cb16-16" tabindex="-1"></a>                         <span class="at">yes =</span> <span class="st">&quot;female&quot;</span>, </span>
+<span id="cb16-17"><a href="probability.html#cb16-17" tabindex="-1"></a>                         <span class="at">no =</span> <span class="st">&quot;male&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="probability.html#cb17-1" tabindex="-1"></a>df.suspects <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="probability.html#cb17-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(gender)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="probability.html#cb17-3" tabindex="-1"></a>  <span class="fu">kable</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="probability.html#cb17-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="st">&quot;striped&quot;</span>, <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:right;">
-sample
+<th style="text-align:left;">
+who
 </th>
-<th style="text-align:right;">
-index
-</th>
-<th style="text-align:right;">
-value
-</th>
-<th style="text-align:right;">
-compact
-</th>
-<th style="text-align:right;">
-augmented
+<th style="text-align:left;">
+gender
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;">
-1
+<td style="text-align:left;">
+col_mustard
 </td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-76.99
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.59
+<td style="text-align:left;">
+male
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
-1
+<td style="text-align:left;">
+mr_green
 </td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-71.94
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.59
+<td style="text-align:left;">
+male
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
-1
+<td style="text-align:left;">
+prof_plum
 </td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-76.71
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.59
+<td style="text-align:left;">
+male
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
-1
+<td style="text-align:left;">
+ms_scarlet
 </td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-69.35
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.59
+<td style="text-align:left;">
+female
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
-1
+<td style="text-align:left;">
+mrs_white
 </td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-82.17
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.59
+<td style="text-align:left;">
+female
 </td>
 </tr>
 <tr>
-<td style="text-align:right;">
-2
+<td style="text-align:left;">
+mrs_peacock
 </td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-71.90
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-74.24
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-75.21
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-74.24
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-70.45
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-74.24
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-75.79
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-74.24
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-71.73
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-74.24
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-77.25
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.38
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-74.91
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.38
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-73.41
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.38
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-70.35
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.38
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-67.56
-</td>
-<td style="text-align:right;">
-75
-</td>
-<td style="text-align:right;">
-75.38
+<td style="text-align:left;">
+female
 </td>
 </tr>
 </tbody>
 </table>
+<div id="conditional-probability" class="section level3 hasAnchor" number="6.5.1">
+<h3><span class="header-section-number">6.5.1</span> Conditional probability<a href="probability.html#conditional-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="probability.html#cb18-1" tabindex="-1"></a><span class="co"># conditional probability (via rules of probability)</span></span>
+<span id="cb18-2"><a href="probability.html#cb18-2" tabindex="-1"></a>df.suspects <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="probability.html#cb18-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_prof_plum_given_male =</span> </span>
+<span id="cb18-4"><a href="probability.html#cb18-4" tabindex="-1"></a>              <span class="fu">sum</span>(gender <span class="sc">==</span> <span class="st">&quot;male&quot;</span> <span class="sc">&amp;</span> who <span class="sc">==</span> <span class="st">&quot;prof_plum&quot;</span>) <span class="sc">/</span></span>
+<span id="cb18-5"><a href="probability.html#cb18-5" tabindex="-1"></a>              <span class="fu">sum</span>(gender <span class="sc">==</span> <span class="st">&quot;male&quot;</span>))</span></code></pre></div>
+<pre><code># A tibble: 1 × 1
+  p_prof_plum_given_male
+                   &lt;dbl&gt;
+1                  0.333</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="probability.html#cb20-1" tabindex="-1"></a><span class="co"># conditional probability (via rejection)</span></span>
+<span id="cb20-2"><a href="probability.html#cb20-2" tabindex="-1"></a>df.suspects <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="probability.html#cb20-3" tabindex="-1"></a>  <span class="fu">filter</span>(gender <span class="sc">==</span> <span class="st">&quot;male&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-4"><a href="probability.html#cb20-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_prof_plum_given_male =</span> </span>
+<span id="cb20-5"><a href="probability.html#cb20-5" tabindex="-1"></a>              <span class="fu">sum</span>(who <span class="sc">==</span> <span class="st">&quot;prof_plum&quot;</span>) <span class="sc">/</span></span>
+<span id="cb20-6"><a href="probability.html#cb20-6" tabindex="-1"></a>              <span class="fu">n</span>())</span></code></pre></div>
+<pre><code># A tibble: 1 × 1
+  p_prof_plum_given_male
+                   &lt;dbl&gt;
+1                  0.333</code></pre>
 </div>
-<div id="misc-4" class="section level2 hasAnchor" number="9.5">
-<h2><span class="header-section-number">9.5</span> Misc<a href="modeling-data.html#misc-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Some code to plot probability distributions together with values of interest highlighted.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="modeling-data.html#cb21-1" tabindex="-1"></a>value_mean <span class="ot">=</span> <span class="fl">3.73</span></span>
-<span id="cb21-2"><a href="modeling-data.html#cb21-2" tabindex="-1"></a>value_sd <span class="ot">=</span> <span class="fl">2.05</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">40</span>)</span>
-<span id="cb21-3"><a href="modeling-data.html#cb21-3" tabindex="-1"></a>q_low <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean =</span> value_mean, <span class="at">sd =</span> value_sd)</span>
-<span id="cb21-4"><a href="modeling-data.html#cb21-4" tabindex="-1"></a>q_high <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>, <span class="at">mean =</span> value_mean, <span class="at">sd =</span> value_sd)</span>
-<span id="cb21-5"><a href="modeling-data.html#cb21-5" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> value_sd</span></code></pre></div>
-<pre><code>[1] 0.6352899</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="modeling-data.html#cb23-1" tabindex="-1"></a><span class="co"># density function</span></span>
-<span id="cb23-2"><a href="modeling-data.html#cb23-2" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="modeling-data.html#cb23-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fl">2.73</span>, <span class="fl">4.73</span>)),</span>
-<span id="cb23-4"><a href="modeling-data.html#cb23-4" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
-<span id="cb23-5"><a href="modeling-data.html#cb23-5" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">dnorm</span>(.,</span>
-<span id="cb23-6"><a href="modeling-data.html#cb23-6" tabindex="-1"></a>                              <span class="at">mean =</span> value_mean,</span>
-<span id="cb23-7"><a href="modeling-data.html#cb23-7" tabindex="-1"></a>                              <span class="at">sd =</span> value_sd),</span>
-<span id="cb23-8"><a href="modeling-data.html#cb23-8" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb23-9"><a href="modeling-data.html#cb23-9" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(q_low, q_high),</span>
-<span id="cb23-10"><a href="modeling-data.html#cb23-10" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>)</span>
-<span id="cb23-11"><a href="modeling-data.html#cb23-11" tabindex="-1"></a></span>
-<span id="cb23-12"><a href="modeling-data.html#cb23-12" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="modeling-data.html#cb23-13" tabindex="-1"></a><span class="co"># quantile function </span></span>
-<span id="cb23-14"><a href="modeling-data.html#cb23-14" tabindex="-1"></a>df.paths <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">each =</span> <span class="dv">2</span>),</span>
-<span id="cb23-15"><a href="modeling-data.html#cb23-15" tabindex="-1"></a>                        <span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">0.025</span>, <span class="sc">-</span><span class="cn">Inf</span>, <span class="fl">0.975</span>),</span>
-<span id="cb23-16"><a href="modeling-data.html#cb23-16" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">2.9</span>, q_low,</span>
-<span id="cb23-17"><a href="modeling-data.html#cb23-17" tabindex="-1"></a>                        <span class="fl">2.9</span>, q_high,</span>
-<span id="cb23-18"><a href="modeling-data.html#cb23-18" tabindex="-1"></a>                        q_low, q_low,</span>
-<span id="cb23-19"><a href="modeling-data.html#cb23-19" tabindex="-1"></a>                        q_high, q_high),</span>
-<span id="cb23-20"><a href="modeling-data.html#cb23-20" tabindex="-1"></a>                  <span class="at">group =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">each =</span> <span class="dv">2</span>))</span>
-<span id="cb23-21"><a href="modeling-data.html#cb23-21" tabindex="-1"></a></span>
-<span id="cb23-22"><a href="modeling-data.html#cb23-22" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
-<span id="cb23-23"><a href="modeling-data.html#cb23-23" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span> </span>
-<span id="cb23-24"><a href="modeling-data.html#cb23-24" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="sc">~</span> <span class="fu">qnorm</span>(.,</span>
-<span id="cb23-25"><a href="modeling-data.html#cb23-25" tabindex="-1"></a>                              <span class="at">mean =</span> value_mean,</span>
-<span id="cb23-26"><a href="modeling-data.html#cb23-26" tabindex="-1"></a>                              <span class="at">sd =</span> value_sd)) <span class="sc">+</span> </span>
-<span id="cb23-27"><a href="modeling-data.html#cb23-27" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> df.paths,</span>
-<span id="cb23-28"><a href="modeling-data.html#cb23-28" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb23-29"><a href="modeling-data.html#cb23-29" tabindex="-1"></a>                          <span class="at">y =</span> y,</span>
-<span id="cb23-30"><a href="modeling-data.html#cb23-30" tabindex="-1"></a>                          <span class="at">group =</span> group),</span>
-<span id="cb23-31"><a href="modeling-data.html#cb23-31" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>,</span>
-<span id="cb23-32"><a href="modeling-data.html#cb23-32" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">2</span>,</span>
-<span id="cb23-33"><a href="modeling-data.html#cb23-33" tabindex="-1"></a>            <span class="at">lineend =</span> <span class="st">&quot;round&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb23-34"><a href="modeling-data.html#cb23-34" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.05</span>, <span class="fl">1.05</span>),</span>
-<span id="cb23-35"><a href="modeling-data.html#cb23-35" tabindex="-1"></a>                  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">2.9</span>, <span class="fl">4.5</span>),</span>
-<span id="cb23-36"><a href="modeling-data.html#cb23-36" tabindex="-1"></a>                  <span class="at">expand =</span> F)</span></code></pre></div>
-<p><img src="psych252_files/figure-html/unnamed-chunk-16-1.png" width="672" /><img src="psych252_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<div id="law-of-total-probability" class="section level3 hasAnchor" number="6.5.2">
+<h3><span class="header-section-number">6.5.2</span> Law of total probability<a href="probability.html#law-of-total-probability" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-e3b1b44d05ac92a67792" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-e3b1b44d05ac92a67792">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="additional-resources-7" class="section level2 hasAnchor" number="9.6">
-<h2><span class="header-section-number">9.6</span> Additional resources<a href="modeling-data.html#additional-resources-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="reading" class="section level3 hasAnchor" number="9.6.1">
-<h3><span class="header-section-number">9.6.1</span> Reading<a href="modeling-data.html#reading" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="probability-operations" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Probability operations<a href="probability.html#probability-operations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="probability.html#cb22-1" tabindex="-1"></a><span class="co"># Make a deck of cards </span></span>
+<span id="cb22-2"><a href="probability.html#cb22-2" tabindex="-1"></a>df.cards <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">suit =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Clubs&quot;</span>, <span class="st">&quot;Spades&quot;</span>, <span class="st">&quot;Hearts&quot;</span>, <span class="st">&quot;Diamonds&quot;</span>), <span class="at">each =</span> <span class="dv">8</span>),</span>
+<span id="cb22-3"><a href="probability.html#cb22-3" tabindex="-1"></a>                  <span class="at">value =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;7&quot;</span>, <span class="st">&quot;8&quot;</span>, <span class="st">&quot;9&quot;</span>, <span class="st">&quot;10&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;Queen&quot;</span>, <span class="st">&quot;King&quot;</span>, <span class="st">&quot;Ace&quot;</span>), <span class="dv">4</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="probability.html#cb23-1" tabindex="-1"></a><span class="co"># conditional probability: p(Hearts | Queen) (via rules of probability)</span></span>
+<span id="cb23-2"><a href="probability.html#cb23-2" tabindex="-1"></a>df.cards <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="probability.html#cb23-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_hearts_given_queen =</span> </span>
+<span id="cb23-4"><a href="probability.html#cb23-4" tabindex="-1"></a>              <span class="fu">sum</span>(suit <span class="sc">==</span> <span class="st">&quot;Hearts&quot;</span> <span class="sc">&amp;</span> value <span class="sc">==</span> <span class="st">&quot;Queen&quot;</span>) <span class="sc">/</span> </span>
+<span id="cb23-5"><a href="probability.html#cb23-5" tabindex="-1"></a>              <span class="fu">sum</span>(value <span class="sc">==</span> <span class="st">&quot;Queen&quot;</span>))</span></code></pre></div>
+<pre><code># A tibble: 1 × 1
+  p_hearts_given_queen
+                 &lt;dbl&gt;
+1                 0.25</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="probability.html#cb25-1" tabindex="-1"></a><span class="co"># conditional probability: p(Hearts | Queen) (via rejection)</span></span>
+<span id="cb25-2"><a href="probability.html#cb25-2" tabindex="-1"></a>df.cards <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="probability.html#cb25-3" tabindex="-1"></a>  <span class="fu">filter</span>(value <span class="sc">==</span> <span class="st">&quot;Queen&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="probability.html#cb25-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_hearts_given_queen =</span> <span class="fu">sum</span>(suit <span class="sc">==</span> <span class="st">&quot;Hearts&quot;</span>)<span class="sc">/</span><span class="fu">n</span>())</span></code></pre></div>
+<pre><code># A tibble: 1 × 1
+  p_hearts_given_queen
+                 &lt;dbl&gt;
+1                 0.25</code></pre>
+</div>
+<div id="bayesian-reasoning-explained" class="section level2 hasAnchor" number="6.7">
+<h2><span class="header-section-number">6.7</span> Bayesian reasoning explained<a href="probability.html#bayesian-reasoning-explained" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-1cfb4abdef5b69e7e815" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-1cfb4abdef5b69e7e815">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="getting-bayes-right-matters" class="section level2 hasAnchor" number="6.8">
+<h2><span class="header-section-number">6.8</span> Getting Bayes right matters<a href="probability.html#getting-bayes-right-matters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="bayesian-reasoning-example" class="section level3 hasAnchor" number="6.8.1">
+<h3><span class="header-section-number">6.8.1</span> Bayesian reasoning example<a href="probability.html#bayesian-reasoning-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="probability.html#cb27-1" tabindex="-1"></a><span class="co"># prior probability of the disease</span></span>
+<span id="cb27-2"><a href="probability.html#cb27-2" tabindex="-1"></a>p.D <span class="ot">=</span> <span class="fl">0.0001</span></span>
+<span id="cb27-3"><a href="probability.html#cb27-3" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="probability.html#cb27-4" tabindex="-1"></a><span class="co"># sensitivity of the test </span></span>
+<span id="cb27-5"><a href="probability.html#cb27-5" tabindex="-1"></a>p.T_given_D <span class="ot">=</span> <span class="fl">0.999</span></span>
+<span id="cb27-6"><a href="probability.html#cb27-6" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="probability.html#cb27-7" tabindex="-1"></a><span class="co"># specificity of the test </span></span>
+<span id="cb27-8"><a href="probability.html#cb27-8" tabindex="-1"></a>p.notT_given_notD <span class="ot">=</span> <span class="fl">0.999</span></span>
+<span id="cb27-9"><a href="probability.html#cb27-9" tabindex="-1"></a>p.T_given_notD <span class="ot">=</span> (<span class="dv">1</span> <span class="sc">-</span> p.notT_given_notD)</span>
+<span id="cb27-10"><a href="probability.html#cb27-10" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="probability.html#cb27-11" tabindex="-1"></a><span class="co"># posterior given a positive test result </span></span>
+<span id="cb27-12"><a href="probability.html#cb27-12" tabindex="-1"></a>p.D_given_T <span class="ot">=</span> (p.T_given_D <span class="sc">*</span> p.D) <span class="sc">/</span> ((p.T_given_D <span class="sc">*</span> p.D) <span class="sc">+</span> (p.T_given_notD <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p.D)))</span>
+<span id="cb27-13"><a href="probability.html#cb27-13" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="probability.html#cb27-14" tabindex="-1"></a>p.D_given_T</span></code></pre></div>
+<pre><code>[1] 0.0908347</code></pre>
+</div>
+<div id="bayesian-reasoning-example-covid-rapid-test" class="section level3 hasAnchor" number="6.8.2">
+<h3><span class="header-section-number">6.8.2</span> Bayesian reasoning example (COVID rapid test)<a href="probability.html#bayesian-reasoning-example-covid-rapid-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/34242764/#" class="uri">https://pubmed.ncbi.nlm.nih.gov/34242764/#</a>:~:text=The%20overall%20sensitivity%20of%20the,%25%20CI%2024.4%2D65.1).</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="probability.html#cb29-1" tabindex="-1"></a><span class="co"># prior probability of the disease</span></span>
+<span id="cb29-2"><a href="probability.html#cb29-2" tabindex="-1"></a>p.D <span class="ot">=</span> <span class="fl">0.1</span> </span>
+<span id="cb29-3"><a href="probability.html#cb29-3" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="probability.html#cb29-4" tabindex="-1"></a><span class="co"># sensitivity covid rapid test</span></span>
+<span id="cb29-5"><a href="probability.html#cb29-5" tabindex="-1"></a>p.T_given_D <span class="ot">=</span> <span class="fl">0.653</span></span>
+<span id="cb29-6"><a href="probability.html#cb29-6" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="probability.html#cb29-7" tabindex="-1"></a><span class="co"># specificity of covid rapid test</span></span>
+<span id="cb29-8"><a href="probability.html#cb29-8" tabindex="-1"></a>p.notT_given_notD <span class="ot">=</span> <span class="fl">0.999</span></span>
+<span id="cb29-9"><a href="probability.html#cb29-9" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="probability.html#cb29-10" tabindex="-1"></a>p.T_given_notD <span class="ot">=</span> (<span class="dv">1</span> <span class="sc">-</span> p.notT_given_notD)</span>
+<span id="cb29-11"><a href="probability.html#cb29-11" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="probability.html#cb29-12" tabindex="-1"></a><span class="co"># posterior given a positive test result </span></span>
+<span id="cb29-13"><a href="probability.html#cb29-13" tabindex="-1"></a>p.D_given_T <span class="ot">=</span> (p.T_given_D <span class="sc">*</span> p.D) <span class="sc">/</span> ((p.T_given_D <span class="sc">*</span> p.D) <span class="sc">+</span> (p.T_given_notD <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p.D)))</span>
+<span id="cb29-14"><a href="probability.html#cb29-14" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="probability.html#cb29-15" tabindex="-1"></a><span class="co"># posterior given a negative test result </span></span>
+<span id="cb29-16"><a href="probability.html#cb29-16" tabindex="-1"></a>p.D_given_notT <span class="ot">=</span> ((<span class="dv">1</span><span class="sc">-</span>p.T_given_D) <span class="sc">*</span> p.D) <span class="sc">/</span> (((<span class="dv">1</span><span class="sc">-</span>p.T_given_D) <span class="sc">*</span> p.D) <span class="sc">+</span> ((<span class="dv">1</span><span class="sc">-</span>p.T_given_notD) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p.D)))</span>
+<span id="cb29-17"><a href="probability.html#cb29-17" tabindex="-1"></a></span>
+<span id="cb29-18"><a href="probability.html#cb29-18" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&quot;Probability of COVID given a positive test: &quot;</span>, <span class="fu">round</span>(p.D_given_T <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">&quot;%&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;Probability of COVID given a positive test: 98.6%&quot;</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="probability.html#cb31-1" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">&quot;Probability of COVID given a negative test: &quot;</span>, <span class="fu">round</span>(p.D_given_notT <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">&quot;%&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;Probability of COVID given a negative test: 3.7%&quot;</code></pre>
+</div>
+<div id="most-people-in-the-hospital-are-vaccinated" class="section level3 hasAnchor" number="6.8.3">
+<h3><span class="header-section-number">6.8.3</span> Most people in the hospital are vaccinated<a href="probability.html#most-people-in-the-hospital-are-vaccinated" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="probability.html#cb33-1" tabindex="-1"></a><span class="co"># probability of being vaccinated </span></span>
+<span id="cb33-2"><a href="probability.html#cb33-2" tabindex="-1"></a>p.V <span class="ot">=</span> <span class="fl">0.8</span> </span>
+<span id="cb33-3"><a href="probability.html#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="probability.html#cb33-4" tabindex="-1"></a><span class="co"># likelihood of hospital </span></span>
+<span id="cb33-5"><a href="probability.html#cb33-5" tabindex="-1"></a>p.H_given_V <span class="ot">=</span> <span class="fl">0.2</span></span>
+<span id="cb33-6"><a href="probability.html#cb33-6" tabindex="-1"></a>p.H_given_notV <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb33-7"><a href="probability.html#cb33-7" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="probability.html#cb33-8" tabindex="-1"></a><span class="co"># posterior probability </span></span>
+<span id="cb33-9"><a href="probability.html#cb33-9" tabindex="-1"></a>p.V_given_H <span class="ot">=</span> (p.H_given_V <span class="sc">*</span> p.V) <span class="sc">/</span> ((p.H_given_V <span class="sc">*</span> p.V) <span class="sc">+</span> (p.H_given_notV <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p.V)))</span>
+<span id="cb33-10"><a href="probability.html#cb33-10" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="probability.html#cb33-11" tabindex="-1"></a>p.V_given_H</span></code></pre></div>
+<pre><code>[1] 0.6153846</code></pre>
+</div>
+</div>
+<div id="building-a-bayesis" class="section level2 hasAnchor" number="6.9">
+<h2><span class="header-section-number">6.9</span> Building a Bayesis<a href="probability.html#building-a-bayesis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="dice-example" class="section level3 hasAnchor" number="6.9.1">
+<h3><span class="header-section-number">6.9.1</span> Dice example<a href="probability.html#dice-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="probability.html#cb35-1" tabindex="-1"></a><span class="co"># prior</span></span>
+<span id="cb35-2"><a href="probability.html#cb35-2" tabindex="-1"></a>p.four <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb35-3"><a href="probability.html#cb35-3" tabindex="-1"></a>p.six <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb35-4"><a href="probability.html#cb35-4" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="probability.html#cb35-5" tabindex="-1"></a><span class="co"># possibilities </span></span>
+<span id="cb35-6"><a href="probability.html#cb35-6" tabindex="-1"></a>df.possibilities <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">observation =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,</span>
+<span id="cb35-7"><a href="probability.html#cb35-7" tabindex="-1"></a>                          <span class="at">p.four =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">2</span>)),</span>
+<span id="cb35-8"><a href="probability.html#cb35-8" tabindex="-1"></a>                          <span class="at">p.six =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>, <span class="dv">6</span>)))</span>
+<span id="cb35-9"><a href="probability.html#cb35-9" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="probability.html#cb35-10" tabindex="-1"></a><span class="co"># data</span></span>
+<span id="cb35-11"><a href="probability.html#cb35-11" tabindex="-1"></a><span class="co"># data = c(4)</span></span>
+<span id="cb35-12"><a href="probability.html#cb35-12" tabindex="-1"></a><span class="co"># data = c(4, 2, 1)</span></span>
+<span id="cb35-13"><a href="probability.html#cb35-13" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>)</span>
+<span id="cb35-14"><a href="probability.html#cb35-14" tabindex="-1"></a><span class="co"># data = c(4, 2, 1, 3, 1, 5)</span></span>
+<span id="cb35-15"><a href="probability.html#cb35-15" tabindex="-1"></a></span>
+<span id="cb35-16"><a href="probability.html#cb35-16" tabindex="-1"></a><span class="co"># likelihood</span></span>
+<span id="cb35-17"><a href="probability.html#cb35-17" tabindex="-1"></a>p.data_given_four <span class="ot">=</span> <span class="fu">prod</span>(df.possibilities<span class="sc">$</span>p.four[data])</span>
+<span id="cb35-18"><a href="probability.html#cb35-18" tabindex="-1"></a>p.data_given_six <span class="ot">=</span> <span class="fu">prod</span>(df.possibilities<span class="sc">$</span>p.six[data])</span>
+<span id="cb35-19"><a href="probability.html#cb35-19" tabindex="-1"></a></span>
+<span id="cb35-20"><a href="probability.html#cb35-20" tabindex="-1"></a><span class="co"># posterior</span></span>
+<span id="cb35-21"><a href="probability.html#cb35-21" tabindex="-1"></a>p.four_given_data <span class="ot">=</span> (p.data_given_four <span class="sc">*</span> p.four) <span class="sc">/</span>  </span>
+<span id="cb35-22"><a href="probability.html#cb35-22" tabindex="-1"></a>  ((p.data_given_four <span class="sc">*</span> p.four) <span class="sc">+</span> </span>
+<span id="cb35-23"><a href="probability.html#cb35-23" tabindex="-1"></a>     (p.data_given_six <span class="sc">*</span> p.six))</span>
+<span id="cb35-24"><a href="probability.html#cb35-24" tabindex="-1"></a></span>
+<span id="cb35-25"><a href="probability.html#cb35-25" tabindex="-1"></a>p.four_given_data</span></code></pre></div>
+<pre><code>[1] 0.8836364</code></pre>
+<p>Given this data <span class="math inline">\(d\)</span> = [4, 2, 1, 3, 1], there is a 88% chance that the four sided die was rolled rather than the six sided die.</p>
+</div>
+</div>
+<div id="additional-resources-4" class="section level2 hasAnchor" number="6.10">
+<h2><span class="header-section-number">6.10</span> Additional resources<a href="probability.html#additional-resources-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="cheatsheets-4" class="section level3 hasAnchor" number="6.10.1">
+<h3><span class="header-section-number">6.10.1</span> Cheatsheets<a href="probability.html#cheatsheets-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Judd, C. M., McClelland, G. H., &amp; Ryan, C. S. (2011). Data analysis: A model comparison approach. Routledge. –&gt; Chapters 1–4</li>
+<li><a href="figures/probability.pdf">Probability cheatsheet</a></li>
 </ul>
 </div>
-<div id="datacamp-2" class="section level3 hasAnchor" number="9.6.2">
-<h3><span class="header-section-number">9.6.2</span> Datacamp<a href="modeling-data.html#datacamp-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="books-and-chapters-4" class="section level3 hasAnchor" number="6.10.2">
+<h3><span class="header-section-number">6.10.2</span> Books and chapters<a href="probability.html#books-and-chapters-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li><a href="https://www.datacamp.com/courses/foundations-of-inference">Foundations of Inference</a></li>
+<li><a href="http://www.isibang.ac.in/~athreya/psweur/">Probability and Statistics with examples using R</a></li>
+<li><a href="https://learningstatisticswithr-bookdown.netlify.com/probability.html#probstats">Learning statistics with R: Chapter 9 Introduction to probability</a></li>
+</ul>
+</div>
+<div id="misc-2" class="section level3 hasAnchor" number="6.10.3">
+<h3><span class="header-section-number">6.10.3</span> Misc<a href="probability.html#misc-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><a href="https://www.tjmahr.com/bayes-theorem-in-three-panels/">Bayes’ theorem in three panels</a></li>
+<li><a href="https://projects.iq.harvard.edu/stat110">Statistics 110: Probability; course at Harvard</a><br />
+</li>
+<li><a href="https://www.youtube.com/watch?v=HZGCoVF3YvM&amp;feature=youtu.be">Bayes theorem and making probability intuitive</a></li>
 </ul>
 </div>
 </div>
-<div id="session-info-8" class="section level2 hasAnchor" number="9.7">
-<h2><span class="header-section-number">9.7</span> Session info<a href="modeling-data.html#session-info-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="session-info-5" class="section level2 hasAnchor" number="6.11">
+<h2><span class="header-section-number">6.11</span> Session info<a href="probability.html#session-info-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Information about this R session including which version of R was used, and what packages were loaded.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="modeling-data.html#cb24-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>R version 4.3.2 (2023-10-31)
 Platform: aarch64-apple-darwin20 (64-bit)
 Running under: macOS Sonoma 14.1.2
@@ -1820,26 +1259,26 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] ggplot2_3.4.4    tidyverse_2.0.0  janitor_2.2.0    kableExtra_1.3.4
-[13] knitr_1.45      
+ [1] lubridate_1.9.3    forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4       
+ [5] purrr_1.0.2        readr_2.1.4        tidyr_1.3.0        tibble_3.2.1      
+ [9] ggplot2_3.4.4      tidyverse_2.0.0    DiagrammeR_1.0.10  arrangements_1.1.9
+[13] kableExtra_1.3.4   knitr_1.45        
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
- [5] lattice_0.22-5    stringi_1.8.3     hms_1.1.3         digest_0.6.33    
- [9] magrittr_2.0.3    evaluate_0.23     grid_4.3.2        timechange_0.2.0 
-[13] bookdown_0.37     fastmap_1.1.1     Matrix_1.6-4      jsonlite_1.8.8   
-[17] mgcv_1.9-1        httr_1.4.7        rvest_1.0.3       fansi_1.0.6      
-[21] viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4   cli_3.6.2        
-[25] crayon_1.5.2      rlang_1.1.2       splines_4.3.2     munsell_0.5.0    
-[29] withr_2.5.2       cachem_1.0.8      yaml_2.3.8        tools_4.3.2      
-[33] tzdb_0.4.0        colorspace_2.1-0  webshot_0.5.5     vctrs_0.6.5      
-[37] R6_2.5.1          lifecycle_1.0.4   snakecase_0.11.1  pkgconfig_2.0.3  
-[41] bslib_0.6.1       pillar_1.9.0      gtable_0.3.4      glue_1.6.2       
-[45] systemfonts_1.0.5 highr_0.10        xfun_0.41         tidyselect_1.2.0 
-[49] rstudioapi_0.15.0 farver_2.1.1      nlme_3.1-164      htmltools_0.5.7  
-[53] labeling_0.4.3    rmarkdown_2.25    svglite_2.1.3     compiler_4.3.2   </code></pre>
+ [1] gmp_0.7-3          sass_0.4.8         utf8_1.2.4         generics_0.1.3    
+ [5] xml2_1.3.6         stringi_1.8.3      hms_1.1.3          digest_0.6.33     
+ [9] magrittr_2.0.3     timechange_0.2.0   evaluate_0.23      grid_4.3.2        
+[13] RColorBrewer_1.1-3 bookdown_0.37      fastmap_1.1.1      jsonlite_1.8.8    
+[17] httr_1.4.7         rvest_1.0.3        fansi_1.0.6        viridisLite_0.4.2 
+[21] scales_1.3.0       jquerylib_0.1.4    cli_3.6.2          crayon_1.5.2      
+[25] rlang_1.1.2        visNetwork_2.1.2   ellipsis_0.3.2     munsell_0.5.0     
+[29] withr_2.5.2        cachem_1.0.8       yaml_2.3.8         tools_4.3.2       
+[33] tzdb_0.4.0         colorspace_2.1-0   webshot_0.5.5      vctrs_0.6.5       
+[37] R6_2.5.1           lifecycle_1.0.4    htmlwidgets_1.6.4  pkgconfig_2.0.3   
+[41] bslib_0.6.1        pillar_1.9.0       gtable_0.3.4       glue_1.6.2        
+[45] systemfonts_1.0.5  highr_0.10         xfun_0.41          tidyselect_1.2.0  
+[49] rstudioapi_0.15.0  farver_2.1.1       htmltools_0.5.7    labeling_0.4.3    
+[53] rmarkdown_2.25     svglite_2.1.3      compiler_4.3.2    </code></pre>
 
 </div>
 </div>
@@ -1848,8 +1287,8 @@ loaded via a namespace (and not attached):
           </div>
         </div>
       </div>
-<a href="simulation-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-model-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-wrangling-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simulation-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1881,7 +1320,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/psych252/psych252book/edit/master/09-modeling_data.Rmd",
+"link": "https://github.com/psych252/psych252book/edit/master/06-probability.Rmd",
 "text": "Edit"
 },
 "history": {

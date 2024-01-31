@@ -163,7 +163,7 @@ ggplot(data = df.plot,
                  fill = "lightblue",
                  color = "black") +
   stat_density(bw = 0.1,
-               size = 2,
+               linewidth = 2,
                geom = "line") + 
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
@@ -572,12 +572,17 @@ df.confidence = df.confidence %>%
                              'inside'))
 
 # plot the result
-ggplot(data = df.confidence, aes(x = sample, y = mean, color = conf_index)) +
-  geom_hline(yintercept = 3.5, color = "red") +
+ggplot(data = df.confidence, aes(x = sample,
+                                 y = mean,
+                                 color = conf_index)) +
+  geom_hline(yintercept = 3.5,
+             color = "red") +
   geom_point() +
-  geom_linerange(aes(ymin = conf_low, ymax = conf_high)) +
+  geom_linerange(aes(ymin = conf_low,
+                     ymax = conf_high)) +
   coord_flip() +
-  scale_color_manual(values = c("black", "red"), labels = c("inside", "outside")) +
+  scale_color_manual(values = c("black", "red"),
+                     labels = c("inside", "outside")) +
   theme(axis.text.y = element_text(size = 12),
         legend.position = "none")
 ```
