@@ -23,7 +23,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2024-01-30" />
+<meta name="date" content="2024-02-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1434,19 +1434,16 @@ y_rank
 <p>F-distribution with a red line indicating the calculated F-statistic.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="linear-model-1.html#cb29-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>)),</span>
 <span id="cb29-2"><a href="linear-model-1.html#cb29-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
-<span id="cb29-3"><a href="linear-model-1.html#cb29-3" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="st">&quot;df&quot;</span>,</span>
+<span id="cb29-3"><a href="linear-model-1.html#cb29-3" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> df,</span>
 <span id="cb29-4"><a href="linear-model-1.html#cb29-4" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">df1 =</span> pa<span class="sc">-</span>pc,</span>
 <span id="cb29-5"><a href="linear-model-1.html#cb29-5" tabindex="-1"></a>                            <span class="at">df2 =</span> n<span class="sc">-</span>pa),</span>
 <span id="cb29-6"><a href="linear-model-1.html#cb29-6" tabindex="-1"></a>                <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb29-7"><a href="linear-model-1.html#cb29-7" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> f,</span>
 <span id="cb29-8"><a href="linear-model-1.html#cb29-8" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
 <span id="cb29-9"><a href="linear-model-1.html#cb29-9" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function &quot;fun&quot;</code></pre>
 <p><img src="psych252_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>The short version of doing what we did above :)</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="linear-model-1.html#cb31-1" tabindex="-1"></a><span class="fu">anova</span>(lm.compact, lm.augmented)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="linear-model-1.html#cb30-1" tabindex="-1"></a><span class="fu">anova</span>(lm.compact, lm.augmented)</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Model 1: happiness ~ 1
@@ -1461,8 +1458,8 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div id="credit-example" class="section level2 hasAnchor" number="10.4">
 <h2><span class="header-section-number">10.4</span> Credit example<a href="linear-model-1.html#credit-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s load the credit card data:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="linear-model-1.html#cb33-1" tabindex="-1"></a>df.credit <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="linear-model-1.html#cb33-2" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="linear-model-1.html#cb32-1" tabindex="-1"></a>df.credit <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="linear-model-1.html#cb32-2" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code></pre></div>
 <p>Here is a short description of the variables:</p>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -1567,38 +1564,38 @@ average credit card debt
 </tbody>
 </table>
 <p>Scatterplot of the relationship between <code>income</code> and <code>balance</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="linear-model-1.html#cb34-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.credit,</span>
-<span id="cb34-2"><a href="linear-model-1.html#cb34-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> income,</span>
-<span id="cb34-3"><a href="linear-model-1.html#cb34-3" tabindex="-1"></a>                     <span class="at">y =</span> balance)) <span class="sc">+</span> </span>
-<span id="cb34-4"><a href="linear-model-1.html#cb34-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb34-5"><a href="linear-model-1.html#cb34-5" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(df.credit<span class="sc">$</span>income)))</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="linear-model-1.html#cb33-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.credit,</span>
+<span id="cb33-2"><a href="linear-model-1.html#cb33-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> income,</span>
+<span id="cb33-3"><a href="linear-model-1.html#cb33-3" tabindex="-1"></a>                     <span class="at">y =</span> balance)) <span class="sc">+</span> </span>
+<span id="cb33-4"><a href="linear-model-1.html#cb33-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="linear-model-1.html#cb33-5" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(df.credit<span class="sc">$</span>income)))</span></code></pre></div>
 <p><img src="psych252_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>To make the model intercept interpretable, we can center the predictor variable by subtracting the mean from each value.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="linear-model-1.html#cb35-1" tabindex="-1"></a>df.plot <span class="ot">=</span> df.credit <span class="sc">%&gt;%</span> </span>
-<span id="cb35-2"><a href="linear-model-1.html#cb35-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income_centered =</span> income <span class="sc">-</span> <span class="fu">mean</span>(income)) <span class="sc">%&gt;%</span> </span>
-<span id="cb35-3"><a href="linear-model-1.html#cb35-3" tabindex="-1"></a>  <span class="fu">select</span>(balance, income, income_centered)</span>
-<span id="cb35-4"><a href="linear-model-1.html#cb35-4" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="linear-model-1.html#cb35-5" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_centered, <span class="at">data =</span> df.plot)</span>
-<span id="cb35-6"><a href="linear-model-1.html#cb35-6" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="linear-model-1.html#cb35-7" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
-<span id="cb35-8"><a href="linear-model-1.html#cb35-8" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> income_centered,</span>
-<span id="cb35-9"><a href="linear-model-1.html#cb35-9" tabindex="-1"></a>                     <span class="at">y =</span> balance)) <span class="sc">+</span> </span>
-<span id="cb35-10"><a href="linear-model-1.html#cb35-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>,</span>
-<span id="cb35-11"><a href="linear-model-1.html#cb35-11" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>,</span>
-<span id="cb35-12"><a href="linear-model-1.html#cb35-12" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
-<span id="cb35-13"><a href="linear-model-1.html#cb35-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(df.plot<span class="sc">$</span>balance),</span>
-<span id="cb35-14"><a href="linear-model-1.html#cb35-14" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb35-15"><a href="linear-model-1.html#cb35-15" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb35-16"><a href="linear-model-1.html#cb35-16" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> F) <span class="sc">+</span></span>
-<span id="cb35-17"><a href="linear-model-1.html#cb35-17" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="linear-model-1.html#cb34-1" tabindex="-1"></a>df.plot <span class="ot">=</span> df.credit <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="linear-model-1.html#cb34-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">income_centered =</span> income <span class="sc">-</span> <span class="fu">mean</span>(income)) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="linear-model-1.html#cb34-3" tabindex="-1"></a>  <span class="fu">select</span>(balance, income, income_centered)</span>
+<span id="cb34-4"><a href="linear-model-1.html#cb34-4" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="linear-model-1.html#cb34-5" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income_centered, <span class="at">data =</span> df.plot)</span>
+<span id="cb34-6"><a href="linear-model-1.html#cb34-6" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="linear-model-1.html#cb34-7" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
+<span id="cb34-8"><a href="linear-model-1.html#cb34-8" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> income_centered,</span>
+<span id="cb34-9"><a href="linear-model-1.html#cb34-9" tabindex="-1"></a>                     <span class="at">y =</span> balance)) <span class="sc">+</span> </span>
+<span id="cb34-10"><a href="linear-model-1.html#cb34-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb34-11"><a href="linear-model-1.html#cb34-11" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>,</span>
+<span id="cb34-12"><a href="linear-model-1.html#cb34-12" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-13"><a href="linear-model-1.html#cb34-13" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(df.plot<span class="sc">$</span>balance),</span>
+<span id="cb34-14"><a href="linear-model-1.html#cb34-14" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-15"><a href="linear-model-1.html#cb34-15" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb34-16"><a href="linear-model-1.html#cb34-16" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb34-17"><a href="linear-model-1.html#cb34-17" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="linear-model-1.html#cb37-1" tabindex="-1"></a>  <span class="co"># coord_cartesian(xlim = c(0, max(df.plot$income_centered)))</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="linear-model-1.html#cb36-1" tabindex="-1"></a>  <span class="co"># coord_cartesian(xlim = c(0, max(df.plot$income_centered)))</span></span></code></pre></div>
 <p><img src="psych252_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 <p>Let’s fit the model and take a look at the model summary:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="linear-model-1.html#cb38-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income, <span class="at">data =</span> df.credit) </span>
-<span id="cb38-2"><a href="linear-model-1.html#cb38-2" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="linear-model-1.html#cb38-3" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb38-4"><a href="linear-model-1.html#cb38-4" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="linear-model-1.html#cb37-1" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income, <span class="at">data =</span> df.credit) </span>
+<span id="cb37-2"><a href="linear-model-1.html#cb37-2" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="linear-model-1.html#cb37-3" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb37-4"><a href="linear-model-1.html#cb37-4" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = balance ~ 1 + income, data = df.credit)
@@ -1618,35 +1615,35 @@ Residual standard error: 407.9 on 398 degrees of freedom
 Multiple R-squared:  0.215, Adjusted R-squared:  0.213 
 F-statistic:   109 on 1 and 398 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Here, I double check that I understand how the statistics about the residuals are calculated that the model summary gives me.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="linear-model-1.html#cb40-1" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="linear-model-1.html#cb40-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb40-3"><a href="linear-model-1.html#cb40-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb40-4"><a href="linear-model-1.html#cb40-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min =</span> <span class="fu">min</span>(resid),</span>
-<span id="cb40-5"><a href="linear-model-1.html#cb40-5" tabindex="-1"></a>            <span class="at">first_quantile =</span> <span class="fu">quantile</span>(resid, <span class="fl">0.25</span>),</span>
-<span id="cb40-6"><a href="linear-model-1.html#cb40-6" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(resid),</span>
-<span id="cb40-7"><a href="linear-model-1.html#cb40-7" tabindex="-1"></a>            <span class="at">third_quantile =</span> <span class="fu">quantile</span>(resid, <span class="fl">0.75</span>),</span>
-<span id="cb40-8"><a href="linear-model-1.html#cb40-8" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(resid),</span>
-<span id="cb40-9"><a href="linear-model-1.html#cb40-9" tabindex="-1"></a>            <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(resid<span class="sc">^</span><span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="linear-model-1.html#cb39-1" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb39-2"><a href="linear-model-1.html#cb39-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href="linear-model-1.html#cb39-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb39-4"><a href="linear-model-1.html#cb39-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min =</span> <span class="fu">min</span>(resid),</span>
+<span id="cb39-5"><a href="linear-model-1.html#cb39-5" tabindex="-1"></a>            <span class="at">first_quantile =</span> <span class="fu">quantile</span>(resid, <span class="fl">0.25</span>),</span>
+<span id="cb39-6"><a href="linear-model-1.html#cb39-6" tabindex="-1"></a>            <span class="at">median =</span> <span class="fu">median</span>(resid),</span>
+<span id="cb39-7"><a href="linear-model-1.html#cb39-7" tabindex="-1"></a>            <span class="at">third_quantile =</span> <span class="fu">quantile</span>(resid, <span class="fl">0.75</span>),</span>
+<span id="cb39-8"><a href="linear-model-1.html#cb39-8" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(resid),</span>
+<span id="cb39-9"><a href="linear-model-1.html#cb39-9" tabindex="-1"></a>            <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(resid<span class="sc">^</span><span class="dv">2</span>)))</span></code></pre></div>
 <pre><code># A tibble: 1 × 6
     min first_quantile median third_quantile   max  rmse
   &lt;dbl&gt;          &lt;dbl&gt;  &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 1 -804.          -349.  -54.4           332. 1100.  407.</code></pre>
 <p>Here is a plot of the residuals. Residual plots are important for checking whether any of the linear model assumptions have been violated.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="linear-model-1.html#cb42-1" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb42-2"><a href="linear-model-1.html#cb42-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href="linear-model-1.html#cb42-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb42-4"><a href="linear-model-1.html#cb42-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
-<span id="cb42-5"><a href="linear-model-1.html#cb42-5" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
-<span id="cb42-6"><a href="linear-model-1.html#cb42-6" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
-<span id="cb42-7"><a href="linear-model-1.html#cb42-7" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb42-8"><a href="linear-model-1.html#cb42-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="linear-model-1.html#cb41-1" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="linear-model-1.html#cb41-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href="linear-model-1.html#cb41-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb41-4"><a href="linear-model-1.html#cb41-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
+<span id="cb41-5"><a href="linear-model-1.html#cb41-5" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
+<span id="cb41-6"><a href="linear-model-1.html#cb41-6" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb41-7"><a href="linear-model-1.html#cb41-7" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb41-8"><a href="linear-model-1.html#cb41-8" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>)</span></code></pre></div>
 <p><img src="psych252_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <p>We can use the <code>glance()</code> function from the <code>broom</code> package to print out model statistics.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="linear-model-1.html#cb43-1" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb43-2"><a href="linear-model-1.html#cb43-2" tabindex="-1"></a>  <span class="fu">glance</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb43-3"><a href="linear-model-1.html#cb43-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb43-4"><a href="linear-model-1.html#cb43-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb43-5"><a href="linear-model-1.html#cb43-5" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="linear-model-1.html#cb42-1" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="linear-model-1.html#cb42-2" tabindex="-1"></a>  <span class="fu">glance</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb42-3"><a href="linear-model-1.html#cb42-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-4"><a href="linear-model-1.html#cb42-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
+<span id="cb42-5"><a href="linear-model-1.html#cb42-5" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1730,16 +1727,16 @@ nobs
 </tbody>
 </table>
 <p>Let’s test whether income is a significant predictor of balance in the credit data set.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="linear-model-1.html#cb44-1" tabindex="-1"></a><span class="co"># fitting the compact model </span></span>
-<span id="cb44-2"><a href="linear-model-1.html#cb44-2" tabindex="-1"></a>fit_c <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb44-3"><a href="linear-model-1.html#cb44-3" tabindex="-1"></a>           <span class="at">data =</span> df.credit)</span>
-<span id="cb44-4"><a href="linear-model-1.html#cb44-4" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="linear-model-1.html#cb44-5" tabindex="-1"></a><span class="co"># fitting the augmented model</span></span>
-<span id="cb44-6"><a href="linear-model-1.html#cb44-6" tabindex="-1"></a>fit_a <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income,</span>
-<span id="cb44-7"><a href="linear-model-1.html#cb44-7" tabindex="-1"></a>           <span class="at">data =</span> df.credit)</span>
-<span id="cb44-8"><a href="linear-model-1.html#cb44-8" tabindex="-1"></a></span>
-<span id="cb44-9"><a href="linear-model-1.html#cb44-9" tabindex="-1"></a><span class="co"># run the F test </span></span>
-<span id="cb44-10"><a href="linear-model-1.html#cb44-10" tabindex="-1"></a><span class="fu">anova</span>(fit_c, fit_a)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="linear-model-1.html#cb43-1" tabindex="-1"></a><span class="co"># fitting the compact model </span></span>
+<span id="cb43-2"><a href="linear-model-1.html#cb43-2" tabindex="-1"></a>fit_c <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb43-3"><a href="linear-model-1.html#cb43-3" tabindex="-1"></a>           <span class="at">data =</span> df.credit)</span>
+<span id="cb43-4"><a href="linear-model-1.html#cb43-4" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="linear-model-1.html#cb43-5" tabindex="-1"></a><span class="co"># fitting the augmented model</span></span>
+<span id="cb43-6"><a href="linear-model-1.html#cb43-6" tabindex="-1"></a>fit_a <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> income,</span>
+<span id="cb43-7"><a href="linear-model-1.html#cb43-7" tabindex="-1"></a>           <span class="at">data =</span> df.credit)</span>
+<span id="cb43-8"><a href="linear-model-1.html#cb43-8" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="linear-model-1.html#cb43-9" tabindex="-1"></a><span class="co"># run the F test </span></span>
+<span id="cb43-10"><a href="linear-model-1.html#cb43-10" tabindex="-1"></a><span class="fu">anova</span>(fit_c, fit_a)</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Model 1: balance ~ 1
@@ -1750,11 +1747,11 @@ Model 2: balance ~ 1 + income
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Let’s print out the parameters of the augmented model with confidence intervals:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="linear-model-1.html#cb46-1" tabindex="-1"></a>fit_a <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a href="linear-model-1.html#cb46-2" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-3"><a href="linear-model-1.html#cb46-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-4"><a href="linear-model-1.html#cb46-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
-<span id="cb46-5"><a href="linear-model-1.html#cb46-5" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="linear-model-1.html#cb45-1" tabindex="-1"></a>fit_a <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="linear-model-1.html#cb45-2" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="linear-model-1.html#cb45-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href="linear-model-1.html#cb45-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&quot;striped&quot;</span>,</span>
+<span id="cb45-5"><a href="linear-model-1.html#cb45-5" tabindex="-1"></a>                <span class="at">full_width =</span> F)</span></code></pre></div>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1831,35 +1828,35 @@ income
 </tbody>
 </table>
 <p>We can use <code>augment()</code> with the <code>newdata =</code> argument to get predictions about new data from our fitted model:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="linear-model-1.html#cb47-1" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb47-2"><a href="linear-model-1.html#cb47-2" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">income =</span> <span class="dv">130</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="linear-model-1.html#cb46-1" tabindex="-1"></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href="linear-model-1.html#cb46-2" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">income =</span> <span class="dv">130</span>))</span></code></pre></div>
 <pre><code># A tibble: 1 × 2
   income .fitted
    &lt;dbl&gt;   &lt;dbl&gt;
 1    130   1033.</code></pre>
 <p>Here is a plot of the model with confidence interval (that captures our uncertainty in the intercept and slope of the model) and the predicted <code>balance</code> value for an <code>income</code> of 130:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="linear-model-1.html#cb49-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.credit,</span>
-<span id="cb49-2"><a href="linear-model-1.html#cb49-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> income,</span>
-<span id="cb49-3"><a href="linear-model-1.html#cb49-3" tabindex="-1"></a>                     <span class="at">y =</span> balance)) <span class="sc">+</span> </span>
-<span id="cb49-4"><a href="linear-model-1.html#cb49-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb49-5"><a href="linear-model-1.html#cb49-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb49-6"><a href="linear-model-1.html#cb49-6" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
-<span id="cb49-7"><a href="linear-model-1.html#cb49-7" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb49-8"><a href="linear-model-1.html#cb49-8" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">5</span>,</span>
-<span id="cb49-9"><a href="linear-model-1.html#cb49-9" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">130</span>,</span>
-<span id="cb49-10"><a href="linear-model-1.html#cb49-10" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">income =</span> <span class="dv">130</span>))) <span class="sc">+</span></span>
-<span id="cb49-11"><a href="linear-model-1.html#cb49-11" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(df.credit<span class="sc">$</span>income)))</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="linear-model-1.html#cb48-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.credit,</span>
+<span id="cb48-2"><a href="linear-model-1.html#cb48-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> income,</span>
+<span id="cb48-3"><a href="linear-model-1.html#cb48-3" tabindex="-1"></a>                     <span class="at">y =</span> balance)) <span class="sc">+</span> </span>
+<span id="cb48-4"><a href="linear-model-1.html#cb48-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="linear-model-1.html#cb48-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb48-6"><a href="linear-model-1.html#cb48-6" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb48-7"><a href="linear-model-1.html#cb48-7" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb48-8"><a href="linear-model-1.html#cb48-8" tabindex="-1"></a>           <span class="at">size =</span> <span class="dv">5</span>,</span>
+<span id="cb48-9"><a href="linear-model-1.html#cb48-9" tabindex="-1"></a>           <span class="at">x =</span> <span class="dv">130</span>,</span>
+<span id="cb48-10"><a href="linear-model-1.html#cb48-10" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">income =</span> <span class="dv">130</span>))) <span class="sc">+</span></span>
+<span id="cb48-11"><a href="linear-model-1.html#cb48-11" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(df.credit<span class="sc">$</span>income)))</span></code></pre></div>
 <pre><code>`geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="psych252_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p>Finally, let’s take a look at how the residuals are distributed.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="linear-model-1.html#cb51-1" tabindex="-1"></a><span class="co"># get the residuals </span></span>
-<span id="cb51-2"><a href="linear-model-1.html#cb51-2" tabindex="-1"></a>df.plot <span class="ot">=</span> fit_a <span class="sc">%&gt;%</span> </span>
-<span id="cb51-3"><a href="linear-model-1.html#cb51-3" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb51-4"><a href="linear-model-1.html#cb51-4" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb51-5"><a href="linear-model-1.html#cb51-5" tabindex="-1"></a></span>
-<span id="cb51-6"><a href="linear-model-1.html#cb51-6" tabindex="-1"></a><span class="co"># and a density of the residuals</span></span>
-<span id="cb51-7"><a href="linear-model-1.html#cb51-7" tabindex="-1"></a><span class="fu">ggplot</span>(df.plot, <span class="fu">aes</span>(<span class="at">x =</span> resid)) <span class="sc">+</span></span>
-<span id="cb51-8"><a href="linear-model-1.html#cb51-8" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="linear-model-1.html#cb50-1" tabindex="-1"></a><span class="co"># get the residuals </span></span>
+<span id="cb50-2"><a href="linear-model-1.html#cb50-2" tabindex="-1"></a>df.plot <span class="ot">=</span> fit_a <span class="sc">%&gt;%</span> </span>
+<span id="cb50-3"><a href="linear-model-1.html#cb50-3" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb50-4"><a href="linear-model-1.html#cb50-4" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb50-5"><a href="linear-model-1.html#cb50-5" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="linear-model-1.html#cb50-6" tabindex="-1"></a><span class="co"># and a density of the residuals</span></span>
+<span id="cb50-7"><a href="linear-model-1.html#cb50-7" tabindex="-1"></a><span class="fu">ggplot</span>(df.plot, <span class="fu">aes</span>(<span class="at">x =</span> resid)) <span class="sc">+</span></span>
+<span id="cb50-8"><a href="linear-model-1.html#cb50-8" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="at">geom =</span> <span class="st">&quot;line&quot;</span>)</span></code></pre></div>
 <p><img src="psych252_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <p>Not quite as normally distributed as we would hope. We learn what to do if some of the assumptions of the linear model are violated later in class.</p>
 <p>In general, we’d like the residuals to have the following shape:</p>
@@ -1893,7 +1890,7 @@ income
 <div id="session-info-9" class="section level2 hasAnchor" number="10.6">
 <h2><span class="header-section-number">10.6</span> Session info<a href="linear-model-1.html#session-info-9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Information about this R session including which version of R was used, and what packages were loaded.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="linear-model-1.html#cb52-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="linear-model-1.html#cb51-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>R version 4.3.2 (2023-10-31)
 Platform: aarch64-apple-darwin20 (64-bit)
 Running under: macOS Sonoma 14.1.2

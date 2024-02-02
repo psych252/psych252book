@@ -133,8 +133,8 @@ df.normal = tibble(participant = 1:n_participants,
                    condition = rep(c("control", "experimental"),
                                    each = n_participants/2)) %>% 
   mutate(score = ifelse(condition == "control",
-                        rnorm(n = n_participants, mean = 5, sd = 2),
-                        rnorm(n = n_participants, mean = 15, sd = 3)))
+                        rnorm(n = n_participants/2, mean = 5, sd = 2),
+                        rnorm(n = n_participants/2, mean = 15, sd = 3)))
 
 # distribution of the data 
 ggplot(data = df.normal,
@@ -210,7 +210,7 @@ df2 = 49
 
 ggplot(data = tibble(x = c(0, 10)),
        mapping = aes(x = x)) + 
-  stat_function(fun = "df",
+  stat_function(fun = df,
                 geom = "area",
                 fill = "red",
                 alpha = 0.5,
