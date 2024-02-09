@@ -23,7 +23,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2024-02-05" />
+<meta name="date" content="2024-02-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1095,7 +1095,7 @@ fixed
 <span id="cb5-6"><a href="linear-model-3.html#cb5-6" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.1</span>)) <span class="sc">+</span> </span>
 <span id="cb5-7"><a href="linear-model-3.html#cb5-7" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>,</span>
 <span id="cb5-8"><a href="linear-model-3.html#cb5-8" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;linerange&quot;</span>,</span>
-<span id="cb5-9"><a href="linear-model-3.html#cb5-9" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb5-9"><a href="linear-model-3.html#cb5-9" tabindex="-1"></a>               <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb5-10"><a href="linear-model-3.html#cb5-10" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>,</span>
 <span id="cb5-11"><a href="linear-model-3.html#cb5-11" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
 <span id="cb5-12"><a href="linear-model-3.html#cb5-12" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">21</span>,</span>
@@ -1103,19 +1103,14 @@ fixed
 <span id="cb5-14"><a href="linear-model-3.html#cb5-14" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;final balance (in Euros)&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb5-15"><a href="linear-model-3.html#cb5-15" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb5-16"><a href="linear-model-3.html#cb5-16" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-generated.</code></pre>
 <p><img src="psych252_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="model-fitting" class="section level3 hasAnchor" number="12.4.2">
 <h3><span class="header-section-number">12.4.2</span> Model fitting<a href="linear-model-3.html#model-fitting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We pass the result of the <code>lm()</code> function to <code>anova()</code> to calculate an analysis of variance like so:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="linear-model-3.html#cb7-1" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand, </span>
-<span id="cb7-2"><a href="linear-model-3.html#cb7-2" tabindex="-1"></a>   <span class="at">data =</span> df.poker) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="linear-model-3.html#cb7-3" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="linear-model-3.html#cb6-1" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand, </span>
+<span id="cb6-2"><a href="linear-model-3.html#cb6-2" tabindex="-1"></a>   <span class="at">data =</span> df.poker) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="linear-model-3.html#cb6-3" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Response: balance
@@ -1128,12 +1123,12 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div id="hypothesis-test-1" class="section level3 hasAnchor" number="12.4.3">
 <h3><span class="header-section-number">12.4.3</span> Hypothesis test<a href="linear-model-3.html#hypothesis-test-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The F-test reported by the ANOVA compares the fitted model with a compact model that only predicts the grand mean:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="linear-model-3.html#cb9-1" tabindex="-1"></a><span class="co"># fit the models </span></span>
-<span id="cb9-2"><a href="linear-model-3.html#cb9-2" tabindex="-1"></a>fit_c <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> df.poker)</span>
-<span id="cb9-3"><a href="linear-model-3.html#cb9-3" tabindex="-1"></a>fit_a <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand, <span class="at">data =</span> df.poker)</span>
-<span id="cb9-4"><a href="linear-model-3.html#cb9-4" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="linear-model-3.html#cb9-5" tabindex="-1"></a><span class="co"># compare via F-test</span></span>
-<span id="cb9-6"><a href="linear-model-3.html#cb9-6" tabindex="-1"></a><span class="fu">anova</span>(fit_c, fit_a)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="linear-model-3.html#cb8-1" tabindex="-1"></a><span class="co"># fit the models </span></span>
+<span id="cb8-2"><a href="linear-model-3.html#cb8-2" tabindex="-1"></a>fit_c <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> df.poker)</span>
+<span id="cb8-3"><a href="linear-model-3.html#cb8-3" tabindex="-1"></a>fit_a <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> hand, <span class="at">data =</span> df.poker)</span>
+<span id="cb8-4"><a href="linear-model-3.html#cb8-4" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="linear-model-3.html#cb8-5" tabindex="-1"></a><span class="co"># compare via F-test</span></span>
+<span id="cb8-6"><a href="linear-model-3.html#cb8-6" tabindex="-1"></a><span class="fu">anova</span>(fit_c, fit_a)</span></code></pre></div>
 <pre><code>Analysis of Variance Table
 
 Model 1: balance ~ 1
@@ -1147,93 +1142,98 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div id="visualize-the-models-predictions" class="section level3 hasAnchor" number="12.4.4">
 <h3><span class="header-section-number">12.4.4</span> Visualize the model’s predictions<a href="linear-model-3.html#visualize-the-models-predictions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here is the model prediction of the compact model:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="linear-model-3.html#cb11-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb11-2"><a href="linear-model-3.html#cb11-2" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="linear-model-3.html#cb11-3" tabindex="-1"></a>df.plot <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
-<span id="cb11-4"><a href="linear-model-3.html#cb11-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hand_jitter =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.25</span>, <span class="at">max =</span> <span class="fl">0.25</span>))</span>
-<span id="cb11-5"><a href="linear-model-3.html#cb11-5" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="linear-model-3.html#cb11-6" tabindex="-1"></a>df.augment <span class="ot">=</span> fit_c <span class="sc">%&gt;%</span> </span>
-<span id="cb11-7"><a href="linear-model-3.html#cb11-7" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb11-8"><a href="linear-model-3.html#cb11-8" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb11-9"><a href="linear-model-3.html#cb11-9" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> </span>
-<span id="cb11-10"><a href="linear-model-3.html#cb11-10" tabindex="-1"></a>              <span class="fu">select</span>(hand, hand_jitter))</span>
-<span id="cb11-11"><a href="linear-model-3.html#cb11-11" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="linear-model-3.html#cb11-12" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot, </span>
-<span id="cb11-13"><a href="linear-model-3.html#cb11-13" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hand_jitter,</span>
-<span id="cb11-14"><a href="linear-model-3.html#cb11-14" tabindex="-1"></a>                     <span class="at">y =</span> balance,</span>
-<span id="cb11-15"><a href="linear-model-3.html#cb11-15" tabindex="-1"></a>                     <span class="at">fill =</span> hand)) <span class="sc">+</span> </span>
-<span id="cb11-16"><a href="linear-model-3.html#cb11-16" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(df.poker<span class="sc">$</span>balance)) <span class="sc">+</span></span>
-<span id="cb11-17"><a href="linear-model-3.html#cb11-17" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
-<span id="cb11-18"><a href="linear-model-3.html#cb11-18" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
-<span id="cb11-19"><a href="linear-model-3.html#cb11-19" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xend =</span> hand_jitter,</span>
-<span id="cb11-20"><a href="linear-model-3.html#cb11-20" tabindex="-1"></a>                             <span class="at">yend =</span> fitted),</span>
-<span id="cb11-21"><a href="linear-model-3.html#cb11-21" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb11-22"><a href="linear-model-3.html#cb11-22" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;balance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb11-23"><a href="linear-model-3.html#cb11-23" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb11-24"><a href="linear-model-3.html#cb11-24" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb11-25"><a href="linear-model-3.html#cb11-25" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="linear-model-3.html#cb10-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="linear-model-3.html#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="linear-model-3.html#cb10-3" tabindex="-1"></a>df.plot <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="linear-model-3.html#cb10-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hand_jitter =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.25</span>, <span class="at">max =</span> <span class="fl">0.25</span>))</span>
+<span id="cb10-5"><a href="linear-model-3.html#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="linear-model-3.html#cb10-6" tabindex="-1"></a>df.augment <span class="ot">=</span> fit_c <span class="sc">%&gt;%</span> </span>
+<span id="cb10-7"><a href="linear-model-3.html#cb10-7" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-8"><a href="linear-model-3.html#cb10-8" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-9"><a href="linear-model-3.html#cb10-9" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> </span>
+<span id="cb10-10"><a href="linear-model-3.html#cb10-10" tabindex="-1"></a>              <span class="fu">select</span>(hand, hand_jitter))</span>
+<span id="cb10-11"><a href="linear-model-3.html#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="linear-model-3.html#cb10-12" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot, </span>
+<span id="cb10-13"><a href="linear-model-3.html#cb10-13" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hand_jitter,</span>
+<span id="cb10-14"><a href="linear-model-3.html#cb10-14" tabindex="-1"></a>                     <span class="at">y =</span> balance,</span>
+<span id="cb10-15"><a href="linear-model-3.html#cb10-15" tabindex="-1"></a>                     <span class="at">fill =</span> hand)) <span class="sc">+</span> </span>
+<span id="cb10-16"><a href="linear-model-3.html#cb10-16" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(df.poker<span class="sc">$</span>balance)) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="linear-model-3.html#cb10-17" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb10-18"><a href="linear-model-3.html#cb10-18" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
+<span id="cb10-19"><a href="linear-model-3.html#cb10-19" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">xend =</span> hand_jitter,</span>
+<span id="cb10-20"><a href="linear-model-3.html#cb10-20" tabindex="-1"></a>                             <span class="at">yend =</span> fitted),</span>
+<span id="cb10-21"><a href="linear-model-3.html#cb10-21" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb10-22"><a href="linear-model-3.html#cb10-22" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;balance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb10-23"><a href="linear-model-3.html#cb10-23" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb10-24"><a href="linear-model-3.html#cb10-24" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb10-25"><a href="linear-model-3.html#cb10-25" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="psych252_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <blockquote>
 <p>Note that since we have a categorical variable here, we don’t really have a continuous x-axis. I’ve just jittered the values so it’s easier to show the residuals.</p>
 </blockquote>
 <p>And here is the prediction of the augmented model (which predicts different means for each group).</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="linear-model-3.html#cb12-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb12-2"><a href="linear-model-3.html#cb12-2" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="linear-model-3.html#cb12-3" tabindex="-1"></a>df.plot <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
-<span id="cb12-4"><a href="linear-model-3.html#cb12-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hand_jitter =</span> hand <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(),</span>
-<span id="cb12-5"><a href="linear-model-3.html#cb12-5" tabindex="-1"></a>         <span class="at">hand_jitter =</span> hand_jitter <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.4</span>, <span class="at">max =</span> <span class="fl">0.4</span>))</span>
-<span id="cb12-6"><a href="linear-model-3.html#cb12-6" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="linear-model-3.html#cb12-7" tabindex="-1"></a>df.tidy <span class="ot">=</span> fit_a <span class="sc">%&gt;%</span> </span>
-<span id="cb12-8"><a href="linear-model-3.html#cb12-8" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb12-9"><a href="linear-model-3.html#cb12-9" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-10"><a href="linear-model-3.html#cb12-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">round</span>(., <span class="at">digits =</span> <span class="dv">2</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="linear-model-3.html#cb11-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb11-2"><a href="linear-model-3.html#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="linear-model-3.html#cb11-3" tabindex="-1"></a>df.plot <span class="ot">=</span> df.poker <span class="sc">%&gt;%</span> </span>
+<span id="cb11-4"><a href="linear-model-3.html#cb11-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hand_jitter =</span> hand <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(),</span>
+<span id="cb11-5"><a href="linear-model-3.html#cb11-5" tabindex="-1"></a>         <span class="at">hand_jitter =</span> hand_jitter <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.4</span>, <span class="at">max =</span> <span class="fl">0.4</span>))</span>
+<span id="cb11-6"><a href="linear-model-3.html#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="linear-model-3.html#cb11-7" tabindex="-1"></a>df.tidy <span class="ot">=</span> fit_a <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="linear-model-3.html#cb11-8" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-9"><a href="linear-model-3.html#cb11-9" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-10"><a href="linear-model-3.html#cb11-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">round</span>(., <span class="at">digits =</span> <span class="dv">2</span>)))</span></code></pre></div>
 <pre><code>Warning: There was 1 warning in `mutate()`.
 ℹ In argument: `across(.fns = ~round(., digits = 2))`.
 Caused by warning:
 ! Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.
 ℹ Please supply `.cols` instead.</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="linear-model-3.html#cb14-1" tabindex="-1"></a>df.augment <span class="ot">=</span> fit_a <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="linear-model-3.html#cb14-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="linear-model-3.html#cb14-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb14-4"><a href="linear-model-3.html#cb14-4" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> </span>
-<span id="cb14-5"><a href="linear-model-3.html#cb14-5" tabindex="-1"></a>              <span class="fu">select</span>(hand_jitter))</span>
-<span id="cb14-6"><a href="linear-model-3.html#cb14-6" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="linear-model-3.html#cb14-7" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
-<span id="cb14-8"><a href="linear-model-3.html#cb14-8" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hand_jitter,</span>
-<span id="cb14-9"><a href="linear-model-3.html#cb14-9" tabindex="-1"></a>                     <span class="at">y =</span> balance,</span>
-<span id="cb14-10"><a href="linear-model-3.html#cb14-10" tabindex="-1"></a>                     <span class="at">color =</span> hand)) <span class="sc">+</span> </span>
-<span id="cb14-11"><a href="linear-model-3.html#cb14-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="linear-model-3.html#cb14-12" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb14-13"><a href="linear-model-3.html#cb14-13" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.6</span>,</span>
-<span id="cb14-14"><a href="linear-model-3.html#cb14-14" tabindex="-1"></a>                             <span class="at">xend =</span> <span class="fl">1.4</span>,</span>
-<span id="cb14-15"><a href="linear-model-3.html#cb14-15" tabindex="-1"></a>                             <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
-<span id="cb14-16"><a href="linear-model-3.html#cb14-16" tabindex="-1"></a>                             <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]),</span>
-<span id="cb14-17"><a href="linear-model-3.html#cb14-17" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb14-18"><a href="linear-model-3.html#cb14-18" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb14-19"><a href="linear-model-3.html#cb14-19" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb14-20"><a href="linear-model-3.html#cb14-20" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.6</span>,</span>
-<span id="cb14-21"><a href="linear-model-3.html#cb14-21" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">2.4</span>,</span>
-<span id="cb14-22"><a href="linear-model-3.html#cb14-22" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
-<span id="cb14-23"><a href="linear-model-3.html#cb14-23" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
-<span id="cb14-24"><a href="linear-model-3.html#cb14-24" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>,</span>
-<span id="cb14-25"><a href="linear-model-3.html#cb14-25" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb14-26"><a href="linear-model-3.html#cb14-26" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
-<span id="cb14-27"><a href="linear-model-3.html#cb14-27" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">2.6</span>,</span>
-<span id="cb14-28"><a href="linear-model-3.html#cb14-28" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">3.4</span>,</span>
-<span id="cb14-29"><a href="linear-model-3.html#cb14-29" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">3</span>],</span>
-<span id="cb14-30"><a href="linear-model-3.html#cb14-30" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">3</span>]),</span>
-<span id="cb14-31"><a href="linear-model-3.html#cb14-31" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;green&quot;</span>,</span>
-<span id="cb14-32"><a href="linear-model-3.html#cb14-32" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb14-33"><a href="linear-model-3.html#cb14-33" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
-<span id="cb14-34"><a href="linear-model-3.html#cb14-34" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">xend =</span> hand_jitter,</span>
-<span id="cb14-35"><a href="linear-model-3.html#cb14-35" tabindex="-1"></a>                   <span class="at">y =</span> balance,</span>
-<span id="cb14-36"><a href="linear-model-3.html#cb14-36" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
-<span id="cb14-37"><a href="linear-model-3.html#cb14-37" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb14-38"><a href="linear-model-3.html#cb14-38" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;balance&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb14-39"><a href="linear-model-3.html#cb14-39" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb14-40"><a href="linear-model-3.html#cb14-40" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb14-41"><a href="linear-model-3.html#cb14-41" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
-<span id="cb14-42"><a href="linear-model-3.html#cb14-42" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="linear-model-3.html#cb13-1" tabindex="-1"></a>df.augment <span class="ot">=</span> fit_a <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="linear-model-3.html#cb13-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="linear-model-3.html#cb13-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="linear-model-3.html#cb13-4" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.plot <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href="linear-model-3.html#cb13-5" tabindex="-1"></a>              <span class="fu">select</span>(hand_jitter))</span>
+<span id="cb13-6"><a href="linear-model-3.html#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="linear-model-3.html#cb13-7" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
+<span id="cb13-8"><a href="linear-model-3.html#cb13-8" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hand_jitter,</span>
+<span id="cb13-9"><a href="linear-model-3.html#cb13-9" tabindex="-1"></a>                     <span class="at">y =</span> balance,</span>
+<span id="cb13-10"><a href="linear-model-3.html#cb13-10" tabindex="-1"></a>                     <span class="at">color =</span> hand)) <span class="sc">+</span> </span>
+<span id="cb13-11"><a href="linear-model-3.html#cb13-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="linear-model-3.html#cb13-12" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-13"><a href="linear-model-3.html#cb13-13" tabindex="-1"></a>               <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.6</span>,</span>
+<span id="cb13-14"><a href="linear-model-3.html#cb13-14" tabindex="-1"></a>                             <span class="at">xend =</span> <span class="fl">1.4</span>,</span>
+<span id="cb13-15"><a href="linear-model-3.html#cb13-15" tabindex="-1"></a>                             <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
+<span id="cb13-16"><a href="linear-model-3.html#cb13-16" tabindex="-1"></a>                             <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]),</span>
+<span id="cb13-17"><a href="linear-model-3.html#cb13-17" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb13-18"><a href="linear-model-3.html#cb13-18" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="linear-model-3.html#cb13-19" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-20"><a href="linear-model-3.html#cb13-20" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.6</span>,</span>
+<span id="cb13-21"><a href="linear-model-3.html#cb13-21" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">2.4</span>,</span>
+<span id="cb13-22"><a href="linear-model-3.html#cb13-22" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb13-23"><a href="linear-model-3.html#cb13-23" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]),</span>
+<span id="cb13-24"><a href="linear-model-3.html#cb13-24" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>,</span>
+<span id="cb13-25"><a href="linear-model-3.html#cb13-25" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb13-26"><a href="linear-model-3.html#cb13-26" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-27"><a href="linear-model-3.html#cb13-27" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">2.6</span>,</span>
+<span id="cb13-28"><a href="linear-model-3.html#cb13-28" tabindex="-1"></a>                   <span class="at">xend =</span> <span class="fl">3.4</span>,</span>
+<span id="cb13-29"><a href="linear-model-3.html#cb13-29" tabindex="-1"></a>                   <span class="at">y =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">3</span>],</span>
+<span id="cb13-30"><a href="linear-model-3.html#cb13-30" tabindex="-1"></a>                   <span class="at">yend =</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">1</span>] <span class="sc">+</span> df.tidy<span class="sc">$</span>estimate[<span class="dv">3</span>]),</span>
+<span id="cb13-31"><a href="linear-model-3.html#cb13-31" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb13-32"><a href="linear-model-3.html#cb13-32" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb13-33"><a href="linear-model-3.html#cb13-33" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> df.augment,</span>
+<span id="cb13-34"><a href="linear-model-3.html#cb13-34" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">xend =</span> hand_jitter,</span>
+<span id="cb13-35"><a href="linear-model-3.html#cb13-35" tabindex="-1"></a>                   <span class="at">y =</span> balance,</span>
+<span id="cb13-36"><a href="linear-model-3.html#cb13-36" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
+<span id="cb13-37"><a href="linear-model-3.html#cb13-37" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb13-38"><a href="linear-model-3.html#cb13-38" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;balance&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb13-39"><a href="linear-model-3.html#cb13-39" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb13-40"><a href="linear-model-3.html#cb13-40" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;neutral&quot;</span>, <span class="st">&quot;good&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb13-41"><a href="linear-model-3.html#cb13-41" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb13-42"><a href="linear-model-3.html#cb13-42" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.</code></pre>
 <p><img src="psych252_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>The vertical lines illustrate the residual sum of squares.</p>
 <p>We can illustrate the model sum of squares like so:</p>
