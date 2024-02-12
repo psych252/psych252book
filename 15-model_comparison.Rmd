@@ -144,8 +144,11 @@ plot_fit = function(i){
     geom_point(data = df.more_data,
                size = 2, 
                color = "red") +
-    geom_smooth(method = "lm", se = F,
-                formula = y ~ poly(x, degree = i, raw = TRUE)) +
+    geom_smooth(method = "lm",
+                se = F,
+                formula = y ~ poly(x,
+                                   degree = i,
+                                   raw = TRUE)) +
     annotate(geom = "text",
              x = Inf,
              y = -Inf,
@@ -189,7 +192,9 @@ sd = 0.5
 
 # sample
 df.data = tibble(participant = 1:sample_size,
-                 x = runif(sample_size, min = 0, max = 1),
+                 x = runif(sample_size,
+                           min = 0,
+                           max = 1),
                  y = b0 + b1*x + b2*x^2 + rnorm(sample_size, sd = sd)) 
 ```
 
@@ -198,7 +203,7 @@ And plot it:
 ```{r}
 ggplot(data = df.data,
        mapping = aes(x = x,
-                    y = y)) + 
+                     y = y)) + 
   geom_smooth(method = "lm",
               formula = y ~ x + I(x^2)) +
   geom_point()
@@ -283,8 +288,10 @@ fun.cv_plot = function(data_point){
               filter(color == 2)) %>% 
     clean_names()
   
-  p = ggplot(df.plot,
-             aes(x, y, color = as.factor(color))) + 
+  p = ggplot(data = df.plot,
+             mapping = aes(x = x, 
+                           y = y, 
+                           color = as.factor(color))) + 
     geom_segment(aes(xend = x,
                      yend = fitted),
                  data = df.fit,
@@ -518,10 +525,12 @@ df.normal = tibble(y = seq(-5, 5, 0.1),
 
 # show the residual plot together with the normal distribution
 ggplot(data = df.plot ,
-       mapping = aes(x = fitted, y = resid)) + 
+       mapping = aes(x = fitted, 
+                     y = resid)) + 
   geom_point() +
   geom_path(data = df.normal,
-            aes(x = x, y = y),
+            aes(x = x,
+                y = y),
             size = 2)
 ```
 
