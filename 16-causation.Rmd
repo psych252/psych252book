@@ -448,11 +448,7 @@ graph neato {
 g
 ```
 
-
-
-
-
-#### Common cause (without direct link between X and Y)
+#### Common effect (with direct link between X and Y)#### Common cause (without direct link between X and Y)
 
 ##### DAG
 
@@ -884,7 +880,7 @@ df.mediation = tibble(x = rnorm(n, 75, 7), # grades
 
 ### Method 1: Baron & Kenny’s (1986) indirect effect method
 
-The @baron1986moderator method is among the original methods for testing for mediation but tends to have low statistical power. It is covered in this chapter because it provides a very clear approach to establishing relationships between variables and is still occassionally requested by reviewers.
+The @baron1986moderator method is among the original methods for testing for mediation but tends to have low statistical power. 
 
 __The three steps__:
 
@@ -905,7 +901,8 @@ fit.y_x = lm(formula = y ~ 1 + x,
             data = df.mediation)
 
 # summarize the results
-fit.y_x %>% summary()
+fit.y_x %>% 
+  summary()
 ```
 
 #### Path a
@@ -914,7 +911,8 @@ fit.y_x %>% summary()
 fit.m_x = lm(formula = m ~ 1 + x,
             data = df.mediation)
 
-fit.m_x %>% summary()
+fit.m_x %>% 
+  summary()
 ```
 
 #### Path b and c'
@@ -925,7 +923,8 @@ Effect of M on Y controlling for X.
 fit.y_mx = lm(formula = y ~ 1 + m + x,
             data = df.mediation)
 
-fit.y_mx %>% summary()
+fit.y_mx %>% 
+  summary()
 ```
 
 #### Interpretation
@@ -999,7 +998,6 @@ plot(fit.mediation)
 #### Interpretation
 
 The `mediate()` function gives us our Average Causal Mediation Effects (ACME), our Average Direct Effects (ADE), our combined indirect and direct effects (Total Effect), and the ratio of these estimates (Prop. Mediated). The ACME here is the indirect effect of M (total effect - direct effect) and thus this value tells us if our mediation effect is significant.
-
 
 ### Be careful about mediation!
 
@@ -1142,6 +1140,7 @@ fit.m = mediate(model.m = fit.zx,
 
 summary(fit.m)
 ```
+
 Both models here lead to the same pattern of "mediation". However, only the first one is a chain: X-->Z-->Y. The second one is a common cause X<--Z-->Y (where X does not cause Y). 
 
 ## Moderation
@@ -1161,9 +1160,15 @@ set.seed(123)
 # number of participants
 n  = 100 
 
-df.moderation = tibble(x  = abs(rnorm(n, 6, 4)), # hours of sleep
-                       x1 = abs(rnorm(n, 60, 30)), # adding some systematic variance to our DV
-                       z  = rnorm(n, 30, 8), # ounces of coffee consumed
+df.moderation = tibble(x  = abs(rnorm(n = n,
+                                      mean = 6,
+                                      sd = 4)), # hours of sleep
+                       x1 = abs(rnorm(n = n,
+                                      mean = 60, 
+                                      sd = 30)), # adding some systematic variance to our DV
+                       z  = rnorm(n = n, 
+                                  mean = 30, 
+                                  sd = 8), # ounces of coffee consumed
                        y  = abs((-0.8 * x) * (0.2 * z) - 0.5 * x - 0.4 * x1 + 10 + 
                                   rnorm(n, 0, 3))) # attention Paid
 ```
@@ -1173,7 +1178,8 @@ df.moderation = tibble(x  = abs(rnorm(n, 6, 4)), # hours of sleep
 ```{r}
 # scale the predictors 
 df.moderation = df.moderation %>%
-  mutate_at(vars(x, z), ~ scale(.)[,])
+  mutate(across(.cols = c(x, z), 
+                .fns = ~ scale(.)[,]))
 
 # run regression model with interaction 
 fit.moderation = lm(formula = y ~ 1 + x * z,
