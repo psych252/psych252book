@@ -289,8 +289,10 @@ df.complete_pooling =  fit.complete_pooling %>%
 df.no_pooling = df.sleep %>% 
   group_by(subject) %>% 
   nest(data = c(days, reaction)) %>% 
-  mutate(fit = map(data, ~ lm(reaction ~ days, data = .)),
-         augment = map(fit, augment)) %>% 
+  mutate(fit = map(.x = data, 
+                   .f = ~ lm(reaction ~ days, data = .x)),
+         augment = map(.x = fit, 
+                       .f = ~ augment(.x))) %>% 
   unnest(c(augment)) %>% 
   ungroup() %>% 
   clean_names() %>% 
@@ -400,8 +402,10 @@ df.partial_pooling = fit.random_intercept_slope %>%
 df.plot = df.sleep %>% 
   group_by(subject) %>% 
   nest(data = c(days, reaction)) %>% 
-  mutate(fit = map(data, ~ lm(reaction ~ days, data = .)),
-         tidy = map(fit, tidy)) %>% 
+  mutate(fit = map(.x = data, 
+                   .f = ~ lm(reaction ~ days, data = .x)),
+         tidy = map(.x = fit, 
+                    .f = ~ tidy(.x))) %>% 
   unnest(c(tidy)) %>% 
   select(subject, term, estimate) %>% 
   pivot_wider(names_from = term,
@@ -517,7 +521,7 @@ Let's fit a model to this data now and take a look at the summary output:
 ```{r}
 # fit model
 fit.mixed = lmer(formula = value ~ 1 + condition + (1 | participant),
-                data = df.mixed)
+                 data = df.mixed)
 
 summary(fit.mixed)
 ```
@@ -687,7 +691,8 @@ n_observations = 10
 slope = -10 
 sd_error = 0.4
 sd_participant = 5
-intercept = rnorm(n_participants, sd = sd_participant) %>% sort()
+intercept = rnorm(n_participants, sd = sd_participant) %>% 
+  sort()
 
 df.simpson = tibble(x = runif(n_participants * n_observations, min = 0, max = 1)) %>%
   arrange(x) %>% 
@@ -753,7 +758,7 @@ Let's fit a linear mixed effects model with random intercepts:
 
 ```{r}
 fit.lmer = lmer(formula = y ~ 1 + x + (1 | participant),
-     data = df.simpson)
+                data = df.simpson)
 
 fit.lmer %>% 
   summary()
@@ -762,7 +767,6 @@ fit.lmer %>%
 As we can see, the fixed effect for `x` is now negative! 
 
 ```{r}
-
 fit.lmer %>% 
   augment() %>% 
   clean_names() %>% 
