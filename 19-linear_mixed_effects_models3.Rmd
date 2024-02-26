@@ -4,7 +4,7 @@
 
 - Pitfalls in fitting `lmers()`s (and what to do about it). 
 - Understanding `lmer()` syntax even better.
-- ANOVA vs. Lmer 
+- ANOVA vs. lmer 
 
 ## Load packages and set plotting theme
 
@@ -42,51 +42,10 @@ options(dplyr.summarise.inform = F)
 
 ## Load data sets
 
-### Sleep data
-
-```{r}
-# load sleepstudy data set 
-df.sleep = sleepstudy %>% 
-  as_tibble() %>% 
-  clean_names() %>% 
-  mutate(subject = as.character(subject)) %>% 
-  select(subject, days, reaction)
-
-# add two fake participants (with missing data)
-df.sleep = df.sleep %>% 
-  bind_rows(tibble(subject = "374",
-                   days = 0:1,
-                   reaction = c(286, 288)),
-            tibble(subject = "373",
-                   days = 0,
-                   reaction = 245))
-```
-
 ### Reasoning data
 
 ```{r}
 df.reasoning = sk2011.1
-```
-
-### Weight loss data
-
-```{r}
-data("weightloss", package = "datarium")
-
-# Modify it to have three-way mixed design
-df.weightloss = weightloss %>%
-  mutate(id = rep(1:24, 2)) %>% 
-  pivot_longer(cols = t1:t3,
-               names_to = "timepoint",
-               values_to = "score") %>% 
-  arrange(id)
-```
-
-### Politness data
-
-```{r}
-df.politeness = read_csv("data/politeness_data.csv") %>% 
-  mutate(scenario = as.factor(scenario))
 ```
 
 ## Understanding the lmer() syntax
@@ -99,7 +58,7 @@ tibble(formula = c("`dv ~ x1 + (1 | g)`",
                    "`dv ~ x1 + (x1 | g)`",
                    "`dv ~ x1 + (x1 || g)`",
                    "`dv ~ x1 + (1 | school) + (1 | teacher)`",
-                   "`dv ~ x1 + (1 | school/teacher)`"),
+                   "`dv ~ x1 + (1 | school) + (1 | school:teacher)`"),
        description = c("Random intercept for each level of `g`",
                        "Random slope for each level of `g`",
                        "Correlated random slope and intercept for each level of `g`",
@@ -111,7 +70,7 @@ tibble(formula = c("`dv ~ x1 + (1 | g)`",
 
 Note that this `(1 | school/teacher)` is equivalent to `(1 | school) + (1 | teacher:school)` (see [here](https://stats.stackexchange.com/questions/228800/crossed-vs-nested-random-effects-how-do-they-differ-and-how-are-they-specified)). 
 
-## ANOVA vs. Lmer
+## ANOVA vs. lmer
 
 ### Between subjects ANOVA
 
@@ -128,7 +87,7 @@ aov_ez(id = "id",
 
 Looks like there was no main effect of `instruction` on participants' responses. 
 
-An alternative route for getting at the same test, would be via combining `lm()` with `Anova()` (as we've done before in class). 
+An alternative route for getting at the same test, would be via combining `lm()` with `joint_tests()` (as we've done before in class). 
 
 ```{r}
 lm(formula = response ~ instruction,
@@ -153,10 +112,11 @@ aov_ez(id = "id",
          filter(instruction == "probabilistic"))
 ```
 
-For the linear model route, given that we have repeated observations from the same participants, we need to use `lmer()`. The repeated measures anova has the random effect structure as shown below: 
+For the linear model route, given that we have repeated observations from the same participants, we need to use `lmer()`. The repeated measures ANOVA has the random effect structure as shown below: 
 
 ```{r}
-lmer(formula = response ~ validity * plausibility + (1 | id) + (1 | validity:id) + (1 | plausibility:id),
+lmer(formula = response ~ 1 + validity * plausibility + (1 | id) + 
+       (1 | id:validity) + (1 | id:plausibility),
      data = df.reasoning %>% 
         filter(instruction == "probabilistic") %>%
         group_by(id, validity, plausibility) %>%
@@ -183,14 +143,20 @@ aov_ez(id = "id",
 with the `lmer()` route: 
 
 ```{r}
-lmer(formula = response ~ instruction * validity * plausibility + (1 | id) + (1 | validity:id) + (1 | plausibility:id),
+lmer(formula = response ~ instruction * validity * plausibility + (1 | id) + 
+       (1 | id:validity) + (1 | id:plausibility),
       data = df.reasoning %>%
         group_by(id, validity, plausibility, instruction) %>%
         summarize(response = mean(response))) %>% 
   joint_tests()
 ```
-
 Here, both routes yield the same results. 
+
+## Additional resources
+
+### Readings
+
+- [Nested and crossed random effects in lme4](https://www.muscardinus.be/statistics/nested.html)
 
 ## Session info
 

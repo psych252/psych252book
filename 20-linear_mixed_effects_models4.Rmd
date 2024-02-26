@@ -228,11 +228,14 @@ ggplot(data = df.politeness,
 We fit the model and compute the contrasts. 
 
 ```{r, message=FALSE}
-fit = lmer(formula = frequency ~ 1 + attitude * gender + (1 | subject) + (1 | scenario),
+fit = lmer(formula = frequency ~ 1 + attitude * gender + (1 + attitude | subject) + (1 | scenario),
            data = df.politeness)
 
 fit %>% 
-  emmeans(specs = pairwise ~ attitude + gender,
+  joint_tests()
+
+fit %>% 
+  emmeans(specs = pairwise ~ attitude + gender, 
           adjust = "none")
 ```
 
@@ -492,7 +495,8 @@ df.boot = df.sleep %>%
   bootstrap(n = 100,
             id = "id") %>% 
   mutate(fit = map(.x = strap,
-                   .f = ~ lm(formula = reaction ~ 1 + days, data = .)),
+                   .f = ~ lm(formula = reaction ~ 1 + days,
+                             data = .x)),
          tidy = map(.x = fit, 
                     .f = tidy)) %>% 
   unnest(tidy) %>% 
