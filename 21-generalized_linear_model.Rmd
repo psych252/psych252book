@@ -22,7 +22,7 @@ library("janitor")    # for cleaning column names
 library("broom")      # for tidying up linear models 
 library("lme4")       # for linear mixed effects models
 library("boot")       # for bootstrapping (also has an inverse logit function)
-library("ggeffects")  # for showing effects in linear, generalized linear, and other models
+library("ggeffects")  # for computing marginal effects 
 library("afex")       # for significance testing of mixed effects models 
 library("emmeans")    # for the joint_tests() function
 library("tidyverse")  # for wrangling, plotting, etc. 
@@ -442,7 +442,9 @@ b1 = 1
 df.data = tibble(x = rnorm(n = sample_size),
                  y = b0 + b1 * x,
                  p = inv.logit(y)) %>% 
-  mutate(response = rbinom(n(), size = 1, p = p))
+  mutate(response = rbinom(n(),
+                           size = 1,
+                           p = p))
 
 # fit model 
 fit = glm(formula = response ~ 1 + x,
@@ -529,7 +531,9 @@ fit.augmented = glm(formula = survived ~ 1 + sex + fare,
                     data = df.titanic)
 
 # likelihood ratio test
-anova(fit.compact, fit.augmented, test = "LRT")
+anova(fit.compact,
+      fit.augmented,
+      test = "LRT")
 ```
 
 Note that in order to get a p-value out of this, we need to specify what statistical test we'd like to run. In this case, we use the likelihood ratio test ("LRT").
@@ -619,8 +623,6 @@ fit_c =  glmer(repeatgr ~ 1 +  minority + (1 | school_nr),
 
 anova(fit_a, fit_c, test = "LRT")
 ```
-
-
 
 ## Additional information
 
