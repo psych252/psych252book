@@ -63,13 +63,16 @@ See [this tutorial](https://mvuorre.github.io/posts/2017-03-21-bayes-factors-wit
 ```{r}
 df.null = tibble(s = 6, k = 10)
 
-fit.brm_bayes = brm(s | trials(k) ~ 0 + Intercept, 
-               family = binomial(link = "identity"),
-               prior = set_prior("beta(1, 1)", class = "b", lb = 0, ub = 1),
-               data = df.null,
-               sample_prior = TRUE,
-               cores = 4,
-               file = "cache/brm_bayes")
+fit.brm_bayes = brm(formula = s | trials(k) ~ 0 + Intercept, 
+                    family = binomial(link = "identity"),
+                    prior = set_prior(prior = "beta(1, 1)",
+                                      class = "b",
+                                      lb = 0,
+                                      ub = 1),
+                    data = df.null,
+                    sample_prior = TRUE,
+                    cores = 4,
+                    file = "cache/brm_bayes")
 ```
 
 #### Visualize the results
@@ -150,7 +153,6 @@ fit.brm_loo2 = add_criterion(fit.brm_loo2,
 loo_compare(fit.brm_loo1, fit.brm_loo2)
 model_weights(fit.brm_loo1, fit.brm_loo2)
 ```
-
 
 ## Dealing with heteroscedasticity
 
