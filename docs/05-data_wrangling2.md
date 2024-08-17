@@ -15,7 +15,7 @@ In this session, we will continue to learn about wrangling data. Some of the fun
 Let's first load the packages that we need for this chapter. 
 
 
-```r
+``` r
 library("knitr") # for rendering the RMarkdown file
 library("tidyverse") # for data wrangling 
 ```
@@ -23,7 +23,7 @@ library("tidyverse") # for data wrangling
 ## Settings
 
 
-```r
+``` r
 # sets how code looks in knitted document
 opts_chunk$set(comment = "")
 
@@ -39,14 +39,14 @@ options(dplyr.summarise.inform = F)
 Let's first load the `starwars` data set again: 
 
 
-```r
+``` r
 df.starwars = starwars
 ```
 
 A particularly powerful way of interacting with data is by grouping and summarizing it. `summarize()` returns a single value for each summary that we ask for: 
 
 
-```r
+``` r
 df.starwars %>% 
   summarize(height_mean = mean(height, na.rm = T),
             height_max = max(height, na.rm = T),
@@ -64,7 +64,7 @@ Here, I computed the mean height, the maximum height, and the total number of ob
 Let's say we wanted to get a quick sense for how tall starwars characters from different species are. To do that, we combine grouping with summarizing: 
 
 
-```r
+``` r
 df.starwars %>% 
   group_by(species) %>% 
   summarize(height_mean = mean(height, na.rm = T))
@@ -92,7 +92,7 @@ I've first used `group_by()` to group our data frame by the different species, a
 It would also be useful to know how many observations there are in each group. 
 
 
-```r
+``` r
 df.starwars %>% 
   group_by(species) %>% 
   summarize(height_mean = mean(height, na.rm = T), 
@@ -126,12 +126,14 @@ So, Humans are the largest group in our data frame, followed by Droids (who are 
 Sometimes `group_by()` is also useful without summarizing the data. For example, we often want to z-score (i.e. normalize) data on the level of individual participants. To do so, we first group the data on the level of participants, and then use `mutate()` to scale the data. Here is an example: 
 
 
-```r
+``` r
 # first let's generate some random data 
 set.seed(1) # to make this reproducible 
 
 df.summarize = tibble(participant = rep(1:3, each = 5),
-                      judgment = sample(0:100, size = 15, replace = TRUE)) %>% 
+                      judgment = sample(x = 0:100,
+                                        size = 15,
+                                        replace = TRUE)) %>% 
   print()
 ```
 
@@ -157,7 +159,7 @@ df.summarize = tibble(participant = rep(1:3, each = 5),
 ```
 
 
-```r
+``` r
 df.summarize %>%   
   group_by(participant) %>% # group by participants
   mutate(judgment_zscored = scale(judgment)) %>% # z-score data of individual participants
@@ -190,7 +192,7 @@ Sometimes, I want to run operations on each row, rather than per column. For exa
 Let's see first what doesn't work: 
 
 
-```r
+``` r
 df.starwars %>% 
   mutate(mean_height_mass = mean(c(height, mass), na.rm = T)) %>% 
   select(name, height, mass, mean_height_mass)
@@ -216,7 +218,7 @@ df.starwars %>%
 Note that all the values are the same. The value shown here is just the mean of all the values in `height` and `mass`.
 
 
-```r
+``` r
 df.starwars %>% 
   select(height, mass) %>% 
   unlist() %>% # turns the data frame into a vector
@@ -230,7 +232,7 @@ df.starwars %>%
 To get the mean by row, we can either spell out the arithmetic
 
 
-```r
+``` r
 df.starwars %>% 
   mutate(mean_height_mass = (height + mass) / 2) %>% # here, I've replaced the mean() function  
   select(name, height, mass, mean_height_mass)
@@ -256,7 +258,7 @@ df.starwars %>%
 or use the `rowwise()` helper function which is like `group_by()` but treats each row like a group: 
 
 
-```r
+``` r
 df.starwars %>% 
   rowwise() %>% # now, each row is treated like a separate group 
   mutate(mean_height_mass = mean(c(height, mass), na.rm = T)) %>%
@@ -286,14 +288,14 @@ df.starwars %>%
 Find out what the average `height` and `mass` (as well as the standard deviation) is from different `species` in different `homeworld`s. Why is the standard deviation `NA` for many groups?  
 
 
-```r
+``` r
 # write your code here 
 ```
 
 Who is the tallest member of each species? What eye color do they have? The `top_n()` function or the `row_number()` function (in combination with `filter()`) will be useful here. 
 
 
-```r
+``` r
 # write your code here 
 ```
 
@@ -316,7 +318,7 @@ For more information on tidy data frames see the [Tidy data](http://r4ds.had.co.
 Let's first generate a data set that is _not_ tidy. 
 
 
-```r
+``` r
 # construct data frame 
 df.reshape = tibble(participant = c(1, 2),
                     observation_1 = c(10, 25),
@@ -338,7 +340,7 @@ Here, I've generated data from two participants with three observations. This da
 We can make it tidy using the `pivot_longer()` function. 
 
 
-```r
+``` r
 df.reshape.long = df.reshape %>% 
   pivot_longer(cols = -participant,
                names_to = "index",
@@ -371,7 +373,7 @@ The `pivot_longer()` function takes at least four arguments:
 `pivot_wider()` is the counterpart of `pivot_longer()`. We can use it to go from a data frame that is in _long_ format, to a data frame in _wide_ format, like so: 
 
 
-```r
+``` r
 df.reshape.wide = df.reshape.long %>% 
   pivot_wider(names_from = index,
               values_from = rating) %>% 
@@ -391,7 +393,7 @@ For my data, I often have a wide data frame that contains demographic informatio
 Here is a more advanced example that involves reshaping a data frame. Let's consider the following data frame to start with: 
 
 
-```r
+``` r
 # construct data frame 
 df.reshape2 = tibble(participant = c(1, 2),
                      stimulus_1 = c("flower", "car"),
@@ -415,13 +417,13 @@ df.reshape2 = tibble(participant = c(1, 2),
 The data frame contains in each row: which stimuli a participant saw, and what rating she gave. The participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of `pivot_longer()`, and `pivot_wider()` to turn this into a data frame in long format. 
 
 
-```r
+``` r
 df.reshape2 %>% 
   pivot_longer(cols = -participant,
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_transform = list(rating = as.character)) %>% 
+               values_transform = as.character) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating") %>% 
   mutate(across(.cols = c(order, observation),
@@ -446,13 +448,13 @@ Voilà! Getting the desired data frame involved a few new tricks. Let's take it 
 First, I use `pivot_longer()` to make a long table. 
 
 
-```r
+``` r
 df.reshape2 %>% 
   pivot_longer(cols = -participant,
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_transform = list(rating = as.character))
+               values_transform = as.character)
 ```
 
 ```
@@ -478,13 +480,13 @@ Notice how I've used a combination of the `names_to = ` and `names_sep = ` argum
 I would like to have the information about the stimulus and the observation in the same row. That is, I want to see what rating a participant gave to the flower stimulus, for example. To get there, I can use the `pivot_wider()` function to make a separate column for each entry in `index` that contains the values in `rating`. 
 
 
-```r
+``` r
 df.reshape2 %>% 
   pivot_longer(cols = -participant,
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_transform = list(rating = as.character)) %>% 
+               values_transform = as.character) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating")
 ```
@@ -504,17 +506,17 @@ df.reshape2 %>%
 That's pretty much it. Now, each row contains information about the order in which a stimulus was presented, what the stimulus was, and the judgment that a participant made in this trial. 
 
 
-```r
+``` r
 df.reshape2 %>% 
   pivot_longer(cols = -participant,
                names_to = c("index", "order"),
                names_sep = "_",
                values_to = "rating",
-               values_transform = list(rating = as.character)) %>% 
+               values_transform = as.character) %>% 
   pivot_wider(names_from = "index",
               values_from = "rating") %>% 
   mutate(across(.cols = c(order, observation),
-                .fns = ~ as.numeric(.))) %>% 
+                .fns = as.numeric)) %>% 
   select(participant, order, stimulus, rating = observation)
 ```
 
@@ -543,12 +545,12 @@ When reading older code, you will often see `gather()` (instead of `pivot_longer
 Sometimes, we want to separate one column into multiple columns. For example, we could have achieved the same result we did above slightly differently, like so: 
 
 
-```r
+``` r
 df.reshape2 %>% 
   pivot_longer(cols = -participant,
                names_to = "index",
                values_to = "rating",
-               values_transform = list(rating = as.character)) %>% 
+               values_transform = as.character) %>% 
   separate(col = index,
            into = c("index", "order"),
            sep = "_")
@@ -582,7 +584,7 @@ Here, I've used the `separate()` function to separate the original `index` colum
 Note, like `pivot_longer()` and `pivot_wider()`, there is a partner for `separate()`, too. It's called `unite()` and it allows you to combine several columns into one, like so:
 
 
-```r
+``` r
 tibble(index = c("flower", "observation"),
        order = c(1, 2)) %>% 
   unite("combined", index, order)
@@ -599,7 +601,7 @@ tibble(index = c("flower", "observation"),
 Sometimes, we may have a data frame where data is recorded in a long string. 
 
 
-```r
+``` r
 df.reshape3 = tibble(participant = 1:2,
                      judgments = c("10, 4, 12, 15", "3, 4")) %>% 
   print()
@@ -618,7 +620,7 @@ Here, I've created a data frame with data from two participants. For whatever re
 We can use the `separate_rows()` function to turn this into a tidy data frame in long format. 
 
 
-```r
+``` r
 df.reshape3 %>% 
   separate_rows(judgments)
 ```
@@ -640,7 +642,7 @@ df.reshape3 %>%
 Load this data frame first.
 
 
-```r
+``` r
 df.practice2 = tibble(participant = 1:10,
                       initial = c("AR", "FA", "IR", "NC", "ER", "PI", "DH", "CN", "WT", "JD"), 
                       judgment_1 = c(12, 13, 1, 14, 5, 6, 12, 41, 100, 33),
@@ -654,7 +656,7 @@ df.practice2 = tibble(participant = 1:10,
 - Notice anything interesting? Think about what [z-scoring](https://www.statisticshowto.com/probability-and-statistics/z-score/) does ... 
 
 
-```r
+``` r
 # write your code here 
 ```
 
@@ -666,7 +668,7 @@ It's nice to have all the information we need in a single, tidy data frame. We h
 For example, we may have one data frame `df.stimuli` with information about each stimulus, and then have another data frame with participants' responses `df.responses` that only contains a stimulus index but no other infromation about the stimuli. 
 
 
-```r
+``` r
 set.seed(1) # setting random seed to make this example reproducible
 
 # data frame with stimulus information
@@ -689,7 +691,7 @@ df.stimuli = tibble(index = 1:5,
 5     5      5     1      7 black
 ```
 
-```r
+``` r
 # data frame with participants' responses 
 df.responses = tibble(participant = rep(1:3, each = 5),
   index = rep(1:5, 3), 
@@ -723,7 +725,7 @@ The `df.stimuli` data frame contains an `index`, information about the `height`,
 Let's say that I now wanted to know what participants' average response for the differently colored dot patterns are. Here is how I would do this: 
 
 
-```r
+``` r
 df.responses %>% 
   left_join(df.stimuli %>%
               select(index, color),
@@ -746,7 +748,7 @@ df.responses %>%
 Let's take it step by step. The key here is to add the information from the `df.stimuli` data frame to the `df.responses` data frame. 
 
 
-```r
+``` r
 df.responses %>% 
   left_join(df.stimuli %>% 
               select(index, color),
@@ -781,7 +783,7 @@ To specify multiple columns by which we would like to join tables, we specify th
 Sometimes, the tables I want to join don't have any column names in common. In that case, we can tell the `left_join()` function which column pair(s) should be used for joining. 
 
 
-```r
+``` r
 df.responses %>% 
   rename(stimuli = index) %>% # I've renamed the index column to stimuli
   left_join(df.stimuli %>% 
@@ -821,7 +823,7 @@ Take a look at the `join` help file to see other operations for combining two or
 Load these three data frames first: 
 
 
-```r
+``` r
 set.seed(1)
 
 df.judgments = tibble(participant = rep(1:3, each = 5),
@@ -835,7 +837,7 @@ df.information = tibble(number = seq(from = 0, to = 100, length.out = 5),
 Create a new data frame called `df.join` that combines the information from both `df.judgments` and `df.information`. Note that column with the colors is called `stimulus` in `df.judgments` and `color` in `df.information`. At the end, you want a data frame that contains the following columns: `participant`, `stimulus`, `number`, and `judgment`. 
 
 
-```r
+``` r
 # write your code here
 ```
 
@@ -850,7 +852,7 @@ There are two ways for data to be missing.
 We can check for explicit missing values using the `is.na()` function like so: 
 
 
-```r
+``` r
 tmp.na = c(1, 2, NA, 3)
 is.na(tmp.na)
 ```
@@ -864,7 +866,7 @@ I've first created a vector `tmp.na` with a missing value at index 3. Calling th
 Let's say that we have a data frame with missing values and that we want to replace those missing values with something else. Let's first create a data frame with missing values. 
 
 
-```r
+``` r
 df.missing = tibble(x = c(1, 2, NA),
                     y = c("a", NA, "b"))
 print(df.missing)
@@ -882,7 +884,7 @@ print(df.missing)
 We can use the `replace_na()` function to replace the missing values with something else. 
 
 
-```r
+``` r
 df.missing %>% 
   mutate(x = replace_na(x, replace = 0),
          y = replace_na(y, replace = "unknown"))
@@ -900,7 +902,7 @@ df.missing %>%
 We can also remove rows with missing values using the `drop_na()` function. 
 
 
-```r
+``` r
 df.missing %>% 
   drop_na()
 ```
@@ -915,7 +917,7 @@ df.missing %>%
 If we only want to drop values from specific columns, we can specify these columns within the `drop_na()` function call. So, if we only want to drop rows that have missing values in the `x` column, we can write: 
 
 
-```r
+``` r
 df.missing %>% 
   drop_na(x)
 ```
@@ -931,7 +933,7 @@ df.missing %>%
 To make the distinction between implicit and explicit missing values more concrete, let's consider the following example (taken from [here](https://r4ds.had.co.nz/tidy-data.html#missing-values-3)): 
 
 
-```r
+``` r
 df.stocks = tibble(year   = c(2015, 2015, 2015, 2015, 2016, 2016, 2016),
                    qtr    = c(   1,    2,    3,    4,    2,    3,    4),
                    return = c(1.88, 0.59, 0.35,   NA, 0.92, 0.17, 2.66))
@@ -945,7 +947,7 @@ There are two missing values in this dataset:
 We can use the `complete()` function to make implicit missing values explicit: 
 
 
-```r
+``` r
 df.stocks %>% 
   complete(year, qtr)
 ```
@@ -969,7 +971,7 @@ Note how now, the data frame contains an additional row in which `year = 2016`, 
 We can also directly tell the `complete()` function to replace the `NA` values via passing a list to its `fill` argument like so: 
 
 
-```r
+``` r
 df.stocks %>% 
   complete(year, qtr, fill = list(return = 0))
 ```
@@ -1013,7 +1015,7 @@ For data in a json format, I highly recommend the `tidyjson` [package](https://g
 I've stored some data files in the `data/` subfolder. Let's first read a csv (= **c**omma-**s**eparated-**v**alue) file. 
 
 
-```r
+``` r
 df.csv = read_csv("data/movies.csv")
 ```
 
@@ -1033,7 +1035,7 @@ The `read_csv()` function gives us information about how each column was parsed.
 And let's take a quick peek at the data: 
 
 
-```r
+``` r
 df.csv %>% glimpse()
 ```
 
@@ -1064,7 +1066,7 @@ RData is a data format native to R. Since this format can only be read by R, it'
 We read (or load) an RData file in the following way:
 
 
-```r
+``` r
 load("data/test.RData", verbose = TRUE)
 ```
 
@@ -1082,7 +1084,7 @@ I've set the `verbose = ` argument to `TRUE` here so that the `load()` function 
 To save a data frame as a csv file, we simply write: 
 
 
-```r
+``` r
 df.test = tibble(x = 1:3,
                  y = c("test1", "test2", "test3"))
 
@@ -1096,14 +1098,14 @@ Just like for reading in data, the `readr` package has a number of other functio
 To save objects as an RData file, we write: 
 
 
-```r
+``` r
 save(df.test, file = "data/test.RData")
 ```
 
 We can add multiple objects simply by adding them at the beginning, like so: 
 
 
-```r
+``` r
 save(df.test, df.starwars, file = "data/test_starwars.RData")
 ```
 
@@ -1132,23 +1134,21 @@ save(df.test, df.starwars, file = "data/test_starwars.RData")
 ### Tutorials
 
 -   **Joining data**:
-
     -   [Two-table verbs](https://dplyr.tidyverse.org/articles/two-table.html)
     -   [Tutorial by Jenny Bryan](http://stat545.com/bit001_dplyr-cheatsheet.html)
-
 -   [tidyexplain](https://github.com/gadenbuie/tidyexplain): Animations that illustrate how `pivot_longer()`, `pivot_wider()`, `left_join()`, etc. work
 
 ## Session info
 
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1161,19 +1161,19 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
- [5] purrr_1.0.2     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
- [9] ggplot2_3.4.4   tidyverse_2.0.0 knitr_1.45     
+ [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 knitr_1.48     
 
 loaded via a namespace (and not attached):
- [1] bit_4.0.5        gtable_0.3.4     jsonlite_1.8.8   crayon_1.5.2    
- [5] compiler_4.3.2   tidyselect_1.2.0 parallel_4.3.2   jquerylib_0.1.4 
- [9] scales_1.3.0     yaml_2.3.8       fastmap_1.1.1    R6_2.5.1        
-[13] generics_0.1.3   bookdown_0.37    munsell_0.5.0    bslib_0.6.1     
-[17] pillar_1.9.0     tzdb_0.4.0       rlang_1.1.2      utf8_1.2.4      
-[21] stringi_1.8.3    cachem_1.0.8     xfun_0.41        sass_0.4.8      
-[25] bit64_4.0.5      timechange_0.2.0 cli_3.6.2        withr_2.5.2     
-[29] magrittr_2.0.3   digest_0.6.33    grid_4.3.2       vroom_1.6.5     
-[33] hms_1.1.3        lifecycle_1.0.4  vctrs_0.6.5      evaluate_0.23   
-[37] glue_1.6.2       fansi_1.0.6      colorspace_2.1-0 rmarkdown_2.25  
-[41] tools_4.3.2      pkgconfig_2.0.3  htmltools_0.5.7 
+ [1] bit_4.0.5         gtable_0.3.5      jsonlite_1.8.8    crayon_1.5.3     
+ [5] compiler_4.4.1    tidyselect_1.2.1  parallel_4.4.1    jquerylib_0.1.4  
+ [9] scales_1.3.0      yaml_2.3.9        fastmap_1.2.0     R6_2.5.1         
+[13] generics_0.1.3    bookdown_0.40     munsell_0.5.1     bslib_0.7.0      
+[17] pillar_1.9.0      tzdb_0.4.0        rlang_1.1.4       utf8_1.2.4       
+[21] stringi_1.8.4     cachem_1.1.0      xfun_0.45         sass_0.4.9       
+[25] bit64_4.0.5       timechange_0.3.0  cli_3.6.3         withr_3.0.0      
+[29] magrittr_2.0.3    digest_0.6.36     grid_4.4.1        vroom_1.6.5      
+[33] hms_1.1.3         lifecycle_1.0.4   vctrs_0.6.5       evaluate_0.24.0  
+[37] glue_1.7.0        fansi_1.0.6       colorspace_2.1-0  rmarkdown_2.27   
+[41] tools_4.4.1       pkgconfig_2.0.3   htmltools_0.5.8.1
 ```

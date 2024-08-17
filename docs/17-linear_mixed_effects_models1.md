@@ -11,7 +11,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")        # for knitting RMarkdown 
 library("kableExtra")   # for making nice tables
 library("janitor")      # for cleaning column names
@@ -22,7 +22,7 @@ library("tidyverse")    # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -35,7 +35,7 @@ opts_chunk$set(comment = "",
 Let's generate a data set in which two observations from the same participants are dependent, and then let's also shuffle this data set to see whether taking into account the dependence in the data matters. 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -48,7 +48,7 @@ df.dependence = tibble(participant = 1:20,
 Let's visualize the original and shuffled data set: 
 
 
-```r
+``` r
 df.plot = df.dependence %>% 
   pivot_longer(cols = -participant,
                names_to = "condition",
@@ -89,7 +89,7 @@ p1 + p2
 Let's save the two original and shuffled data set as two separate data sets.
 
 
-```r
+``` r
 # separate the data sets 
 df.original = df.dependence %>% 
   pivot_longer(cols = -participant,
@@ -109,7 +109,7 @@ df.shuffled = df.dependence %>%
 Let's run a linear model, and independent samples t-test on the original data set. 
 
 
-```r
+``` r
 # linear model (assuming independent samples)
 lm(formula = value ~ condition,
    data = df.original) %>% 
@@ -135,7 +135,7 @@ Multiple R-squared:  0.01259,	Adjusted R-squared:  -0.0134
 F-statistic: 0.4843 on 1 and 38 DF,  p-value: 0.4907
 ```
 
-```r
+``` r
 t.test(df.original$value[df.original$condition == "1"],
        df.original$value[df.original$condition == "2"],
        alternative = "two.sided",
@@ -161,7 +161,7 @@ The mean difference between the conditions is extremely small, and non-significa
 Let's fit a linear mixed effects model with a random intercept for each participant: 
 
 
-```r
+``` r
 # fit a linear mixed effects model 
 lmer(formula = value ~ condition + (1 | participant),
      data = df.original) %>% 
@@ -198,7 +198,7 @@ condition2 -0.048
 To test for whether condition is a significant predictor, we need to use our model comparison approach: 
 
 
-```r
+``` r
 # fit models
 fit.compact = lmer(formula = value ~ 1 + (1 | participant),
                    data = df.original)
@@ -228,7 +228,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 This result is identical to running a paired samples t-test: 
 
 
-```r
+``` r
 t.test(df.original$value[df.original$condition == "1"],
        df.original$value[df.original$condition == "2"],
        alternative = "two.sided",
@@ -254,7 +254,7 @@ But, unlike in the paired samples t-test, the linear mixed effects model explici
 Let's fit a linear model and a linear mixed effects model to the original (non-shuffled) data. 
 
 
-```r
+``` r
 # model assuming independence
 fit.independent = lm(formula = value ~ 1 + condition,
                      data = df.original)
@@ -267,7 +267,7 @@ fit.dependent = lmer(formula = value ~ 1 + condition + (1 | participant),
 Let's visualize the linear model's predictions: 
 
 
-```r
+``` r
 # plot with predictions by fit.independent 
 fit.independent %>% 
   augment() %>% 
@@ -291,7 +291,7 @@ fit.independent %>%
 And this is what the residuals look like: 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -329,7 +329,7 @@ It's clear from this residual plot, that fitting two separate lines (or points) 
 Let's visualize the predictions of the linear mixed effects model: 
 
 
-```r
+``` r
 # plot with predictions by fit.independent 
 fit.dependent %>% 
   augment() %>% 
@@ -351,7 +351,7 @@ fit.dependent %>%
 Let's compare the residuals of the linear model with that of the linear mixed effects model: 
 
 
-```r
+``` r
 # linear model 
 p1 = fit.independent %>% 
   augment() %>% 
@@ -380,7 +380,7 @@ p1 + p2
 The residuals of the linear mixed effects model are much smaller. Let's test whether taking the individual variation into account is worth it (statistically speaking). 
 
 
-```r
+``` r
 # fit models (without and with dependence)
 fit.compact = lm(formula = value ~ 1 + condition,
                  data = df.original)
@@ -389,7 +389,7 @@ fit.augmented = lmer(formula = value ~ 1 + condition + (1 | participant),
                      data = df.original)
 
 # compare models
-# note: the lmer model has to be supplied first 
+# note: the lmer model has to be entered as the first argument
 anova(fit.augmented, fit.compact) 
 ```
 
@@ -409,7 +409,7 @@ fit.augmented    4  17.849  24.605  -4.925    9.849 93.701  1  < 2.2e-16 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-Yes, the likelihood of the data given the linear mixed effects model is significantly higher compared to its likelihood given the linear model. 
+Yes, the linear mixed effects model explains the data better than the linear model. 
 
 ## Additional resources
 
@@ -422,18 +422,18 @@ Yes, the likelihood of the data given the linear mixed effects model is signific
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -446,29 +446,28 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
- [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.4        
- [7] tidyr_1.3.0         tibble_3.2.1        ggplot2_3.4.4      
-[10] tidyverse_2.0.0     lme4_1.1-35.1       Matrix_1.6-4       
-[13] patchwork_1.1.3     broom.mixed_0.2.9.4 janitor_2.2.0      
-[16] kableExtra_1.3.4    knitr_1.45         
+ [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
+ [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
+[10] tidyverse_2.0.0     lme4_1.1-35.5       Matrix_1.7-0       
+[13] patchwork_1.2.0     broom.mixed_0.2.9.5 janitor_2.2.0      
+[16] kableExtra_1.4.0    knitr_1.48         
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.4       xfun_0.41          bslib_0.6.1        lattice_0.22-5    
- [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.3.2        generics_0.1.3    
- [9] parallel_4.3.2     fansi_1.0.6        highr_0.10         pkgconfig_2.0.3   
-[13] RColorBrewer_1.1-3 webshot_0.5.5      lifecycle_1.0.4    farver_2.1.1      
-[17] compiler_4.3.2     munsell_0.5.0      codetools_0.2-19   snakecase_0.11.1  
-[21] htmltools_0.5.7    sass_0.4.8         yaml_2.3.8         nloptr_2.0.3      
-[25] pillar_1.9.0       furrr_0.3.1        jquerylib_0.1.4    MASS_7.3-60       
-[29] cachem_1.0.8       boot_1.3-28.1      nlme_3.1-164       parallelly_1.36.0 
-[33] tidyselect_1.2.0   rvest_1.0.3        digest_0.6.33      stringi_1.8.3     
-[37] future_1.33.1      bookdown_0.37      listenv_0.9.0      labeling_0.4.3    
-[41] splines_4.3.2      fastmap_1.1.1      grid_4.3.2         colorspace_2.1-0  
-[45] cli_3.6.2          magrittr_2.0.3     utf8_1.2.4         broom_1.0.5       
-[49] withr_2.5.2        scales_1.3.0       backports_1.4.1    timechange_0.2.0  
-[53] rmarkdown_2.25     httr_1.4.7         globals_0.16.2     hms_1.1.3         
-[57] evaluate_0.23      viridisLite_0.4.2  mgcv_1.9-1         rlang_1.1.2       
-[61] Rcpp_1.0.11        glue_1.6.2         xml2_1.3.6         minqa_1.2.6       
-[65] svglite_2.1.3      rstudioapi_0.15.0  jsonlite_1.8.8     R6_2.5.1          
-[69] systemfonts_1.0.5 
+ [1] gtable_0.3.5       xfun_0.45          bslib_0.7.0        lattice_0.22-6    
+ [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.4.1        generics_0.1.3    
+ [9] parallel_4.4.1     fansi_1.0.6        highr_0.11         pkgconfig_2.0.3   
+[13] RColorBrewer_1.1-3 lifecycle_1.0.4    farver_2.1.2       compiler_4.4.1    
+[17] munsell_0.5.1      codetools_0.2-20   snakecase_0.11.1   htmltools_0.5.8.1 
+[21] sass_0.4.9         yaml_2.3.9         nloptr_2.1.1       pillar_1.9.0      
+[25] furrr_0.3.1        jquerylib_0.1.4    MASS_7.3-61        cachem_1.1.0      
+[29] boot_1.3-30        nlme_3.1-164       parallelly_1.37.1  tidyselect_1.2.1  
+[33] digest_0.6.36      stringi_1.8.4      future_1.33.2      bookdown_0.40     
+[37] listenv_0.9.1      labeling_0.4.3     splines_4.4.1      fastmap_1.2.0     
+[41] grid_4.4.1         colorspace_2.1-0   cli_3.6.3          magrittr_2.0.3    
+[45] utf8_1.2.4         broom_1.0.6        withr_3.0.0        scales_1.3.0      
+[49] backports_1.5.0    timechange_0.3.0   rmarkdown_2.27     globals_0.16.3    
+[53] hms_1.1.3          evaluate_0.24.0    viridisLite_0.4.2  mgcv_1.9-1        
+[57] rlang_1.1.4        Rcpp_1.0.13        glue_1.7.0         xml2_1.3.6        
+[61] minqa_1.2.7        svglite_2.1.3      rstudioapi_0.16.0  jsonlite_1.8.8    
+[65] R6_2.5.1           systemfonts_1.1.0 
 ```

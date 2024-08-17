@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Data wrangling 2 | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
   <meta name="description" content="Course notes for Psych 252." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Data wrangling 2 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2024-01-19" />
+<meta name="date" content="2024-08-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="data-wrangling-1.html"/>
-<link rel="next" href="probability-and-causality.html"/>
+<link rel="next" href="probability.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,11 +51,25 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.33/datatables.js"></script>
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +79,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -122,6 +136,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -149,7 +186,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#session-info"><i class="fa fa-check"></i><b>1.3</b> Session info</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#install-all-packages-needed-for-this-book"><i class="fa fa-check"></i><b>1.3</b> Install all packages needed for this book</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#session-info"><i class="fa fa-check"></i><b>1.4</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a>
 <ul>
@@ -292,36 +330,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5.8" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#session-info-4"><i class="fa fa-check"></i><b>5.8</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a>
+<li class="chapter" data-level="6" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>6</b> Probability</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>6.1</b> Load packages, load data, set theme</a></li>
-<li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.2</b> Counting</a></li>
-<li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#the-random-secretary"><i class="fa fa-check"></i><b>6.3</b> The random secretary</a></li>
-<li class="chapter" data-level="6.4" data-path="probability-and-causality.html"><a href="probability-and-causality.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.4</b> Flipping a coin many times</a></li>
-<li class="chapter" data-level="6.5" data-path="probability-and-causality.html"><a href="probability-and-causality.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.5</b> Clue guide to probability</a>
+<li class="chapter" data-level="6.1" data-path="probability.html"><a href="probability.html#load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>6.1</b> Load packages, load data, set theme</a></li>
+<li class="chapter" data-level="6.2" data-path="probability.html"><a href="probability.html#counting"><i class="fa fa-check"></i><b>6.2</b> Counting</a></li>
+<li class="chapter" data-level="6.3" data-path="probability.html"><a href="probability.html#the-random-secretary"><i class="fa fa-check"></i><b>6.3</b> The random secretary</a></li>
+<li class="chapter" data-level="6.4" data-path="probability.html"><a href="probability.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.4</b> Flipping a coin many times</a></li>
+<li class="chapter" data-level="6.5" data-path="probability.html"><a href="probability.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.5</b> Clue guide to probability</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#conditional-probability"><i class="fa fa-check"></i><b>6.5.1</b> Conditional probability</a></li>
-<li class="chapter" data-level="6.5.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.5.2</b> Law of total probability</a></li>
+<li class="chapter" data-level="6.5.1" data-path="probability.html"><a href="probability.html#conditional-probability"><i class="fa fa-check"></i><b>6.5.1</b> Conditional probability</a></li>
+<li class="chapter" data-level="6.5.2" data-path="probability.html"><a href="probability.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.5.2</b> Law of total probability</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="probability-and-causality.html"><a href="probability-and-causality.html#probability-operations"><i class="fa fa-check"></i><b>6.6</b> Probability operations</a></li>
-<li class="chapter" data-level="6.7" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-explained"><i class="fa fa-check"></i><b>6.7</b> Bayesian reasoning explained</a></li>
-<li class="chapter" data-level="6.8" data-path="probability-and-causality.html"><a href="probability-and-causality.html#getting-bayes-right-matters"><i class="fa fa-check"></i><b>6.8</b> Getting Bayes right matters</a>
+<li class="chapter" data-level="6.6" data-path="probability.html"><a href="probability.html#probability-operations"><i class="fa fa-check"></i><b>6.6</b> Probability operations</a></li>
+<li class="chapter" data-level="6.7" data-path="probability.html"><a href="probability.html#bayesian-reasoning-explained"><i class="fa fa-check"></i><b>6.7</b> Bayesian reasoning explained</a></li>
+<li class="chapter" data-level="6.8" data-path="probability.html"><a href="probability.html#getting-bayes-right-matters"><i class="fa fa-check"></i><b>6.8</b> Getting Bayes right matters</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.8.1</b> Bayesian reasoning example</a></li>
-<li class="chapter" data-level="6.8.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example-covid-rapid-test"><i class="fa fa-check"></i><b>6.8.2</b> Bayesian reasoning example (COVID rapid test)</a></li>
-<li class="chapter" data-level="6.8.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#most-people-in-the-hospital-are-vaccinated"><i class="fa fa-check"></i><b>6.8.3</b> Most people in the hospital are vaccinated</a></li>
+<li class="chapter" data-level="6.8.1" data-path="probability.html"><a href="probability.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.8.1</b> Bayesian reasoning example</a></li>
+<li class="chapter" data-level="6.8.2" data-path="probability.html"><a href="probability.html#bayesian-reasoning-example-covid-rapid-test"><i class="fa fa-check"></i><b>6.8.2</b> Bayesian reasoning example (COVID rapid test)</a></li>
+<li class="chapter" data-level="6.8.3" data-path="probability.html"><a href="probability.html#most-people-in-the-hospital-are-vaccinated"><i class="fa fa-check"></i><b>6.8.3</b> Most people in the hospital are vaccinated</a></li>
 </ul></li>
-<li class="chapter" data-level="6.9" data-path="probability-and-causality.html"><a href="probability-and-causality.html#building-a-bayesis"><i class="fa fa-check"></i><b>6.9</b> Building a Bayesis</a>
+<li class="chapter" data-level="6.9" data-path="probability.html"><a href="probability.html#building-a-bayesis"><i class="fa fa-check"></i><b>6.9</b> Building a Bayesis</a>
 <ul>
-<li class="chapter" data-level="6.9.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#dice-example"><i class="fa fa-check"></i><b>6.9.1</b> Dice example</a></li>
+<li class="chapter" data-level="6.9.1" data-path="probability.html"><a href="probability.html#dice-example"><i class="fa fa-check"></i><b>6.9.1</b> Dice example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="probability-and-causality.html"><a href="probability-and-causality.html#additional-resources-4"><i class="fa fa-check"></i><b>6.10</b> Additional resources</a>
+<li class="chapter" data-level="6.10" data-path="probability.html"><a href="probability.html#additional-resources-4"><i class="fa fa-check"></i><b>6.10</b> Additional resources</a>
 <ul>
-<li class="chapter" data-level="6.10.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.10.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="6.10.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.10.2</b> Books and chapters</a></li>
-<li class="chapter" data-level="6.10.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#misc-2"><i class="fa fa-check"></i><b>6.10.3</b> Misc</a></li>
+<li class="chapter" data-level="6.10.1" data-path="probability.html"><a href="probability.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.10.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="6.10.2" data-path="probability.html"><a href="probability.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.10.2</b> Books and chapters</a></li>
+<li class="chapter" data-level="6.10.3" data-path="probability.html"><a href="probability.html#misc-2"><i class="fa fa-check"></i><b>6.10.3</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="6.11" data-path="probability-and-causality.html"><a href="probability-and-causality.html#session-info-5"><i class="fa fa-check"></i><b>6.11</b> Session info</a></li>
+<li class="chapter" data-level="6.11" data-path="probability.html"><a href="probability.html#session-info-5"><i class="fa fa-check"></i><b>6.11</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a>
 <ul>
@@ -339,23 +377,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.4" data-path="simulation-1.html"><a href="simulation-1.html#cumulative-probability-distribution"><i class="fa fa-check"></i><b>7.3.4</b> Cumulative probability distribution</a></li>
 <li class="chapter" data-level="7.3.5" data-path="simulation-1.html"><a href="simulation-1.html#inverse-cumulative-distribution"><i class="fa fa-check"></i><b>7.3.5</b> Inverse cumulative distribution</a></li>
 <li class="chapter" data-level="7.3.6" data-path="simulation-1.html"><a href="simulation-1.html#computing-probabilities"><i class="fa fa-check"></i><b>7.3.6</b> Computing probabilities</a></li>
+<li class="chapter" data-level="7.3.7" data-path="simulation-1.html"><a href="simulation-1.html#make-the-plot"><i class="fa fa-check"></i><b>7.3.7</b> Make the plot</a></li>
+<li class="chapter" data-level="7.3.8" data-path="simulation-1.html"><a href="simulation-1.html#analytic-solutions"><i class="fa fa-check"></i><b>7.3.8</b> Analytic solutions</a></li>
+<li class="chapter" data-level="7.3.9" data-path="simulation-1.html"><a href="simulation-1.html#sampling-solution"><i class="fa fa-check"></i><b>7.3.9</b> Sampling solution</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#breakout-room-exercise"><i class="fa fa-check"></i><b>7.4</b> Breakout room exercise</a>
+<li class="chapter" data-level="7.4" data-path="simulation-1.html"><a href="simulation-1.html#bayesian-inference-with-the-normal-distribution"><i class="fa fa-check"></i><b>7.4</b> Bayesian inference with the normal distribution</a>
 <ul>
-<li class="chapter" data-level="7.4.1" data-path="simulation-1.html"><a href="simulation-1.html#make-the-plot"><i class="fa fa-check"></i><b>7.4.1</b> Make the plot</a></li>
-<li class="chapter" data-level="7.4.2" data-path="simulation-1.html"><a href="simulation-1.html#analytic-solutions"><i class="fa fa-check"></i><b>7.4.2</b> Analytic solutions</a></li>
-<li class="chapter" data-level="7.4.3" data-path="simulation-1.html"><a href="simulation-1.html#sampling-solution"><i class="fa fa-check"></i><b>7.4.3</b> Sampling solution</a></li>
+<li class="chapter" data-level="7.4.1" data-path="simulation-1.html"><a href="simulation-1.html#analytic-solution"><i class="fa fa-check"></i><b>7.4.1</b> Analytic solution</a></li>
+<li class="chapter" data-level="7.4.2" data-path="simulation-1.html"><a href="simulation-1.html#solution-via-sampling"><i class="fa fa-check"></i><b>7.4.2</b> Solution via sampling</a></li>
 </ul></li>
-<li class="chapter" data-level="7.5" data-path="simulation-1.html"><a href="simulation-1.html#bayesian-inference-with-the-normal-distribution"><i class="fa fa-check"></i><b>7.5</b> Bayesian inference with the normal distribution</a>
+<li class="chapter" data-level="7.5" data-path="simulation-1.html"><a href="simulation-1.html#additional-resources-5"><i class="fa fa-check"></i><b>7.5</b> Additional resources</a>
 <ul>
-<li class="chapter" data-level="7.5.1" data-path="simulation-1.html"><a href="simulation-1.html#analytic-solution"><i class="fa fa-check"></i><b>7.5.1</b> Analytic solution</a></li>
-<li class="chapter" data-level="7.5.2" data-path="simulation-1.html"><a href="simulation-1.html#solution-via-sampling"><i class="fa fa-check"></i><b>7.5.2</b> Solution via sampling</a></li>
+<li class="chapter" data-level="7.5.1" data-path="simulation-1.html"><a href="simulation-1.html#datacamp"><i class="fa fa-check"></i><b>7.5.1</b> Datacamp</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="simulation-1.html"><a href="simulation-1.html#additional-resources-5"><i class="fa fa-check"></i><b>7.6</b> Additional resources</a>
-<ul>
-<li class="chapter" data-level="7.6.1" data-path="simulation-1.html"><a href="simulation-1.html#datacamp"><i class="fa fa-check"></i><b>7.6.1</b> Datacamp</a></li>
-</ul></li>
-<li class="chapter" data-level="7.7" data-path="simulation-1.html"><a href="simulation-1.html#session-info-6"><i class="fa fa-check"></i><b>7.7</b> Session info</a></li>
+<li class="chapter" data-level="7.6" data-path="simulation-1.html"><a href="simulation-1.html#session-info-6"><i class="fa fa-check"></i><b>7.6</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a>
 <ul>
@@ -621,19 +656,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="19.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-packages-and-set-plotting-theme-12"><i class="fa fa-check"></i><b>19.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-sets-4"><i class="fa fa-check"></i><b>19.3</b> Load data sets</a>
 <ul>
-<li class="chapter" data-level="19.3.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#sleep-data"><i class="fa fa-check"></i><b>19.3.1</b> Sleep data</a></li>
-<li class="chapter" data-level="19.3.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#reasoning-data"><i class="fa fa-check"></i><b>19.3.2</b> Reasoning data</a></li>
-<li class="chapter" data-level="19.3.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#weight-loss-data"><i class="fa fa-check"></i><b>19.3.3</b> Weight loss data</a></li>
-<li class="chapter" data-level="19.3.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#politness-data"><i class="fa fa-check"></i><b>19.3.4</b> Politness data</a></li>
+<li class="chapter" data-level="19.3.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#reasoning-data"><i class="fa fa-check"></i><b>19.3.1</b> Reasoning data</a></li>
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#understanding-the-lmer-syntax"><i class="fa fa-check"></i><b>19.4</b> Understanding the lmer() syntax</a></li>
-<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#anova-vs.-lmer"><i class="fa fa-check"></i><b>19.5</b> ANOVA vs. Lmer</a>
+<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#anova-vs.-lmer"><i class="fa fa-check"></i><b>19.5</b> ANOVA vs. lmer</a>
 <ul>
 <li class="chapter" data-level="19.5.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#between-subjects-anova"><i class="fa fa-check"></i><b>19.5.1</b> Between subjects ANOVA</a></li>
 <li class="chapter" data-level="19.5.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#repeated-measures-anova"><i class="fa fa-check"></i><b>19.5.2</b> Repeated-measures ANOVA</a></li>
 <li class="chapter" data-level="19.5.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixed-anova"><i class="fa fa-check"></i><b>19.5.3</b> Mixed ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-18"><i class="fa fa-check"></i><b>19.6</b> Session info</a></li>
+<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#additional-resources-17"><i class="fa fa-check"></i><b>19.6</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="19.6.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#readings-2"><i class="fa fa-check"></i><b>19.6.1</b> Readings</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-18"><i class="fa fa-check"></i><b>19.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html"><i class="fa fa-check"></i><b>20</b> Linear mixed effects models 4</a>
 <ul>
@@ -641,10 +677,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#load-packages-and-set-plotting-theme-13"><i class="fa fa-check"></i><b>20.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="20.3" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#load-data-sets-5"><i class="fa fa-check"></i><b>20.3</b> Load data sets</a>
 <ul>
-<li class="chapter" data-level="20.3.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#sleep-data-1"><i class="fa fa-check"></i><b>20.3.1</b> Sleep data</a></li>
+<li class="chapter" data-level="20.3.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#sleep-data"><i class="fa fa-check"></i><b>20.3.1</b> Sleep data</a></li>
 <li class="chapter" data-level="20.3.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#reasoning-data-1"><i class="fa fa-check"></i><b>20.3.2</b> Reasoning data</a></li>
-<li class="chapter" data-level="20.3.3" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#weight-loss-data-1"><i class="fa fa-check"></i><b>20.3.3</b> Weight loss data</a></li>
-<li class="chapter" data-level="20.3.4" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#politness-data-1"><i class="fa fa-check"></i><b>20.3.4</b> Politness data</a></li>
+<li class="chapter" data-level="20.3.3" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#weight-loss-data"><i class="fa fa-check"></i><b>20.3.3</b> Weight loss data</a></li>
+<li class="chapter" data-level="20.3.4" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#politness-data"><i class="fa fa-check"></i><b>20.3.4</b> Politness data</a></li>
 </ul></li>
 <li class="chapter" data-level="20.4" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#follow-up-tests-with-emmeans"><i class="fa fa-check"></i><b>20.4</b> Follow-up tests with emmeans</a>
 <ul>
@@ -653,11 +689,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="20.4.3" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#politeness-study"><i class="fa fa-check"></i><b>20.4.3</b> Politeness study</a></li>
 </ul></li>
 <li class="chapter" data-level="20.5" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#mixtures-of-participants"><i class="fa fa-check"></i><b>20.5</b> Mixtures of participants</a></li>
-<li class="chapter" data-level="20.6" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#bootstrapping"><i class="fa fa-check"></i><b>20.6</b> Bootstrapping</a>
+<li class="chapter" data-level="20.6" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#simulating-different-random-effects-structures"><i class="fa fa-check"></i><b>20.6</b> Simulating different random effects structures</a>
 <ul>
-<li class="chapter" data-level="20.6.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#linear-model"><i class="fa fa-check"></i><b>20.6.1</b> Linear model</a></li>
+<li class="chapter" data-level="20.6.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#two-level-model"><i class="fa fa-check"></i><b>20.6.1</b> Two-level model</a></li>
+<li class="chapter" data-level="20.6.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#three-level-model"><i class="fa fa-check"></i><b>20.6.2</b> Three-level model</a></li>
 </ul></li>
-<li class="chapter" data-level="20.7" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#session-info-19"><i class="fa fa-check"></i><b>20.7</b> Session info</a></li>
+<li class="chapter" data-level="20.7" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#bootstrapping"><i class="fa fa-check"></i><b>20.7</b> Bootstrapping</a>
+<ul>
+<li class="chapter" data-level="20.7.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#linear-model"><i class="fa fa-check"></i><b>20.7.1</b> Linear model</a></li>
+<li class="chapter" data-level="20.7.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#linear-mixed-effects-model"><i class="fa fa-check"></i><b>20.7.2</b> Linear mixed effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="20.8" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#session-info-19"><i class="fa fa-check"></i><b>20.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>21</b> Generalized linear model</a>
 <ul>
@@ -701,7 +743,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="22.4.2" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.4.2</b> Frequentist analysis</a></li>
 <li class="chapter" data-level="22.4.3" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#bayesian-regression"><i class="fa fa-check"></i><b>22.4.3</b> Bayesian regression</a></li>
 </ul></li>
-<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#additional-resources-17"><i class="fa fa-check"></i><b>22.5</b> Additional resources</a>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#additional-resources-18"><i class="fa fa-check"></i><b>22.5</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#books-and-chapters-5"><i class="fa fa-check"></i><b>22.5.1</b> Books and chapters</a></li>
 </ul></li>
@@ -744,7 +786,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="23.7.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model-3"><i class="fa fa-check"></i><b>23.7.2</b> 2. Specify and fit the model</a></li>
 <li class="chapter" data-level="23.7.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#test-specific-hypotheses-3"><i class="fa fa-check"></i><b>23.7.3</b> 5. Test specific hypotheses</a></li>
 </ul></li>
-<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-18"><i class="fa fa-check"></i><b>23.8</b> Additional resources</a></li>
+<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-19"><i class="fa fa-check"></i><b>23.8</b> Additional resources</a></li>
 <li class="chapter" data-level="23.9" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-22"><i class="fa fa-check"></i><b>23.9</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>24</b> Bayesian data analysis 3</a>
@@ -771,7 +813,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.6.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#gaussian-regression-unequal-variance"><i class="fa fa-check"></i><b>24.6.4</b> Gaussian regression (unequal variance)</a></li>
 <li class="chapter" data-level="24.6.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#model-comparison-2"><i class="fa fa-check"></i><b>24.6.5</b> Model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-19"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
+<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-20"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
 <li class="chapter" data-level="24.8" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-23"><i class="fa fa-check"></i><b>24.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>25</b> Model assumptions</a>
@@ -786,7 +828,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="25.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#non-parametric-tests"><i class="fa fa-check"></i><b>25.3.4</b> Non-parametric tests</a></li>
 <li class="chapter" data-level="25.3.5" data-path="model-assumptions.html"><a href="model-assumptions.html#bootstrapping-regressions"><i class="fa fa-check"></i><b>25.3.5</b> Bootstrapping regressions</a></li>
 </ul></li>
-<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-20"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
+<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-21"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
 <li class="chapter" data-level="25.5" data-path="model-assumptions.html"><a href="model-assumptions.html#session-info-24"><i class="fa fa-check"></i><b>25.5</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="26" data-path="reporting-statistics.html"><a href="reporting-statistics.html"><i class="fa fa-check"></i><b>26</b> Reporting statistics</a>
@@ -803,7 +845,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="26.2.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#frequentist-statistics"><i class="fa fa-check"></i><b>26.2.1</b> Frequentist statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="26.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#additional-resources-21"><i class="fa fa-check"></i><b>26.3</b> Additional resources</a>
+<li class="chapter" data-level="26.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#additional-resources-22"><i class="fa fa-check"></i><b>26.3</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="26.3.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#misc-12"><i class="fa fa-check"></i><b>26.3.1</b> Misc</a></li>
 </ul></li>
@@ -851,37 +893,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="load-packages-2" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Load packages<a href="data-wrangling-2.html#load-packages-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s first load the packages that we need for this chapter.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data-wrangling-2.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>) <span class="co"># for rendering the RMarkdown file</span></span>
-<span id="cb1-2"><a href="data-wrangling-2.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># for data wrangling </span></span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-wrangling-2.html#cb266-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>) <span class="co"># for rendering the RMarkdown file</span></span>
+<span id="cb266-2"><a href="data-wrangling-2.html#cb266-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># for data wrangling </span></span></code></pre></div>
 </div>
 <div id="settings" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Settings<a href="data-wrangling-2.html#settings" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data-wrangling-2.html#cb2-1" tabindex="-1"></a><span class="co"># sets how code looks in knitted document</span></span>
-<span id="cb2-2"><a href="data-wrangling-2.html#cb2-2" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>)</span>
-<span id="cb2-3"><a href="data-wrangling-2.html#cb2-3" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="data-wrangling-2.html#cb2-4" tabindex="-1"></a><span class="co"># suppresses warning about grouping </span></span>
-<span id="cb2-5"><a href="data-wrangling-2.html#cb2-5" tabindex="-1"></a><span class="fu">options</span>(<span class="at">dplyr.summarise.inform =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="data-wrangling-2.html#cb267-1" tabindex="-1"></a><span class="co"># sets how code looks in knitted document</span></span>
+<span id="cb267-2"><a href="data-wrangling-2.html#cb267-2" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb267-3"><a href="data-wrangling-2.html#cb267-3" tabindex="-1"></a></span>
+<span id="cb267-4"><a href="data-wrangling-2.html#cb267-4" tabindex="-1"></a><span class="co"># suppresses warning about grouping </span></span>
+<span id="cb267-5"><a href="data-wrangling-2.html#cb267-5" tabindex="-1"></a><span class="fu">options</span>(<span class="at">dplyr.summarise.inform =</span> F)</span></code></pre></div>
 </div>
 <div id="wrangling-data-continued" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> Wrangling data (continued)<a href="data-wrangling-2.html#wrangling-data-continued" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="summarizing-data" class="section level3 hasAnchor" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> Summarizing data<a href="data-wrangling-2.html#summarizing-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s first load the <code>starwars</code> data set again:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="data-wrangling-2.html#cb3-1" tabindex="-1"></a>df.starwars <span class="ot">=</span> starwars</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-wrangling-2.html#cb268-1" tabindex="-1"></a>df.starwars <span class="ot">=</span> starwars</span></code></pre></div>
 <p>A particularly powerful way of interacting with data is by grouping and summarizing it. <code>summarize()</code> returns a single value for each summary that we ask for:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="data-wrangling-2.html#cb4-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="data-wrangling-2.html#cb4-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">height_mean =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> T),</span>
-<span id="cb4-3"><a href="data-wrangling-2.html#cb4-3" tabindex="-1"></a>            <span class="at">height_max =</span> <span class="fu">max</span>(height, <span class="at">na.rm =</span> T),</span>
-<span id="cb4-4"><a href="data-wrangling-2.html#cb4-4" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="data-wrangling-2.html#cb269-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb269-2"><a href="data-wrangling-2.html#cb269-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">height_mean =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> T),</span>
+<span id="cb269-3"><a href="data-wrangling-2.html#cb269-3" tabindex="-1"></a>            <span class="at">height_max =</span> <span class="fu">max</span>(height, <span class="at">na.rm =</span> T),</span>
+<span id="cb269-4"><a href="data-wrangling-2.html#cb269-4" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div>
 <pre><code># A tibble: 1 × 3
   height_mean height_max     n
         &lt;dbl&gt;      &lt;int&gt; &lt;int&gt;
 1        175.        264    87</code></pre>
 <p>Here, I computed the mean height, the maximum height, and the total number of observations (using the function <code>n()</code>).
 Let’s say we wanted to get a quick sense for how tall starwars characters from different species are. To do that, we combine grouping with summarizing:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-wrangling-2.html#cb6-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="data-wrangling-2.html#cb6-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="data-wrangling-2.html#cb6-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">height_mean =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> T))</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="data-wrangling-2.html#cb271-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb271-2"><a href="data-wrangling-2.html#cb271-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb271-3"><a href="data-wrangling-2.html#cb271-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">height_mean =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> T))</span></code></pre></div>
 <pre><code># A tibble: 38 × 2
    species   height_mean
    &lt;chr&gt;           &lt;dbl&gt;
@@ -898,11 +940,11 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 # ℹ 28 more rows</code></pre>
 <p>I’ve first used <code>group_by()</code> to group our data frame by the different species, and then used <code>summarize()</code> to calculate the mean height of each species.</p>
 <p>It would also be useful to know how many observations there are in each group.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-wrangling-2.html#cb8-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="data-wrangling-2.html#cb8-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="data-wrangling-2.html#cb8-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">height_mean =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> T), </span>
-<span id="cb8-4"><a href="data-wrangling-2.html#cb8-4" tabindex="-1"></a>            <span class="at">group_size =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-5"><a href="data-wrangling-2.html#cb8-5" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(group_size)) </span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="data-wrangling-2.html#cb273-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb273-2"><a href="data-wrangling-2.html#cb273-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb273-3"><a href="data-wrangling-2.html#cb273-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">height_mean =</span> <span class="fu">mean</span>(height, <span class="at">na.rm =</span> T), </span>
+<span id="cb273-4"><a href="data-wrangling-2.html#cb273-4" tabindex="-1"></a>            <span class="at">group_size =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb273-5"><a href="data-wrangling-2.html#cb273-5" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(group_size)) </span></code></pre></div>
 <pre><code># A tibble: 38 × 3
    species  height_mean group_size
    &lt;chr&gt;          &lt;dbl&gt;      &lt;int&gt;
@@ -921,14 +963,14 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <p>Note that <code>n()</code> always yields the number of observations in each group. If we don’t group the data, then we get the overall number of observations in our data frame (i.e. the number of rows).</p>
 <p>So, Humans are the largest group in our data frame, followed by Droids (who are considerably smaller) and Gungans (who would make for good Basketball players).</p>
 <p>Sometimes <code>group_by()</code> is also useful without summarizing the data. For example, we often want to z-score (i.e. normalize) data on the level of individual participants. To do so, we first group the data on the level of participants, and then use <code>mutate()</code> to scale the data. Here is an example:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-wrangling-2.html#cb10-1" tabindex="-1"></a><span class="co"># first let&#39;s generate some random data </span></span>
-<span id="cb10-2"><a href="data-wrangling-2.html#cb10-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>) <span class="co"># to make this reproducible </span></span>
-<span id="cb10-3"><a href="data-wrangling-2.html#cb10-3" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="data-wrangling-2.html#cb10-4" tabindex="-1"></a>df.summarize <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">5</span>),</span>
-<span id="cb10-5"><a href="data-wrangling-2.html#cb10-5" tabindex="-1"></a>                      <span class="at">judgment =</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
-<span id="cb10-6"><a href="data-wrangling-2.html#cb10-6" tabindex="-1"></a>                                        <span class="at">size =</span> <span class="dv">15</span>,</span>
-<span id="cb10-7"><a href="data-wrangling-2.html#cb10-7" tabindex="-1"></a>                                        <span class="at">replace =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-8"><a href="data-wrangling-2.html#cb10-8" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="data-wrangling-2.html#cb275-1" tabindex="-1"></a><span class="co"># first let&#39;s generate some random data </span></span>
+<span id="cb275-2"><a href="data-wrangling-2.html#cb275-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>) <span class="co"># to make this reproducible </span></span>
+<span id="cb275-3"><a href="data-wrangling-2.html#cb275-3" tabindex="-1"></a></span>
+<span id="cb275-4"><a href="data-wrangling-2.html#cb275-4" tabindex="-1"></a>df.summarize <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">5</span>),</span>
+<span id="cb275-5"><a href="data-wrangling-2.html#cb275-5" tabindex="-1"></a>                      <span class="at">judgment =</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb275-6"><a href="data-wrangling-2.html#cb275-6" tabindex="-1"></a>                                        <span class="at">size =</span> <span class="dv">15</span>,</span>
+<span id="cb275-7"><a href="data-wrangling-2.html#cb275-7" tabindex="-1"></a>                                        <span class="at">replace =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb275-8"><a href="data-wrangling-2.html#cb275-8" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code># A tibble: 15 × 2
    participant judgment
          &lt;int&gt;    &lt;int&gt;
@@ -947,11 +989,11 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 13           3       20
 14           3       53
 15           3       73</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-wrangling-2.html#cb12-1" tabindex="-1"></a>df.summarize <span class="sc">%&gt;%</span>   </span>
-<span id="cb12-2"><a href="data-wrangling-2.html#cb12-2" tabindex="-1"></a>  <span class="fu">group_by</span>(participant) <span class="sc">%&gt;%</span> <span class="co"># group by participants</span></span>
-<span id="cb12-3"><a href="data-wrangling-2.html#cb12-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">judgment_zscored =</span> <span class="fu">scale</span>(judgment)) <span class="sc">%&gt;%</span> <span class="co"># z-score data of individual participants</span></span>
-<span id="cb12-4"><a href="data-wrangling-2.html#cb12-4" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="co"># ungroup the data frame</span></span>
-<span id="cb12-5"><a href="data-wrangling-2.html#cb12-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="co"># print the top 10 rows </span></span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="data-wrangling-2.html#cb277-1" tabindex="-1"></a>df.summarize <span class="sc">%&gt;%</span>   </span>
+<span id="cb277-2"><a href="data-wrangling-2.html#cb277-2" tabindex="-1"></a>  <span class="fu">group_by</span>(participant) <span class="sc">%&gt;%</span> <span class="co"># group by participants</span></span>
+<span id="cb277-3"><a href="data-wrangling-2.html#cb277-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">judgment_zscored =</span> <span class="fu">scale</span>(judgment)) <span class="sc">%&gt;%</span> <span class="co"># z-score data of individual participants</span></span>
+<span id="cb277-4"><a href="data-wrangling-2.html#cb277-4" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="co"># ungroup the data frame</span></span>
+<span id="cb277-5"><a href="data-wrangling-2.html#cb277-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="co"># print the top 10 rows </span></span></code></pre></div>
 <pre><code># A tibble: 10 × 3
    participant judgment judgment_zscored[,1]
          &lt;int&gt;    &lt;int&gt;                &lt;dbl&gt;
@@ -971,9 +1013,9 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 </blockquote>
 <p>Sometimes, I want to run operations on each row, rather than per column. For example, let’s say that I wanted each character’s average combined height and mass.</p>
 <p>Let’s see first what doesn’t work:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="data-wrangling-2.html#cb14-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="data-wrangling-2.html#cb14-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_height_mass =</span> <span class="fu">mean</span>(<span class="fu">c</span>(height, mass), <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-3"><a href="data-wrangling-2.html#cb14-3" tabindex="-1"></a>  <span class="fu">select</span>(name, height, mass, mean_height_mass)</span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="data-wrangling-2.html#cb279-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb279-2"><a href="data-wrangling-2.html#cb279-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_height_mass =</span> <span class="fu">mean</span>(<span class="fu">c</span>(height, mass), <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span> </span>
+<span id="cb279-3"><a href="data-wrangling-2.html#cb279-3" tabindex="-1"></a>  <span class="fu">select</span>(name, height, mass, mean_height_mass)</span></code></pre></div>
 <pre><code># A tibble: 87 × 4
    name               height  mass mean_height_mass
    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
@@ -989,15 +1031,15 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 10 Obi-Wan Kenobi        182    77             142.
 # ℹ 77 more rows</code></pre>
 <p>Note that all the values are the same. The value shown here is just the mean of all the values in <code>height</code> and <code>mass</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="data-wrangling-2.html#cb16-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="data-wrangling-2.html#cb16-2" tabindex="-1"></a>  <span class="fu">select</span>(height, mass) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-3"><a href="data-wrangling-2.html#cb16-3" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> <span class="co"># turns the data frame into a vector</span></span>
-<span id="cb16-4"><a href="data-wrangling-2.html#cb16-4" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="at">na.rm =</span> T) </span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="data-wrangling-2.html#cb281-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb281-2"><a href="data-wrangling-2.html#cb281-2" tabindex="-1"></a>  <span class="fu">select</span>(height, mass) <span class="sc">%&gt;%</span> </span>
+<span id="cb281-3"><a href="data-wrangling-2.html#cb281-3" tabindex="-1"></a>  <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> <span class="co"># turns the data frame into a vector</span></span>
+<span id="cb281-4"><a href="data-wrangling-2.html#cb281-4" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="at">na.rm =</span> T) </span></code></pre></div>
 <pre><code>[1] 142.0314</code></pre>
 <p>To get the mean by row, we can either spell out the arithmetic</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="data-wrangling-2.html#cb18-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="data-wrangling-2.html#cb18-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_height_mass =</span> (height <span class="sc">+</span> mass) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> <span class="co"># here, I&#39;ve replaced the mean() function  </span></span>
-<span id="cb18-3"><a href="data-wrangling-2.html#cb18-3" tabindex="-1"></a>  <span class="fu">select</span>(name, height, mass, mean_height_mass)</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="data-wrangling-2.html#cb283-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb283-2"><a href="data-wrangling-2.html#cb283-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_height_mass =</span> (height <span class="sc">+</span> mass) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> <span class="co"># here, I&#39;ve replaced the mean() function  </span></span>
+<span id="cb283-3"><a href="data-wrangling-2.html#cb283-3" tabindex="-1"></a>  <span class="fu">select</span>(name, height, mass, mean_height_mass)</span></code></pre></div>
 <pre><code># A tibble: 87 × 4
    name               height  mass mean_height_mass
    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
@@ -1013,11 +1055,11 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 10 Obi-Wan Kenobi        182    77            130. 
 # ℹ 77 more rows</code></pre>
 <p>or use the <code>rowwise()</code> helper function which is like <code>group_by()</code> but treats each row like a group:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="data-wrangling-2.html#cb20-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="data-wrangling-2.html#cb20-2" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> <span class="co"># now, each row is treated like a separate group </span></span>
-<span id="cb20-3"><a href="data-wrangling-2.html#cb20-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_height_mass =</span> <span class="fu">mean</span>(<span class="fu">c</span>(height, mass), <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="data-wrangling-2.html#cb20-4" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb20-5"><a href="data-wrangling-2.html#cb20-5" tabindex="-1"></a>  <span class="fu">select</span>(name, height, mass, mean_height_mass)</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="data-wrangling-2.html#cb285-1" tabindex="-1"></a>df.starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb285-2"><a href="data-wrangling-2.html#cb285-2" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> <span class="co"># now, each row is treated like a separate group </span></span>
+<span id="cb285-3"><a href="data-wrangling-2.html#cb285-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_height_mass =</span> <span class="fu">mean</span>(<span class="fu">c</span>(height, mass), <span class="at">na.rm =</span> T)) <span class="sc">%&gt;%</span></span>
+<span id="cb285-4"><a href="data-wrangling-2.html#cb285-4" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb285-5"><a href="data-wrangling-2.html#cb285-5" tabindex="-1"></a>  <span class="fu">select</span>(name, height, mass, mean_height_mass)</span></code></pre></div>
 <pre><code># A tibble: 87 × 4
    name               height  mass mean_height_mass
    &lt;chr&gt;               &lt;int&gt; &lt;dbl&gt;            &lt;dbl&gt;
@@ -1035,9 +1077,9 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <div id="practice-1-1" class="section level4 hasAnchor" number="5.4.1.1">
 <h4><span class="header-section-number">5.4.1.1</span> Practice 1<a href="data-wrangling-2.html#practice-1-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Find out what the average <code>height</code> and <code>mass</code> (as well as the standard deviation) is from different <code>species</code> in different <code>homeworld</code>s. Why is the standard deviation <code>NA</code> for many groups?</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="data-wrangling-2.html#cb22-1" tabindex="-1"></a><span class="co"># write your code here </span></span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="data-wrangling-2.html#cb287-1" tabindex="-1"></a><span class="co"># write your code here </span></span></code></pre></div>
 <p>Who is the tallest member of each species? What eye color do they have? The <code>top_n()</code> function or the <code>row_number()</code> function (in combination with <code>filter()</code>) will be useful here.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-wrangling-2.html#cb23-1" tabindex="-1"></a><span class="co"># write your code here </span></span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="data-wrangling-2.html#cb288-1" tabindex="-1"></a><span class="co"># write your code here </span></span></code></pre></div>
 </div>
 </div>
 <div id="reshaping-data" class="section level3 hasAnchor" number="5.4.2">
@@ -1058,12 +1100,12 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <div id="pivot_longer-and-pivot_wider" class="section level4 hasAnchor" number="5.4.2.1">
 <h4><span class="header-section-number">5.4.2.1</span> <code>pivot_longer()</code> and <code>pivot_wider()</code><a href="data-wrangling-2.html#pivot_longer-and-pivot_wider" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Let’s first generate a data set that is <em>not</em> tidy.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="data-wrangling-2.html#cb24-1" tabindex="-1"></a><span class="co"># construct data frame </span></span>
-<span id="cb24-2"><a href="data-wrangling-2.html#cb24-2" tabindex="-1"></a>df.reshape <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb24-3"><a href="data-wrangling-2.html#cb24-3" tabindex="-1"></a>                    <span class="at">observation_1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),</span>
-<span id="cb24-4"><a href="data-wrangling-2.html#cb24-4" tabindex="-1"></a>                    <span class="at">observation_2 =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),</span>
-<span id="cb24-5"><a href="data-wrangling-2.html#cb24-5" tabindex="-1"></a>                    <span class="at">observation_3 =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-6"><a href="data-wrangling-2.html#cb24-6" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="data-wrangling-2.html#cb289-1" tabindex="-1"></a><span class="co"># construct data frame </span></span>
+<span id="cb289-2"><a href="data-wrangling-2.html#cb289-2" tabindex="-1"></a>df.reshape <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb289-3"><a href="data-wrangling-2.html#cb289-3" tabindex="-1"></a>                    <span class="at">observation_1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),</span>
+<span id="cb289-4"><a href="data-wrangling-2.html#cb289-4" tabindex="-1"></a>                    <span class="at">observation_2 =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),</span>
+<span id="cb289-5"><a href="data-wrangling-2.html#cb289-5" tabindex="-1"></a>                    <span class="at">observation_3 =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb289-6"><a href="data-wrangling-2.html#cb289-6" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code># A tibble: 2 × 4
   participant observation_1 observation_2 observation_3
         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
@@ -1071,12 +1113,12 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 2           2            25            63            45</code></pre>
 <p>Here, I’ve generated data from two participants with three observations. This data frame is not tidy since each row contains more than a single observation. Data frames that have one row per participant but many observations are called <em>wide</em> data frames.</p>
 <p>We can make it tidy using the <code>pivot_longer()</code> function.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="data-wrangling-2.html#cb26-1" tabindex="-1"></a>df.reshape.long <span class="ot">=</span> df.reshape <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="data-wrangling-2.html#cb26-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb26-3"><a href="data-wrangling-2.html#cb26-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb26-4"><a href="data-wrangling-2.html#cb26-4" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-5"><a href="data-wrangling-2.html#cb26-5" tabindex="-1"></a>  <span class="fu">arrange</span>(participant) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-6"><a href="data-wrangling-2.html#cb26-6" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="data-wrangling-2.html#cb291-1" tabindex="-1"></a>df.reshape.long <span class="ot">=</span> df.reshape <span class="sc">%&gt;%</span> </span>
+<span id="cb291-2"><a href="data-wrangling-2.html#cb291-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb291-3"><a href="data-wrangling-2.html#cb291-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb291-4"><a href="data-wrangling-2.html#cb291-4" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb291-5"><a href="data-wrangling-2.html#cb291-5" tabindex="-1"></a>  <span class="fu">arrange</span>(participant) <span class="sc">%&gt;%</span> </span>
+<span id="cb291-6"><a href="data-wrangling-2.html#cb291-6" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code># A tibble: 6 × 3
   participant index         rating
         &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;
@@ -1095,10 +1137,10 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <li>a <code>values_to</code> argument which specifies the name of the column which will contain the values that were spread across different columns in the original data frame</li>
 </ol>
 <p><code>pivot_wider()</code> is the counterpart of <code>pivot_longer()</code>. We can use it to go from a data frame that is in <em>long</em> format, to a data frame in <em>wide</em> format, like so:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="data-wrangling-2.html#cb28-1" tabindex="-1"></a>df.reshape.wide <span class="ot">=</span> df.reshape.long <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="data-wrangling-2.html#cb28-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> index,</span>
-<span id="cb28-3"><a href="data-wrangling-2.html#cb28-3" tabindex="-1"></a>              <span class="at">values_from =</span> rating) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-4"><a href="data-wrangling-2.html#cb28-4" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="data-wrangling-2.html#cb293-1" tabindex="-1"></a>df.reshape.wide <span class="ot">=</span> df.reshape.long <span class="sc">%&gt;%</span> </span>
+<span id="cb293-2"><a href="data-wrangling-2.html#cb293-2" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> index,</span>
+<span id="cb293-3"><a href="data-wrangling-2.html#cb293-3" tabindex="-1"></a>              <span class="at">values_from =</span> rating) <span class="sc">%&gt;%</span> </span>
+<span id="cb293-4"><a href="data-wrangling-2.html#cb293-4" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code># A tibble: 2 × 4
   participant observation_1 observation_2 observation_3
         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
@@ -1106,15 +1148,15 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 2           2            25            63            45</code></pre>
 <p>For my data, I often have a wide data frame that contains demographic information about participants, and a long data frame that contains participants’ responses in the experiment. In Section <a href="data-wrangling-2.html#joining-multiple-data-frames">5.4.3</a>, we will learn how to combine information from multiple data frames (with potentially different formats).</p>
 <p>Here is a more advanced example that involves reshaping a data frame. Let’s consider the following data frame to start with:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-wrangling-2.html#cb30-1" tabindex="-1"></a><span class="co"># construct data frame </span></span>
-<span id="cb30-2"><a href="data-wrangling-2.html#cb30-2" tabindex="-1"></a>df.reshape2 <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
-<span id="cb30-3"><a href="data-wrangling-2.html#cb30-3" tabindex="-1"></a>                     <span class="at">stimulus_1 =</span> <span class="fu">c</span>(<span class="st">&quot;flower&quot;</span>, <span class="st">&quot;car&quot;</span>),</span>
-<span id="cb30-4"><a href="data-wrangling-2.html#cb30-4" tabindex="-1"></a>                     <span class="at">observation_1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),</span>
-<span id="cb30-5"><a href="data-wrangling-2.html#cb30-5" tabindex="-1"></a>                     <span class="at">stimulus_2 =</span> <span class="fu">c</span>(<span class="st">&quot;house&quot;</span>, <span class="st">&quot;flower&quot;</span>),</span>
-<span id="cb30-6"><a href="data-wrangling-2.html#cb30-6" tabindex="-1"></a>                     <span class="at">observation_2 =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),</span>
-<span id="cb30-7"><a href="data-wrangling-2.html#cb30-7" tabindex="-1"></a>                     <span class="at">stimulus_3 =</span> <span class="fu">c</span>(<span class="st">&quot;car&quot;</span>, <span class="st">&quot;house&quot;</span>),</span>
-<span id="cb30-8"><a href="data-wrangling-2.html#cb30-8" tabindex="-1"></a>                     <span class="at">observation_3 =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-9"><a href="data-wrangling-2.html#cb30-9" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="data-wrangling-2.html#cb295-1" tabindex="-1"></a><span class="co"># construct data frame </span></span>
+<span id="cb295-2"><a href="data-wrangling-2.html#cb295-2" tabindex="-1"></a>df.reshape2 <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb295-3"><a href="data-wrangling-2.html#cb295-3" tabindex="-1"></a>                     <span class="at">stimulus_1 =</span> <span class="fu">c</span>(<span class="st">&quot;flower&quot;</span>, <span class="st">&quot;car&quot;</span>),</span>
+<span id="cb295-4"><a href="data-wrangling-2.html#cb295-4" tabindex="-1"></a>                     <span class="at">observation_1 =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>),</span>
+<span id="cb295-5"><a href="data-wrangling-2.html#cb295-5" tabindex="-1"></a>                     <span class="at">stimulus_2 =</span> <span class="fu">c</span>(<span class="st">&quot;house&quot;</span>, <span class="st">&quot;flower&quot;</span>),</span>
+<span id="cb295-6"><a href="data-wrangling-2.html#cb295-6" tabindex="-1"></a>                     <span class="at">observation_2 =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">63</span>),</span>
+<span id="cb295-7"><a href="data-wrangling-2.html#cb295-7" tabindex="-1"></a>                     <span class="at">stimulus_3 =</span> <span class="fu">c</span>(<span class="st">&quot;car&quot;</span>, <span class="st">&quot;house&quot;</span>),</span>
+<span id="cb295-8"><a href="data-wrangling-2.html#cb295-8" tabindex="-1"></a>                     <span class="at">observation_3 =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">45</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb295-9"><a href="data-wrangling-2.html#cb295-9" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code># A tibble: 2 × 7
   participant stimulus_1 observation_1 stimulus_2 observation_2 stimulus_3
         &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;     
@@ -1122,17 +1164,17 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 2           2 car                   25 flower                63 house     
 # ℹ 1 more variable: observation_3 &lt;dbl&gt;</code></pre>
 <p>The data frame contains in each row: which stimuli a participant saw, and what rating she gave. The participants saw a picture of a flower, car, and house, and rated how much they liked the picture on a scale from 0 to 100. The order at which the pictures were presented was randomized between participants. I will use a combination of <code>pivot_longer()</code>, and <code>pivot_wider()</code> to turn this into a data frame in long format.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-wrangling-2.html#cb32-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="data-wrangling-2.html#cb32-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb32-3"><a href="data-wrangling-2.html#cb32-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
-<span id="cb32-4"><a href="data-wrangling-2.html#cb32-4" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb32-5"><a href="data-wrangling-2.html#cb32-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
-<span id="cb32-6"><a href="data-wrangling-2.html#cb32-6" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-7"><a href="data-wrangling-2.html#cb32-7" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb32-8"><a href="data-wrangling-2.html#cb32-8" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">&quot;rating&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-9"><a href="data-wrangling-2.html#cb32-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(order, observation),</span>
-<span id="cb32-10"><a href="data-wrangling-2.html#cb32-10" tabindex="-1"></a>                <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">as.numeric</span>(.))) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-11"><a href="data-wrangling-2.html#cb32-11" tabindex="-1"></a>  <span class="fu">select</span>(participant, order, stimulus, <span class="at">rating =</span> observation)</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="data-wrangling-2.html#cb297-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
+<span id="cb297-2"><a href="data-wrangling-2.html#cb297-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb297-3"><a href="data-wrangling-2.html#cb297-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
+<span id="cb297-4"><a href="data-wrangling-2.html#cb297-4" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb297-5"><a href="data-wrangling-2.html#cb297-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
+<span id="cb297-6"><a href="data-wrangling-2.html#cb297-6" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb297-7"><a href="data-wrangling-2.html#cb297-7" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb297-8"><a href="data-wrangling-2.html#cb297-8" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">&quot;rating&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb297-9"><a href="data-wrangling-2.html#cb297-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(order, observation),</span>
+<span id="cb297-10"><a href="data-wrangling-2.html#cb297-10" tabindex="-1"></a>                <span class="at">.fns =</span> <span class="sc">~</span> <span class="fu">as.numeric</span>(.))) <span class="sc">%&gt;%</span> </span>
+<span id="cb297-11"><a href="data-wrangling-2.html#cb297-11" tabindex="-1"></a>  <span class="fu">select</span>(participant, order, stimulus, <span class="at">rating =</span> observation)</span></code></pre></div>
 <pre><code># A tibble: 6 × 4
   participant order stimulus rating
         &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
@@ -1144,12 +1186,12 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 6           2     3 house        45</code></pre>
 <p>Voilà! Getting the desired data frame involved a few new tricks. Let’s take it step by step.</p>
 <p>First, I use <code>pivot_longer()</code> to make a long table.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-wrangling-2.html#cb34-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
-<span id="cb34-2"><a href="data-wrangling-2.html#cb34-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb34-3"><a href="data-wrangling-2.html#cb34-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
-<span id="cb34-4"><a href="data-wrangling-2.html#cb34-4" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb34-5"><a href="data-wrangling-2.html#cb34-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
-<span id="cb34-6"><a href="data-wrangling-2.html#cb34-6" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character)</span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="data-wrangling-2.html#cb299-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
+<span id="cb299-2"><a href="data-wrangling-2.html#cb299-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb299-3"><a href="data-wrangling-2.html#cb299-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
+<span id="cb299-4"><a href="data-wrangling-2.html#cb299-4" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb299-5"><a href="data-wrangling-2.html#cb299-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
+<span id="cb299-6"><a href="data-wrangling-2.html#cb299-6" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character)</span></code></pre></div>
 <pre><code># A tibble: 12 × 4
    participant index       order rating
          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
@@ -1167,14 +1209,14 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 12           2 observation 3     45    </code></pre>
 <p>Notice how I’ve used a combination of the <code>names_to =</code> and <code>names_sep =</code> arguments to create two columns. Because I’m combining data of two different types (“character” and “numeric”), I needed to specify what I want the resulting data type to be via the <code>values_transform =</code> argument.</p>
 <p>I would like to have the information about the stimulus and the observation in the same row. That is, I want to see what rating a participant gave to the flower stimulus, for example. To get there, I can use the <code>pivot_wider()</code> function to make a separate column for each entry in <code>index</code> that contains the values in <code>rating</code>.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="data-wrangling-2.html#cb36-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
-<span id="cb36-2"><a href="data-wrangling-2.html#cb36-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb36-3"><a href="data-wrangling-2.html#cb36-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
-<span id="cb36-4"><a href="data-wrangling-2.html#cb36-4" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb36-5"><a href="data-wrangling-2.html#cb36-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
-<span id="cb36-6"><a href="data-wrangling-2.html#cb36-6" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character) <span class="sc">%&gt;%</span> </span>
-<span id="cb36-7"><a href="data-wrangling-2.html#cb36-7" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb36-8"><a href="data-wrangling-2.html#cb36-8" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">&quot;rating&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="data-wrangling-2.html#cb301-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
+<span id="cb301-2"><a href="data-wrangling-2.html#cb301-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb301-3"><a href="data-wrangling-2.html#cb301-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
+<span id="cb301-4"><a href="data-wrangling-2.html#cb301-4" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb301-5"><a href="data-wrangling-2.html#cb301-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
+<span id="cb301-6"><a href="data-wrangling-2.html#cb301-6" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb301-7"><a href="data-wrangling-2.html#cb301-7" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb301-8"><a href="data-wrangling-2.html#cb301-8" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">&quot;rating&quot;</span>)</span></code></pre></div>
 <pre><code># A tibble: 6 × 4
   participant order stimulus observation
         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;      
@@ -1185,17 +1227,17 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 5           2 2     flower   63         
 6           2 3     house    45         </code></pre>
 <p>That’s pretty much it. Now, each row contains information about the order in which a stimulus was presented, what the stimulus was, and the judgment that a participant made in this trial.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-wrangling-2.html#cb38-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
-<span id="cb38-2"><a href="data-wrangling-2.html#cb38-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb38-3"><a href="data-wrangling-2.html#cb38-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
-<span id="cb38-4"><a href="data-wrangling-2.html#cb38-4" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb38-5"><a href="data-wrangling-2.html#cb38-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
-<span id="cb38-6"><a href="data-wrangling-2.html#cb38-6" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-7"><a href="data-wrangling-2.html#cb38-7" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb38-8"><a href="data-wrangling-2.html#cb38-8" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">&quot;rating&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-9"><a href="data-wrangling-2.html#cb38-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(order, observation),</span>
-<span id="cb38-10"><a href="data-wrangling-2.html#cb38-10" tabindex="-1"></a>                <span class="at">.fns =</span> as.numeric)) <span class="sc">%&gt;%</span> </span>
-<span id="cb38-11"><a href="data-wrangling-2.html#cb38-11" tabindex="-1"></a>  <span class="fu">select</span>(participant, order, stimulus, <span class="at">rating =</span> observation)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="data-wrangling-2.html#cb303-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
+<span id="cb303-2"><a href="data-wrangling-2.html#cb303-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb303-3"><a href="data-wrangling-2.html#cb303-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
+<span id="cb303-4"><a href="data-wrangling-2.html#cb303-4" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb303-5"><a href="data-wrangling-2.html#cb303-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
+<span id="cb303-6"><a href="data-wrangling-2.html#cb303-6" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb303-7"><a href="data-wrangling-2.html#cb303-7" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb303-8"><a href="data-wrangling-2.html#cb303-8" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">&quot;rating&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb303-9"><a href="data-wrangling-2.html#cb303-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="at">.cols =</span> <span class="fu">c</span>(order, observation),</span>
+<span id="cb303-10"><a href="data-wrangling-2.html#cb303-10" tabindex="-1"></a>                <span class="at">.fns =</span> as.numeric)) <span class="sc">%&gt;%</span> </span>
+<span id="cb303-11"><a href="data-wrangling-2.html#cb303-11" tabindex="-1"></a>  <span class="fu">select</span>(participant, order, stimulus, <span class="at">rating =</span> observation)</span></code></pre></div>
 <pre><code># A tibble: 6 × 4
   participant order stimulus rating
         &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;
@@ -1213,14 +1255,14 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <div id="separate-and-unite" class="section level4 hasAnchor" number="5.4.2.2">
 <h4><span class="header-section-number">5.4.2.2</span> <code>separate()</code> and <code>unite()</code><a href="data-wrangling-2.html#separate-and-unite" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Sometimes, we want to separate one column into multiple columns. For example, we could have achieved the same result we did above slightly differently, like so:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-wrangling-2.html#cb40-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href="data-wrangling-2.html#cb40-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb40-3"><a href="data-wrangling-2.html#cb40-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
-<span id="cb40-4"><a href="data-wrangling-2.html#cb40-4" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
-<span id="cb40-5"><a href="data-wrangling-2.html#cb40-5" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-6"><a href="data-wrangling-2.html#cb40-6" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> index,</span>
-<span id="cb40-7"><a href="data-wrangling-2.html#cb40-7" tabindex="-1"></a>           <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
-<span id="cb40-8"><a href="data-wrangling-2.html#cb40-8" tabindex="-1"></a>           <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="data-wrangling-2.html#cb305-1" tabindex="-1"></a>df.reshape2 <span class="sc">%&gt;%</span> </span>
+<span id="cb305-2"><a href="data-wrangling-2.html#cb305-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb305-3"><a href="data-wrangling-2.html#cb305-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;index&quot;</span>,</span>
+<span id="cb305-4"><a href="data-wrangling-2.html#cb305-4" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;rating&quot;</span>,</span>
+<span id="cb305-5"><a href="data-wrangling-2.html#cb305-5" tabindex="-1"></a>               <span class="at">values_transform =</span> as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb305-6"><a href="data-wrangling-2.html#cb305-6" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> index,</span>
+<span id="cb305-7"><a href="data-wrangling-2.html#cb305-7" tabindex="-1"></a>           <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;index&quot;</span>, <span class="st">&quot;order&quot;</span>),</span>
+<span id="cb305-8"><a href="data-wrangling-2.html#cb305-8" tabindex="-1"></a>           <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
 <pre><code># A tibble: 12 × 4
    participant index       order rating
          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; 
@@ -1244,18 +1286,18 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <li>the separator <code>sep</code> that we want to use to split the columns.</li>
 </ol>
 <p>Note, like <code>pivot_longer()</code> and <code>pivot_wider()</code>, there is a partner for <code>separate()</code>, too. It’s called <code>unite()</code> and it allows you to combine several columns into one, like so:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="data-wrangling-2.html#cb42-1" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;flower&quot;</span>, <span class="st">&quot;observation&quot;</span>),</span>
-<span id="cb42-2"><a href="data-wrangling-2.html#cb42-2" tabindex="-1"></a>       <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href="data-wrangling-2.html#cb42-3" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">&quot;combined&quot;</span>, index, order)</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="data-wrangling-2.html#cb307-1" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">index =</span> <span class="fu">c</span>(<span class="st">&quot;flower&quot;</span>, <span class="st">&quot;observation&quot;</span>),</span>
+<span id="cb307-2"><a href="data-wrangling-2.html#cb307-2" tabindex="-1"></a>       <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb307-3"><a href="data-wrangling-2.html#cb307-3" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">&quot;combined&quot;</span>, index, order)</span></code></pre></div>
 <pre><code># A tibble: 2 × 1
   combined     
   &lt;chr&gt;        
 1 flower_1     
 2 observation_2</code></pre>
 <p>Sometimes, we may have a data frame where data is recorded in a long string.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-wrangling-2.html#cb44-1" tabindex="-1"></a>df.reshape3 <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb44-2"><a href="data-wrangling-2.html#cb44-2" tabindex="-1"></a>                     <span class="at">judgments =</span> <span class="fu">c</span>(<span class="st">&quot;10, 4, 12, 15&quot;</span>, <span class="st">&quot;3, 4&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-3"><a href="data-wrangling-2.html#cb44-3" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="data-wrangling-2.html#cb309-1" tabindex="-1"></a>df.reshape3 <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb309-2"><a href="data-wrangling-2.html#cb309-2" tabindex="-1"></a>                     <span class="at">judgments =</span> <span class="fu">c</span>(<span class="st">&quot;10, 4, 12, 15&quot;</span>, <span class="st">&quot;3, 4&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb309-3"><a href="data-wrangling-2.html#cb309-3" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code># A tibble: 2 × 2
   participant judgments    
         &lt;int&gt; &lt;chr&gt;        
@@ -1263,8 +1305,8 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 2           2 3, 4         </code></pre>
 <p>Here, I’ve created a data frame with data from two participants. For whatever reason, we have four judgments from participant 1 and only two judgments from participant 2 (data is often messy in real life, too!).</p>
 <p>We can use the <code>separate_rows()</code> function to turn this into a tidy data frame in long format.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="data-wrangling-2.html#cb46-1" tabindex="-1"></a>df.reshape3 <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a href="data-wrangling-2.html#cb46-2" tabindex="-1"></a>  <span class="fu">separate_rows</span>(judgments)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="data-wrangling-2.html#cb311-1" tabindex="-1"></a>df.reshape3 <span class="sc">%&gt;%</span> </span>
+<span id="cb311-2"><a href="data-wrangling-2.html#cb311-2" tabindex="-1"></a>  <span class="fu">separate_rows</span>(judgments)</span></code></pre></div>
 <pre><code># A tibble: 6 × 2
   participant judgments
         &lt;int&gt; &lt;chr&gt;    
@@ -1278,33 +1320,33 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <div id="practice-2-1" class="section level4 hasAnchor" number="5.4.2.3">
 <h4><span class="header-section-number">5.4.2.3</span> Practice 2<a href="data-wrangling-2.html#practice-2-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Load this data frame first.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="data-wrangling-2.html#cb48-1" tabindex="-1"></a>df.practice2 <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
-<span id="cb48-2"><a href="data-wrangling-2.html#cb48-2" tabindex="-1"></a>                      <span class="at">initial =</span> <span class="fu">c</span>(<span class="st">&quot;AR&quot;</span>, <span class="st">&quot;FA&quot;</span>, <span class="st">&quot;IR&quot;</span>, <span class="st">&quot;NC&quot;</span>, <span class="st">&quot;ER&quot;</span>, <span class="st">&quot;PI&quot;</span>, <span class="st">&quot;DH&quot;</span>, <span class="st">&quot;CN&quot;</span>, <span class="st">&quot;WT&quot;</span>, <span class="st">&quot;JD&quot;</span>), </span>
-<span id="cb48-3"><a href="data-wrangling-2.html#cb48-3" tabindex="-1"></a>                      <span class="at">judgment_1 =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">1</span>, <span class="dv">14</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">41</span>, <span class="dv">100</span>, <span class="dv">33</span>),</span>
-<span id="cb48-4"><a href="data-wrangling-2.html#cb48-4" tabindex="-1"></a>                      <span class="at">judgment_2 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">89</span>, <span class="dv">94</span>, <span class="dv">27</span>, <span class="dv">29</span>, <span class="dv">19</span>, <span class="dv">57</span>, <span class="dv">74</span>),</span>
-<span id="cb48-5"><a href="data-wrangling-2.html#cb48-5" tabindex="-1"></a>                      <span class="at">judgment_3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">89</span>, <span class="dv">94</span>, <span class="dv">27</span>, <span class="dv">29</span>, <span class="dv">19</span>, <span class="dv">57</span>, <span class="dv">74</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="data-wrangling-2.html#cb313-1" tabindex="-1"></a>df.practice2 <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb313-2"><a href="data-wrangling-2.html#cb313-2" tabindex="-1"></a>                      <span class="at">initial =</span> <span class="fu">c</span>(<span class="st">&quot;AR&quot;</span>, <span class="st">&quot;FA&quot;</span>, <span class="st">&quot;IR&quot;</span>, <span class="st">&quot;NC&quot;</span>, <span class="st">&quot;ER&quot;</span>, <span class="st">&quot;PI&quot;</span>, <span class="st">&quot;DH&quot;</span>, <span class="st">&quot;CN&quot;</span>, <span class="st">&quot;WT&quot;</span>, <span class="st">&quot;JD&quot;</span>), </span>
+<span id="cb313-3"><a href="data-wrangling-2.html#cb313-3" tabindex="-1"></a>                      <span class="at">judgment_1 =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">1</span>, <span class="dv">14</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">41</span>, <span class="dv">100</span>, <span class="dv">33</span>),</span>
+<span id="cb313-4"><a href="data-wrangling-2.html#cb313-4" tabindex="-1"></a>                      <span class="at">judgment_2 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">89</span>, <span class="dv">94</span>, <span class="dv">27</span>, <span class="dv">29</span>, <span class="dv">19</span>, <span class="dv">57</span>, <span class="dv">74</span>),</span>
+<span id="cb313-5"><a href="data-wrangling-2.html#cb313-5" tabindex="-1"></a>                      <span class="at">judgment_3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">89</span>, <span class="dv">94</span>, <span class="dv">27</span>, <span class="dv">29</span>, <span class="dv">19</span>, <span class="dv">57</span>, <span class="dv">74</span>))</span></code></pre></div>
 <ul>
 <li>Make the <code>df.practice2</code> data frame tidy (by turning into a long format).</li>
 <li>Compute the z-score of each participants’ judgments (using the <code>scale()</code> function).</li>
 <li>Calculate the mean and standard deviation of each participants’ z-scored judgments.</li>
 <li>Notice anything interesting? Think about what <a href="https://www.statisticshowto.com/probability-and-statistics/z-score/">z-scoring</a> does …</li>
 </ul>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="data-wrangling-2.html#cb49-1" tabindex="-1"></a><span class="co"># write your code here </span></span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="data-wrangling-2.html#cb314-1" tabindex="-1"></a><span class="co"># write your code here </span></span></code></pre></div>
 </div>
 </div>
 <div id="joining-multiple-data-frames" class="section level3 hasAnchor" number="5.4.3">
 <h3><span class="header-section-number">5.4.3</span> Joining multiple data frames<a href="data-wrangling-2.html#joining-multiple-data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It’s nice to have all the information we need in a single, tidy data frame. We have learned above how to go from a single untidy data frame to a tidy one. However, often our situation to start off with is even worse. The information we need sits in several, messy data frames.</p>
 <p>For example, we may have one data frame <code>df.stimuli</code> with information about each stimulus, and then have another data frame with participants’ responses <code>df.responses</code> that only contains a stimulus index but no other infromation about the stimuli.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="data-wrangling-2.html#cb50-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>) <span class="co"># setting random seed to make this example reproducible</span></span>
-<span id="cb50-2"><a href="data-wrangling-2.html#cb50-2" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="data-wrangling-2.html#cb50-3" tabindex="-1"></a><span class="co"># data frame with stimulus information</span></span>
-<span id="cb50-4"><a href="data-wrangling-2.html#cb50-4" tabindex="-1"></a>df.stimuli <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">index =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
-<span id="cb50-5"><a href="data-wrangling-2.html#cb50-5" tabindex="-1"></a>  <span class="at">height =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
-<span id="cb50-6"><a href="data-wrangling-2.html#cb50-6" tabindex="-1"></a>  <span class="at">width =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
-<span id="cb50-7"><a href="data-wrangling-2.html#cb50-7" tabindex="-1"></a>  <span class="at">n_dots =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">7</span>),</span>
-<span id="cb50-8"><a href="data-wrangling-2.html#cb50-8" tabindex="-1"></a>  <span class="at">color =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb50-9"><a href="data-wrangling-2.html#cb50-9" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="data-wrangling-2.html#cb315-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>) <span class="co"># setting random seed to make this example reproducible</span></span>
+<span id="cb315-2"><a href="data-wrangling-2.html#cb315-2" tabindex="-1"></a></span>
+<span id="cb315-3"><a href="data-wrangling-2.html#cb315-3" tabindex="-1"></a><span class="co"># data frame with stimulus information</span></span>
+<span id="cb315-4"><a href="data-wrangling-2.html#cb315-4" tabindex="-1"></a>df.stimuli <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">index =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb315-5"><a href="data-wrangling-2.html#cb315-5" tabindex="-1"></a>  <span class="at">height =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb315-6"><a href="data-wrangling-2.html#cb315-6" tabindex="-1"></a>  <span class="at">width =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>),</span>
+<span id="cb315-7"><a href="data-wrangling-2.html#cb315-7" tabindex="-1"></a>  <span class="at">n_dots =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">7</span>),</span>
+<span id="cb315-8"><a href="data-wrangling-2.html#cb315-8" tabindex="-1"></a>  <span class="at">color =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;black&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb315-9"><a href="data-wrangling-2.html#cb315-9" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code># A tibble: 5 × 5
   index height width n_dots color
   &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
@@ -1313,11 +1355,11 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 3     3      1     2      5 white
 4     4      4     3     13 red  
 5     5      5     1      7 black</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="data-wrangling-2.html#cb52-1" tabindex="-1"></a><span class="co"># data frame with participants&#39; responses </span></span>
-<span id="cb52-2"><a href="data-wrangling-2.html#cb52-2" tabindex="-1"></a>df.responses <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">5</span>),</span>
-<span id="cb52-3"><a href="data-wrangling-2.html#cb52-3" tabindex="-1"></a>  <span class="at">index =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">3</span>), </span>
-<span id="cb52-4"><a href="data-wrangling-2.html#cb52-4" tabindex="-1"></a>  <span class="at">response =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="co"># randomly sample 15 values from 0 to 100</span></span>
-<span id="cb52-5"><a href="data-wrangling-2.html#cb52-5" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="data-wrangling-2.html#cb317-1" tabindex="-1"></a><span class="co"># data frame with participants&#39; responses </span></span>
+<span id="cb317-2"><a href="data-wrangling-2.html#cb317-2" tabindex="-1"></a>df.responses <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">5</span>),</span>
+<span id="cb317-3"><a href="data-wrangling-2.html#cb317-3" tabindex="-1"></a>  <span class="at">index =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="dv">3</span>), </span>
+<span id="cb317-4"><a href="data-wrangling-2.html#cb317-4" tabindex="-1"></a>  <span class="at">response =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="co"># randomly sample 15 values from 0 to 100</span></span>
+<span id="cb317-5"><a href="data-wrangling-2.html#cb317-5" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code># A tibble: 15 × 3
    participant index response
          &lt;int&gt; &lt;int&gt;    &lt;int&gt;
@@ -1338,12 +1380,12 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 15           3     5       73</code></pre>
 <p>The <code>df.stimuli</code> data frame contains an <code>index</code>, information about the <code>height</code>, and <code>width</code>, as well as the number of <code>dots</code>, and their <code>color</code>. Let’s imagine that participants had to judge how much they liked each image from a scale of 0 (“not liking this dot pattern at all”) to 100 (“super thrilled about this dot pattern”).</p>
 <p>Let’s say that I now wanted to know what participants’ average response for the differently colored dot patterns are. Here is how I would do this:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="data-wrangling-2.html#cb54-1" tabindex="-1"></a>df.responses <span class="sc">%&gt;%</span> </span>
-<span id="cb54-2"><a href="data-wrangling-2.html#cb54-2" tabindex="-1"></a>  <span class="fu">left_join</span>(df.stimuli <span class="sc">%&gt;%</span></span>
-<span id="cb54-3"><a href="data-wrangling-2.html#cb54-3" tabindex="-1"></a>              <span class="fu">select</span>(index, color),</span>
-<span id="cb54-4"><a href="data-wrangling-2.html#cb54-4" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;index&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb54-5"><a href="data-wrangling-2.html#cb54-5" tabindex="-1"></a>  <span class="fu">group_by</span>(color) <span class="sc">%&gt;%</span> </span>
-<span id="cb54-6"><a href="data-wrangling-2.html#cb54-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">response_mean =</span> <span class="fu">mean</span>(response))</span></code></pre></div>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="data-wrangling-2.html#cb319-1" tabindex="-1"></a>df.responses <span class="sc">%&gt;%</span> </span>
+<span id="cb319-2"><a href="data-wrangling-2.html#cb319-2" tabindex="-1"></a>  <span class="fu">left_join</span>(df.stimuli <span class="sc">%&gt;%</span></span>
+<span id="cb319-3"><a href="data-wrangling-2.html#cb319-3" tabindex="-1"></a>              <span class="fu">select</span>(index, color),</span>
+<span id="cb319-4"><a href="data-wrangling-2.html#cb319-4" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;index&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb319-5"><a href="data-wrangling-2.html#cb319-5" tabindex="-1"></a>  <span class="fu">group_by</span>(color) <span class="sc">%&gt;%</span> </span>
+<span id="cb319-6"><a href="data-wrangling-2.html#cb319-6" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">response_mean =</span> <span class="fu">mean</span>(response))</span></code></pre></div>
 <pre><code># A tibble: 5 × 2
   color response_mean
   &lt;chr&gt;         &lt;dbl&gt;
@@ -1353,10 +1395,10 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 4 red            48  
 5 white          33.7</code></pre>
 <p>Let’s take it step by step. The key here is to add the information from the <code>df.stimuli</code> data frame to the <code>df.responses</code> data frame.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="data-wrangling-2.html#cb56-1" tabindex="-1"></a>df.responses <span class="sc">%&gt;%</span> </span>
-<span id="cb56-2"><a href="data-wrangling-2.html#cb56-2" tabindex="-1"></a>  <span class="fu">left_join</span>(df.stimuli <span class="sc">%&gt;%</span> </span>
-<span id="cb56-3"><a href="data-wrangling-2.html#cb56-3" tabindex="-1"></a>              <span class="fu">select</span>(index, color),</span>
-<span id="cb56-4"><a href="data-wrangling-2.html#cb56-4" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;index&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="data-wrangling-2.html#cb321-1" tabindex="-1"></a>df.responses <span class="sc">%&gt;%</span> </span>
+<span id="cb321-2"><a href="data-wrangling-2.html#cb321-2" tabindex="-1"></a>  <span class="fu">left_join</span>(df.stimuli <span class="sc">%&gt;%</span> </span>
+<span id="cb321-3"><a href="data-wrangling-2.html#cb321-3" tabindex="-1"></a>              <span class="fu">select</span>(index, color),</span>
+<span id="cb321-4"><a href="data-wrangling-2.html#cb321-4" tabindex="-1"></a>            <span class="at">by =</span> <span class="st">&quot;index&quot;</span>)</span></code></pre></div>
 <pre><code># A tibble: 15 × 4
    participant index response color
          &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
@@ -1378,11 +1420,11 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <p>I’ve joined the <code>df.stimuli</code> table in which I’ve only selected the <code>index</code> and <code>color</code> column, with the <code>df.responses</code> table, and specified the <code>index</code> column as the one by which the tables should be joined. This is the only column that both of the data frames have in common.</p>
 <p>To specify multiple columns by which we would like to join tables, we specify the <code>by</code> argument as follows: <code>by = c("one_column", "another_column")</code>.</p>
 <p>Sometimes, the tables I want to join don’t have any column names in common. In that case, we can tell the <code>left_join()</code> function which column pair(s) should be used for joining.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="data-wrangling-2.html#cb58-1" tabindex="-1"></a>df.responses <span class="sc">%&gt;%</span> </span>
-<span id="cb58-2"><a href="data-wrangling-2.html#cb58-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">stimuli =</span> index) <span class="sc">%&gt;%</span> <span class="co"># I&#39;ve renamed the index column to stimuli</span></span>
-<span id="cb58-3"><a href="data-wrangling-2.html#cb58-3" tabindex="-1"></a>  <span class="fu">left_join</span>(df.stimuli <span class="sc">%&gt;%</span> </span>
-<span id="cb58-4"><a href="data-wrangling-2.html#cb58-4" tabindex="-1"></a>              <span class="fu">select</span>(index, color),</span>
-<span id="cb58-5"><a href="data-wrangling-2.html#cb58-5" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;stimuli&quot;</span> <span class="ot">=</span> <span class="st">&quot;index&quot;</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="data-wrangling-2.html#cb323-1" tabindex="-1"></a>df.responses <span class="sc">%&gt;%</span> </span>
+<span id="cb323-2"><a href="data-wrangling-2.html#cb323-2" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">stimuli =</span> index) <span class="sc">%&gt;%</span> <span class="co"># I&#39;ve renamed the index column to stimuli</span></span>
+<span id="cb323-3"><a href="data-wrangling-2.html#cb323-3" tabindex="-1"></a>  <span class="fu">left_join</span>(df.stimuli <span class="sc">%&gt;%</span> </span>
+<span id="cb323-4"><a href="data-wrangling-2.html#cb323-4" tabindex="-1"></a>              <span class="fu">select</span>(index, color),</span>
+<span id="cb323-5"><a href="data-wrangling-2.html#cb323-5" tabindex="-1"></a>            <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;stimuli&quot;</span> <span class="ot">=</span> <span class="st">&quot;index&quot;</span>)) </span></code></pre></div>
 <pre><code># A tibble: 15 × 4
    participant stimuli response color
          &lt;int&gt;   &lt;int&gt;    &lt;int&gt; &lt;chr&gt;
@@ -1407,16 +1449,16 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <div id="practice-3-1" class="section level4 hasAnchor" number="5.4.3.1">
 <h4><span class="header-section-number">5.4.3.1</span> Practice 3<a href="data-wrangling-2.html#practice-3-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Load these three data frames first:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="data-wrangling-2.html#cb60-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb60-2"><a href="data-wrangling-2.html#cb60-2" tabindex="-1"></a></span>
-<span id="cb60-3"><a href="data-wrangling-2.html#cb60-3" tabindex="-1"></a>df.judgments <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">5</span>),</span>
-<span id="cb60-4"><a href="data-wrangling-2.html#cb60-4" tabindex="-1"></a>                      <span class="at">stimulus =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="dv">5</span>),</span>
-<span id="cb60-5"><a href="data-wrangling-2.html#cb60-5" tabindex="-1"></a>                      <span class="at">judgment =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">replace =</span> T))</span>
-<span id="cb60-6"><a href="data-wrangling-2.html#cb60-6" tabindex="-1"></a></span>
-<span id="cb60-7"><a href="data-wrangling-2.html#cb60-7" tabindex="-1"></a>df.information <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">number =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">length.out =</span> <span class="dv">5</span>),</span>
-<span id="cb60-8"><a href="data-wrangling-2.html#cb60-8" tabindex="-1"></a>                        <span class="at">color =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="data-wrangling-2.html#cb325-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb325-2"><a href="data-wrangling-2.html#cb325-2" tabindex="-1"></a></span>
+<span id="cb325-3"><a href="data-wrangling-2.html#cb325-3" tabindex="-1"></a>df.judgments <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">5</span>),</span>
+<span id="cb325-4"><a href="data-wrangling-2.html#cb325-4" tabindex="-1"></a>                      <span class="at">stimulus =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="dv">5</span>),</span>
+<span id="cb325-5"><a href="data-wrangling-2.html#cb325-5" tabindex="-1"></a>                      <span class="at">judgment =</span> <span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">size =</span> <span class="dv">15</span>, <span class="at">replace =</span> T))</span>
+<span id="cb325-6"><a href="data-wrangling-2.html#cb325-6" tabindex="-1"></a></span>
+<span id="cb325-7"><a href="data-wrangling-2.html#cb325-7" tabindex="-1"></a>df.information <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">number =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">length.out =</span> <span class="dv">5</span>),</span>
+<span id="cb325-8"><a href="data-wrangling-2.html#cb325-8" tabindex="-1"></a>                        <span class="at">color =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>))</span></code></pre></div>
 <p>Create a new data frame called <code>df.join</code> that combines the information from both <code>df.judgments</code> and <code>df.information</code>. Note that column with the colors is called <code>stimulus</code> in <code>df.judgments</code> and <code>color</code> in <code>df.information</code>. At the end, you want a data frame that contains the following columns: <code>participant</code>, <code>stimulus</code>, <code>number</code>, and <code>judgment</code>.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="data-wrangling-2.html#cb61-1" tabindex="-1"></a><span class="co"># write your code here</span></span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-wrangling-2.html#cb326-1" tabindex="-1"></a><span class="co"># write your code here</span></span></code></pre></div>
 </div>
 </div>
 <div id="dealing-with-missing-data" class="section level3 hasAnchor" number="5.4.4">
@@ -1427,14 +1469,14 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <li><strong>explicit</strong>: data is flagged with <code>NA</code></li>
 </ul>
 <p>We can check for explicit missing values using the <code>is.na()</code> function like so:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="data-wrangling-2.html#cb62-1" tabindex="-1"></a>tmp.na <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">3</span>)</span>
-<span id="cb62-2"><a href="data-wrangling-2.html#cb62-2" tabindex="-1"></a><span class="fu">is.na</span>(tmp.na)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="data-wrangling-2.html#cb327-1" tabindex="-1"></a>tmp.na <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>, <span class="dv">3</span>)</span>
+<span id="cb327-2"><a href="data-wrangling-2.html#cb327-2" tabindex="-1"></a><span class="fu">is.na</span>(tmp.na)</span></code></pre></div>
 <pre><code>[1] FALSE FALSE  TRUE FALSE</code></pre>
 <p>I’ve first created a vector <code>tmp.na</code> with a missing value at index 3. Calling the <code>is.na()</code> function on this vector yields a logical vector with <code>FALSE</code> for each value that is not missing, and <code>TRUE</code> for each missing value.</p>
 <p>Let’s say that we have a data frame with missing values and that we want to replace those missing values with something else. Let’s first create a data frame with missing values.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="data-wrangling-2.html#cb64-1" tabindex="-1"></a>df.missing <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>),</span>
-<span id="cb64-2"><a href="data-wrangling-2.html#cb64-2" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;b&quot;</span>))</span>
-<span id="cb64-3"><a href="data-wrangling-2.html#cb64-3" tabindex="-1"></a><span class="fu">print</span>(df.missing)</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="data-wrangling-2.html#cb329-1" tabindex="-1"></a>df.missing <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>),</span>
+<span id="cb329-2"><a href="data-wrangling-2.html#cb329-2" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="cn">NA</span>, <span class="st">&quot;b&quot;</span>))</span>
+<span id="cb329-3"><a href="data-wrangling-2.html#cb329-3" tabindex="-1"></a><span class="fu">print</span>(df.missing)</span></code></pre></div>
 <pre><code># A tibble: 3 × 2
       x y    
   &lt;dbl&gt; &lt;chr&gt;
@@ -1442,9 +1484,9 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 2     2 &lt;NA&gt; 
 3    NA b    </code></pre>
 <p>We can use the <code>replace_na()</code> function to replace the missing values with something else.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="data-wrangling-2.html#cb66-1" tabindex="-1"></a>df.missing <span class="sc">%&gt;%</span> </span>
-<span id="cb66-2"><a href="data-wrangling-2.html#cb66-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">replace_na</span>(x, <span class="at">replace =</span> <span class="dv">0</span>),</span>
-<span id="cb66-3"><a href="data-wrangling-2.html#cb66-3" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">replace_na</span>(y, <span class="at">replace =</span> <span class="st">&quot;unknown&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="data-wrangling-2.html#cb331-1" tabindex="-1"></a>df.missing <span class="sc">%&gt;%</span> </span>
+<span id="cb331-2"><a href="data-wrangling-2.html#cb331-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">replace_na</span>(x, <span class="at">replace =</span> <span class="dv">0</span>),</span>
+<span id="cb331-3"><a href="data-wrangling-2.html#cb331-3" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">replace_na</span>(y, <span class="at">replace =</span> <span class="st">&quot;unknown&quot;</span>))</span></code></pre></div>
 <pre><code># A tibble: 3 × 2
       x y      
   &lt;dbl&gt; &lt;chr&gt;  
@@ -1452,32 +1494,32 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 2     2 unknown
 3     0 b      </code></pre>
 <p>We can also remove rows with missing values using the <code>drop_na()</code> function.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="data-wrangling-2.html#cb68-1" tabindex="-1"></a>df.missing <span class="sc">%&gt;%</span> </span>
-<span id="cb68-2"><a href="data-wrangling-2.html#cb68-2" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="data-wrangling-2.html#cb333-1" tabindex="-1"></a>df.missing <span class="sc">%&gt;%</span> </span>
+<span id="cb333-2"><a href="data-wrangling-2.html#cb333-2" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span></code></pre></div>
 <pre><code># A tibble: 1 × 2
       x y    
   &lt;dbl&gt; &lt;chr&gt;
 1     1 a    </code></pre>
 <p>If we only want to drop values from specific columns, we can specify these columns within the <code>drop_na()</code> function call. So, if we only want to drop rows that have missing values in the <code>x</code> column, we can write:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="data-wrangling-2.html#cb70-1" tabindex="-1"></a>df.missing <span class="sc">%&gt;%</span> </span>
-<span id="cb70-2"><a href="data-wrangling-2.html#cb70-2" tabindex="-1"></a>  <span class="fu">drop_na</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="data-wrangling-2.html#cb335-1" tabindex="-1"></a>df.missing <span class="sc">%&gt;%</span> </span>
+<span id="cb335-2"><a href="data-wrangling-2.html#cb335-2" tabindex="-1"></a>  <span class="fu">drop_na</span>(x)</span></code></pre></div>
 <pre><code># A tibble: 2 × 2
       x y    
   &lt;dbl&gt; &lt;chr&gt;
 1     1 a    
 2     2 &lt;NA&gt; </code></pre>
 <p>To make the distinction between implicit and explicit missing values more concrete, let’s consider the following example (taken from <a href="https://r4ds.had.co.nz/tidy-data.html#missing-values-3">here</a>):</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="data-wrangling-2.html#cb72-1" tabindex="-1"></a>df.stocks <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">year   =</span> <span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2016</span>, <span class="dv">2016</span>),</span>
-<span id="cb72-2"><a href="data-wrangling-2.html#cb72-2" tabindex="-1"></a>                   <span class="at">qtr    =</span> <span class="fu">c</span>(   <span class="dv">1</span>,    <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>,    <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>),</span>
-<span id="cb72-3"><a href="data-wrangling-2.html#cb72-3" tabindex="-1"></a>                   <span class="at">return =</span> <span class="fu">c</span>(<span class="fl">1.88</span>, <span class="fl">0.59</span>, <span class="fl">0.35</span>,   <span class="cn">NA</span>, <span class="fl">0.92</span>, <span class="fl">0.17</span>, <span class="fl">2.66</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="data-wrangling-2.html#cb337-1" tabindex="-1"></a>df.stocks <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">year   =</span> <span class="fu">c</span>(<span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2016</span>, <span class="dv">2016</span>),</span>
+<span id="cb337-2"><a href="data-wrangling-2.html#cb337-2" tabindex="-1"></a>                   <span class="at">qtr    =</span> <span class="fu">c</span>(   <span class="dv">1</span>,    <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>,    <span class="dv">2</span>,    <span class="dv">3</span>,    <span class="dv">4</span>),</span>
+<span id="cb337-3"><a href="data-wrangling-2.html#cb337-3" tabindex="-1"></a>                   <span class="at">return =</span> <span class="fu">c</span>(<span class="fl">1.88</span>, <span class="fl">0.59</span>, <span class="fl">0.35</span>,   <span class="cn">NA</span>, <span class="fl">0.92</span>, <span class="fl">0.17</span>, <span class="fl">2.66</span>))</span></code></pre></div>
 <p>There are two missing values in this dataset:</p>
 <ul>
 <li>The return for the fourth quarter of 2015 is explicitly missing, because the cell where its value should be instead contains <code>NA</code>.</li>
 <li>The return for the first quarter of 2016 is implicitly missing, because it simply does not appear in the dataset.</li>
 </ul>
 <p>We can use the <code>complete()</code> function to make implicit missing values explicit:</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="data-wrangling-2.html#cb73-1" tabindex="-1"></a>df.stocks <span class="sc">%&gt;%</span> </span>
-<span id="cb73-2"><a href="data-wrangling-2.html#cb73-2" tabindex="-1"></a>  <span class="fu">complete</span>(year, qtr)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="data-wrangling-2.html#cb338-1" tabindex="-1"></a>df.stocks <span class="sc">%&gt;%</span> </span>
+<span id="cb338-2"><a href="data-wrangling-2.html#cb338-2" tabindex="-1"></a>  <span class="fu">complete</span>(year, qtr)</span></code></pre></div>
 <pre><code># A tibble: 8 × 3
    year   qtr return
   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -1491,8 +1533,8 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 8  2016     4   2.66</code></pre>
 <p>Note how now, the data frame contains an additional row in which <code>year = 2016</code>, <code>qtr = 1</code> and <code>return = NA</code> even though we didn’t originally specify this.</p>
 <p>We can also directly tell the <code>complete()</code> function to replace the <code>NA</code> values via passing a list to its <code>fill</code> argument like so:</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="data-wrangling-2.html#cb75-1" tabindex="-1"></a>df.stocks <span class="sc">%&gt;%</span> </span>
-<span id="cb75-2"><a href="data-wrangling-2.html#cb75-2" tabindex="-1"></a>  <span class="fu">complete</span>(year, qtr, <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">return =</span> <span class="dv">0</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="data-wrangling-2.html#cb340-1" tabindex="-1"></a>df.stocks <span class="sc">%&gt;%</span> </span>
+<span id="cb340-2"><a href="data-wrangling-2.html#cb340-2" tabindex="-1"></a>  <span class="fu">complete</span>(year, qtr, <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">return =</span> <span class="dv">0</span>))</span></code></pre></div>
 <pre><code># A tibble: 8 × 3
    year   qtr return
   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
@@ -1512,34 +1554,34 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <p>So far, we’ve used data sets that already came with the packages we’ve loaded. In the visualization chapters, we used the <code>diamonds</code> data set from the <code>ggplot2</code> package, and in the data wrangling chapters, we used the <code>starwars</code> data set from the <code>dplyr</code> package.</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th align="right">file type</th>
 <th align="left">platform</th>
 <th align="left">description</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="right"><code>csv</code></td>
 <td align="left">general</td>
 <td align="left">medium-size data frames</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="right"><code>RData</code></td>
 <td align="left">R</td>
 <td align="left">saving the results of intensive computations</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="right"><code>xls</code></td>
 <td align="left">excel</td>
 <td align="left">people who use excel</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="right"><code>json</code></td>
 <td align="left">general</td>
 <td align="left">more complex data structures</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="right"><code>feather</code></td>
 <td align="left">python &amp; R</td>
 <td align="left">fast interaction between R and python</td>
@@ -1551,9 +1593,9 @@ Let’s say we wanted to get a quick sense for how tall starwars characters from
 <div id="csv" class="section level3 hasAnchor" number="5.5.1">
 <h3><span class="header-section-number">5.5.1</span> csv<a href="data-wrangling-2.html#csv" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>I’ve stored some data files in the <code>data/</code> subfolder. Let’s first read a csv (= <strong>c</strong>omma-<strong>s</strong>eparated-<strong>v</strong>alue) file.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="data-wrangling-2.html#cb77-1" tabindex="-1"></a>df.csv <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/movies.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="data-wrangling-2.html#cb342-1" tabindex="-1"></a>df.csv <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/movies.csv&quot;</span>)</span></code></pre></div>
 <pre><code>Rows: 2961 Columns: 11
-── Column specification ────────────────────────────────────────────────────────
+── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 Delimiter: &quot;,&quot;
 chr (3): title, genre, director
 dbl (8): year, duration, gross, budget, cast_facebook_likes, votes, reviews,...
@@ -1562,7 +1604,7 @@ dbl (8): year, duration, gross, budget, cast_facebook_likes, votes, reviews,...
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>The <code>read_csv()</code> function gives us information about how each column was parsed. Here, we have some columns that are characters (such as <code>title</code> and <code>genre</code>), and some columns that are numeric (such as <code>year</code> and <code>duration</code>). Note that it says <code>double()</code> in the specification but double and numeric are identical.</p>
 <p>And let’s take a quick peek at the data:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="data-wrangling-2.html#cb79-1" tabindex="-1"></a>df.csv <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="data-wrangling-2.html#cb344-1" tabindex="-1"></a>df.csv <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>Rows: 2,961
 Columns: 11
 $ title               &lt;chr&gt; &quot;Over the Hill to the Poorhouse&quot;, &quot;The Broadway Me…
@@ -1583,7 +1625,7 @@ $ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5, 6
 <h3><span class="header-section-number">5.5.2</span> RData<a href="data-wrangling-2.html#rdata" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>RData is a data format native to R. Since this format can only be read by R, it’s not a good format for sharing data. However, it’s a useful format that allows us to flexibly save and load R objects. For example, consider that we always start our script by reading in and structuring data, and that this takes quite a while. One thing we can do is to save the output of intermediate steps as an RData object, and then simply load this object (instead of re-running the whole routine every time).</p>
 <p>We read (or load) an RData file in the following way:</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="data-wrangling-2.html#cb81-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/test.RData&quot;</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="data-wrangling-2.html#cb346-1" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/test.RData&quot;</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>Loading objects:
   df.test</code></pre>
 <p>I’ve set the <code>verbose =</code> argument to <code>TRUE</code> here so that the <code>load()</code> function tells me what objects it added to the environment. This is useful for checking whether existing objects were overwritten.</p>
@@ -1594,18 +1636,18 @@ $ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5, 6
 <div id="csv-1" class="section level3 hasAnchor" number="5.6.1">
 <h3><span class="header-section-number">5.6.1</span> csv<a href="data-wrangling-2.html#csv-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To save a data frame as a csv file, we simply write:</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="data-wrangling-2.html#cb83-1" tabindex="-1"></a>df.test <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb83-2"><a href="data-wrangling-2.html#cb83-2" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;test1&quot;</span>, <span class="st">&quot;test2&quot;</span>, <span class="st">&quot;test3&quot;</span>))</span>
-<span id="cb83-3"><a href="data-wrangling-2.html#cb83-3" tabindex="-1"></a></span>
-<span id="cb83-4"><a href="data-wrangling-2.html#cb83-4" tabindex="-1"></a><span class="fu">write_csv</span>(df.test, <span class="at">file =</span> <span class="st">&quot;data/test.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="data-wrangling-2.html#cb348-1" tabindex="-1"></a>df.test <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb348-2"><a href="data-wrangling-2.html#cb348-2" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">c</span>(<span class="st">&quot;test1&quot;</span>, <span class="st">&quot;test2&quot;</span>, <span class="st">&quot;test3&quot;</span>))</span>
+<span id="cb348-3"><a href="data-wrangling-2.html#cb348-3" tabindex="-1"></a></span>
+<span id="cb348-4"><a href="data-wrangling-2.html#cb348-4" tabindex="-1"></a><span class="fu">write_csv</span>(df.test, <span class="at">file =</span> <span class="st">&quot;data/test.csv&quot;</span>)</span></code></pre></div>
 <p>Just like for reading in data, the <code>readr</code> package has a number of other functions for saving data. Just type <code>write_</code> in the console below and take a look at the autocomplete suggestions.</p>
 </div>
 <div id="rdata-1" class="section level3 hasAnchor" number="5.6.2">
 <h3><span class="header-section-number">5.6.2</span> RData<a href="data-wrangling-2.html#rdata-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To save objects as an RData file, we write:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="data-wrangling-2.html#cb84-1" tabindex="-1"></a><span class="fu">save</span>(df.test, <span class="at">file =</span> <span class="st">&quot;data/test.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="data-wrangling-2.html#cb349-1" tabindex="-1"></a><span class="fu">save</span>(df.test, <span class="at">file =</span> <span class="st">&quot;data/test.RData&quot;</span>)</span></code></pre></div>
 <p>We can add multiple objects simply by adding them at the beginning, like so:</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="data-wrangling-2.html#cb85-1" tabindex="-1"></a><span class="fu">save</span>(df.test, df.starwars, <span class="at">file =</span> <span class="st">&quot;data/test_starwars.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="data-wrangling-2.html#cb350-1" tabindex="-1"></a><span class="fu">save</span>(df.test, df.starwars, <span class="at">file =</span> <span class="st">&quot;data/test_starwars.RData&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="additional-resources-3" class="section level2 hasAnchor" number="5.7">
@@ -1650,13 +1692,13 @@ $ rating              &lt;dbl&gt; 4.8, 6.3, 7.7, 7.8, 8.6, 7.7, 8.1, 8.2, 7.5, 6
 </div>
 <div id="session-info-4" class="section level2 hasAnchor" number="5.8">
 <h2><span class="header-section-number">5.8</span> Session info<a href="data-wrangling-2.html#session-info-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<pre><code>R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+<pre><code>R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1669,21 +1711,21 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
- [5] purrr_1.0.2     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
- [9] ggplot2_3.4.4   tidyverse_2.0.0 knitr_1.45     
+ [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 knitr_1.48     
 
 loaded via a namespace (and not attached):
- [1] bit_4.0.5         gtable_0.3.4      jsonlite_1.8.8    crayon_1.5.2     
- [5] compiler_4.3.2    tidyselect_1.2.0  parallel_4.3.2    jquerylib_0.1.4  
- [9] scales_1.3.0      yaml_2.3.8        fastmap_1.1.1     R6_2.5.1         
-[13] generics_0.1.3    bookdown_0.37     munsell_0.5.0     bslib_0.6.1      
-[17] pillar_1.9.0      tzdb_0.4.0        rlang_1.1.2       utf8_1.2.4       
-[21] stringi_1.8.3     cachem_1.0.8      xfun_0.41         sass_0.4.8       
-[25] bit64_4.0.5       timechange_0.2.0  cli_3.6.2         withr_2.5.2      
-[29] magrittr_2.0.3    digest_0.6.33     grid_4.3.2        vroom_1.6.5      
-[33] rstudioapi_0.15.0 hms_1.1.3         lifecycle_1.0.4   vctrs_0.6.5      
-[37] evaluate_0.23     glue_1.6.2        fansi_1.0.6       colorspace_2.1-0 
-[41] rmarkdown_2.25    tools_4.3.2       pkgconfig_2.0.3   htmltools_0.5.7  </code></pre>
+ [1] bit_4.0.5         gtable_0.3.5      jsonlite_1.8.8    crayon_1.5.3     
+ [5] compiler_4.4.1    tidyselect_1.2.1  parallel_4.4.1    jquerylib_0.1.4  
+ [9] scales_1.3.0      yaml_2.3.9        fastmap_1.2.0     R6_2.5.1         
+[13] generics_0.1.3    bookdown_0.40     munsell_0.5.1     bslib_0.7.0      
+[17] pillar_1.9.0      tzdb_0.4.0        rlang_1.1.4       utf8_1.2.4       
+[21] stringi_1.8.4     cachem_1.1.0      xfun_0.45         sass_0.4.9       
+[25] bit64_4.0.5       timechange_0.3.0  cli_3.6.3         withr_3.0.0      
+[29] magrittr_2.0.3    digest_0.6.36     grid_4.4.1        vroom_1.6.5      
+[33] hms_1.1.3         lifecycle_1.0.4   vctrs_0.6.5       evaluate_0.24.0  
+[37] glue_1.7.0        fansi_1.0.6       colorspace_2.1-0  rmarkdown_2.27   
+[41] tools_4.4.1       pkgconfig_2.0.3   htmltools_0.5.8.1</code></pre>
 
 </div>
 </div>
@@ -1693,7 +1735,7 @@ loaded via a namespace (and not attached):
         </div>
       </div>
 <a href="data-wrangling-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="probability-and-causality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="probability.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -1747,6 +1789,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -12,7 +12,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")      # for knitting RMarkdown
 library("janitor")    # for cleaning column names
 library("patchwork")  # for figure panels
@@ -25,7 +25,7 @@ library("tidyverse")  # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
     theme(text = element_text(size = 20))) #set the default text size
 
@@ -38,7 +38,7 @@ opts_chunk$set(comment = "",
 ### Sequential updating based on the Beta distribution
 
 
-```r
+``` r
 # data 
 data = c(0, 1, 1, 0, 1, 1, 1, 1)
 
@@ -78,7 +78,7 @@ wrap_plots(plots, ncol = 3)
 Is the coin biased? 
 
 
-```r
+``` r
 # data 
 data = rep(0:1, c(8, 2))
 
@@ -106,7 +106,7 @@ df.coins = tibble(theta = theta,
 Visualize the results: 
 
 
-```r
+``` r
 df.coins %>% 
   pivot_longer(cols = -theta,
                names_to = "index",
@@ -140,7 +140,7 @@ df.coins %>%
 #### Effect of the prior
 
 
-```r
+``` r
 # grid
 theta = seq(0, 1, 0.01)
 
@@ -207,7 +207,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 #### Effect of the likelihood
 
 
-```r
+``` r
 # grid
 theta = seq(0, 1, 0.01)
 
@@ -263,7 +263,7 @@ df.likelihood_effect %>%
 #### Effect of the sample size
 
 
-```r
+``` r
 # grid
 theta = seq(0, 1, 0.01)
 
@@ -323,7 +323,7 @@ You can find out more about how get started with "greta" here: [https://greta-st
 ### Attitude data set
 
 
-```r
+``` r
 # load the attitude data set 
 df.attitude = attitude
 ```
@@ -331,7 +331,7 @@ df.attitude = attitude
 Visualize relationship between how well complaints are handled and the overall rating of an employee
 
 
-```r
+``` r
 ggplot(data = df.attitude,
        mapping = aes(x = complaints,
                      y = rating)) +
@@ -343,7 +343,7 @@ ggplot(data = df.attitude,
 ### Frequentist analysis
 
 
-```r
+``` r
 # fit model 
 fit.lm = lm(formula = rating ~ 1 + complaints, 
             data = df.attitude)
@@ -377,7 +377,7 @@ F-statistic: 59.86 on 1 and 28 DF,  p-value: 1.988e-08
 Visualize the model's predictions
 
 
-```r
+``` r
 ggplot(data = df.attitude,
        mapping = aes(x = complaints,
                      y = rating)) +
@@ -394,7 +394,7 @@ ggplot(data = df.attitude,
 #### Fit the model
 
 
-```r
+``` r
 set.seed(1)
 
 # variables & priors
@@ -415,7 +415,7 @@ m = model(b0, b1, sd)
 Visualize the model as graph: 
 
 
-```r
+``` r
 # plotting
 plot(m)
 ```
@@ -439,7 +439,7 @@ df.draws = tidy_draws(draws) %>%
 These are the priors I used for the intercept, regression weights, and the standard deviation of the Gaussian likelihood function:  
 
 
-```r
+``` r
 # Gaussian
 ggplot(tibble(x = c(-30, 30)),
        aes(x = x)) +
@@ -461,7 +461,7 @@ ggplot(tibble(x = c(0, 30)),
 This is what the posterior looks like for the three parameters in the model: 
 
 
-```r
+``` r
 df.draws %>% 
   select(draw:sd) %>% 
   pivot_longer(cols = -draw,
@@ -488,7 +488,7 @@ df.draws %>%
 #### Credible interval vs. confidence interval
 
 
-```r
+``` r
 fit.lm %>% 
   tidy(conf.int = T) %>% 
   ggplot(mapping = aes(y = term,
@@ -504,7 +504,7 @@ fit.lm %>%
 Let's take some samples from the posterior to visualize the model predictions: 
 
 
-```r
+``` r
 ggplot(data = df.attitude,
        mapping = aes(x = complaints, 
                      y = rating)) + 
@@ -522,7 +522,7 @@ ggplot(data = df.attitude,
 Let's make an animation that illustrates what predicted data sets (based on samples from the posterior) would look like: 
 
 
-```r
+``` r
 p = df.draws %>% 
   slice_sample(n = 10) %>%  
   mutate(complaints = list(seq(min(df.attitude$complaints),
@@ -555,7 +555,7 @@ animate(p,
 And let's illustrate what data we would have expected to see just based on the information that we encoded in our priors. 
 
 
-```r
+``` r
 sample_size = 10
 
 p = tibble(b0 = rnorm(sample_size, mean = 0, sd = 10),
@@ -597,18 +597,18 @@ animate(p,
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -621,36 +621,36 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3   forcats_1.0.0     stringr_1.5.1     dplyr_1.1.4      
- [5] purrr_1.0.2       readr_2.1.4       tidyr_1.3.0       tibble_3.2.1     
- [9] tidyverse_2.0.0   broom_1.0.5       extraDistr_1.10.0 gganimate_1.0.8  
-[13] ggplot2_3.4.4     greta_0.4.3       tidybayes_3.0.6   patchwork_1.1.3  
-[17] janitor_2.2.0     knitr_1.45       
+ [5] purrr_1.0.2       readr_2.1.5       tidyr_1.3.1       tibble_3.2.1     
+ [9] tidyverse_2.0.0   broom_1.0.6       extraDistr_1.10.0 gganimate_1.0.9  
+[13] ggplot2_3.5.1     greta_0.4.5       tidybayes_3.0.6   patchwork_1.2.0  
+[17] janitor_2.2.0     knitr_1.48       
 
 loaded via a namespace (and not attached):
- [1] svUnit_1.0.6         tidyselect_1.2.0     farver_2.1.1        
- [4] tensorflow_2.14.0    fastmap_1.1.1        tensorA_0.36.2.1    
- [7] tweenr_2.0.2         digest_0.6.33        timechange_0.2.0    
-[10] lifecycle_1.0.4      processx_3.8.3       magrittr_2.0.3      
-[13] posterior_1.5.0      compiler_4.3.2       rlang_1.1.2         
-[16] sass_0.4.8           progress_1.2.3       tools_4.3.2         
-[19] utf8_1.2.4           yaml_2.3.8           labeling_0.4.3      
-[22] prettyunits_1.2.0    reticulate_1.34.0    abind_1.4-5         
-[25] withr_2.5.2          grid_4.3.2           fansi_1.0.6         
-[28] colorspace_2.1-0     future_1.33.1        globals_0.16.2      
-[31] scales_1.3.0         cli_3.6.2            rmarkdown_2.25      
-[34] crayon_1.5.2         generics_0.1.3       tzdb_0.4.0          
-[37] tfruns_1.5.1         cachem_1.0.8         splines_4.3.2       
-[40] parallel_4.3.2       base64enc_0.1-3      vctrs_0.6.5         
-[43] Matrix_1.6-4         jsonlite_1.8.8       bookdown_0.37       
-[46] callr_3.7.3          hms_1.1.3            arrayhelpers_1.1-0  
-[49] listenv_0.9.0        ggdist_3.3.1         jquerylib_0.1.4     
-[52] glue_1.6.2           parallelly_1.36.0    codetools_0.2-19    
-[55] ps_1.7.5             distributional_0.3.2 stringi_1.8.3       
-[58] gtable_0.3.4         munsell_0.5.0        pillar_1.9.0        
-[61] htmltools_0.5.7      R6_2.5.1             evaluate_0.23       
-[64] lattice_0.22-5       highr_0.10           png_0.1-8           
-[67] backports_1.4.1      snakecase_0.11.1     bslib_0.6.1         
-[70] Rcpp_1.0.11          nlme_3.1-164         coda_0.19-4         
+ [1] svUnit_1.0.6         tidyselect_1.2.1     farver_2.1.2        
+ [4] tensorflow_2.16.0    fastmap_1.2.0        tensorA_0.36.2.1    
+ [7] tweenr_2.0.3         digest_0.6.36        timechange_0.3.0    
+[10] lifecycle_1.0.4      processx_3.8.4       magrittr_2.0.3      
+[13] posterior_1.6.0      compiler_4.4.1       rlang_1.1.4         
+[16] sass_0.4.9           progress_1.2.3       tools_4.4.1         
+[19] utf8_1.2.4           yaml_2.3.9           labeling_0.4.3      
+[22] prettyunits_1.2.0    reticulate_1.38.0    abind_1.4-5         
+[25] withr_3.0.0          grid_4.4.1           fansi_1.0.6         
+[28] colorspace_2.1-0     future_1.33.2        globals_0.16.3      
+[31] scales_1.3.0         cli_3.6.3            rmarkdown_2.27      
+[34] crayon_1.5.3         generics_0.1.3       tzdb_0.4.0          
+[37] tfruns_1.5.3         cachem_1.1.0         splines_4.4.1       
+[40] parallel_4.4.1       base64enc_0.1-3      vctrs_0.6.5         
+[43] Matrix_1.7-0         jsonlite_1.8.8       bookdown_0.40       
+[46] callr_3.7.6          hms_1.1.3            arrayhelpers_1.1-0  
+[49] listenv_0.9.1        ggdist_3.3.2         jquerylib_0.1.4     
+[52] glue_1.7.0           parallelly_1.37.1    codetools_0.2-20    
+[55] ps_1.7.7             distributional_0.4.0 stringi_1.8.4       
+[58] gtable_0.3.5         munsell_0.5.1        pillar_1.9.0        
+[61] htmltools_0.5.8.1    R6_2.5.1             evaluate_0.24.0     
+[64] lattice_0.22-6       highr_0.11           png_0.1-8           
+[67] backports_1.5.0      snakecase_0.11.1     bslib_0.7.0         
+[70] Rcpp_1.0.13          nlme_3.1-164         coda_0.19-4.1       
 [73] checkmate_2.3.1      mgcv_1.9-1           whisker_0.4.1       
-[76] xfun_0.41            pkgconfig_2.0.3     
+[76] xfun_0.45            pkgconfig_2.0.3     
 ```

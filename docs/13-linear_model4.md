@@ -3,7 +3,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -15,7 +15,7 @@ library("tidyverse")  # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(
   theme_classic() + #set the theme 
     theme(text = element_text(size = 20)) #set the default text size
@@ -31,7 +31,7 @@ opts_chunk$set(comment = "",
 Read in the data:
 
 
-```r
+``` r
 df.poker = read_csv("data/poker.csv") %>% 
   mutate(skill = factor(skill,
                         levels = 1:2,
@@ -63,7 +63,7 @@ There are two reasons for why this happens.
 Sequential sums of squares means that the predictors are added to the model in the order in which the are specified. 
 
 
-```r
+``` r
 # one order 
 lm(formula = balance ~ skill + hand, 
          data = df.poker.unbalanced) %>% 
@@ -82,7 +82,7 @@ Residuals 286 4951.5   17.31
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-```r
+``` r
 # another order 
 lm(formula = balance ~ hand + skill, 
          data = df.poker.unbalanced) %>% 
@@ -100,10 +100,11 @@ Residuals 286 4951.5   17.31
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
+
 We should compute an ANOVA with type 3 sums of squares, and set the contrast to sum contrasts. I like to use the `joint_tests()` function from the "emmeans" package for doing so. It does both of these things for us. 
 
 
-```r
+``` r
 # one order
 lm(formula = balance ~ hand * skill,
    data = df.poker.unbalanced) %>% 
@@ -117,7 +118,7 @@ lm(formula = balance ~ hand * skill,
  hand:skill   2 284   7.440  0.0007
 ```
 
-```r
+``` r
 # another order
 lm(formula = balance ~ skill + hand,
    data = df.poker.unbalanced) %>% 
@@ -135,7 +136,7 @@ Now, the order of the independent variables doesn't matter anymore.
 Alternatively,we can also use the `aov_ez()` function from the `afex` package. 
 
 
-```r
+``` r
 lm(formula = balance ~ skill * hand,
    data = df.poker.unbalanced) %>% 
   joint_tests()
@@ -148,7 +149,7 @@ lm(formula = balance ~ skill * hand,
  skill:hand   2 284   7.440  0.0007
 ```
 
-```r
+``` r
 fit = aov_ez(id = "participant",
              dv = "balance",
              data = df.poker.unbalanced,
@@ -159,7 +160,7 @@ fit = aov_ez(id = "participant",
 Contrasts set to contr.sum for the following variables: hand, skill
 ```
 
-```r
+``` r
 fit$Anova
 ```
 
@@ -180,7 +181,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## Interpreting parameters (very important!)
 
 
-```r
+``` r
 fit = lm(formula = balance ~ skill * hand,
          data = df.poker)
 
@@ -218,7 +219,7 @@ F-statistic: 34.99 on 5 and 294 DF,  p-value: < 2.2e-16
 Here, this parameter just captures whether there is a significant difference between average and skilled players **when they have a bad hand** (because that's the reference category here). Let's check that this is true. 
 
 
-```r
+``` r
 df.poker %>% 
   group_by(skill, hand) %>% 
   summarize(mean = mean(balance)) %>% 
@@ -247,7 +248,7 @@ We see here that the difference in balance between the average and expert player
 Here is a linear contrast that assumes that there is a linear relationship between the quality of one's hand, and the final balance.  
 
 
-```r
+``` r
 df.poker = df.poker %>% 
   mutate(hand_contrast = factor(hand,
                                 levels = c("bad", "neutral", "good"),
@@ -263,7 +264,7 @@ fit.contrast = lm(formula = balance ~ hand_contrast,
 Here is a visualization of the model prediction together with the residuals. 
 
 
-```r
+``` r
 df.plot = df.poker %>% 
   mutate(hand_jitter = hand %>% as.numeric(),
          hand_jitter = hand_jitter + runif(n(), min = -0.4, max = 0.4))
@@ -323,6 +324,21 @@ This warning is displayed once every 8 hours.
 Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
+```
+Warning in geom_segment(data = NULL, aes(x = 0.6, xend = 1.4, y = df.tidy$estimate[1] - : All aesthetics have length 1, but the data has 300 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
+```
+Warning in geom_segment(data = NULL, aes(x = 1.6, xend = 2.4, y = df.tidy$estimate[1], : All aesthetics have length 1, but the data has 300 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
+```
+Warning in geom_segment(data = NULL, aes(x = 2.6, xend = 3.4, y = df.tidy$estimate[1] + : All aesthetics have length 1, but the data has 300 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
 <img src="13-linear_model4_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 ### Hypothetical data
@@ -330,12 +346,12 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 Here is some code to generate a hypothetical developmental data set. 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
-# means = c(5, 10, 5)
-means = c(3, 5, 20)
+means = c(5, 20, 8)
+# means = c(3, 5, 20)
 # means = c(3, 5, 7)
 # means = c(3, 7, 12)
 sd = 2
@@ -372,7 +388,7 @@ df.development = tibble(
 Let's define a linear contrast using the `emmeans` package, and test whether it's significant. 
 
 
-```r
+``` r
 fit = lm(formula = performance ~ group,
          data = df.development)
 
@@ -385,7 +401,7 @@ fit %>%
 
 ```
  contrast estimate    SE df t.ratio p.value
- linear       8.45 0.274 57  30.856  <.0001
+ linear       1.45 0.274 57   5.290  <.0001
 ```
 
 Yes, we see that there is a significant positive linear contrast with an estimate of 8.45. This means, it predicts a difference of 8.45 in performance between each of the consecutive age groups. For a visualization of the predictions of this model, see Figure \@ref{fig:linear-contrast-model}. 
@@ -395,7 +411,7 @@ Yes, we see that there is a significant positive linear contrast with an estimat
 Total variance: 
 
 
-```r
+``` r
 set.seed(1)
 
 fit_c = lm(formula = performance ~ 1,
@@ -432,7 +448,7 @@ ggplot(data = df.plot,
 With contrast
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -445,23 +461,14 @@ df.plot = df.development %>%
 
 df.tidy = fit %>% 
   tidy() %>% 
-  select(where(is.numeric)) %>% 
-  mutate(across(.fns = ~ round(. , 2)))
-```
+  mutate(across(.cols = where(is.numeric),
+                .fns = ~ round(. , 2)))
 
-```
-Warning: There was 1 warning in `mutate()`.
-ℹ In argument: `across(.fns = ~round(., 2))`.
-Caused by warning:
-! Using `across()` without supplying `.cols` was deprecated in dplyr 1.1.0.
-ℹ Please supply `.cols` instead.
-```
-
-```r
 df.augment = fit %>% 
   augment() %>%
   clean_names() %>% 
-  bind_cols(df.plot %>% select(group_jitter))
+  bind_cols(df.plot %>% 
+              select(group_jitter))
 
 ggplot(data = df.plot,
        mapping = aes(x = group_jitter,
@@ -496,9 +503,25 @@ ggplot(data = df.plot,
                alpha = 0.3) +
   labs(y = "performance") + 
   scale_color_manual(values = c("red", "orange", "green")) + 
-  scale_x_continuous(breaks = 1:3, labels = levels(df.development$group)) +
+  scale_x_continuous(breaks = 1:3,
+                     labels = levels(df.development$group)) +
   theme(legend.position = "none",
         axis.title.x = element_blank())
+```
+
+```
+Warning in geom_segment(data = NULL, aes(x = 0.6, xend = 1.4, y = df.tidy$estimate[1] - : All aesthetics have length 1, but the data has 60 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
+```
+Warning in geom_segment(data = NULL, aes(x = 1.6, xend = 2.4, y = df.tidy$estimate[1], : All aesthetics have length 1, but the data has 60 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
+```
+Warning in geom_segment(data = NULL, aes(x = 2.6, xend = 3.4, y = df.tidy$estimate[1] + : All aesthetics have length 1, but the data has 60 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
 ```
 
 <div class="figure">
@@ -509,7 +532,7 @@ ggplot(data = df.plot,
 Results figure
 
 
-```r
+``` r
 df.development %>% 
   ggplot(mapping = aes(x = group,
                        y = performance)) + 
@@ -527,7 +550,7 @@ df.development %>%
 Here we test some more specific hypotheses: the the two youngest groups of children are different from the oldest group, and that the 3 year olds are different from the 5 year olds. 
 
 
-```r
+``` r
 #  fit the linear model 
 fit = lm(formula = performance ~ group,
          data = df.development)
@@ -540,7 +563,7 @@ levels(df.development$group)
 [1] "3-4" "5-6" "7-8"
 ```
 
-```r
+``` r
 # define the contrasts of interest 
 contrasts = list(young_vs_old = c(-0.5, -0.5, 1),
                  three_vs_five = c(-0.5, 0.5, 0))
@@ -555,8 +578,8 @@ fit %>%
 
 ```
  contrast      estimate    SE df t.ratio p.value
- young_vs_old    16.094 0.474 57  33.936  <.0001
- three_vs_five    0.803 0.274 57   2.933  0.0097
+ young_vs_old     -4.41 0.474 57  -9.292  <.0001
+ three_vs_five     7.30 0.274 57  26.673  <.0001
 
 P value adjustment: bonferroni method for 2 tests 
 ```
@@ -566,7 +589,7 @@ P value adjustment: bonferroni method for 2 tests
 Post-hoc tests for a single predictor (using the poker data set). 
 
 
-```r
+``` r
 fit = lm(formula = balance ~ hand,
          data = df.poker)
 
@@ -589,7 +612,7 @@ P value adjustment: bonferroni method for 3 tests
 Post-hoc tests for two predictors (:
 
 
-```r
+``` r
 # fit the model
 fit = lm(formula = balance ~ hand + skill,
          data = df.poker)
@@ -624,7 +647,7 @@ P value adjustment: bonferroni method for 15 tests
 
 
 
-```r
+``` r
 fit = lm(formula = balance ~ hand,
          data = df.poker)
 
@@ -643,7 +666,7 @@ fit %>%
 P value adjustment: fdr method for 3 tests 
 ```
 
-```r
+``` r
 # one vs. all others 
 fit %>% 
   emmeans(del.eff ~ hand) %>% 
@@ -662,7 +685,7 @@ P value adjustment: fdr method for 3 tests
 ### Understanding dummy coding
 
 
-```r
+``` r
 fit = lm(formula = balance ~ 1 + hand,
          data = df.poker)
 
@@ -692,7 +715,7 @@ Multiple R-squared:  0.3377,	Adjusted R-squared:  0.3332
 F-statistic:  75.7 on 2 and 297 DF,  p-value: < 2.2e-16
 ```
 
-```r
+``` r
 model.matrix(fit) %>% 
   as_tibble() %>% 
   distinct()
@@ -707,7 +730,7 @@ model.matrix(fit) %>%
 3             1           0        1
 ```
 
-```r
+``` r
 df.poker %>% 
   select(participant, hand, balance) %>% 
   group_by(hand) %>% 
@@ -777,7 +800,7 @@ df.poker %>%
 ### Understanding sum coding
 
 
-```r
+``` r
 fit = lm(formula = balance ~ 1 + hand,
          contrasts = list(hand = "contr.sum"),
          data = df.poker)
@@ -808,7 +831,7 @@ Multiple R-squared:  0.3377,	Adjusted R-squared:  0.3332
 F-statistic:  75.7 on 2 and 297 DF,  p-value: < 2.2e-16
 ```
 
-```r
+``` r
 model.matrix(fit) %>% 
   as_tibble() %>% 
   distinct() %>% 
@@ -855,18 +878,18 @@ model.matrix(fit) %>%
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -879,41 +902,40 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] ggplot2_3.4.4    tidyverse_2.0.0  car_3.1-2        carData_3.0-5   
-[13] emmeans_1.9.0    afex_1.3-0       lme4_1.1-35.1    Matrix_1.6-4    
-[17] broom_1.0.5      janitor_2.2.0    kableExtra_1.3.4 knitr_1.45      
+ [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  car_3.1-2        carData_3.0-5   
+[13] emmeans_1.10.3   afex_1.3-1       lme4_1.1-35.5    Matrix_1.7-0    
+[17] broom_1.0.6      janitor_2.2.0    kableExtra_1.4.0 knitr_1.48      
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.0    viridisLite_0.4.2   farver_2.1.1       
- [4] fastmap_1.1.1       rpart_4.1.23        digest_0.6.33      
- [7] timechange_0.2.0    estimability_1.4.1  lifecycle_1.0.4    
-[10] cluster_2.1.6       magrittr_2.0.3      compiler_4.3.2     
-[13] Hmisc_5.1-1         rlang_1.1.2         sass_0.4.8         
-[16] tools_4.3.2         utf8_1.2.4          yaml_2.3.8         
-[19] data.table_1.14.10  htmlwidgets_1.6.4   labeling_0.4.3     
+ [1] tidyselect_1.2.1    viridisLite_0.4.2   farver_2.1.2       
+ [4] fastmap_1.2.0       rpart_4.1.23        digest_0.6.36      
+ [7] timechange_0.3.0    estimability_1.5.1  lifecycle_1.0.4    
+[10] cluster_2.1.6       magrittr_2.0.3      compiler_4.4.1     
+[13] Hmisc_5.1-3         rlang_1.1.4         sass_0.4.9         
+[16] tools_4.4.1         utf8_1.2.4          yaml_2.3.9         
+[19] data.table_1.15.4   htmlwidgets_1.6.4   labeling_0.4.3     
 [22] bit_4.0.5           plyr_1.8.9          xml2_1.3.6         
-[25] abind_1.4-5         foreign_0.8-86      withr_2.5.2        
-[28] numDeriv_2016.8-1.1 nnet_7.3-19         grid_4.3.2         
+[25] abind_1.4-5         foreign_0.8-86      withr_3.0.0        
+[28] numDeriv_2016.8-1.1 nnet_7.3-19         grid_4.4.1         
 [31] fansi_1.0.6         xtable_1.8-4        colorspace_2.1-0   
-[34] scales_1.3.0        MASS_7.3-60         cli_3.6.2          
-[37] mvtnorm_1.2-4       rmarkdown_2.25      crayon_1.5.2       
-[40] generics_0.1.3      rstudioapi_0.15.0   httr_1.4.7         
-[43] reshape2_1.4.4      tzdb_0.4.0          minqa_1.2.6        
-[46] cachem_1.0.8        splines_4.3.2       rvest_1.0.3        
-[49] parallel_4.3.2      base64enc_0.1-3     vctrs_0.6.5        
-[52] boot_1.3-28.1       webshot_0.5.5       jsonlite_1.8.8     
-[55] bookdown_0.37       hms_1.1.3           bit64_4.0.5        
-[58] htmlTable_2.4.2     Formula_1.2-5       systemfonts_1.0.5  
-[61] jquerylib_0.1.4     glue_1.6.2          nloptr_2.0.3       
-[64] stringi_1.8.3       gtable_0.3.4        lmerTest_3.1-3     
-[67] munsell_0.5.0       pillar_1.9.0        htmltools_0.5.7    
-[70] R6_2.5.1            vroom_1.6.5         evaluate_0.23      
-[73] lattice_0.22-5      highr_0.10          backports_1.4.1    
-[76] snakecase_0.11.1    bslib_0.6.1         Rcpp_1.0.11        
-[79] checkmate_2.3.1     gridExtra_2.3       svglite_2.1.3      
-[82] coda_0.19-4         nlme_3.1-164        xfun_0.41          
-[85] pkgconfig_2.0.3    
+[34] scales_1.3.0        MASS_7.3-61         cli_3.6.3          
+[37] mvtnorm_1.2-5       rmarkdown_2.27      crayon_1.5.3       
+[40] generics_0.1.3      rstudioapi_0.16.0   reshape2_1.4.4     
+[43] tzdb_0.4.0          minqa_1.2.7         cachem_1.1.0       
+[46] splines_4.4.1       parallel_4.4.1      base64enc_0.1-3    
+[49] vctrs_0.6.5         boot_1.3-30         jsonlite_1.8.8     
+[52] bookdown_0.40       hms_1.1.3           bit64_4.0.5        
+[55] htmlTable_2.4.2     Formula_1.2-5       systemfonts_1.1.0  
+[58] jquerylib_0.1.4     glue_1.7.0          nloptr_2.1.1       
+[61] stringi_1.8.4       gtable_0.3.5        lmerTest_3.1-3     
+[64] munsell_0.5.1       pillar_1.9.0        htmltools_0.5.8.1  
+[67] R6_2.5.1            vroom_1.6.5         evaluate_0.24.0    
+[70] lattice_0.22-6      highr_0.11          backports_1.5.0    
+[73] snakecase_0.11.1    bslib_0.7.0         Rcpp_1.0.13        
+[76] checkmate_2.3.1     gridExtra_2.3       svglite_2.1.3      
+[79] coda_0.19-4.1       nlme_3.1-164        xfun_0.45          
+[82] pkgconfig_2.0.3    
 ```
 
 

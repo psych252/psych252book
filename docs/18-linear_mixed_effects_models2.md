@@ -14,7 +14,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")       # for knitting RMarkdown 
 library("kableExtra")  # for making nice tables
 library("janitor")     # for cleaning column names
@@ -28,7 +28,7 @@ library("tidyverse")   # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -41,7 +41,7 @@ opts_chunk$set(comment = "",
 Let's illustrate the concept of pooling and shrinkage via the sleep data set that comes with the lmer package. 
 
 
-```r
+``` r
 # load sleepstudy data set 
 df.sleep = sleepstudy %>% 
   as_tibble() %>% 
@@ -51,7 +51,7 @@ df.sleep = sleepstudy %>%
 ```
 
 
-```r
+``` r
 # add two fake participants (with missing data)
 df.sleep = df.sleep %>% 
   bind_rows(tibble(subject = "374",
@@ -65,7 +65,7 @@ df.sleep = df.sleep %>%
 Let's start by visualizing the data 
 
 
-```r
+``` r
 # visualize the data
 ggplot(data = df.sleep,
        mapping = aes(x = days, y = reaction)) + 
@@ -87,7 +87,7 @@ The plot shows the effect of the number of days of sleep deprivation on the aver
 Let's first fit a model the simply combines all the data points. This model ignores the dependence structure in the data (i.e. the fact that we have repeated observations from the same participants). 
 
 
-```r
+``` r
 fit.complete = lm(formula = reaction ~ days,
                   data = df.sleep)
 
@@ -120,7 +120,7 @@ F-statistic: 72.88 on 1 and 181 DF,  p-value: 5.484e-15
 And let's visualize the predictions of this model.
 
 
-```r
+``` r
 # visualization (aggregate) 
 ggplot(data = df.sleep,
        mapping = aes(x = days, y = reaction)) + 
@@ -140,7 +140,7 @@ ggplot(data = df.sleep,
 And here is what the model's predictions look like separated by participant.
 
 
-```r
+``` r
 # visualization (separate participants) 
 ggplot(data = df.sleep,
        mapping = aes(x = days, y = reaction)) + 
@@ -165,7 +165,7 @@ The model predicts the same relationship between sleep deprivation and reaction 
 We could also fit separate regressions for each participant. Let's do that.
 
 
-```r
+``` r
 # fit regressions and extract parameter estimates 
 df.no_pooling = df.sleep %>% 
   group_by(subject) %>% 
@@ -184,7 +184,7 @@ df.no_pooling = df.sleep %>%
 And let's visualize what the predictions of these separate regressions would look like: 
 
 
-```r
+``` r
 ggplot(data = df.sleep,
        mapping = aes(x = days,
                      y = reaction)) + 
@@ -219,7 +219,7 @@ This model allows for random differences in the intercepts and slopes between su
 Let's fit the model
 
 
-```r
+``` r
 fit.random_intercept_slope = lmer(formula = reaction ~ 1 + days + (1 + days | subject),
                                   data = df.sleep)
 ```
@@ -227,7 +227,7 @@ fit.random_intercept_slope = lmer(formula = reaction ~ 1 + days + (1 + days | su
 and take a look at the model's predictions: 
 
 
-```r
+``` r
 fit.random_intercept_slope %>% 
   augment() %>% 
   clean_names() %>% 
@@ -254,7 +254,7 @@ As we can see, the lines for each participant are different. We've allowed for t
 Let's fit a model that only allows for the intercepts to vary between participants. 
 
 
-```r
+``` r
 fit.random_intercept = lmer(formula = reaction ~ 1 + days + (1 | subject),
                             data = df.sleep)
 ```
@@ -262,7 +262,7 @@ fit.random_intercept = lmer(formula = reaction ~ 1 + days + (1 | subject),
 And let's visualize what these predictions look like: 
 
 
-```r
+``` r
 fit.random_intercept %>% 
   augment() %>% 
   clean_names() %>% 
@@ -289,7 +289,7 @@ Now, all the lines are parallel but the intercept differs between participants.
 Finally, let's compare a model that only allows for the slopes to differ but not the intercepts. 
 
 
-```r
+``` r
 fit.random_slope = lmer(formula = reaction ~ 1 + days + (0 + days | subject),
                         data = df.sleep)
 ```
@@ -297,7 +297,7 @@ fit.random_slope = lmer(formula = reaction ~ 1 + days + (0 + days | subject),
 And let's visualize the model fit: 
 
 
-```r
+``` r
 fit.random_slope %>% 
   augment() %>% 
   clean_names() %>% 
@@ -324,7 +324,7 @@ Here, all the lines have the same starting point (i.e. the same intercept) but t
 Let's compare the results of the different methods -- complete pooling, no pooling, and partial pooling (with random intercepts and slopes). 
 
 
-```r
+``` r
 # complete pooling
 fit.complete_pooling = lm(formula = reaction ~ days,
                           data = df.sleep)  
@@ -341,8 +341,10 @@ df.complete_pooling =  fit.complete_pooling %>%
 df.no_pooling = df.sleep %>% 
   group_by(subject) %>% 
   nest(data = c(days, reaction)) %>% 
-  mutate(fit = map(data, ~ lm(reaction ~ days, data = .)),
-         augment = map(fit, augment)) %>% 
+  mutate(fit = map(.x = data, 
+                   .f = ~ lm(reaction ~ days, data = .x)),
+         augment = map(.x = fit, 
+                       .f = ~ augment(.x))) %>% 
   unnest(c(augment)) %>% 
   ungroup() %>% 
   clean_names() %>% 
@@ -371,7 +373,7 @@ df.pooling = df.partial_pooling %>%
 Let's compare the predictions of the different models visually: 
 
 
-```r
+``` r
 ggplot(data = df.pooling,
        mapping = aes(x = days,
                      y = reaction)) + 
@@ -397,7 +399,7 @@ ggplot(data = df.pooling,
 To better see the differences between the approaches, let's focus on the predictions for the participants with incomplete data: 
 
 
-```r
+``` r
 # subselection
 ggplot(data = df.pooling %>% 
          filter(subject %in% c("373", "374")),
@@ -427,7 +429,7 @@ ggplot(data = df.pooling %>%
 One good way to get a sense for what the different models are doing is by taking a look at the coefficients: 
 
 
-```r
+``` r
 coef(fit.complete_pooling)
 ```
 
@@ -437,7 +439,7 @@ coef(fit.complete_pooling)
 ```
 
 
-```r
+``` r
 coef(fit.random_intercept)
 ```
 
@@ -470,7 +472,7 @@ attr(,"class")
 ```
 
 
-```r
+``` r
 coef(fit.random_slope)
 ```
 
@@ -503,7 +505,7 @@ attr(,"class")
 ```
 
 
-```r
+``` r
 coef(fit.random_intercept_slope)
 ```
 
@@ -540,7 +542,7 @@ attr(,"class")
 In mixed effects models, the variance of parameter estimates across participants shrinks compared to a no pooling model (where we fit a different regression to each participant). Expressed differently, individual parameter estimates are borrowing strength from the overall data set in mixed effects models. 
 
 
-```r
+``` r
 # get estimates from partial pooling model
 df.partial_pooling = fit.random_intercept_slope %>% 
   coef() %>% 
@@ -552,8 +554,10 @@ df.partial_pooling = fit.random_intercept_slope %>%
 df.plot = df.sleep %>% 
   group_by(subject) %>% 
   nest(data = c(days, reaction)) %>% 
-  mutate(fit = map(data, ~ lm(reaction ~ days, data = .)),
-         tidy = map(fit, tidy)) %>% 
+  mutate(fit = map(.x = data, 
+                   .f = ~ lm(reaction ~ days, data = .x)),
+         tidy = map(.x = fit, 
+                    .f = ~ tidy(.x))) %>% 
   unnest(c(tidy)) %>% 
   select(subject, term, estimate) %>% 
   pivot_wider(names_from = term,
@@ -581,7 +585,8 @@ ggplot(data = df.plot,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (`stat_density()`).
+Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_density()`).
 ```
 
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-24-1.png" width="672" />
@@ -591,7 +596,7 @@ Warning: Removed 1 rows containing non-finite values (`stat_density()`).
 To get p-values for mixed effects models, I recommend using the `joint_tests()` function from the `emmeans` package.
 
 
-```r
+``` r
 lmer(formula = reaction ~ 1 + days + (1 + days | subject),
      data = df.sleep) %>% 
   joint_tests()
@@ -605,7 +610,7 @@ lmer(formula = reaction ~ 1 + days + (1 + days | subject),
 Our good ol' model comparison approach produces a Likelihood ratio test in this case: 
 
 
-```r
+``` r
 fit1 = lmer(formula = reaction ~ 1 + days + (1 + days | subject),
             data = df.sleep)
 
@@ -636,7 +641,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #### Plotting marginal effects
 
 
-```r
+``` r
 # library("ggeffects")
 
 # using the plot() function
@@ -671,7 +676,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 #### Checking model performance
 
 
-```r
+``` r
 lmer(formula = reaction ~ 1 + days + (1 + days | subject),
      data = df.sleep) %>% 
   check_model()
@@ -684,7 +689,7 @@ lmer(formula = reaction ~ 1 + days + (1 + days | subject),
 To generate some data for a linear mixed effects model with random intercepts, we do pretty much what we are used to doing when we generated data for a linear model. However, this time, we have an additional parameter that captures the variance in the intercepts between participants. So, we draw a separate (offset from the global) intercept for each participant from this distribution.  
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -727,10 +732,10 @@ df.mixed
 Let's fit a model to this data now and take a look at the summary output: 
 
 
-```r
+``` r
 # fit model
 fit.mixed = lmer(formula = value ~ 1 + condition + (1 | participant),
-                data = df.mixed)
+                 data = df.mixed)
 
 summary(fit.mixed)
 ```
@@ -765,7 +770,7 @@ condition -0.658
 Let's visualize the model's predictions: 
 
 
-```r
+``` r
 fit.mixed %>%
   augment() %>%
   clean_names() %>%
@@ -786,7 +791,7 @@ fit.mixed %>%
 Let's simulate some data from this fitted model: 
 
 
-```r
+``` r
 # simulated data 
 fit.mixed %>% 
   simulate() %>% 
@@ -806,7 +811,7 @@ Even though we only fitted random intercepts in this model, when we simulate fro
 Let's see whether fitting random intercepts was worth it in this case: 
 
 
-```r
+``` r
 # using chisq test
 fit.compact = lm(formula = value ~ 1 +  condition,
                 data = df.mixed)
@@ -838,7 +843,7 @@ Nope, it's not worth it in this case. That said, even though having random inter
 Let's take 20 participants from our `df.mixed` data set, and make one of the participants be an outlier: 
 
 
-```r
+``` r
 # let's make one outlier
 df.outlier = df.mixed %>%
   mutate(participant = participant %>% as.character() %>% as.numeric()) %>% 
@@ -850,7 +855,7 @@ df.outlier = df.mixed %>%
 Let's fit the model and look at the summary: 
 
 
-```r
+``` r
 # fit model
 fit.outlier = lmer(formula = value ~ 1 + condition + (1 | participant),
                    data = df.outlier)
@@ -889,7 +894,7 @@ The variance of the participants' intercepts has increased dramatically!
 Let's visualize the data together with the model's predictions: 
 
 
-```r
+``` r
 fit.outlier %>%
   augment() %>%
   clean_names() %>%
@@ -910,7 +915,7 @@ fit.outlier %>%
 The model is still able to capture the participants quite well. But note what its simulated data looks like now: 
 
 
-```r
+``` r
 # simulated data from lmer with outlier
 fit.outlier %>% 
   simulate() %>% 
@@ -932,7 +937,7 @@ The simulated data doesn't look like our original data. This is because one norm
 Let's generate data where the effect of condition is different for participants: 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -951,7 +956,7 @@ df.slopes = tibble(
 Let's fit a model with random intercepts. 
 
 
-```r
+``` r
 fit.slopes = lmer(formula = value ~ 1 + condition + (1 | participant),
                 data = df.slopes)
 ```
@@ -960,7 +965,7 @@ fit.slopes = lmer(formula = value ~ 1 + condition + (1 | participant),
 boundary (singular) fit: see help('isSingular')
 ```
 
-```r
+``` r
 summary(fit.slopes)
 ```
 
@@ -998,7 +1003,7 @@ Note how the summary says "singular fit", and how the variance for random interc
 How about fitting random slopes? 
 
 
-```r
+``` r
 # fit model
 lmer(formula = value ~ 1 + condition + (1 + condition | participant),
      data = df.slopes)
@@ -1013,7 +1018,7 @@ Taking dependence in the data into account is extremely important. The Simpson's
 Let's start by simulating some data to demonstrate the paradox. 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(2)
 
@@ -1022,7 +1027,8 @@ n_observations = 10
 slope = -10 
 sd_error = 0.4
 sd_participant = 5
-intercept = rnorm(n_participants, sd = sd_participant) %>% sort()
+intercept = rnorm(n_participants, sd = sd_participant) %>% 
+  sort()
 
 df.simpson = tibble(x = runif(n_participants * n_observations, min = 0, max = 1)) %>%
   arrange(x) %>% 
@@ -1034,7 +1040,7 @@ df.simpson = tibble(x = runif(n_participants * n_observations, min = 0, max = 1)
 Let's visualize the overall relationship between `x` and `y` with a simple linear model. 
 
 
-```r
+``` r
 # overall effect 
 ggplot(data = df.simpson,
        mapping = aes(x = x,
@@ -1049,7 +1055,7 @@ ggplot(data = df.simpson,
 As we see, overall, there is a positive relationship between `x` and `y`.
 
 
-```r
+``` r
 lm(formula = y ~ x,
    data = df.simpson) %>% 
   summary()
@@ -1081,7 +1087,7 @@ And this relationship is significant.
 Let's take another look at the data use different colors for the different participants.
 
 
-```r
+``` r
 # effect by participant 
 ggplot(data = df.simpson,
        mapping = aes(x = x,
@@ -1098,7 +1104,7 @@ ggplot(data = df.simpson,
 And let's fit a different regression for each participant:
 
 
-```r
+``` r
 # effect by participant 
 ggplot(data = df.simpson,
        mapping = aes(x = x,
@@ -1118,9 +1124,9 @@ What this plot shows, is that for almost all individual participants, the relati
 Let's fit a linear mixed effects model with random intercepts: 
 
 
-```r
+``` r
 fit.lmer = lmer(formula = y ~ 1 + x + (1 | participant),
-     data = df.simpson)
+                data = df.simpson)
 
 fit.lmer %>% 
   summary()
@@ -1156,7 +1162,7 @@ x -0.621
 As we can see, the fixed effect for `x` is now negative! 
 
 
-```r
+``` r
 fit.lmer %>% 
   augment() %>% 
   clean_names() %>% 
@@ -1190,18 +1196,18 @@ Lesson learned: taking dependence into account is critical for drawing correct i
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1214,33 +1220,32 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
- [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.4        
- [7] tidyr_1.3.0         tibble_3.2.1        ggplot2_3.4.4      
-[10] tidyverse_2.0.0     see_0.8.1           performance_0.10.8 
-[13] lme4_1.1-35.1       Matrix_1.6-4        emmeans_1.9.0      
-[16] ggeffects_1.3.4     broom.mixed_0.2.9.4 janitor_2.2.0      
-[19] kableExtra_1.3.4    knitr_1.45         
+ [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
+ [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
+[10] tidyverse_2.0.0     see_0.8.5           performance_0.12.2 
+[13] lme4_1.1-35.5       Matrix_1.7-0        emmeans_1.10.3     
+[16] ggeffects_1.7.0     broom.mixed_0.2.9.5 janitor_2.2.0      
+[19] kableExtra_1.4.0    knitr_1.48         
 
 loaded via a namespace (and not attached):
- [1] sjlabelled_1.2.0   tidyselect_1.2.0   viridisLite_0.4.2  farver_2.1.1      
- [5] fastmap_1.1.1      bayestestR_0.13.1  digest_0.6.33      estimability_1.4.1
- [9] timechange_0.2.0   lifecycle_1.0.4    magrittr_2.0.3     compiler_4.3.2    
-[13] rlang_1.1.2        sass_0.4.8         tools_4.3.2        utf8_1.2.4        
-[17] yaml_2.3.8         labeling_0.4.3     xml2_1.3.6         withr_2.5.2       
-[21] datawizard_0.9.1   grid_4.3.2         fansi_1.0.6        xtable_1.8-4      
-[25] colorspace_2.1-0   future_1.33.1      globals_0.16.2     scales_1.3.0      
-[29] MASS_7.3-60        insight_0.19.7     cli_3.6.2          mvtnorm_1.2-4     
-[33] crayon_1.5.2       rmarkdown_2.25     generics_0.1.3     rstudioapi_0.15.0 
-[37] httr_1.4.7         tzdb_0.4.0         minqa_1.2.6        cachem_1.0.8      
-[41] splines_4.3.2      rvest_1.0.3        parallel_4.3.2     vctrs_0.6.5       
-[45] boot_1.3-28.1      webshot_0.5.5      jsonlite_1.8.8     bookdown_0.37     
-[49] patchwork_1.1.3    hms_1.1.3          ggrepel_0.9.4      pbkrtest_0.5.2    
-[53] listenv_0.9.0      systemfonts_1.0.5  jquerylib_0.1.4    glue_1.6.2        
-[57] parallelly_1.36.0  nloptr_2.0.3       codetools_0.2-19   stringi_1.8.3     
-[61] gtable_0.3.4       munsell_0.5.0      furrr_0.3.1        pillar_1.9.0      
-[65] htmltools_0.5.7    R6_2.5.1           evaluate_0.23      lattice_0.22-5    
-[69] haven_2.5.4        highr_0.10         backports_1.4.1    broom_1.0.5       
-[73] snakecase_0.11.1   bslib_0.6.1        Rcpp_1.0.11        svglite_2.1.3     
-[77] coda_0.19-4        nlme_3.1-164       mgcv_1.9-1         xfun_0.41         
-[81] pkgconfig_2.0.3   
+ [1] sjlabelled_1.2.0   tidyselect_1.2.1   viridisLite_0.4.2  farver_2.1.2      
+ [5] fastmap_1.2.0      bayestestR_0.14.0  digest_0.6.36      estimability_1.5.1
+ [9] timechange_0.3.0   lifecycle_1.0.4    magrittr_2.0.3     compiler_4.4.1    
+[13] rlang_1.1.4        sass_0.4.9         tools_4.4.1        utf8_1.2.4        
+[17] yaml_2.3.9         labeling_0.4.3     xml2_1.3.6         withr_3.0.0       
+[21] datawizard_0.12.2  grid_4.4.1         fansi_1.0.6        xtable_1.8-4      
+[25] colorspace_2.1-0   future_1.33.2      globals_0.16.3     scales_1.3.0      
+[29] MASS_7.3-61        insight_0.20.3     cli_3.6.3          mvtnorm_1.2-5     
+[33] crayon_1.5.3       rmarkdown_2.27     generics_0.1.3     rstudioapi_0.16.0 
+[37] tzdb_0.4.0         minqa_1.2.7        cachem_1.1.0       splines_4.4.1     
+[41] parallel_4.4.1     vctrs_0.6.5        boot_1.3-30        jsonlite_1.8.8    
+[45] bookdown_0.40      patchwork_1.2.0    hms_1.1.3          ggrepel_0.9.5     
+[49] pbkrtest_0.5.3     listenv_0.9.1      systemfonts_1.1.0  jquerylib_0.1.4   
+[53] glue_1.7.0         parallelly_1.37.1  nloptr_2.1.1       codetools_0.2-20  
+[57] stringi_1.8.4      gtable_0.3.5       munsell_0.5.1      furrr_0.3.1       
+[61] pillar_1.9.0       htmltools_0.5.8.1  R6_2.5.1           evaluate_0.24.0   
+[65] lattice_0.22-6     haven_2.5.4        highr_0.11         backports_1.5.0   
+[69] broom_1.0.6        snakecase_0.11.1   bslib_0.7.0        Rcpp_1.0.13       
+[73] svglite_2.1.3      coda_0.19-4.1      nlme_3.1-164       mgcv_1.9-1        
+[77] xfun_0.45          pkgconfig_2.0.3   
 ```

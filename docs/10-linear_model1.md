@@ -3,7 +3,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -12,7 +12,7 @@ library("tidyverse")  # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -23,7 +23,7 @@ opts_chunk$set(comment = "",
 ## Correlation
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -51,7 +51,7 @@ Variance is the average squared difference between each data point and the mean:
 - $Var(Y) = \frac{\sum_{i = 1}^n(Y_i - \overline Y)^2}{n-1}$
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -89,7 +89,7 @@ Covariance is defined in the following way:
 - $Cov(X,Y) = \sum_{i=1}^n\frac{(X_i-\overline X)(Y_i-\overline Y)}{n-1}$
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -98,8 +98,9 @@ df.covariance = tibble(x = runif(20, min = 0, max = 1),
                        y = x + rnorm(x, mean = 0.5, sd = 0.25))
 
 # plot the data
-ggplot(df.covariance,
-       aes(x = x, y = y)) +
+ggplot(data = df.covariance,
+       mapping = aes(x = x,
+                     y = y)) +
   geom_point(size = 3) +
   theme(axis.text = element_blank(),
         axis.title = element_blank(),
@@ -111,26 +112,20 @@ ggplot(df.covariance,
 Add lines for $\overline X$ and $\overline Y$ to the data:
 
 
-```r
-ggplot(df.covariance,
-       aes(x = x, y = y)) +
+``` r
+ggplot(data = df.covariance,
+       mapping = aes(x = x,
+                     y = y)) +
   geom_hline(yintercept = mean(df.covariance$y),
              color = "red",
-             size = 1) +
+             linewidth = 1) +
   geom_vline(xintercept = mean(df.covariance$x),
              color = "red",
-             size = 1) +
+             linewidth = 1) +
   geom_point(size = 3) +
   theme(axis.text = element_blank(),
         axis.title = element_blank(),
         axis.ticks = element_blank())
-```
-
-```
-Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="10-linear_model1_files/figure-html/unnamed-chunk-6-1.png" width="672" />
@@ -138,7 +133,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 Illustrate how covariance is computed by drawing the distance to $\overline X$ and $\overline Y$ for three data points:
 
 
-```r
+``` r
 df.plot = df.covariance %>% 
   mutate(covariance = (x-mean(x)) *( y-mean(y))) %>% 
   arrange(abs(covariance)) %>% 
@@ -150,8 +145,10 @@ df.plot$color[1] = 1
 df.plot$color[10] = 2
 df.plot$color[19] = 3
 
-ggplot(df.plot,
-       aes(x = x, y = y, color = as.factor(color))) +
+ggplot(data = df.plot,
+       mapping = aes(x = x, 
+                     y = y, 
+                     color = as.factor(color))) +
   geom_segment(data = df.plot %>% 
                  filter(color == 1),
                mapping = aes(x = x,
@@ -207,6 +204,13 @@ ggplot(df.plot,
         legend.position = "none")
 ```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="10-linear_model1_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 #### Spearman's rank order correlation
@@ -214,7 +218,7 @@ ggplot(df.plot,
 Spearman's $\rho$ captures the extent to which the relationship between two variables is monotonic.
 
 
-```r
+``` r
 # create data frame with data points and ranks 
 df.ranking = tibble(x = c(1.2, 2.5, 4.5),
                     y = c(2.2, 1, 3.3),
@@ -224,8 +228,9 @@ df.ranking = tibble(x = c(1.2, 2.5, 4.5),
                     label_rank = str_c("(", x_rank, ", ", y_rank, ")"))
 
 # plot the data (and show their ranks)
-ggplot(df.ranking,
-       aes(x = x, y = y)) +
+ggplot(data = df.ranking,
+       mapping = aes(x = x, 
+                     y = y)) +
   geom_point(size = 3) +
   geom_text(aes(label = label),
             hjust = -0.2,
@@ -245,7 +250,7 @@ ggplot(df.ranking,
 Show that Spearman's $\rho$ is equivalent to Pearson's $r$ applied to ranked data.
 
 
-```r
+``` r
 # data set
 df.spearman = df.correlation %>% 
   mutate(x_rank = dense_rank(x),
@@ -265,10 +270,11 @@ df.spearman %>%
 1 0.851    0.836   0.836
 ```
 
-```r
+``` r
 # plot
-ggplot(df.spearman,
-       aes(x = x_rank, y = y_rank)) +
+ggplot(data = df.spearman,
+       mapping = aes(x = x_rank,
+                     y = y_rank)) +
   geom_point(size = 3) +
   scale_x_continuous(breaks = 1:20) +
   scale_y_continuous(breaks = 1:20) +
@@ -360,7 +366,7 @@ df.spearman %>%
 Comparison between $r$ and $\rho$ for a given data set: 
 
 
-```r
+``` r
 # data set
 df.example = tibble(x = 1:10,
                     y = c(-10, 2:9, 20)) %>% 
@@ -381,11 +387,11 @@ df.example %>%
 1 0.878        1       1
 ```
 
-```r
+``` r
 # plot
-ggplot(df.example,
-       # aes(x = x_rank, y = y_rank)) + # see the ranked data 
-       aes(x = x, y = y)) + # see the original data
+ggplot(data = df.example,
+       # mapping = aes(x = x_rank, y = y_rank)) + # see the ranked data 
+       mapping = aes(x = x, y = y)) + # see the original data
   geom_point(size = 3) +
   theme(axis.text = element_text(size = 10))
 ```
@@ -395,7 +401,7 @@ ggplot(df.example,
 Another example
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -419,11 +425,12 @@ df.example2 %>%
 1 0.919    0.467   0.467
 ```
 
-```r
+``` r
 # plot
-ggplot(df.example2,
-       # aes(x = x_rank, y = y_rank)) + # see the ranked data 
-       aes(x = x, y = y)) + # see the original data
+ggplot(data = df.example2,
+       # mapping = aes(x = x_rank, y = y_rank)) + # see the ranked data 
+       mapping = aes(x = x,
+                     y = y)) + # see the original data
   geom_point(size = 3) +
   theme(axis.text = element_text(size = 10))
 ```
@@ -433,7 +440,7 @@ ggplot(df.example2,
 ## Regression
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -446,8 +453,8 @@ df.regression = tibble(chocolate = runif(n_samples, min = 0, max = 100),
 
 # plot the data 
 ggplot(data = df.regression,
-       aes(x = chocolate,
-           y = happiness)) +
+       mapping = aes(x = chocolate,
+                     y = happiness)) +
   geom_point(size = 3)
 ```
 
@@ -458,7 +465,7 @@ ggplot(data = df.regression,
 Define and fit the compact model (Model C): $Y_i = \beta_0 + \epsilon_i$
 
 
-```r
+``` r
 # fit the compact model
 lm.compact = lm(happiness ~ 1, data = df.regression)
 
@@ -467,11 +474,11 @@ df.compact = tidy(lm.compact)
 
 # plot the data with model prediction
 ggplot(data = df.regression,
-       aes(x = chocolate,
-           y = happiness)) +
+       mapping = aes(x = chocolate,
+                     y = happiness)) +
   geom_hline(yintercept = df.compact$estimate,
              color = "blue",
-              size = 1) +
+             size = 1) +
   geom_point(size = 3) 
 ```
 
@@ -480,7 +487,7 @@ ggplot(data = df.regression,
 Define and fit the augmented model (Model A): $Y_i = \beta_0 + \beta_1 X_{1i} + \epsilon_i$
 
 
-```r
+``` r
 # fit the augmented model
 lm.augmented = lm(happiness ~ chocolate, data = df.regression)
 
@@ -489,8 +496,8 @@ df.augmented = tidy(lm.augmented)
 
 # plot the data with model prediction
 ggplot(data = df.regression,
-       aes(x = chocolate,
-           y = happiness)) +
+       mapping = aes(x = chocolate,
+                     y = happiness)) +
   geom_abline(intercept = df.augmented$estimate[1],
               slope = df.augmented$estimate[2],
               color = "red",
@@ -505,7 +512,7 @@ ggplot(data = df.regression,
 Illustration of the residuals for the compact model:  
 
 
-```r
+``` r
 # fit the model 
 lm.compact = lm(happiness ~ 1, data = df.regression)
 
@@ -519,13 +526,13 @@ df.compact_model = augment(lm.compact) %>%
 
 # plot model prediction with residuals
 ggplot(data = df.compact_model,
-       aes(x = chocolate,
-           y = happiness)) +
+       mapping = aes(x = chocolate,
+                     y = happiness)) +
   geom_hline(yintercept = df.compact_summary$estimate,
              color = "blue",
-              size = 1) +
-  geom_segment(aes(xend = chocolate,
-                   yend = df.compact_summary$estimate),
+             linewidth = 1) +
+  geom_segment(mapping = aes(xend = chocolate,
+                             yend = df.compact_summary$estimate),
                color = "blue") + 
   geom_point(size = 3) 
 
@@ -546,7 +553,7 @@ df.compact_model %>%
 Illustration of the residuals for the augmented model:  
 
 
-```r
+``` r
 # fit the model 
 lm.augmented = lm(happiness ~ chocolate, data = df.regression)
 
@@ -560,14 +567,14 @@ df.augmented_model = augment(lm.augmented) %>%
 
 # plot model prediction with residuals
 ggplot(data = df.augmented_model,
-       aes(x = chocolate,
-           y = happiness)) +
+       mapping = aes(x = chocolate,
+                     y = happiness)) +
   geom_abline(intercept = df.augmented_summary$estimate[1],
               slope = df.augmented_summary$estimate[2],
-             color = "red",
-              size = 1) +
-  geom_segment(aes(xend = chocolate,
-                   yend = fitted),
+              color = "red",
+              linewidth = 1) +
+  geom_segment(mapping = aes(xend = chocolate,
+                             yend = fitted),
                color = "red") + 
   geom_point(size = 3) 
 
@@ -588,7 +595,7 @@ df.augmented_model %>%
 Calculate the F-test to determine whether PRE is significant. 
 
 
-```r
+``` r
 pc = 1 # number of parameters in the compact model  
 pa = 2 # number of parameters in the augmented model  
 n = 10 # number of observations
@@ -620,10 +627,10 @@ print(p_value)
 F-distribution with a red line indicating the calculated F-statistic.
 
 
-```r
+``` r
 ggplot(data = tibble(x = c(0, 10)),
        mapping = aes(x = x)) +
-  stat_function(fun = "df",
+  stat_function(fun = df,
                 args = list(df1 = pa-pc,
                             df2 = n-pa),
                 size = 1) +
@@ -632,18 +639,12 @@ ggplot(data = tibble(x = c(0, 10)),
              size = 1)
 ```
 
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
 <img src="10-linear_model1_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 The short version of doing what we did above :) 
 
 
-```r
+``` r
 anova(lm.compact, lm.augmented)
 ```
 
@@ -664,7 +665,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Let's load the credit card data: 
 
 
-```r
+``` r
 df.credit = read_csv("data/credit.csv") %>% 
   clean_names()
 ```
@@ -729,7 +730,7 @@ Here is a short description of the variables:
 Scatterplot of the relationship between `income` and `balance`.
 
 
-```r
+``` r
 ggplot(data = df.credit,
        mapping = aes(x = income,
                      y = balance)) + 
@@ -742,7 +743,7 @@ ggplot(data = df.credit,
 To make the model intercept interpretable, we can center the predictor variable by subtracting the mean from each value.
 
 
-```r
+``` r
 df.plot = df.credit %>% 
   mutate(income_centered = income - mean(income)) %>% 
   select(balance, income, income_centered)
@@ -766,7 +767,7 @@ ggplot(data = df.plot,
 `geom_smooth()` using formula = 'y ~ x'
 ```
 
-```r
+``` r
   # coord_cartesian(xlim = c(0, max(df.plot$income_centered)))
 ```
 
@@ -775,7 +776,7 @@ ggplot(data = df.plot,
 Let's fit the model and take a look at the model summary: 
 
 
-```r
+``` r
 fit = lm(balance ~ 1 + income, data = df.credit) 
 
 fit %>% 
@@ -806,7 +807,7 @@ F-statistic:   109 on 1 and 398 DF,  p-value: < 2.2e-16
 Here, I double check that I understand how the statistics about the residuals are calculated that the model summary gives me.  
 
 
-```r
+``` r
 fit %>% 
   augment() %>% 
   clean_names() %>% 
@@ -828,12 +829,12 @@ fit %>%
 Here is a plot of the residuals. Residual plots are important for checking whether any of the linear model assumptions have been violated. 
 
 
-```r
+``` r
 fit %>% 
   augment() %>% 
   clean_names() %>% 
-  ggplot(aes(x = fitted,
-             y = resid)) + 
+  ggplot(mapping = aes(x = fitted,
+                       y = resid)) + 
   geom_hline(yintercept = 0,
              color = "blue") +
   geom_point(alpha = 0.3)
@@ -844,7 +845,7 @@ fit %>%
 We can use the `glance()` function from the `broom` package to print out model statistics. 
 
 
-```r
+``` r
 fit %>% 
   glance() %>% 
   kable(digits = 2) %>% 
@@ -890,7 +891,7 @@ fit %>%
 Let's test whether income is a significant predictor of balance in the credit data set. 
 
 
-```r
+``` r
 # fitting the compact model 
 fit_c = lm(formula = balance ~ 1,
            data = df.credit)
@@ -918,7 +919,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Let's print out the parameters of the augmented model with confidence intervals: 
 
 
-```r
+``` r
 fit_a %>% 
   tidy(conf.int = T) %>% 
   kable(digits = 2) %>% 
@@ -963,7 +964,7 @@ fit_a %>%
 We can use `augment()` with the `newdata = ` argument to get predictions about new data from our fitted model: 
 
 
-```r
+``` r
 fit %>% 
   augment(newdata = tibble(income = 130))
 ```
@@ -978,7 +979,7 @@ fit %>%
 Here is a plot of the model with confidence interval (that captures our uncertainty in the intercept and slope of the model) and the predicted `balance` value for an `income` of 130:
 
 
-```r
+``` r
 ggplot(data = df.credit,
        mapping = aes(x = income,
                      y = balance)) + 
@@ -1001,7 +1002,7 @@ ggplot(data = df.credit,
 Finally, let's take a look at how the residuals are distributed. 
 
 
-```r
+``` r
 # get the residuals 
 df.plot = fit_a %>% 
   augment() %>% 
@@ -1049,18 +1050,18 @@ Here are some examples of what the residuals could look like when things go wron
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1073,25 +1074,24 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] ggplot2_3.4.4    tidyverse_2.0.0  broom_1.0.5      janitor_2.2.0   
-[13] kableExtra_1.3.4 knitr_1.45      
+ [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  broom_1.0.6      janitor_2.2.0   
+[13] kableExtra_1.4.0 knitr_1.48      
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.4      xfun_0.41         bslib_0.6.1       lattice_0.22-5   
- [5] tzdb_0.4.0        vctrs_0.6.5       tools_4.3.2       generics_0.1.3   
- [9] parallel_4.3.2    fansi_1.0.6       highr_0.10        pkgconfig_2.0.3  
-[13] Matrix_1.6-4      webshot_0.5.5     lifecycle_1.0.4   compiler_4.3.2   
-[17] farver_2.1.1      munsell_0.5.0     snakecase_0.11.1  htmltools_0.5.7  
-[21] sass_0.4.8        yaml_2.3.8        pillar_1.9.0      crayon_1.5.2     
-[25] jquerylib_0.1.4   ellipsis_0.3.2    cachem_1.0.8      nlme_3.1-164     
-[29] tidyselect_1.2.0  rvest_1.0.3       digest_0.6.33     stringi_1.8.3    
-[33] bookdown_0.37     labeling_0.4.3    splines_4.3.2     fastmap_1.1.1    
-[37] grid_4.3.2        colorspace_2.1-0  cli_3.6.2         magrittr_2.0.3   
-[41] utf8_1.2.4        withr_2.5.2       scales_1.3.0      backports_1.4.1  
-[45] bit64_4.0.5       timechange_0.2.0  rmarkdown_2.25    httr_1.4.7       
-[49] bit_4.0.5         png_0.1-8         hms_1.1.3         evaluate_0.23    
-[53] viridisLite_0.4.2 mgcv_1.9-1        rlang_1.1.2       glue_1.6.2       
-[57] xml2_1.3.6        svglite_2.1.3     rstudioapi_0.15.0 vroom_1.6.5      
-[61] jsonlite_1.8.8    R6_2.5.1          systemfonts_1.0.5
+ [1] gtable_0.3.5      xfun_0.45         bslib_0.7.0       lattice_0.22-6   
+ [5] tzdb_0.4.0        vctrs_0.6.5       tools_4.4.1       generics_0.1.3   
+ [9] parallel_4.4.1    fansi_1.0.6       highr_0.11        pkgconfig_2.0.3  
+[13] Matrix_1.7-0      lifecycle_1.0.4   compiler_4.4.1    farver_2.1.2     
+[17] munsell_0.5.1     snakecase_0.11.1  htmltools_0.5.8.1 sass_0.4.9       
+[21] yaml_2.3.9        pillar_1.9.0      crayon_1.5.3      jquerylib_0.1.4  
+[25] cachem_1.1.0      nlme_3.1-164      tidyselect_1.2.1  digest_0.6.36    
+[29] stringi_1.8.4     bookdown_0.40     labeling_0.4.3    splines_4.4.1    
+[33] fastmap_1.2.0     grid_4.4.1        colorspace_2.1-0  cli_3.6.3        
+[37] magrittr_2.0.3    utf8_1.2.4        withr_3.0.0       scales_1.3.0     
+[41] backports_1.5.0   bit64_4.0.5       timechange_0.3.0  rmarkdown_2.27   
+[45] bit_4.0.5         png_0.1-8         hms_1.1.3         evaluate_0.24.0  
+[49] viridisLite_0.4.2 mgcv_1.9-1        rlang_1.1.4       glue_1.7.0       
+[53] xml2_1.3.6        svglite_2.1.3     rstudioapi_0.16.0 vroom_1.6.5      
+[57] jsonlite_1.8.8    R6_2.5.1          systemfonts_1.1.0
 ```

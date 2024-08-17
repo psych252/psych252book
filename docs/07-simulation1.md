@@ -3,7 +3,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")
 library("kableExtra")
 library("MASS")
@@ -12,7 +12,7 @@ library("tidyverse")
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -25,7 +25,7 @@ opts_chunk$set(comment = "",
 ### Drawing numbers from a vector
 
 
-```r
+``` r
 numbers = 1:3
 
 numbers %>% 
@@ -34,13 +34,13 @@ numbers %>%
 ```
 
 ```
- [1] 3 2 1 2 1 3 2 3 2 2
+ [1] 3 2 2 2 1 1 2 3 3 2
 ```
 
 Use the `prob = ` argument to change the probability with which each number should be drawn. 
 
 
-```r
+``` r
 numbers = 1:3
 
 numbers %>% 
@@ -50,14 +50,14 @@ numbers %>%
 ```
 
 ```
- [1] 1 1 1 1 1 1 2 1 1 2
+ [1] 2 1 1 1 1 1 1 1 1 1
 ```
 
 Make sure to set the seed in order to make your code reproducible. The code chunk below may give a different outcome each time is run. 
 
 
 
-```r
+``` r
 numbers = 1:5
 
 numbers %>% 
@@ -65,13 +65,13 @@ numbers %>%
 ```
 
 ```
-[1] 3 2 5 4 1
+[1] 3 4 5 2 1
 ```
 
 The chunk below will produce the same outcome every time it's run. 
 
 
-```r
+``` r
 set.seed(1)
 
 numbers = 1:5
@@ -89,19 +89,24 @@ numbers %>%
 Generate a data frame. 
 
 
-```r
+``` r
 set.seed(1)
 n = 10
 df.data = tibble(trial = 1:n,
-                 stimulus = sample(c("flower", "pet"), size = n, replace = T),
-                 rating = sample(1:10, size = n, replace = T))
+                 stimulus = sample(x = c("flower", "pet"),
+                                   size = n,
+                                   replace = T),
+                 rating = sample(x = 1:10,
+                                 size = n,
+                                 replace = T))
 ```
 
 Sample a given number of rows. 
 
 
-```r
+``` r
 set.seed(1)
+
 df.data %>% 
   slice_sample(n = 6, 
                replace = T)
@@ -120,8 +125,9 @@ df.data %>%
 ```
 
 
-```r
+``` r
 set.seed(1)
+
 df.data %>% 
   slice_sample(prop = 0.5)
 ```
@@ -140,7 +146,7 @@ df.data %>%
 Note that there is a whole family of `slice()` functions in dplyr. Take a look at the help file here: 
 
 
-```r
+``` r
 help(slice)
 ```
 
@@ -190,10 +196,12 @@ You can get more info about the distributions that come with R via running `help
 Here's an easy way to plot distributions in `ggplot2` using the `stat_function()` function. We take a look at a normal distribution of height (in cm) with `mean = 180` and `sd = 10` (as this is the example we run with in class).
 
 
-```r
+``` r
 ggplot(data = tibble(height = c(150, 210)),
        mapping = aes(x = height)) +
-  stat_function(fun = ~ dnorm(., mean = 180, sd = 10))
+  stat_function(fun = ~ dnorm(x = .,
+                              mean = 180,
+                              sd = 10))
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-10-1.png" width="672" />
@@ -203,7 +211,7 @@ Note that the data frame I created with `tibble()` only needs to have the minimu
 The `stat_function()` is very flexible. We can define our own functions and plot these like here: 
 
 
-```r
+``` r
 # define the breakpoint function 
 fun.breakpoint = function(x, breakpoint){
   x[x < breakpoint] = breakpoint
@@ -213,7 +221,8 @@ fun.breakpoint = function(x, breakpoint){
 # plot the function
 ggplot(data = tibble(x = c(-5, 5)),
        mapping = aes(x = x)) +
-  stat_function(fun = ~ fun.breakpoint(., breakpoint = 2))
+  stat_function(fun = ~ fun.breakpoint(x = .,
+                                       breakpoint = 2))
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-11-1.png" width="672" />
@@ -228,7 +237,7 @@ For each distribution, R provides a way of sampling random number from this dist
 So let's take some random samples and plot a histogram. 
 
 
-```r
+``` r
 # make this example reproducible 
 set.seed(1)
 
@@ -236,7 +245,9 @@ set.seed(1)
 tmp.nsamples = 100
 
 # make a data frame with the samples
-df.plot = tibble(height = rnorm(n = tmp.nsamples, mean = 180, sd = 10))
+df.plot = tibble(height = rnorm(n = tmp.nsamples,
+                                mean = 180,
+                                sd = 10))
 
 # plot the samples using a histogram 
 ggplot(data = df.plot,
@@ -245,10 +256,12 @@ ggplot(data = df.plot,
                  color = "black",
                  fill = "lightblue") +
   scale_x_continuous(breaks = c(160, 180, 200)) +
-  coord_cartesian(xlim = c(150, 210), expand = F)
+  coord_cartesian(xlim = c(150, 210),
+                  expand = F)
 
 # remove all variables with tmp in their name 
-rm(list = ls() %>% str_subset(pattern = "tmp."))
+rm(list = ls() %>% 
+     str_subset(pattern = "tmp."))
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-12-1.png" width="672" />
@@ -256,7 +269,7 @@ rm(list = ls() %>% str_subset(pattern = "tmp."))
 Let's see how many samples it takes to closely approximate the shape of the normal distribution with our histogram of samples. 
 
 
-```r
+``` r
 # make this example reproducible 
 set.seed(1)
 
@@ -287,7 +300,7 @@ ggplot(data = df.plot,
                                   n = tmp.nsamples,
                                   binwidth = tmp.binwidth),
                 xlim = c(min(df.plot$height), max(df.plot$height)),
-                size = 2) +
+                linewidth = 2) +
   annotate(geom = "text",
            label = str_c("n = ", tmp.nsamples),
            x = -Inf,
@@ -297,19 +310,12 @@ ggplot(data = df.plot,
            size = 10,
            family = "Courier New") +
   scale_x_continuous(breaks = c(160, 180, 200)) +
-  coord_cartesian(xlim = c(150, 210), expand = F)
-```
+  coord_cartesian(xlim = c(150, 210),
+                  expand = F)
 
-```
-Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
-```
-
-```r
 # remove all variables with tmp in their name 
-rm(list = ls() %>% str_subset(pattern = "tmp."))
+rm(list = ls() %>% 
+     str_subset(pattern = "tmp."))
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-13-1.png" width="672" />
@@ -322,7 +328,7 @@ To keep my environment clean, I've named the parameters `tmp.nsamples` and `tmp.
 First, let's calculate the density for a set of observations and store them in a data frame.
 
 
-```r
+``` r
 # calculate density
 observations = c(1, 1.2, 1.5, 2, 3)
 bandwidth = 0.25 # bandwidth (= sd) of the Gaussian distribution 
@@ -360,7 +366,7 @@ df.density %>%
   </tr>
   <tr>
    <td style="text-align:right;"> 0.264 </td>
-   <td style="text-align:right;"> 0.005 </td>
+   <td style="text-align:right;"> 0.004 </td>
   </tr>
   <tr>
    <td style="text-align:right;"> 0.271 </td>
@@ -380,7 +386,7 @@ df.density %>%
 Now, let's plot the density. 
 
 
-```r
+``` r
 ggplot(data = df.density, 
        mapping = aes(x = x, y = y)) +
   geom_line(size = 2) +
@@ -389,12 +395,19 @@ ggplot(data = df.density,
              size = 3)
 ```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="07-simulation1_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 This density shows the sum of the densities of normal distributions that are centered at the observations with the specified bandwidth. 
 
 
-```r
+``` r
 # add densities for the individual normal distributions
 for (i in 1:length(observations)){
   df.density[[str_c("observation_",i)]] = dnorm(df.density$x,
@@ -450,7 +463,7 @@ df.density %>%
   </tr>
   <tr>
    <td style="text-align:right;"> 0.264 </td>
-   <td style="text-align:right;"> 0.023 </td>
+   <td style="text-align:right;"> 0.022 </td>
    <td style="text-align:right;"> 0.021 </td>
    <td style="text-align:right;"> 0.001 </td>
    <td style="text-align:right;"> 0 </td>
@@ -470,7 +483,7 @@ df.density %>%
   </tr>
   <tr>
    <td style="text-align:right;"> 0.277 </td>
-   <td style="text-align:right;"> 0.027 </td>
+   <td style="text-align:right;"> 0.026 </td>
    <td style="text-align:right;"> 0.024 </td>
    <td style="text-align:right;"> 0.002 </td>
    <td style="text-align:right;"> 0 </td>
@@ -494,17 +507,19 @@ df.density %>%
 Now, let's plot the individual densities as well as the overall density.
 
 
-```r
+``` r
 # colors of individual Gaussian distributions 
 colors = c("blue", "green", "red", "purple", "orange")
+bandwidth = 0.25
 
 # original density 
-p = ggplot(data = df.density, aes(x = x, y = y)) +
-  geom_line(size = 2)
+p = ggplot(data = df.density, aes(x = x,
+                                  y = y)) +
+  geom_line(linewidth = 2)
 
 # individual densities 
 for (i in 1:length(observations)){
-  p = p + stat_function(fun = "dnorm",
+  p = p + stat_function(fun = dnorm,
                         args = list(mean = observations[i], sd = bandwidth),
                         color = colors[i])
 }
@@ -526,42 +541,12 @@ p = p +
 p # print the figure
 ```
 
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
 <img src="07-simulation1_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 Here are the same results when specifying a different bandwidth: 
 
 
-```r
+``` r
 # colors of individual Gaussian distributions 
 colors = c("blue", "green", "red", "purple", "orange")
 
@@ -593,7 +578,7 @@ df.density = df.density %>%
 
 # original plot 
 p = ggplot(data = df.density, aes(x = x, y = y)) +
-  geom_line(size = 2) +
+  geom_line(linewidth = 2) +
   geom_point(data = enframe(observations),
              mapping = aes(x = value,
                            y = 0,
@@ -604,7 +589,7 @@ p = ggplot(data = df.density, aes(x = x, y = y)) +
 
 # add individual Gaussians
 for (i in 1:length(observations)){
-  p = p + stat_function(fun = "dnorm",
+  p = p + stat_function(fun = dnorm,
                         args = list(mean = observations[i], sd = bandwidth),
                         color = colors[i])
 }
@@ -619,53 +604,24 @@ p = p +
 p
 ```
 
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
 <img src="07-simulation1_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 
 ### Cumulative probability distribution
 
 
-```r
+``` r
 ggplot(data = tibble(height = c(150, 210)),
        mapping = aes(x = height)) +
   stat_function(fun = ~ pnorm(q = ., 
                               mean = 180, 
                               sd = 10)) + 
-  labs(x = "height", y = "cumulative probability") + 
   scale_x_continuous(breaks = c(160, 180, 200)) + 
   coord_cartesian(xlim = c(150, 210),
                   ylim = c(0, 1.05),
-                  expand = F)
+                  expand = F) + 
+  labs(x = "height",
+       y = "cumulative probability") 
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-19-1.png" width="672" />
@@ -673,7 +629,7 @@ ggplot(data = tibble(height = c(150, 210)),
 Let's find the cumulative probability of a particular value. 
 
 
-```r
+``` r
 tmp.x = 190
 tmp.y = pnorm(tmp.x, mean = 180, sd = 10)
 
@@ -684,7 +640,7 @@ print(tmp.y %>% round(3))
 [1] 0.841
 ```
 
-```r
+``` r
 # draw the cumulative probability distribution and show the value
 ggplot(data = tibble(height = c(150, 210)),
        mapping = aes(x = height)) +
@@ -708,12 +664,25 @@ ggplot(data = tibble(height = c(150, 210)),
                              yend = tmp.y),
                size = 1,
                color = "blue") +
-  labs(x = "height", y = "cumulative probability") + 
   scale_x_continuous(breaks = c(160, 180, 200)) + 
   coord_cartesian(xlim = c(150, 210),
                   ylim = c(0, 1.05),
-                  expand = F)
+                  expand = F) + 
+  labs(x = "height",
+       y = "cumulative probability")
+```
 
+```
+Warning in geom_segment(mapping = aes(x = tmp.x, xend = tmp.x, y = 0, yend = tmp.y), : All aesthetics have length 1, but the data has 2 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
+```
+Warning in geom_segment(mapping = aes(x = -5, xend = tmp.x, y = tmp.y, yend = tmp.y), : All aesthetics have length 1, but the data has 2 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
+``` r
 # remove all variables with tmp in their name 
 rm(list = str_subset(string = ls(), pattern = "tmp."))
 ```
@@ -723,7 +692,7 @@ rm(list = str_subset(string = ls(), pattern = "tmp."))
 Let's illustrate what this would look like using a normal density plot. 
 
 
-```r
+``` r
 ggplot(data = tibble(height = c(150, 210)),
        mapping = aes(x = height)) + 
   stat_function(fun = ~ dnorm(., mean = 180, sd = 10),
@@ -731,11 +700,11 @@ ggplot(data = tibble(height = c(150, 210)),
                 fill = "lightblue",
                 xlim = c(150, 190)) +
   stat_function(fun = ~ dnorm(., mean = 180, sd = 10),
-                size = 1.5) +
-  labs(x = "height", y = "density") + 
-  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+                linewidth = 1.5) +
   scale_x_continuous(breaks = c(160, 180, 200)) + 
-  coord_cartesian(xlim = c(150, 210))
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+  coord_cartesian(xlim = c(150, 210)) + 
+  labs(x = "height", y = "density")
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-21-1.png" width="672" />
@@ -743,18 +712,18 @@ ggplot(data = tibble(height = c(150, 210)),
 ### Inverse cumulative distribution
 
 
-```r
+``` r
 ggplot(data = tibble(probability = c(0, 1)),
        mapping = aes(x = probability)) +
   stat_function(fun = ~ qnorm(p = ., 
                               mean = 180,
                               sd = 10)) + 
-  labs(y = "height", 
-       x = "cumulative probability") + 
   scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.1)) + 
   scale_y_continuous(limits = c(160, 200)) + 
   coord_cartesian(xlim = c(0, 1.05),
-                  expand = F)
+                  expand = F) + 
+  labs(y = "height", 
+       x = "cumulative probability")
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-22-1.png" width="672" />
@@ -762,18 +731,20 @@ ggplot(data = tibble(probability = c(0, 1)),
 And let's compute the inverse cumulative probability for a particular value. 
 
 
-```r
+``` r
 tmp.x = 0.3
 tmp.y = qnorm(tmp.x, mean = 180, sd = 10)
 
-print(tmp.y %>% round(3))
+tmp.y %>% 
+  round(3) %>% 
+  print()
 ```
 
 ```
 [1] 174.756
 ```
 
-```r
+``` r
 # draw the cumulative probability distribution and show the value
 ggplot(data = tibble(probability = c(0, 1)),
        mapping = aes(x = probability)) +
@@ -795,13 +766,25 @@ ggplot(data = tibble(probability = c(0, 1)),
                              yend = tmp.y),
                size = 1,
                color = "blue") +
-  labs(x = "cumulative probability",
-       y = "height") + 
   scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.1)) + 
   scale_y_continuous(limits = c(160, 200)) + 
   coord_cartesian(xlim = c(0, 1.05),
-                  expand = F)
+                  expand = F) + 
+  labs(x = "cumulative probability",
+       y = "height")
+```
 
+```
+Warning in geom_segment(mapping = aes(x = tmp.x, xend = tmp.x, y = 160, : All aesthetics have length 1, but the data has 2 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
+```
+Warning in geom_segment(mapping = aes(x = 0, xend = tmp.x, y = tmp.y, yend = tmp.y), : All aesthetics have length 1, but the data has 2 rows.
+ℹ Please consider using `annotate()` or provide this layer with data containing a single row.
+```
+
+``` r
 # remove all variables with tmp in their name 
 rm(list = str_subset(string = ls(), pattern = "tmp."))
 ```
@@ -815,7 +798,7 @@ rm(list = str_subset(string = ls(), pattern = "tmp."))
 Let's compute the probability of observing a particular value $x$ in a given range. 
 
 
-```r
+``` r
 tmp.lower = 170
 tmp.upper = 180
 
@@ -829,7 +812,7 @@ tmp.prob
 [1] 0.3413447
 ```
 
-```r
+``` r
 ggplot(data = tibble(x = c(150, 210)),
        mapping = aes(x = x)) + 
   stat_function(fun = ~ dnorm(., mean = 180, sd = 10),
@@ -839,12 +822,12 @@ ggplot(data = tibble(x = c(150, 210)),
                 color = "black",
                 linetype = 2) +
   stat_function(fun = ~ dnorm(., mean = 180, sd = 10),
-                size = 1.5) +
-  labs(x = "height",
-       y = "density") + 
+                linewidth = 1.5) +
   scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
   scale_x_continuous(breaks = c(160, 180, 200)) + 
-  coord_cartesian(xlim = c(150, 210))
+  coord_cartesian(xlim = c(150, 210)) + 
+  labs(x = "height",
+       y = "density") 
 
 # remove all variables with tmp in their name 
 rm(list = str_subset(string = ls(), pattern = "tmp."))
@@ -860,7 +843,7 @@ We can also compute the probability of observing certain events using sampling. 
 
 
 
-```r
+``` r
 # let's compute the probability of observing a value within a certain range 
 tmp.lower = 170
 tmp.upper = 180
@@ -907,15 +890,19 @@ rm(list = str_subset(string = ls(), pattern = "tmp."))
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-25-1.png" width="672" />
-## Breakout room exercise
+## Pinguin exercise 
+
+Assume that we have a population of penguins whose height is distribution according to a Gamma distribution with a `shape` parameter of 50, and `rate` parameter of 1. 
 
 ### Make the plot
 
 
-```r
+``` r
 ggplot(data = tibble(height = c(30, 70)),
        mapping = aes(x = height)) +
-  stat_function(fun = ~ dgamma(., shape = 50, rate = 1))
+  stat_function(fun = ~ dgamma(.,
+                               shape = 50,
+                               rate = 1))
 ```
 
 <img src="07-simulation1_files/figure-html/unnamed-chunk-26-1.png" width="672" />
@@ -925,7 +912,7 @@ ggplot(data = tibble(height = c(30, 70)),
 #### Question: A 60cm tall Penguin claims that no more than 10% are taller than her. Is she correct?
 
 
-```r
+``` r
 1 - pgamma(60, shape = 50, rate = 1)
 ```
 
@@ -938,7 +925,7 @@ Answer: Yes, she is correct. Only ~ 8.4% of Penguins are taller than her.
 #### Question:  Are there more penguins between 50 and 55cm or between 55 and 65cm?
 
 
-```r
+``` r
 first_range = pgamma(55, shape = 50, rate = 1) - pgamma(50, shape = 50, rate = 1)
 second_range = pgamma(65, shape = 50, rate = 1) - pgamma(55, shape = 50, rate = 1)
 
@@ -954,7 +941,7 @@ Answer: There are 4% more Penguins between 50 and 55cm than between 55 and 65 cm
 #### Question: What size is a Penguin who is taller than 75% of the rest?
 
 
-```r
+``` r
 qgamma(0.75, shape = 50, rate = 1)
 ```
 
@@ -969,7 +956,7 @@ Answer: A Penguin who is ~54.6cm tall is taller than 75% of the rest.
 Let's just simulate a bunch of Penguins, yay! 
 
 
-```r
+``` r
 set.seed(1)
 df.penguins = tibble(height = rgamma(n = 100000, shape = 50, rate = 1))
 ```
@@ -977,7 +964,7 @@ df.penguins = tibble(height = rgamma(n = 100000, shape = 50, rate = 1))
 #### Question: A 60cm tall Penguin claims that no more than 10% are taller than her. Is she correct?
 
 
-```r
+``` r
 df.penguins %>% 
   summarize(probability = sum(height > 60) / n())
 ```
@@ -994,7 +981,7 @@ Answer: Yes, she is correct. Only ~ 8.3% of Penguins are taller than her.
 #### Question: Are there more penguins between 50 and 55cm or between 55 and 65cm?
 
 
-```r
+``` r
 df.penguins %>% 
   summarize(probability = (sum(between(height, 50, 55)) - sum(between(height, 55, 65)))/n())
 ```
@@ -1011,7 +998,7 @@ Answer: There are 3.9% more Penguins between 50 and 55cm than between 55 and 65 
 #### Question: What size is a Penguin who is taller than 75% of the rest?
 
 
-```r
+``` r
 df.penguins %>% 
   arrange(height) %>%
   slice_head(prop = 0.75) %>% 
@@ -1039,7 +1026,7 @@ At the camp site, a child walks over to you and asks you where their gym is. You
 ### Analytic solution
 
 
-```r
+``` r
 height = 175
 
 # priors 
@@ -1060,7 +1047,7 @@ likelihood_chess = dnorm(height, mean = mean_chess, sd = sd_chess)
 posterior_basketball = (likelihood_basketball * prior_basketball) / 
   ((likelihood_basketball * prior_basketball) + (likelihood_chess * prior_chess))
 
-posterior_basketball %>% print()
+print(posterior_basketball)
 ```
 
 ```
@@ -1072,7 +1059,7 @@ posterior_basketball %>% print()
 Let's do the same thing via sampling. 
 
 
-```r
+``` r
 # number of kids 
 tmp.nkids = 10000
 
@@ -1098,11 +1085,15 @@ df.camp = tibble(kid = 1:tmp.nkids,
                                 prob = c(prior_chess, prior_basketball))) %>% 
   rowwise() %>% 
   mutate(height = ifelse(test = sport == "chess",
-                         yes = rnorm(., mean = mean_chess, sd = sd_chess),
-                         no = rnorm(., mean = mean_basketball, sd = sd_basketball))) %>% 
+                         yes = rnorm(n = .,
+                                     mean = mean_chess,
+                                     sd = sd_chess),
+                         no = rnorm(n = .,
+                                    mean = mean_basketball,
+                                    sd = sd_basketball))) %>% 
   ungroup
 
-df.camp %>% print()
+print(df.camp)
 ```
 
 ```
@@ -1127,7 +1118,7 @@ Now we have a data frame with kids whose height was randomly sampled depending o
 Note that the solution above is not particularly efficient since it uses the `rowwise()` function to make sure that a different random value for height is drawn for each row. Running this code will get slow for large samples. A more efficient solution would be the following: 
 
 
-```r
+``` r
 # number of kids 
 tmp.nkids = 100000
 
@@ -1154,7 +1145,7 @@ In this solution, I take advantage of the fact that `rnorm()` is vectorized. Tha
 How can we now use these samples to answer our question of interest? Let's see what doesn't work first: 
 
 
-```r
+``` r
 tmp.height = 175
 
 df.camp %>% 
@@ -1167,7 +1158,7 @@ df.camp %>%
 The reason this doesn't work is because none of our kids is exactly 175cm tall. Instead, we need to filter kids that are within a certain height range. 
 
 
-```r
+``` r
 tmp.height = 175
 tmp.margin = 1
 
@@ -1201,18 +1192,18 @@ Here, I've used the `between()` function which is a shortcut for otherwise writi
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1225,22 +1216,21 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] ggplot2_3.4.4    tidyverse_2.0.0  patchwork_1.1.3  MASS_7.3-60     
-[13] kableExtra_1.3.4 knitr_1.45      
+ [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  patchwork_1.2.0  MASS_7.3-61     
+[13] kableExtra_1.4.0 knitr_1.48      
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
- [5] stringi_1.8.3     hms_1.1.3         digest_0.6.33     magrittr_2.0.3   
- [9] timechange_0.2.0  evaluate_0.23     grid_4.3.2        bookdown_0.37    
-[13] fastmap_1.1.1     jsonlite_1.8.8    httr_1.4.7        rvest_1.0.3      
-[17] fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4  
-[21] cli_3.6.2         crayon_1.5.2      rlang_1.1.2       munsell_0.5.0    
-[25] withr_2.5.2       cachem_1.0.8      yaml_2.3.8        tools_4.3.2      
-[29] tzdb_0.4.0        colorspace_2.1-0  webshot_0.5.5     vctrs_0.6.5      
-[33] R6_2.5.1          lifecycle_1.0.4   pkgconfig_2.0.3   pillar_1.9.0     
-[37] bslib_0.6.1       gtable_0.3.4      glue_1.6.2        systemfonts_1.0.5
-[41] highr_0.10        xfun_0.41         tidyselect_1.2.0  rstudioapi_0.15.0
-[45] farver_2.1.1      htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25   
-[49] svglite_2.1.3     compiler_4.3.2   
+ [1] sass_0.4.9        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
+ [5] stringi_1.8.4     hms_1.1.3         digest_0.6.36     magrittr_2.0.3   
+ [9] evaluate_0.24.0   grid_4.4.1        timechange_0.3.0  bookdown_0.40    
+[13] fastmap_1.2.0     jsonlite_1.8.8    fansi_1.0.6       viridisLite_0.4.2
+[17] scales_1.3.0      jquerylib_0.1.4   cli_3.6.3         crayon_1.5.3     
+[21] rlang_1.1.4       munsell_0.5.1     withr_3.0.0       cachem_1.1.0     
+[25] yaml_2.3.9        tools_4.4.1       tzdb_0.4.0        colorspace_2.1-0 
+[29] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   pkgconfig_2.0.3  
+[33] pillar_1.9.0      bslib_0.7.0       gtable_0.3.5      glue_1.7.0       
+[37] systemfonts_1.1.0 highr_0.11        xfun_0.45         tidyselect_1.2.1 
+[41] rstudioapi_0.16.0 farver_2.1.2      htmltools_0.5.8.1 labeling_0.4.3   
+[45] rmarkdown_2.27    svglite_2.1.3     compiler_4.4.1   
 ```

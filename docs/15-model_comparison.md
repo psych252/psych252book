@@ -13,7 +13,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -24,7 +24,7 @@ library("tidyverse")  # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -51,7 +51,7 @@ $$
 Here, I'll use the following parameters: $\beta_0 = 10$, $\beta_1 = 3$, and $\beta_2 = 2$ to generate the data:
 
 
-```r
+``` r
 set.seed(1)
 
 n_plots = 3
@@ -104,7 +104,7 @@ wrap_plots(plotlist = l.p, ncol = 3)
 As we can see, RMSE becomes smaller and smaller the more parameters the model has to fit the data. But how does the RMSE look like for new data that is generated from the same underlying ground truth? 
 
 
-```r
+``` r
 set.seed(1)
 
 n_plots = 3
@@ -150,8 +150,11 @@ plot_fit = function(i){
     geom_point(data = df.more_data,
                size = 2, 
                color = "red") +
-    geom_smooth(method = "lm", se = F,
-                formula = y ~ poly(x, degree = i, raw = TRUE)) +
+    geom_smooth(method = "lm",
+                se = F,
+                formula = y ~ poly(x,
+                                   degree = i,
+                                   raw = TRUE)) +
     annotate(geom = "text",
              x = Inf,
              y = -Inf,
@@ -185,7 +188,7 @@ The RMSE in black shows the root mean squared error for the data that the model 
 Let's generate another data set: 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -198,17 +201,19 @@ sd = 0.5
 
 # sample
 df.data = tibble(participant = 1:sample_size,
-                 x = runif(sample_size, min = 0, max = 1),
+                 x = runif(sample_size,
+                           min = 0,
+                           max = 1),
                  y = b0 + b1*x + b2*x^2 + rnorm(sample_size, sd = sd)) 
 ```
 
 And plot it: 
 
 
-```r
+``` r
 ggplot(data = df.data,
        mapping = aes(x = x,
-                    y = y)) + 
+                     y = y)) + 
   geom_smooth(method = "lm",
               formula = y ~ x + I(x^2)) +
   geom_point()
@@ -225,7 +230,7 @@ $$
 $$
 
 
-```r
+``` r
 # fit models to the data 
 fit_simple = lm(y ~ 1 + x, data = df.data)
 fit_correct = lm(y ~ 1 + x + I(x^2), data = df.data)
@@ -247,7 +252,7 @@ Model 2: y ~ 1 + x + I(x^2)
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-```r
+``` r
 anova(fit_correct, fit_complex)
 ```
 
@@ -287,7 +292,7 @@ Different versions of cross-validation differ in how the training and test data 
 I've used code similar to this one to illustrate how LOO works in class. Here is a simple data set with 9 data points. We fit 9 models, where for each model, the training set includes one of the data points, and then we look at how well the model captures the held-out data point. We can then characterize the model's performance by calculating the mean squared error across the 9 runs. 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -322,8 +327,10 @@ fun.cv_plot = function(data_point){
               filter(color == 2)) %>% 
     clean_names()
   
-  p = ggplot(df.plot,
-             aes(x, y, color = as.factor(color))) + 
+  p = ggplot(data = df.plot,
+             mapping = aes(x = x, 
+                           y = y, 
+                           color = as.factor(color))) + 
     geom_segment(aes(xend = x,
                      yend = fitted),
                  data = df.fit,
@@ -359,7 +366,7 @@ As you can see, the regression line changes quite a bit depending on which data 
 Now, let's use LOO to evaluate the models on the data set I've created above: 
 
 
-```r
+``` r
 # fit the models and calculate the RMSE for each model on the test set 
 df.cross = df.data %>% 
   crossv_loo() %>% # function which generates training and test data sets 
@@ -403,7 +410,7 @@ For k-fold cross-validation, we split the data set in k folds, and then use k-1 
 The code is almost identical as before. Instead of `crossv_loo()`, we use the `crossv_kfold()` function instead and say how many times we want to "fold" the data. 
 
 
-```r
+``` r
 # crossvalidation scheme 
 df.cross = df.data %>% 
   crossv_kfold(k = 10) %>% 
@@ -441,7 +448,7 @@ Note, for this example, I've calculated $R^2$ (the variance explained by each mo
 Finally, let's consider another very flexible version of cross-validation. For this version of cross-validation, we determine how many random splits into training set and test set we would like to do, and what proportion of the data should be in the test set. 
 
 
-```r
+``` r
 # crossvalidation scheme 
 df.cross = df.data %>% 
   crossv_mc(n = 50, test = 0.5) %>% # number of samples, and percentage of test 
@@ -481,7 +488,7 @@ We can also use the `modelr` package for bootstrapping. The idea is the same as 
 Here is an example for how to boostrap confidence intervals for a mean. 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -499,7 +506,7 @@ mean(df.data$x)
 [1] 0.5515139
 ```
 
-```r
+``` r
 # bootstrap to get confidence intervals around the mean 
 df.data %>%
   bootstrap(n = 1000) %>% # create 1000 bootstrapped samples
@@ -537,7 +544,7 @@ where $k$ is the number of parameters in the model, $n$ is the number of observa
 Calculating AIC and BIC in R is straightforward. We simply need to fit a linear model, and then call the `AIC()` or `BIC()` functions on the fitted model like so: 
 
 
-```r
+``` r
 set.seed(0)
 
 # let's generate some data 
@@ -556,7 +563,7 @@ AIC(fit)
 [1] 75.47296
 ```
 
-```r
+``` r
 # get BIC
 BIC(fit)
 ```
@@ -568,7 +575,7 @@ BIC(fit)
 We can also just use the `broom` package to get that information: 
 
 
-```r
+``` r
 fit %>% 
   glance()
 ```
@@ -586,7 +593,7 @@ Both AIC and BIC take the number of parameters and the model's likelihood into a
 Let's visualize the data first: 
 
 
-```r
+``` r
 # plot the data with a linear model fit  
 ggplot(data = df.example,
        mapping = aes(x = x,
@@ -601,7 +608,7 @@ ggplot(data = df.example,
 Now, let's take a look at the residuals by plotting the fitted values on the x axis, and the residuals on the y axis. 
 
 
-```r
+``` r
 # residual plot 
 df.plot = df.example %>% 
   lm(formula = y ~ x,
@@ -622,17 +629,19 @@ Remember that the linear model makes the assumption that the residuals are norma
 Let's make a plot that shows a normal distribution alongside the residuals: 
 
 
-```r
+``` r
 # define a normal distribution 
 df.normal = tibble(y = seq(-5, 5, 0.1),
                    x = dnorm(y, sd = 2) + 3.75)
 
 # show the residual plot together with the normal distribution
 ggplot(data = df.plot ,
-       mapping = aes(x = fitted, y = resid)) + 
+       mapping = aes(x = fitted, 
+                     y = resid)) + 
   geom_point() +
   geom_path(data = df.normal,
-            aes(x = x, y = y),
+            aes(x = x,
+                y = y),
             size = 2)
 ```
 
@@ -644,7 +653,7 @@ Instead of multiplying likelihoods, we often sum the log likelihoods instead. Th
 To better understand AIC and BIC, let's calculate them by hand: 
 
 
-```r
+``` r
 # we first get the estimate of the standard deviation of the residuals 
 sigma = fit %>% 
   glance() %>% 
@@ -668,7 +677,7 @@ print(aic)
 [1] 75.58017
 ```
 
-```r
+``` r
 print(bic)
 ```
 
@@ -679,7 +688,7 @@ print(bic)
 Cool! The values are the same as when we use the `glance()` function like so (except for a small difference due to rounding): 
 
 
-```r
+``` r
 fit %>% 
   glance() %>% 
   select(AIC, BIC)
@@ -695,7 +704,7 @@ fit %>%
 #### log() is your friend
 
 
-```r
+``` r
 ggplot(data = tibble(x = c(0, 1)),
        mapping = aes(x = x)) + 
   stat_function(fun = "log",
@@ -707,7 +716,7 @@ ggplot(data = tibble(x = c(0, 1)),
 ```
 
 ```
-Warning: Computation failed in `stat_function()`
+Warning: Computation failed in `stat_function()`.
 Caused by error in `fun()`:
 ! could not find function "fun"
 ```
@@ -731,18 +740,18 @@ Caused by error in `fun()`:
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -755,24 +764,24 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] ggplot2_3.4.4    tidyverse_2.0.0  modelr_0.1.11    patchwork_1.1.3 
-[13] broom_1.0.5      janitor_2.2.0    kableExtra_1.3.4 knitr_1.45      
+ [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  modelr_0.1.11    patchwork_1.2.0 
+[13] broom_1.0.6      janitor_2.2.0    kableExtra_1.4.0 knitr_1.48      
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.4      xfun_0.41         bslib_0.6.1       lattice_0.22-5   
- [5] tzdb_0.4.0        vctrs_0.6.5       tools_4.3.2       generics_0.1.3   
- [9] fansi_1.0.6       highr_0.10        pkgconfig_2.0.3   Matrix_1.6-4     
-[13] webshot_0.5.5     lifecycle_1.0.4   compiler_4.3.2    farver_2.1.1     
-[17] munsell_0.5.0     snakecase_0.11.1  htmltools_0.5.7   sass_0.4.8       
-[21] yaml_2.3.8        pillar_1.9.0      jquerylib_0.1.4   cachem_1.0.8     
-[25] nlme_3.1-164      tidyselect_1.2.0  rvest_1.0.3       digest_0.6.33    
-[29] stringi_1.8.3     bookdown_0.37     labeling_0.4.3    splines_4.3.2    
-[33] fastmap_1.1.1     grid_4.3.2        colorspace_2.1-0  cli_3.6.2        
-[37] magrittr_2.0.3    utf8_1.2.4        withr_2.5.2       scales_1.3.0     
-[41] backports_1.4.1   timechange_0.2.0  rmarkdown_2.25    httr_1.4.7       
-[45] hms_1.1.3         evaluate_0.23     viridisLite_0.4.2 mgcv_1.9-1       
-[49] rlang_1.1.2       glue_1.6.2        xml2_1.3.6        svglite_2.1.3    
-[53] rstudioapi_0.15.0 jsonlite_1.8.8    R6_2.5.1          systemfonts_1.0.5
+ [1] sass_0.4.9        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
+ [5] lattice_0.22-6    stringi_1.8.4     hms_1.1.3         digest_0.6.36    
+ [9] magrittr_2.0.3    evaluate_0.24.0   grid_4.4.1        timechange_0.3.0 
+[13] bookdown_0.40     fastmap_1.2.0     Matrix_1.7-0      jsonlite_1.8.8   
+[17] backports_1.5.0   mgcv_1.9-1        fansi_1.0.6       viridisLite_0.4.2
+[21] scales_1.3.0      jquerylib_0.1.4   cli_3.6.3         rlang_1.1.4      
+[25] splines_4.4.1     munsell_0.5.1     withr_3.0.0       cachem_1.1.0     
+[29] yaml_2.3.9        tools_4.4.1       tzdb_0.4.0        colorspace_2.1-0 
+[33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   snakecase_0.11.1 
+[37] pkgconfig_2.0.3   pillar_1.9.0      bslib_0.7.0       gtable_0.3.5     
+[41] glue_1.7.0        systemfonts_1.1.0 highr_0.11        xfun_0.45        
+[45] tidyselect_1.2.1  rstudioapi_0.16.0 farver_2.1.2      nlme_3.1-164     
+[49] htmltools_0.5.8.1 labeling_0.4.3    rmarkdown_2.27    svglite_2.1.3    
+[53] compiler_4.4.1   
 ```
 

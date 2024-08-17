@@ -3,12 +3,14 @@
 ## Learning goals
 
 - Some worked examples. 
-- Doing follow-up tests with the emmeans package
+- Doing follow-up tests with the `emmeans` package
+- Simulating, plotting, and analyzing models with different random effects structures
+- Bootstrapping confidence intervals for fixed effects 
 
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")       # for knitting RMarkdown 
 library("kableExtra")  # for making nice tables
 library("janitor")     # for cleaning column names
@@ -25,7 +27,7 @@ library("tidyverse")   # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -42,7 +44,7 @@ options(dplyr.summarise.inform = F)
 ### Sleep data
 
 
-```r
+``` r
 # load sleepstudy data set 
 df.sleep = sleepstudy %>% 
   as_tibble() %>% 
@@ -63,14 +65,14 @@ df.sleep = df.sleep %>%
 ### Reasoning data
 
 
-```r
+``` r
 df.reasoning = sk2011.1
 ```
 
 ### Weight loss data
 
 
-```r
+``` r
 data("weightloss", package = "datarium")
 
 # Modify it to have three-way mixed design
@@ -85,7 +87,7 @@ df.weightloss = weightloss %>%
 ### Politness data
 
 
-```r
+``` r
 df.politeness = read_csv("data/politeness_data.csv") %>% 
   mutate(scenario = as.factor(scenario))
 ```
@@ -115,7 +117,7 @@ Let's ask some more specific question aboust the sleep study.
 Let's visualize the data first: 
 
 
-```r
+``` r
 ggplot(data = df.sleep %>% 
          mutate(days = as.factor(days)),
        mapping = aes(x = days,
@@ -130,7 +132,7 @@ ggplot(data = df.sleep %>%
 And now let's fit the model, and compute the contrasts: 
 
 
-```r
+``` r
 fit = lmer(formula = reaction ~ 1 + days + (1 | subject),
            data = df.sleep %>% 
              mutate(days = as.factor(days)))
@@ -152,7 +154,7 @@ fit %>%
 Degrees-of-freedom method: kenward-roger 
 ```
 
-```r
+``` r
 df.sleep %>% 
   # filter(days %in% c(0, 1)) %>% 
   group_by(days) %>% 
@@ -175,7 +177,7 @@ df.sleep %>%
 10     9     351.
 ```
 
-```r
+``` r
 df.sleep %>% 
   mutate(index = ifelse(days %in% 0:4, "early", "late")) %>% 
   group_by(index) %>% 
@@ -200,7 +202,7 @@ For the weight loss data set, we want to check:
 Let's first visualize again: 
 
 
-```r
+``` r
 ggplot(data = df.weightloss,
        mapping = aes(x = timepoint,
                      y = score,
@@ -228,7 +230,7 @@ ggplot(data = df.weightloss,
 And then fit the model, and compute the contrasts:
 
 
-```r
+``` r
 fit = aov_ez(id = "id",
        dv = "score",
        between = "exercises",
@@ -240,7 +242,7 @@ fit = aov_ez(id = "id",
 Contrasts set to contr.sum for the following variables: exercises
 ```
 
-```r
+``` r
 contrasts = list(first_two_vs_last = c(-0.5, -0.5, 1),
                  linear_increase = c(-1, 0, 1))
 
@@ -280,7 +282,7 @@ For the politeness study, we'll be interested in one particular contrast:
 Let's visualize first: 
 
 
-```r
+``` r
 # overview of the data 
 ggplot(data = df.politeness,
         mapping = aes(x = attitude,
@@ -294,14 +296,16 @@ ggplot(data = df.politeness,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (`stat_summary()`).
+Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_summary()`).
 ```
 
 ```
-Warning: Removed 1 rows containing missing values (`geom_point()`).
+Warning: Removed 1 row containing missing values or values outside the scale
+range (`geom_point()`).
 ```
 
-```r
+``` r
 # variation across scenarios 
 ggplot(data = df.politeness,
         mapping = aes(x = scenario,
@@ -313,11 +317,11 @@ ggplot(data = df.politeness,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (`stat_summary()`).
-Removed 1 rows containing missing values (`geom_point()`).
+Warning: Removed 1 row containing non-finite outside the scale range (`stat_summary()`).
+Removed 1 row containing missing values or values outside the scale range (`geom_point()`).
 ```
 
-```r
+``` r
 # variation across participants
 ggplot(data = df.politeness,
         mapping = aes(x = subject,
@@ -329,8 +333,8 @@ ggplot(data = df.politeness,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (`stat_summary()`).
-Removed 1 rows containing missing values (`geom_point()`).
+Warning: Removed 1 row containing non-finite outside the scale range (`stat_summary()`).
+Removed 1 row containing missing values or values outside the scale range (`geom_point()`).
 ```
 
 <img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-11-1.png" width="672" /><img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-11-2.png" width="672" /><img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-11-3.png" width="672" />
@@ -338,34 +342,48 @@ Removed 1 rows containing missing values (`geom_point()`).
 We fit the model and compute the contrasts. 
 
 
-```r
-fit = lmer(formula = frequency ~ 1 + attitude * gender + (1 | subject) + (1 | scenario),
+``` r
+fit = lmer(formula = frequency ~ 1 + attitude * gender + 
+             (1 + attitude | subject) + 
+             (1 + attitude | scenario),
            data = df.politeness)
 
 fit %>% 
-  emmeans(specs = pairwise ~ attitude + gender,
+  joint_tests()
+```
+
+```
+ model term      df1  df2 F.ratio p.value
+ attitude          1 3.20   9.522  0.0495
+ gender            1 4.00  26.600  0.0067
+ attitude:gender   1 3.99   1.997  0.2305
+```
+
+``` r
+fit %>% 
+  emmeans(specs = pairwise ~ attitude + gender, 
           adjust = "none")
 ```
 
 ```
 $emmeans
  attitude gender emmean   SE   df lower.CL upper.CL
- inf      F         261 16.3 5.73    220.2      301
- pol      F         233 16.3 5.73    192.8      274
- inf      M         144 16.3 5.73    104.0      185
- pol      M         133 16.4 5.80     92.2      173
+ inf      F         261 16.0 4.97    219.4      302
+ pol      F         233 16.8 5.17    190.5      276
+ inf      M         144 16.0 4.97    103.2      186
+ pol      M         133 16.9 5.23     89.8      175
 
 Degrees-of-freedom method: kenward-roger 
 Confidence level used: 0.95 
 
 $contrasts
- contrast      estimate    SE    df t.ratio p.value
- inf F - pol F     27.4  7.79 69.00   3.517  0.0008
- inf F - inf M    116.2 21.73  4.56   5.348  0.0040
- inf F - pol M    128.0 21.77  4.59   5.881  0.0027
- pol F - inf M     88.8 21.73  4.56   4.087  0.0115
- pol F - pol M    100.6 21.77  4.59   4.623  0.0071
- inf M - pol M     11.8  7.90 69.08   1.497  0.1390
+ contrast      estimate    SE   df t.ratio p.value
+ inf F - pol F     27.4  8.35 4.08   3.283  0.0295
+ inf F - inf M    116.2 21.33 4.00   5.448  0.0055
+ inf F - pol M    128.1 21.99 4.73   5.824  0.0025
+ pol F - inf M     88.8 21.95 4.70   4.046  0.0112
+ pol F - pol M    100.7 22.12 4.00   4.551  0.0104
+ inf M - pol M     11.9  8.46 4.28   1.405  0.2283
 
 Degrees-of-freedom method: kenward-roger 
 ```
@@ -375,7 +393,7 @@ Here, I've computed all pairwise contrasts. We were only interested in one: `inf
 If we had used an ANOVA approach for this data set, we could have done it like so: 
 
 
-```r
+``` r
 aov_ez(id = "subject",
        dv = "frequency",
        between = "gender",
@@ -423,7 +441,7 @@ This approach ignores the variation across scenarios (and just computed the mean
 What if we have groups of participants who differ from each other? Let's generate data for which this is the case.
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -455,7 +473,7 @@ df.mixed = tibble(
 Let' first fit a model that ignores the fact that there are two different groups of participants. 
 
 
-```r
+``` r
 # fit model
 fit.mixed = lmer(formula = value ~ 1 + condition + (1 | participant),
                  data = df.mixed)
@@ -496,7 +514,7 @@ condition1 -0.095
 Let's look at the model's predictions: 
 
 
-```r
+``` r
 fit.mixed %>%
   augment() %>%
   clean_names() %>%
@@ -518,7 +536,7 @@ fit.mixed %>%
 And let's simulate some data from the fitted model: 
 
 
-```r
+``` r
 # simulated data 
 fit.mixed %>%
   simulate() %>%
@@ -540,7 +558,7 @@ As we can see, the simulated data doesn't look like the data that was used to fi
 Now, let's fit a model that takes the differences between groups into account by adding a fixed effect for `group`.
 
 
-```r
+``` r
 # fit model
 fit.grouped = lmer(formula = value ~ 1 + group + condition + (1 | participant),
                    data = df.mixed)
@@ -585,7 +603,7 @@ Note how the variance of the random intercepts is much smaller now that we've ta
 Let's visualize the model's predictions:
 
 
-```r
+``` r
 fit.grouped %>%
   augment() %>%
   clean_names() %>%
@@ -606,7 +624,7 @@ fit.grouped %>%
 And simulate some data from the model: 
 
 
-```r
+``` r
 # simulated data 
 fit.grouped %>%
   simulate() %>%
@@ -625,7 +643,7 @@ This time, the simulated data looks much more like the data that was used to fit
 
 
 
-```r
+``` r
 ggpredict(model = fit.grouped,
           terms = "condition") %>% 
   plot()
@@ -645,7 +663,7 @@ The example above has shown that we can take overall differences between groups 
 Let's first generate some data with heterogeneous variance: 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -676,7 +694,7 @@ df.variance = tibble(
 Let's fit the model: 
 
 
-```r
+``` r
 # fit model
 fit.variance = lmer(formula = value ~ 1 + group + condition + (1 | participant),
                     data = df.variance)
@@ -719,7 +737,7 @@ condition1 -0.174  0.000
 Look at the data and model predictions: 
 
 
-```r
+``` r
 fit.variance %>%
   augment() %>%
   clean_names() %>%
@@ -740,7 +758,7 @@ fit.variance %>%
 And the simulated data: 
 
 
-```r
+``` r
 # simulated data 
 fit.variance %>%
   simulate() %>%
@@ -759,6 +777,468 @@ The `lmer()` fails here. It uses one normal distribution to model the variance b
 
 We will later see that it's straightforward in Bayesian models to explicitly model heterogeneity in variance. 
 
+## Simulating different random effects structures  
+
+The examples below are taken from [this post](https://rpsychologist.com/r-guide-longitudinal-lme-lmer#power-analysis-and-simulating-these-models). 
+
+### Two-level model
+
+<div class="figure">
+<img src="figures/two_level.png" alt="Two-level model" width="95%" />
+<p class="caption">(\#fig:two-level-model)Two-level model</p>
+</div>
+
+#### Conditional model 
+
+
+##### Cimulate the data
+
+
+``` r
+set.seed(1)
+
+n_participants = 100
+n_timepoints = 3
+n_conditions = 2
+p_condition = 0.5
+b0 = 10
+b1 = 10
+sd_participant = 2
+sd_residual = 1
+
+df.data = tibble(participant = rep(1:n_participants, each = n_timepoints),
+                 timepoint = rep(1:n_timepoints, times = n_participants),
+                 intercept_participant = rep(rnorm(n_participants, sd = sd_participant), 
+                                             each = n_timepoints)) %>% 
+  group_by(participant) %>% 
+  mutate(condition = rbinom(n = 1, size = 1, prob = p_condition)) %>% 
+  ungroup() %>% 
+  mutate(value = b0 + b1 * condition + intercept_participant + 
+           rnorm(n_participants * n_timepoints, sd = sd_residual))
+```
+
+##### Plot the data 
+
+
+``` r
+df.plot = df.data %>% 
+  mutate(condition = factor(condition,
+                            levels = c(0, 1),
+                            labels = c("control", "treatment")),
+         timepoint = as.factor(timepoint))
+
+ggplot(data = df.plot,
+       mapping = aes(x = timepoint,
+                     y = value,
+                     group = participant)) +
+  geom_point(alpha = 0.5) +
+  geom_line(alpha = 0.5) +
+  facet_grid(~ condition) +
+  labs(x = "timepoint")
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+
+##### Fit the model 
+
+
+``` r
+fit = lmer(formula = value ~ 1 + condition + (1 | participant),
+           data = df.data)
+
+fit %>% 
+  summary()
+```
+
+```
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: value ~ 1 + condition + (1 | participant)
+   Data: df.data
+
+REML criterion at convergence: 1102
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.30522 -0.57146  0.03152  0.56826  2.28135 
+
+Random effects:
+ Groups      Name        Variance Std.Dev.
+ participant (Intercept) 3.106    1.762   
+ Residual                1.087    1.043   
+Number of obs: 300, groups:  participant, 100
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(>|t|)    
+(Intercept)  10.2199     0.2365 98.0000   43.21   <2e-16 ***
+condition    10.0461     0.3837 98.0000   26.18   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+          (Intr)
+condition -0.616
+```
+
+##### Simulate and plot new data
+
+
+``` r
+set.seed(1)
+
+fit %>% 
+  simulate() %>% 
+  bind_cols(df.data) %>% 
+  mutate(condition = factor(condition,
+                            levels = c(0, 1),
+                            labels = c("control", "treatment")),
+         timepoint = as.factor(timepoint)) %>% 
+  ggplot(data = .,
+         mapping = aes(x = timepoint,
+                       y = sim_1,
+                       group = participant)) +
+  geom_point(alpha = 0.5,
+             color = "blue") +
+  geom_line(alpha = 0.5,
+            color = "blue") +
+  facet_grid(~ condition) +
+  labs(x = "timepoint")
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+
+#### Conditional growth model 
+
+##### Simulate the data
+
+
+``` r
+set.seed(1)
+
+n_participants = 100
+n_timepoints = 3
+n_conditions = 2
+p_condition = 0.5
+b0 = 10 # intercept 
+b1 = 10 # condition
+b2 = 2 # time 
+b3 = 3 # interaction
+sd_participant = 2
+sd_time = 2
+sd_residual = 1
+
+df.data = tibble(participant = rep(1:n_participants, each = n_timepoints),
+                 timepoint = rep(1:n_timepoints, times = n_participants),
+                 intercept_participant = rep(rnorm(n_participants, sd = sd_participant), 
+                                             each = n_timepoints),
+                 time_participant = rep(rnorm(n_participants, sd = sd_time), 
+                                             each = n_timepoints)) %>% 
+  group_by(participant) %>% 
+  mutate(condition = rbinom(n = 1, size = 1, prob = p_condition)) %>% 
+  ungroup() %>% 
+  mutate(value = b0 + intercept_participant + 
+           b1 * condition + 
+           (b2  + time_participant) * timepoint +  
+           b3 * condition * timepoint +
+           rnorm(n_participants * n_timepoints, sd = sd_residual))
+```
+
+##### Plot the data 
+
+
+``` r
+df.plot = df.data %>% 
+  mutate(condition = factor(condition,
+                            levels = c(0, 1),
+                            labels = c("control", "treatment")),
+         timepoint = as.factor(timepoint))
+
+ggplot(data = df.plot,
+       mapping = aes(x = timepoint,
+                     y = value,
+                     group = participant)) +
+  geom_point(alpha = 0.5) +
+  geom_line(alpha = 0.5) +
+  facet_grid(~ condition) +
+  labs(x = "timepoint")
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-31-1.png" width="672" />
+
+##### Fit the model 
+
+
+``` r
+fit = lmer(formula = value ~ 1 + condition * timepoint + (1 + timepoint | participant),
+           data = df.data)
+
+fit %>% 
+  summary()
+```
+
+```
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: value ~ 1 + condition * timepoint + (1 + timepoint | participant)
+   Data: df.data
+
+REML criterion at convergence: 1360.3
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.14633 -0.46360  0.03902  0.42302  2.82945 
+
+Random effects:
+ Groups      Name        Variance Std.Dev. Corr 
+ participant (Intercept) 3.190    1.786         
+             timepoint   3.831    1.957    -0.06
+ Residual                1.149    1.072         
+Number of obs: 300, groups:  participant, 100
+
+Fixed effects:
+                    Estimate Std. Error      df t value Pr(>|t|)    
+(Intercept)          10.0101     0.3328 98.0000  30.079  < 2e-16 ***
+condition            10.0684     0.4854 98.0000  20.741  < 2e-16 ***
+timepoint             2.0595     0.2883 97.9999   7.143 1.62e-10 ***
+condition:timepoint   2.9090     0.4205 97.9999   6.917 4.76e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) condtn timpnt
+condition   -0.686              
+timepoint   -0.266  0.182       
+cndtn:tmpnt  0.182 -0.266 -0.686
+```
+
+##### Data with individual model predictions 
+
+
+``` r
+df.plot = fit %>% 
+  augment() %>% 
+  mutate(condition = factor(condition,
+                            levels = c(0, 1),
+                            labels = c("control", "treatment")),
+         timepoint = as.factor(timepoint))
+         
+
+ggplot(data = df.plot,
+       mapping = aes(x = timepoint,
+                     y = value,
+                     group = participant)) +
+  # geom_point(alpha = 0.5) +
+  # geom_line(alpha = 0.5) +
+  geom_point(mapping = aes(y = .fitted),
+             alpha = 0.3,
+             color = "red") +
+  geom_line(mapping = aes(y = .fitted),
+             alpha = 0.3,
+             color = "red") +
+  facet_grid(~ condition) +
+  labs(x = "timepoint")
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-33-1.png" width="672" />
+
+##### Data with overall model predictions 
+
+
+``` r
+df.model = ggpredict(model = fit, 
+                     terms = c("timepoint", "condition"),
+                     type = "fixed") %>% 
+  rename(timepoint = x,
+         condition = group) %>% 
+  mutate(condition = factor(condition,
+                            levels = c(0, 1),
+                            labels = c("control", "treatment")),
+         timepoint = as.factor(timepoint))
+
+ggplot(data = df.plot,
+       mapping = aes(x = timepoint,
+                     y = value,
+                     group = participant)) +
+  geom_point(alpha = 0.2) +
+  geom_line(alpha = 0.2) +
+  geom_ribbon(data = df.model,
+              mapping = aes(ymin = conf.low,
+                            ymax = conf.high,
+                            y = predicted,
+                            group = NA),
+              fill = "red",
+              alpha = 0.4) +
+  geom_point(data = df.model,
+             mapping = aes(y = predicted,
+                           group = NA),
+             color = "red",
+             size = 3) +
+  geom_line(data = df.model,
+            mapping = aes(y = predicted,
+                          group = NA),
+            color = "red",
+            linewidth = 1) +
+  facet_grid(~ condition) +
+  labs(x = "timepoint")
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-34-1.png" width="672" />
+
+##### Simulate and plot new data
+
+
+``` r
+set.seed(1)
+
+fit %>% 
+  simulate() %>% 
+  bind_cols(df.data) %>% 
+  mutate(condition = factor(condition,
+                            levels = c(0, 1),
+                            labels = c("control", "treatment")),
+         timepoint = as.factor(timepoint)) %>% 
+  ggplot(data = .,
+         mapping = aes(x = timepoint,
+                       y = sim_1,
+                       group = participant)) +
+  geom_point(alpha = 0.5,
+             color = "blue") +
+  geom_line(alpha = 0.5,
+            color = "blue") +
+  facet_grid(~ condition) +
+  labs(x = "timepoint")
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-35-1.png" width="672" />
+
+### Three-level model 
+
+<div class="figure">
+<img src="figures/three_level.png" alt="Three-level model" width="95%" />
+<p class="caption">(\#fig:three-level-model)Three-level model</p>
+</div>
+
+##### Simulate the data
+
+
+``` r
+set.seed(1)
+
+n_participants = 100
+n_therapists = 6
+n_timepoints = 3
+n_conditions = 2
+p_condition = 0.5
+b0 = 10 # intercept 
+b1 = 10 # condition
+b2 = 2 # time 
+b3 = 3 # interaction
+sd_intercept_therapist = 3
+sd_intercept_participant = 2
+sd_time_therapist = 2
+sd_time_participant = 1
+sd_residual = 1
+
+df.data = tibble(participant = rep(1:n_participants, each = n_timepoints),
+                 timepoint = rep(1:n_timepoints, times = n_participants),
+                 intercept_participant = rep(rnorm(n_participants,
+                                                   sd = sd_intercept_participant), 
+                                             each = n_timepoints),
+                 time_participant = rep(rnorm(n_participants, sd = sd_time_participant), 
+                                             each = n_timepoints)) %>% 
+  group_by(participant) %>% 
+  mutate(condition = rbinom(n = 1, size = 1, prob = p_condition),
+         therapist = ifelse(condition == 0, sample(x = 1:(n_therapists/2),
+                                                   size = 1),
+                        sample(x = ((n_therapists/2)+1):n_therapists,
+                               size = 1))) %>% 
+  ungroup() %>% 
+  group_by(therapist) %>%
+  mutate(intercept_therapist = rnorm(1, sd = sd_intercept_therapist),
+         time_therapist = rnorm(1, sd = sd_time_therapist)) %>%
+  ungroup() %>% 
+  mutate(value = b0 + intercept_therapist + intercept_participant + 
+           b1 * condition + 
+           (b2 + time_therapist + time_participant) * timepoint +  
+           b3 * condition * timepoint +
+           rnorm(n_participants * n_timepoints, sd = sd_residual))
+```
+
+##### Plot the data 
+
+
+``` r
+df.plot = df.data %>% 
+  mutate(condition = factor(condition,
+                            levels = c(0, 1),
+                            labels = c("control", "treatment")),
+         timepoint = as.factor(timepoint),
+         therapist = as.factor(therapist))
+
+ggplot(data = df.plot,
+       mapping = aes(x = timepoint,
+                     y = value,
+                     group = participant,
+                     color = therapist)) +
+  geom_point(alpha = 0.5) +
+  geom_line(alpha = 0.5) +
+  facet_grid(~ condition) +
+  labs(x = "timepoint")
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-37-1.png" width="672" />
+
+##### Fit the model 
+
+
+``` r
+fit = lmer(formula = value ~ 1 + condition * timepoint + 
+             (1 + timepoint | therapist) + 
+             (1 + timepoint | therapist:participant),
+           data = df.data)
+
+fit %>% 
+  summary()
+```
+
+```
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: value ~ 1 + condition * timepoint + (1 + timepoint | therapist) +  
+    (1 + timepoint | therapist:participant)
+   Data: df.data
+
+REML criterion at convergence: 1237.9
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.02926 -0.51103  0.01576  0.48074  2.12179 
+
+Random effects:
+ Groups                Name        Variance Std.Dev. Corr 
+ therapist:participant (Intercept) 2.1361   1.4616        
+                       timepoint   0.8205   0.9058   0.33 
+ therapist             (Intercept) 5.6350   2.3738        
+                       timepoint   2.4175   1.5548   -0.21
+ Residual                          1.0515   1.0254        
+Number of obs: 300, groups:  therapist:participant, 100; therapist, 6
+
+Fixed effects:
+                    Estimate Std. Error      df t value Pr(>|t|)   
+(Intercept)          10.5078     1.4037  3.9706   7.486  0.00175 **
+condition             7.7672     1.9866  3.9825   3.910  0.01754 * 
+timepoint             1.5160     0.9126  3.9765   1.661  0.17244   
+condition:timepoint   5.0489     1.2913  3.9845   3.910  0.01752 * 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) condtn timpnt
+condition   -0.707              
+timepoint   -0.208  0.147       
+cndtn:tmpnt  0.147 -0.208 -0.707
+```
+
 ## Bootstrapping
 
 Bootstrapping is a good way to estimate our uncertainty on the parameter estimates in the model. 
@@ -768,7 +1248,7 @@ Bootstrapping is a good way to estimate our uncertainty on the parameter estimat
 Let's briefly review how to do bootstrapping in a simple linear model. 
 
 
-```r
+``` r
 # fit model 
 fit.lm = lm(formula = reaction ~ 1 + days,
             data = df.sleep)
@@ -782,13 +1262,14 @@ coef(fit.lm)
   252.32070    10.32766 
 ```
 
-```r
+``` r
 # bootstrapping 
 df.boot = df.sleep %>% 
   bootstrap(n = 100,
             id = "id") %>% 
   mutate(fit = map(.x = strap,
-                   .f = ~ lm(formula = reaction ~ 1 + days, data = .)),
+                   .f = ~ lm(formula = reaction ~ 1 + days,
+                             data = .x)),
          tidy = map(.x = fit, 
                     .f = tidy)) %>% 
   unnest(tidy) %>% 
@@ -800,7 +1281,7 @@ df.boot = df.sleep %>%
 Let's illustrate the linear model with a confidence interval (making parametric assumptions using the t-distribution). 
 
 
-```r
+``` r
 ggplot(data = df.sleep,
        mapping = aes(x = days,
                      y = reaction)) + 
@@ -808,12 +1289,12 @@ ggplot(data = df.sleep,
   geom_point(alpha = 0.3)
 ```
 
-<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-40-1.png" width="672" />
 
 And let's compare this with the different regression lines that we get out of our bootstrapped samples:
 
 
-```r
+``` r
 ggplot(data = df.sleep,
        mapping = aes(x = days,
                      y = reaction)) + 
@@ -825,14 +1306,14 @@ ggplot(data = df.sleep,
   geom_point(alpha = 0.3)
 ```
 
-<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-28-1.png" width="672" />
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-41-1.png" width="672" />
 
-#### bootmer() function
+### Linear mixed effects model 
 
 For the linear mixed effects model, we can use the `bootmer()` function to do bootstrapping. 
 
 
-```r
+``` r
 set.seed(1)
 
 # fit the model 
@@ -845,7 +1326,9 @@ boot.lmer = bootMer(fit.lmer,
                     nsim = 100)
 
 # compute confidence interval 
-boot.ci(boot.lmer, index = 2, type = "perc")
+boot.ci(boot.lmer,
+        index = 2,
+        type = "perc")
 ```
 
 ```
@@ -862,8 +1345,11 @@ Calculations and Intervals on Original Scale
 Some percentile intervals may be unstable
 ```
 
-```r
-# plot estimates 
+Let's plot the distribution of estimates.
+
+
+``` r
+# plot distribution of estimates 
 boot.lmer$t %>% 
   as_tibble() %>% 
   clean_names() %>% 
@@ -879,25 +1365,50 @@ boot.lmer$t %>%
   coord_cartesian(expand = F)
 ```
 
-<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-43-1.png" width="672" />
+
+And let's look at the predictions together with the data. 
+
+
+``` r
+df.boot_lmer = boot.lmer$t %>% 
+  as_tibble() %>% 
+  clean_names() %>% 
+  mutate(id = 1:n())
+
+ggplot(data = df.sleep,
+       mapping = aes(x = days,
+                     y = reaction)) + 
+  geom_abline(data = df.boot_lmer,
+              aes(intercept = intercept,
+                  slope = days,
+                  group = id),
+              alpha = 0.1) +
+  geom_point(alpha = 0.3)
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-44-1.png" width="672" />
+
+As you'll notice, once we take the dependence in the data into account, the bootstrapped confidence interval is wider than when we ignore the dependence. 
+
 
 ## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -910,46 +1421,45 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
- [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.4        
- [7] tidyr_1.3.0         tibble_3.2.1        ggplot2_3.4.4      
-[10] tidyverse_2.0.0     emmeans_1.9.0       ggeffects_1.3.4    
-[13] boot_1.3-28.1       modelr_0.1.11       datarium_0.1.0     
-[16] car_3.1-2           carData_3.0-5       afex_1.3-0         
-[19] lme4_1.1-35.1       Matrix_1.6-4        broom.mixed_0.2.9.4
-[22] janitor_2.2.0       kableExtra_1.3.4    knitr_1.45         
+ [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
+ [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
+[10] tidyverse_2.0.0     emmeans_1.10.3      ggeffects_1.7.0    
+[13] boot_1.3-30         modelr_0.1.11       datarium_0.1.0     
+[16] car_3.1-2           carData_3.0-5       afex_1.3-1         
+[19] lme4_1.1-35.5       Matrix_1.7-0        broom.mixed_0.2.9.5
+[22] janitor_2.2.0       kableExtra_1.4.0    knitr_1.48         
 
 loaded via a namespace (and not attached):
- [1] gridExtra_2.3       rlang_1.1.2         magrittr_2.0.3     
- [4] snakecase_0.11.1    furrr_0.3.1         compiler_4.3.2     
- [7] mgcv_1.9-1          systemfonts_1.0.5   vctrs_0.6.5        
-[10] reshape2_1.4.4      rvest_1.0.3         pkgconfig_2.0.3    
-[13] crayon_1.5.2        fastmap_1.1.1       backports_1.4.1    
-[16] labeling_0.4.3      utf8_1.2.4          rmarkdown_2.25     
-[19] tzdb_0.4.0          haven_2.5.4         nloptr_2.0.3       
-[22] bit_4.0.5           xfun_0.41           cachem_1.0.8       
-[25] jsonlite_1.8.8      highr_0.10          broom_1.0.5        
-[28] parallel_4.3.2      cluster_2.1.6       R6_2.5.1           
-[31] RColorBrewer_1.1-3  bslib_0.6.1         stringi_1.8.3      
-[34] parallelly_1.36.0   rpart_4.1.23        jquerylib_0.1.4    
-[37] numDeriv_2016.8-1.1 estimability_1.4.1  Rcpp_1.0.11        
-[40] bookdown_0.37       base64enc_0.1-3     splines_4.3.2      
-[43] nnet_7.3-19         timechange_0.2.0    tidyselect_1.2.0   
-[46] rstudioapi_0.15.0   abind_1.4-5         yaml_2.3.8         
-[49] sjlabelled_1.2.0    codetools_0.2-19    listenv_0.9.0      
-[52] lattice_0.22-5      lmerTest_3.1-3      plyr_1.8.9         
-[55] withr_2.5.2         coda_0.19-4         evaluate_0.23      
-[58] foreign_0.8-86      future_1.33.1       xml2_1.3.6         
-[61] pillar_1.9.0        checkmate_2.3.1     insight_0.19.7     
-[64] generics_0.1.3      vroom_1.6.5         hms_1.1.3          
-[67] munsell_0.5.0       scales_1.3.0        minqa_1.2.6        
-[70] globals_0.16.2      xtable_1.8-4        glue_1.6.2         
-[73] Hmisc_5.1-1         tools_4.3.2         data.table_1.14.10 
-[76] webshot_0.5.5       mvtnorm_1.2-4       grid_4.3.2         
-[79] datawizard_0.9.1    colorspace_2.1-0    nlme_3.1-164       
-[82] htmlTable_2.4.2     Formula_1.2-5       cli_3.6.2          
-[85] fansi_1.0.6         viridisLite_0.4.2   svglite_2.1.3      
-[88] gtable_0.3.4        sass_0.4.8          digest_0.6.33      
-[91] pbkrtest_0.5.2      farver_2.1.1        htmlwidgets_1.6.4  
-[94] htmltools_0.5.7     lifecycle_1.0.4     httr_1.4.7         
-[97] bit64_4.0.5         MASS_7.3-60        
+ [1] gridExtra_2.3       rlang_1.1.4         magrittr_2.0.3     
+ [4] snakecase_0.11.1    furrr_0.3.1         compiler_4.4.1     
+ [7] mgcv_1.9-1          systemfonts_1.1.0   vctrs_0.6.5        
+[10] reshape2_1.4.4      pkgconfig_2.0.3     crayon_1.5.3       
+[13] fastmap_1.2.0       backports_1.5.0     labeling_0.4.3     
+[16] utf8_1.2.4          rmarkdown_2.27      tzdb_0.4.0         
+[19] haven_2.5.4         nloptr_2.1.1        bit_4.0.5          
+[22] xfun_0.45           cachem_1.1.0        jsonlite_1.8.8     
+[25] highr_0.11          broom_1.0.6         parallel_4.4.1     
+[28] cluster_2.1.6       R6_2.5.1            RColorBrewer_1.1-3 
+[31] bslib_0.7.0         stringi_1.8.4       parallelly_1.37.1  
+[34] rpart_4.1.23        jquerylib_0.1.4     numDeriv_2016.8-1.1
+[37] estimability_1.5.1  Rcpp_1.0.13         bookdown_0.40      
+[40] base64enc_0.1-3     splines_4.4.1       nnet_7.3-19        
+[43] timechange_0.3.0    tidyselect_1.2.1    rstudioapi_0.16.0  
+[46] abind_1.4-5         yaml_2.3.9          sjlabelled_1.2.0   
+[49] codetools_0.2-20    listenv_0.9.1       lattice_0.22-6     
+[52] lmerTest_3.1-3      plyr_1.8.9          withr_3.0.0        
+[55] coda_0.19-4.1       evaluate_0.24.0     foreign_0.8-86     
+[58] future_1.33.2       xml2_1.3.6          pillar_1.9.0       
+[61] checkmate_2.3.1     insight_0.20.3      generics_0.1.3     
+[64] vroom_1.6.5         hms_1.1.3           munsell_0.5.1      
+[67] scales_1.3.0        minqa_1.2.7         globals_0.16.3     
+[70] xtable_1.8-4        glue_1.7.0          Hmisc_5.1-3        
+[73] tools_4.4.1         data.table_1.15.4   mvtnorm_1.2-5      
+[76] grid_4.4.1          datawizard_0.12.2   colorspace_2.1-0   
+[79] nlme_3.1-164        htmlTable_2.4.2     Formula_1.2-5      
+[82] cli_3.6.3           fansi_1.0.6         viridisLite_0.4.2  
+[85] svglite_2.1.3       gtable_0.3.5        sass_0.4.9         
+[88] digest_0.6.36       pbkrtest_0.5.3      farver_2.1.2       
+[91] htmlwidgets_1.6.4   htmltools_0.5.8.1   lifecycle_1.0.4    
+[94] bit64_4.0.5         MASS_7.3-61        
 ```

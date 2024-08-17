@@ -44,6 +44,7 @@ Special thanks go to my teaching teams:
   - Satchel Grant 
   - Shawn Schwartz
 - 2023: 
+  - Nilam Ram (instructor)
   - Ari Beller
   - Yoonji Lee
   - Satchel Grant 
@@ -69,7 +70,7 @@ Special thanks go to my teaching teams:
 ## List of R packages used in this book
 
 
-```r
+``` r
 # RMarkdown
 library("knitr")            # markdown things
 library("bookdown")         # markdown things
@@ -91,6 +92,7 @@ library("patchwork")        # making figure panels
 library("ggpol")            # for making fancy boxplots
 library("ggridges")         # for making joyplots
 library("gganimate")        # for making animations
+library("transformr")       # for gganmiate
 library("GGally")           # for pairs plot
 library("ggrepel")          # for labels in ggplots
 library("corrr")            # for calculating correlations between many variables
@@ -122,6 +124,7 @@ library("extraDistr")       # additional probability distributions
 library("effects")          # for showing effects in linear, generalized linear, and other models
 library("brms")             # Bayesian regression
 library("parameters")       # For extracting parameters
+library("rstanarm")         # For Bayesian modeling with Stan
 
 # Misc
 library("tictoc")           # timing things
@@ -136,19 +139,31 @@ library("xtable")           # for tables
 library("DT")               # for tables
 library("papaja")           # for reporting results
 library("statsExpressions") # for extracting stats results APA style
+library("devtools")         # for installing packages from GitHub
+library("sf")               # package needed for the transformr package
 ```
+
+## Install all packages needed for this book 
+
+
+``` r
+install.packages(c("knitr", "bookdown", "kableExtra", "gapminder", "NHANES", "datarium", "titanic", "arrangements", "magrittr", "tidyverse", "patchwork", "ggpol", "ggridges", "gganimate", "GGally", "ggrepel", "corrr", "corrplot", "DiagrammeR", "DiagrammeRsvg", "ggeffects", "bayesplot", "skimr", "visdat", "rsvg", "see", "afex", "lme4", "emmeans", "broom.mixed", "janitor", "car", "rstanarm", "greta", "tidybayes", "boot", "modelr", "mediation", "multilevel", "extraDistr", "effects", "brms", "parameters", "tictoc", "MASS", "lsr", "extrafont", "pwr", "arrangements", "stargazer", "sjPlot", "xtable", "DT", "papaja", "statsExpressions", "devtools", "sf", "rstanarm"))
+
+devtools::install_github("thomasp85/transformr")
+```
+
 
 ## Session info
 
 
 ```
-## R version 4.3.2 (2023-10-31)
-## Platform: aarch64-apple-darwin20 (64-bit)
-## Running under: macOS Sonoma 14.1.2
+## R version 4.4.1 (2024-06-14)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Sonoma 14.6
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -160,9 +175,9 @@ library("statsExpressions") # for extracting stats results APA style
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.33   R6_2.5.1        bookdown_0.37   fastmap_1.1.1  
-##  [5] xfun_0.41       cachem_1.0.8    knitr_1.45      htmltools_0.5.7
-##  [9] rmarkdown_2.25  lifecycle_1.0.4 cli_3.6.2       sass_0.4.8     
-## [13] jquerylib_0.1.4 compiler_4.3.2  tools_4.3.2     evaluate_0.23  
-## [17] bslib_0.6.1     yaml_2.3.8      rlang_1.1.2     jsonlite_1.8.8
+##  [1] digest_0.6.36     R6_2.5.1          bookdown_0.40     fastmap_1.2.0    
+##  [5] xfun_0.45         cachem_1.1.0      knitr_1.48        htmltools_0.5.8.1
+##  [9] rmarkdown_2.27    lifecycle_1.0.4   cli_3.6.3         sass_0.4.9       
+## [13] jquerylib_0.1.4   compiler_4.4.1    tools_4.4.1       evaluate_0.24.0  
+## [17] bslib_0.7.0       yaml_2.3.9        rlang_1.1.4       jsonlite_1.8.8
 ```

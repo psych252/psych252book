@@ -4,12 +4,12 @@
 
 - Pitfalls in fitting `lmers()`s (and what to do about it). 
 - Understanding `lmer()` syntax even better.
-- ANOVA vs. Lmer 
+- ANOVA vs. lmer 
 
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")       # for knitting RMarkdown 
 library("kableExtra")  # for making nice tables
 library("janitor")     # for cleaning column names
@@ -27,7 +27,7 @@ library("tidyverse")   # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -44,110 +44,30 @@ options(dplyr.summarise.inform = F)
 
 ## Load data sets
 
-### Sleep data
-
-
-```r
-# load sleepstudy data set 
-df.sleep = sleepstudy %>% 
-  as_tibble() %>% 
-  clean_names() %>% 
-  mutate(subject = as.character(subject)) %>% 
-  select(subject, days, reaction)
-
-# add two fake participants (with missing data)
-df.sleep = df.sleep %>% 
-  bind_rows(tibble(subject = "374",
-                   days = 0:1,
-                   reaction = c(286, 288)),
-            tibble(subject = "373",
-                   days = 0,
-                   reaction = 245))
-```
-
 ### Reasoning data
 
 
-```r
+``` r
 df.reasoning = sk2011.1
-```
-
-### Weight loss data
-
-
-```r
-data("weightloss", package = "datarium")
-
-# Modify it to have three-way mixed design
-df.weightloss = weightloss %>%
-  mutate(id = rep(1:24, 2)) %>% 
-  pivot_longer(cols = t1:t3,
-               names_to = "timepoint",
-               values_to = "score") %>% 
-  arrange(id)
-```
-
-### Politness data
-
-
-```r
-df.politeness = read_csv("data/politeness_data.csv") %>% 
-  mutate(scenario = as.factor(scenario))
-```
-
-```
-Rows: 84 Columns: 5
-── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-Delimiter: ","
-chr (3): subject, gender, attitude
-dbl (2): scenario, frequency
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 ## Understanding the lmer() syntax
 
 Here is an overview of how to specify different kinds of linear mixed effects models.
 
-<table>
- <thead>
-  <tr>
-   <th style="text-align:left;"> formula </th>
-   <th style="text-align:left;"> description </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (1 | g)` </td>
-   <td style="text-align:left;"> Random intercept for each level of `g` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (0 + x1 | g)` </td>
-   <td style="text-align:left;"> Random slope for each level of `g` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (x1 | g)` </td>
-   <td style="text-align:left;"> Correlated random slope and intercept for each level of `g` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (x1 || g)` </td>
-   <td style="text-align:left;"> Uncorrelated random slope and intercept for each level of `g` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (1 | school) + (1 | teacher)` </td>
-   <td style="text-align:left;"> Random intercept for each level of `school` and for each level of `teacher` (crossed) </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> `dv ~ x1 + (1 | school/teacher)` </td>
-   <td style="text-align:left;"> Random intercept for each level of `school` and for each level of `teacher` in `school` (nested) </td>
-  </tr>
-</tbody>
-</table>
+
+|formula                                                   |description                                                                                      |
+|:---------------------------------------------------------|:------------------------------------------------------------------------------------------------|
+|`dv ~ x1 + (1 &#124; g)`                                  |Random intercept for each level of `g`                                                           |
+|`dv ~ x1 + (0 + x1 &#124; g)`                             |Random slope for each level of `g`                                                               |
+|`dv ~ x1 + (x1 &#124; g)`                                 |Correlated random slope and intercept for each level of `g`                                      |
+|`dv ~ x1 + (x1 &#124;&#124; g)`                           |Uncorrelated random slope and intercept for each level of `g`                                    |
+|`dv ~ x1 + (1 &#124; school) + (1 &#124; teacher)`        |Random intercept for each level of `school` and for each level of `teacher` (crossed)            |
+|`dv ~ x1 + (1 &#124; school) + (1 &#124; school:teacher)` |Random intercept for each level of `school` and for each level of `teacher` in `school` (nested) |
 
 Note that this `(1 | school/teacher)` is equivalent to `(1 | school) + (1 | teacher:school)` (see [here](https://stats.stackexchange.com/questions/228800/crossed-vs-nested-random-effects-how-do-they-differ-and-how-are-they-specified)). 
 
-## ANOVA vs. Lmer
+## ANOVA vs. lmer
 
 ### Between subjects ANOVA
 
@@ -156,7 +76,7 @@ Let's start with a between subjects ANOVA (which means we are in `lm()` world). 
 First, we use the `aov_ez()` function from the "afex" package to do so. 
 
 
-```r
+``` r
 aov_ez(id = "id",
        dv = "response",
        between = "instruction",
@@ -184,10 +104,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 
 Looks like there was no main effect of `instruction` on participants' responses. 
 
-An alternative route for getting at the same test, would be via combining `lm()` with `Anova()` (as we've done before in class). 
+An alternative route for getting at the same test, would be via combining `lm()` with `joint_tests()` (as we've done before in class). 
 
 
-```r
+``` r
 lm(formula = response ~ instruction,
    data = df.reasoning %>% 
      group_by(id, instruction) %>% 
@@ -208,7 +128,7 @@ The two routes yield the same result. Notice that for the `lm()` approach, I cal
 Now let's take a look whether `validity` and `plausibility` affected participants' responses in the reasoning task. These two factors were varied within participants. Again, we'll use the `aov_ez()` function like so: 
 
 
-```r
+``` r
 aov_ez(id = "id",
        dv = "response",
        within = c("validity", "plausibility"),
@@ -233,11 +153,12 @@ Response: response
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
 
-For the linear model route, given that we have repeated observations from the same participants, we need to use `lmer()`. The repeated measures anova has the random effect structure as shown below: 
+For the linear model route, given that we have repeated observations from the same participants, we need to use `lmer()`. The repeated measures ANOVA has the random effect structure as shown below: 
 
 
-```r
-lmer(formula = response ~ validity * plausibility + (1 | id) + (1 | validity:id) + (1 | plausibility:id),
+``` r
+lmer(formula = response ~ 1 + validity * plausibility + (1 | id) + 
+       (1 | id:validity) + (1 | id:plausibility),
      data = df.reasoning %>% 
         filter(instruction == "probabilistic") %>%
         group_by(id, validity, plausibility) %>%
@@ -265,7 +186,7 @@ Note though that the results of the ANOVA route and the `lmer()` route weren't i
 Now let's take a look at both between- as well as within-subjects factors. Let's compare the `aov_ez()` route
 
 
-```r
+``` r
 aov_ez(id = "id",
        dv = "response",
        between = "instruction",
@@ -301,8 +222,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 with the `lmer()` route: 
 
 
-```r
-lmer(formula = response ~ instruction * validity * plausibility + (1 | id) + (1 | validity:id) + (1 | plausibility:id),
+``` r
+lmer(formula = response ~ instruction * validity * plausibility + (1 | id) + 
+       (1 | id:validity) + (1 | id:plausibility),
       data = df.reasoning %>%
         group_by(id, validity, plausibility, instruction) %>%
         summarize(response = mean(response))) %>% 
@@ -319,26 +241,31 @@ lmer(formula = response ~ instruction * validity * plausibility + (1 | id) + (1 
  validity:plausibility               1  38   0.136  0.7148
  instruction:validity:plausibility   1  38   4.777  0.0351
 ```
-
 Here, both routes yield the same results. 
+
+## Additional resources
+
+### Readings
+
+- [Nested and crossed random effects in lme4](https://www.muscardinus.be/statistics/nested.html)
 
 ## Session info
 
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -351,40 +278,38 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
- [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.4        
- [7] tidyr_1.3.0         tibble_3.2.1        ggplot2_3.4.4      
-[10] tidyverse_2.0.0     emmeans_1.9.0       ggeffects_1.3.4    
-[13] boot_1.3-28.1       modelr_0.1.11       datarium_0.1.0     
-[16] car_3.1-2           carData_3.0-5       afex_1.3-0         
-[19] lme4_1.1-35.1       Matrix_1.6-4        patchwork_1.1.3    
-[22] broom.mixed_0.2.9.4 janitor_2.2.0       kableExtra_1.3.4   
-[25] knitr_1.45         
+ [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
+ [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
+[10] tidyverse_2.0.0     emmeans_1.10.3      ggeffects_1.7.0    
+[13] boot_1.3-30         modelr_0.1.11       datarium_0.1.0     
+[16] car_3.1-2           carData_3.0-5       afex_1.3-1         
+[19] lme4_1.1-35.5       Matrix_1.7-0        patchwork_1.2.0    
+[22] broom.mixed_0.2.9.5 janitor_2.2.0       kableExtra_1.4.0   
+[25] knitr_1.48         
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.0    viridisLite_0.4.2   fastmap_1.1.1      
- [4] digest_0.6.33       timechange_0.2.0    estimability_1.4.1 
- [7] lifecycle_1.0.4     magrittr_2.0.3      compiler_4.3.2     
-[10] rlang_1.1.2         sass_0.4.8          tools_4.3.2        
-[13] utf8_1.2.4          yaml_2.3.8          bit_4.0.5          
-[16] plyr_1.8.9          xml2_1.3.6          abind_1.4-5        
-[19] withr_2.5.2         numDeriv_2016.8-1.1 grid_4.3.2         
-[22] fansi_1.0.6         xtable_1.8-4        colorspace_2.1-0   
-[25] future_1.33.1       globals_0.16.2      scales_1.3.0       
-[28] MASS_7.3-60         cli_3.6.2           mvtnorm_1.2-4      
-[31] crayon_1.5.2        rmarkdown_2.25      generics_0.1.3     
-[34] rstudioapi_0.15.0   tzdb_0.4.0          httr_1.4.7         
-[37] reshape2_1.4.4      minqa_1.2.6         cachem_1.0.8       
-[40] splines_4.3.2       rvest_1.0.3         parallel_4.3.2     
-[43] vctrs_0.6.5         webshot_0.5.5       jsonlite_1.8.8     
-[46] bookdown_0.37       hms_1.1.3           pbkrtest_0.5.2     
-[49] bit64_4.0.5         listenv_0.9.0       systemfonts_1.0.5  
-[52] jquerylib_0.1.4     glue_1.6.2          parallelly_1.36.0  
-[55] nloptr_2.0.3        codetools_0.2-19    stringi_1.8.3      
-[58] gtable_0.3.4        lmerTest_3.1-3      munsell_0.5.0      
-[61] furrr_0.3.1         pillar_1.9.0        htmltools_0.5.7    
-[64] R6_2.5.1            vroom_1.6.5         evaluate_0.23      
-[67] lattice_0.22-5      highr_0.10          backports_1.4.1    
-[70] broom_1.0.5         snakecase_0.11.1    bslib_0.6.1        
-[73] Rcpp_1.0.11         svglite_2.1.3       coda_0.19-4        
-[76] nlme_3.1-164        xfun_0.41           pkgconfig_2.0.3    
+ [1] tidyselect_1.2.1    viridisLite_0.4.2   fastmap_1.2.0      
+ [4] digest_0.6.36       timechange_0.3.0    estimability_1.5.1 
+ [7] lifecycle_1.0.4     magrittr_2.0.3      compiler_4.4.1     
+[10] rlang_1.1.4         sass_0.4.9          tools_4.4.1        
+[13] utf8_1.2.4          yaml_2.3.9          plyr_1.8.9         
+[16] xml2_1.3.6          abind_1.4-5         withr_3.0.0        
+[19] numDeriv_2016.8-1.1 grid_4.4.1          fansi_1.0.6        
+[22] xtable_1.8-4        colorspace_2.1-0    future_1.33.2      
+[25] globals_0.16.3      scales_1.3.0        MASS_7.3-61        
+[28] insight_0.20.3      cli_3.6.3           mvtnorm_1.2-5      
+[31] rmarkdown_2.27      generics_0.1.3      rstudioapi_0.16.0  
+[34] tzdb_0.4.0          reshape2_1.4.4      minqa_1.2.7        
+[37] cachem_1.1.0        splines_4.4.1       parallel_4.4.1     
+[40] vctrs_0.6.5         jsonlite_1.8.8      bookdown_0.40      
+[43] hms_1.1.3           pbkrtest_0.5.3      listenv_0.9.1      
+[46] systemfonts_1.1.0   jquerylib_0.1.4     glue_1.7.0         
+[49] parallelly_1.37.1   nloptr_2.1.1        codetools_0.2-20   
+[52] stringi_1.8.4       gtable_0.3.5        lmerTest_3.1-3     
+[55] munsell_0.5.1       furrr_0.3.1         pillar_1.9.0       
+[58] htmltools_0.5.8.1   R6_2.5.1            evaluate_0.24.0    
+[61] lattice_0.22-6      backports_1.5.0     broom_1.0.6        
+[64] snakecase_0.11.1    bslib_0.7.0         Rcpp_1.0.13        
+[67] svglite_2.1.3       coda_0.19-4.1       nlme_3.1-164       
+[70] xfun_0.45           pkgconfig_2.0.3    
 ```

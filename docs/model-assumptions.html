@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 25 Model assumptions | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
   <meta name="description" content="Course notes for Psych 252." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 25 Model assumptions | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2024-01-06" />
+<meta name="date" content="2024-08-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,9 +51,10 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.31/datatables.js"></script>
+<script src="libs/datatables-binding-0.33/datatables.js"></script>
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
@@ -61,7 +62,7 @@
 <script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -78,7 +79,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -185,7 +186,8 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#thanks"><i class="fa fa-check"></i><b>1.1</b> Thanks</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#list-of-r-packages-used-in-this-book"><i class="fa fa-check"></i><b>1.2</b> List of R packages used in this book</a></li>
-<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#session-info"><i class="fa fa-check"></i><b>1.3</b> Session info</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#install-all-packages-needed-for-this-book"><i class="fa fa-check"></i><b>1.3</b> Install all packages needed for this book</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#session-info"><i class="fa fa-check"></i><b>1.4</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="visualization-1.html"><a href="visualization-1.html"><i class="fa fa-check"></i><b>2</b> Visualization 1</a>
 <ul>
@@ -328,36 +330,36 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.8" data-path="data-wrangling-2.html"><a href="data-wrangling-2.html#session-info-4"><i class="fa fa-check"></i><b>5.8</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="probability-and-causality.html"><a href="probability-and-causality.html"><i class="fa fa-check"></i><b>6</b> Probability and causality</a>
+<li class="chapter" data-level="6" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>6</b> Probability</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>6.1</b> Load packages, load data, set theme</a></li>
-<li class="chapter" data-level="6.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#counting"><i class="fa fa-check"></i><b>6.2</b> Counting</a></li>
-<li class="chapter" data-level="6.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#the-random-secretary"><i class="fa fa-check"></i><b>6.3</b> The random secretary</a></li>
-<li class="chapter" data-level="6.4" data-path="probability-and-causality.html"><a href="probability-and-causality.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.4</b> Flipping a coin many times</a></li>
-<li class="chapter" data-level="6.5" data-path="probability-and-causality.html"><a href="probability-and-causality.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.5</b> Clue guide to probability</a>
+<li class="chapter" data-level="6.1" data-path="probability.html"><a href="probability.html#load-packages-load-data-set-theme"><i class="fa fa-check"></i><b>6.1</b> Load packages, load data, set theme</a></li>
+<li class="chapter" data-level="6.2" data-path="probability.html"><a href="probability.html#counting"><i class="fa fa-check"></i><b>6.2</b> Counting</a></li>
+<li class="chapter" data-level="6.3" data-path="probability.html"><a href="probability.html#the-random-secretary"><i class="fa fa-check"></i><b>6.3</b> The random secretary</a></li>
+<li class="chapter" data-level="6.4" data-path="probability.html"><a href="probability.html#flipping-a-coin-many-times"><i class="fa fa-check"></i><b>6.4</b> Flipping a coin many times</a></li>
+<li class="chapter" data-level="6.5" data-path="probability.html"><a href="probability.html#clue-guide-to-probability"><i class="fa fa-check"></i><b>6.5</b> Clue guide to probability</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#conditional-probability"><i class="fa fa-check"></i><b>6.5.1</b> Conditional probability</a></li>
-<li class="chapter" data-level="6.5.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.5.2</b> Law of total probability</a></li>
+<li class="chapter" data-level="6.5.1" data-path="probability.html"><a href="probability.html#conditional-probability"><i class="fa fa-check"></i><b>6.5.1</b> Conditional probability</a></li>
+<li class="chapter" data-level="6.5.2" data-path="probability.html"><a href="probability.html#law-of-total-probability"><i class="fa fa-check"></i><b>6.5.2</b> Law of total probability</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="probability-and-causality.html"><a href="probability-and-causality.html#probability-operations"><i class="fa fa-check"></i><b>6.6</b> Probability operations</a></li>
-<li class="chapter" data-level="6.7" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-explained"><i class="fa fa-check"></i><b>6.7</b> Bayesian reasoning explained</a></li>
-<li class="chapter" data-level="6.8" data-path="probability-and-causality.html"><a href="probability-and-causality.html#getting-bayes-right-matters"><i class="fa fa-check"></i><b>6.8</b> Getting Bayes right matters</a>
+<li class="chapter" data-level="6.6" data-path="probability.html"><a href="probability.html#probability-operations"><i class="fa fa-check"></i><b>6.6</b> Probability operations</a></li>
+<li class="chapter" data-level="6.7" data-path="probability.html"><a href="probability.html#bayesian-reasoning-explained"><i class="fa fa-check"></i><b>6.7</b> Bayesian reasoning explained</a></li>
+<li class="chapter" data-level="6.8" data-path="probability.html"><a href="probability.html#getting-bayes-right-matters"><i class="fa fa-check"></i><b>6.8</b> Getting Bayes right matters</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.8.1</b> Bayesian reasoning example</a></li>
-<li class="chapter" data-level="6.8.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#bayesian-reasoning-example-covid-rapid-test"><i class="fa fa-check"></i><b>6.8.2</b> Bayesian reasoning example (COVID rapid test)</a></li>
-<li class="chapter" data-level="6.8.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#most-people-in-the-hospital-are-vaccinated"><i class="fa fa-check"></i><b>6.8.3</b> Most people in the hospital are vaccinated</a></li>
+<li class="chapter" data-level="6.8.1" data-path="probability.html"><a href="probability.html#bayesian-reasoning-example"><i class="fa fa-check"></i><b>6.8.1</b> Bayesian reasoning example</a></li>
+<li class="chapter" data-level="6.8.2" data-path="probability.html"><a href="probability.html#bayesian-reasoning-example-covid-rapid-test"><i class="fa fa-check"></i><b>6.8.2</b> Bayesian reasoning example (COVID rapid test)</a></li>
+<li class="chapter" data-level="6.8.3" data-path="probability.html"><a href="probability.html#most-people-in-the-hospital-are-vaccinated"><i class="fa fa-check"></i><b>6.8.3</b> Most people in the hospital are vaccinated</a></li>
 </ul></li>
-<li class="chapter" data-level="6.9" data-path="probability-and-causality.html"><a href="probability-and-causality.html#building-a-bayesis"><i class="fa fa-check"></i><b>6.9</b> Building a Bayesis</a>
+<li class="chapter" data-level="6.9" data-path="probability.html"><a href="probability.html#building-a-bayesis"><i class="fa fa-check"></i><b>6.9</b> Building a Bayesis</a>
 <ul>
-<li class="chapter" data-level="6.9.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#dice-example"><i class="fa fa-check"></i><b>6.9.1</b> Dice example</a></li>
+<li class="chapter" data-level="6.9.1" data-path="probability.html"><a href="probability.html#dice-example"><i class="fa fa-check"></i><b>6.9.1</b> Dice example</a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="probability-and-causality.html"><a href="probability-and-causality.html#additional-resources-4"><i class="fa fa-check"></i><b>6.10</b> Additional resources</a>
+<li class="chapter" data-level="6.10" data-path="probability.html"><a href="probability.html#additional-resources-4"><i class="fa fa-check"></i><b>6.10</b> Additional resources</a>
 <ul>
-<li class="chapter" data-level="6.10.1" data-path="probability-and-causality.html"><a href="probability-and-causality.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.10.1</b> Cheatsheets</a></li>
-<li class="chapter" data-level="6.10.2" data-path="probability-and-causality.html"><a href="probability-and-causality.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.10.2</b> Books and chapters</a></li>
-<li class="chapter" data-level="6.10.3" data-path="probability-and-causality.html"><a href="probability-and-causality.html#misc-2"><i class="fa fa-check"></i><b>6.10.3</b> Misc</a></li>
+<li class="chapter" data-level="6.10.1" data-path="probability.html"><a href="probability.html#cheatsheets-4"><i class="fa fa-check"></i><b>6.10.1</b> Cheatsheets</a></li>
+<li class="chapter" data-level="6.10.2" data-path="probability.html"><a href="probability.html#books-and-chapters-4"><i class="fa fa-check"></i><b>6.10.2</b> Books and chapters</a></li>
+<li class="chapter" data-level="6.10.3" data-path="probability.html"><a href="probability.html#misc-2"><i class="fa fa-check"></i><b>6.10.3</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="6.11" data-path="probability-and-causality.html"><a href="probability-and-causality.html#session-info-5"><i class="fa fa-check"></i><b>6.11</b> Session info</a></li>
+<li class="chapter" data-level="6.11" data-path="probability.html"><a href="probability.html#session-info-5"><i class="fa fa-check"></i><b>6.11</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a>
 <ul>
@@ -410,7 +412,8 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="8.5" data-path="simulation-2.html"><a href="simulation-2.html#additional-resources-6"><i class="fa fa-check"></i><b>8.5</b> Additional resources</a>
 <ul>
-<li class="chapter" data-level="8.5.1" data-path="simulation-2.html"><a href="simulation-2.html#datacamp-1"><i class="fa fa-check"></i><b>8.5.1</b> Datacamp</a></li>
+<li class="chapter" data-level="8.5.1" data-path="simulation-2.html"><a href="simulation-2.html#misc-3"><i class="fa fa-check"></i><b>8.5.1</b> Misc</a></li>
+<li class="chapter" data-level="8.5.2" data-path="simulation-2.html"><a href="simulation-2.html#datacamp-1"><i class="fa fa-check"></i><b>8.5.2</b> Datacamp</a></li>
 </ul></li>
 <li class="chapter" data-level="8.6" data-path="simulation-2.html"><a href="simulation-2.html#session-info-7"><i class="fa fa-check"></i><b>8.6</b> Session info</a></li>
 </ul></li>
@@ -425,7 +428,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="modeling-data.html"><a href="modeling-data.html#hypothesis-testing-one-sample-t-test"><i class="fa fa-check"></i><b>9.3</b> Hypothesis testing: “One-sample t-test”</a></li>
 <li class="chapter" data-level="9.4" data-path="modeling-data.html"><a href="modeling-data.html#building-a-sampling-distribution-of-pre"><i class="fa fa-check"></i><b>9.4</b> Building a sampling distribution of PRE</a></li>
-<li class="chapter" data-level="9.5" data-path="modeling-data.html"><a href="modeling-data.html#misc-3"><i class="fa fa-check"></i><b>9.5</b> Misc</a></li>
+<li class="chapter" data-level="9.5" data-path="modeling-data.html"><a href="modeling-data.html#misc-4"><i class="fa fa-check"></i><b>9.5</b> Misc</a></li>
 <li class="chapter" data-level="9.6" data-path="modeling-data.html"><a href="modeling-data.html#additional-resources-7"><i class="fa fa-check"></i><b>9.6</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="9.6.1" data-path="modeling-data.html"><a href="modeling-data.html#reading"><i class="fa fa-check"></i><b>9.6.1</b> Reading</a></li>
@@ -446,7 +449,7 @@ div.csl-indent {
 <li class="chapter" data-level="10.5" data-path="linear-model-1.html"><a href="linear-model-1.html#additional-resources-8"><i class="fa fa-check"></i><b>10.5</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="10.5.1" data-path="linear-model-1.html"><a href="linear-model-1.html#datacamp-3"><i class="fa fa-check"></i><b>10.5.1</b> Datacamp</a></li>
-<li class="chapter" data-level="10.5.2" data-path="linear-model-1.html"><a href="linear-model-1.html#misc-4"><i class="fa fa-check"></i><b>10.5.2</b> Misc</a></li>
+<li class="chapter" data-level="10.5.2" data-path="linear-model-1.html"><a href="linear-model-1.html#misc-5"><i class="fa fa-check"></i><b>10.5.2</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="10.6" data-path="linear-model-1.html"><a href="linear-model-1.html#session-info-9"><i class="fa fa-check"></i><b>10.6</b> Session info</a></li>
 </ul></li>
@@ -478,7 +481,7 @@ div.csl-indent {
 <li class="chapter" data-level="11.8" data-path="linear-model-2.html"><a href="linear-model-2.html#additional-resources-9"><i class="fa fa-check"></i><b>11.8</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="11.8.1" data-path="linear-model-2.html"><a href="linear-model-2.html#datacamp-4"><i class="fa fa-check"></i><b>11.8.1</b> Datacamp</a></li>
-<li class="chapter" data-level="11.8.2" data-path="linear-model-2.html"><a href="linear-model-2.html#misc-5"><i class="fa fa-check"></i><b>11.8.2</b> Misc</a></li>
+<li class="chapter" data-level="11.8.2" data-path="linear-model-2.html"><a href="linear-model-2.html#misc-6"><i class="fa fa-check"></i><b>11.8.2</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="11.9" data-path="linear-model-2.html"><a href="linear-model-2.html#session-info-10"><i class="fa fa-check"></i><b>11.9</b> Session info</a></li>
 <li class="chapter" data-level="11.10" data-path="linear-model-2.html"><a href="linear-model-2.html#references"><i class="fa fa-check"></i><b>11.10</b> References</a></li>
@@ -509,7 +512,7 @@ div.csl-indent {
 <li class="chapter" data-level="12.7" data-path="linear-model-3.html"><a href="linear-model-3.html#additional-resources-10"><i class="fa fa-check"></i><b>12.7</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="12.7.1" data-path="linear-model-3.html"><a href="linear-model-3.html#datacamp-5"><i class="fa fa-check"></i><b>12.7.1</b> Datacamp</a></li>
-<li class="chapter" data-level="12.7.2" data-path="linear-model-3.html"><a href="linear-model-3.html#misc-6"><i class="fa fa-check"></i><b>12.7.2</b> Misc</a></li>
+<li class="chapter" data-level="12.7.2" data-path="linear-model-3.html"><a href="linear-model-3.html#misc-7"><i class="fa fa-check"></i><b>12.7.2</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="12.8" data-path="linear-model-3.html"><a href="linear-model-3.html#session-info-11"><i class="fa fa-check"></i><b>12.8</b> Session info</a></li>
 </ul></li>
@@ -529,7 +532,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="13.6" data-path="linear-model-4.html"><a href="linear-model-4.html#additional-resources-11"><i class="fa fa-check"></i><b>13.6</b> Additional resources</a>
 <ul>
-<li class="chapter" data-level="13.6.1" data-path="linear-model-4.html"><a href="linear-model-4.html#misc-7"><i class="fa fa-check"></i><b>13.6.1</b> Misc</a></li>
+<li class="chapter" data-level="13.6.1" data-path="linear-model-4.html"><a href="linear-model-4.html#misc-8"><i class="fa fa-check"></i><b>13.6.1</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="13.7" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-12"><i class="fa fa-check"></i><b>13.7</b> Session info</a></li>
 </ul></li>
@@ -552,7 +555,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="14.7.1" data-path="power-analysis.html"><a href="power-analysis.html#datacamp-6"><i class="fa fa-check"></i><b>14.7.1</b> Datacamp</a></li>
 <li class="chapter" data-level="14.7.2" data-path="power-analysis.html"><a href="power-analysis.html#cheatsheets-5"><i class="fa fa-check"></i><b>14.7.2</b> Cheatsheets</a></li>
-<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-8"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
+<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-9"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-13"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
 </ul></li>
@@ -607,7 +610,7 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="16.8.1" data-path="causation.html"><a href="causation.html#books"><i class="fa fa-check"></i><b>16.8.1</b> Books</a></li>
 <li class="chapter" data-level="16.8.2" data-path="causation.html"><a href="causation.html#tutorials-1"><i class="fa fa-check"></i><b>16.8.2</b> Tutorials</a></li>
-<li class="chapter" data-level="16.8.3" data-path="causation.html"><a href="causation.html#misc-9"><i class="fa fa-check"></i><b>16.8.3</b> Misc</a></li>
+<li class="chapter" data-level="16.8.3" data-path="causation.html"><a href="causation.html#misc-10"><i class="fa fa-check"></i><b>16.8.3</b> Misc</a></li>
 </ul></li>
 <li class="chapter" data-level="16.9" data-path="causation.html"><a href="causation.html#session-info-15"><i class="fa fa-check"></i><b>16.9</b> Session info</a></li>
 </ul></li>
@@ -653,19 +656,20 @@ div.csl-indent {
 <li class="chapter" data-level="19.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-packages-and-set-plotting-theme-12"><i class="fa fa-check"></i><b>19.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="19.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#load-data-sets-4"><i class="fa fa-check"></i><b>19.3</b> Load data sets</a>
 <ul>
-<li class="chapter" data-level="19.3.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#sleep-data"><i class="fa fa-check"></i><b>19.3.1</b> Sleep data</a></li>
-<li class="chapter" data-level="19.3.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#reasoning-data"><i class="fa fa-check"></i><b>19.3.2</b> Reasoning data</a></li>
-<li class="chapter" data-level="19.3.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#weight-loss-data"><i class="fa fa-check"></i><b>19.3.3</b> Weight loss data</a></li>
-<li class="chapter" data-level="19.3.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#politness-data"><i class="fa fa-check"></i><b>19.3.4</b> Politness data</a></li>
+<li class="chapter" data-level="19.3.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#reasoning-data"><i class="fa fa-check"></i><b>19.3.1</b> Reasoning data</a></li>
 </ul></li>
 <li class="chapter" data-level="19.4" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#understanding-the-lmer-syntax"><i class="fa fa-check"></i><b>19.4</b> Understanding the lmer() syntax</a></li>
-<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#anova-vs.-lmer"><i class="fa fa-check"></i><b>19.5</b> ANOVA vs. Lmer</a>
+<li class="chapter" data-level="19.5" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#anova-vs.-lmer"><i class="fa fa-check"></i><b>19.5</b> ANOVA vs. lmer</a>
 <ul>
 <li class="chapter" data-level="19.5.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#between-subjects-anova"><i class="fa fa-check"></i><b>19.5.1</b> Between subjects ANOVA</a></li>
 <li class="chapter" data-level="19.5.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#repeated-measures-anova"><i class="fa fa-check"></i><b>19.5.2</b> Repeated-measures ANOVA</a></li>
 <li class="chapter" data-level="19.5.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixed-anova"><i class="fa fa-check"></i><b>19.5.3</b> Mixed ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-18"><i class="fa fa-check"></i><b>19.6</b> Session info</a></li>
+<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#additional-resources-17"><i class="fa fa-check"></i><b>19.6</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="19.6.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#readings-2"><i class="fa fa-check"></i><b>19.6.1</b> Readings</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#session-info-18"><i class="fa fa-check"></i><b>19.7</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html"><i class="fa fa-check"></i><b>20</b> Linear mixed effects models 4</a>
 <ul>
@@ -673,10 +677,10 @@ div.csl-indent {
 <li class="chapter" data-level="20.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#load-packages-and-set-plotting-theme-13"><i class="fa fa-check"></i><b>20.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="20.3" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#load-data-sets-5"><i class="fa fa-check"></i><b>20.3</b> Load data sets</a>
 <ul>
-<li class="chapter" data-level="20.3.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#sleep-data-1"><i class="fa fa-check"></i><b>20.3.1</b> Sleep data</a></li>
+<li class="chapter" data-level="20.3.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#sleep-data"><i class="fa fa-check"></i><b>20.3.1</b> Sleep data</a></li>
 <li class="chapter" data-level="20.3.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#reasoning-data-1"><i class="fa fa-check"></i><b>20.3.2</b> Reasoning data</a></li>
-<li class="chapter" data-level="20.3.3" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#weight-loss-data-1"><i class="fa fa-check"></i><b>20.3.3</b> Weight loss data</a></li>
-<li class="chapter" data-level="20.3.4" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#politness-data-1"><i class="fa fa-check"></i><b>20.3.4</b> Politness data</a></li>
+<li class="chapter" data-level="20.3.3" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#weight-loss-data"><i class="fa fa-check"></i><b>20.3.3</b> Weight loss data</a></li>
+<li class="chapter" data-level="20.3.4" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#politness-data"><i class="fa fa-check"></i><b>20.3.4</b> Politness data</a></li>
 </ul></li>
 <li class="chapter" data-level="20.4" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#follow-up-tests-with-emmeans"><i class="fa fa-check"></i><b>20.4</b> Follow-up tests with emmeans</a>
 <ul>
@@ -685,11 +689,17 @@ div.csl-indent {
 <li class="chapter" data-level="20.4.3" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#politeness-study"><i class="fa fa-check"></i><b>20.4.3</b> Politeness study</a></li>
 </ul></li>
 <li class="chapter" data-level="20.5" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#mixtures-of-participants"><i class="fa fa-check"></i><b>20.5</b> Mixtures of participants</a></li>
-<li class="chapter" data-level="20.6" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#bootstrapping"><i class="fa fa-check"></i><b>20.6</b> Bootstrapping</a>
+<li class="chapter" data-level="20.6" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#simulating-different-random-effects-structures"><i class="fa fa-check"></i><b>20.6</b> Simulating different random effects structures</a>
 <ul>
-<li class="chapter" data-level="20.6.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#linear-model"><i class="fa fa-check"></i><b>20.6.1</b> Linear model</a></li>
+<li class="chapter" data-level="20.6.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#two-level-model"><i class="fa fa-check"></i><b>20.6.1</b> Two-level model</a></li>
+<li class="chapter" data-level="20.6.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#three-level-model"><i class="fa fa-check"></i><b>20.6.2</b> Three-level model</a></li>
 </ul></li>
-<li class="chapter" data-level="20.7" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#session-info-19"><i class="fa fa-check"></i><b>20.7</b> Session info</a></li>
+<li class="chapter" data-level="20.7" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#bootstrapping"><i class="fa fa-check"></i><b>20.7</b> Bootstrapping</a>
+<ul>
+<li class="chapter" data-level="20.7.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#linear-model"><i class="fa fa-check"></i><b>20.7.1</b> Linear model</a></li>
+<li class="chapter" data-level="20.7.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#linear-mixed-effects-model"><i class="fa fa-check"></i><b>20.7.2</b> Linear mixed effects model</a></li>
+</ul></li>
+<li class="chapter" data-level="20.8" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#session-info-19"><i class="fa fa-check"></i><b>20.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="21" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>21</b> Generalized linear model</a>
 <ul>
@@ -712,7 +722,7 @@ div.csl-indent {
 <li class="chapter" data-level="21.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>21.7</b> Logistic mixed effects model</a></li>
 <li class="chapter" data-level="21.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>21.8</b> Additional information</a>
 <ul>
-<li class="chapter" data-level="21.8.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#misc-10"><i class="fa fa-check"></i><b>21.8.1</b> Misc</a></li>
+<li class="chapter" data-level="21.8.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#misc-11"><i class="fa fa-check"></i><b>21.8.1</b> Misc</a></li>
 <li class="chapter" data-level="21.8.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-7"><i class="fa fa-check"></i><b>21.8.2</b> Datacamp</a></li>
 </ul></li>
 <li class="chapter" data-level="21.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-20"><i class="fa fa-check"></i><b>21.9</b> Session info</a></li>
@@ -733,7 +743,7 @@ div.csl-indent {
 <li class="chapter" data-level="22.4.2" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#frequentist-analysis"><i class="fa fa-check"></i><b>22.4.2</b> Frequentist analysis</a></li>
 <li class="chapter" data-level="22.4.3" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#bayesian-regression"><i class="fa fa-check"></i><b>22.4.3</b> Bayesian regression</a></li>
 </ul></li>
-<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#additional-resources-17"><i class="fa fa-check"></i><b>22.5</b> Additional resources</a>
+<li class="chapter" data-level="22.5" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#additional-resources-18"><i class="fa fa-check"></i><b>22.5</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="22.5.1" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html#books-and-chapters-5"><i class="fa fa-check"></i><b>22.5.1</b> Books and chapters</a></li>
 </ul></li>
@@ -776,7 +786,7 @@ div.csl-indent {
 <li class="chapter" data-level="23.7.2" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#specify-and-fit-the-model-3"><i class="fa fa-check"></i><b>23.7.2</b> 2. Specify and fit the model</a></li>
 <li class="chapter" data-level="23.7.3" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#test-specific-hypotheses-3"><i class="fa fa-check"></i><b>23.7.3</b> 5. Test specific hypotheses</a></li>
 </ul></li>
-<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-18"><i class="fa fa-check"></i><b>23.8</b> Additional resources</a></li>
+<li class="chapter" data-level="23.8" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#additional-resources-19"><i class="fa fa-check"></i><b>23.8</b> Additional resources</a></li>
 <li class="chapter" data-level="23.9" data-path="bayesian-data-analysis-2.html"><a href="bayesian-data-analysis-2.html#session-info-22"><i class="fa fa-check"></i><b>23.9</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="24" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html"><i class="fa fa-check"></i><b>24</b> Bayesian data analysis 3</a>
@@ -803,7 +813,7 @@ div.csl-indent {
 <li class="chapter" data-level="24.6.4" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#gaussian-regression-unequal-variance"><i class="fa fa-check"></i><b>24.6.4</b> Gaussian regression (unequal variance)</a></li>
 <li class="chapter" data-level="24.6.5" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#model-comparison-2"><i class="fa fa-check"></i><b>24.6.5</b> Model comparison</a></li>
 </ul></li>
-<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-19"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
+<li class="chapter" data-level="24.7" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#additional-resources-20"><i class="fa fa-check"></i><b>24.7</b> Additional resources</a></li>
 <li class="chapter" data-level="24.8" data-path="bayesian-data-analysis-3.html"><a href="bayesian-data-analysis-3.html#session-info-23"><i class="fa fa-check"></i><b>24.8</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="25" data-path="model-assumptions.html"><a href="model-assumptions.html"><i class="fa fa-check"></i><b>25</b> Model assumptions</a>
@@ -818,7 +828,7 @@ div.csl-indent {
 <li class="chapter" data-level="25.3.4" data-path="model-assumptions.html"><a href="model-assumptions.html#non-parametric-tests"><i class="fa fa-check"></i><b>25.3.4</b> Non-parametric tests</a></li>
 <li class="chapter" data-level="25.3.5" data-path="model-assumptions.html"><a href="model-assumptions.html#bootstrapping-regressions"><i class="fa fa-check"></i><b>25.3.5</b> Bootstrapping regressions</a></li>
 </ul></li>
-<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-20"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
+<li class="chapter" data-level="25.4" data-path="model-assumptions.html"><a href="model-assumptions.html#additional-resources-21"><i class="fa fa-check"></i><b>25.4</b> Additional resources</a></li>
 <li class="chapter" data-level="25.5" data-path="model-assumptions.html"><a href="model-assumptions.html#session-info-24"><i class="fa fa-check"></i><b>25.5</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="26" data-path="reporting-statistics.html"><a href="reporting-statistics.html"><i class="fa fa-check"></i><b>26</b> Reporting statistics</a>
@@ -835,7 +845,11 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="26.2.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#frequentist-statistics"><i class="fa fa-check"></i><b>26.2.1</b> Frequentist statistics</a></li>
 </ul></li>
-<li class="chapter" data-level="26.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#session-info-25"><i class="fa fa-check"></i><b>26.3</b> Session info</a></li>
+<li class="chapter" data-level="26.3" data-path="reporting-statistics.html"><a href="reporting-statistics.html#additional-resources-22"><i class="fa fa-check"></i><b>26.3</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="26.3.1" data-path="reporting-statistics.html"><a href="reporting-statistics.html#misc-12"><i class="fa fa-check"></i><b>26.3.1</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="26.4" data-path="reporting-statistics.html"><a href="reporting-statistics.html#session-info-25"><i class="fa fa-check"></i><b>26.4</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="27" data-path="cheatsheets-6.html"><a href="cheatsheets-6.html"><i class="fa fa-check"></i><b>27</b> Cheatsheets</a>
 <ul>
@@ -875,27 +889,27 @@ div.csl-indent {
 </div>
 <div id="load-packages-and-set-plotting-theme-18" class="section level2 hasAnchor" number="25.2">
 <h2><span class="header-section-number">25.2</span> Load packages and set plotting theme<a href="model-assumptions.html#load-packages-and-set-plotting-theme-18" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb1462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1462-1"><a href="model-assumptions.html#cb1462-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span></span>
-<span id="cb1462-2"><a href="model-assumptions.html#cb1462-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for nice RMarkdown tables</span></span>
-<span id="cb1462-3"><a href="model-assumptions.html#cb1462-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidybayes&quot;</span>)  <span class="co"># tidying up results from Bayesian models</span></span>
-<span id="cb1462-4"><a href="model-assumptions.html#cb1462-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;lme4&quot;</span>)       <span class="co"># for linear mixed effects models </span></span>
-<span id="cb1462-5"><a href="model-assumptions.html#cb1462-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;brms&quot;</span>)       <span class="co"># Bayesian regression models with Stan</span></span>
-<span id="cb1462-6"><a href="model-assumptions.html#cb1462-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;car&quot;</span>)        <span class="co"># for bootstrapping regression models </span></span>
-<span id="cb1462-7"><a href="model-assumptions.html#cb1462-7" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># for tidy regression results</span></span>
-<span id="cb1462-8"><a href="model-assumptions.html#cb1462-8" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning up variable names </span></span>
-<span id="cb1462-9"><a href="model-assumptions.html#cb1462-9" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)  <span class="co"># for figure panels</span></span>
-<span id="cb1462-10"><a href="model-assumptions.html#cb1462-10" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggeffects&quot;</span>)  <span class="co"># for visualizing estimated marginal means</span></span>
-<span id="cb1462-11"><a href="model-assumptions.html#cb1462-11" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stargazer&quot;</span>)  <span class="co"># for latex regression tables </span></span>
-<span id="cb1462-12"><a href="model-assumptions.html#cb1462-12" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;sjPlot&quot;</span>)     <span class="co"># for nice RMarkdown regression tables</span></span>
-<span id="cb1462-13"><a href="model-assumptions.html#cb1462-13" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;xtable&quot;</span>)     <span class="co"># for latex tables</span></span>
-<span id="cb1462-14"><a href="model-assumptions.html#cb1462-14" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggrepel&quot;</span>)    <span class="co"># for smart text annotation in ggplot</span></span>
-<span id="cb1462-15"><a href="model-assumptions.html#cb1462-15" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></span></code></pre></div>
-<div class="sourceCode" id="cb1463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1463-1"><a href="model-assumptions.html#cb1463-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
-<span id="cb1463-2"><a href="model-assumptions.html#cb1463-2" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))) <span class="co">#set the default text size</span></span>
-<span id="cb1463-3"><a href="model-assumptions.html#cb1463-3" tabindex="-1"></a></span>
-<span id="cb1463-4"><a href="model-assumptions.html#cb1463-4" tabindex="-1"></a><span class="co"># set rstan options</span></span>
-<span id="cb1463-5"><a href="model-assumptions.html#cb1463-5" tabindex="-1"></a>rstan<span class="sc">::</span><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1463-6"><a href="model-assumptions.html#cb1463-6" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb1492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1492-1"><a href="model-assumptions.html#cb1492-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)      <span class="co"># for knitting RMarkdown </span></span>
+<span id="cb1492-2"><a href="model-assumptions.html#cb1492-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>) <span class="co"># for nice RMarkdown tables</span></span>
+<span id="cb1492-3"><a href="model-assumptions.html#cb1492-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidybayes&quot;</span>)  <span class="co"># tidying up results from Bayesian models</span></span>
+<span id="cb1492-4"><a href="model-assumptions.html#cb1492-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;lme4&quot;</span>)       <span class="co"># for linear mixed effects models </span></span>
+<span id="cb1492-5"><a href="model-assumptions.html#cb1492-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;brms&quot;</span>)       <span class="co"># Bayesian regression models with Stan</span></span>
+<span id="cb1492-6"><a href="model-assumptions.html#cb1492-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;car&quot;</span>)        <span class="co"># for bootstrapping regression models </span></span>
+<span id="cb1492-7"><a href="model-assumptions.html#cb1492-7" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;broom&quot;</span>)      <span class="co"># for tidy regression results</span></span>
+<span id="cb1492-8"><a href="model-assumptions.html#cb1492-8" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)    <span class="co"># for cleaning up variable names </span></span>
+<span id="cb1492-9"><a href="model-assumptions.html#cb1492-9" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)  <span class="co"># for figure panels</span></span>
+<span id="cb1492-10"><a href="model-assumptions.html#cb1492-10" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggeffects&quot;</span>)  <span class="co"># for visualizing estimated marginal means</span></span>
+<span id="cb1492-11"><a href="model-assumptions.html#cb1492-11" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stargazer&quot;</span>)  <span class="co"># for latex regression tables </span></span>
+<span id="cb1492-12"><a href="model-assumptions.html#cb1492-12" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;sjPlot&quot;</span>)     <span class="co"># for nice RMarkdown regression tables</span></span>
+<span id="cb1492-13"><a href="model-assumptions.html#cb1492-13" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;xtable&quot;</span>)     <span class="co"># for latex tables</span></span>
+<span id="cb1492-14"><a href="model-assumptions.html#cb1492-14" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggrepel&quot;</span>)    <span class="co"># for smart text annotation in ggplot</span></span>
+<span id="cb1492-15"><a href="model-assumptions.html#cb1492-15" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)  <span class="co"># for wrangling, plotting, etc. </span></span></code></pre></div>
+<div class="sourceCode" id="cb1493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1493-1"><a href="model-assumptions.html#cb1493-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
+<span id="cb1493-2"><a href="model-assumptions.html#cb1493-2" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))) <span class="co">#set the default text size</span></span>
+<span id="cb1493-3"><a href="model-assumptions.html#cb1493-3" tabindex="-1"></a></span>
+<span id="cb1493-4"><a href="model-assumptions.html#cb1493-4" tabindex="-1"></a><span class="co"># set rstan options</span></span>
+<span id="cb1493-5"><a href="model-assumptions.html#cb1493-5" tabindex="-1"></a>rstan<span class="sc">::</span><span class="fu">rstan_options</span>(<span class="at">auto_write =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1493-6"><a href="model-assumptions.html#cb1493-6" tabindex="-1"></a><span class="fu">options</span>(<span class="at">mc.cores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>())</span></code></pre></div>
 </div>
 <div id="model-assumptions-and-what-to-do-if-they-are-violated" class="section level2 hasAnchor" number="25.3">
 <h2><span class="header-section-number">25.3</span> Model assumptions and what to do if they are violated<a href="model-assumptions.html#model-assumptions-and-what-to-do-if-they-are-violated" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -906,50 +920,50 @@ div.csl-indent {
 <div id="leverage-hat-values" class="section level4 hasAnchor" number="25.3.1.1">
 <h4><span class="header-section-number">25.3.1.1</span> Leverage: Hat-values<a href="model-assumptions.html#leverage-hat-values" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Data points that are far from the center of the predictor space have potentially greater influence on the results – these points have <em>high leverage</em>. hat-values are a way of characterizing how much influence individual data points have.</p>
-<div class="sourceCode" id="cb1464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1464-1"><a href="model-assumptions.html#cb1464-1" tabindex="-1"></a>df.credit <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-2"><a href="model-assumptions.html#cb1464-2" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb1464-3"><a href="model-assumptions.html#cb1464-3" tabindex="-1"></a></span>
-<span id="cb1464-4"><a href="model-assumptions.html#cb1464-4" tabindex="-1"></a>fit.credit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> income,</span>
-<span id="cb1464-5"><a href="model-assumptions.html#cb1464-5" tabindex="-1"></a>                <span class="at">data =</span> df.credit)</span>
-<span id="cb1464-6"><a href="model-assumptions.html#cb1464-6" tabindex="-1"></a></span>
-<span id="cb1464-7"><a href="model-assumptions.html#cb1464-7" tabindex="-1"></a><span class="co"># fit model without the data point of interest </span></span>
-<span id="cb1464-8"><a href="model-assumptions.html#cb1464-8" tabindex="-1"></a>fit.credit2 <span class="ot">=</span> <span class="fu">update</span>(fit.credit,</span>
-<span id="cb1464-9"><a href="model-assumptions.html#cb1464-9" tabindex="-1"></a>                     <span class="at">data =</span> df.credit <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-10"><a href="model-assumptions.html#cb1464-10" tabindex="-1"></a>                       <span class="fu">filter</span>(x1 <span class="sc">!=</span> <span class="dv">324</span>))</span>
-<span id="cb1464-11"><a href="model-assumptions.html#cb1464-11" tabindex="-1"></a></span>
-<span id="cb1464-12"><a href="model-assumptions.html#cb1464-12" tabindex="-1"></a>res_with_outlier <span class="ot">=</span> fit.credit <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-13"><a href="model-assumptions.html#cb1464-13" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-14"><a href="model-assumptions.html#cb1464-14" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">324</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-15"><a href="model-assumptions.html#cb1464-15" tabindex="-1"></a>  <span class="fu">pull</span>(.resid)</span>
-<span id="cb1464-16"><a href="model-assumptions.html#cb1464-16" tabindex="-1"></a></span>
-<span id="cb1464-17"><a href="model-assumptions.html#cb1464-17" tabindex="-1"></a>res_without_outlier <span class="ot">=</span> fit.credit2 <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-18"><a href="model-assumptions.html#cb1464-18" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> df.credit) <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-19"><a href="model-assumptions.html#cb1464-19" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.resid =</span> balance <span class="sc">-</span> .fitted) <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-20"><a href="model-assumptions.html#cb1464-20" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">324</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-21"><a href="model-assumptions.html#cb1464-21" tabindex="-1"></a>  <span class="fu">pull</span>(.resid)</span>
-<span id="cb1464-22"><a href="model-assumptions.html#cb1464-22" tabindex="-1"></a></span>
-<span id="cb1464-23"><a href="model-assumptions.html#cb1464-23" tabindex="-1"></a>hat1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (res_with_outlier<span class="sc">/</span>res_without_outlier) <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-24"><a href="model-assumptions.html#cb1464-24" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb1464-25"><a href="model-assumptions.html#cb1464-25" tabindex="-1"></a></span>
-<span id="cb1464-26"><a href="model-assumptions.html#cb1464-26" tabindex="-1"></a>hat2 <span class="ot">=</span> fit.credit <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-27"><a href="model-assumptions.html#cb1464-27" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-28"><a href="model-assumptions.html#cb1464-28" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">324</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-29"><a href="model-assumptions.html#cb1464-29" tabindex="-1"></a>  <span class="fu">pull</span>(.hat) <span class="sc">%&gt;%</span> </span>
-<span id="cb1464-30"><a href="model-assumptions.html#cb1464-30" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span>
-<span id="cb1464-31"><a href="model-assumptions.html#cb1464-31" tabindex="-1"></a></span>
-<span id="cb1464-32"><a href="model-assumptions.html#cb1464-32" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">&quot;hat1: &quot;</span>, hat1))</span></code></pre></div>
+<div class="sourceCode" id="cb1494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1494-1"><a href="model-assumptions.html#cb1494-1" tabindex="-1"></a>df.credit <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/credit.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-2"><a href="model-assumptions.html#cb1494-2" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb1494-3"><a href="model-assumptions.html#cb1494-3" tabindex="-1"></a></span>
+<span id="cb1494-4"><a href="model-assumptions.html#cb1494-4" tabindex="-1"></a>fit.credit <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> balance <span class="sc">~</span> income,</span>
+<span id="cb1494-5"><a href="model-assumptions.html#cb1494-5" tabindex="-1"></a>                <span class="at">data =</span> df.credit)</span>
+<span id="cb1494-6"><a href="model-assumptions.html#cb1494-6" tabindex="-1"></a></span>
+<span id="cb1494-7"><a href="model-assumptions.html#cb1494-7" tabindex="-1"></a><span class="co"># fit model without the data point of interest </span></span>
+<span id="cb1494-8"><a href="model-assumptions.html#cb1494-8" tabindex="-1"></a>fit.credit2 <span class="ot">=</span> <span class="fu">update</span>(fit.credit,</span>
+<span id="cb1494-9"><a href="model-assumptions.html#cb1494-9" tabindex="-1"></a>                     <span class="at">data =</span> df.credit <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-10"><a href="model-assumptions.html#cb1494-10" tabindex="-1"></a>                       <span class="fu">filter</span>(x1 <span class="sc">!=</span> <span class="dv">324</span>))</span>
+<span id="cb1494-11"><a href="model-assumptions.html#cb1494-11" tabindex="-1"></a></span>
+<span id="cb1494-12"><a href="model-assumptions.html#cb1494-12" tabindex="-1"></a>res_with_outlier <span class="ot">=</span> fit.credit <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-13"><a href="model-assumptions.html#cb1494-13" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-14"><a href="model-assumptions.html#cb1494-14" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">324</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-15"><a href="model-assumptions.html#cb1494-15" tabindex="-1"></a>  <span class="fu">pull</span>(.resid)</span>
+<span id="cb1494-16"><a href="model-assumptions.html#cb1494-16" tabindex="-1"></a></span>
+<span id="cb1494-17"><a href="model-assumptions.html#cb1494-17" tabindex="-1"></a>res_without_outlier <span class="ot">=</span> fit.credit2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-18"><a href="model-assumptions.html#cb1494-18" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> df.credit) <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-19"><a href="model-assumptions.html#cb1494-19" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">.resid =</span> balance <span class="sc">-</span> .fitted) <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-20"><a href="model-assumptions.html#cb1494-20" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">324</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-21"><a href="model-assumptions.html#cb1494-21" tabindex="-1"></a>  <span class="fu">pull</span>(.resid)</span>
+<span id="cb1494-22"><a href="model-assumptions.html#cb1494-22" tabindex="-1"></a></span>
+<span id="cb1494-23"><a href="model-assumptions.html#cb1494-23" tabindex="-1"></a>hat1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (res_with_outlier<span class="sc">/</span>res_without_outlier) <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-24"><a href="model-assumptions.html#cb1494-24" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb1494-25"><a href="model-assumptions.html#cb1494-25" tabindex="-1"></a></span>
+<span id="cb1494-26"><a href="model-assumptions.html#cb1494-26" tabindex="-1"></a>hat2 <span class="ot">=</span> fit.credit <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-27"><a href="model-assumptions.html#cb1494-27" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-28"><a href="model-assumptions.html#cb1494-28" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">324</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-29"><a href="model-assumptions.html#cb1494-29" tabindex="-1"></a>  <span class="fu">pull</span>(.hat) <span class="sc">%&gt;%</span> </span>
+<span id="cb1494-30"><a href="model-assumptions.html#cb1494-30" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb1494-31"><a href="model-assumptions.html#cb1494-31" tabindex="-1"></a></span>
+<span id="cb1494-32"><a href="model-assumptions.html#cb1494-32" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">&quot;hat1: &quot;</span>, hat1))</span></code></pre></div>
 <pre><code>## [1] &quot;hat1: 0.041&quot;</code></pre>
-<div class="sourceCode" id="cb1466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1466-1"><a href="model-assumptions.html#cb1466-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">&quot;hat2: &quot;</span>, hat2))</span></code></pre></div>
+<div class="sourceCode" id="cb1496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1496-1"><a href="model-assumptions.html#cb1496-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">&quot;hat2: &quot;</span>, hat2))</span></code></pre></div>
 <pre><code>## [1] &quot;hat2: 0.041&quot;</code></pre>
 <p>Cook’s distance is defined as</p>
 <p><span class="math display">\[D_i = \frac{e^2_{Si}}{k + 1} \times \frac{h_i}{1-h_1}\]</span>,</p>
 <p>where <span class="math inline">\(e^2_{Si}\)</span> is the squared standardized residual, <span class="math inline">\(k\)</span> is the number of coefficients in the model (excluding the intercept), and <span class="math inline">\(h_i\)</span> is the hat-value for case <span class="math inline">\(i\)</span>.</p>
 <p>Let’s double check here:</p>
-<div class="sourceCode" id="cb1468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1468-1"><a href="model-assumptions.html#cb1468-1" tabindex="-1"></a>fit.credit <span class="sc">%&gt;%</span> </span>
-<span id="cb1468-2"><a href="model-assumptions.html#cb1468-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1468-3"><a href="model-assumptions.html#cb1468-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cook =</span> ((.std.resid<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">*</span> (.hat<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> .hat))) <span class="sc">%&gt;%</span> </span>
-<span id="cb1468-4"><a href="model-assumptions.html#cb1468-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&quot;cook&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1468-5"><a href="model-assumptions.html#cb1468-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1498-1"><a href="model-assumptions.html#cb1498-1" tabindex="-1"></a>fit.credit <span class="sc">%&gt;%</span> </span>
+<span id="cb1498-2"><a href="model-assumptions.html#cb1498-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1498-3"><a href="model-assumptions.html#cb1498-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cook =</span> ((.std.resid<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span>)) <span class="sc">*</span> (.hat<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> .hat))) <span class="sc">%&gt;%</span> </span>
+<span id="cb1498-4"><a href="model-assumptions.html#cb1498-4" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&quot;cook&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1498-5"><a href="model-assumptions.html#cb1498-5" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 2
 ##        .cooksd        cook
 ##          &lt;dbl&gt;       &lt;dbl&gt;
@@ -964,60 +978,60 @@ div.csl-indent {
 ##  9 0.0000457   0.0000304  
 ## 10 0.00529     0.00353</code></pre>
 <p>Looking good!</p>
-<div class="sourceCode" id="cb1470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1470-1"><a href="model-assumptions.html#cb1470-1" tabindex="-1"></a>fit.credit <span class="sc">%&gt;%</span> </span>
-<span id="cb1470-2"><a href="model-assumptions.html#cb1470-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1470-3"><a href="model-assumptions.html#cb1470-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .hat,</span>
-<span id="cb1470-4"><a href="model-assumptions.html#cb1470-4" tabindex="-1"></a>             <span class="at">y =</span> .std.resid)) <span class="sc">+</span> </span>
-<span id="cb1470-5"><a href="model-assumptions.html#cb1470-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1470-6"><a href="model-assumptions.html#cb1470-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .cooksd),</span>
-<span id="cb1470-7"><a href="model-assumptions.html#cb1470-7" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1500-1"><a href="model-assumptions.html#cb1500-1" tabindex="-1"></a>fit.credit <span class="sc">%&gt;%</span> </span>
+<span id="cb1500-2"><a href="model-assumptions.html#cb1500-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1500-3"><a href="model-assumptions.html#cb1500-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .hat,</span>
+<span id="cb1500-4"><a href="model-assumptions.html#cb1500-4" tabindex="-1"></a>             <span class="at">y =</span> .std.resid)) <span class="sc">+</span> </span>
+<span id="cb1500-5"><a href="model-assumptions.html#cb1500-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1500-6"><a href="model-assumptions.html#cb1500-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .cooksd),</span>
+<span id="cb1500-7"><a href="model-assumptions.html#cb1500-7" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div id="toy-example" class="section level5 hasAnchor" number="25.3.1.1.1">
 <h5><span class="header-section-number">25.3.1.1.1</span> Toy example<a href="model-assumptions.html#toy-example" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <p>Generate some data with an outlier.</p>
-<div class="sourceCode" id="cb1471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1471-1"><a href="model-assumptions.html#cb1471-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb1471-2"><a href="model-assumptions.html#cb1471-2" tabindex="-1"></a>df.hat <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">5</span>),</span>
-<span id="cb1471-3"><a href="model-assumptions.html#cb1471-3" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">10</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1471-4"><a href="model-assumptions.html#cb1471-4" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">x =</span> <span class="fl">0.7</span>,</span>
-<span id="cb1471-5"><a href="model-assumptions.html#cb1471-5" tabindex="-1"></a>                   <span class="at">y =</span> <span class="dv">15</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1471-6"><a href="model-assumptions.html#cb1471-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb1501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1501-1"><a href="model-assumptions.html#cb1501-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1501-2"><a href="model-assumptions.html#cb1501-2" tabindex="-1"></a>df.hat <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">5</span>),</span>
+<span id="cb1501-3"><a href="model-assumptions.html#cb1501-3" tabindex="-1"></a>                <span class="at">y =</span> <span class="dv">10</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1501-4"><a href="model-assumptions.html#cb1501-4" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="at">x =</span> <span class="fl">0.7</span>,</span>
+<span id="cb1501-5"><a href="model-assumptions.html#cb1501-5" tabindex="-1"></a>                   <span class="at">y =</span> <span class="dv">15</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1501-6"><a href="model-assumptions.html#cb1501-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code></pre></div>
 <p>Illustrate the hat-values and cook’s distance.</p>
-<div class="sourceCode" id="cb1472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1472-1"><a href="model-assumptions.html#cb1472-1" tabindex="-1"></a>fit.hat <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x,</span>
-<span id="cb1472-2"><a href="model-assumptions.html#cb1472-2" tabindex="-1"></a>             <span class="at">data =</span> df.hat)</span>
-<span id="cb1472-3"><a href="model-assumptions.html#cb1472-3" tabindex="-1"></a></span>
-<span id="cb1472-4"><a href="model-assumptions.html#cb1472-4" tabindex="-1"></a>fit.hat <span class="sc">%&gt;%</span> </span>
-<span id="cb1472-5"><a href="model-assumptions.html#cb1472-5" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1472-6"><a href="model-assumptions.html#cb1472-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb1472-7"><a href="model-assumptions.html#cb1472-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .hat,</span>
-<span id="cb1472-8"><a href="model-assumptions.html#cb1472-8" tabindex="-1"></a>             <span class="at">y =</span> .std.resid)) <span class="sc">+</span> </span>
-<span id="cb1472-9"><a href="model-assumptions.html#cb1472-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1472-10"><a href="model-assumptions.html#cb1472-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .cooksd),</span>
-<span id="cb1472-11"><a href="model-assumptions.html#cb1472-11" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1472-12"><a href="model-assumptions.html#cb1472-12" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> index),</span>
-<span id="cb1472-13"><a href="model-assumptions.html#cb1472-13" tabindex="-1"></a>            <span class="at">nudge_y =</span> <span class="sc">-</span><span class="fl">0.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1502-1"><a href="model-assumptions.html#cb1502-1" tabindex="-1"></a>fit.hat <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb1502-2"><a href="model-assumptions.html#cb1502-2" tabindex="-1"></a>             <span class="at">data =</span> df.hat)</span>
+<span id="cb1502-3"><a href="model-assumptions.html#cb1502-3" tabindex="-1"></a></span>
+<span id="cb1502-4"><a href="model-assumptions.html#cb1502-4" tabindex="-1"></a>fit.hat <span class="sc">%&gt;%</span> </span>
+<span id="cb1502-5"><a href="model-assumptions.html#cb1502-5" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1502-6"><a href="model-assumptions.html#cb1502-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb1502-7"><a href="model-assumptions.html#cb1502-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> .hat,</span>
+<span id="cb1502-8"><a href="model-assumptions.html#cb1502-8" tabindex="-1"></a>             <span class="at">y =</span> .std.resid)) <span class="sc">+</span> </span>
+<span id="cb1502-9"><a href="model-assumptions.html#cb1502-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1502-10"><a href="model-assumptions.html#cb1502-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .cooksd),</span>
+<span id="cb1502-11"><a href="model-assumptions.html#cb1502-11" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1502-12"><a href="model-assumptions.html#cb1502-12" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> index),</span>
+<span id="cb1502-13"><a href="model-assumptions.html#cb1502-13" tabindex="-1"></a>            <span class="at">nudge_y =</span> <span class="sc">-</span><span class="fl">0.2</span>)</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Illustrate what the regression line looks like when all points are fit vs. one of the points is excluded.</p>
-<div class="sourceCode" id="cb1473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1473-1"><a href="model-assumptions.html#cb1473-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.hat,</span>
-<span id="cb1473-2"><a href="model-assumptions.html#cb1473-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb1473-3"><a href="model-assumptions.html#cb1473-3" tabindex="-1"></a>                     <span class="at">y =</span> y)) <span class="sc">+</span> </span>
-<span id="cb1473-4"><a href="model-assumptions.html#cb1473-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb1473-5"><a href="model-assumptions.html#cb1473-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb1473-6"><a href="model-assumptions.html#cb1473-6" tabindex="-1"></a>              <span class="at">se =</span> F,</span>
-<span id="cb1473-7"><a href="model-assumptions.html#cb1473-7" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb1473-8"><a href="model-assumptions.html#cb1473-8" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> df.hat <span class="sc">%&gt;%</span> </span>
-<span id="cb1473-9"><a href="model-assumptions.html#cb1473-9" tabindex="-1"></a>                <span class="fu">filter</span>(index <span class="sc">!=</span> <span class="dv">6</span>),</span>
-<span id="cb1473-10"><a href="model-assumptions.html#cb1473-10" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb1473-11"><a href="model-assumptions.html#cb1473-11" tabindex="-1"></a>              <span class="at">se =</span> F,</span>
-<span id="cb1473-12"><a href="model-assumptions.html#cb1473-12" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1503-1"><a href="model-assumptions.html#cb1503-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.hat,</span>
+<span id="cb1503-2"><a href="model-assumptions.html#cb1503-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb1503-3"><a href="model-assumptions.html#cb1503-3" tabindex="-1"></a>                     <span class="at">y =</span> y)) <span class="sc">+</span> </span>
+<span id="cb1503-4"><a href="model-assumptions.html#cb1503-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb1503-5"><a href="model-assumptions.html#cb1503-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb1503-6"><a href="model-assumptions.html#cb1503-6" tabindex="-1"></a>              <span class="at">se =</span> F,</span>
+<span id="cb1503-7"><a href="model-assumptions.html#cb1503-7" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1503-8"><a href="model-assumptions.html#cb1503-8" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> df.hat <span class="sc">%&gt;%</span> </span>
+<span id="cb1503-9"><a href="model-assumptions.html#cb1503-9" tabindex="-1"></a>                <span class="fu">filter</span>(index <span class="sc">!=</span> <span class="dv">6</span>),</span>
+<span id="cb1503-10"><a href="model-assumptions.html#cb1503-10" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb1503-11"><a href="model-assumptions.html#cb1503-11" tabindex="-1"></a>              <span class="at">se =</span> F,</span>
+<span id="cb1503-12"><a href="model-assumptions.html#cb1503-12" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Summary of each observation.</p>
-<div class="sourceCode" id="cb1475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1475-1"><a href="model-assumptions.html#cb1475-1" tabindex="-1"></a>fit.hat <span class="sc">%&gt;%</span> </span>
-<span id="cb1475-2"><a href="model-assumptions.html#cb1475-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1475-3"><a href="model-assumptions.html#cb1475-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1475-4"><a href="model-assumptions.html#cb1475-4" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1475-5"><a href="model-assumptions.html#cb1475-5" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1505-1"><a href="model-assumptions.html#cb1505-1" tabindex="-1"></a>fit.hat <span class="sc">%&gt;%</span> </span>
+<span id="cb1505-2"><a href="model-assumptions.html#cb1505-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1505-3"><a href="model-assumptions.html#cb1505-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1505-4"><a href="model-assumptions.html#cb1505-4" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1505-5"><a href="model-assumptions.html#cb1505-5" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1207,39 +1221,39 @@ std_resid
 </tbody>
 </table>
 <p>Compute cook’s distance</p>
-<div class="sourceCode" id="cb1476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1476-1"><a href="model-assumptions.html#cb1476-1" tabindex="-1"></a>fit.hat_with <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x,</span>
-<span id="cb1476-2"><a href="model-assumptions.html#cb1476-2" tabindex="-1"></a>                  <span class="at">data =</span> df.hat)</span>
-<span id="cb1476-3"><a href="model-assumptions.html#cb1476-3" tabindex="-1"></a></span>
-<span id="cb1476-4"><a href="model-assumptions.html#cb1476-4" tabindex="-1"></a>fit.hat_without <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x,</span>
-<span id="cb1476-5"><a href="model-assumptions.html#cb1476-5" tabindex="-1"></a>                     <span class="at">data =</span> df.hat <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-6"><a href="model-assumptions.html#cb1476-6" tabindex="-1"></a>                       <span class="fu">filter</span>(index <span class="sc">!=</span> <span class="dv">6</span>))</span>
-<span id="cb1476-7"><a href="model-assumptions.html#cb1476-7" tabindex="-1"></a></span>
-<span id="cb1476-8"><a href="model-assumptions.html#cb1476-8" tabindex="-1"></a>residual_without <span class="ot">=</span> fit.hat_without <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-9"><a href="model-assumptions.html#cb1476-9" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> df.hat) <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-10"><a href="model-assumptions.html#cb1476-10" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-11"><a href="model-assumptions.html#cb1476-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resid =</span> y <span class="sc">-</span> fitted) <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-12"><a href="model-assumptions.html#cb1476-12" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-13"><a href="model-assumptions.html#cb1476-13" tabindex="-1"></a>  <span class="fu">pull</span>(resid)</span>
-<span id="cb1476-14"><a href="model-assumptions.html#cb1476-14" tabindex="-1"></a></span>
-<span id="cb1476-15"><a href="model-assumptions.html#cb1476-15" tabindex="-1"></a>residual_with <span class="ot">=</span> fit.hat <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-16"><a href="model-assumptions.html#cb1476-16" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-17"><a href="model-assumptions.html#cb1476-17" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-18"><a href="model-assumptions.html#cb1476-18" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1476-19"><a href="model-assumptions.html#cb1476-19" tabindex="-1"></a>  <span class="fu">pull</span>(resid)</span>
-<span id="cb1476-20"><a href="model-assumptions.html#cb1476-20" tabindex="-1"></a></span>
-<span id="cb1476-21"><a href="model-assumptions.html#cb1476-21" tabindex="-1"></a>hat <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (residual_with<span class="sc">/</span>residual_without)</span>
-<span id="cb1476-22"><a href="model-assumptions.html#cb1476-22" tabindex="-1"></a>hat</span></code></pre></div>
+<div class="sourceCode" id="cb1506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1506-1"><a href="model-assumptions.html#cb1506-1" tabindex="-1"></a>fit.hat_with <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb1506-2"><a href="model-assumptions.html#cb1506-2" tabindex="-1"></a>                  <span class="at">data =</span> df.hat)</span>
+<span id="cb1506-3"><a href="model-assumptions.html#cb1506-3" tabindex="-1"></a></span>
+<span id="cb1506-4"><a href="model-assumptions.html#cb1506-4" tabindex="-1"></a>fit.hat_without <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb1506-5"><a href="model-assumptions.html#cb1506-5" tabindex="-1"></a>                     <span class="at">data =</span> df.hat <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-6"><a href="model-assumptions.html#cb1506-6" tabindex="-1"></a>                       <span class="fu">filter</span>(index <span class="sc">!=</span> <span class="dv">6</span>))</span>
+<span id="cb1506-7"><a href="model-assumptions.html#cb1506-7" tabindex="-1"></a></span>
+<span id="cb1506-8"><a href="model-assumptions.html#cb1506-8" tabindex="-1"></a>residual_without <span class="ot">=</span> fit.hat_without <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-9"><a href="model-assumptions.html#cb1506-9" tabindex="-1"></a>  <span class="fu">augment</span>(<span class="at">newdata =</span> df.hat) <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-10"><a href="model-assumptions.html#cb1506-10" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-11"><a href="model-assumptions.html#cb1506-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resid =</span> y <span class="sc">-</span> fitted) <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-12"><a href="model-assumptions.html#cb1506-12" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-13"><a href="model-assumptions.html#cb1506-13" tabindex="-1"></a>  <span class="fu">pull</span>(resid)</span>
+<span id="cb1506-14"><a href="model-assumptions.html#cb1506-14" tabindex="-1"></a></span>
+<span id="cb1506-15"><a href="model-assumptions.html#cb1506-15" tabindex="-1"></a>residual_with <span class="ot">=</span> fit.hat <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-16"><a href="model-assumptions.html#cb1506-16" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-17"><a href="model-assumptions.html#cb1506-17" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-18"><a href="model-assumptions.html#cb1506-18" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">==</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1506-19"><a href="model-assumptions.html#cb1506-19" tabindex="-1"></a>  <span class="fu">pull</span>(resid)</span>
+<span id="cb1506-20"><a href="model-assumptions.html#cb1506-20" tabindex="-1"></a></span>
+<span id="cb1506-21"><a href="model-assumptions.html#cb1506-21" tabindex="-1"></a>hat <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> (residual_with<span class="sc">/</span>residual_without)</span>
+<span id="cb1506-22"><a href="model-assumptions.html#cb1506-22" tabindex="-1"></a>hat</span></code></pre></div>
 <pre><code>## [1] 0.270516</code></pre>
 </div>
 </div>
 </div>
 <div id="linear-and-additive" class="section level3 hasAnchor" number="25.3.2">
 <h3><span class="header-section-number">25.3.2</span> Linear and additive<a href="model-assumptions.html#linear-and-additive" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1478-1"><a href="model-assumptions.html#cb1478-1" tabindex="-1"></a>df.car <span class="ot">=</span> mtcars</span></code></pre></div>
-<div class="sourceCode" id="cb1479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1479-1"><a href="model-assumptions.html#cb1479-1" tabindex="-1"></a>df.car <span class="sc">%&gt;%</span> </span>
-<span id="cb1479-2"><a href="model-assumptions.html#cb1479-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1479-3"><a href="model-assumptions.html#cb1479-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1479-4"><a href="model-assumptions.html#cb1479-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1508-1"><a href="model-assumptions.html#cb1508-1" tabindex="-1"></a>df.car <span class="ot">=</span> mtcars</span></code></pre></div>
+<div class="sourceCode" id="cb1509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1509-1"><a href="model-assumptions.html#cb1509-1" tabindex="-1"></a>df.car <span class="sc">%&gt;%</span> </span>
+<span id="cb1509-2"><a href="model-assumptions.html#cb1509-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">6</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1509-3"><a href="model-assumptions.html#cb1509-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1509-4"><a href="model-assumptions.html#cb1509-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1511,88 +1525,88 @@ Valiant
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb1480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1480-1"><a href="model-assumptions.html#cb1480-1" tabindex="-1"></a>fit.car <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> mpg <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> hp,</span>
-<span id="cb1480-2"><a href="model-assumptions.html#cb1480-2" tabindex="-1"></a>             <span class="at">data =</span> df.car)</span>
-<span id="cb1480-3"><a href="model-assumptions.html#cb1480-3" tabindex="-1"></a></span>
-<span id="cb1480-4"><a href="model-assumptions.html#cb1480-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.car,</span>
-<span id="cb1480-5"><a href="model-assumptions.html#cb1480-5" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hp,</span>
-<span id="cb1480-6"><a href="model-assumptions.html#cb1480-6" tabindex="-1"></a>                     <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
-<span id="cb1480-7"><a href="model-assumptions.html#cb1480-7" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb1480-8"><a href="model-assumptions.html#cb1480-8" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb1480-9"><a href="model-assumptions.html#cb1480-9" tabindex="-1"></a>              <span class="at">se =</span> F) <span class="sc">+</span> </span>
-<span id="cb1480-10"><a href="model-assumptions.html#cb1480-10" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1510-1"><a href="model-assumptions.html#cb1510-1" tabindex="-1"></a>fit.car <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> mpg <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> hp,</span>
+<span id="cb1510-2"><a href="model-assumptions.html#cb1510-2" tabindex="-1"></a>             <span class="at">data =</span> df.car)</span>
+<span id="cb1510-3"><a href="model-assumptions.html#cb1510-3" tabindex="-1"></a></span>
+<span id="cb1510-4"><a href="model-assumptions.html#cb1510-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.car,</span>
+<span id="cb1510-5"><a href="model-assumptions.html#cb1510-5" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hp,</span>
+<span id="cb1510-6"><a href="model-assumptions.html#cb1510-6" tabindex="-1"></a>                     <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
+<span id="cb1510-7"><a href="model-assumptions.html#cb1510-7" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb1510-8"><a href="model-assumptions.html#cb1510-8" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb1510-9"><a href="model-assumptions.html#cb1510-9" tabindex="-1"></a>              <span class="at">se =</span> F) <span class="sc">+</span> </span>
+<span id="cb1510-10"><a href="model-assumptions.html#cb1510-10" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Residual plot</p>
-<div class="sourceCode" id="cb1482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1482-1"><a href="model-assumptions.html#cb1482-1" tabindex="-1"></a>fit.car <span class="sc">%&gt;%</span> </span>
-<span id="cb1482-2"><a href="model-assumptions.html#cb1482-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1482-3"><a href="model-assumptions.html#cb1482-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1482-4"><a href="model-assumptions.html#cb1482-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
-<span id="cb1482-5"><a href="model-assumptions.html#cb1482-5" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
-<span id="cb1482-6"><a href="model-assumptions.html#cb1482-6" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
-<span id="cb1482-7"><a href="model-assumptions.html#cb1482-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, </span>
-<span id="cb1482-8"><a href="model-assumptions.html#cb1482-8" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb1482-9"><a href="model-assumptions.html#cb1482-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb1482-10"><a href="model-assumptions.html#cb1482-10" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb1482-11"><a href="model-assumptions.html#cb1482-11" tabindex="-1"></a>              <span class="at">se =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb1512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1512-1"><a href="model-assumptions.html#cb1512-1" tabindex="-1"></a>fit.car <span class="sc">%&gt;%</span> </span>
+<span id="cb1512-2"><a href="model-assumptions.html#cb1512-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1512-3"><a href="model-assumptions.html#cb1512-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1512-4"><a href="model-assumptions.html#cb1512-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb1512-5"><a href="model-assumptions.html#cb1512-5" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
+<span id="cb1512-6"><a href="model-assumptions.html#cb1512-6" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
+<span id="cb1512-7"><a href="model-assumptions.html#cb1512-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, </span>
+<span id="cb1512-8"><a href="model-assumptions.html#cb1512-8" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb1512-9"><a href="model-assumptions.html#cb1512-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1512-10"><a href="model-assumptions.html#cb1512-10" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb1512-11"><a href="model-assumptions.html#cb1512-11" tabindex="-1"></a>              <span class="at">se =</span> F)</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Include a squared predictor</p>
-<div class="sourceCode" id="cb1483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1483-1"><a href="model-assumptions.html#cb1483-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.car,</span>
-<span id="cb1483-2"><a href="model-assumptions.html#cb1483-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hp,</span>
-<span id="cb1483-3"><a href="model-assumptions.html#cb1483-3" tabindex="-1"></a>                     <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
-<span id="cb1483-4"><a href="model-assumptions.html#cb1483-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb1483-5"><a href="model-assumptions.html#cb1483-5" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> x <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb1483-6"><a href="model-assumptions.html#cb1483-6" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1513-1"><a href="model-assumptions.html#cb1513-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.car,</span>
+<span id="cb1513-2"><a href="model-assumptions.html#cb1513-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> hp,</span>
+<span id="cb1513-3"><a href="model-assumptions.html#cb1513-3" tabindex="-1"></a>                     <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
+<span id="cb1513-4"><a href="model-assumptions.html#cb1513-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb1513-5"><a href="model-assumptions.html#cb1513-5" tabindex="-1"></a>              <span class="at">formula =</span> y <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> x <span class="sc">+</span> <span class="fu">I</span>(x<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb1513-6"><a href="model-assumptions.html#cb1513-6" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<div class="sourceCode" id="cb1484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1484-1"><a href="model-assumptions.html#cb1484-1" tabindex="-1"></a>fit.car2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> mpg <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> hp <span class="sc">+</span> <span class="fu">I</span>(hp<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb1484-2"><a href="model-assumptions.html#cb1484-2" tabindex="-1"></a>             <span class="at">data =</span> df.car)</span>
-<span id="cb1484-3"><a href="model-assumptions.html#cb1484-3" tabindex="-1"></a></span>
-<span id="cb1484-4"><a href="model-assumptions.html#cb1484-4" tabindex="-1"></a>fit.car2 <span class="sc">%&gt;%</span> </span>
-<span id="cb1484-5"><a href="model-assumptions.html#cb1484-5" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1484-6"><a href="model-assumptions.html#cb1484-6" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1484-7"><a href="model-assumptions.html#cb1484-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
-<span id="cb1484-8"><a href="model-assumptions.html#cb1484-8" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
-<span id="cb1484-9"><a href="model-assumptions.html#cb1484-9" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
-<span id="cb1484-10"><a href="model-assumptions.html#cb1484-10" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, </span>
-<span id="cb1484-11"><a href="model-assumptions.html#cb1484-11" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb1484-12"><a href="model-assumptions.html#cb1484-12" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb1484-13"><a href="model-assumptions.html#cb1484-13" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb1484-14"><a href="model-assumptions.html#cb1484-14" tabindex="-1"></a>              <span class="at">se =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb1514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1514-1"><a href="model-assumptions.html#cb1514-1" tabindex="-1"></a>fit.car2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> mpg <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> hp <span class="sc">+</span> <span class="fu">I</span>(hp<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb1514-2"><a href="model-assumptions.html#cb1514-2" tabindex="-1"></a>             <span class="at">data =</span> df.car)</span>
+<span id="cb1514-3"><a href="model-assumptions.html#cb1514-3" tabindex="-1"></a></span>
+<span id="cb1514-4"><a href="model-assumptions.html#cb1514-4" tabindex="-1"></a>fit.car2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1514-5"><a href="model-assumptions.html#cb1514-5" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1514-6"><a href="model-assumptions.html#cb1514-6" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1514-7"><a href="model-assumptions.html#cb1514-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb1514-8"><a href="model-assumptions.html#cb1514-8" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
+<span id="cb1514-9"><a href="model-assumptions.html#cb1514-9" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
+<span id="cb1514-10"><a href="model-assumptions.html#cb1514-10" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, </span>
+<span id="cb1514-11"><a href="model-assumptions.html#cb1514-11" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb1514-12"><a href="model-assumptions.html#cb1514-12" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1514-13"><a href="model-assumptions.html#cb1514-13" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb1514-14"><a href="model-assumptions.html#cb1514-14" tabindex="-1"></a>              <span class="at">se =</span> F)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
 <div id="normally-distributed-residuals" class="section level3 hasAnchor" number="25.3.3">
 <h3><span class="header-section-number">25.3.3</span> Normally distributed residuals<a href="model-assumptions.html#normally-distributed-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s look at the residuals for the credit card model.</p>
-<div class="sourceCode" id="cb1486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1486-1"><a href="model-assumptions.html#cb1486-1" tabindex="-1"></a>fit.credit <span class="sc">%&gt;%</span> </span>
-<span id="cb1486-2"><a href="model-assumptions.html#cb1486-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1486-3"><a href="model-assumptions.html#cb1486-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1486-4"><a href="model-assumptions.html#cb1486-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> ., </span>
-<span id="cb1486-5"><a href="model-assumptions.html#cb1486-5" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
-<span id="cb1486-6"><a href="model-assumptions.html#cb1486-6" tabindex="-1"></a>                     <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
-<span id="cb1486-7"><a href="model-assumptions.html#cb1486-7" tabindex="-1"></a>  <span class="fu">geom_point</span>()  </span></code></pre></div>
+<div class="sourceCode" id="cb1516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1516-1"><a href="model-assumptions.html#cb1516-1" tabindex="-1"></a>fit.credit <span class="sc">%&gt;%</span> </span>
+<span id="cb1516-2"><a href="model-assumptions.html#cb1516-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1516-3"><a href="model-assumptions.html#cb1516-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1516-4"><a href="model-assumptions.html#cb1516-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> ., </span>
+<span id="cb1516-5"><a href="model-assumptions.html#cb1516-5" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
+<span id="cb1516-6"><a href="model-assumptions.html#cb1516-6" tabindex="-1"></a>                     <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
+<span id="cb1516-7"><a href="model-assumptions.html#cb1516-7" tabindex="-1"></a>  <span class="fu">geom_point</span>()  </span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>This plot helps assess whether there is homogeneity of variance. Overall, the residual plot looks pretty ok. The diagonal points in the bottom left of th plot arise because credit card balance is not an unbounded variable, and some of the people have a credit card balance of 0.</p>
 <p>We can also check whether the residuals are normally distributed by plotting a density of the residuals, and a quantile quantile plot.</p>
-<div class="sourceCode" id="cb1487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1487-1"><a href="model-assumptions.html#cb1487-1" tabindex="-1"></a>df.plot <span class="ot">=</span> fit.credit <span class="sc">%&gt;%</span> </span>
-<span id="cb1487-2"><a href="model-assumptions.html#cb1487-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1487-3"><a href="model-assumptions.html#cb1487-3" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb1487-4"><a href="model-assumptions.html#cb1487-4" tabindex="-1"></a></span>
-<span id="cb1487-5"><a href="model-assumptions.html#cb1487-5" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
-<span id="cb1487-6"><a href="model-assumptions.html#cb1487-6" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> resid)) <span class="sc">+</span> </span>
-<span id="cb1487-7"><a href="model-assumptions.html#cb1487-7" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb1487-8"><a href="model-assumptions.html#cb1487-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Density plot&quot;</span>)</span>
-<span id="cb1487-9"><a href="model-assumptions.html#cb1487-9" tabindex="-1"></a></span>
-<span id="cb1487-10"><a href="model-assumptions.html#cb1487-10" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
-<span id="cb1487-11"><a href="model-assumptions.html#cb1487-11" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">sample =</span> <span class="fu">scale</span>(resid))) <span class="sc">+</span></span>
-<span id="cb1487-12"><a href="model-assumptions.html#cb1487-12" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>() <span class="sc">+</span> </span>
-<span id="cb1487-13"><a href="model-assumptions.html#cb1487-13" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span> </span>
-<span id="cb1487-14"><a href="model-assumptions.html#cb1487-14" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;QQ plot&quot;</span>,</span>
-<span id="cb1487-15"><a href="model-assumptions.html#cb1487-15" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;theoretical&quot;</span>,</span>
-<span id="cb1487-16"><a href="model-assumptions.html#cb1487-16" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;standardized residuals&quot;</span>)</span>
-<span id="cb1487-17"><a href="model-assumptions.html#cb1487-17" tabindex="-1"></a></span>
-<span id="cb1487-18"><a href="model-assumptions.html#cb1487-18" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb1517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1517-1"><a href="model-assumptions.html#cb1517-1" tabindex="-1"></a>df.plot <span class="ot">=</span> fit.credit <span class="sc">%&gt;%</span> </span>
+<span id="cb1517-2"><a href="model-assumptions.html#cb1517-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1517-3"><a href="model-assumptions.html#cb1517-3" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb1517-4"><a href="model-assumptions.html#cb1517-4" tabindex="-1"></a></span>
+<span id="cb1517-5"><a href="model-assumptions.html#cb1517-5" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
+<span id="cb1517-6"><a href="model-assumptions.html#cb1517-6" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> resid)) <span class="sc">+</span> </span>
+<span id="cb1517-7"><a href="model-assumptions.html#cb1517-7" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb1517-8"><a href="model-assumptions.html#cb1517-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Density plot&quot;</span>)</span>
+<span id="cb1517-9"><a href="model-assumptions.html#cb1517-9" tabindex="-1"></a></span>
+<span id="cb1517-10"><a href="model-assumptions.html#cb1517-10" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.plot,</span>
+<span id="cb1517-11"><a href="model-assumptions.html#cb1517-11" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">sample =</span> <span class="fu">scale</span>(resid))) <span class="sc">+</span></span>
+<span id="cb1517-12"><a href="model-assumptions.html#cb1517-12" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>() <span class="sc">+</span> </span>
+<span id="cb1517-13"><a href="model-assumptions.html#cb1517-13" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span> </span>
+<span id="cb1517-14"><a href="model-assumptions.html#cb1517-14" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;QQ plot&quot;</span>,</span>
+<span id="cb1517-15"><a href="model-assumptions.html#cb1517-15" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;theoretical&quot;</span>,</span>
+<span id="cb1517-16"><a href="model-assumptions.html#cb1517-16" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;standardized residuals&quot;</span>)</span>
+<span id="cb1517-17"><a href="model-assumptions.html#cb1517-17" tabindex="-1"></a></span>
+<span id="cb1517-18"><a href="model-assumptions.html#cb1517-18" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>The residuals aren’t really normally distributed. As both the density and the QQ plot show, residuals with low/negative values are more frequent than residuals with high/positive values.</p>
 <div id="transforming-the-outcome-variable" class="section level4 hasAnchor" number="25.3.3.1">
@@ -1600,14 +1614,14 @@ Valiant
 <p>When the residuals aren’t normally distributed and/or when the variance is not homogeneous, one option is to transform some of the variables.</p>
 <div id="logarithmic-transform" class="section level5 hasAnchor" number="25.3.3.1.1">
 <h5><span class="header-section-number">25.3.3.1.1</span> Logarithmic transform<a href="model-assumptions.html#logarithmic-transform" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<div class="sourceCode" id="cb1488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1488-1"><a href="model-assumptions.html#cb1488-1" tabindex="-1"></a>df.un <span class="ot">=</span> UN <span class="sc">%&gt;%</span> </span>
-<span id="cb1488-2"><a href="model-assumptions.html#cb1488-2" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1488-3"><a href="model-assumptions.html#cb1488-3" tabindex="-1"></a>  <span class="fu">drop_na</span>(infant_mortality, ppgdp)</span>
-<span id="cb1488-4"><a href="model-assumptions.html#cb1488-4" tabindex="-1"></a></span>
-<span id="cb1488-5"><a href="model-assumptions.html#cb1488-5" tabindex="-1"></a>df.un <span class="sc">%&gt;%</span> </span>
-<span id="cb1488-6"><a href="model-assumptions.html#cb1488-6" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1488-7"><a href="model-assumptions.html#cb1488-7" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1488-8"><a href="model-assumptions.html#cb1488-8" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1518-1"><a href="model-assumptions.html#cb1518-1" tabindex="-1"></a>df.un <span class="ot">=</span> UN <span class="sc">%&gt;%</span> </span>
+<span id="cb1518-2"><a href="model-assumptions.html#cb1518-2" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1518-3"><a href="model-assumptions.html#cb1518-3" tabindex="-1"></a>  <span class="fu">drop_na</span>(infant_mortality, ppgdp)</span>
+<span id="cb1518-4"><a href="model-assumptions.html#cb1518-4" tabindex="-1"></a></span>
+<span id="cb1518-5"><a href="model-assumptions.html#cb1518-5" tabindex="-1"></a>df.un <span class="sc">%&gt;%</span> </span>
+<span id="cb1518-6"><a href="model-assumptions.html#cb1518-6" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1518-7"><a href="model-assumptions.html#cb1518-7" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1518-8"><a href="model-assumptions.html#cb1518-8" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1770,60 +1784,64 @@ other
 </tbody>
 </table>
 <p>The linear model fit (blue) versus the “loess” (local regression) fit (red).</p>
-<div class="sourceCode" id="cb1489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1489-1"><a href="model-assumptions.html#cb1489-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
-<span id="cb1489-2"><a href="model-assumptions.html#cb1489-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ppgdp,</span>
-<span id="cb1489-3"><a href="model-assumptions.html#cb1489-3" tabindex="-1"></a>                     <span class="at">y =</span> infant_mortality)) <span class="sc">+</span> </span>
-<span id="cb1489-4"><a href="model-assumptions.html#cb1489-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb1489-5"><a href="model-assumptions.html#cb1489-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb1489-6"><a href="model-assumptions.html#cb1489-6" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;lm&quot;</span>),</span>
-<span id="cb1489-7"><a href="model-assumptions.html#cb1489-7" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>,</span>
-<span id="cb1489-8"><a href="model-assumptions.html#cb1489-8" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb1489-9"><a href="model-assumptions.html#cb1489-9" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;loess&quot;</span>),</span>
-<span id="cb1489-10"><a href="model-assumptions.html#cb1489-10" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb1489-11"><a href="model-assumptions.html#cb1489-11" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb1489-12"><a href="model-assumptions.html#cb1489-12" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb1489-13"><a href="model-assumptions.html#cb1489-13" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb1489-14"><a href="model-assumptions.html#cb1489-14" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb1489-15"><a href="model-assumptions.html#cb1489-15" tabindex="-1"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb1489-16"><a href="model-assumptions.html#cb1489-16" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>)),</span>
-<span id="cb1489-17"><a href="model-assumptions.html#cb1489-17" tabindex="-1"></a>                              <span class="at">reverse =</span> T))</span></code></pre></div>
+<div class="sourceCode" id="cb1519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1519-1"><a href="model-assumptions.html#cb1519-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
+<span id="cb1519-2"><a href="model-assumptions.html#cb1519-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ppgdp,</span>
+<span id="cb1519-3"><a href="model-assumptions.html#cb1519-3" tabindex="-1"></a>                     <span class="at">y =</span> infant_mortality)) <span class="sc">+</span> </span>
+<span id="cb1519-4"><a href="model-assumptions.html#cb1519-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1519-5"><a href="model-assumptions.html#cb1519-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb1519-6"><a href="model-assumptions.html#cb1519-6" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;lm&quot;</span>),</span>
+<span id="cb1519-7"><a href="model-assumptions.html#cb1519-7" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>,</span>
+<span id="cb1519-8"><a href="model-assumptions.html#cb1519-8" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb1519-9"><a href="model-assumptions.html#cb1519-9" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="st">&quot;loess&quot;</span>),</span>
+<span id="cb1519-10"><a href="model-assumptions.html#cb1519-10" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb1519-11"><a href="model-assumptions.html#cb1519-11" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb1519-12"><a href="model-assumptions.html#cb1519-12" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb1519-13"><a href="model-assumptions.html#cb1519-13" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1519-14"><a href="model-assumptions.html#cb1519-14" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb1519-15"><a href="model-assumptions.html#cb1519-15" tabindex="-1"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb1519-16"><a href="model-assumptions.html#cb1519-16" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>)),</span>
+<span id="cb1519-17"><a href="model-assumptions.html#cb1519-17" tabindex="-1"></a>                              <span class="at">reverse =</span> T))</span></code></pre></div>
+<pre><code>## Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2 3.5.0.
+## ℹ Please use the `legend.position.inside` argument of `theme()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>Densities of the untransformed and log-transformed variables.</p>
-<div class="sourceCode" id="cb1490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1490-1"><a href="model-assumptions.html#cb1490-1" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
-<span id="cb1490-2"><a href="model-assumptions.html#cb1490-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality)) <span class="sc">+</span> </span>
-<span id="cb1490-3"><a href="model-assumptions.html#cb1490-3" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
-<span id="cb1490-4"><a href="model-assumptions.html#cb1490-4" tabindex="-1"></a></span>
-<span id="cb1490-5"><a href="model-assumptions.html#cb1490-5" tabindex="-1"></a><span class="co"># log transformed </span></span>
-<span id="cb1490-6"><a href="model-assumptions.html#cb1490-6" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
-<span id="cb1490-7"><a href="model-assumptions.html#cb1490-7" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(infant_mortality))) <span class="sc">+</span> </span>
-<span id="cb1490-8"><a href="model-assumptions.html#cb1490-8" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
-<span id="cb1490-9"><a href="model-assumptions.html#cb1490-9" tabindex="-1"></a></span>
-<span id="cb1490-10"><a href="model-assumptions.html#cb1490-10" tabindex="-1"></a>p3 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
-<span id="cb1490-11"><a href="model-assumptions.html#cb1490-11" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ppgdp)) <span class="sc">+</span> </span>
-<span id="cb1490-12"><a href="model-assumptions.html#cb1490-12" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
-<span id="cb1490-13"><a href="model-assumptions.html#cb1490-13" tabindex="-1"></a></span>
-<span id="cb1490-14"><a href="model-assumptions.html#cb1490-14" tabindex="-1"></a><span class="co"># log transformed </span></span>
-<span id="cb1490-15"><a href="model-assumptions.html#cb1490-15" tabindex="-1"></a>p4 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
-<span id="cb1490-16"><a href="model-assumptions.html#cb1490-16" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(ppgdp))) <span class="sc">+</span> </span>
-<span id="cb1490-17"><a href="model-assumptions.html#cb1490-17" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
-<span id="cb1490-18"><a href="model-assumptions.html#cb1490-18" tabindex="-1"></a></span>
-<span id="cb1490-19"><a href="model-assumptions.html#cb1490-19" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4 <span class="sc">+</span> </span>
-<span id="cb1490-20"><a href="model-assumptions.html#cb1490-20" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1521-1"><a href="model-assumptions.html#cb1521-1" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
+<span id="cb1521-2"><a href="model-assumptions.html#cb1521-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> infant_mortality)) <span class="sc">+</span> </span>
+<span id="cb1521-3"><a href="model-assumptions.html#cb1521-3" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb1521-4"><a href="model-assumptions.html#cb1521-4" tabindex="-1"></a></span>
+<span id="cb1521-5"><a href="model-assumptions.html#cb1521-5" tabindex="-1"></a><span class="co"># log transformed </span></span>
+<span id="cb1521-6"><a href="model-assumptions.html#cb1521-6" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
+<span id="cb1521-7"><a href="model-assumptions.html#cb1521-7" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(infant_mortality))) <span class="sc">+</span> </span>
+<span id="cb1521-8"><a href="model-assumptions.html#cb1521-8" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb1521-9"><a href="model-assumptions.html#cb1521-9" tabindex="-1"></a></span>
+<span id="cb1521-10"><a href="model-assumptions.html#cb1521-10" tabindex="-1"></a>p3 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
+<span id="cb1521-11"><a href="model-assumptions.html#cb1521-11" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ppgdp)) <span class="sc">+</span> </span>
+<span id="cb1521-12"><a href="model-assumptions.html#cb1521-12" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb1521-13"><a href="model-assumptions.html#cb1521-13" tabindex="-1"></a></span>
+<span id="cb1521-14"><a href="model-assumptions.html#cb1521-14" tabindex="-1"></a><span class="co"># log transformed </span></span>
+<span id="cb1521-15"><a href="model-assumptions.html#cb1521-15" tabindex="-1"></a>p4 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
+<span id="cb1521-16"><a href="model-assumptions.html#cb1521-16" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(ppgdp))) <span class="sc">+</span> </span>
+<span id="cb1521-17"><a href="model-assumptions.html#cb1521-17" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb1521-18"><a href="model-assumptions.html#cb1521-18" tabindex="-1"></a></span>
+<span id="cb1521-19"><a href="model-assumptions.html#cb1521-19" tabindex="-1"></a>p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3 <span class="sc">+</span> p4 <span class="sc">+</span> </span>
+<span id="cb1521-20"><a href="model-assumptions.html#cb1521-20" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>Fitting different models with / without transformations.</p>
-<div class="sourceCode" id="cb1491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1491-1"><a href="model-assumptions.html#cb1491-1" tabindex="-1"></a>fit.mortality1 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> infant_mortality <span class="sc">~</span> ppgdp,</span>
-<span id="cb1491-2"><a href="model-assumptions.html#cb1491-2" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
-<span id="cb1491-3"><a href="model-assumptions.html#cb1491-3" tabindex="-1"></a></span>
-<span id="cb1491-4"><a href="model-assumptions.html#cb1491-4" tabindex="-1"></a>fit.mortality2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> <span class="fu">log</span>(infant_mortality) <span class="sc">~</span> <span class="fu">log</span>(ppgdp),</span>
-<span id="cb1491-5"><a href="model-assumptions.html#cb1491-5" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
-<span id="cb1491-6"><a href="model-assumptions.html#cb1491-6" tabindex="-1"></a></span>
-<span id="cb1491-7"><a href="model-assumptions.html#cb1491-7" tabindex="-1"></a>fit.mortality3 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> <span class="fu">log</span>(infant_mortality) <span class="sc">~</span> ppgdp,</span>
-<span id="cb1491-8"><a href="model-assumptions.html#cb1491-8" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
-<span id="cb1491-9"><a href="model-assumptions.html#cb1491-9" tabindex="-1"></a></span>
-<span id="cb1491-10"><a href="model-assumptions.html#cb1491-10" tabindex="-1"></a>fit.mortality4 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> infant_mortality <span class="sc">~</span> <span class="fu">log</span>(ppgdp),</span>
-<span id="cb1491-11"><a href="model-assumptions.html#cb1491-11" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
-<span id="cb1491-12"><a href="model-assumptions.html#cb1491-12" tabindex="-1"></a></span>
-<span id="cb1491-13"><a href="model-assumptions.html#cb1491-13" tabindex="-1"></a><span class="fu">summary</span>(fit.mortality1)</span></code></pre></div>
+<div class="sourceCode" id="cb1522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1522-1"><a href="model-assumptions.html#cb1522-1" tabindex="-1"></a>fit.mortality1 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> infant_mortality <span class="sc">~</span> ppgdp,</span>
+<span id="cb1522-2"><a href="model-assumptions.html#cb1522-2" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
+<span id="cb1522-3"><a href="model-assumptions.html#cb1522-3" tabindex="-1"></a></span>
+<span id="cb1522-4"><a href="model-assumptions.html#cb1522-4" tabindex="-1"></a>fit.mortality2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> <span class="fu">log</span>(infant_mortality) <span class="sc">~</span> <span class="fu">log</span>(ppgdp),</span>
+<span id="cb1522-5"><a href="model-assumptions.html#cb1522-5" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
+<span id="cb1522-6"><a href="model-assumptions.html#cb1522-6" tabindex="-1"></a></span>
+<span id="cb1522-7"><a href="model-assumptions.html#cb1522-7" tabindex="-1"></a>fit.mortality3 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> <span class="fu">log</span>(infant_mortality) <span class="sc">~</span> ppgdp,</span>
+<span id="cb1522-8"><a href="model-assumptions.html#cb1522-8" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
+<span id="cb1522-9"><a href="model-assumptions.html#cb1522-9" tabindex="-1"></a></span>
+<span id="cb1522-10"><a href="model-assumptions.html#cb1522-10" tabindex="-1"></a>fit.mortality4 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> infant_mortality <span class="sc">~</span> <span class="fu">log</span>(ppgdp),</span>
+<span id="cb1522-11"><a href="model-assumptions.html#cb1522-11" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
+<span id="cb1522-12"><a href="model-assumptions.html#cb1522-12" tabindex="-1"></a></span>
+<span id="cb1522-13"><a href="model-assumptions.html#cb1522-13" tabindex="-1"></a><span class="fu">summary</span>(fit.mortality1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = infant_mortality ~ ppgdp, data = df.un)
@@ -1842,7 +1860,7 @@ other
 ## Residual standard error: 25.13 on 191 degrees of freedom
 ## Multiple R-squared:  0.2656, Adjusted R-squared:  0.2618 
 ## F-statistic: 69.08 on 1 and 191 DF,  p-value: 1.73e-14</code></pre>
-<div class="sourceCode" id="cb1493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1493-1"><a href="model-assumptions.html#cb1493-1" tabindex="-1"></a><span class="fu">summary</span>(fit.mortality2)</span></code></pre></div>
+<div class="sourceCode" id="cb1524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1524-1"><a href="model-assumptions.html#cb1524-1" tabindex="-1"></a><span class="fu">summary</span>(fit.mortality2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log(infant_mortality) ~ log(ppgdp), data = df.un)
@@ -1861,7 +1879,7 @@ other
 ## Residual standard error: 0.5281 on 191 degrees of freedom
 ## Multiple R-squared:  0.7662, Adjusted R-squared:  0.765 
 ## F-statistic: 625.9 on 1 and 191 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb1495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1495-1"><a href="model-assumptions.html#cb1495-1" tabindex="-1"></a><span class="fu">summary</span>(fit.mortality3)</span></code></pre></div>
+<div class="sourceCode" id="cb1526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1526-1"><a href="model-assumptions.html#cb1526-1" tabindex="-1"></a><span class="fu">summary</span>(fit.mortality3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log(infant_mortality) ~ ppgdp, data = df.un)
@@ -1880,7 +1898,7 @@ other
 ## Residual standard error: 0.7413 on 191 degrees of freedom
 ## Multiple R-squared:  0.5394, Adjusted R-squared:  0.537 
 ## F-statistic: 223.7 on 1 and 191 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb1497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1497-1"><a href="model-assumptions.html#cb1497-1" tabindex="-1"></a><span class="fu">summary</span>(fit.mortality4)</span></code></pre></div>
+<div class="sourceCode" id="cb1528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1528-1"><a href="model-assumptions.html#cb1528-1" tabindex="-1"></a><span class="fu">summary</span>(fit.mortality4)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = infant_mortality ~ log(ppgdp), data = df.un)
@@ -1900,85 +1918,85 @@ other
 ## Multiple R-squared:  0.6172, Adjusted R-squared:  0.6152 
 ## F-statistic:   308 on 1 and 191 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Diagnostics plots for the model without transformed variables.</p>
-<div class="sourceCode" id="cb1499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1499-1"><a href="model-assumptions.html#cb1499-1" tabindex="-1"></a>fit.mortality1 <span class="sc">%&gt;%</span> </span>
-<span id="cb1499-2"><a href="model-assumptions.html#cb1499-2" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1530-1"><a href="model-assumptions.html#cb1530-1" tabindex="-1"></a>fit.mortality1 <span class="sc">%&gt;%</span> </span>
+<span id="cb1530-2"><a href="model-assumptions.html#cb1530-2" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-23-1.png" width="672" /><img src="25-assumptions_files/figure-html/unnamed-chunk-23-2.png" width="672" /><img src="25-assumptions_files/figure-html/unnamed-chunk-23-3.png" width="672" /><img src="25-assumptions_files/figure-html/unnamed-chunk-23-4.png" width="672" /></p>
 <p>Residual plot using ggplot.</p>
-<div class="sourceCode" id="cb1500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1500-1"><a href="model-assumptions.html#cb1500-1" tabindex="-1"></a>fit.mortality1 <span class="sc">%&gt;%</span> </span>
-<span id="cb1500-2"><a href="model-assumptions.html#cb1500-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1500-3"><a href="model-assumptions.html#cb1500-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1500-4"><a href="model-assumptions.html#cb1500-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
-<span id="cb1500-5"><a href="model-assumptions.html#cb1500-5" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
-<span id="cb1500-6"><a href="model-assumptions.html#cb1500-6" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
-<span id="cb1500-7"><a href="model-assumptions.html#cb1500-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, </span>
-<span id="cb1500-8"><a href="model-assumptions.html#cb1500-8" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb1500-9"><a href="model-assumptions.html#cb1500-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb1500-10"><a href="model-assumptions.html#cb1500-10" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb1500-11"><a href="model-assumptions.html#cb1500-11" tabindex="-1"></a>              <span class="at">se =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb1531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1531-1"><a href="model-assumptions.html#cb1531-1" tabindex="-1"></a>fit.mortality1 <span class="sc">%&gt;%</span> </span>
+<span id="cb1531-2"><a href="model-assumptions.html#cb1531-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1531-3"><a href="model-assumptions.html#cb1531-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1531-4"><a href="model-assumptions.html#cb1531-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb1531-5"><a href="model-assumptions.html#cb1531-5" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
+<span id="cb1531-6"><a href="model-assumptions.html#cb1531-6" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span> </span>
+<span id="cb1531-7"><a href="model-assumptions.html#cb1531-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, </span>
+<span id="cb1531-8"><a href="model-assumptions.html#cb1531-8" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb1531-9"><a href="model-assumptions.html#cb1531-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1531-10"><a href="model-assumptions.html#cb1531-10" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb1531-11"><a href="model-assumptions.html#cb1531-11" tabindex="-1"></a>              <span class="at">se =</span> F)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <p>Diagnostic plots for the log-log transformed model.</p>
-<div class="sourceCode" id="cb1502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1502-1"><a href="model-assumptions.html#cb1502-1" tabindex="-1"></a>fit.mortality2 <span class="sc">%&gt;%</span> </span>
-<span id="cb1502-2"><a href="model-assumptions.html#cb1502-2" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1533-1"><a href="model-assumptions.html#cb1533-1" tabindex="-1"></a>fit.mortality2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1533-2"><a href="model-assumptions.html#cb1533-2" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-25-1.png" width="672" /><img src="25-assumptions_files/figure-html/unnamed-chunk-25-2.png" width="672" /><img src="25-assumptions_files/figure-html/unnamed-chunk-25-3.png" width="672" /><img src="25-assumptions_files/figure-html/unnamed-chunk-25-4.png" width="672" /></p>
 <p>Model fit.</p>
-<div class="sourceCode" id="cb1503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1503-1"><a href="model-assumptions.html#cb1503-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
-<span id="cb1503-2"><a href="model-assumptions.html#cb1503-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(ppgdp),</span>
-<span id="cb1503-3"><a href="model-assumptions.html#cb1503-3" tabindex="-1"></a>                     <span class="at">y =</span> <span class="fu">log</span>(infant_mortality))) <span class="sc">+</span> </span>
-<span id="cb1503-4"><a href="model-assumptions.html#cb1503-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb1503-5"><a href="model-assumptions.html#cb1503-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb1503-6"><a href="model-assumptions.html#cb1503-6" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>,</span>
-<span id="cb1503-7"><a href="model-assumptions.html#cb1503-7" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>,</span>
-<span id="cb1503-8"><a href="model-assumptions.html#cb1503-8" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1534-1"><a href="model-assumptions.html#cb1534-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.un,</span>
+<span id="cb1534-2"><a href="model-assumptions.html#cb1534-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(ppgdp),</span>
+<span id="cb1534-3"><a href="model-assumptions.html#cb1534-3" tabindex="-1"></a>                     <span class="at">y =</span> <span class="fu">log</span>(infant_mortality))) <span class="sc">+</span> </span>
+<span id="cb1534-4"><a href="model-assumptions.html#cb1534-4" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb1534-5"><a href="model-assumptions.html#cb1534-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb1534-6"><a href="model-assumptions.html#cb1534-6" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>,</span>
+<span id="cb1534-7"><a href="model-assumptions.html#cb1534-7" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>,</span>
+<span id="cb1534-8"><a href="model-assumptions.html#cb1534-8" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <p>Illustration of the model predictions in the original scale.</p>
-<div class="sourceCode" id="cb1504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1504-1"><a href="model-assumptions.html#cb1504-1" tabindex="-1"></a>fit.mortality2 <span class="sc">%&gt;%</span> </span>
-<span id="cb1504-2"><a href="model-assumptions.html#cb1504-2" tabindex="-1"></a>  <span class="fu">ggpredict</span>(<span class="at">terms =</span> <span class="st">&quot;ppgdp&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1535-1"><a href="model-assumptions.html#cb1535-1" tabindex="-1"></a>fit.mortality2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1535-2"><a href="model-assumptions.html#cb1535-2" tabindex="-1"></a>  <span class="fu">ggpredict</span>(<span class="at">terms =</span> <span class="st">&quot;ppgdp&quot;</span>)</span></code></pre></div>
 <pre><code>## Model has log-transformed response. Back-transforming predictions to
 ##   original response scale. Standard errors are still on the log-scale.</code></pre>
 <pre><code>## # Predicted values of infant_mortality
 ## 
-##  ppgdp | Predicted |       95% CI
-## ---------------------------------
-##      0 |       Inf |             
-##  15000 |      8.78 | [7.99, 9.66]
-##  25000 |      6.41 | [5.73, 7.17]
-##  40000 |      4.80 | [4.21, 5.46]
-##  55000 |      3.94 | [3.42, 4.55]
-##  70000 |      3.40 | [2.91, 3.96]
-##  85000 |      3.01 | [2.56, 3.54]
-## 110000 |      2.57 | [2.16, 3.05]</code></pre>
+##  ppgdp | Predicted |      95% CI
+## --------------------------------
+##      0 |       Inf |            
+##  15000 |      8.78 | 7.99,  9.66
+##  25000 |      6.41 | 5.73,  7.17
+##  40000 |      4.80 | 4.21,  5.46
+##  55000 |      3.94 | 3.42,  4.55
+##  70000 |      3.40 | 2.91,  3.96
+##  85000 |      3.01 | 2.56,  3.54
+## 110000 |      2.57 | 2.16,  3.05</code></pre>
 <pre><code>## 
 ## Not all rows are shown in the output. Use `print(..., n = Inf)` to show
 ##   all rows.</code></pre>
-<div class="sourceCode" id="cb1508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1508-1"><a href="model-assumptions.html#cb1508-1" tabindex="-1"></a>fit.mortality2 <span class="sc">%&gt;%</span> </span>
-<span id="cb1508-2"><a href="model-assumptions.html#cb1508-2" tabindex="-1"></a>  <span class="fu">ggpredict</span>(<span class="at">terms =</span> <span class="st">&quot;ppgdp [exp]&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1508-3"><a href="model-assumptions.html#cb1508-3" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1539-1"><a href="model-assumptions.html#cb1539-1" tabindex="-1"></a>fit.mortality2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1539-2"><a href="model-assumptions.html#cb1539-2" tabindex="-1"></a>  <span class="fu">ggpredict</span>(<span class="at">terms =</span> <span class="st">&quot;ppgdp [exp]&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1539-3"><a href="model-assumptions.html#cb1539-3" tabindex="-1"></a>  <span class="fu">plot</span>()</span></code></pre></div>
 <pre><code>## Model has log-transformed response. Back-transforming predictions to
 ##   original response scale. Standard errors are still on the log-scale.</code></pre>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>Model predictions for models with multiple predictors.</p>
-<div class="sourceCode" id="cb1510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1510-1"><a href="model-assumptions.html#cb1510-1" tabindex="-1"></a><span class="co"># with log transforms </span></span>
-<span id="cb1510-2"><a href="model-assumptions.html#cb1510-2" tabindex="-1"></a>fit.mortality5 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> <span class="fu">log</span>(infant_mortality) <span class="sc">~</span> <span class="fu">log</span>(ppgdp) <span class="sc">+</span> group,</span>
-<span id="cb1510-3"><a href="model-assumptions.html#cb1510-3" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
-<span id="cb1510-4"><a href="model-assumptions.html#cb1510-4" tabindex="-1"></a></span>
-<span id="cb1510-5"><a href="model-assumptions.html#cb1510-5" tabindex="-1"></a><span class="co"># without log transforms </span></span>
-<span id="cb1510-6"><a href="model-assumptions.html#cb1510-6" tabindex="-1"></a>fit.mortality6 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> infant_mortality <span class="sc">~</span> ppgdp <span class="sc">+</span> group,</span>
-<span id="cb1510-7"><a href="model-assumptions.html#cb1510-7" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
-<span id="cb1510-8"><a href="model-assumptions.html#cb1510-8" tabindex="-1"></a></span>
-<span id="cb1510-9"><a href="model-assumptions.html#cb1510-9" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggpredict</span>(fit.mortality5,</span>
-<span id="cb1510-10"><a href="model-assumptions.html#cb1510-10" tabindex="-1"></a>          <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">&quot;ppgdp [exp]&quot;</span>, <span class="st">&quot;group&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1510-11"><a href="model-assumptions.html#cb1510-11" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
-<span id="cb1510-12"><a href="model-assumptions.html#cb1510-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Prediction with log transform&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1510-13"><a href="model-assumptions.html#cb1510-13" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20000</span>))</span>
-<span id="cb1510-14"><a href="model-assumptions.html#cb1510-14" tabindex="-1"></a></span>
-<span id="cb1510-15"><a href="model-assumptions.html#cb1510-15" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggpredict</span>(fit.mortality6,</span>
-<span id="cb1510-16"><a href="model-assumptions.html#cb1510-16" tabindex="-1"></a>          <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">&quot;ppgdp&quot;</span>, <span class="st">&quot;group&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1510-17"><a href="model-assumptions.html#cb1510-17" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
-<span id="cb1510-18"><a href="model-assumptions.html#cb1510-18" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Prediction without log transform&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1510-19"><a href="model-assumptions.html#cb1510-19" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20000</span>))</span>
-<span id="cb1510-20"><a href="model-assumptions.html#cb1510-20" tabindex="-1"></a></span>
-<span id="cb1510-21"><a href="model-assumptions.html#cb1510-21" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb1541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1541-1"><a href="model-assumptions.html#cb1541-1" tabindex="-1"></a><span class="co"># with log transforms </span></span>
+<span id="cb1541-2"><a href="model-assumptions.html#cb1541-2" tabindex="-1"></a>fit.mortality5 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> <span class="fu">log</span>(infant_mortality) <span class="sc">~</span> <span class="fu">log</span>(ppgdp) <span class="sc">+</span> group,</span>
+<span id="cb1541-3"><a href="model-assumptions.html#cb1541-3" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
+<span id="cb1541-4"><a href="model-assumptions.html#cb1541-4" tabindex="-1"></a></span>
+<span id="cb1541-5"><a href="model-assumptions.html#cb1541-5" tabindex="-1"></a><span class="co"># without log transforms </span></span>
+<span id="cb1541-6"><a href="model-assumptions.html#cb1541-6" tabindex="-1"></a>fit.mortality6 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> infant_mortality <span class="sc">~</span> ppgdp <span class="sc">+</span> group,</span>
+<span id="cb1541-7"><a href="model-assumptions.html#cb1541-7" tabindex="-1"></a>                   <span class="at">data =</span> df.un)</span>
+<span id="cb1541-8"><a href="model-assumptions.html#cb1541-8" tabindex="-1"></a></span>
+<span id="cb1541-9"><a href="model-assumptions.html#cb1541-9" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggpredict</span>(fit.mortality5,</span>
+<span id="cb1541-10"><a href="model-assumptions.html#cb1541-10" tabindex="-1"></a>          <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">&quot;ppgdp [exp]&quot;</span>, <span class="st">&quot;group&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1541-11"><a href="model-assumptions.html#cb1541-11" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
+<span id="cb1541-12"><a href="model-assumptions.html#cb1541-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Prediction with log transform&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1541-13"><a href="model-assumptions.html#cb1541-13" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20000</span>))</span>
+<span id="cb1541-14"><a href="model-assumptions.html#cb1541-14" tabindex="-1"></a></span>
+<span id="cb1541-15"><a href="model-assumptions.html#cb1541-15" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggpredict</span>(fit.mortality6,</span>
+<span id="cb1541-16"><a href="model-assumptions.html#cb1541-16" tabindex="-1"></a>          <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">&quot;ppgdp&quot;</span>, <span class="st">&quot;group&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1541-17"><a href="model-assumptions.html#cb1541-17" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
+<span id="cb1541-18"><a href="model-assumptions.html#cb1541-18" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Prediction without log transform&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1541-19"><a href="model-assumptions.html#cb1541-19" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20000</span>))</span>
+<span id="cb1541-20"><a href="model-assumptions.html#cb1541-20" tabindex="-1"></a></span>
+<span id="cb1541-21"><a href="model-assumptions.html#cb1541-21" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 </div>
 </div>
@@ -1987,19 +2005,19 @@ other
 <h3><span class="header-section-number">25.3.4</span> Non-parametric tests<a href="model-assumptions.html#non-parametric-tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="mann-whitney" class="section level4 hasAnchor" number="25.3.4.1">
 <h4><span class="header-section-number">25.3.4.1</span> Mann-Whitney<a href="model-assumptions.html#mann-whitney" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb1511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1511-1"><a href="model-assumptions.html#cb1511-1" tabindex="-1"></a>df.ttest <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">group1 =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
-<span id="cb1511-2"><a href="model-assumptions.html#cb1511-2" tabindex="-1"></a>                  <span class="at">group2 =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">8</span>, <span class="at">sd =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1511-3"><a href="model-assumptions.html#cb1511-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb1511-4"><a href="model-assumptions.html#cb1511-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code></pre></div>
-<div class="sourceCode" id="cb1512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1512-1"><a href="model-assumptions.html#cb1512-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.ttest,</span>
-<span id="cb1512-2"><a href="model-assumptions.html#cb1512-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> name,</span>
-<span id="cb1512-3"><a href="model-assumptions.html#cb1512-3" tabindex="-1"></a>                     <span class="at">y =</span> value)) <span class="sc">+</span> </span>
-<span id="cb1512-4"><a href="model-assumptions.html#cb1512-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
-<span id="cb1512-5"><a href="model-assumptions.html#cb1512-5" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>)) <span class="sc">+</span> </span>
-<span id="cb1512-6"><a href="model-assumptions.html#cb1512-6" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1542-1"><a href="model-assumptions.html#cb1542-1" tabindex="-1"></a>df.ttest <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">group1 =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
+<span id="cb1542-2"><a href="model-assumptions.html#cb1542-2" tabindex="-1"></a>                  <span class="at">group2 =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">8</span>, <span class="at">sd =</span> <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1542-3"><a href="model-assumptions.html#cb1542-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb1542-4"><a href="model-assumptions.html#cb1542-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb1543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1543-1"><a href="model-assumptions.html#cb1543-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.ttest,</span>
+<span id="cb1543-2"><a href="model-assumptions.html#cb1543-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> name,</span>
+<span id="cb1543-3"><a href="model-assumptions.html#cb1543-3" tabindex="-1"></a>                     <span class="at">y =</span> value)) <span class="sc">+</span> </span>
+<span id="cb1543-4"><a href="model-assumptions.html#cb1543-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>,</span>
+<span id="cb1543-5"><a href="model-assumptions.html#cb1543-5" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>)) <span class="sc">+</span> </span>
+<span id="cb1543-6"><a href="model-assumptions.html#cb1543-6" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> <span class="st">&quot;mean_cl_boot&quot;</span>)</span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
-<div class="sourceCode" id="cb1513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1513-1"><a href="model-assumptions.html#cb1513-1" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> value <span class="sc">~</span> name,</span>
-<span id="cb1513-2"><a href="model-assumptions.html#cb1513-2" tabindex="-1"></a>       <span class="at">data =</span> df.ttest)</span></code></pre></div>
+<div class="sourceCode" id="cb1544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1544-1"><a href="model-assumptions.html#cb1544-1" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">formula =</span> value <span class="sc">~</span> name,</span>
+<span id="cb1544-2"><a href="model-assumptions.html#cb1544-2" tabindex="-1"></a>       <span class="at">data =</span> df.ttest)</span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -2011,8 +2029,8 @@ other
 ## sample estimates:
 ## mean in group group1 mean in group group2 
 ##            10.035302             7.804315</code></pre>
-<div class="sourceCode" id="cb1515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1515-1"><a href="model-assumptions.html#cb1515-1" tabindex="-1"></a><span class="fu">wilcox.test</span>(<span class="at">formula =</span> value <span class="sc">~</span> name,</span>
-<span id="cb1515-2"><a href="model-assumptions.html#cb1515-2" tabindex="-1"></a>            <span class="at">data =</span> df.ttest)</span></code></pre></div>
+<div class="sourceCode" id="cb1546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1546-1"><a href="model-assumptions.html#cb1546-1" tabindex="-1"></a><span class="fu">wilcox.test</span>(<span class="at">formula =</span> value <span class="sc">~</span> name,</span>
+<span id="cb1546-2"><a href="model-assumptions.html#cb1546-2" tabindex="-1"></a>            <span class="at">data =</span> df.ttest)</span></code></pre></div>
 <pre><code>## 
 ##  Wilcoxon rank sum exact test
 ## 
@@ -2024,25 +2042,25 @@ other
 <div id="bootstrapping-regressions" class="section level3 hasAnchor" number="25.3.5">
 <h3><span class="header-section-number">25.3.5</span> Bootstrapping regressions<a href="model-assumptions.html#bootstrapping-regressions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This section is based on this post <a href="https://ademos.people.uic.edu/Chapter12.html#4_what_about_a_more_problematic_example">here</a>.</p>
-<div class="sourceCode" id="cb1517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1517-1"><a href="model-assumptions.html#cb1517-1" tabindex="-1"></a><span class="co"># make reproducible</span></span>
-<span id="cb1517-2"><a href="model-assumptions.html#cb1517-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb1517-3"><a href="model-assumptions.html#cb1517-3" tabindex="-1"></a></span>
-<span id="cb1517-4"><a href="model-assumptions.html#cb1517-4" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">250</span> </span>
-<span id="cb1517-5"><a href="model-assumptions.html#cb1517-5" tabindex="-1"></a>df.turkey <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">turkey_time =</span> <span class="fu">runif</span>(<span class="at">n =</span> n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">50</span>),</span>
-<span id="cb1517-6"><a href="model-assumptions.html#cb1517-6" tabindex="-1"></a>                   <span class="at">nap_time =</span> <span class="dv">500</span> <span class="sc">+</span> turkey_time <span class="sc">^</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">16</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1548-1"><a href="model-assumptions.html#cb1548-1" tabindex="-1"></a><span class="co"># make reproducible</span></span>
+<span id="cb1548-2"><a href="model-assumptions.html#cb1548-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1548-3"><a href="model-assumptions.html#cb1548-3" tabindex="-1"></a></span>
+<span id="cb1548-4"><a href="model-assumptions.html#cb1548-4" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">250</span> </span>
+<span id="cb1548-5"><a href="model-assumptions.html#cb1548-5" tabindex="-1"></a>df.turkey <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">turkey_time =</span> <span class="fu">runif</span>(<span class="at">n =</span> n, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">50</span>),</span>
+<span id="cb1548-6"><a href="model-assumptions.html#cb1548-6" tabindex="-1"></a>                   <span class="at">nap_time =</span> <span class="dv">500</span> <span class="sc">+</span> turkey_time <span class="sc">^</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">16</span>))</span></code></pre></div>
 <p>Visualize the data</p>
-<div class="sourceCode" id="cb1518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1518-1"><a href="model-assumptions.html#cb1518-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.turkey, </span>
-<span id="cb1518-2"><a href="model-assumptions.html#cb1518-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> turkey_time,</span>
-<span id="cb1518-3"><a href="model-assumptions.html#cb1518-3" tabindex="-1"></a>                     <span class="at">y =</span> nap_time)) <span class="sc">+</span> </span>
-<span id="cb1518-4"><a href="model-assumptions.html#cb1518-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1518-5"><a href="model-assumptions.html#cb1518-5" tabindex="-1"></a>  <span class="fu">geom_point</span>()  </span></code></pre></div>
+<div class="sourceCode" id="cb1549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1549-1"><a href="model-assumptions.html#cb1549-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df.turkey, </span>
+<span id="cb1549-2"><a href="model-assumptions.html#cb1549-2" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> turkey_time,</span>
+<span id="cb1549-3"><a href="model-assumptions.html#cb1549-3" tabindex="-1"></a>                     <span class="at">y =</span> nap_time)) <span class="sc">+</span> </span>
+<span id="cb1549-4"><a href="model-assumptions.html#cb1549-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1549-5"><a href="model-assumptions.html#cb1549-5" tabindex="-1"></a>  <span class="fu">geom_point</span>()  </span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>A simple linear regression doesn’t fit the data well (not suprising since we included a squared predictor).</p>
 <p>Let’s fit a simple linear model and print out the model summary.</p>
-<div class="sourceCode" id="cb1519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1519-1"><a href="model-assumptions.html#cb1519-1" tabindex="-1"></a>fit.turkey <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> nap_time <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> turkey_time,</span>
-<span id="cb1519-2"><a href="model-assumptions.html#cb1519-2" tabindex="-1"></a>                <span class="at">data =</span> df.turkey)</span>
-<span id="cb1519-3"><a href="model-assumptions.html#cb1519-3" tabindex="-1"></a></span>
-<span id="cb1519-4"><a href="model-assumptions.html#cb1519-4" tabindex="-1"></a><span class="fu">summary</span>(fit.turkey)</span></code></pre></div>
+<div class="sourceCode" id="cb1550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1550-1"><a href="model-assumptions.html#cb1550-1" tabindex="-1"></a>fit.turkey <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> nap_time <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> turkey_time,</span>
+<span id="cb1550-2"><a href="model-assumptions.html#cb1550-2" tabindex="-1"></a>                <span class="at">data =</span> df.turkey)</span>
+<span id="cb1550-3"><a href="model-assumptions.html#cb1550-3" tabindex="-1"></a></span>
+<span id="cb1550-4"><a href="model-assumptions.html#cb1550-4" tabindex="-1"></a><span class="fu">summary</span>(fit.turkey)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = nap_time ~ 1 + turkey_time, data = df.turkey)
@@ -2062,10 +2080,10 @@ other
 ## Multiple R-squared:  0.9422, Adjusted R-squared:  0.9419 
 ## F-statistic:  4039 on 1 and 248 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>A regression with a squared predictor would fit well.</p>
-<div class="sourceCode" id="cb1521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1521-1"><a href="model-assumptions.html#cb1521-1" tabindex="-1"></a>fit.turkey2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> nap_time <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">I</span>(turkey_time <span class="sc">^</span> <span class="dv">2</span>),</span>
-<span id="cb1521-2"><a href="model-assumptions.html#cb1521-2" tabindex="-1"></a>                <span class="at">data =</span> df.turkey)</span>
-<span id="cb1521-3"><a href="model-assumptions.html#cb1521-3" tabindex="-1"></a></span>
-<span id="cb1521-4"><a href="model-assumptions.html#cb1521-4" tabindex="-1"></a><span class="fu">summary</span>(fit.turkey2)</span></code></pre></div>
+<div class="sourceCode" id="cb1552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1552-1"><a href="model-assumptions.html#cb1552-1" tabindex="-1"></a>fit.turkey2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> nap_time <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">I</span>(turkey_time <span class="sc">^</span> <span class="dv">2</span>),</span>
+<span id="cb1552-2"><a href="model-assumptions.html#cb1552-2" tabindex="-1"></a>                <span class="at">data =</span> df.turkey)</span>
+<span id="cb1552-3"><a href="model-assumptions.html#cb1552-3" tabindex="-1"></a></span>
+<span id="cb1552-4"><a href="model-assumptions.html#cb1552-4" tabindex="-1"></a><span class="fu">summary</span>(fit.turkey2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = nap_time ~ 1 + I(turkey_time^2), data = df.turkey)
@@ -2084,28 +2102,28 @@ other
 ## Residual standard error: 16.23 on 248 degrees of freedom
 ## Multiple R-squared:  0.9995, Adjusted R-squared:  0.9995 
 ## F-statistic: 4.835e+05 on 1 and 248 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb1523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1523-1"><a href="model-assumptions.html#cb1523-1" tabindex="-1"></a>fit.turkey2 <span class="sc">%&gt;%</span> </span>
-<span id="cb1523-2"><a href="model-assumptions.html#cb1523-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1523-3"><a href="model-assumptions.html#cb1523-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb1523-4"><a href="model-assumptions.html#cb1523-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> ., </span>
-<span id="cb1523-5"><a href="model-assumptions.html#cb1523-5" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> i_turkey_time_2,</span>
-<span id="cb1523-6"><a href="model-assumptions.html#cb1523-6" tabindex="-1"></a>                     <span class="at">y =</span> nap_time)) <span class="sc">+</span> </span>
-<span id="cb1523-7"><a href="model-assumptions.html#cb1523-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
-<span id="cb1523-8"><a href="model-assumptions.html#cb1523-8" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1523-9"><a href="model-assumptions.html#cb1523-9" tabindex="-1"></a>  <span class="fu">geom_point</span>()  </span></code></pre></div>
+<div class="sourceCode" id="cb1554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1554-1"><a href="model-assumptions.html#cb1554-1" tabindex="-1"></a>fit.turkey2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1554-2"><a href="model-assumptions.html#cb1554-2" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1554-3"><a href="model-assumptions.html#cb1554-3" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1554-4"><a href="model-assumptions.html#cb1554-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> ., </span>
+<span id="cb1554-5"><a href="model-assumptions.html#cb1554-5" tabindex="-1"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> i_turkey_time_2,</span>
+<span id="cb1554-6"><a href="model-assumptions.html#cb1554-6" tabindex="-1"></a>                     <span class="at">y =</span> nap_time)) <span class="sc">+</span> </span>
+<span id="cb1554-7"><a href="model-assumptions.html#cb1554-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
+<span id="cb1554-8"><a href="model-assumptions.html#cb1554-8" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1554-9"><a href="model-assumptions.html#cb1554-9" tabindex="-1"></a>  <span class="fu">geom_point</span>()  </span></code></pre></div>
 <p><img src="25-assumptions_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>Let’s fit a bootstrap regression.</p>
-<div class="sourceCode" id="cb1524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1524-1"><a href="model-assumptions.html#cb1524-1" tabindex="-1"></a>boot.turkey <span class="ot">=</span> <span class="fu">Boot</span>(fit.turkey)</span>
-<span id="cb1524-2"><a href="model-assumptions.html#cb1524-2" tabindex="-1"></a><span class="fu">summary</span>(boot.turkey)</span></code></pre></div>
+<div class="sourceCode" id="cb1555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1555-1"><a href="model-assumptions.html#cb1555-1" tabindex="-1"></a>boot.turkey <span class="ot">=</span> <span class="fu">Boot</span>(fit.turkey)</span>
+<span id="cb1555-2"><a href="model-assumptions.html#cb1555-2" tabindex="-1"></a><span class="fu">summary</span>(boot.turkey)</span></code></pre></div>
 <pre><code>## 
 ## Number of bootstrap replications R = 999 
 ##             original  bootBias bootSE bootMed
 ## (Intercept)   15.497 -1.130589 29.330  15.080
 ## turkey_time   51.575  0.023717  1.058  51.625</code></pre>
-<div class="sourceCode" id="cb1526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1526-1"><a href="model-assumptions.html#cb1526-1" tabindex="-1"></a>fit.turkey <span class="sc">%&gt;%</span> </span>
-<span id="cb1526-2"><a href="model-assumptions.html#cb1526-2" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb1526-3"><a href="model-assumptions.html#cb1526-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1526-4"><a href="model-assumptions.html#cb1526-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1557-1"><a href="model-assumptions.html#cb1557-1" tabindex="-1"></a>fit.turkey <span class="sc">%&gt;%</span> </span>
+<span id="cb1557-2"><a href="model-assumptions.html#cb1557-2" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb1557-3"><a href="model-assumptions.html#cb1557-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1557-4"><a href="model-assumptions.html#cb1557-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2181,10 +2199,10 @@ turkey_time
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb1527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1527-1"><a href="model-assumptions.html#cb1527-1" tabindex="-1"></a>boot.turkey <span class="sc">%&gt;%</span> </span>
-<span id="cb1527-2"><a href="model-assumptions.html#cb1527-2" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
-<span id="cb1527-3"><a href="model-assumptions.html#cb1527-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb1527-4"><a href="model-assumptions.html#cb1527-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1558-1"><a href="model-assumptions.html#cb1558-1" tabindex="-1"></a>boot.turkey <span class="sc">%&gt;%</span> </span>
+<span id="cb1558-2"><a href="model-assumptions.html#cb1558-2" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">conf.int =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb1558-3"><a href="model-assumptions.html#cb1558-3" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1558-4"><a href="model-assumptions.html#cb1558-4" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2254,8 +2272,8 @@ turkey_time
 <p>We see that the confidence intervals using the bootstrap method are wider than the ones that use the linear regression model (particularly for the intercept).</p>
 </div>
 </div>
-<div id="additional-resources-20" class="section level2 hasAnchor" number="25.4">
-<h2><span class="header-section-number">25.4</span> Additional resources<a href="model-assumptions.html#additional-resources-20" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="additional-resources-21" class="section level2 hasAnchor" number="25.4">
+<h2><span class="header-section-number">25.4</span> Additional resources<a href="model-assumptions.html#additional-resources-21" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><a href="http://r-statistics.co-Linear-Regression.html">Assumptions of a linear regression</a></li>
 </ul>
@@ -2263,14 +2281,14 @@ turkey_time
 <div id="session-info-24" class="section level2 hasAnchor" number="25.5">
 <h2><span class="header-section-number">25.5</span> Session info<a href="model-assumptions.html#session-info-24" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Information about this R session including which version of R was used, and what packages were loaded.</p>
-<div class="sourceCode" id="cb1528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1528-1"><a href="model-assumptions.html#cb1528-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>## R version 4.3.2 (2023-10-31)
-## Platform: aarch64-apple-darwin20 (64-bit)
-## Running under: macOS Sonoma 14.1.2
+<div class="sourceCode" id="cb1559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1559-1"><a href="model-assumptions.html#cb1559-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.4.1 (2024-06-14)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Sonoma 14.6
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -2283,59 +2301,50 @@ turkey_time
 ## 
 ## other attached packages:
 ##  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
-##  [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
-##  [9] tidyverse_2.0.0  ggrepel_0.9.4    ggplot2_3.4.4    xtable_1.8-4    
-## [13] sjPlot_2.8.15    stargazer_5.2.3  ggeffects_1.3.4  patchwork_1.1.3 
-## [17] janitor_2.2.0    broom_1.0.5      car_3.1-2        carData_3.0-5   
-## [21] brms_2.20.4      Rcpp_1.0.11      lme4_1.1-35.1    Matrix_1.6-4    
-## [25] tidybayes_3.0.6  kableExtra_1.3.4 knitr_1.45      
+##  [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+##  [9] tidyverse_2.0.0  ggrepel_0.9.5    ggplot2_3.5.1    xtable_1.8-4    
+## [13] sjPlot_2.8.16    stargazer_5.2.3  ggeffects_1.7.0  patchwork_1.2.0 
+## [17] janitor_2.2.0    broom_1.0.6      car_3.1-2        carData_3.0-5   
+## [21] brms_2.21.0      Rcpp_1.0.13      lme4_1.1-35.5    Matrix_1.7-0    
+## [25] tidybayes_3.0.6  kableExtra_1.4.0 knitr_1.48      
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] svUnit_1.0.6         shinythemes_1.2.0    splines_4.3.2       
-##   [4] later_1.3.2          datawizard_0.9.1     rpart_4.1.23        
-##   [7] xts_0.13.1           lifecycle_1.0.4      StanHeaders_2.26.28 
-##  [10] lattice_0.22-5       vroom_1.6.5          MASS_7.3-60         
-##  [13] insight_0.19.7       crosstalk_1.2.1      ggdist_3.3.1        
-##  [16] backports_1.4.1      magrittr_2.0.3       Hmisc_5.1-1         
-##  [19] sass_0.4.8           rmarkdown_2.25       jquerylib_0.1.4     
-##  [22] yaml_2.3.8           httpuv_1.6.13        pkgbuild_1.4.3      
-##  [25] minqa_1.2.6          abind_1.4-5          rvest_1.0.3         
-##  [28] nnet_7.3-19          tensorA_0.36.2.1     inline_0.3.19       
-##  [31] performance_0.10.8   bridgesampling_1.1-2 svglite_2.1.3       
-##  [34] codetools_0.2-19     DT_0.31              xml2_1.3.6          
-##  [37] tidyselect_1.2.0     bayesplot_1.10.0     farver_2.1.1        
-##  [40] matrixStats_1.2.0    stats4_4.3.2         base64enc_0.1-3     
-##  [43] webshot_0.5.5        jsonlite_1.8.8       ellipsis_0.3.2      
-##  [46] Formula_1.2-5        emmeans_1.9.0        systemfonts_1.0.5   
-##  [49] tools_4.3.2          glue_1.6.2           gridExtra_2.3       
-##  [52] xfun_0.41            mgcv_1.9-1           distributional_0.3.2
-##  [55] loo_2.6.0            withr_2.5.2          fastmap_1.1.1       
-##  [58] boot_1.3-28.1        fansi_1.0.6          shinyjs_2.1.0       
-##  [61] digest_0.6.33        timechange_0.2.0     R6_2.5.1            
-##  [64] mime_0.12            estimability_1.4.1   colorspace_2.1-0    
-##  [67] gtools_3.9.5         markdown_1.12        threejs_0.3.3       
-##  [70] utf8_1.2.4           generics_0.1.3       data.table_1.14.10  
-##  [73] httr_1.4.7           htmlwidgets_1.6.4    pkgconfig_2.0.3     
-##  [76] dygraphs_1.1.1.6     gtable_0.3.4         htmltools_0.5.7     
-##  [79] bookdown_0.37        scales_1.3.0         posterior_1.5.0     
-##  [82] snakecase_0.11.1     rstudioapi_0.15.0    tzdb_0.4.0          
-##  [85] reshape2_1.4.4       coda_0.19-4          checkmate_2.3.1     
-##  [88] nlme_3.1-164         curl_5.2.0           nloptr_2.0.3        
-##  [91] cachem_1.0.8         zoo_1.8-12           sjlabelled_1.2.0    
-##  [94] parallel_4.3.2       miniUI_0.1.1.1       foreign_0.8-86      
-##  [97] pillar_1.9.0         grid_4.3.2           vctrs_0.6.5         
-## [100] shinystan_2.6.0      promises_1.2.1       arrayhelpers_1.1-0  
-## [103] cluster_2.1.6        htmlTable_2.4.2      evaluate_0.23       
-## [106] mvtnorm_1.2-4        cli_3.6.2            compiler_4.3.2      
-## [109] rlang_1.1.2          crayon_1.5.2         rstantools_2.3.1.1  
-## [112] modelr_0.1.11        labeling_0.4.3       plyr_1.8.9          
-## [115] sjmisc_2.8.9         stringi_1.8.3        rstan_2.32.3        
-## [118] viridisLite_0.4.2    QuickJSR_1.0.9       munsell_0.5.0       
-## [121] colourpicker_1.3.0   Brobdingnag_1.2-9    bayestestR_0.13.1   
-## [124] V8_4.4.1             sjstats_0.18.2       hms_1.1.3           
-## [127] bit64_4.0.5          shiny_1.8.0          highr_0.10          
-## [130] haven_2.5.4          igraph_1.6.0         RcppParallel_5.1.7  
-## [133] bslib_0.6.1          bit_4.0.5</code></pre>
+##   [1] tensorA_0.36.2.1     rstudioapi_0.16.0    jsonlite_1.8.8      
+##   [4] datawizard_0.12.2    magrittr_2.0.3       estimability_1.5.1  
+##   [7] farver_2.1.2         nloptr_2.1.1         rmarkdown_2.27      
+##  [10] vctrs_0.6.5          minqa_1.2.7          base64enc_0.1-3     
+##  [13] htmltools_0.5.8.1    distributional_0.4.0 curl_5.2.1          
+##  [16] haven_2.5.4          Formula_1.2-5        sjmisc_2.8.10       
+##  [19] sass_0.4.9           StanHeaders_2.32.9   bslib_0.7.0         
+##  [22] htmlwidgets_1.6.4    emmeans_1.10.3       cachem_1.1.0        
+##  [25] lifecycle_1.0.4      pkgconfig_2.0.3      sjlabelled_1.2.0    
+##  [28] R6_2.5.1             fastmap_1.2.0        snakecase_0.11.1    
+##  [31] digest_0.6.36        colorspace_2.1-0     Hmisc_5.1-3         
+##  [34] labeling_0.4.3       fansi_1.0.6          timechange_0.3.0    
+##  [37] abind_1.4-5          mgcv_1.9-1           compiler_4.4.1      
+##  [40] bit64_4.0.5          withr_3.0.0          htmlTable_2.4.2     
+##  [43] backports_1.5.0      inline_0.3.19        performance_0.12.2  
+##  [46] QuickJSR_1.3.0       pkgbuild_1.4.4       highr_0.11          
+##  [49] MASS_7.3-61          sjstats_0.19.0       loo_2.8.0           
+##  [52] tools_4.4.1          foreign_0.8-86       nnet_7.3-19         
+##  [55] glue_1.7.0           nlme_3.1-164         grid_4.4.1          
+##  [58] checkmate_2.3.1      cluster_2.1.6        generics_0.1.3      
+##  [61] gtable_0.3.5         tzdb_0.4.0           data.table_1.15.4   
+##  [64] hms_1.1.3            xml2_1.3.6           utf8_1.2.4          
+##  [67] pillar_1.9.0         ggdist_3.3.2         vroom_1.6.5         
+##  [70] posterior_1.6.0      splines_4.4.1        lattice_0.22-6      
+##  [73] bit_4.0.5            tidyselect_1.2.1     arrayhelpers_1.1-0  
+##  [76] gridExtra_2.3        V8_5.0.0             bookdown_0.40       
+##  [79] svglite_2.1.3        stats4_4.4.1         xfun_0.45           
+##  [82] bridgesampling_1.1-2 matrixStats_1.3.0    rstan_2.32.6        
+##  [85] stringi_1.8.4        yaml_2.3.9           boot_1.3-30         
+##  [88] evaluate_0.24.0      codetools_0.2-20     cli_3.6.3           
+##  [91] rpart_4.1.23         RcppParallel_5.1.8   systemfonts_1.1.0   
+##  [94] munsell_0.5.1        jquerylib_0.1.4      coda_0.19-4.1       
+##  [97] svUnit_1.0.6         parallel_4.4.1       rstantools_2.4.0    
+## [100] bayesplot_1.11.1     Brobdingnag_1.2-9    viridisLite_0.4.2   
+## [103] mvtnorm_1.2-5        scales_1.3.0         insight_0.20.3      
+## [106] crayon_1.5.3         rlang_1.1.4</code></pre>
 
 </div>
 </div>

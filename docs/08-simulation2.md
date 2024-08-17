@@ -10,7 +10,7 @@ In which we figure out some key statistical concepts through simulation and plot
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -18,7 +18,7 @@ library("tidyverse")  # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -33,7 +33,7 @@ opts_chunk$set(comment = "",
 Let's first put the information we need for our population distribution in a data frame. 
 
 
-```r
+``` r
 # the distribution from which we want to sample (aka the heavy metal distribution)
 df.population = tibble(numbers = 1:6,
                        probability = c(1/3, 0, 1/6, 1/6, 0, 1/3))
@@ -42,7 +42,7 @@ df.population = tibble(numbers = 1:6,
 And then let's plot it: 
 
 
-```r
+``` r
 # plot the distribution 
 ggplot(data = df.population,
        mapping = aes(x = numbers,
@@ -61,7 +61,7 @@ ggplot(data = df.population,
 Here are the true mean and standard deviation of our population distribution: 
 
 
-```r
+``` r
 # mean and standard deviation (see: https://nzmaths.co.nz/category/glossary/standard-deviation-discrete-random-variable)
 
 df.population %>% 
@@ -92,7 +92,7 @@ df.population %>%
 Let's draw a single sample of size $n = 40$ from the population distribution and plot it: 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -128,7 +128,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 Here are the sample mean and standard deviation:
 
 
-```r
+``` r
 # print out sample mean and standard deviation 
 df.sample %>% 
   summarize(sample_mean = mean(number),
@@ -157,7 +157,7 @@ df.sample %>%
 
 And let's now create the sampling distribution (making the unrealistic assumption that we know the population distribution). 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -200,7 +200,7 @@ df.sampling_distribution_means = df.sampling_distribution %>%
 And plot it: 
 
 
-```r
+``` r
 set.seed(1)
 
 # plot a histogram of the means with density overlaid 
@@ -213,16 +213,9 @@ ggplot(data = df.plot,
                  fill = "lightblue",
                  color = "black") +
   stat_density(bw = 0.1,
-               size = 2,
+               linewidth = 2,
                geom = "line") + 
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
-```
-
-```
-Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="08-simulation2_files/figure-html/unnamed-chunk-9-1.png" width="672" />
@@ -232,7 +225,7 @@ Even though our population distribution was far from normal (and much more heavy
 And here are the mean and standard deviation of the sampling distribution: 
 
 
-```r
+``` r
 # print out sampling distribution mean and standard deviation 
 df.sampling_distribution_means %>% 
   summarize(sampling_distribution_mean = mean(mean),
@@ -260,7 +253,7 @@ df.sampling_distribution_means %>%
 Here is a data frame that I've used for illustrating the idea behind how a sampling distribution is constructed from the population distribution. 
 
 
-```r
+``` r
 # data frame for illustration in class 
 df.sampling_distribution %>% 
   filter(sample <= 10, draw <= 4) %>% 
@@ -376,7 +369,7 @@ Of course, in actuality, we never have access to the population distribution. We
 It urns out that we can approximate the sampling distribution only using our actual sample. The idea is to take the sample that we drew, and generate new samples from it by drawing with replacement. Essentially, we are treating our original sample like the population from which we are generating random samples to derive the sampling distribution. 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -398,7 +391,7 @@ df.bootstrap = tibble(bootstrap = 1:n_samples,
 Let's plot our sample first: 
 
 
-```r
+``` r
 # plot the distribution 
 ggplot(data = df.sample,
        mapping = aes(x = number)) +
@@ -417,7 +410,7 @@ ggplot(data = df.sample,
 Let's plot the bootstrapped sampling distribution: 
 
 
-```r
+``` r
 # plot the bootstrapped sampling distribution
 ggplot(data = df.bootstrap, 
        mapping = aes(x = average)) +
@@ -438,12 +431,19 @@ ggplot(data = df.bootstrap,
   scale_y_continuous(expand = expansion(mult = c(0, 0.01)))
 ```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="08-simulation2_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 And let's calculate the mean and standard deviation: 
 
 
-```r
+``` r
 # print out sampling distribution mean and standard deviation 
 df.bootstrap %>% 
   summarize(bootstrapped_distribution_mean = mean(average),
@@ -488,7 +488,7 @@ An intutive way for illustrating (this rather unintuitive procedure) is the perm
 Let's start by generating some random data from two different normal distributions (simulating a possible experiment). 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -503,7 +503,7 @@ df.permutation = tibble(control = rnorm(25, mean = 5.5, sd = 2),
 Here is a summary of how each group performed: 
 
 
-```r
+``` r
 df.permutation %>% 
   group_by(condition) %>%
   summarize(mean = mean(performance),
@@ -543,7 +543,7 @@ df.permutation %>%
 Let's plot the results: 
 
 
-```r
+``` r
 ggplot(data = df.permutation, 
        mapping = aes(x = condition, y = performance)) +
   geom_point(position = position_jitter(height = 0, width = 0.1),
@@ -567,7 +567,7 @@ ggplot(data = df.permutation,
 We are interested in the difference in the mean performance between the two groups: 
 
 
-```r
+``` r
 # calculate the difference between conditions
 difference_actual = df.permutation %>% 
   group_by(condition) %>% 
@@ -581,7 +581,7 @@ The difference in the mean rating between the control and experimental condition
 Let's answer the question using simulation. Here is the main idea: imagine that we were very sloppy in how we recorded the data, and now we don't remember anymore which participants were in the controld condition and which ones were in experimental condition (we still remember though, that we tested 25 participants in each condition). 
 
 
-```r
+``` r
 set.seed(0)
 df.permutation = df.permutation %>% 
   mutate(permutation = sample(condition)) #randomly assign labels
@@ -606,7 +606,7 @@ Here, the difference between the two conditions is 0.0105496.
 After randomly shuffling the condition labels, this is how the results would look like: 
 
 
-```r
+``` r
 ggplot(data = df.permutation, 
        mapping = aes(x = permutation, y = performance))+
   geom_point(mapping = aes(color = condition),
@@ -631,7 +631,7 @@ ggplot(data = df.permutation,
 The idea is now that, similar to bootstrapping above, we can get a sampling distribution of the difference in the means between the two conditions (assuming that the null hypothesis were true), by randomly shuffling the labels and calculating the difference in means (and doing this many times). What we get is a distribution of the differences we would expect, if there was no effect of condition. 
 
 
-```r
+``` r
 set.seed(1)
 
 n_permutations = 500
@@ -668,7 +668,8 @@ ggplot(data = df.permutations, aes(x = mean_difference)) +
 ```
 
 ```
-Warning: Removed 2 rows containing missing values (`geom_bar()`).
+Warning: Removed 2 rows containing missing values or values outside the scale
+range (`geom_bar()`).
 ```
 
 <img src="08-simulation2_files/figure-html/unnamed-chunk-22-1.png" width="672" />
@@ -676,7 +677,7 @@ Warning: Removed 2 rows containing missing values (`geom_bar()`).
 And we can then simply calculate the p-value by using some basic data wrangling (i.e. finding the proportion of differences that were as or more extreme than the one we observed).
 
 
-```r
+``` r
 #calculate p-value of our observed result
 df.permutations %>% 
   summarize(p_value = sum(mean_difference <= difference_actual)/n())
@@ -694,7 +695,7 @@ df.permutations %>%
 Examining the t-distribution. 
 
 
-```r
+``` r
 set.seed(1)
 
 n_simulations = 1000 
@@ -739,7 +740,7 @@ df.ttest
 Population distribution 
 
 
-```r
+``` r
 mean = 0
 sd = 1
 
@@ -758,7 +759,7 @@ ggplot(data = tibble(x = c(mean - 3 * sd, mean + 3 * sd)),
 Distribution of differences in means
 
 
-```r
+``` r
 ggplot(data = df.ttest,
        mapping = aes(x = difference)) + 
   geom_density(size = 1) + 
@@ -772,7 +773,7 @@ ggplot(data = df.ttest,
 t-distribution 
 
 
-```r
+``` r
 ggplot(data = df.ttest,
        mapping = aes(x = tstatistic)) + 
   stat_function(fun = ~ dt(., df = sample_size * 2 - 2),
@@ -801,7 +802,7 @@ For smaller sample sizes, we can use the $t$-distribution instead with $n-1$ deg
 So let's run a a simulation to check whether the definition of the confidence interval seems right. We will use our heavy metal distribution from above, take samples from the distribution, calculate the mean and confidence interval, and check how often the true mean of the population ($M = 3.5$) is contained within the confidence interval. 
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -846,12 +847,17 @@ df.confidence = df.confidence %>%
                              'inside'))
 
 # plot the result
-ggplot(data = df.confidence, aes(x = sample, y = mean, color = conf_index)) +
-  geom_hline(yintercept = 3.5, color = "red") +
+ggplot(data = df.confidence, aes(x = sample,
+                                 y = mean,
+                                 color = conf_index)) +
+  geom_hline(yintercept = 3.5,
+             color = "red") +
   geom_point() +
-  geom_linerange(aes(ymin = conf_low, ymax = conf_high)) +
+  geom_linerange(aes(ymin = conf_low,
+                     ymax = conf_high)) +
   coord_flip() +
-  scale_color_manual(values = c("black", "red"), labels = c("inside", "outside")) +
+  scale_color_manual(values = c("black", "red"),
+                     labels = c("inside", "outside")) +
   theme(axis.text.y = element_text(size = 12),
         legend.position = "none")
 ```
@@ -865,7 +871,7 @@ Feel free to play around with the code above. For example, change the sample siz
 ### `mean_cl_boot()` explained
 
 
-```r
+``` r
 set.seed(1)
 
 n = 10 # sample size per group
@@ -893,7 +899,7 @@ print(p)
 Peeking behind the scenes 
 
 
-```r
+``` r
 build = ggplot_build(p)
 
 build$data[[2]] %>% 
@@ -980,7 +986,7 @@ build$data[[2]] %>%
 Let's focus on condition 1 
 
 
-```r
+``` r
 set.seed(1)
 
 df.condition1 = df.data %>% 
@@ -1004,7 +1010,7 @@ quantile(bootstraps, prob = c(0.025, 0.975))
 6.671962 7.583905 
 ```
 
-```r
+``` r
 ggplot(data = as_tibble(bootstraps),
        mapping = aes(x = value)) + 
   geom_density(size = 1) + 
@@ -1017,6 +1023,10 @@ ggplot(data = as_tibble(bootstraps),
 
 ## Additional resources
 
+### Misc 
+
+- [Nice illustration of the permutation test](https://www.jwilber.me/permutationtest/?s=09)
+
 ### Datacamp
 
 - [Foundations of Inference](https://www.datacamp.com/courses/foundations-of-inference)
@@ -1026,18 +1036,18 @@ ggplot(data = as_tibble(bootstraps),
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1050,25 +1060,25 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] ggplot2_3.4.4    tidyverse_2.0.0  janitor_2.2.0    kableExtra_1.3.4
-[13] knitr_1.45      
+ [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  janitor_2.2.0    kableExtra_1.4.0
+[13] knitr_1.48      
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.4       xfun_0.41          bslib_0.6.1        htmlwidgets_1.6.4 
- [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.3.2        generics_0.1.3    
- [9] fansi_1.0.6        highr_0.10         cluster_2.1.6      pkgconfig_2.0.3   
-[13] data.table_1.14.10 checkmate_2.3.1    webshot_0.5.5      lifecycle_1.0.4   
-[17] compiler_4.3.2     farver_2.1.1       munsell_0.5.0      snakecase_0.11.1  
-[21] htmltools_0.5.7    sass_0.4.8         yaml_2.3.8         htmlTable_2.4.2   
-[25] Formula_1.2-5      pillar_1.9.0       crayon_1.5.2       jquerylib_0.1.4   
-[29] cachem_1.0.8       Hmisc_5.1-1        rpart_4.1.23       tidyselect_1.2.0  
-[33] rvest_1.0.3        digest_0.6.33      stringi_1.8.3      bookdown_0.37     
-[37] labeling_0.4.3     fastmap_1.1.1      grid_4.3.2         colorspace_2.1-0  
-[41] cli_3.6.2          magrittr_2.0.3     base64enc_0.1-3    utf8_1.2.4        
-[45] foreign_0.8-86     withr_2.5.2        backports_1.4.1    scales_1.3.0      
-[49] timechange_0.2.0   rmarkdown_2.25     httr_1.4.7         nnet_7.3-19       
-[53] gridExtra_2.3      hms_1.1.3          evaluate_0.23      viridisLite_0.4.2 
-[57] rlang_1.1.2        glue_1.6.2         xml2_1.3.6         svglite_2.1.3     
-[61] rstudioapi_0.15.0  jsonlite_1.8.8     R6_2.5.1           systemfonts_1.0.5 
+ [1] gtable_0.3.5      xfun_0.45         bslib_0.7.0       htmlwidgets_1.6.4
+ [5] tzdb_0.4.0        vctrs_0.6.5       tools_4.4.1       generics_0.1.3   
+ [9] fansi_1.0.6       highr_0.11        cluster_2.1.6     pkgconfig_2.0.3  
+[13] data.table_1.15.4 checkmate_2.3.1   lifecycle_1.0.4   compiler_4.4.1   
+[17] farver_2.1.2      munsell_0.5.1     snakecase_0.11.1  htmltools_0.5.8.1
+[21] sass_0.4.9        yaml_2.3.9        htmlTable_2.4.2   Formula_1.2-5    
+[25] pillar_1.9.0      crayon_1.5.3      jquerylib_0.1.4   cachem_1.1.0     
+[29] Hmisc_5.1-3       rpart_4.1.23      tidyselect_1.2.1  digest_0.6.36    
+[33] stringi_1.8.4     bookdown_0.40     labeling_0.4.3    fastmap_1.2.0    
+[37] grid_4.4.1        colorspace_2.1-0  cli_3.6.3         magrittr_2.0.3   
+[41] base64enc_0.1-3   utf8_1.2.4        foreign_0.8-86    withr_3.0.0      
+[45] scales_1.3.0      backports_1.5.0   timechange_0.3.0  rmarkdown_2.27   
+[49] nnet_7.3-19       gridExtra_2.3     hms_1.1.3         evaluate_0.24.0  
+[53] viridisLite_0.4.2 rlang_1.1.4       glue_1.7.0        xml2_1.3.6       
+[57] svglite_2.1.3     rstudioapi_0.16.0 jsonlite_1.8.8    R6_2.5.1         
+[61] systemfonts_1.1.0
 ```

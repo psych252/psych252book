@@ -15,7 +15,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")      # for knitting RMarkdown 
 library("titanic")    # titanic dataset
 library("kableExtra") # for making nice tables
@@ -23,14 +23,14 @@ library("janitor")    # for cleaning column names
 library("broom")      # for tidying up linear models 
 library("lme4")       # for linear mixed effects models
 library("boot")       # for bootstrapping (also has an inverse logit function)
-library("ggeffects")  # for showing effects in linear, generalized linear, and other models
+library("ggeffects")  # for computing marginal effects 
 library("afex")       # for significance testing of mixed effects models 
 library("emmeans")    # for the joint_tests() function
 library("tidyverse")  # for wrangling, plotting, etc. 
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
     theme(text = element_text(size = 20))) #set the default text size
 
@@ -41,7 +41,7 @@ opts_chunk$set(comment = "",
 ## Load data set
 
 
-```r
+``` r
 df.titanic = titanic_train %>% 
   clean_names() %>% 
   mutate(sex = as.factor(sex))
@@ -50,7 +50,7 @@ df.titanic = titanic_train %>%
 Let's take a quick look at the data: 
 
 
-```r
+``` r
 df.titanic %>% 
   glimpse()
 ```
@@ -73,7 +73,7 @@ $ embarked     <chr> "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S", "Sâ€
 ```
 
 
-```r
+``` r
 # Table of the first 10 entries
 df.titanic %>% 
   head(10) %>% 
@@ -250,7 +250,7 @@ Let's see if we can predict whether or not a passenger survived based on the pri
 Let's run a simple regression first: 
 
 
-```r
+``` r
 # fit a linear model 
 fit.lm = lm(formula = survived ~ 1 + fare,
             data = df.titanic)
@@ -284,7 +284,7 @@ F-statistic: 63.03 on 1 and 889 DF,  p-value: 6.12e-15
 Look's like `fare` is a significant predictor of whether or not a person survived. Let's visualize the model's predictions:
 
 
-```r
+``` r
 ggplot(data = df.titanic,
        mapping = aes(x = fare,
                      y = survived)) + 
@@ -300,7 +300,7 @@ This doesn't look good! The model predicts intermediate values of `survived` (wh
 Let's run a logistic regression instead. 
 
 
-```r
+``` r
 # fit a logistic regression 
 fit.glm = glm(formula = survived ~ 1 + fare,
               family = "binomial",
@@ -334,7 +334,7 @@ Number of Fisher Scoring iterations: 4
 And let's visualize the predictions of the logistic regression: 
 
 
-```r
+``` r
 ggplot(data = df.titanic,
        mapping = aes(x = fare,
                      y = survived)) + 
@@ -373,7 +373,7 @@ In R, we can use `log(x)` to calculate the natural logarithm $\ln(x)$, and `exp(
 ### Interpreting the parameters
 
 
-```r
+``` r
 fit.glm %>% 
   summary()
 ```
@@ -404,7 +404,7 @@ The estimate for the intercept and fare are in log-odds.
 Let's take a look at the linear model's predictions in log-odds space. 
 
 
-```r
+``` r
 df.plot = fit.glm %>% 
   augment() %>% 
   clean_names()
@@ -420,7 +420,7 @@ Nice, looks like a good old linear model. But what's the y-axis here? It's in lo
 
 
 
-```r
+``` r
 ggplot(data = df.plot,
        mapping = aes(x = fare,
                      y = inv.logit(fitted))) + 
@@ -433,7 +433,7 @@ Great! Now the y-axis is back in probability space. We used the inverse logit fu
 Let's check what the intercept of our model is in probability space: 
 
 
-```r
+``` r
 fit.glm %>% 
   pluck(coefficients, 1) %>% 
   inv.logit()
@@ -451,7 +451,7 @@ Here, we see that the intercept is $p = 0.28$. That is, the predicted chance of 
 Here is a visualization of what the odds and log odds transformation look like.
 
 
-```r
+``` r
 # going from probabilities to odds (ranges from 0 to +infinity)
 ggplot(data = tibble(x = seq(0, 1, 0.1)),
        mapping = aes(x = x)) + 
@@ -466,7 +466,7 @@ This warning is displayed once every 8 hours.
 Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
-```r
+``` r
 # going from probabilities to log odds (ranges from -infinity to +infinity)
 ggplot(data = tibble(x = seq(0, 1, 0.1)),
        mapping = aes(x = x)) + 
@@ -482,7 +482,7 @@ ggplot(data = tibble(x = seq(0, 1, 0.1)),
 Let's see whether the probability of survival differed between male and female passengers. 
 
 
-```r
+``` r
 fit.glm2 = glm(formula = survived ~ 1 + sex,
                family = "binomial",
                data = df.titanic)
@@ -515,7 +515,7 @@ Number of Fisher Scoring iterations: 4
 It looks like it did! Let's visualize: 
 
 
-```r
+``` r
 df.titanic %>% 
   mutate(survived = factor(survived, labels = c("died", "survived"))) %>% 
   ggplot(data = .,
@@ -544,7 +544,7 @@ $$
 The predicted probability is: 
 
 
-```r
+``` r
 fit.glm2 %>% 
   pluck(coefficients, 1) %>% 
   inv.logit()
@@ -568,7 +568,7 @@ $$
 The predicted probability of male passengers surviving is: 
 
 
-```r
+``` r
 fit.glm2 %>% 
   pluck(coefficients) %>% 
   sum() %>% 
@@ -582,7 +582,7 @@ fit.glm2 %>%
 Here is the same information in a table: 
 
 
-```r
+``` r
 df.titanic %>% 
   count(sex, survived) %>% 
   mutate(p = n / sum(n)) %>% 
@@ -606,7 +606,7 @@ df.titanic %>%
 To interpret the predictions when a continuous predictor is involved, it's easiest to consider a few concrete cases. Here, I use the `augment()` function from the "broom" package to get the model's predictions for some values of interest: 
 
 
-```r
+``` r
 fit.glm %>% 
   augment(newdata = tibble(fare = c(0, 10, 50, 100, 500))) %>% 
   clean_names() %>% 
@@ -630,7 +630,7 @@ fit.glm %>%
 Let's fit a logistic regression that predicts the probability of survival based both on the passenger's sex and what fare they paid (allowing for an interaction of the two predictors): 
 
 
-```r
+``` r
 fit.glm3 = glm(formula = survived ~ 1 + sex * fare,
                family = "binomial",
                data = df.titanic)
@@ -668,7 +668,7 @@ Make sure not to interpret the significance test on the coefficients here as mai
 Let's visualize the model predictions: 
 
 
-```r
+``` r
 ggplot(data = df.titanic,
        mapping = aes(x = fare,
                      y = survived,
@@ -685,7 +685,7 @@ ggplot(data = df.titanic,
 Just for kicks, to get a better sense for what the interaction looks like, here is the visualization in log-odds space: 
 
 
-```r
+``` r
 fit.glm3 %>% 
   augment() %>% 
   clean_names() %>% 
@@ -703,7 +703,7 @@ fit.glm3 %>%
 Let's see how large the difference between genders is once we take into account how much each person paid for the fair:
 
 
-```r
+``` r
 ggpredict(fit.glm3,
           terms = c("sex"))
 ```
@@ -711,10 +711,10 @@ ggpredict(fit.glm3,
 ```
 # Predicted probabilities of survived
 
-sex    | Predicted |       95% CI
----------------------------------
-female |      0.74 | [0.69, 0.79]
-male   |      0.19 | [0.16, 0.23]
+sex    | Predicted |     95% CI
+-------------------------------
+female |      0.74 | 0.69, 0.79
+male   |      0.19 | 0.16, 0.23
 
 Adjusted for:
 * fare = 32.20
@@ -724,7 +724,7 @@ Adjusted for:
 We notice that there is one outlier who was male and paid a $500 fare (or maybe this is a mistake in the data entry?!). Let's remove this outlier and see what happens: 
 
 
-```r
+``` r
 fit.glm3_no_outlier = glm(formula = survived ~ 1 + sex * fare,
                           family = "binomial",
                           data = df.titanic %>% 
@@ -758,7 +758,7 @@ AIC: 887.51
 Number of Fisher Scoring iterations: 5
 ```
 
-```r
+``` r
 df.titanic %>% 
   filter(fare < 500) %>% 
   mutate(sex = as.factor(sex)) %>% 
@@ -781,7 +781,7 @@ df.titanic %>%
 There is still a clear difference between female and male passengers, but the prediction for male passengers has changed a bit. Let's look at a concrete example: 
 
 
-```r
+``` r
 # with the outlier: 
 
 # predicted probability of survival for a male passenger who paid $200 for their fare 
@@ -794,7 +794,7 @@ inv.logit(fit.glm3$coefficients[1] + fit.glm3$coefficients[2] +
   0.4903402 
 ```
 
-```r
+``` r
 # without the outlier: 
 
 # predicted probability of survival for a male passenger who paid $200 for their fare 
@@ -816,7 +816,7 @@ With the outlier removed, the predicted probability of survival for a male passe
 The "ggeffects" package helps with the interpretation of the results. It applies the inverse logit transform for us, and shows the predictions for a range of cases. 
 
 
-```r
+``` r
 # show effects 
 ggeffect(model = fit.glm,
          terms = "fare [1, 100, 200, 300, 400, 500]")
@@ -825,14 +825,14 @@ ggeffect(model = fit.glm,
 ```
 # Predicted probabilities of survived
 
-fare | Predicted |       95% CI
--------------------------------
-   1 |      0.28 | [0.25, 0.32]
- 100 |      0.64 | [0.56, 0.72]
- 200 |      0.89 | [0.79, 0.95]
- 300 |      0.97 | [0.92, 0.99]
- 400 |      0.99 | [0.97, 1.00]
- 500 |      1.00 | [0.99, 1.00]
+fare | Predicted |     95% CI
+-----------------------------
+   1 |      0.28 | 0.25, 0.32
+ 100 |      0.64 | 0.56, 0.72
+ 200 |      0.89 | 0.79, 0.95
+ 300 |      0.97 | 0.92, 0.99
+ 400 |      0.99 | 0.97, 1.00
+ 500 |      1.00 | 0.99, 1.00
 ```
 
 I've used the `[]` construction to specify for what values of the predictor `fare`, I'd like get the predicted values. Here, the prediction is marginalized across both women and men. 
@@ -840,7 +840,7 @@ I've used the `[]` construction to specify for what values of the predictor `far
 We can also get a plot of the model predictions like so: 
 
 
-```r
+``` r
 ggeffect(model = fit.glm,
          terms = "fare [1, 100, 200, 300, 400, 500]") %>% 
   plot()
@@ -851,7 +851,7 @@ ggeffect(model = fit.glm,
 And, we can also get the predicted probability of survival for sex marginalized over the fare, using the model which included both sex and fare, as well as its interaction as predictors. 
 
 
-```r
+``` r
 ggeffect(model = fit.glm3,
          terms = "sex")
 ```
@@ -859,16 +859,16 @@ ggeffect(model = fit.glm3,
 ```
 # Predicted probabilities of survived
 
-sex    | Predicted |       95% CI
----------------------------------
-female |      0.74 | [0.69, 0.79]
-male   |      0.19 | [0.16, 0.23]
+sex    | Predicted |     95% CI
+-------------------------------
+female |      0.74 | 0.69, 0.79
+male   |      0.19 | 0.16, 0.23
 ```
 
 Finally, we can ask for predictions for specific combinations of our predictor variables, by using the `ggpredict()` function. 
 
 
-```r
+``` r
 ggpredict(model = fit.glm3,
           terms = c("sex", "fare [200]"))
 ```
@@ -876,10 +876,10 @@ ggpredict(model = fit.glm3,
 ```
 # Predicted probabilities of survived
 
-sex    | Predicted |       95% CI
----------------------------------
-female |      0.99 | [0.93, 1.00]
-male   |      0.49 | [0.29, 0.70]
+sex    | Predicted |     95% CI
+-------------------------------
+female |      0.99 | 0.93, 1.00
+male   |      0.49 | 0.29, 0.70
 ```
 
 The example above, shows the predicted probability of survival for male vs. female passengers, assuming that they paid 200 for the fare. 
@@ -889,7 +889,7 @@ The example above, shows the predicted probability of survival for male vs. fema
 As always, to better understand a statistical modeling procedure, it's helpful to simulate data from the assumed data-generating process, fit the model, and see whether we can reconstruct the parameters.  
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -903,7 +903,9 @@ b1 = 1
 df.data = tibble(x = rnorm(n = sample_size),
                  y = b0 + b1 * x,
                  p = inv.logit(y)) %>% 
-  mutate(response = rbinom(n(), size = 1, p = p))
+  mutate(response = rbinom(n(),
+                           size = 1,
+                           p = p))
 
 # fit model 
 fit = glm(formula = response ~ 1 + x,
@@ -936,7 +938,7 @@ AIC: 1213.6
 Number of Fisher Scoring iterations: 3
 ```
 
-```r
+``` r
 df.data %>% 
   head(10) %>% 
   kable(digits = 2) %>% 
@@ -1022,7 +1024,7 @@ Nice! The inferred estimates are very close to the parameter values we used to s
 Let's visualize the result: 
 
 
-```r
+``` r
 ggplot(data = df.data,
        mapping = aes(x = x,
                      y = response)) + 
@@ -1041,7 +1043,7 @@ To calculate the likelihood of the data for a given logistic model, we look at t
 This table illustrate the steps involved: 
 
 
-```r
+``` r
 fit %>% 
   augment() %>% 
   clean_names() %>% 
@@ -1073,7 +1075,7 @@ fit %>%
 Let's calculate the log-likelihood by hand:
 
 
-```r
+``` r
 fit %>% 
   augment() %>% 
   clean_names() %>% 
@@ -1092,7 +1094,7 @@ fit %>%
 And compare it with the model summary
 
 
-```r
+``` r
 fit %>% 
   glance() %>% 
   select(logLik, AIC, BIC)
@@ -1112,7 +1114,7 @@ We're getting the same result -- neat! Now we know how the likelihood of the dat
 To test hypotheses, we can use our good old model comparison approach: 
 
 
-```r
+``` r
 # fit compact model
 fit.compact = glm(formula = survived ~ 1 + fare,
                   family = "binomial",
@@ -1124,7 +1126,9 @@ fit.augmented = glm(formula = survived ~ 1 + sex + fare,
                     data = df.titanic)
 
 # likelihood ratio test
-anova(fit.compact, fit.augmented, test = "LRT")
+anova(fit.compact,
+      fit.augmented,
+      test = "LRT")
 ```
 
 ```
@@ -1144,7 +1148,7 @@ Note that in order to get a p-value out of this, we need to specify what statist
 We can also test for both effects of survived and fare in one go using the `joint_tests()` function from the "emmeans" package like so: 
 
 
-```r
+``` r
 glm(formula = survived ~ 1 + sex + fare,
     family = "binomial",
     data = df.titanic) %>% 
@@ -1166,7 +1170,7 @@ Just like we can build linear mixed effects models using `lmer()` instead of `lm
 Let's read in some data: 
 
 
-```r
+``` r
 # load bdf data set from nlme package
 data(bdf, package = "nlme")
 
@@ -1183,7 +1187,7 @@ rm(bdf)
 Fit the model, and print out the results: 
 
 
-```r
+``` r
 fit =  glmer(repeatgr ~ 1 + ses + minority + (1 | school_nr),
              data = df.language,
              family = "binomial")
@@ -1213,9 +1217,9 @@ Number of obs: 2283, groups:  school_nr, 131
 
 Fixed effects:
              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -0.506291   0.197568  -2.563  0.01039 *  
+(Intercept) -0.506280   0.197568  -2.563  0.01039 *  
 ses         -0.060086   0.007524  -7.986 1.39e-15 ***
-minorityY    0.673612   0.238659   2.822  0.00477 ** 
+minorityY    0.673605   0.238655   2.823  0.00477 ** 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -1228,7 +1232,7 @@ minorityY -0.308  0.208
 To visualize the results, we can use the `ggeffects` package. 
 
 
-```r
+``` r
 ggpredict(model = fit,
           terms = c("ses [all]", "minority")) %>% 
   plot()
@@ -1239,7 +1243,7 @@ ggpredict(model = fit,
 And for significance testing, we can use the the `joint_tests()` function from the "emmeans" package
 
 
-```r
+``` r
 glmer(formula = repeatgr ~ 1 + ses + minority + (1 | school_nr),
       data = df.language,
       family = "binomial") %>% 
@@ -1248,8 +1252,8 @@ glmer(formula = repeatgr ~ 1 + ses + minority + (1 | school_nr),
 
 ```
  model term df1 df2 F.ratio  Chisq p.value
- ses          1 Inf  63.783 63.783  <.0001
- minority     1 Inf   7.966  7.966  0.0048
+ ses          1 Inf  63.784 63.784  <.0001
+ minority     1 Inf   7.967  7.967  0.0048
 ```
 
 The results show that there was both a significant effect of ses and of minority. 
@@ -1259,7 +1263,7 @@ Note: This post [here](https://stats.stackexchange.com/questions/400101/using-em
 If you'd like to compute the likelihood ratio test, a convenient way of doing so is by using the `mixed()` function from the "afex" package.
 
 
-```r
+``` r
 mixed(formula = repeatgr ~ 1 + ses + minority + (1 | school_nr),
       family = "binomial",
       data = df.language,
@@ -1290,7 +1294,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 And we can compare that the model comparison approach gives us the same result: 
 
 
-```r
+``` r
 fit_a =  glmer(repeatgr ~ 1 + ses + minority + (1 | school_nr),
              data = df.language,
              family = "binomial")
@@ -1315,13 +1319,12 @@ fit_a    4 1659.1 1682.1 -825.57   1651.1 75.395  1  < 2.2e-16 ***
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-
-
 ## Additional information
 
 ### Misc 
 
 - [Nice logistic regression explainer](https://cims.nyu.edu/~brenden/courses/labincp/chapters/14/00-logisticregression.html)
+- [StatQuest: Logistic regression](https://www.youtube.com/watch?v=yIYKR4sgzI8)
 
 ### Datacamp
 
@@ -1334,18 +1337,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1358,39 +1361,38 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] ggplot2_3.4.4    tidyverse_2.0.0  emmeans_1.9.0    afex_1.3-0      
-[13] ggeffects_1.3.4  boot_1.3-28.1    lme4_1.1-35.1    Matrix_1.6-4    
-[17] broom_1.0.5      janitor_2.2.0    kableExtra_1.3.4 titanic_0.1.0   
-[21] knitr_1.45      
+ [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  emmeans_1.10.3   afex_1.3-1      
+[13] ggeffects_1.7.0  boot_1.3-30      lme4_1.1-35.5    Matrix_1.7-0    
+[17] broom_1.0.6      janitor_2.2.0    kableExtra_1.4.0 titanic_0.1.0   
+[21] knitr_1.48      
 
 loaded via a namespace (and not attached):
- [1] sjlabelled_1.2.0    tidyselect_1.2.0    viridisLite_0.4.2  
- [4] farver_2.1.1        fastmap_1.1.1       digest_0.6.33      
- [7] timechange_0.2.0    estimability_1.4.1  lifecycle_1.0.4    
-[10] survival_3.5-7      magrittr_2.0.3      compiler_4.3.2     
-[13] rlang_1.1.2         sass_0.4.8          tools_4.3.2        
-[16] utf8_1.2.4          yaml_2.3.8          labeling_0.4.3     
+ [1] sjlabelled_1.2.0    tidyselect_1.2.1    viridisLite_0.4.2  
+ [4] farver_2.1.2        fastmap_1.2.0       digest_0.6.36      
+ [7] timechange_0.3.0    estimability_1.5.1  lifecycle_1.0.4    
+[10] survival_3.6-4      magrittr_2.0.3      compiler_4.4.1     
+[13] rlang_1.1.4         sass_0.4.9          tools_4.4.1        
+[16] utf8_1.2.4          yaml_2.3.9          labeling_0.4.3     
 [19] RColorBrewer_1.1-3  plyr_1.8.9          xml2_1.3.6         
-[22] abind_1.4-5         withr_2.5.2         numDeriv_2016.8-1.1
-[25] effects_4.2-2       nnet_7.3-19         datawizard_0.9.1   
-[28] grid_4.3.2          fansi_1.0.6         xtable_1.8-4       
-[31] colorspace_2.1-0    scales_1.3.0        MASS_7.3-60        
-[34] insight_0.19.7      survey_4.2-1        cli_3.6.2          
-[37] mvtnorm_1.2-4       crayon_1.5.2        rmarkdown_2.25     
-[40] generics_0.1.3      rstudioapi_0.15.0   httr_1.4.7         
-[43] reshape2_1.4.4      tzdb_0.4.0          DBI_1.2.0          
-[46] minqa_1.2.6         cachem_1.0.8        splines_4.3.2      
-[49] rvest_1.0.3         parallel_4.3.2      mitools_2.4        
-[52] vctrs_0.6.5         webshot_0.5.5       jsonlite_1.8.8     
-[55] carData_3.0-5       bookdown_0.37       car_3.1-2          
-[58] hms_1.1.3           systemfonts_1.0.5   jquerylib_0.1.4    
-[61] glue_1.6.2          nloptr_2.0.3        stringi_1.8.3      
-[64] gtable_0.3.4        lmerTest_3.1-3      munsell_0.5.0      
-[67] pillar_1.9.0        htmltools_0.5.7     R6_2.5.1           
-[70] evaluate_0.23       lattice_0.22-5      haven_2.5.4        
-[73] highr_0.10          backports_1.4.1     snakecase_0.11.1   
-[76] bslib_0.6.1         Rcpp_1.0.11         svglite_2.1.3      
-[79] coda_0.19-4         nlme_3.1-164        mgcv_1.9-1         
-[82] xfun_0.41           pkgconfig_2.0.3    
+[22] abind_1.4-5         withr_3.0.0         numDeriv_2016.8-1.1
+[25] effects_4.2-2       nnet_7.3-19         datawizard_0.12.2  
+[28] grid_4.4.1          fansi_1.0.6         xtable_1.8-4       
+[31] colorspace_2.1-0    scales_1.3.0        MASS_7.3-61        
+[34] insight_0.20.3      survey_4.4-2        cli_3.6.3          
+[37] mvtnorm_1.2-5       crayon_1.5.3        rmarkdown_2.27     
+[40] generics_0.1.3      rstudioapi_0.16.0   reshape2_1.4.4     
+[43] tzdb_0.4.0          DBI_1.2.3           minqa_1.2.7        
+[46] cachem_1.1.0        splines_4.4.1       parallel_4.4.1     
+[49] mitools_2.4         vctrs_0.6.5         jsonlite_1.8.8     
+[52] carData_3.0-5       bookdown_0.40       car_3.1-2          
+[55] hms_1.1.3           systemfonts_1.1.0   jquerylib_0.1.4    
+[58] glue_1.7.0          nloptr_2.1.1        stringi_1.8.4      
+[61] gtable_0.3.5        lmerTest_3.1-3      munsell_0.5.1      
+[64] pillar_1.9.0        htmltools_0.5.8.1   R6_2.5.1           
+[67] evaluate_0.24.0     lattice_0.22-6      haven_2.5.4        
+[70] highr_0.11          backports_1.5.0     snakecase_0.11.1   
+[73] bslib_0.7.0         Rcpp_1.0.13         svglite_2.1.3      
+[76] coda_0.19-4.1       nlme_3.1-164        mgcv_1.9-1         
+[79] xfun_0.45           pkgconfig_2.0.3    
 ```

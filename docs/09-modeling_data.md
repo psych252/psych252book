@@ -3,7 +3,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -11,7 +11,7 @@ library("tidyverse")  # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -24,7 +24,7 @@ opts_chunk$set(comment = "",
 ### Simplicity vs. accuracy trade-off
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -54,7 +54,7 @@ ggplot(data = df.data,
 </div>
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 # n_samples = 20
@@ -84,7 +84,7 @@ ggplot(data = df.pre,
 ### Sampling distributions for median and mean
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -127,7 +127,7 @@ df.sampling_distribution_summaries = df.sampling_distribution %>%
 And plot it: 
 
 
-```r
+``` r
 # plot a histogram of the means with density overlaid 
 
 ggplot(data = df.sampling_distribution_summaries,
@@ -150,16 +150,17 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 ### Residuals need to be normally distributed, not the data itself
 
 
-```r
+``` r
 set.seed(1)
 
 n_participants = 1000
 
 df.normal = tibble(participant = 1:n_participants,
-                   condition = rep(c("control", "experimental"), each = n_participants/2)) %>% 
+                   condition = rep(c("control", "experimental"),
+                                   each = n_participants/2)) %>% 
   mutate(score = ifelse(condition == "control",
-                        rnorm(n = n_participants, mean = 5, sd = 2),
-                        rnorm(n = n_participants, mean = 15, sd = 3)))
+                        rnorm(n = n_participants/2, mean = 5, sd = 2),
+                        rnorm(n = n_participants/2, mean = 15, sd = 3)))
 
 # distribution of the data 
 ggplot(data = df.normal,
@@ -187,7 +188,7 @@ ggplot(data = tibble(residuals = fit$residuals),
 ## Hypothesis testing: "One-sample t-test"
 
 
-```r
+``` r
 df.internet = read_table2(file = "data/internet_access.txt") %>% 
   clean_names()
 ```
@@ -205,7 +206,7 @@ cols(
 ```
 
 
-```r
+``` r
 df.internet %>% 
   mutate(i = 1:n()) %>% 
   select(i, internet, everything()) %>% 
@@ -312,7 +313,7 @@ df.internet %>%
 
 
 
-```r
+``` r
 # parameters per model 
 pa = 1
 pc = 0 
@@ -366,13 +367,13 @@ df.model %>%
 
 
 
-```r
+``` r
 df1 = 1
 df2 = 49
 
 ggplot(data = tibble(x = c(0, 10)),
        mapping = aes(x = x)) + 
-  stat_function(fun = "df",
+  stat_function(fun = df,
                 geom = "area",
                 fill = "red",
                 alpha = 0.5,
@@ -389,12 +390,6 @@ ggplot(data = tibble(x = c(0, 10)),
        x = "Proportional reduction in error")
 ```
 
-```
-Warning: Computation failed in `stat_function()`
-Caused by error in `fun()`:
-! could not find function "fun"
-```
-
 <div class="figure">
 <img src="09-modeling_data_files/figure-html/unnamed-chunk-11-1.png" alt="F-distribution" width="672" />
 <p class="caption">(\#fig:unnamed-chunk-11)F-distribution</p>
@@ -403,7 +398,7 @@ Caused by error in `fun()`:
 We've implemented a one sample t-test (compare the p-value here to the one I computed above using PRE and the F statistic).
 
 
-```r
+``` r
 t.test(df.internet$internet, mu = 75)
 ```
 
@@ -433,7 +428,7 @@ whereby I assume that $\epsilon_i \sim \mathcal{N}(0, \sigma)$.
 For this example, I assume that I know the population distribution. I first draw a sample from that distribution, and then calculate PRE. 
 
 
-```r
+``` r
 # make example reproducible
 set.seed(1)
 
@@ -457,7 +452,7 @@ df.summary = df.sample %>%
 To generate the sampling distribution, I assume that the null hypothesis is true, and then take a look at what values for PRE we could expect by chance for our given sample size. 
 
 
-```r
+``` r
 # simulation parameters
 n_samples = 1000
 sample_size = 50 
@@ -515,7 +510,7 @@ df.samples %>%
 Some code I wrote to show a subset of the samples. 
 
 
-```r
+``` r
 samples %>% 
   as_tibble(.name_repair = "unique") %>% 
   mutate(sample = 1:n()) %>% 
@@ -660,7 +655,7 @@ samples %>%
 Some code to plot probability distributions together with values of interest highlighted. 
 
 
-```r
+``` r
 value_mean = 3.73
 value_sd = 2.05/sqrt(40)
 q_low = qnorm(0.025, mean = value_mean, sd = value_sd)
@@ -672,7 +667,7 @@ qnorm(0.975) * value_sd
 [1] 0.6352899
 ```
 
-```r
+``` r
 # density function
 
 ggplot(data = tibble(x = c(2.73, 4.73)),
@@ -729,18 +724,18 @@ ggplot(data = tibble(x = c(0, 1)),
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -753,23 +748,23 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] ggplot2_3.4.4    tidyverse_2.0.0  janitor_2.2.0    kableExtra_1.3.4
-[13] knitr_1.45      
+ [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  janitor_2.2.0    kableExtra_1.4.0
+[13] knitr_1.48      
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
- [5] lattice_0.22-5    stringi_1.8.3     hms_1.1.3         digest_0.6.33    
- [9] magrittr_2.0.3    evaluate_0.23     grid_4.3.2        timechange_0.2.0 
-[13] bookdown_0.37     fastmap_1.1.1     Matrix_1.6-4      jsonlite_1.8.8   
-[17] mgcv_1.9-1        httr_1.4.7        rvest_1.0.3       fansi_1.0.6      
-[21] viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4   cli_3.6.2        
-[25] crayon_1.5.2      rlang_1.1.2       splines_4.3.2     munsell_0.5.0    
-[29] withr_2.5.2       cachem_1.0.8      yaml_2.3.8        tools_4.3.2      
-[33] tzdb_0.4.0        colorspace_2.1-0  webshot_0.5.5     vctrs_0.6.5      
-[37] R6_2.5.1          lifecycle_1.0.4   snakecase_0.11.1  pkgconfig_2.0.3  
-[41] bslib_0.6.1       pillar_1.9.0      gtable_0.3.4      glue_1.6.2       
-[45] systemfonts_1.0.5 highr_0.10        xfun_0.41         tidyselect_1.2.0 
-[49] rstudioapi_0.15.0 farver_2.1.1      nlme_3.1-164      htmltools_0.5.7  
-[53] labeling_0.4.3    rmarkdown_2.25    svglite_2.1.3     compiler_4.3.2   
+ [1] sass_0.4.9        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
+ [5] lattice_0.22-6    stringi_1.8.4     hms_1.1.3         digest_0.6.36    
+ [9] magrittr_2.0.3    evaluate_0.24.0   grid_4.4.1        timechange_0.3.0 
+[13] bookdown_0.40     fastmap_1.2.0     Matrix_1.7-0      jsonlite_1.8.8   
+[17] mgcv_1.9-1        fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0     
+[21] jquerylib_0.1.4   cli_3.6.3         crayon_1.5.3      rlang_1.1.4      
+[25] splines_4.4.1     munsell_0.5.1     withr_3.0.0       cachem_1.1.0     
+[29] yaml_2.3.9        tools_4.4.1       tzdb_0.4.0        colorspace_2.1-0 
+[33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   snakecase_0.11.1 
+[37] pkgconfig_2.0.3   bslib_0.7.0       pillar_1.9.0      gtable_0.3.5     
+[41] glue_1.7.0        systemfonts_1.1.0 highr_0.11        xfun_0.45        
+[45] tidyselect_1.2.1  rstudioapi_0.16.0 farver_2.1.2      nlme_3.1-164     
+[49] htmltools_0.5.8.1 labeling_0.4.3    rmarkdown_2.27    svglite_2.1.3    
+[53] compiler_4.4.1   
 ```

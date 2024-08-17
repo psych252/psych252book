@@ -11,7 +11,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")       # for knitting RMarkdown 
 library("kableExtra")  # for making nice tables
 library("janitor")     # for cleaning column names
@@ -36,7 +36,7 @@ library("tidyverse")   # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + # set the theme 
             theme(text = element_text(size = 20))) # set the default text size
 
@@ -52,7 +52,7 @@ options(ggplot2.discrete.color = RColorBrewer::brewer.pal(9,"Set1"))
 ## Load data sets
 
 
-```r
+``` r
 # poker 
 df.poker = read_csv("data/poker.csv") %>% 
   mutate(skill = factor(skill,
@@ -98,7 +98,7 @@ df.politeness = read_csv("data/politeness_data.csv") %>%
 Let's visualize the data first. 
 
 
-```r
+``` r
 set.seed(1)
 
 df.poker %>% 
@@ -130,7 +130,7 @@ df.poker %>%
 And let's now fit a simple (frequentist) ANOVA model. You have multiple options to do so: 
 
 
-```r
+``` r
 # Option 1: Using the "afex" package
 aov_ez(id = "participant",
        dv = "balance",
@@ -154,7 +154,7 @@ Response: balance
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
 
-```r
+``` r
 # Option 2: Using the car package (here we have to remember to set the contrasts to sum
 # contrasts!)
 lm(balance ~ hand * skill,
@@ -178,7 +178,7 @@ Residuals    4752.3 294
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-```r
+``` r
 # Option 3: Using the emmeans package (I like this one the best! It let's us use the 
 # general lm() syntax and we don't have to remember to set the contrast)
 fit.lm_poker = lm(balance ~ hand * skill,
@@ -202,7 +202,7 @@ All three options give the same result. Personally, I like Option 3 the best.
 Now, let's fit a Bayesian regression model using the `brm()` function (starting with a simple model that only considers `hand` as a predictor):
 
 
-```r
+``` r
 fit.brm_poker = brm(formula = balance ~ 1 + hand,
                     data = df.poker,
                     seed = 1, 
@@ -226,13 +226,13 @@ Formula: balance ~ 1 + hand
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept       5.94      0.42     5.11     6.76 1.00     3434     2747
 handneutral     4.41      0.60     3.22     5.60 1.00     3669     2860
 handgood        7.09      0.61     5.91     8.27 1.00     3267     2841
 
-Family Specific Parameters: 
+Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma     4.12      0.17     3.82     4.48 1.00     3378     3010
 
@@ -250,7 +250,7 @@ So far, we have used the defaults that `brm()` comes with and not bothered about
 Notice that we didn't specify any priors in the model. By default, "brms" assigns weakly informative priors to the parameters in the model. We can see what these are by running the following command: 
 
 
-```r
+``` r
 fit.brm_poker %>% 
   prior_summary()
 ```
@@ -273,7 +273,7 @@ fit.brm_poker %>%
 We can also get information about which priors need to be specified before fitting a model:
 
 
-```r
+``` r
 get_prior(formula = balance ~ 1 + hand,
           family = "gaussian",
           data = df.poker)
@@ -297,7 +297,7 @@ get_prior(formula = balance ~ 1 + hand,
 Here is an example for what a more complete model specification could look like: 
 
 
-```r
+``` r
 fit.brm_poker_full = brm(formula = balance ~ 1 + hand,
                          family = "gaussian",
                          data = df.poker,
@@ -345,13 +345,13 @@ Formula: balance ~ 1 + hand
   Draws: 4 chains, each with iter = 4000; warmup = 1000; thin = 1;
          total post-warmup draws = 12000
 
-Population-Level Effects: 
+Regression Coefficients:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept       5.96      0.41     5.15     6.76 1.00    10533     8949
 handneutral     4.39      0.58     3.26     5.52 1.00    11458     9173
 handgood        7.06      0.58     5.91     8.20 1.00    10754     8753
 
-Family Specific Parameters: 
+Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma     4.13      0.17     3.81     4.48 1.00    11877     8882
 
@@ -363,7 +363,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 We can also take a look at the Stan code that the `brm()` function creates: 
 
 
-```r
+``` r
 fit.brm_poker_full %>%
   stancode()
 ```
@@ -424,10 +424,14 @@ One thing worth noticing: by default, "brms" centers the predictors which makes 
 So far, we've assumed that the inference has worked out. We can check this by running `plot()` on our brm object:  
 
 
-```r
+``` r
 plot(fit.brm_poker,
      N = 7,
      ask = F)
+```
+
+```
+Warning: Argument 'N' is deprecated. Please use argument 'nvariables' instead.
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-11-1.png" width="960" />
@@ -437,7 +441,7 @@ The posterior distributions (left hand side), and the trace plots of the samples
 Let's make our own version of a trace plot for one parameter in the model:
 
 
-```r
+``` r
 fit.brm_poker %>% 
   spread_draws(b_Intercept) %>% 
   clean_names() %>% 
@@ -456,7 +460,7 @@ fit.brm_poker %>%
 We can also take a look at the auto-correlation plot. Ideally, we want to generate independent samples from the posterior. So we don't want subsequent samples to be strongly correlated with each other. Let's take a look: 
 
 
-```r
+``` r
 variables = fit.brm_poker %>%
   get_variables() %>%
   .[1:4]
@@ -465,15 +469,6 @@ fit.brm_poker %>%
   as_draws() %>% 
   mcmc_acf(pars = variables,
            lags = 4)
-```
-
-```
-Warning: The `facets` argument of `facet_grid()` is deprecated as of ggplot2 2.2.0.
-ℹ Please use the `rows` argument instead.
-ℹ The deprecated feature was likely used in the bayesplot package.
-  Please report the issue at <https://github.com/stan-dev/bayesplot/issues/>.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-13-1.png" width="672" />
@@ -485,7 +480,7 @@ Looking good! The autocorrelation should become very small as the lag increases 
 Let's try to fit a model to very little data (just two observations) with extremely uninformative priors: 
 
 
-```r
+``` r
 df.data = tibble(y = c(-1, 1))
 
 fit.brm_wrong = brm(data = df.data,
@@ -504,7 +499,7 @@ fit.brm_wrong = brm(data = df.data,
 Let's take a look at the posterior distributions of the model parameters: 
 
 
-```r
+``` r
 summary(fit.brm_wrong)
 ```
 
@@ -522,13 +517,13 @@ Formula: y ~ 1
   Draws: 2 chains, each with iter = 4000; warmup = 1000; thin = 1;
          total post-warmup draws = 6000
 
-Population-Level Effects: 
+Regression Coefficients:
               Estimate    Est.Error      l-95% CI      u-95% CI Rhat Bulk_ESS
 Intercept 228357056.15 984976734.30 -616012010.65 4388257793.68 1.04       45
           Tail_ESS
 Intercept       59
 
-Family Specific Parameters: 
+Further Distributional Parameters:
           Estimate     Est.Error  l-95% CI      u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma 812525872.95 1745959463.85 282591.91 6739518200.93 1.04       44       63
 
@@ -542,16 +537,20 @@ Not looking good -- The estimates and credible intervals are off the charts. And
 Let's visualize the trace plots:
 
 
-```r
+``` r
 plot(fit.brm_wrong,
      N = 2, 
      ask = F)
 ```
 
+```
+Warning: Argument 'N' is deprecated. Please use argument 'nvariables' instead.
+```
+
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-16-1.png" width="1152" />
 
 
-```r
+``` r
 fit.brm_wrong %>% 
   spread_draws(b_Intercept) %>% 
   clean_names() %>% 
@@ -569,7 +568,7 @@ fit.brm_wrong %>%
 Given that we have so little data in this case, we need to help the model a little bit by providing some slighlty more specific priors. 
 
 
-```r
+``` r
 fit.brm_right = brm(data = df.data,
                     family = gaussian,
                     formula = y ~ 1,
@@ -585,7 +584,7 @@ fit.brm_right = brm(data = df.data,
 Let's take a look at the posterior distributions of the model parameters: 
 
 
-```r
+``` r
 summary(fit.brm_right)
 ```
 
@@ -597,11 +596,11 @@ Formula: y ~ 1
   Draws: 2 chains, each with iter = 4000; warmup = 1000; thin = 1;
          total post-warmup draws = 6000
 
-Population-Level Effects: 
+Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept    -0.05      1.55    -3.35     3.11 1.00     1730     1300
 
-Family Specific Parameters: 
+Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma     2.01      1.84     0.62     6.81 1.00     1206     1568
 
@@ -615,16 +614,20 @@ This looks much better. There is still quite a bit of uncertainty in our paremet
 Let's visualize the trace plots:
 
 
-```r
+``` r
 plot(fit.brm_right,
      N = 2, 
      ask = F)
 ```
 
+```
+Warning: Argument 'N' is deprecated. Please use argument 'nvariables' instead.
+```
+
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 
-```r
+``` r
 fit.brm_right %>% 
   spread_draws(b_Intercept, sigma) %>% 
   clean_names() %>% 
@@ -650,7 +653,7 @@ Looking mostly good!
 To check whether the model did a good job capturing the data, we can simulate what future data the Bayesian model predicts, now that it has learned from the data we feed into it.  
 
 
-```r
+``` r
 pp_check(fit.brm_poker, ndraws = 100)
 ```
 
@@ -661,7 +664,7 @@ This looks good! The predicted shaped of the data based on samples from the post
 Let's make a hypothetical outcome plot that shows what concrete data sets the model would predict.  The `add_predicted_draws()` function from the "tidybayes" package is helpful for generating predictions from the posterior.
 
 
-```r
+``` r
 df.predictive_samples = df.poker %>% 
   add_predicted_draws(newdata = .,
                       object = fit.brm_poker2,
@@ -697,7 +700,7 @@ package to create animated output
 ##### Prior predictive check
 
 
-```r
+``` r
 fit.brm_poker_prior = brm(formula = balance ~ 0 + Intercept + hand * skill,
                           family = "gaussian",
                           data = df.poker,
@@ -745,7 +748,7 @@ Warning: No renderer available. Please install the gifski, av, or magick
 package to create animated output
 ```
 
-```r
+``` r
 # anim_save("poker_prior_predictive.gif")
 ```
 
@@ -758,7 +761,7 @@ Let's visualize what the posterior for the different parameters looks like. We u
 
 
 
-```r
+``` r
 fit.brm_poker %>% 
   as_draws_df() %>%
   select(starts_with("b_"), sigma) %>%
@@ -779,7 +782,7 @@ fit.brm_poker %>%
 To compute the MAP (maximum a posteriori probability) estimate and highest density interval, we use the `mean_hdi()` function that comes with the "tidybayes" package.
 
 
-```r
+``` r
 fit.brm_poker %>% 
   as_draws_df() %>%
   select(starts_with("b_"), sigma) %>% 
@@ -813,7 +816,7 @@ One key advantage of Bayesian over frequentist analysis is that we can test hypo
 We may ask, for example, what the probability is that the parameter for the difference between a bad hand and a neutral hand (`b_handneutral`) is greater than 0. Let's plot the posterior distribution together with the criterion: 
 
 
-```r
+``` r
 fit.brm_poker %>% 
   as_draws_df() %>% 
   select(b_handneutral) %>% 
@@ -834,7 +837,7 @@ We see that the posterior is definitely greater than 0.
 We can ask many different kinds of questions about the data by doing basic arithmetic on our posterior samples. The `hypothesis()` function makes this even easier. Here are some examples: 
 
 
-```r
+``` r
 # the probability that the posterior for handneutral is less than 0
 hypothesis(fit.brm_poker,
            hypothesis = "handneutral < 0")
@@ -854,7 +857,7 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.
 ```
 
 
-```r
+``` r
 # the probability that the posterior for handneutral is greater than 4
 hypothesis(fit.brm_poker,
            hypothesis = "handneutral > 4") %>% 
@@ -864,7 +867,7 @@ hypothesis(fit.brm_poker,
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 
-```r
+``` r
 # the probability that good hands make twice as much as bad hands
 hypothesis(fit.brm_poker,
            hypothesis = "Intercept + handgood > 2 * Intercept")
@@ -886,7 +889,7 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.
 We can also make a plot of what the posterior distribution of the hypothesis looks like: 
 
 
-```r
+``` r
 hypothesis(fit.brm_poker,
            hypothesis = "Intercept + handgood > 2 * Intercept") %>% 
   plot()
@@ -896,7 +899,7 @@ hypothesis(fit.brm_poker,
 
 
 
-```r
+``` r
 # the probability that neutral hands make less than the average of bad and good hands
 hypothesis(fit.brm_poker,
            hypothesis = "Intercept + handneutral < (Intercept + Intercept + handgood) / 2")
@@ -918,7 +921,7 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.
 Let's double check one example, and calculate the result directly based on the posterior samples: 
 
 
-```r
+``` r
 df.hypothesis = fit.brm_poker %>% 
   as_draws_df() %>% 
   clean_names() %>% 
@@ -932,7 +935,7 @@ df.hypothesis = fit.brm_poker %>%
 Warning: Dropping 'draws_df' class as required metadata was removed.
 ```
 
-```r
+``` r
 df.hypothesis %>% 
   summarize(p = sum(hypothesis)/n())
 ```
@@ -949,13 +952,9 @@ df.hypothesis %>%
 We can also use the `emmeans()` function to compute contrasts. 
 
 
-```r
+``` r
 fit.brm_poker %>% 
   emmeans(specs = consec ~ hand)
-```
-
-```
-Loading required namespace: rstanarm
 ```
 
 ```
@@ -982,7 +981,7 @@ Here, it computed the estimated means for each group for us, as well as the cons
 Let's visualize the contrasts. First, let's just use the `plot()` function as it's been adapted by the emmeans package: 
 
 
-```r
+``` r
 fit.brm_poker %>% 
   emmeans(specs = consec ~ hand) %>% 
   pluck("contrasts") %>% 
@@ -994,7 +993,7 @@ fit.brm_poker %>%
 To get full posterior distributions instead of summaries, we can use the "tidybayes" package like so: 
 
 
-```r
+``` r
 fit.brm_poker %>% 
   emmeans(specs = consec ~ hand) %>% 
   pluck("contrasts") %>% 
@@ -1013,7 +1012,7 @@ fit.brm_poker %>%
 To see whether neutral hands did differently from bad and good hands (combined), we can define the following contrast.
 
 
-```r
+``` r
 contrasts = list(neutral_vs_rest = c(-1, 2, -1))
 
 fit.brm_poker %>% 
@@ -1036,7 +1035,7 @@ Here, the HDP does not exclude 0.
 Let's double check that we get the same result using the `hypothesis()` function, or by directly computing from the posterior samples. 
 
 
-```r
+``` r
 # using hypothesis()
 fit.brm_poker %>% 
   hypothesis("(Intercept + handneutral)*2 < (Intercept + Intercept + handgood)")
@@ -1055,7 +1054,7 @@ for two-sided hypotheses, the value tested against lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.
 ```
 
-```r
+``` r
 # directly computing from the posterior
 fit.brm_poker %>% 
   as_draws_df() %>% 
@@ -1076,7 +1075,7 @@ The `emmeans()` function becomes particularly useful when our model has several 
 Let's take a look for a model that considers both `skill` and `hand` as predictors (as well as the interaction). 
 
 
-```r
+``` r
 fit.brm_poker2 = brm(formula = balance ~ hand * skill,
                      data = df.poker,
                      seed = 1, 
@@ -1094,7 +1093,7 @@ Formula: balance ~ 1 + hand * skill
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
                         Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
 Intercept                   4.58      0.56     3.48     5.69 1.00     2402
 handneutral                 5.26      0.79     3.72     6.86 1.00     2617
@@ -1110,7 +1109,7 @@ skillexpert                 2476
 handneutral:skillexpert     3040
 handgood:skillexpert        2295
 
-Family Specific Parameters: 
+Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma     4.03      0.17     3.72     4.38 1.00     3369     2728
 
@@ -1122,7 +1121,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 In the summary table above, `skillexpert` captures the difference between an expert and an average player **when they have a bad hand**. To see whether there was a difference in expertise overall (i.e. across all three kinds of hands), we can calculate a linear contrast. 
 
 
-```r
+``` r
 fit.brm_poker2 %>% 
   emmeans(pairwise ~ skill)
 ```
@@ -1155,7 +1154,7 @@ It looks like overall, skilled players weren't doing much better than average pl
 We can even do something like an equivalent of an ANOVA using `emmeans()`, like so: 
 
 
-```r
+``` r
 joint_tests(fit.brm_poker2)
 ```
 
@@ -1169,7 +1168,7 @@ joint_tests(fit.brm_poker2)
 The values we get here are very similar to what we would get from a frequentist ANOVA: 
 
 
-```r
+``` r
 aov_ez(id = "participant",
        dv = "balance",
        between = c("hand", "skill"),
@@ -1197,7 +1196,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 Another way of testing hypothesis is via the Bayes factor. Let's fit the two models we are interested in comparing with each other: 
 
 
-```r
+``` r
 fit.brm_poker_bf1 = brm(formula = balance ~ 1 + hand,
                         data = df.poker,
                         save_pars = save_pars(all = T),
@@ -1212,7 +1211,7 @@ fit.brm_poker_bf2 = brm(formula = balance ~ 1 + hand + skill,
 And then compare the models using the `bayes_factor()` function: 
 
 
-```r
+``` r
 bayes_factor(fit.brm_poker_bf2, fit.brm_poker_bf1)
 ```
 
@@ -1226,11 +1225,10 @@ Iteration: 1
 Iteration: 2
 Iteration: 3
 Iteration: 4
-Iteration: 5
 ```
 
 ```
-Estimated Bayes factor in favor of fit.brm_poker_bf2 over fit.brm_poker_bf1: 3.82034
+Estimated Bayes factor in favor of fit.brm_poker_bf2 over fit.brm_poker_bf1: 3.82932
 ```
 
 Bayes factors don't have a very good reputation (see here and here). Instead, the way to go these days appears to be via approximate leave one out cross-validation. 
@@ -1238,7 +1236,7 @@ Bayes factors don't have a very good reputation (see here and here). Instead, th
 #### Approximate leave one out cross-validation
 
 
-```r
+``` r
 fit.brm_poker_bf1 = add_criterion(fit.brm_poker_bf1,
                                   criterion = "loo",
                                   reloo = T,
@@ -1265,7 +1263,7 @@ fit.brm_poker_bf1 -0.3       1.5
 ### 1. Visualize the data
 
 
-```r
+``` r
 set.seed(1)
 
 ggplot(data = df.sleep %>% 
@@ -1284,7 +1282,7 @@ ggplot(data = df.sleep %>%
 #### Frequentist analysis
 
 
-```r
+``` r
 fit.lmer_sleep = lmer(formula = reaction ~ 1 + days + (1 + days | subject),
                       data = df.sleep)
 
@@ -1327,7 +1325,7 @@ days -0.137
 #### Bayesian analysis
 
 
-```r
+``` r
 fit.brm_sleep = brm(formula = reaction ~ 1 + days + (1 + days | subject),
                     data = df.sleep,
                     seed = 1,
@@ -1339,7 +1337,7 @@ fit.brm_sleep = brm(formula = reaction ~ 1 + days + (1 + days | subject),
 #### a) Did the inference work?
 
 
-```r
+``` r
 fit.brm_sleep %>% 
   summary()
 ```
@@ -1352,19 +1350,19 @@ Formula: reaction ~ 1 + days + (1 + days | subject)
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Group-Level Effects: 
+Multilevel Hyperparameters:
 ~subject (Number of levels: 20) 
                     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sd(Intercept)          26.15      6.51    15.13    40.55 1.00     1511     2248
 sd(days)                6.57      1.52     4.12     9.90 1.00     1419     2223
 cor(Intercept,days)     0.09      0.29    -0.48     0.65 1.00      888     1670
 
-Population-Level Effects: 
+Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept   252.18      6.95   238.65   265.96 1.00     1755     2235
 days         10.47      1.75     7.07    14.00 1.00     1259     1608
 
-Family Specific Parameters: 
+Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma    25.82      1.54    22.96    29.05 1.00     3254     2958
 
@@ -1373,9 +1371,13 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
-```r
+``` r
 fit.brm_sleep %>% 
   plot(N = 6)
+```
+
+```
+Warning: Argument 'N' is deprecated. Please use argument 'nvariables' instead.
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-49-1.png" width="768" />
@@ -1383,7 +1385,7 @@ fit.brm_sleep %>%
 #### b) Visualize model predictions
 
 
-```r
+``` r
 pp_check(fit.brm_sleep,
          ndraws = 100)
 ```
@@ -1393,7 +1395,7 @@ pp_check(fit.brm_sleep,
 ### 4. Interpret the parameters
 
 
-```r
+``` r
 fit.brm_sleep %>% 
   tidy(conf.method = "HPDinterval")
 ```
@@ -1413,7 +1415,7 @@ fit.brm_sleep %>%
 #### Summary of posterior distributions
 
 
-```r
+``` r
 # all parameters
 fit.brm_sleep %>% 
   as_draws_df() %>% 
@@ -1452,7 +1454,7 @@ Here, we were just interested in how the number of days of sleep deprivation aff
 #### Model prediction with posterior draws (aggregate)
 
 
-```r
+``` r
 df.model = tibble(days = 0:9) %>% 
   add_linpred_draws(newdata = .,
                     object = fit.brm_sleep,
@@ -1478,7 +1480,7 @@ ggplot(data = df.sleep,
 #### Model prediction with credible intervals (aggregate)
 
 
-```r
+``` r
 df.model = fit.brm_sleep %>% 
   fitted(re_formula = NA,
          newdata = tibble(days = 0:9)) %>% 
@@ -1518,7 +1520,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 #### Model prediction with credible intervals (individual participants)
 
 
-```r
+``` r
 fit.brm_sleep %>% 
   fitted() %>% 
   as_tibble() %>% 
@@ -1546,7 +1548,7 @@ fit.brm_sleep %>%
 #### Model prediction for random samples
 
 
-```r
+``` r
 df.model = df.sleep %>% 
   complete(subject, days) %>% 
   add_linpred_draws(newdata = .,
@@ -1577,7 +1579,7 @@ df.sleep %>%
 #### Animated model prediction for random samples
 
 
-```r
+``` r
 df.model = df.sleep %>% 
   complete(subject, days) %>% 
   add_linpred_draws(newdata = .,
@@ -1611,7 +1613,7 @@ Warning: No renderer available. Please install the gifski, av, or magick
 package to create animated output
 ```
 
-```r
+``` r
 # anim_save("sleep_posterior_predictive.gif")
 ```
 
@@ -1620,7 +1622,7 @@ package to create animated output
 ### 1. Visualize the data
 
 
-```r
+``` r
 df.titanic %>% 
   mutate(sex = as.factor(sex)) %>% 
   ggplot(data = .,
@@ -1642,7 +1644,7 @@ df.titanic %>%
 #### Frequentist analysis
 
 
-```r
+``` r
 fit.glm_titanic = glm(formula = survived ~ 1 + fare * sex,
                       family = "binomial",
                       data = df.titanic)
@@ -1678,7 +1680,7 @@ Number of Fisher Scoring iterations: 5
 #### Bayesian analysis
 
 
-```r
+``` r
 fit.brm_titanic = brm(formula = survived ~ 1 + fare * sex,
                       family = "bernoulli",
                       data = df.titanic,
@@ -1691,7 +1693,7 @@ fit.brm_titanic = brm(formula = survived ~ 1 + fare * sex,
 #### a) Did the inference work?
 
 
-```r
+``` r
 fit.brm_titanic %>% 
   summary()
 ```
@@ -1704,7 +1706,7 @@ Formula: survived ~ 1 + fare * sex
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept        0.40      0.19     0.03     0.76 1.00     1900     2394
 fare             0.02      0.01     0.01     0.03 1.00     1414     1684
@@ -1716,7 +1718,7 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
-```r
+``` r
 fit.brm_titanic %>% 
   plot()
 ```
@@ -1726,7 +1728,7 @@ fit.brm_titanic %>%
 #### b) Visualize model predictions
 
 
-```r
+``` r
 pp_check(fit.brm_titanic,
          ndraws = 100)
 ```
@@ -1736,7 +1738,7 @@ pp_check(fit.brm_titanic,
 Let's visualize what the posterior predictive would have looked like for a linear model (instead of a logistic model). 
 
 
-```r
+``` r
 fit.brm_titanic_linear = brm(formula = survived ~ 1 + fare * sex,
                              data = df.titanic,
                              file = "cache/brm_titanic_linear",
@@ -1751,7 +1753,7 @@ pp_check(fit.brm_titanic_linear,
 ### 4. Interpret the parameters
 
 
-```r
+``` r
 fit.brm_titanic %>% 
   as_draws_df() %>% 
   select(-lp__) %>%
@@ -1768,14 +1770,14 @@ fit.brm_titanic %>%
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-64-1.png" width="672" />
 
 
-```r
+``` r
 fit.brm_titanic %>% 
   parameters(centrality = "mean",
              ci = 0.95)
 ```
 
 
-```r
+``` r
 fit.brm_titanic %>% 
   ggpredict(terms = c("fare [0:500]", "sex")) %>% 
   plot()
@@ -1788,7 +1790,7 @@ fit.brm_titanic %>%
 Difference between men and women in survival? 
 
 
-```r
+``` r
 fit.brm_titanic %>% 
   emmeans(specs = pairwise ~ sex,
           type = "response")
@@ -1820,7 +1822,7 @@ HPD interval probability: 0.95
 Difference in how fare affected the chances of survival for men and women? 
 
 
-```r
+``` r
 fit.brm_titanic %>% 
   emtrends(specs = pairwise ~ sex,
            var = "fare")
@@ -1846,7 +1848,7 @@ HPD interval probability: 0.95
 ### 6. Report results
 
 
-```r
+``` r
 df.model = add_linpred_draws(newdata = expand_grid(sex = c("female", "male"),
                                                    fare = 0:500) %>% 
                                mutate(sex = factor(sex, levels = c("female", "male"))),
@@ -1881,7 +1883,7 @@ The data is drawn from @winter2012phonetic, and this section follows the excelle
 ### 1. Visualize the data
 
 
-```r
+``` r
 ggplot(data = df.politeness,
        mapping = aes(x = attitude,
                      y = pitch,
@@ -1896,11 +1898,13 @@ ggplot(data = df.politeness,
 ```
 
 ```
-Warning: Removed 1 rows containing non-finite values (`stat_summary()`).
+Warning: Removed 1 row containing non-finite outside the scale range
+(`stat_summary()`).
 ```
 
 ```
-Warning: Removed 1 rows containing missing values (`geom_point()`).
+Warning: Removed 1 row containing missing values or values outside the scale
+range (`geom_point()`).
 ```
 
 <img src="23-bayesian_data_analysis2_files/figure-html/unnamed-chunk-70-1.png" width="672" />
@@ -1910,7 +1914,7 @@ Warning: Removed 1 rows containing missing values (`geom_point()`).
 #### Frequentist analysis
 
 
-```r
+``` r
 fit.lm_polite = lm(formula = pitch ~ gender * attitude,
                    data = df.politeness)
 ```
@@ -1918,7 +1922,7 @@ fit.lm_polite = lm(formula = pitch ~ gender * attitude,
 #### Bayesian analysis
 
 
-```r
+``` r
 fit.brm_polite = brm(formula = pitch ~ gender * attitude, 
                      data = df.politeness, 
                      file = "cache/brm_polite",
@@ -1931,7 +1935,7 @@ fit.brm_polite = brm(formula = pitch ~ gender * attitude,
 #### Frequentist
 
 
-```r
+``` r
 fit.lm_polite %>% 
   joint_tests()
 ```
@@ -1948,7 +1952,7 @@ It looks like there are significant main effects of gender and attitude, but no 
 Let's check whether there is a difference in attitude separately for each gender: 
 
 
-```r
+``` r
 fit.lm_polite %>% 
   emmeans(specs = pairwise ~ attitude | gender) %>% 
   pluck("contrasts")
@@ -1971,7 +1975,7 @@ There was a significant difference of attitude for female participants but not f
 Let's whether there was a main effect of gender.
 
 
-```r
+``` r
 # main effect of gender
 fit.brm_polite %>% 
   emmeans(specs = pairwise ~ gender) %>% 
@@ -1994,7 +1998,7 @@ HPD interval probability: 0.95
 Let's take a look what the full posterior distribution over this contrast looks like: 
 
 
-```r
+``` r
 fit.brm_polite %>% 
   emmeans(specs = pairwise ~ gender) %>% 
   pluck("contrasts") %>% 
@@ -2014,7 +2018,7 @@ Looks neat!
 And let's confirm that we really estimated the main effect here. Let's fit a model that only has gender as a predictor, and then compare: 
 
 
-```r
+``` r
 fit.brm_polite_gender = brm(formula = pitch ~ 1 + gender, 
                             data = df.politeness, 
                             file = "cache/brm_polite_gender",
@@ -2039,7 +2043,7 @@ NOTE: Results may be misleading due to involvement in interactions
 1 F - M      108.   91.9   124.   0.95 mean   hdi      
 ```
 
-```r
+``` r
 fit.brm_polite_gender %>% 
   fixef() %>% 
   as_tibble(rownames = "term")
@@ -2056,7 +2060,7 @@ fit.brm_polite_gender %>%
 Yip, both of these methods give us the same result (the sign is flipped but that's just because emmeans computed F-M, whereas the other method computed M-F)! Again, the `emmeans()` route is more convenient because we can more easily check for several main effects (and take a look at specific contrast, too). 
 
 
-```r
+``` r
 # main effect attitude
 fit.brm_polite %>% 
   emmeans(specs = pairwise ~ attitude) %>% 
@@ -2076,7 +2080,7 @@ Point estimate displayed: median
 HPD interval probability: 0.95 
 ```
 
-```r
+``` r
 # effect of attitude separately for each gender
 fit.brm_polite %>% 
   emmeans(specs = pairwise ~ attitude | gender) %>% 
@@ -2096,7 +2100,7 @@ Point estimate displayed: median
 HPD interval probability: 0.95 
 ```
 
-```r
+``` r
 # in case you want the means instead of medians 
 fit.brm_polite %>% 
   emmeans(specs = pairwise ~ attitude | gender) %>% 
@@ -2116,7 +2120,7 @@ fit.brm_polite %>%
 Here is a way to visualize the contrasts: 
 
 
-```r
+``` r
 fit.brm_polite %>% 
   emmeans(specs = pairwise ~ attitude | gender) %>% 
   pluck("contrasts") %>% 
@@ -2143,7 +2147,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 Here is one way to check whether there was an interaction between attitude and gender (see [this vignette](https://cran.r-project.org/web/packages/emmeans/vignettes/interactions.html) for more info).
 
 
-```r
+``` r
 fit.brm_polite %>% 
   emmeans(pairwise ~ attitude | gender) %>% 
   pluck("emmeans") %>% 
@@ -2174,18 +2178,18 @@ HPD interval probability: 0.95
 Information about this R session including which version of R was used, and what packages were loaded.
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -2198,67 +2202,66 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3       forcats_1.0.0         stringr_1.5.1        
- [4] dplyr_1.1.4           purrr_1.0.2           readr_2.1.4          
- [7] tidyr_1.3.0           tibble_3.2.1          tidyverse_2.0.0      
-[10] transformr_0.1.4.9000 parameters_0.21.3     gganimate_1.0.8      
-[13] titanic_0.1.0         ggeffects_1.3.4       emmeans_1.9.0        
-[16] car_3.1-2             carData_3.0-5         afex_1.3-0           
-[19] lme4_1.1-35.1         Matrix_1.6-4          modelr_0.1.11        
-[22] bayesplot_1.10.0      broom.mixed_0.2.9.4   GGally_2.2.0         
-[25] ggplot2_3.4.4         patchwork_1.1.3       brms_2.20.4          
-[28] Rcpp_1.0.11           tidybayes_3.0.6       janitor_2.2.0        
-[31] kableExtra_1.3.4      knitr_1.45           
+ [4] dplyr_1.1.4           purrr_1.0.2           readr_2.1.5          
+ [7] tidyr_1.3.1           tibble_3.2.1          tidyverse_2.0.0      
+[10] transformr_0.1.5.9000 parameters_0.22.1     gganimate_1.0.9      
+[13] titanic_0.1.0         ggeffects_1.7.0       emmeans_1.10.3       
+[16] car_3.1-2             carData_3.0-5         afex_1.3-1           
+[19] lme4_1.1-35.5         Matrix_1.7-0          modelr_0.1.11        
+[22] bayesplot_1.11.1      broom.mixed_0.2.9.5   GGally_2.2.1         
+[25] ggplot2_3.5.1         patchwork_1.2.0       brms_2.21.0          
+[28] Rcpp_1.0.13           tidybayes_3.0.6       janitor_2.2.0        
+[31] kableExtra_1.4.0      knitr_1.48           
 
 loaded via a namespace (and not attached):
-  [1] svUnit_1.0.6         shinythemes_1.2.0    splines_4.3.2       
-  [4] later_1.3.2          datawizard_0.9.1     rpart_4.1.23        
-  [7] xts_0.13.1           lifecycle_1.0.4      sf_1.0-15           
- [10] StanHeaders_2.26.28  vroom_1.6.5          globals_0.16.2      
- [13] lattice_0.22-5       MASS_7.3-60          insight_0.19.7      
- [16] crosstalk_1.2.1      ggdist_3.3.1         backports_1.4.1     
- [19] magrittr_2.0.3       Hmisc_5.1-1          sass_0.4.8          
- [22] rmarkdown_2.25       jquerylib_0.1.4      yaml_2.3.8          
- [25] httpuv_1.6.13        pkgbuild_1.4.3       DBI_1.2.0           
- [28] minqa_1.2.6          RColorBrewer_1.1-3   abind_1.4-5         
- [31] rvest_1.0.3          nnet_7.3-19          tensorA_0.36.2.1    
- [34] tweenr_2.0.2         inline_0.3.19        listenv_0.9.0       
- [37] units_0.8-5          bridgesampling_1.1-2 parallelly_1.36.0   
- [40] svglite_2.1.3        codetools_0.2-19     DT_0.31             
- [43] xml2_1.3.6           tidyselect_1.2.0     rstanarm_2.26.1     
- [46] farver_2.1.1         matrixStats_1.2.0    stats4_4.3.2        
- [49] base64enc_0.1-3      webshot_0.5.5        jsonlite_1.8.8      
- [52] e1071_1.7-14         Formula_1.2-5        ellipsis_0.3.2      
- [55] survival_3.5-7       systemfonts_1.0.5    tools_4.3.2         
- [58] progress_1.2.3       glue_1.6.2           gridExtra_2.3       
- [61] mgcv_1.9-1           xfun_0.41            distributional_0.3.2
- [64] loo_2.6.0            withr_2.5.2          numDeriv_2016.8-1.1 
- [67] fastmap_1.1.1        boot_1.3-28.1        fansi_1.0.6         
- [70] shinyjs_2.1.0        digest_0.6.33        timechange_0.2.0    
- [73] R6_2.5.1             mime_0.12            estimability_1.4.1  
- [76] colorspace_2.1-0     lpSolve_5.6.20       gtools_3.9.5        
- [79] markdown_1.12        threejs_0.3.3        utf8_1.2.4          
- [82] generics_0.1.3       data.table_1.14.10   class_7.3-22        
- [85] prettyunits_1.2.0    httr_1.4.7           htmlwidgets_1.6.4   
- [88] ggstats_0.5.1        pkgconfig_2.0.3      dygraphs_1.1.1.6    
- [91] gtable_0.3.4         furrr_0.3.1          htmltools_0.5.7     
- [94] bookdown_0.37        scales_1.3.0         posterior_1.5.0     
- [97] snakecase_0.11.1     rstudioapi_0.15.0    tzdb_0.4.0          
-[100] reshape2_1.4.4       coda_0.19-4          checkmate_2.3.1     
-[103] nlme_3.1-164         curl_5.2.0           nloptr_2.0.3        
-[106] proxy_0.4-27         cachem_1.0.8         zoo_1.8-12          
-[109] sjlabelled_1.2.0     KernSmooth_2.23-22   parallel_4.3.2      
-[112] miniUI_0.1.1.1       foreign_0.8-86       pillar_1.9.0        
-[115] grid_4.3.2           vctrs_0.6.5          shinystan_2.6.0     
-[118] promises_1.2.1       arrayhelpers_1.1-0   cluster_2.1.6       
-[121] xtable_1.8-4         htmlTable_2.4.2      evaluate_0.23       
-[124] mvtnorm_1.2-4        cli_3.6.2            compiler_4.3.2      
-[127] rlang_1.1.2          crayon_1.5.2         rstantools_2.3.1.1  
-[130] labeling_0.4.3       classInt_0.4-10      plyr_1.8.9          
-[133] stringi_1.8.3        rstan_2.32.3         viridisLite_0.4.2   
-[136] QuickJSR_1.0.9       lmerTest_3.1-3       munsell_0.5.0       
-[139] colourpicker_1.3.0   Brobdingnag_1.2-9    bayestestR_0.13.1   
-[142] V8_4.4.1             hms_1.1.3            bit64_4.0.5         
-[145] future_1.33.1        shiny_1.8.0          haven_2.5.4         
-[148] highr_0.10           igraph_1.6.0         broom_1.0.5         
-[151] RcppParallel_5.1.7   bslib_0.6.1          bit_4.0.5           
+  [1] svUnit_1.0.6         shinythemes_1.2.0    later_1.3.2         
+  [4] splines_4.4.1        datawizard_0.12.2    xts_0.14.0          
+  [7] rpart_4.1.23         lifecycle_1.0.4      sf_1.0-16           
+ [10] StanHeaders_2.32.9   globals_0.16.3       lattice_0.22-6      
+ [13] vroom_1.6.5          MASS_7.3-61          crosstalk_1.2.1     
+ [16] insight_0.20.3       ggdist_3.3.2         backports_1.5.0     
+ [19] magrittr_2.0.3       Hmisc_5.1-3          sass_0.4.9          
+ [22] rmarkdown_2.27       jquerylib_0.1.4      yaml_2.3.9          
+ [25] httpuv_1.6.15        pkgbuild_1.4.4       DBI_1.2.3           
+ [28] minqa_1.2.7          RColorBrewer_1.1-3   abind_1.4-5         
+ [31] nnet_7.3-19          tensorA_0.36.2.1     tweenr_2.0.3        
+ [34] inline_0.3.19        listenv_0.9.1        units_0.8-5         
+ [37] bridgesampling_1.1-2 parallelly_1.37.1    svglite_2.1.3       
+ [40] codetools_0.2-20     DT_0.33              xml2_1.3.6          
+ [43] tidyselect_1.2.1     rstanarm_2.32.1      farver_2.1.2        
+ [46] matrixStats_1.3.0    stats4_4.4.1         base64enc_0.1-3     
+ [49] jsonlite_1.8.8       e1071_1.7-14         Formula_1.2-5       
+ [52] survival_3.6-4       systemfonts_1.1.0    tools_4.4.1         
+ [55] progress_1.2.3       glue_1.7.0           gridExtra_2.3       
+ [58] mgcv_1.9-1           xfun_0.45            distributional_0.4.0
+ [61] loo_2.8.0            withr_3.0.0          numDeriv_2016.8-1.1 
+ [64] fastmap_1.2.0        boot_1.3-30          fansi_1.0.6         
+ [67] shinyjs_2.1.0        digest_0.6.36        mime_0.12           
+ [70] timechange_0.3.0     R6_2.5.1             estimability_1.5.1  
+ [73] colorspace_2.1-0     gtools_3.9.5         lpSolve_5.6.20      
+ [76] markdown_1.13        threejs_0.3.3        utf8_1.2.4          
+ [79] generics_0.1.3       data.table_1.15.4    class_7.3-22        
+ [82] prettyunits_1.2.0    htmlwidgets_1.6.4    ggstats_0.6.0       
+ [85] pkgconfig_2.0.3      dygraphs_1.1.1.6     gtable_0.3.5        
+ [88] furrr_0.3.1          htmltools_0.5.8.1    bookdown_0.40       
+ [91] scales_1.3.0         posterior_1.6.0      snakecase_0.11.1    
+ [94] rstudioapi_0.16.0    tzdb_0.4.0           reshape2_1.4.4      
+ [97] coda_0.19-4.1        checkmate_2.3.1      nlme_3.1-164        
+[100] curl_5.2.1           nloptr_2.1.1         zoo_1.8-12          
+[103] proxy_0.4-27         cachem_1.1.0         sjlabelled_1.2.0    
+[106] KernSmooth_2.23-24   miniUI_0.1.1.1       parallel_4.4.1      
+[109] foreign_0.8-86       pillar_1.9.0         grid_4.4.1          
+[112] vctrs_0.6.5          shinystan_2.6.0      promises_1.3.0      
+[115] arrayhelpers_1.1-0   xtable_1.8-4         cluster_2.1.6       
+[118] htmlTable_2.4.2      evaluate_0.24.0      mvtnorm_1.2-5       
+[121] cli_3.6.3            compiler_4.4.1       rlang_1.1.4         
+[124] crayon_1.5.3         rstantools_2.4.0     labeling_0.4.3      
+[127] classInt_0.4-10      plyr_1.8.9           stringi_1.8.4       
+[130] rstan_2.32.6         viridisLite_0.4.2    QuickJSR_1.3.0      
+[133] lmerTest_3.1-3       munsell_0.5.1        colourpicker_1.3.0  
+[136] Brobdingnag_1.2-9    bayestestR_0.14.0    V8_5.0.0            
+[139] hms_1.1.3            bit64_4.0.5          future_1.33.2       
+[142] shiny_1.9.1          haven_2.5.4          highr_0.11          
+[145] igraph_2.0.3         broom_1.0.6          RcppParallel_5.1.8  
+[148] bslib_0.7.0          bit_4.0.5           
 ```

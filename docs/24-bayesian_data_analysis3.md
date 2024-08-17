@@ -11,7 +11,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")       # for knitting RMarkdown 
 library("kableExtra")  # for making nice tables
 library("janitor")     # for cleaning column names
@@ -38,7 +38,7 @@ library("tidyverse")   # for wrangling, plotting, etc.
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
             theme(text = element_text(size = 20))) #set the default text size
 
@@ -63,16 +63,19 @@ See [this tutorial](https://mvuorre.github.io/posts/2017-03-21-bayes-factors-wit
 - Get samples from the prior
 
 
-```r
+``` r
 df.null = tibble(s = 6, k = 10)
 
-fit.brm_bayes = brm(s | trials(k) ~ 0 + Intercept, 
-               family = binomial(link = "identity"),
-               prior = set_prior("beta(1, 1)", class = "b", lb = 0, ub = 1),
-               data = df.null,
-               sample_prior = TRUE,
-               cores = 4,
-               file = "cache/brm_bayes")
+fit.brm_bayes = brm(formula = s | trials(k) ~ 0 + Intercept, 
+                    family = binomial(link = "identity"),
+                    prior = set_prior(prior = "beta(1, 1)",
+                                      class = "b",
+                                      lb = 0,
+                                      ub = 1),
+                    data = df.null,
+                    sample_prior = TRUE,
+                    cores = 4,
+                    file = "cache/brm_bayes")
 ```
 
 #### Visualize the results
@@ -80,7 +83,7 @@ fit.brm_bayes = brm(s | trials(k) ~ 0 + Intercept,
 Visualize the prior and posterior samples: 
 
 
-```r
+``` r
 fit.brm_bayes %>%
   as_draws_df(variable = "[b]",
               regex = T) %>%
@@ -95,7 +98,7 @@ fit.brm_bayes %>%
 
 
 
-```r
+``` r
 fit.brm_bayes %>% 
   as_draws_df(variable = "[b]",
               regex = T)
@@ -124,7 +127,7 @@ We test the H0: $\theta = 0.5$ versus the H1: $\theta \neq 0.5$ using the Savage
 $BF_{01} = \frac{p(D|H_0)}{p(D|H_1)} = \frac{p(\theta = 0.5|D, H_1)}{p(\theta = 0.5|H_1)}$
 
 
-```r
+``` r
 fit.brm_bayes %>% 
   hypothesis(hypothesis = "Intercept = 0.5")
 ```
@@ -149,7 +152,7 @@ The result shows that the evidence ratio is in favor of the H0 with $BF_{01} = 2
 Another way to test different models is to compare them via approximate leave-one-out cross-validation. 
 
 
-```r
+``` r
 set.seed(1)
 df.loo = tibble(x = rnorm(n = 50),
                 y = rnorm(n = 50))
@@ -187,7 +190,7 @@ Multiple R-squared:  0.001528,	Adjusted R-squared:  -0.01927
 F-statistic: 0.07345 on 1 and 48 DF,  p-value: 0.7875
 ```
 
-```r
+``` r
 # fit and compare bayesian models 
 fit.brm_loo1 = brm(formula = y ~ 1,
                    data = df.loo,
@@ -216,7 +219,7 @@ fit.brm_loo1  0.0       0.0
 fit.brm_loo2 -1.2       0.5   
 ```
 
-```r
+``` r
 model_weights(fit.brm_loo1, fit.brm_loo2)
 ```
 
@@ -227,13 +230,12 @@ fit.brm_loo1 fit.brm_loo2
 
 <img src="24-bayesian_data_analysis3_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
-
 ## Dealing with heteroscedasticity
 
 Let's generate some fake developmental data where the variance in the data is greatest for young children, smaller for older children, and even smaller for adults:  
 
 
-```r
+``` r
 # make example reproducible 
 set.seed(1)
 
@@ -246,7 +248,7 @@ df.variance = tibble(group = rep(c("3yo", "5yo", "adults"), each = 20),
 ### Visualize the data
 
 
-```r
+``` r
 df.variance %>%
   ggplot(aes(x = group, y = response)) +
   geom_jitter(height = 0,
@@ -261,7 +263,7 @@ df.variance %>%
 #### Fit the model
 
 
-```r
+``` r
 fit.lm_variance = lm(formula = response ~ 1 + group,
                      data = df.variance)
 
@@ -291,7 +293,7 @@ Multiple R-squared:  0.762,	Adjusted R-squared:  0.7537
 F-statistic: 91.27 on 2 and 57 DF,  p-value: < 2.2e-16
 ```
 
-```r
+``` r
 fit.lm_variance %>% 
   glance()
 ```
@@ -307,7 +309,7 @@ fit.lm_variance %>%
 #### Visualize the model predictions
 
 
-```r
+``` r
 set.seed(1)
 
 fit.lm_variance %>% 
@@ -332,7 +334,7 @@ While frequentist models (such as a linear regression) assume equality of varian
 We define a multivariate model which tries to fit both the `response` as well as the variance `sigma`: 
 
 
-```r
+``` r
 fit.brm_variance = brm(formula = bf(response ~ group,
                                     sigma ~ group),
                        data = df.variance,
@@ -351,7 +353,7 @@ Formula: response ~ group
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
                   Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept             0.53      0.65    -0.72     1.84 1.00     1250     1764
 sigma_Intercept       1.04      0.17     0.72     1.40 1.00     1937     2184
@@ -368,7 +370,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 Notice that sigma is on the log scale. To get the standard deviations, we have to exponentiate the predictors, like so:  
 
 
-```r
+``` r
 fit.brm_variance %>% 
   tidy(parameters = "^b_") %>% 
   filter(str_detect(term, "sigma")) %>% 
@@ -396,7 +398,7 @@ underscores: term naming may be unreliable!
 #### Visualize the model predictions
 
 
-```r
+``` r
 df.variance %>%
   expand(group) %>% 
   add_epred_draws(object = fit.brm_variance,
@@ -422,7 +424,7 @@ df.variance %>%
 This plot shows what the posterior looks like for both mu (the inferred means), and for sigma (the inferred variances) for the different groups. 
 
 
-```r
+``` r
 set.seed(1)
 
 df.variance %>% 
@@ -450,7 +452,7 @@ Check out the following two papers:
 Let's read in some movie ratings: 
 
 
-```r
+``` r
 df.movies = read_csv(file = "data/MoviesData.csv")
 
 df.movies = df.movies %>% 
@@ -471,7 +473,7 @@ df.movies = df.movies %>%
 #### Fit the model
 
 
-```r
+``` r
 fit.brm_ordinal = brm(formula = stars ~ 1 + id,
                       family = cumulative(link = "probit"),
                       data = df.movies,
@@ -489,7 +491,7 @@ Formula: stars ~ 1 + id
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept[1]    -1.22      0.04    -1.30    -1.14 1.00     1933     2237
 Intercept[2]    -0.90      0.04    -0.98    -0.82 1.00     1863     2325
@@ -501,7 +503,7 @@ id4              0.33      0.04     0.25     0.41 1.00     1866     2536
 id5              0.44      0.05     0.34     0.55 1.00     2224     2514
 id6              0.76      0.04     0.67     0.83 1.00     1828     2412
 
-Family Specific Parameters: 
+Further Distributional Parameters:
      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 disc     1.00      0.00     1.00     1.00   NA       NA       NA
 
@@ -517,7 +519,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 The model infers the thresholds and the means of the Gaussian distributions in latent space. 
 
 
-```r
+``` r
 df.params = fit.brm_ordinal %>% 
   parameters(centrality = "mean") %>% 
   as_tibble() %>% 
@@ -544,17 +546,21 @@ ggplot(data = tibble(x = c(-3, 3)),
 ##### MCMC inference
 
 
-```r
+``` r
 fit.brm_ordinal %>% 
   plot(N = 9,
        variable = "^b_",
        regex = T)
 ```
 
+```
+Warning: Argument 'N' is deprecated. Please use argument 'nvariables' instead.
+```
+
 <img src="24-bayesian_data_analysis3_files/figure-html/unnamed-chunk-19-1.png" width="768" />
 
 
-```r
+``` r
 fit.brm_ordinal %>% 
   pp_check(ndraws = 20)
 ```
@@ -565,7 +571,7 @@ fit.brm_ordinal %>%
 ##### Model predictions
 
 
-```r
+``` r
 conditional_effects(fit.brm_ordinal,
                     effects = "id",
                     categorical = T)
@@ -574,7 +580,7 @@ conditional_effects(fit.brm_ordinal,
 <img src="24-bayesian_data_analysis3_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 
-```r
+``` r
 df.model = add_epred_draws(newdata = expand_grid(id = 1:6),
                            object = fit.brm_ordinal,
                            ndraws = 10)
@@ -619,7 +625,7 @@ Call `lifecycle::last_lifecycle_warnings()` to see where this warning was genera
 #### Fit the model
 
 
-```r
+``` r
 fit.brm_metric = brm(formula = stars ~ 1 + id,
                      data = df.movies,
                      file = "cache/brm_metric",
@@ -636,7 +642,7 @@ Formula: stars ~ 1 + id
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept     3.77      0.04     3.70     3.85 1.00     1222     1855
 id2           0.64      0.05     0.54     0.75 1.00     1557     2242
@@ -645,7 +651,7 @@ id4           0.37      0.04     0.29     0.45 1.00     1306     2183
 id5           0.30      0.05     0.20     0.39 1.00     1495     2069
 id6           0.72      0.04     0.64     0.79 1.00     1251     1847
 
-Family Specific Parameters: 
+Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma     1.00      0.00     0.99     1.01 1.00     3886     2720
 
@@ -659,7 +665,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 ##### Model predictions
 
 
-```r
+``` r
 # get the predictions for each value of the Likert scale 
 df.model = fit.brm_metric %>% 
   parameters(centrality = "mean") %>% 
@@ -716,7 +722,7 @@ ggplot(data = df.plot,
 #### Fit the model
 
 
-```r
+``` r
 fit.brm_ordinal_variance = brm(formula = bf(stars ~ 1 + id) + 
                                  lf(disc ~ 0 + id, cmc = FALSE),
                                family = cumulative(link = "probit"),
@@ -736,7 +742,7 @@ Formula: stars ~ 1 + id
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept[1]    -1.41      0.06    -1.52    -1.29 1.00     1508     2216
 Intercept[2]    -1.00      0.05    -1.10    -0.90 1.00     2031     2699
@@ -763,7 +769,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 ##### Model parameters
 
 
-```r
+``` r
 df.params = fit.brm_ordinal_variance %>% 
   tidy(parameters = "^b_") %>% 
   select(term, estimate) %>% 
@@ -775,7 +781,7 @@ Warning in tidy.brmsfit(., parameters = "^b_"): some parameter names contain
 underscores: term naming may be unreliable!
 ```
 
-```r
+``` r
 ggplot(data = tibble(x = c(-3, 3)),
        mapping = aes(x = x)) + 
   stat_function(fun = ~ dnorm(.),
@@ -796,7 +802,7 @@ ggplot(data = tibble(x = c(-3, 3)),
 ##### Model predictions
 
 
-```r
+``` r
 df.model = add_epred_draws(newdata = expand_grid(id = 1:6),
                            object = fit.brm_ordinal_variance,
                            ndraws = 10)
@@ -827,7 +833,7 @@ ggplot(data = df.plot,
 #### Fit the model
 
 
-```r
+``` r
 fit.brm_metric_variance = brm(formula = bf(stars ~ 1 + id,
                             sigma ~ 1 + id),
                data = df.movies,
@@ -846,7 +852,7 @@ Formula: stars ~ 1 + id
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
                 Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept           3.77      0.05     3.68     3.86 1.00     1636     2210
 sigma_Intercept     0.20      0.03     0.15     0.26 1.00     1743     2134
@@ -871,7 +877,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).
 ##### Model predictions
 
 
-```r
+``` r
 df.model = fit.brm_metric_variance %>% 
   tidy(parameters = "^b_") %>% 
   select(term, estimate) %>% 
@@ -911,7 +917,7 @@ Warning in tidy.brmsfit(., parameters = "^b_"): some parameter names contain
 underscores: term naming may be unreliable!
 ```
 
-```r
+``` r
 df.plot = df.movies %>% 
   count(id, stars) %>% 
   group_by(id) %>% 
@@ -934,7 +940,7 @@ ggplot(data = df.plot,
 ### Model comparison
 
 
-```r
+``` r
 # currently not working 
 
 # ordinal regression with equal variance 
@@ -956,6 +962,7 @@ loo_compare(fit.brm_ordinal, fit.brm_ordinal_variance)
 - [Hypothetical outcome plots](https://mucollective.northwestern.edu/files/2018-HOPsTrends-InfoVis.pdf)
 - [Visual MCMC diagnostics](https://cran.r-project.org/web/packages/bayesplot/vignettes/visual-mcmc-diagnostics.html#general-mcmc-diagnostics)
 - [Visualiztion of different MCMC algorithms](https://chi-feng.github.io/mcmc-demo/)
+- [Frequentist equivalence test](https://www.carlislerainey.com/blog/2023-08-18-equivalence-tests/?s=09)
 
 
 For additional resources, I highly recommend the brms and tidyverse implementations of the Statistical rethinking book [@mcelreath2020statistical], as well as of the Doing Bayesian Data analysis book [@kruschke2014doing], by Solomon Kurz [@kurz2020statistical; @kurz2022doingbayesian]. 
@@ -966,18 +973,18 @@ For additional resources, I highly recommend the brms and tidyverse implementati
 Information about this R session including which version of R was used, and what packages were loaded.
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -990,64 +997,63 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3       forcats_1.0.0         stringr_1.5.1        
- [4] dplyr_1.1.4           purrr_1.0.2           readr_2.1.4          
- [7] tidyr_1.3.0           tibble_3.2.1          tidyverse_2.0.0      
-[10] scales_1.3.0          ggrepel_0.9.4         rstanarm_2.26.1      
-[13] transformr_0.1.4.9000 parameters_0.21.3     gganimate_1.0.8      
-[16] titanic_0.1.0         ggeffects_1.3.4       emmeans_1.9.0        
-[19] car_3.1-2             carData_3.0-5         afex_1.3-0           
-[22] lme4_1.1-35.1         Matrix_1.6-4          modelr_0.1.11        
-[25] bayesplot_1.10.0      broom.mixed_0.2.9.4   GGally_2.2.0         
-[28] ggplot2_3.4.4         patchwork_1.1.3       brms_2.20.4          
-[31] Rcpp_1.0.11           tidybayes_3.0.6       janitor_2.2.0        
-[34] kableExtra_1.3.4      knitr_1.45           
+ [4] dplyr_1.1.4           purrr_1.0.2           readr_2.1.5          
+ [7] tidyr_1.3.1           tibble_3.2.1          tidyverse_2.0.0      
+[10] scales_1.3.0          ggrepel_0.9.5         rstanarm_2.32.1      
+[13] transformr_0.1.5.9000 parameters_0.22.1     gganimate_1.0.9      
+[16] titanic_0.1.0         ggeffects_1.7.0       emmeans_1.10.3       
+[19] car_3.1-2             carData_3.0-5         afex_1.3-1           
+[22] lme4_1.1-35.5         Matrix_1.7-0          modelr_0.1.11        
+[25] bayesplot_1.11.1      broom.mixed_0.2.9.5   GGally_2.2.1         
+[28] ggplot2_3.5.1         patchwork_1.2.0       brms_2.21.0          
+[31] Rcpp_1.0.13           tidybayes_3.0.6       janitor_2.2.0        
+[34] kableExtra_1.4.0      knitr_1.48           
 
 loaded via a namespace (and not attached):
-  [1] svUnit_1.0.6         shinythemes_1.2.0    splines_4.3.2       
-  [4] later_1.3.2          datawizard_0.9.1     xts_0.13.1          
-  [7] lifecycle_1.0.4      sf_1.0-15            StanHeaders_2.26.28 
- [10] vroom_1.6.5          globals_0.16.2       lattice_0.22-5      
- [13] MASS_7.3-60          insight_0.19.7       crosstalk_1.2.1     
- [16] ggdist_3.3.1         backports_1.4.1      magrittr_2.0.3      
- [19] sass_0.4.8           rmarkdown_2.25       jquerylib_0.1.4     
- [22] yaml_2.3.8           httpuv_1.6.13        pkgbuild_1.4.3      
- [25] DBI_1.2.0            minqa_1.2.6          RColorBrewer_1.1-3  
- [28] abind_1.4-5          rvest_1.0.3          tensorA_0.36.2.1    
- [31] tweenr_2.0.2         inline_0.3.19        listenv_0.9.0       
- [34] units_0.8-5          bridgesampling_1.1-2 parallelly_1.36.0   
- [37] svglite_2.1.3        codetools_0.2-19     DT_0.31             
- [40] xml2_1.3.6           tidyselect_1.2.0     farver_2.1.1        
- [43] matrixStats_1.2.0    stats4_4.3.2         base64enc_0.1-3     
- [46] webshot_0.5.5        jsonlite_1.8.8       e1071_1.7-14        
- [49] ellipsis_0.3.2       survival_3.5-7       systemfonts_1.0.5   
- [52] tools_4.3.2          progress_1.2.3       glue_1.6.2          
- [55] gridExtra_2.3        xfun_0.41            distributional_0.3.2
- [58] loo_2.6.0            withr_2.5.2          numDeriv_2016.8-1.1 
- [61] fastmap_1.1.1        boot_1.3-28.1        fansi_1.0.6         
- [64] shinyjs_2.1.0        digest_0.6.33        timechange_0.2.0    
- [67] R6_2.5.1             mime_0.12            estimability_1.4.1  
- [70] colorspace_2.1-0     lpSolve_5.6.20       gtools_3.9.5        
- [73] markdown_1.12        threejs_0.3.3        utf8_1.2.4          
- [76] generics_0.1.3       class_7.3-22         prettyunits_1.2.0   
- [79] httr_1.4.7           htmlwidgets_1.6.4    ggstats_0.5.1       
- [82] pkgconfig_2.0.3      dygraphs_1.1.1.6     gtable_0.3.4        
- [85] furrr_0.3.1          htmltools_0.5.7      bookdown_0.37       
- [88] posterior_1.5.0      snakecase_0.11.1     rstudioapi_0.15.0   
- [91] tzdb_0.4.0           reshape2_1.4.4       coda_0.19-4         
- [94] checkmate_2.3.1      nlme_3.1-164         curl_5.2.0          
- [97] nloptr_2.0.3         proxy_0.4-27         cachem_1.0.8        
-[100] zoo_1.8-12           KernSmooth_2.23-22   parallel_4.3.2      
-[103] miniUI_0.1.1.1       pillar_1.9.0         grid_4.3.2          
-[106] vctrs_0.6.5          shinystan_2.6.0      promises_1.2.1      
-[109] arrayhelpers_1.1-0   xtable_1.8-4         evaluate_0.23       
-[112] mvtnorm_1.2-4        cli_3.6.2            compiler_4.3.2      
-[115] rlang_1.1.2          crayon_1.5.2         rstantools_2.3.1.1  
-[118] labeling_0.4.3       classInt_0.4-10      plyr_1.8.9          
-[121] stringi_1.8.3        rstan_2.32.3         viridisLite_0.4.2   
-[124] QuickJSR_1.0.9       lmerTest_3.1-3       munsell_0.5.0       
-[127] colourpicker_1.3.0   Brobdingnag_1.2-9    bayestestR_0.13.1   
-[130] V8_4.4.1             hms_1.1.3            bit64_4.0.5         
-[133] future_1.33.1        shiny_1.8.0          highr_0.10          
-[136] igraph_1.6.0         broom_1.0.5          RcppParallel_5.1.7  
-[139] bslib_0.6.1          bit_4.0.5           
+  [1] svUnit_1.0.6         shinythemes_1.2.0    splines_4.4.1       
+  [4] later_1.3.2          datawizard_0.12.2    xts_0.14.0          
+  [7] lifecycle_1.0.4      sf_1.0-16            StanHeaders_2.32.9  
+ [10] vroom_1.6.5          globals_0.16.3       lattice_0.22-6      
+ [13] MASS_7.3-61          insight_0.20.3       crosstalk_1.2.1     
+ [16] ggdist_3.3.2         backports_1.5.0      magrittr_2.0.3      
+ [19] sass_0.4.9           rmarkdown_2.27       jquerylib_0.1.4     
+ [22] yaml_2.3.9           httpuv_1.6.15        pkgbuild_1.4.4      
+ [25] DBI_1.2.3            minqa_1.2.7          RColorBrewer_1.1-3  
+ [28] abind_1.4-5          tensorA_0.36.2.1     tweenr_2.0.3        
+ [31] inline_0.3.19        listenv_0.9.1        units_0.8-5         
+ [34] bridgesampling_1.1-2 parallelly_1.37.1    svglite_2.1.3       
+ [37] codetools_0.2-20     DT_0.33              xml2_1.3.6          
+ [40] tidyselect_1.2.1     farver_2.1.2         matrixStats_1.3.0   
+ [43] stats4_4.4.1         base64enc_0.1-3      jsonlite_1.8.8      
+ [46] e1071_1.7-14         survival_3.6-4       systemfonts_1.1.0   
+ [49] tools_4.4.1          progress_1.2.3       glue_1.7.0          
+ [52] gridExtra_2.3        xfun_0.45            distributional_0.4.0
+ [55] loo_2.8.0            withr_3.0.0          numDeriv_2016.8-1.1 
+ [58] fastmap_1.2.0        boot_1.3-30          fansi_1.0.6         
+ [61] shinyjs_2.1.0        digest_0.6.36        timechange_0.3.0    
+ [64] R6_2.5.1             mime_0.12            estimability_1.5.1  
+ [67] colorspace_2.1-0     lpSolve_5.6.20       gtools_3.9.5        
+ [70] markdown_1.13        threejs_0.3.3        utf8_1.2.4          
+ [73] generics_0.1.3       class_7.3-22         prettyunits_1.2.0   
+ [76] htmlwidgets_1.6.4    ggstats_0.6.0        pkgconfig_2.0.3     
+ [79] dygraphs_1.1.1.6     gtable_0.3.5         furrr_0.3.1         
+ [82] htmltools_0.5.8.1    bookdown_0.40        posterior_1.6.0     
+ [85] snakecase_0.11.1     rstudioapi_0.16.0    tzdb_0.4.0          
+ [88] reshape2_1.4.4       coda_0.19-4.1        checkmate_2.3.1     
+ [91] nlme_3.1-164         curl_5.2.1           nloptr_2.1.1        
+ [94] proxy_0.4-27         cachem_1.1.0         zoo_1.8-12          
+ [97] KernSmooth_2.23-24   parallel_4.4.1       miniUI_0.1.1.1      
+[100] pillar_1.9.0         grid_4.4.1           vctrs_0.6.5         
+[103] shinystan_2.6.0      promises_1.3.0       arrayhelpers_1.1-0  
+[106] xtable_1.8-4         evaluate_0.24.0      mvtnorm_1.2-5       
+[109] cli_3.6.3            compiler_4.4.1       rlang_1.1.4         
+[112] crayon_1.5.3         rstantools_2.4.0     labeling_0.4.3      
+[115] classInt_0.4-10      plyr_1.8.9           stringi_1.8.4       
+[118] rstan_2.32.6         viridisLite_0.4.2    QuickJSR_1.3.0      
+[121] lmerTest_3.1-3       munsell_0.5.1        colourpicker_1.3.0  
+[124] Brobdingnag_1.2-9    bayestestR_0.14.0    V8_5.0.0            
+[127] hms_1.1.3            bit64_4.0.5          future_1.33.2       
+[130] shiny_1.9.1          highr_0.11           igraph_2.0.3        
+[133] broom_1.0.6          RcppParallel_5.1.8   bslib_0.7.0         
+[136] bit_4.0.5           
 ```

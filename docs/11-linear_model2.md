@@ -15,7 +15,7 @@
 ## Load packages and set plotting theme
 
 
-```r
+``` r
 library("knitr")      # for knitting RMarkdown 
 library("kableExtra") # for making nice tables
 library("janitor")    # for cleaning column names
@@ -30,10 +30,9 @@ knitr::write_bib(.packages(), "packages.bib")
 ```
 
 
-```r
+``` r
 theme_set(theme_classic() + #set the theme 
     theme(text = element_text(size = 20))) #set the default text size
-
 
 opts_chunk$set(comment = "",
                fig.show = "hold")
@@ -44,7 +43,7 @@ opts_chunk$set(comment = "",
 Let's load the data sets that we'll explore in this class: 
 
 
-```r
+``` r
 # credit data set
 df.credit = read_csv("data/credit.csv") %>% 
   rename(index = `...1`) %>% 
@@ -120,7 +119,7 @@ Let's take a look at a case where we have multiple continuous predictor variable
 The `corrr` package is great for exploring correlations between variables. To find out more how `corrr` works, take a look at this vignette: 
 
 
-```r
+``` r
 vignette(topic = "using-corrr",
          package = "corrr")
 ```
@@ -128,7 +127,7 @@ vignette(topic = "using-corrr",
 Here is an example that illustrates some of the key functions in the `corrr` package (using the advertisement data): 
 
 
-```r
+``` r
 df.ads %>% 
   select(where(is.numeric)) %>% 
   correlate(quiet = T) %>% 
@@ -150,7 +149,7 @@ df.ads %>%
 ##### Correlations with the dependent variable
 
 
-```r
+``` r
 df.credit %>% 
   select(where(is.numeric)) %>%
   correlate(quiet = T) %>%
@@ -179,7 +178,7 @@ df.credit %>%
 ##### All pairwise correlations
 
 
-```r
+``` r
 tmp = df.credit %>%
   select(where(is.numeric), -index) %>%
   correlate(diagonal = 0,
@@ -193,7 +192,7 @@ tmp = df.credit %>%
 <img src="11-linear_model2_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
 
-```r
+``` r
 df.ads %>%
   select(-index) %>% 
   ggpairs()
@@ -207,7 +206,7 @@ df.ads %>%
 With some customization: 
 
 
-```r
+``` r
 df.ads %>% 
   select(-index) %>%
   ggpairs(lower = list(continuous = wrap("points",
@@ -230,7 +229,7 @@ Now that we've explored the correlations, let's have a go at the multiple regres
 We'll first take another look at the pairwise relationships: 
 
 
-```r
+``` r
 tmp.x = "tv"
 # tmp.x = "radio"
 # tmp.x = "newspaper"
@@ -278,7 +277,7 @@ TV ads and radio ads aren't correlated. Yay!
 Let's see whether adding radio ads is worth it (over and above having TV ads).
 
 
-```r
+``` r
 # fit the models 
 fit_c = lm(sales ~ 1 + tv, data = df.ads)
 fit_a = lm(sales ~ 1 + tv + radio, data = df.ads)
@@ -304,7 +303,7 @@ It's worth it!
 Let's evaluate how well the model actually does. We do this by taking a look at the residual plot, and check whether the residuals are normally distributed.
 
 
-```r
+``` r
 tmp.fit = lm(sales ~ 1 + tv + radio, data = df.ads)
 
 df.plot = tmp.fit %>% 
@@ -336,7 +335,7 @@ There is a slight non-linear trend in the residuals. We can also see that the re
 Let's see how well the model does overall: 
 
 
-```r
+``` r
 fit_a %>% 
   glance() %>% 
     kable(digits = 3) %>% 
@@ -386,7 +385,7 @@ As we can see, the model almost explains 90% of the variance. That's very decent
 Here is a way of visualizing how both tv ads and radio ads affect sales: 
 
 
-```r
+``` r
 df.plot = lm(sales ~ 1 + tv + radio, data =  df.ads) %>% 
   augment() %>% 
   clean_names()
@@ -400,6 +399,13 @@ ggplot(df.plot, aes(x = radio, y = sales, color = tv)) +
   theme(legend.position = c(0.1, 0.8))
 ```
 
+```
+Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2 3.5.0.
+ℹ Please use the `legend.position.inside` argument of `theme()` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="11-linear_model2_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 We used color here to encode TV ads (and the x-axis for the radio ads). 
@@ -407,7 +413,7 @@ We used color here to encode TV ads (and the x-axis for the radio ads).
 In addition, we might want to illustrate what relationship between radio ads and sales the model predicts for three distinct values for TV ads. Like so: 
 
 
-```r
+``` r
 df.plot = lm(sales ~ 1 + tv + radio, data =  df.ads) %>% 
   augment() %>% 
   clean_names()
@@ -434,7 +440,7 @@ ggplot(df.plot, aes(x = radio, y = sales, color = tv)) +
 Fitting the augmented model yields the following estimates for the coefficients in the model: 
 
 
-```r
+``` r
 fit_a %>% 
   tidy(conf.int = T) %>% 
     head(10) %>% 
@@ -491,7 +497,7 @@ fit_a %>%
 One thing we can do to make different predictors more comparable is to standardize them. 
 
 
-```r
+``` r
 df.ads = df.ads %>% 
   mutate(across(.cols = c(tv, radio),
                 .fns = ~ scale(.),
@@ -603,7 +609,7 @@ df.ads %>%
 We can standardize (z-score) variables using the `scale()` function.
 
 
-```r
+``` r
 # tmp.variable = "tv"
 tmp.variable = "tv_scaled" 
 
@@ -643,7 +649,7 @@ Scaling a variable leaves the distribution intact, but changes the mean to 0 and
 Let's compare a compact model that only predicts the mean, with a model that uses the student variable as an additional predictor. 
 
 
-```r
+``` r
 # fit the models
 fit_c = lm(balance ~ 1, data = df.credit)
 fit_a = lm(balance ~ 1 + student, data = df.credit)
@@ -664,7 +670,7 @@ Model 2: balance ~ 1 + student
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-```r
+``` r
 fit_a %>% 
   summary()
 ```
@@ -697,7 +703,7 @@ The `summary()` shows that it's worth it: the augmented model explains a signifc
 Let's visualize the model predictions. Here is the compact model: 
 
 
-```r
+``` r
 ggplot(df.credit,
        aes(x = index, 
            y = balance)) +
@@ -716,7 +722,7 @@ It just predicts the mean (the horizontal black line). The vertical lines from e
 And here is the augmented model:
 
 
-```r
+``` r
 df.fit = fit_a %>% 
   tidy() %>% 
   mutate(estimate = round(estimate,2))
@@ -755,7 +761,7 @@ Note that this model predicts two horizontal lines. One for students, and one fo
 Let's make simple plot that shows the means of both groups with bootstrapped confidence intervals. 
 
 
-```r
+``` r
 ggplot(data = df.credit,
        mapping = aes(x = student, y = balance, fill = student)) + 
   stat_summary(fun = "mean",
@@ -773,7 +779,7 @@ ggplot(data = df.credit,
 And let's double check that we also get a signifcant result when we run a t-test instead of our model comparison procedure: 
 
 
-```r
+``` r
 t.test(x = df.credit$balance[df.credit$student == "No"],
        y = df.credit$balance[df.credit$student == "Yes"])
 ```
@@ -797,7 +803,7 @@ mean of x mean of y
 When we put a variable in a linear model that is coded as a character or as a factor, R automatically recodes this variable using dummy coding. It uses level 1 as the reference category for factors, or the value that comes first in the alphabet for characters. 
 
 
-```r
+``` r
 df.credit %>% 
   select(income, student) %>% 
   mutate(student_dummy = ifelse(student == "No", 0, 1))%>% 
@@ -874,7 +880,7 @@ df.credit %>%
 To report the results, we could show a plot like this:  
 
 
-```r
+``` r
 df.plot = df.credit
 
 ggplot(df.plot,
@@ -891,7 +897,7 @@ ggplot(df.plot,
 And then report the means and standard deviations together with the result of our signifance test: 
 
 
-```r
+``` r
 df.credit %>% 
   group_by(student) %>% 
   summarize(mean = mean(balance),
@@ -912,7 +918,7 @@ df.credit %>%
 Now let's take a look at a case where we have one continuous and one categorical predictor variable. Let's first formulate and fit our models: 
 
 
-```r
+``` r
 # fit the models
 fit_c = lm(balance ~ 1 + income, df.credit)
 fit_a = lm(balance ~ 1 + income + student, df.credit)
@@ -940,7 +946,7 @@ We see again that it's worth it. The augmented model explains significantly more
 Let's visualize the model predictions again. Let's start with the compact model: 
 
 
-```r
+``` r
 df.augment = fit_c %>% 
   augment() %>% 
   clean_names()
@@ -964,7 +970,7 @@ ggplot(df.augment,
 This time, the compact model still predicts just one line (like above) but note that this line is not horizontal anymore. 
 
 
-```r
+``` r
 df.tidy = fit_a %>% 
   tidy() %>% 
   mutate(estimate = round(estimate,2))
@@ -1017,7 +1023,7 @@ Let's check whether there is an interaction between how income affects balance f
 Let's take a look at the data first. 
 
 
-```r
+``` r
 ggplot(data = df.credit,
        mapping = aes(x = income,
                      y = balance,
@@ -1045,7 +1051,7 @@ But is the interaction in the model worth it? That is, does a model that include
 Let's check: 
 
 
-```r
+``` r
 # fit models 
 fit_c = lm(formula = balance ~ income + student, data = df.credit)
 fit_a = lm(formula = balance ~ income * student, data = df.credit)
@@ -1083,18 +1089,18 @@ Nope, not worth it! The F-test comes out non-significant.
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1107,34 +1113,33 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
- [5] purrr_1.0.2      readr_2.1.4      tidyr_1.3.0      tibble_3.2.1    
- [9] tidyverse_2.0.0  GGally_2.2.0     ggplot2_3.4.4    corrplot_0.92   
-[13] corrr_0.4.4      broom_1.0.5      janitor_2.2.0    kableExtra_1.3.4
-[17] knitr_1.45      
+ [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
+ [9] tidyverse_2.0.0  GGally_2.2.1     ggplot2_3.5.1    corrplot_0.92   
+[13] corrr_0.4.4      broom_1.0.6      janitor_2.2.0    kableExtra_1.4.0
+[17] knitr_1.48      
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.0   viridisLite_0.4.2  farver_2.1.1       fastmap_1.1.1     
- [5] TSP_1.2-4          rpart_4.1.23       digest_0.6.33      timechange_0.2.0  
- [9] lifecycle_1.0.4    cluster_2.1.6      ellipsis_0.3.2     magrittr_2.0.3    
-[13] compiler_4.3.2     Hmisc_5.1-1        rlang_1.1.2        sass_0.4.8        
-[17] tools_4.3.2        utf8_1.2.4         yaml_2.3.8         data.table_1.14.10
-[21] htmlwidgets_1.6.4  labeling_0.4.3     bit_4.0.5          plyr_1.8.9        
-[25] xml2_1.3.6         RColorBrewer_1.1-3 registry_0.5-1     ca_0.71.1         
-[29] foreign_0.8-86     withr_2.5.2        nnet_7.3-19        grid_4.3.2        
-[33] fansi_1.0.6        colorspace_2.1-0   scales_1.3.0       iterators_1.0.14  
-[37] cli_3.6.2          rmarkdown_2.25     crayon_1.5.2       generics_0.1.3    
-[41] rstudioapi_0.15.0  httr_1.4.7         tzdb_0.4.0         cachem_1.0.8      
-[45] splines_4.3.2      rvest_1.0.3        parallel_4.3.2     base64enc_0.1-3   
-[49] vctrs_0.6.5        webshot_0.5.5      Matrix_1.6-4       jsonlite_1.8.8    
-[53] bookdown_0.37      seriation_1.5.4    hms_1.1.3          bit64_4.0.5       
-[57] htmlTable_2.4.2    Formula_1.2-5      systemfonts_1.0.5  foreach_1.5.2     
-[61] jquerylib_0.1.4    glue_1.6.2         ggstats_0.5.1      codetools_0.2-19  
-[65] stringi_1.8.3      gtable_0.3.4       munsell_0.5.0      pillar_1.9.0      
-[69] htmltools_0.5.7    R6_2.5.1           vroom_1.6.5        evaluate_0.23     
-[73] lattice_0.22-5     highr_0.10         backports_1.4.1    snakecase_0.11.1  
-[77] bslib_0.6.1        Rcpp_1.0.11        checkmate_2.3.1    gridExtra_2.3     
-[81] svglite_2.1.3      nlme_3.1-164       mgcv_1.9-1         xfun_0.41         
-[85] pkgconfig_2.0.3   
+ [1] tidyselect_1.2.1   viridisLite_0.4.2  farver_2.1.2       fastmap_1.2.0     
+ [5] TSP_1.2-4          rpart_4.1.23       digest_0.6.36      timechange_0.3.0  
+ [9] lifecycle_1.0.4    cluster_2.1.6      magrittr_2.0.3     compiler_4.4.1    
+[13] rlang_1.1.4        Hmisc_5.1-3        sass_0.4.9         tools_4.4.1       
+[17] utf8_1.2.4         yaml_2.3.9         data.table_1.15.4  htmlwidgets_1.6.4 
+[21] labeling_0.4.3     bit_4.0.5          plyr_1.8.9         xml2_1.3.6        
+[25] RColorBrewer_1.1-3 registry_0.5-1     ca_0.71.1          foreign_0.8-86    
+[29] withr_3.0.0        nnet_7.3-19        grid_4.4.1         fansi_1.0.6       
+[33] colorspace_2.1-0   scales_1.3.0       iterators_1.0.14   cli_3.6.3         
+[37] rmarkdown_2.27     crayon_1.5.3       generics_0.1.3     rstudioapi_0.16.0 
+[41] tzdb_0.4.0         cachem_1.1.0       splines_4.4.1      parallel_4.4.1    
+[45] base64enc_0.1-3    vctrs_0.6.5        Matrix_1.7-0       jsonlite_1.8.8    
+[49] bookdown_0.40      seriation_1.5.5    hms_1.1.3          bit64_4.0.5       
+[53] htmlTable_2.4.2    Formula_1.2-5      systemfonts_1.1.0  foreach_1.5.2     
+[57] jquerylib_0.1.4    glue_1.7.0         ggstats_0.6.0      codetools_0.2-20  
+[61] stringi_1.8.4      gtable_0.3.5       munsell_0.5.1      pillar_1.9.0      
+[65] htmltools_0.5.8.1  R6_2.5.1           vroom_1.6.5        evaluate_0.24.0   
+[69] lattice_0.22-6     highr_0.11         backports_1.5.0    snakecase_0.11.1  
+[73] bslib_0.7.0        Rcpp_1.0.13        checkmate_2.3.1    gridExtra_2.3     
+[77] svglite_2.1.3      nlme_3.1-164       mgcv_1.9-1         xfun_0.45         
+[81] pkgconfig_2.0.3   
 ```
 
 ## References

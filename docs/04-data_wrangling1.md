@@ -14,7 +14,7 @@ In this lecture, we will take a look at how to wrangle data using the [dplyr](ht
 Let's first load the packages that we need for this chapter. 
 
 
-```r
+``` r
 library("knitr")        # for rendering the RMarkdown file
 library("skimr")        # for visualizing data 
 library("visdat")       # for visualizing data 
@@ -36,17 +36,18 @@ Variables in R can have different modes. Table \@ref(tab:variable-modes) shows t
 
 Table: (\#tab:variable-modes)Most commonly used variable modes in R.
 
-|          name|example                  |
-|-------------:|:------------------------|
-|       numeric|`1`, `3`, `48`           |
-|     character|`'Steve'`, `'a'`, `'78'` |
-|       logical|`TRUE`, `FALSE`          |
-| not available|`NA`                     |
+|          name|example                          |
+|-------------:|:--------------------------------|
+|       numeric|`1`, `3`, `48`                   |
+|     character|`'Steve'`, `'a'`, `'78'`         |
+|       logical|`TRUE`, `FALSE`                  |
+|        factor|`'small'`, `'medium'`, `'large'` |
+| not available|`NA`                             |
 
 For characters you can either use `"` or `'`. R has a number of functions to convert a variable from one mode to another. `NA` is used for missing values.
 
 
-```r
+``` r
 tmp1 = "1" # we start with a character
 str(tmp1) 
 ```
@@ -55,7 +56,7 @@ str(tmp1)
  chr "1"
 ```
 
-```r
+``` r
 tmp2 = as.numeric(tmp1) # turn it into a numeric
 str(tmp2) 
 ```
@@ -64,7 +65,7 @@ str(tmp2)
  num 1
 ```
 
-```r
+``` r
 tmp3 = as.factor(tmp2) # turn that into a factor
 str(tmp3)
 ```
@@ -73,7 +74,7 @@ str(tmp3)
  Factor w/ 1 level "1": 1
 ```
 
-```r
+``` r
 tmp4 = as.character(tmp3) # and go full cycle by turning it back into a character
 str(tmp4)
 ```
@@ -82,7 +83,7 @@ str(tmp4)
  chr "1"
 ```
 
-```r
+``` r
 identical(tmp1, tmp4) # checks whether tmp1 and tmp4 are the same
 ```
 
@@ -102,7 +103,6 @@ Table: (\#tab:data-types)Most commonly used data types in R.
 |       name|description                                                   |
 |----------:|:-------------------------------------------------------------|
 |     vector|list of values with of the same variable mode                 |
-|     factor|for ordinal variables                                         |
 |     matrix|2D data structure                                             |
 |      array|same as matrix for higher dimensional data                    |
 | data frame|similar to matrix but with column names                       |
@@ -113,7 +113,7 @@ Table: (\#tab:data-types)Most commonly used data types in R.
 We build vectors using the concatenate function `c()`, and we use `[]` to access one or more elements of a vector.  
 
 
-```r
+``` r
 numbers = c(1, 4, 5) # make a vector
 numbers[2] # access the second element 
 ```
@@ -122,7 +122,7 @@ numbers[2] # access the second element
 [1] 4
 ```
 
-```r
+``` r
 numbers[1:2] # access the first two elements
 ```
 
@@ -130,7 +130,7 @@ numbers[1:2] # access the first two elements
 [1] 1 4
 ```
 
-```r
+``` r
 numbers[c(1, 3)] # access the first and last element
 ```
 
@@ -145,7 +145,7 @@ In R (unlike in Python for example), 1 refers to the first element of a vector (
 We build a matrix using the `matrix()` function, and we use `[]` to access its elements. 
 
 
-```r
+``` r
 matrix = matrix(data = c(1, 2, 3, 4, 5, 6),
                 nrow = 3,
                 ncol = 2)
@@ -159,7 +159,7 @@ matrix # the full matrix
 [3,]    3    6
 ```
 
-```r
+``` r
 matrix[1, 2] # element in row 1, column 2
 ```
 
@@ -167,7 +167,7 @@ matrix[1, 2] # element in row 1, column 2
 [1] 4
 ```
 
-```r
+``` r
 matrix[1, ] # all elements in the first row 
 ```
 
@@ -175,7 +175,7 @@ matrix[1, ] # all elements in the first row
 [1] 1 4
 ```
 
-```r
+``` r
 matrix[ , 1] # all elements in the first column 
 ```
 
@@ -183,7 +183,7 @@ matrix[ , 1] # all elements in the first column
 [1] 1 2 3
 ```
 
-```r
+``` r
 matrix[-1, ] # a matrix which excludes the first row
 ```
 
@@ -202,7 +202,7 @@ Arrays work the same was as matrices with data of more than two dimensions.
 #### Data frame
 
 
-```r
+``` r
 df = tibble(participant_id = c(1, 2, 3),
             participant_name = c("Leia", "Luke", "Darth")) # make the data frame 
 
@@ -218,7 +218,7 @@ df # the complete data frame
 3              3 Darth           
 ```
 
-```r
+``` r
 df[1, 2] # a single element using numbers 
 ```
 
@@ -229,7 +229,7 @@ df[1, 2] # a single element using numbers
 1 Leia            
 ```
 
-```r
+``` r
 df$participant_id # all participants 
 ```
 
@@ -237,7 +237,7 @@ df$participant_id # all participants
 [1] 1 2 3
 ```
 
-```r
+``` r
 df[["participant_id"]] # same as before but using [[]] instead of $
 ```
 
@@ -245,7 +245,7 @@ df[["participant_id"]] # same as before but using [[]] instead of $
 [1] 1 2 3
 ```
 
-```r
+``` r
 df$participant_name[2] # name of the second participant
 ```
 
@@ -253,7 +253,7 @@ df$participant_name[2] # name of the second participant
 [1] "Luke"
 ```
 
-```r
+``` r
 df[["participant_name"]][2] # same as above
 ```
 
@@ -268,7 +268,7 @@ Here we used the `tibble()` function to create the data frame. A `tibble` is alm
 #### Lists
 
 
-```r
+``` r
 l.mixed = list(number = 1, 
                character = "2", 
                factor = factor(3), 
@@ -301,7 +301,7 @@ $df
 2     2     4
 ```
 
-```r
+``` r
 # three different ways of accessing a list
 l.mixed$character
 ```
@@ -310,7 +310,7 @@ l.mixed$character
 [1] "2"
 ```
 
-```r
+``` r
 l.mixed[["character"]]
 ```
 
@@ -318,7 +318,7 @@ l.mixed[["character"]]
 [1] "2"
 ```
 
-```r
+``` r
 l.mixed[[2]] 
 ```
 
@@ -336,19 +336,19 @@ Table \@ref(tab:logical-operators) shows the comparison operators that result in
 Table: (\#tab:logical-operators)Table of comparison operators that result in 
       boolean (TRUE/FALSE) outputs.
 
-|symbol             |name                                      |
-|:------------------|:-----------------------------------------|
-|`==`               |equal to                                  |
-|`!=`               |not equal to                              |
-|`>`, `<`           |greater/less than                         |
-|`>=`, `<=`         |greater/less than or equal                |
-|`&`, `&#124;`, `!` |logical operators: and, or, not           |
-|`%in%`             |checks whether an element is in an object |
+|symbol           |name                                      |
+|:----------------|:-----------------------------------------|
+|`==`             |equal to                                  |
+|`!=`             |not equal to                              |
+|`>`, `<`         |greater/less than                         |
+|`>=`, `<=`       |greater/less than or equal                |
+|`&`, &#124;, `!` |logical operators: and, or, not           |
+|`%in%`           |checks whether an element is in an object |
 
 The `%in%` operator is very useful, and we can use it like so: 
 
 
-```r
+``` r
 x = c(1, 2, 3)
 2 %in% x 
 ```
@@ -357,7 +357,7 @@ x = c(1, 2, 3)
 [1] TRUE
 ```
 
-```r
+``` r
 c(3, 4) %in% x
 ```
 
@@ -372,7 +372,7 @@ It's particularly useful for filtering data as we will see below.
 #### if-then {#if-else}
 
 
-```r
+``` r
 number = 3
 
 if (number == 1) {
@@ -391,7 +391,7 @@ if (number == 1) {
 As a shorthand version, we can also use the `ifelse()` function like so: 
 
 
-```r
+``` r
 number = 3
 ifelse(test = number == 1, yes = "correct", no = "false")
 ```
@@ -403,7 +403,7 @@ ifelse(test = number == 1, yes = "correct", no = "false")
 #### for loop
 
 
-```r
+``` r
 sequence = 1:10
 
 for(i in 1:length(sequence)){
@@ -427,7 +427,7 @@ for(i in 1:length(sequence)){
 #### while loop
 
 
-```r
+``` r
 number = 1 
 
 while(number <= 10){
@@ -452,7 +452,7 @@ while(number <= 10){
 ### Functions
 
 
-```r
+``` r
 fun.add_two_numbers = function(a, b){
   x = a + b
   return(str_c("The result is ", x))
@@ -506,7 +506,7 @@ The pipe operator `%>%` is a special operator introduced in the `magrittr` packa
 Let's consider the following example of making and eating a cake (thanks to https://twitter.com/dmi3k/status/1191824875842879489?s=09). This would be the traditional way of writing some code: 
 
 
-```r
+``` r
 eat(
   slice(
     bake(
@@ -523,7 +523,7 @@ eat(
 To see what's going on here, we need to read the code inside out. That is, we have to start in the innermost bracket, and then work our way outward. However, there is a natural causal ordering to these steps and wouldn't it be nice if we could just write code in that order? Thanks to the pipe operator `%>%` we can! Here is the same example using the pipe: 
 
 
-```r
+``` r
 ingredients %>% 
   mix %>% 
   pour(into = baking_form) %>% 
@@ -542,7 +542,7 @@ Abstractly, the pipe operator does the following:
 For example, in standard R, we would write: 
 
 
-```r
+``` r
 x = 1:3
 
 # standard R 
@@ -556,7 +556,7 @@ sum(x)
 With the pipe, we can rewrite this as: 
 
 
-```r
+``` r
 x = 1:3
 
 # with the pipe  
@@ -574,7 +574,7 @@ This doesn't seem super useful yet, but just hold on a little longer.
 So, we could rewrite the following standard R code ... 
 
 
-```r
+``` r
 # rounding pi to 6 digits, standard R 
 round(pi, digits = 6)
 ```
@@ -586,7 +586,7 @@ round(pi, digits = 6)
 ... by using the pipe: 
 
 
-```r
+``` r
 # rounding pi to 6 digits, standard R 
 pi %>% round(digits = 6)
 ```
@@ -598,7 +598,7 @@ pi %>% round(digits = 6)
 Here is another example: 
 
 
-```r
+``` r
 a = 3
 b = 4
 sum(a, b) # standard way 
@@ -608,7 +608,7 @@ sum(a, b) # standard way
 [1] 7
 ```
 
-```r
+``` r
 a %>% sum(b) # the pipe way 
 ```
 
@@ -619,7 +619,7 @@ a %>% sum(b) # the pipe way
 The pipe operator inserts the result of the previous computation as a first element into the next computation. So, `a %>% sum(b)` is equivalent to `sum(a, b)`. We can also specify to insert the result at a different position via the `.` operator. For example:  
 
 
-```r
+``` r
 a = 1
 b = 10 
 b %>% seq(from = a, to = .)
@@ -649,7 +649,7 @@ where $\hat{y}_i$ denotes the prediction, and $y_i$ the actually observed value.
 In base R, we would do the following. 
 
 
-```r
+``` r
 data = c(1, 3, 4, 2, 5)
 prediction = c(1, 2, 2, 1, 4)
 
@@ -665,7 +665,7 @@ print(rmse)
 Using the pipe operator makes the operation more intuitive: 
 
 
-```r
+``` r
 data = c(1, 3, 4, 2, 5)
 prediction = c(1, 2, 2, 1, 4)
 
@@ -697,7 +697,7 @@ A key advantage of using the pipe is that you don't have to save intermediate co
 Let's practice the pipe operator. 
 
 
-```r
+``` r
 # here are some numbers
 x = seq(from = 1, to = 5, by = 1)
 
@@ -709,12 +709,12 @@ log(x)
 [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379
 ```
 
-```r
+``` r
 # now take the log the pipe way (write your code underneath)
 ```
 
 
-```r
+``` r
 # some more numbers
 x = seq(from = 10, to = 5, by = -1)
 
@@ -726,7 +726,7 @@ mean(round(sqrt(x), digits = 2))
 [1] 2.721667
 ```
 
-```r
+``` r
 # the pipe way (write your code underneath)
 ```
 
@@ -749,7 +749,7 @@ Table: (\#tab:unnamed-chunk-27)Some naming conventions I adopt to make my life e
 The package `dplyr` which we loaded as part of the tidyverse, includes a data set with information about starwars characters. Let's store this as  `df.starwars`. 
 
 
-```r
+``` r
 df.starwars = starwars
 ```
 
@@ -773,7 +773,7 @@ Here are some useful functions:
 Without any extra arguments specified, `head()` shows the top six rows of the data. 
 
 
-```r
+``` r
 head(df.starwars)
 ```
 
@@ -796,7 +796,7 @@ head(df.starwars)
 `glimpse()` is helpful when the data frame has many columns. The data is shown in a transposed way with columns as rows. 
 
 
-```r
+``` r
 glimpse(df.starwars)
 ```
 
@@ -824,7 +824,7 @@ $ starships  <list> <"X-wing", "Imperial shuttle">, <>, <>, "TIE Advanced x1",�
 `distinct()` shows all the distinct values for a character or factor column. 
 
 
-```r
+``` r
 df.starwars %>% 
   distinct(species)
 ```
@@ -851,7 +851,7 @@ df.starwars %>%
 `count()` shows a count of all the different distinct values in a column. 
 
 
-```r
+``` r
 df.starwars %>% 
   count(eye_color)
 ```
@@ -880,7 +880,7 @@ df.starwars %>%
 It's possible to do grouped counts by combining several variables.
 
 
-```r
+``` r
 df.starwars %>% 
   count(eye_color, gender) %>% 
   head(n = 10)
@@ -907,14 +907,14 @@ df.starwars %>%
 For RMardkown files specifically, we can use the `datatable()` function from the `DT` package to get an interactive table widget.
 
 
-```r
+``` r
 df.starwars %>% 
   DT::datatable()
 ```
 
 ```{=html}
-<div class="datatables html-widget html-fill-item" id="htmlwidget-1cae70326745e1bd11a2" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1cae70326745e1bd11a2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87"],["Luke Skywalker","C-3PO","R2-D2","Darth Vader","Leia Organa","Owen Lars","Beru Whitesun Lars","R5-D4","Biggs Darklighter","Obi-Wan Kenobi","Anakin Skywalker","Wilhuff Tarkin","Chewbacca","Han Solo","Greedo","Jabba Desilijic Tiure","Wedge Antilles","Jek Tono Porkins","Yoda","Palpatine","Boba Fett","IG-88","Bossk","Lando Calrissian","Lobot","Ackbar","Mon Mothma","Arvel Crynyd","Wicket Systri Warrick","Nien Nunb","Qui-Gon Jinn","Nute Gunray","Finis Valorum","Padmé Amidala","Jar Jar Binks","Roos Tarpals","Rugor Nass","Ric Olié","Watto","Sebulba","Quarsh Panaka","Shmi Skywalker","Darth Maul","Bib Fortuna","Ayla Secura","Ratts Tyerel","Dud Bolt","Gasgano","Ben Quadinaros","Mace Windu","Ki-Adi-Mundi","Kit Fisto","Eeth Koth","Adi Gallia","Saesee Tiin","Yarael Poof","Plo Koon","Mas Amedda","Gregar Typho","Cordé","Cliegg Lars","Poggle the Lesser","Luminara Unduli","Barriss Offee","Dormé","Dooku","Bail Prestor Organa","Jango Fett","Zam Wesell","Dexter Jettster","Lama Su","Taun We","Jocasta Nu","R4-P17","Wat Tambor","San Hill","Shaak Ti","Grievous","Tarfful","Raymus Antilles","Sly Moore","Tion Medon","Finn","Rey","Poe Dameron","BB8","Captain Phasma"],[172,167,96,202,150,178,165,97,183,182,188,180,228,180,173,175,170,180,66,170,183,200,190,177,175,180,150,null,88,160,193,191,170,185,196,224,206,183,137,112,183,163,175,180,178,79,94,122,163,188,198,196,171,184,188,264,188,196,185,157,183,183,170,166,165,193,191,183,168,198,229,213,167,96,193,191,178,216,234,188,178,206,null,null,null,null,null],[77,75,32,136,49,120,75,32,84,77,84,null,112,80,74,1358,77,110,17,75,78.2,140,113,79,79,83,null,null,20,68,89,90,null,45,66,82,null,null,null,40,null,null,80,null,55,15,45,null,65,84,82,87,null,50,null,null,80,null,85,null,null,80,56.2,50,null,80,null,79,55,102,88,null,null,null,48,null,57,159,136,79,48,80,null,null,null,null,null],["blond",null,null,"none","brown","brown, grey","brown",null,"black","auburn, white","blond","auburn, grey","brown","brown",null,null,"brown","brown","white","grey","black","none","none","black","none","none","auburn","brown","brown","none","brown","none","blond","brown","none","none","none","brown","black","none","black","black","none","none","none","none","none","none","none","none","white","none","black","none","none","none","none","none","black","brown","brown","none","black","black","brown","white","black","black","blonde","none","none","none","white","none","none","none","none","none","brown","brown","none","none","black","brown","brown","none","none"],["fair","gold","white, blue","white","light","light","light","white, red","light","fair","fair","fair","unknown","fair","green","green-tan, brown","fair","fair","green","pale","fair","metal","green","dark","light","brown mottle","fair","fair","brown","grey","fair","mottled green","fair","light","orange","grey","green","fair","blue, grey","grey, red","dark","fair","red","pale","blue","grey, blue","blue, grey","white, blue","grey, green, yellow","dark","pale","green","brown","dark","pale","white","orange","blue","dark","light","fair","green","yellow","yellow","light","fair","tan","tan","fair, green, yellow","brown","grey","grey","fair","silver, red","green, grey","grey","red, blue, white","brown, white","brown","light","pale","grey","dark","light","light","none","none"],["blue","yellow","red","yellow","brown","blue","blue","red","brown","blue-gray","blue","blue","blue","brown","black","orange","hazel","blue","brown","yellow","brown","red","red","brown","blue","orange","blue","brown","brown","black","blue","red","blue","brown","orange","orange","orange","blue","yellow","orange","brown","brown","yellow","pink","hazel","unknown","yellow","black","orange","brown","yellow","black","brown","blue","orange","yellow","black","blue","brown","brown","blue","yellow","blue","blue","brown","brown","brown","brown","yellow","yellow","black","black","blue","red, blue","unknown","gold","black","green, yellow","blue","brown","white","black","dark","hazel","brown","black","unknown"],[19,112,33,41.9,19,52,47,null,24,57,41.9,64,200,29,44,600,21,null,896,82,31.5,15,53,31,37,41,48,null,8,null,92,null,91,46,52,null,null,null,null,null,62,72,54,null,48,null,null,null,null,72,92,null,null,null,null,null,22,null,null,null,82,null,58,40,null,102,67,66,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["male","none","none","male","female","male","female","none","male","male","male","male","male","male","male","hermaphroditic","male",null,"male","male","male","none","male","male","male","male","female","male","male","male","male","male","male","female","male","male","male","male","male","male","male","female","male","male","female","male","male","male","male","male","male","male","male","female","male","male","male","male",null,null,"male","male","female","female","female","male","male","male","female","male","male","female","female","none","male","male","female","male","male","male",null,"male","male","female","male","none","female"],["masculine","masculine","masculine","masculine","feminine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine",null,"masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine",null,null,"masculine","masculine","feminine","feminine","feminine","masculine","masculine","masculine","feminine","masculine","masculine","feminine","feminine","feminine","masculine","masculine","feminine","masculine","masculine","masculine",null,"masculine","masculine","feminine","masculine","masculine","feminine"],["Tatooine","Tatooine","Naboo","Tatooine","Alderaan","Tatooine","Tatooine","Tatooine","Tatooine","Stewjon","Tatooine","Eriadu","Kashyyyk","Corellia","Rodia","Nal Hutta","Corellia","Bestine IV",null,"Naboo","Kamino",null,"Trandosha","Socorro","Bespin","Mon Cala","Chandrila",null,"Endor","Sullust",null,"Cato Neimoidia","Coruscant","Naboo","Naboo","Naboo","Naboo","Naboo","Toydaria","Malastare","Naboo","Tatooine","Dathomir","Ryloth","Ryloth","Aleen Minor","Vulpter","Troiken","Tund","Haruun Kal","Cerea","Glee Anselm","Iridonia","Coruscant","Iktotch","Quermia","Dorin","Champala","Naboo","Naboo","Tatooine","Geonosis","Mirial","Mirial","Naboo","Serenno","Alderaan","Concord Dawn","Zolan","Ojom","Kamino","Kamino","Coruscant",null,"Skako","Muunilinst","Shili","Kalee","Kashyyyk","Alderaan","Umbara","Utapau",null,null,null,null,null],["Human","Droid","Droid","Human","Human","Human","Human","Droid","Human","Human","Human","Human","Wookiee","Human","Rodian","Hutt","Human",null,"Yoda's species","Human","Human","Droid","Trandoshan","Human","Human","Mon Calamari","Human","Human","Ewok","Sullustan","Human","Neimodian","Human","Human","Gungan","Gungan","Gungan","Human","Toydarian","Dug","Human","Human","Zabrak","Twi'lek","Twi'lek","Aleena","Vulptereen","Xexto","Toong","Human","Cerean","Nautolan","Zabrak","Tholothian","Iktotchi","Quermian","Kel Dor","Chagrian",null,null,"Human","Geonosian","Mirialan","Mirialan","Human","Human","Human","Human","Clawdite","Besalisk","Kaminoan","Kaminoan","Human","Droid","Skakoan","Muun","Togruta","Kaleesh","Wookiee","Human",null,"Pau'an","Human","Human","Human","Droid","Human"],[["A New Hope","The Empire Strikes Back","Return of the Jedi","Revenge of the Sith","The Force Awakens"],["A New Hope","The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["A New Hope","The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith","The Force Awakens"],["A New Hope","The Empire Strikes Back","Return of the Jedi","Revenge of the Sith"],["A New Hope","The Empire Strikes Back","Return of the Jedi","Revenge of the Sith","The Force Awakens"],["A New Hope","Attack of the Clones","Revenge of the Sith"],["A New Hope","Attack of the Clones","Revenge of the Sith"],["A New Hope"],["A New Hope"],["A New Hope","The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["A New Hope","Revenge of the Sith"],["A New Hope","The Empire Strikes Back","Return of the Jedi","Revenge of the Sith","The Force Awakens"],["A New Hope","The Empire Strikes Back","Return of the Jedi","The Force Awakens"],["A New Hope"],["A New Hope","Return of the Jedi","The Phantom Menace"],["A New Hope","The Empire Strikes Back","Return of the Jedi"],["A New Hope"],["The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Empire Strikes Back","Return of the Jedi","Attack of the Clones"],["The Empire Strikes Back"],["The Empire Strikes Back"],["The Empire Strikes Back","Return of the Jedi"],["The Empire Strikes Back"],["Return of the Jedi","The Force Awakens"],["Return of the Jedi"],["Return of the Jedi"],["Return of the Jedi"],["Return of the Jedi"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones"],["The Phantom Menace"],["Return of the Jedi"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones","Revenge of the Sith"],["Revenge of the Sith"],["Revenge of the Sith"],["A New Hope","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],["Revenge of the Sith"],["The Force Awakens"],["The Force Awakens"],["The Force Awakens"],["The Force Awakens"],["The Force Awakens"]],[["Snowspeeder","Imperial Speeder Bike"],[],[],[],["Imperial Speeder Bike"],[],[],[],[],["Tribubble bongo"],["Zephyr-G swoop bike","XJ-6 airspeeder"],[],["AT-ST"],[],[],[],["Snowspeeder"],[],[],[],[],[],[],[],[],[],[],[],[],[],["Tribubble bongo"],[],[],[],[],[],[],[],[],[],[],[],["Sith speeder"],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],["Flitknot speeder"],[],[],["Koro-2 Exodrive airspeeder"],[],[],[],[],[],[],[],[],["Tsmeu-6 personal wheel bike"],[],[],[],[],[],[],[],[],[]],[["X-wing","Imperial shuttle"],[],[],["TIE Advanced x1"],[],[],[],[],["X-wing"],["Jedi starfighter","Trade Federation cruiser","Naboo star skiff","Jedi Interceptor","Belbullab-22 starfighter"],["Naboo fighter","Trade Federation cruiser","Jedi Interceptor"],[],["Millennium Falcon","Imperial shuttle"],["Millennium Falcon","Imperial shuttle"],[],[],["X-wing"],["X-wing"],[],[],["Slave 1"],[],[],["Millennium Falcon"],[],[],[],["A-wing"],[],["Millennium Falcon"],[],[],[],["Naboo fighter","H-type Nubian yacht","Naboo star skiff"],[],[],[],["Naboo Royal Starship"],[],[],[],[],["Scimitar"],[],[],[],[],[],[],[],[],[],[],[],[],[],["Jedi starfighter"],[],["Naboo fighter"],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],["Belbullab-22 starfighter"],[],[],[],[],[],[],["X-wing"],[],[]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>height<\/th>\n      <th>mass<\/th>\n      <th>hair_color<\/th>\n      <th>skin_color<\/th>\n      <th>eye_color<\/th>\n      <th>birth_year<\/th>\n      <th>sex<\/th>\n      <th>gender<\/th>\n      <th>homeworld<\/th>\n      <th>species<\/th>\n      <th>films<\/th>\n      <th>vehicles<\/th>\n      <th>starships<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,7]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"name","targets":1},{"name":"height","targets":2},{"name":"mass","targets":3},{"name":"hair_color","targets":4},{"name":"skin_color","targets":5},{"name":"eye_color","targets":6},{"name":"birth_year","targets":7},{"name":"sex","targets":8},{"name":"gender","targets":9},{"name":"homeworld","targets":10},{"name":"species","targets":11},{"name":"films","targets":12},{"name":"vehicles","targets":13},{"name":"starships","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ca434307b7e37efc4209" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ca434307b7e37efc4209">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87"],["Luke Skywalker","C-3PO","R2-D2","Darth Vader","Leia Organa","Owen Lars","Beru Whitesun Lars","R5-D4","Biggs Darklighter","Obi-Wan Kenobi","Anakin Skywalker","Wilhuff Tarkin","Chewbacca","Han Solo","Greedo","Jabba Desilijic Tiure","Wedge Antilles","Jek Tono Porkins","Yoda","Palpatine","Boba Fett","IG-88","Bossk","Lando Calrissian","Lobot","Ackbar","Mon Mothma","Arvel Crynyd","Wicket Systri Warrick","Nien Nunb","Qui-Gon Jinn","Nute Gunray","Finis Valorum","Padmé Amidala","Jar Jar Binks","Roos Tarpals","Rugor Nass","Ric Olié","Watto","Sebulba","Quarsh Panaka","Shmi Skywalker","Darth Maul","Bib Fortuna","Ayla Secura","Ratts Tyerel","Dud Bolt","Gasgano","Ben Quadinaros","Mace Windu","Ki-Adi-Mundi","Kit Fisto","Eeth Koth","Adi Gallia","Saesee Tiin","Yarael Poof","Plo Koon","Mas Amedda","Gregar Typho","Cordé","Cliegg Lars","Poggle the Lesser","Luminara Unduli","Barriss Offee","Dormé","Dooku","Bail Prestor Organa","Jango Fett","Zam Wesell","Dexter Jettster","Lama Su","Taun We","Jocasta Nu","R4-P17","Wat Tambor","San Hill","Shaak Ti","Grievous","Tarfful","Raymus Antilles","Sly Moore","Tion Medon","Finn","Rey","Poe Dameron","BB8","Captain Phasma"],[172,167,96,202,150,178,165,97,183,182,188,180,228,180,173,175,170,180,66,170,183,200,190,177,175,180,150,null,88,160,193,191,170,185,196,224,206,183,137,112,183,163,175,180,178,79,94,122,163,188,198,196,171,184,188,264,188,196,185,157,183,183,170,166,165,193,191,183,168,198,229,213,167,96,193,191,178,216,234,188,178,206,null,null,null,null,null],[77,75,32,136,49,120,75,32,84,77,84,null,112,80,74,1358,77,110,17,75,78.2,140,113,79,79,83,null,null,20,68,89,90,null,45,66,82,null,null,null,40,null,null,80,null,55,15,45,null,65,84,82,87,null,50,null,null,80,null,85,null,null,80,56.2,50,null,80,null,79,55,102,88,null,null,null,48,null,57,159,136,79,48,80,null,null,null,null,null],["blond",null,null,"none","brown","brown, grey","brown",null,"black","auburn, white","blond","auburn, grey","brown","brown",null,null,"brown","brown","white","grey","black","none","none","black","none","none","auburn","brown","brown","none","brown","none","blond","brown","none","none","none","brown","black","none","black","black","none","none","none","none","none","none","none","none","white","none","black","none","none","none","none","none","black","brown","brown","none","black","black","brown","white","black","black","blonde","none","none","none","white","none","none","none","none","none","brown","brown","none","none","black","brown","brown","none","none"],["fair","gold","white, blue","white","light","light","light","white, red","light","fair","fair","fair","unknown","fair","green","green-tan, brown","fair","fair","green","pale","fair","metal","green","dark","light","brown mottle","fair","fair","brown","grey","fair","mottled green","fair","light","orange","grey","green","fair","blue, grey","grey, red","dark","fair","red","pale","blue","grey, blue","blue, grey","white, blue","grey, green, yellow","dark","pale","green","brown","dark","pale","white","orange","blue","dark","light","fair","green","yellow","yellow","light","fair","tan","tan","fair, green, yellow","brown","grey","grey","fair","silver, red","green, grey","grey","red, blue, white","brown, white","brown","light","pale","grey","dark","light","light","none","none"],["blue","yellow","red","yellow","brown","blue","blue","red","brown","blue-gray","blue","blue","blue","brown","black","orange","hazel","blue","brown","yellow","brown","red","red","brown","blue","orange","blue","brown","brown","black","blue","red","blue","brown","orange","orange","orange","blue","yellow","orange","brown","brown","yellow","pink","hazel","unknown","yellow","black","orange","brown","yellow","black","brown","blue","orange","yellow","black","blue","brown","brown","blue","yellow","blue","blue","brown","brown","brown","brown","yellow","yellow","black","black","blue","red, blue","unknown","gold","black","green, yellow","blue","brown","white","black","dark","hazel","brown","black","unknown"],[19,112,33,41.9,19,52,47,null,24,57,41.9,64,200,29,44,600,21,null,896,82,31.5,15,53,31,37,41,48,null,8,null,92,null,91,46,52,null,null,null,null,null,62,72,54,null,48,null,null,null,null,72,92,null,null,null,null,null,22,null,null,null,82,null,58,40,null,102,67,66,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["male","none","none","male","female","male","female","none","male","male","male","male","male","male","male","hermaphroditic","male",null,"male","male","male","none","male","male","male","male","female","male","male","male","male","male","male","female","male","male","male","male","male","male","male","female","male","male","female","male","male","male","male","male","male","male","male","female","male","male","male","male",null,null,"male","male","female","female","female","male","male","male","female","male","male","female","female","none","male","male","female","male","male","male",null,"male","male","female","male","none","female"],["masculine","masculine","masculine","masculine","feminine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine",null,"masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","feminine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","masculine","feminine","masculine","masculine","masculine","masculine",null,null,"masculine","masculine","feminine","feminine","feminine","masculine","masculine","masculine","feminine","masculine","masculine","feminine","feminine","feminine","masculine","masculine","feminine","masculine","masculine","masculine",null,"masculine","masculine","feminine","masculine","masculine","feminine"],["Tatooine","Tatooine","Naboo","Tatooine","Alderaan","Tatooine","Tatooine","Tatooine","Tatooine","Stewjon","Tatooine","Eriadu","Kashyyyk","Corellia","Rodia","Nal Hutta","Corellia","Bestine IV",null,"Naboo","Kamino",null,"Trandosha","Socorro","Bespin","Mon Cala","Chandrila",null,"Endor","Sullust",null,"Cato Neimoidia","Coruscant","Naboo","Naboo","Naboo","Naboo","Naboo","Toydaria","Malastare","Naboo","Tatooine","Dathomir","Ryloth","Ryloth","Aleen Minor","Vulpter","Troiken","Tund","Haruun Kal","Cerea","Glee Anselm","Iridonia","Coruscant","Iktotch","Quermia","Dorin","Champala","Naboo","Naboo","Tatooine","Geonosis","Mirial","Mirial","Naboo","Serenno","Alderaan","Concord Dawn","Zolan","Ojom","Kamino","Kamino","Coruscant",null,"Skako","Muunilinst","Shili","Kalee","Kashyyyk","Alderaan","Umbara","Utapau",null,null,null,null,null],["Human","Droid","Droid","Human","Human","Human","Human","Droid","Human","Human","Human","Human","Wookiee","Human","Rodian","Hutt","Human",null,"Yoda's species","Human","Human","Droid","Trandoshan","Human","Human","Mon Calamari","Human","Human","Ewok","Sullustan","Human","Neimodian","Human","Human","Gungan","Gungan","Gungan","Human","Toydarian","Dug","Human","Human","Zabrak","Twi'lek","Twi'lek","Aleena","Vulptereen","Xexto","Toong","Human","Cerean","Nautolan","Zabrak","Tholothian","Iktotchi","Quermian","Kel Dor","Chagrian",null,null,"Human","Geonosian","Mirialan","Mirialan","Human","Human","Human","Human","Clawdite","Besalisk","Kaminoan","Kaminoan","Human","Droid","Skakoan","Muun","Togruta","Kaleesh","Wookiee","Human",null,"Pau'an","Human","Human","Human","Droid","Human"],[["A New Hope","The Empire Strikes Back","Return of the Jedi","Revenge of the Sith","The Force Awakens"],["A New Hope","The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["A New Hope","The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith","The Force Awakens"],["A New Hope","The Empire Strikes Back","Return of the Jedi","Revenge of the Sith"],["A New Hope","The Empire Strikes Back","Return of the Jedi","Revenge of the Sith","The Force Awakens"],["A New Hope","Attack of the Clones","Revenge of the Sith"],["A New Hope","Attack of the Clones","Revenge of the Sith"],["A New Hope"],["A New Hope"],["A New Hope","The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["A New Hope","Revenge of the Sith"],["A New Hope","The Empire Strikes Back","Return of the Jedi","Revenge of the Sith","The Force Awakens"],["A New Hope","The Empire Strikes Back","Return of the Jedi","The Force Awakens"],["A New Hope"],["A New Hope","Return of the Jedi","The Phantom Menace"],["A New Hope","The Empire Strikes Back","Return of the Jedi"],["A New Hope"],["The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Empire Strikes Back","Return of the Jedi","The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Empire Strikes Back","Return of the Jedi","Attack of the Clones"],["The Empire Strikes Back"],["The Empire Strikes Back"],["The Empire Strikes Back","Return of the Jedi"],["The Empire Strikes Back"],["Return of the Jedi","The Force Awakens"],["Return of the Jedi"],["Return of the Jedi"],["Return of the Jedi"],["Return of the Jedi"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones"],["The Phantom Menace"],["Return of the Jedi"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace","Revenge of the Sith"],["The Phantom Menace"],["The Phantom Menace","Attack of the Clones","Revenge of the Sith"],["The Phantom Menace","Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones","Revenge of the Sith"],["Attack of the Clones"],["Attack of the Clones"],["Attack of the Clones","Revenge of the Sith"],["Revenge of the Sith"],["Revenge of the Sith"],["A New Hope","Revenge of the Sith"],["Attack of the Clones","Revenge of the Sith"],["Revenge of the Sith"],["The Force Awakens"],["The Force Awakens"],["The Force Awakens"],["The Force Awakens"],["The Force Awakens"]],[["Snowspeeder","Imperial Speeder Bike"],[],[],[],["Imperial Speeder Bike"],[],[],[],[],["Tribubble bongo"],["Zephyr-G swoop bike","XJ-6 airspeeder"],[],["AT-ST"],[],[],[],["Snowspeeder"],[],[],[],[],[],[],[],[],[],[],[],[],[],["Tribubble bongo"],[],[],[],[],[],[],[],[],[],[],[],["Sith speeder"],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],["Flitknot speeder"],[],[],["Koro-2 Exodrive airspeeder"],[],[],[],[],[],[],[],[],["Tsmeu-6 personal wheel bike"],[],[],[],[],[],[],[],[],[]],[["X-wing","Imperial shuttle"],[],[],["TIE Advanced x1"],[],[],[],[],["X-wing"],["Jedi starfighter","Trade Federation cruiser","Naboo star skiff","Jedi Interceptor","Belbullab-22 starfighter"],["Naboo fighter","Trade Federation cruiser","Jedi Interceptor"],[],["Millennium Falcon","Imperial shuttle"],["Millennium Falcon","Imperial shuttle"],[],[],["X-wing"],["X-wing"],[],[],["Slave 1"],[],[],["Millennium Falcon"],[],[],[],["A-wing"],[],["Millennium Falcon"],[],[],[],["Naboo fighter","H-type Nubian yacht","Naboo star skiff"],[],[],[],["Naboo Royal Starship"],[],[],[],[],["Scimitar"],[],[],[],[],[],[],[],[],[],[],[],[],[],["Jedi starfighter"],[],["Naboo fighter"],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],["Belbullab-22 starfighter"],[],[],[],[],[],[],["X-wing"],[],[]]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>name<\/th>\n      <th>height<\/th>\n      <th>mass<\/th>\n      <th>hair_color<\/th>\n      <th>skin_color<\/th>\n      <th>eye_color<\/th>\n      <th>birth_year<\/th>\n      <th>sex<\/th>\n      <th>gender<\/th>\n      <th>homeworld<\/th>\n      <th>species<\/th>\n      <th>films<\/th>\n      <th>vehicles<\/th>\n      <th>starships<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,7]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"name","targets":1},{"name":"height","targets":2},{"name":"mass","targets":3},{"name":"hair_color","targets":4},{"name":"skin_color","targets":5},{"name":"eye_color","targets":6},{"name":"birth_year","targets":7},{"name":"sex","targets":8},{"name":"gender","targets":9},{"name":"homeworld","targets":10},{"name":"species","targets":11},{"name":"films","targets":12},{"name":"vehicles","targets":13},{"name":"starships","targets":14}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ### Other tools for taking a quick look at data
@@ -924,7 +924,7 @@ df.starwars %>%
 The `vis_dat()` function from the `visdat` package, gives a visual summary that makes it easy to see the variable types and whether there are missing values in the data. 
 
 
-```r
+``` r
 visdat::vis_dat(df.starwars)
 ```
 
@@ -948,7 +948,7 @@ lot).</p>
 The `skim()` function from the `skimr` package provides a nice overview of the data, separated by variable types. 
 
 
-```r
+``` r
 # install.packages("skimr")
 skimr::skim(df.starwars)
 ```
@@ -1006,7 +1006,7 @@ Table: (\#tab:unnamed-chunk-37)Data summary
 The `summarytools` package is another great package for taking a look at the data. It renders a nice html output for the data frame including a lot of helpful information. You can find out more about this package [here](https://cran.r-project.org/web/packages/summarytools/index.html).
 
 
-```r
+``` r
 df.starwars %>% 
   select(where(~ !is.list(.))) %>% # this removes all list columns
   summarytools::dfSummary() %>% 
@@ -1026,7 +1026,7 @@ We use the functions in the package `dplyr` to manipulate our data.
 `filter()` lets us apply logical (and other) operators (see Table \@ref(tab:logical-operators)) to subset the data. Here, I've filtered out the masculine characters. 
 
 
-```r
+``` r
 df.starwars %>% 
   filter(gender == "masculine")
 ```
@@ -1053,7 +1053,7 @@ df.starwars %>%
 We can combine multiple conditions in the same call. Here, I've filtered out masculine characters, whose height is greater than the median height (i.e. they are in the top 50 percentile), and whose mass was not `NA`. 
 
 
-```r
+``` r
 df.starwars %>% 
   filter(gender == "masculine",
          height > median(height, na.rm = T),
@@ -1084,7 +1084,7 @@ Many functions like `mean()`, `median()`, `var()`, `sd()`, `sum()` have the argu
 You can use `,` and `&` interchangeably in `filter()`. Make sure to use parentheses when combining several logical operators to indicate which logical operation should be performed first: 
 
 
-```r
+``` r
 df.starwars %>% 
   filter((skin_color %in% c("dark", "pale") | sex == "hermaphroditic") & height > 170)
 ```
@@ -1114,7 +1114,7 @@ The starwars characters that have either a `"dark"` or a `"pale"` skin tone, or 
 `arrange()` allows us to sort the values in a data frame by one or more column entries. 
 
 
-```r
+``` r
 df.starwars %>% 
   arrange(hair_color, desc(height))
 ```
@@ -1145,7 +1145,7 @@ Here, I've sorted the data frame first by `hair_color`, and then by `height`. I'
 `rename()` renames column names.
 
 
-```r
+``` r
 df.starwars %>% 
   rename(person = name,
          mass_kg = mass)
@@ -1175,7 +1175,7 @@ The new variable names goes on the LHS of the`=` sign, and the old name on the R
 To rename all variables at the same time use `rename_with()`: 
 
 
-```r
+``` r
 df.starwars %>%
   rename_with(.fn = ~ toupper(.))
 ```
@@ -1206,7 +1206,7 @@ Notice that I used the `~` here in the function call. I will explain what this d
 `relocate()` moves columns. For example, the following piece of code moves the `species` column to the front of the data frame: 
 
 
-```r
+``` r
 df.starwars %>% 
   relocate(species)
 ```
@@ -1233,7 +1233,7 @@ df.starwars %>%
 We could also move the `species` column after the name column like so: 
 
 
-```r
+``` r
 df.starwars %>% 
   relocate(species, .after = name)
 ```
@@ -1262,7 +1262,7 @@ df.starwars %>%
 `select()` allows us to select a subset of the columns in the data frame. 
 
 
-```r
+``` r
 df.starwars %>% 
   select(name, height, mass)
 ```
@@ -1287,7 +1287,7 @@ df.starwars %>%
 We can select multiple columns using the `(from:to)` syntax: 
 
 
-```r
+``` r
 df.starwars %>%  
   select(name:birth_year) # from name to birth_year
 ```
@@ -1312,7 +1312,7 @@ df.starwars %>%
 Or use a variable for column selection: 
 
 
-```r
+``` r
 columns = c("name", "height", "species")
 
 df.starwars %>% 
@@ -1339,7 +1339,7 @@ df.starwars %>%
 We can also _deselect_ (multiple) columns:
 
 
-```r
+``` r
 df.starwars %>% 
   select(-name, -(birth_year:vehicles))
 ```
@@ -1364,7 +1364,7 @@ df.starwars %>%
 And select columns by partially matching the column name:
 
 
-```r
+``` r
 df.starwars %>% 
   select(contains("_")) # every column that contains the character "_"
 ```
@@ -1387,7 +1387,7 @@ df.starwars %>%
 ```
 
 
-```r
+``` r
 df.starwars %>% 
   select(starts_with("h")) # every column that starts with an "h"
 ```
@@ -1412,7 +1412,7 @@ df.starwars %>%
 We can rename some of the columns using `select()` like so: 
 
 
-```r
+``` r
 df.starwars %>% 
   select(person = name, height, mass_kg = mass)
 ```
@@ -1439,7 +1439,7 @@ df.starwars %>%
 `where()` is a useful helper function that comes in handy, for example, when we want to select columns based on their data type. 
 
 
-```r
+``` r
 df.starwars %>% 
   select(where(fn = is.numeric)) # just select numeric columns
 ```
@@ -1464,7 +1464,7 @@ df.starwars %>%
 The following selects all columns that are not numeric: 
 
 
-```r
+``` r
 df.starwars %>% 
   select(where(fn = ~ !is.numeric(.))) # selects all columns that are not numeric
 ```
@@ -1492,7 +1492,7 @@ Note that I used `~` here to indicate that I'm creating an anonymous function to
 So, I could write the same code like so: 
 
 
-```r
+``` r
 df.starwars %>% 
   select(where(function(x) !is.numeric(x))) # selects all columns that are not numeric
 ```
@@ -1526,7 +1526,7 @@ Create a data frame that:
 - and has the `name` column renamed to `person`
 
 
-```r
+``` r
 # write your code here 
 ```
 
@@ -1535,7 +1535,7 @@ Create a data frame that:
 `mutate()` is used to change existing columns or make new ones. 
 
 
-```r
+``` r
 df.starwars %>% 
   mutate(height = height / 100, # to get height in meters
          bmi = mass / (height^2)) %>% # bmi = kg / (m^2)
@@ -1564,11 +1564,11 @@ Here, I've calculated the bmi for the different starwars characters. I first mut
 A useful helper function for `mutate()` is `ifelse()` which is a shorthand for the if-else control flow (Section \@ref(if-else)). Here is an example: 
 
 
-```r
+``` r
 df.starwars %>% 
-  mutate(height_categorical = ifelse(height > median(height, na.rm = T),
-                                     "tall",
-                                     "short")) %>% 
+  mutate(height_categorical = ifelse(test = height > median(height, na.rm = T),
+                                     yes = "tall",
+                                     no = "short")) %>% 
   select(name, contains("height"))
 ```
 
@@ -1600,7 +1600,7 @@ In previous versions of `dplyr` (the package we use for data wrangling), there w
 For example, let's imagine that we want to z-score a number of variables in our data frame. We can do this like so: 
 
 
-```r
+``` r
 df.starwars %>%  
   mutate(across(.cols = c(height, mass, birth_year),
                 .fns = scale))
@@ -1634,7 +1634,7 @@ In the `.cols = ` argument of `across()`, I've specified what variables to mutat
 We can also use names to create new columns:
 
 
-```r
+``` r
 df.starwars %>%  
   mutate(across(.cols = c(height, mass, birth_year),
                 .fns = scale,
@@ -1664,7 +1664,7 @@ I've specified how I'd like the new variables to be called by using the `.names 
 We can also apply several functions at the same time. 
 
 
-```r
+``` r
 df.starwars %>% 
   mutate(across(.cols = c(height, mass, birth_year),
                 .fns = list(z = scale,
@@ -1696,7 +1696,7 @@ Here, I've created z-scored and centered (i.e. only subtracted the mean but didn
 You can use the `everything()` helper function if you want to apply a function to all of the columns in your data frame. 
 
 
-```r
+``` r
 df.starwars %>% 
   select(height, mass) %>%
   mutate(across(.cols = everything(),
@@ -1727,7 +1727,7 @@ Sometimes, you want to apply a function only to those columns that have a partic
 For example, the following code changes all the numeric columns to character columns:
 
 
-```r
+``` r
 df.starwars %>% 
   mutate(across(.cols = where(~ is.numeric(.)),
                 .fns = ~ as.character(.)))
@@ -1755,7 +1755,7 @@ df.starwars %>%
 Or we could round all the numeric columns to one digit: 
 
 
-```r
+``` r
 df.starwars %>% 
   mutate(across(.cols = where(~ is.numeric(.)),
                 .fns = ~ round(., digits = 1)))
@@ -1790,7 +1790,7 @@ Compute the body mass index for `masculine` characters who are `human`.
 - arrange the data frame starting with the highest body mass index 
 
 
-```r
+``` r
 # write your code here 
 ```
 
@@ -1806,8 +1806,6 @@ Compute the body mass index for `masculine` characters who are `human`.
 - [dplyr](https://www.datacamp.com/courses/dplyr-data-manipulation-r-tutorial)
 - [tidyverse](https://www.datacamp.com/courses/introduction-to-the-tidyverse)
 - [working with data in the tidyverse](https://www.datacamp.com/courses/working-with-data-in-the-tidyverse)
-- [cleaning data](https://www.datacamp.com/courses/importing-cleaning-data-in-r-case-studies)
-- [cleaning data: case studies](https://www.datacamp.com/courses/importing-cleaning-data-in-r-case-studies)
 - [string manipulation in R](https://www.datacamp.com/courses/string-manipulation-in-r-with-stringr)
 - [Intermediate R](https://www.datacamp.com/courses/intermediate-r)
 - [Writing functions in R](https://www.datacamp.com/courses/introduction-to-function-writing-in-r)
@@ -1822,18 +1820,18 @@ Compute the body mass index for `masculine` characters who are `human`.
 Information about this R session including which version of R was used, and what packages were loaded. 
 
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-R version 4.3.2 (2023-10-31)
-Platform: aarch64-apple-darwin20 (64-bit)
-Running under: macOS Sonoma 14.1.2
+R version 4.4.1 (2024-06-14)
+Platform: aarch64-apple-darwin20
+Running under: macOS Sonoma 14.6
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1846,21 +1844,21 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
- [5] purrr_1.0.2     readr_2.1.4     tidyr_1.3.0     tibble_3.2.1   
- [9] ggplot2_3.4.4   tidyverse_2.0.0 DT_0.31         visdat_0.6.0   
-[13] skimr_2.1.5     knitr_1.45     
+ [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 DT_0.33         visdat_0.6.0   
+[13] skimr_2.1.5     knitr_1.48     
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
- [5] hms_1.1.3         digest_0.6.33     magrittr_2.0.3    evaluate_0.23    
- [9] grid_4.3.2        timechange_0.2.0  bookdown_0.37     fastmap_1.1.1    
+ [1] sass_0.4.9        utf8_1.2.4        generics_0.1.3    stringi_1.8.4    
+ [5] hms_1.1.3         digest_0.6.36     magrittr_2.0.3    evaluate_0.24.0  
+ [9] grid_4.4.1        timechange_0.3.0  bookdown_0.40     fastmap_1.2.0    
 [13] jsonlite_1.8.8    fansi_1.0.6       crosstalk_1.2.1   scales_1.3.0     
-[17] jquerylib_0.1.4   cli_3.6.2         rlang_1.1.2       ellipsis_0.3.2   
-[21] munsell_0.5.0     base64enc_0.1-3   withr_2.5.2       repr_1.1.6       
-[25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       tzdb_0.4.0       
-[29] colorspace_2.1-0  vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4  
-[33] htmlwidgets_1.6.4 pkgconfig_2.0.3   pillar_1.9.0      bslib_0.6.1      
-[37] gtable_0.3.4      glue_1.6.2        xfun_0.41         tidyselect_1.2.0 
-[41] highr_0.10        farver_2.1.1      htmltools_0.5.7   labeling_0.4.3   
-[45] rmarkdown_2.25    compiler_4.3.2   
+[17] jquerylib_0.1.4   cli_3.6.3         rlang_1.1.4       munsell_0.5.1    
+[21] base64enc_0.1-3   withr_3.0.0       repr_1.1.7        cachem_1.1.0     
+[25] yaml_2.3.9        tools_4.4.1       tzdb_0.4.0        colorspace_2.1-0 
+[29] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   htmlwidgets_1.6.4
+[33] pkgconfig_2.0.3   pillar_1.9.0      bslib_0.7.0       gtable_0.3.5     
+[37] glue_1.7.0        xfun_0.45         tidyselect_1.2.1  highr_0.11       
+[41] farver_2.1.2      htmltools_0.5.8.1 labeling_0.4.3    rmarkdown_2.27   
+[45] compiler_4.4.1   
 ```
