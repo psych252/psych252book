@@ -988,9 +988,9 @@ Here, I've set `color = "black"` within the `geom_smooth()` function, and now on
 
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1008,25 +1008,24 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
  [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
- [9] ggplot2_3.5.1   tidyverse_2.0.0 knitr_1.48     
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 knitr_1.49     
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.9        utf8_1.2.4        generics_0.1.3    lattice_0.22-6   
  [5] stringi_1.8.4     hms_1.1.3         digest_0.6.36     magrittr_2.0.3   
- [9] evaluate_0.24.0   grid_4.4.1        timechange_0.3.0  bookdown_0.40    
-[13] fastmap_1.2.0     Matrix_1.7-0      jsonlite_1.8.8    backports_1.5.0  
+ [9] evaluate_0.24.0   grid_4.4.2        timechange_0.3.0  bookdown_0.42    
+[13] fastmap_1.2.0     Matrix_1.7-1      jsonlite_1.8.8    backports_1.5.0  
 [17] nnet_7.3-19       Formula_1.2-5     gridExtra_2.3     mgcv_1.9-1       
 [21] fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4  
-[25] cli_3.6.3         rlang_1.1.4       splines_4.4.1     munsell_0.5.1    
-[29] Hmisc_5.1-3       base64enc_0.1-3   withr_3.0.0       cachem_1.1.0     
-[33] yaml_2.3.9        tools_4.4.1       tzdb_0.4.0        checkmate_2.3.1  
+[25] cli_3.6.3         rlang_1.1.4       splines_4.4.2     munsell_0.5.1    
+[29] Hmisc_5.2-1       base64enc_0.1-3   withr_3.0.2       cachem_1.1.0     
+[33] yaml_2.3.10       tools_4.4.2       tzdb_0.4.0        checkmate_2.3.1  
 [37] htmlTable_2.4.2   colorspace_2.1-0  rpart_4.1.23      vctrs_0.6.5      
-[41] R6_2.5.1          lifecycle_1.0.4   htmlwidgets_1.6.4 foreign_0.8-86   
+[41] R6_2.5.1          lifecycle_1.0.4   htmlwidgets_1.6.4 foreign_0.8-87   
 [45] cluster_2.1.6     pkgconfig_2.0.3   pillar_1.9.0      bslib_0.7.0      
-[49] gtable_0.3.5      data.table_1.15.4 glue_1.7.0        xfun_0.45        
-[53] tidyselect_1.2.1  highr_0.11        rstudioapi_0.16.0 farver_2.1.2     
-[57] nlme_3.1-164      htmltools_0.5.8.1 rmarkdown_2.27    labeling_0.4.3   
-[61] compiler_4.4.1   
+[49] gtable_0.3.5      data.table_1.15.4 glue_1.8.0        xfun_0.49        
+[53] tidyselect_1.2.1  rstudioapi_0.16.0 farver_2.1.2      nlme_3.1-166     
+[57] htmltools_0.5.8.1 rmarkdown_2.29    labeling_0.4.3    compiler_4.4.2   
 ```
 
 <div class="figure">

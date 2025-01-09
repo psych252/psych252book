@@ -195,7 +195,7 @@ df.internet = read_table2(file = "data/internet_access.txt") %>%
 
 ```
 
-── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 cols(
   State = col_character(),
   Internet = col_double(),
@@ -729,9 +729,9 @@ sessionInfo()
 ```
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -749,22 +749,21 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
  [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
- [9] ggplot2_3.5.1    tidyverse_2.0.0  janitor_2.2.0    kableExtra_1.4.0
-[13] knitr_1.48      
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  janitor_2.2.1    kableExtra_1.4.0
+[13] knitr_1.49      
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.9        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
  [5] lattice_0.22-6    stringi_1.8.4     hms_1.1.3         digest_0.6.36    
- [9] magrittr_2.0.3    evaluate_0.24.0   grid_4.4.1        timechange_0.3.0 
-[13] bookdown_0.40     fastmap_1.2.0     Matrix_1.7-0      jsonlite_1.8.8   
+ [9] magrittr_2.0.3    evaluate_0.24.0   grid_4.4.2        timechange_0.3.0 
+[13] bookdown_0.42     fastmap_1.2.0     Matrix_1.7-1      jsonlite_1.8.8   
 [17] mgcv_1.9-1        fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0     
 [21] jquerylib_0.1.4   cli_3.6.3         crayon_1.5.3      rlang_1.1.4      
-[25] splines_4.4.1     munsell_0.5.1     withr_3.0.0       cachem_1.1.0     
-[29] yaml_2.3.9        tools_4.4.1       tzdb_0.4.0        colorspace_2.1-0 
+[25] splines_4.4.2     munsell_0.5.1     withr_3.0.2       cachem_1.1.0     
+[29] yaml_2.3.10       tools_4.4.2       tzdb_0.4.0        colorspace_2.1-0 
 [33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   snakecase_0.11.1 
 [37] pkgconfig_2.0.3   bslib_0.7.0       pillar_1.9.0      gtable_0.3.5     
-[41] glue_1.7.0        systemfonts_1.1.0 highr_0.11        xfun_0.45        
-[45] tidyselect_1.2.1  rstudioapi_0.16.0 farver_2.1.2      nlme_3.1-164     
-[49] htmltools_0.5.8.1 labeling_0.4.3    rmarkdown_2.27    svglite_2.1.3    
-[53] compiler_4.4.1   
+[41] glue_1.8.0        systemfonts_1.1.0 xfun_0.49         tidyselect_1.2.1 
+[45] rstudioapi_0.16.0 farver_2.1.2      nlme_3.1-166      htmltools_0.5.8.1
+[49] labeling_0.4.3    rmarkdown_2.29    svglite_2.1.3     compiler_4.4.2   
 ```

@@ -883,9 +883,9 @@ sessionInfo()
 ```
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -903,39 +903,38 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
  [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
- [9] ggplot2_3.5.1    tidyverse_2.0.0  car_3.1-2        carData_3.0-5   
-[13] emmeans_1.10.3   afex_1.3-1       lme4_1.1-35.5    Matrix_1.7-0    
-[17] broom_1.0.6      janitor_2.2.0    kableExtra_1.4.0 knitr_1.48      
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  car_3.1-3        carData_3.0-5   
+[13] emmeans_1.10.6   afex_1.4-1       lme4_1.1-35.5    Matrix_1.7-1    
+[17] broom_1.0.7      janitor_2.2.1    kableExtra_1.4.0 knitr_1.49      
 
 loaded via a namespace (and not attached):
  [1] tidyselect_1.2.1    viridisLite_0.4.2   farver_2.1.2       
  [4] fastmap_1.2.0       rpart_4.1.23        digest_0.6.36      
  [7] timechange_0.3.0    estimability_1.5.1  lifecycle_1.0.4    
-[10] cluster_2.1.6       magrittr_2.0.3      compiler_4.4.1     
-[13] Hmisc_5.1-3         rlang_1.1.4         sass_0.4.9         
-[16] tools_4.4.1         utf8_1.2.4          yaml_2.3.9         
+[10] cluster_2.1.6       magrittr_2.0.3      compiler_4.4.2     
+[13] Hmisc_5.2-1         rlang_1.1.4         sass_0.4.9         
+[16] tools_4.4.2         utf8_1.2.4          yaml_2.3.10        
 [19] data.table_1.15.4   htmlwidgets_1.6.4   labeling_0.4.3     
 [22] bit_4.0.5           plyr_1.8.9          xml2_1.3.6         
-[25] abind_1.4-5         foreign_0.8-86      withr_3.0.0        
-[28] numDeriv_2016.8-1.1 nnet_7.3-19         grid_4.4.1         
+[25] abind_1.4-5         foreign_0.8-87      withr_3.0.2        
+[28] numDeriv_2016.8-1.1 nnet_7.3-19         grid_4.4.2         
 [31] fansi_1.0.6         xtable_1.8-4        colorspace_2.1-0   
-[34] scales_1.3.0        MASS_7.3-61         cli_3.6.3          
-[37] mvtnorm_1.2-5       rmarkdown_2.27      crayon_1.5.3       
+[34] scales_1.3.0        MASS_7.3-64         cli_3.6.3          
+[37] mvtnorm_1.2-5       rmarkdown_2.29      crayon_1.5.3       
 [40] generics_0.1.3      rstudioapi_0.16.0   reshape2_1.4.4     
 [43] tzdb_0.4.0          minqa_1.2.7         cachem_1.1.0       
-[46] splines_4.4.1       parallel_4.4.1      base64enc_0.1-3    
-[49] vctrs_0.6.5         boot_1.3-30         jsonlite_1.8.8     
-[52] bookdown_0.40       hms_1.1.3           bit64_4.0.5        
+[46] splines_4.4.2       parallel_4.4.2      base64enc_0.1-3    
+[49] vctrs_0.6.5         boot_1.3-31         jsonlite_1.8.8     
+[52] bookdown_0.42       hms_1.1.3           bit64_4.0.5        
 [55] htmlTable_2.4.2     Formula_1.2-5       systemfonts_1.1.0  
-[58] jquerylib_0.1.4     glue_1.7.0          nloptr_2.1.1       
+[58] jquerylib_0.1.4     glue_1.8.0          nloptr_2.1.1       
 [61] stringi_1.8.4       gtable_0.3.5        lmerTest_3.1-3     
 [64] munsell_0.5.1       pillar_1.9.0        htmltools_0.5.8.1  
 [67] R6_2.5.1            vroom_1.6.5         evaluate_0.24.0    
-[70] lattice_0.22-6      highr_0.11          backports_1.5.0    
-[73] snakecase_0.11.1    bslib_0.7.0         Rcpp_1.0.13        
-[76] checkmate_2.3.1     gridExtra_2.3       svglite_2.1.3      
-[79] coda_0.19-4.1       nlme_3.1-164        xfun_0.45          
-[82] pkgconfig_2.0.3    
+[70] lattice_0.22-6      backports_1.5.0     snakecase_0.11.1   
+[73] bslib_0.7.0         Rcpp_1.0.13         checkmate_2.3.1    
+[76] gridExtra_2.3       svglite_2.1.3       coda_0.19-4.1      
+[79] nlme_3.1-166        xfun_0.49           pkgconfig_2.0.3    
 ```
 
 

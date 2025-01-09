@@ -157,9 +157,9 @@ devtools::install_github("thomasp85/transformr")
 
 
 ```
-## R version 4.4.1 (2024-06-14)
+## R version 4.4.2 (2024-10-31)
 ## Platform: aarch64-apple-darwin20
-## Running under: macOS Sonoma 14.6
+## Running under: macOS Sequoia 15.2
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -175,9 +175,9 @@ devtools::install_github("thomasp85/transformr")
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] digest_0.6.36     R6_2.5.1          bookdown_0.40     fastmap_1.2.0    
-##  [5] xfun_0.45         cachem_1.1.0      knitr_1.48        htmltools_0.5.8.1
-##  [9] rmarkdown_2.27    lifecycle_1.0.4   cli_3.6.3         sass_0.4.9       
-## [13] jquerylib_0.1.4   compiler_4.4.1    tools_4.4.1       evaluate_0.24.0  
-## [17] bslib_0.7.0       yaml_2.3.9        rlang_1.1.4       jsonlite_1.8.8
+##  [1] digest_0.6.36     R6_2.5.1          bookdown_0.42     fastmap_1.2.0    
+##  [5] xfun_0.49         cachem_1.1.0      knitr_1.49        htmltools_0.5.8.1
+##  [9] rmarkdown_2.29    lifecycle_1.0.4   cli_3.6.3         sass_0.4.9       
+## [13] jquerylib_0.1.4   compiler_4.4.2    tools_4.4.2       evaluate_0.24.0  
+## [17] bslib_0.7.0       yaml_2.3.10       rlang_1.1.4       jsonlite_1.8.8
 ```

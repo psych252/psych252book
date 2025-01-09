@@ -34,7 +34,7 @@ numbers %>%
 ```
 
 ```
- [1] 3 2 2 2 1 1 2 3 3 2
+ [1] 1 2 3 1 3 2 3 2 3 2
 ```
 
 Use the `prob = ` argument to change the probability with which each number should be drawn. 
@@ -50,7 +50,7 @@ numbers %>%
 ```
 
 ```
- [1] 2 1 1 1 1 1 1 1 1 1
+ [1] 1 1 1 1 1 2 1 1 1 3
 ```
 
 Make sure to set the seed in order to make your code reproducible. The code chunk below may give a different outcome each time is run. 
@@ -65,7 +65,7 @@ numbers %>%
 ```
 
 ```
-[1] 3 4 5 2 1
+[1] 4 1 3 2 5
 ```
 
 The chunk below will produce the same outcome every time it's run. 
@@ -1197,9 +1197,9 @@ sessionInfo()
 ```
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1217,20 +1217,20 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
  [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
- [9] ggplot2_3.5.1    tidyverse_2.0.0  patchwork_1.2.0  MASS_7.3-61     
-[13] kableExtra_1.4.0 knitr_1.48      
+ [9] ggplot2_3.5.1    tidyverse_2.0.0  patchwork_1.3.0  MASS_7.3-64     
+[13] kableExtra_1.4.0 knitr_1.49      
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.9        utf8_1.2.4        generics_0.1.3    xml2_1.3.6       
  [5] stringi_1.8.4     hms_1.1.3         digest_0.6.36     magrittr_2.0.3   
- [9] evaluate_0.24.0   grid_4.4.1        timechange_0.3.0  bookdown_0.40    
+ [9] timechange_0.3.0  evaluate_0.24.0   grid_4.4.2        bookdown_0.42    
 [13] fastmap_1.2.0     jsonlite_1.8.8    fansi_1.0.6       viridisLite_0.4.2
 [17] scales_1.3.0      jquerylib_0.1.4   cli_3.6.3         crayon_1.5.3     
-[21] rlang_1.1.4       munsell_0.5.1     withr_3.0.0       cachem_1.1.0     
-[25] yaml_2.3.9        tools_4.4.1       tzdb_0.4.0        colorspace_2.1-0 
+[21] rlang_1.1.4       munsell_0.5.1     withr_3.0.2       cachem_1.1.0     
+[25] yaml_2.3.10       tools_4.4.2       tzdb_0.4.0        colorspace_2.1-0 
 [29] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   pkgconfig_2.0.3  
-[33] pillar_1.9.0      bslib_0.7.0       gtable_0.3.5      glue_1.7.0       
-[37] systemfonts_1.1.0 highr_0.11        xfun_0.45         tidyselect_1.2.1 
-[41] rstudioapi_0.16.0 farver_2.1.2      htmltools_0.5.8.1 labeling_0.4.3   
-[45] rmarkdown_2.27    svglite_2.1.3     compiler_4.4.1   
+[33] pillar_1.9.0      bslib_0.7.0       gtable_0.3.5      glue_1.8.0       
+[37] systemfonts_1.1.0 xfun_0.49         tidyselect_1.2.1  rstudioapi_0.16.0
+[41] farver_2.1.2      htmltools_0.5.8.1 labeling_0.4.3    rmarkdown_2.29   
+[45] svglite_2.1.3     compiler_4.4.2   
 ```

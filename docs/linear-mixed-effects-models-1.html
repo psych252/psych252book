@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Linear mixed effects models 1 | Psych 252: Statistical Methods for Behavioral and Social Sciences</title>
   <meta name="description" content="Course notes for Psych 252." />
-  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Linear mixed effects models 1 | Psych 252: Statistical Methods for Behavioral and Social Sciences" />
   <meta property="og:type" content="book" />
@@ -23,14 +23,14 @@
 <meta name="author" content="Tobias Gerstenberg" />
 
 
-<meta name="date" content="2024-08-16" />
+<meta name="date" content="2025-01-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="causation.html"/>
+<link rel="prev" href="model-comparison.html"/>
 <link rel="next" href="linear-mixed-effects-models-2.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -68,8 +68,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -79,7 +80,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -536,90 +537,79 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="13.7" data-path="linear-model-4.html"><a href="linear-model-4.html#session-info-12"><i class="fa fa-check"></i><b>13.7</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>14</b> Power analysis</a>
+<li class="chapter" data-level="14" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>14</b> Generalized linear model</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="power-analysis.html"><a href="power-analysis.html#learning-goals-5"><i class="fa fa-check"></i><b>14.1</b> Learning goals</a></li>
-<li class="chapter" data-level="14.2" data-path="power-analysis.html"><a href="power-analysis.html#load-packages-and-set-plotting-theme-7"><i class="fa fa-check"></i><b>14.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="14.3" data-path="power-analysis.html"><a href="power-analysis.html#load-data-sets-3"><i class="fa fa-check"></i><b>14.3</b> Load data sets</a></li>
-<li class="chapter" data-level="14.4" data-path="power-analysis.html"><a href="power-analysis.html#decision-making"><i class="fa fa-check"></i><b>14.4</b> Decision-making</a></li>
-<li class="chapter" data-level="14.5" data-path="power-analysis.html"><a href="power-analysis.html#effect-sizes"><i class="fa fa-check"></i><b>14.5</b> Effect sizes</a>
+<li class="chapter" data-level="14.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#learning-goals-5"><i class="fa fa-check"></i><b>14.1</b> Learning goals</a></li>
+<li class="chapter" data-level="14.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-packages-and-set-plotting-theme-7"><i class="fa fa-check"></i><b>14.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="14.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set"><i class="fa fa-check"></i><b>14.3</b> Load data set</a></li>
+<li class="chapter" data-level="14.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>14.4</b> Logistic regression</a>
 <ul>
-<li class="chapter" data-level="14.5.1" data-path="power-analysis.html"><a href="power-analysis.html#cohens-d"><i class="fa fa-check"></i><b>14.5.1</b> Cohen’s d</a></li>
+<li class="chapter" data-level="14.4.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#interpreting-the-parameters"><i class="fa fa-check"></i><b>14.4.1</b> Interpreting the parameters</a></li>
+<li class="chapter" data-level="14.4.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#binary-predictor"><i class="fa fa-check"></i><b>14.4.2</b> Binary predictor</a></li>
+<li class="chapter" data-level="14.4.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#continuous-predictor"><i class="fa fa-check"></i><b>14.4.3</b> Continuous predictor</a></li>
+<li class="chapter" data-level="14.4.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#several-predictors"><i class="fa fa-check"></i><b>14.4.4</b> Several predictors</a></li>
+<li class="chapter" data-level="14.4.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#using-the-ggeffects-package"><i class="fa fa-check"></i><b>14.4.5</b> Using the “ggeffects” package</a></li>
 </ul></li>
-<li class="chapter" data-level="14.6" data-path="power-analysis.html"><a href="power-analysis.html#determining-sample-size"><i class="fa fa-check"></i><b>14.6</b> Determining sample size</a>
+<li class="chapter" data-level="14.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>14.5</b> Simulate a logistic regression</a>
 <ul>
-<li class="chapter" data-level="14.6.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>14.6.1</b> <code>pwr</code> package</a></li>
-<li class="chapter" data-level="14.6.2" data-path="power-analysis.html"><a href="power-analysis.html#power-analysis-1"><i class="fa fa-check"></i><b>14.6.2</b> Power analysis</a></li>
+<li class="chapter" data-level="14.5.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#calculate-the-models-likelihood"><i class="fa fa-check"></i><b>14.5.1</b> Calculate the model’s likelihood</a></li>
 </ul></li>
-<li class="chapter" data-level="14.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-12"><i class="fa fa-check"></i><b>14.7</b> Additional resources</a>
+<li class="chapter" data-level="14.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>14.6</b> Testing hypotheses</a></li>
+<li class="chapter" data-level="14.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>14.7</b> Additional information</a>
 <ul>
-<li class="chapter" data-level="14.7.1" data-path="power-analysis.html"><a href="power-analysis.html#datacamp-6"><i class="fa fa-check"></i><b>14.7.1</b> Datacamp</a></li>
-<li class="chapter" data-level="14.7.2" data-path="power-analysis.html"><a href="power-analysis.html#cheatsheets-5"><i class="fa fa-check"></i><b>14.7.2</b> Cheatsheets</a></li>
-<li class="chapter" data-level="14.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-9"><i class="fa fa-check"></i><b>14.7.3</b> Misc</a></li>
+<li class="chapter" data-level="14.7.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#misc-9"><i class="fa fa-check"></i><b>14.7.1</b> Misc</a></li>
+<li class="chapter" data-level="14.7.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-6"><i class="fa fa-check"></i><b>14.7.2</b> Datacamp</a></li>
 </ul></li>
-<li class="chapter" data-level="14.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-13"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
+<li class="chapter" data-level="14.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-13"><i class="fa fa-check"></i><b>14.8</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>15</b> Model comparison</a>
+<li class="chapter" data-level="15" data-path="power-analysis.html"><a href="power-analysis.html"><i class="fa fa-check"></i><b>15</b> Power analysis</a>
 <ul>
-<li class="chapter" data-level="15.1" data-path="model-comparison.html"><a href="model-comparison.html#learning-goals-6"><i class="fa fa-check"></i><b>15.1</b> Learning goals</a></li>
-<li class="chapter" data-level="15.2" data-path="model-comparison.html"><a href="model-comparison.html#load-packages-and-set-plotting-theme-8"><i class="fa fa-check"></i><b>15.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="15.3" data-path="model-comparison.html"><a href="model-comparison.html#model-comparison-1"><i class="fa fa-check"></i><b>15.3</b> Model comparison</a>
+<li class="chapter" data-level="15.1" data-path="power-analysis.html"><a href="power-analysis.html#learning-goals-6"><i class="fa fa-check"></i><b>15.1</b> Learning goals</a></li>
+<li class="chapter" data-level="15.2" data-path="power-analysis.html"><a href="power-analysis.html#load-packages-and-set-plotting-theme-8"><i class="fa fa-check"></i><b>15.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="15.3" data-path="power-analysis.html"><a href="power-analysis.html#load-data-sets-3"><i class="fa fa-check"></i><b>15.3</b> Load data sets</a></li>
+<li class="chapter" data-level="15.4" data-path="power-analysis.html"><a href="power-analysis.html#decision-making"><i class="fa fa-check"></i><b>15.4</b> Decision-making</a></li>
+<li class="chapter" data-level="15.5" data-path="power-analysis.html"><a href="power-analysis.html#effect-sizes"><i class="fa fa-check"></i><b>15.5</b> Effect sizes</a>
 <ul>
-<li class="chapter" data-level="15.3.1" data-path="model-comparison.html"><a href="model-comparison.html#fitting-vs.-predicting"><i class="fa fa-check"></i><b>15.3.1</b> Fitting vs. predicting</a></li>
-<li class="chapter" data-level="15.3.2" data-path="model-comparison.html"><a href="model-comparison.html#f-test"><i class="fa fa-check"></i><b>15.3.2</b> F-test</a></li>
-<li class="chapter" data-level="15.3.3" data-path="model-comparison.html"><a href="model-comparison.html#cross-validation"><i class="fa fa-check"></i><b>15.3.3</b> Cross-validation</a></li>
-<li class="chapter" data-level="15.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>15.3.4</b> Bootstrap</a></li>
-<li class="chapter" data-level="15.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>15.3.5</b> AIC and BIC</a></li>
+<li class="chapter" data-level="15.5.1" data-path="power-analysis.html"><a href="power-analysis.html#cohens-d"><i class="fa fa-check"></i><b>15.5.1</b> Cohen’s d</a></li>
 </ul></li>
-<li class="chapter" data-level="15.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-13"><i class="fa fa-check"></i><b>15.4</b> Additional resources</a>
+<li class="chapter" data-level="15.6" data-path="power-analysis.html"><a href="power-analysis.html#determining-sample-size"><i class="fa fa-check"></i><b>15.6</b> Determining sample size</a>
 <ul>
-<li class="chapter" data-level="15.4.1" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>15.4.1</b> Datacamp course</a></li>
-<li class="chapter" data-level="15.4.2" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>15.4.2</b> Reading</a></li>
+<li class="chapter" data-level="15.6.1" data-path="power-analysis.html"><a href="power-analysis.html#pwr-package"><i class="fa fa-check"></i><b>15.6.1</b> <code>pwr</code> package</a></li>
+<li class="chapter" data-level="15.6.2" data-path="power-analysis.html"><a href="power-analysis.html#power-analysis-1"><i class="fa fa-check"></i><b>15.6.2</b> Power analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="15.5" data-path="model-comparison.html"><a href="model-comparison.html#session-info-14"><i class="fa fa-check"></i><b>15.5</b> Session info</a></li>
-</ul></li>
-<li class="chapter" data-level="16" data-path="causation.html"><a href="causation.html"><i class="fa fa-check"></i><b>16</b> Causation</a>
+<li class="chapter" data-level="15.7" data-path="power-analysis.html"><a href="power-analysis.html#additional-resources-12"><i class="fa fa-check"></i><b>15.7</b> Additional resources</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="causation.html"><a href="causation.html#learning-goals-7"><i class="fa fa-check"></i><b>16.1</b> Learning goals</a></li>
-<li class="chapter" data-level="16.2" data-path="causation.html"><a href="causation.html#recommended-reading"><i class="fa fa-check"></i><b>16.2</b> Recommended reading</a></li>
-<li class="chapter" data-level="16.3" data-path="causation.html"><a href="causation.html#load-packages-and-set-plotting-theme-9"><i class="fa fa-check"></i><b>16.3</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="16.4" data-path="causation.html"><a href="causation.html#bayesian-networks"><i class="fa fa-check"></i><b>16.4</b> Bayesian networks</a>
-<ul>
-<li class="chapter" data-level="16.4.1" data-path="causation.html"><a href="causation.html#sprinkler-example"><i class="fa fa-check"></i><b>16.4.1</b> Sprinkler example</a></li>
+<li class="chapter" data-level="15.7.1" data-path="power-analysis.html"><a href="power-analysis.html#datacamp-7"><i class="fa fa-check"></i><b>15.7.1</b> Datacamp</a></li>
+<li class="chapter" data-level="15.7.2" data-path="power-analysis.html"><a href="power-analysis.html#cheatsheets-5"><i class="fa fa-check"></i><b>15.7.2</b> Cheatsheets</a></li>
+<li class="chapter" data-level="15.7.3" data-path="power-analysis.html"><a href="power-analysis.html#misc-10"><i class="fa fa-check"></i><b>15.7.3</b> Misc</a></li>
 </ul></li>
-<li class="chapter" data-level="16.5" data-path="causation.html"><a href="causation.html#controlling-for-variables"><i class="fa fa-check"></i><b>16.5</b> Controlling for variables</a>
-<ul>
-<li class="chapter" data-level="16.5.1" data-path="causation.html"><a href="causation.html#illustration-of-the-d-separation-algorithm"><i class="fa fa-check"></i><b>16.5.1</b> Illustration of the d-separation algorithm</a></li>
-<li class="chapter" data-level="16.5.2" data-path="causation.html"><a href="causation.html#good-controls"><i class="fa fa-check"></i><b>16.5.2</b> Good controls</a></li>
-<li class="chapter" data-level="16.5.3" data-path="causation.html"><a href="causation.html#bad-controls"><i class="fa fa-check"></i><b>16.5.3</b> Bad controls</a></li>
+<li class="chapter" data-level="15.8" data-path="power-analysis.html"><a href="power-analysis.html#session-info-14"><i class="fa fa-check"></i><b>15.8</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="16.6" data-path="causation.html"><a href="causation.html#mediation"><i class="fa fa-check"></i><b>16.6</b> Mediation</a>
+<li class="chapter" data-level="16" data-path="model-comparison.html"><a href="model-comparison.html"><i class="fa fa-check"></i><b>16</b> Model comparison</a>
 <ul>
-<li class="chapter" data-level="16.6.1" data-path="causation.html"><a href="causation.html#generate-data"><i class="fa fa-check"></i><b>16.6.1</b> Generate data</a></li>
-<li class="chapter" data-level="16.6.2" data-path="causation.html"><a href="causation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>16.6.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
-<li class="chapter" data-level="16.6.3" data-path="causation.html"><a href="causation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>16.6.3</b> Method 2: Sobel Test</a></li>
-<li class="chapter" data-level="16.6.4" data-path="causation.html"><a href="causation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>16.6.4</b> Method 3: Bootstrapping</a></li>
-<li class="chapter" data-level="16.6.5" data-path="causation.html"><a href="causation.html#be-careful-about-mediation"><i class="fa fa-check"></i><b>16.6.5</b> Be careful about mediation!</a></li>
-</ul></li>
-<li class="chapter" data-level="16.7" data-path="causation.html"><a href="causation.html#moderation"><i class="fa fa-check"></i><b>16.7</b> Moderation</a>
+<li class="chapter" data-level="16.1" data-path="model-comparison.html"><a href="model-comparison.html#learning-goals-7"><i class="fa fa-check"></i><b>16.1</b> Learning goals</a></li>
+<li class="chapter" data-level="16.2" data-path="model-comparison.html"><a href="model-comparison.html#load-packages-and-set-plotting-theme-9"><i class="fa fa-check"></i><b>16.2</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="16.3" data-path="model-comparison.html"><a href="model-comparison.html#model-comparison-1"><i class="fa fa-check"></i><b>16.3</b> Model comparison</a>
 <ul>
-<li class="chapter" data-level="16.7.1" data-path="causation.html"><a href="causation.html#generate-data-1"><i class="fa fa-check"></i><b>16.7.1</b> Generate data</a></li>
-<li class="chapter" data-level="16.7.2" data-path="causation.html"><a href="causation.html#moderation-analysis"><i class="fa fa-check"></i><b>16.7.2</b> Moderation analysis</a></li>
+<li class="chapter" data-level="16.3.1" data-path="model-comparison.html"><a href="model-comparison.html#fitting-vs.-predicting"><i class="fa fa-check"></i><b>16.3.1</b> Fitting vs. predicting</a></li>
+<li class="chapter" data-level="16.3.2" data-path="model-comparison.html"><a href="model-comparison.html#f-test"><i class="fa fa-check"></i><b>16.3.2</b> F-test</a></li>
+<li class="chapter" data-level="16.3.3" data-path="model-comparison.html"><a href="model-comparison.html#cross-validation"><i class="fa fa-check"></i><b>16.3.3</b> Cross-validation</a></li>
+<li class="chapter" data-level="16.3.4" data-path="model-comparison.html"><a href="model-comparison.html#bootstrap"><i class="fa fa-check"></i><b>16.3.4</b> Bootstrap</a></li>
+<li class="chapter" data-level="16.3.5" data-path="model-comparison.html"><a href="model-comparison.html#aic-and-bic"><i class="fa fa-check"></i><b>16.3.5</b> AIC and BIC</a></li>
 </ul></li>
-<li class="chapter" data-level="16.8" data-path="causation.html"><a href="causation.html#additional-resources-14"><i class="fa fa-check"></i><b>16.8</b> Additional resources</a>
+<li class="chapter" data-level="16.4" data-path="model-comparison.html"><a href="model-comparison.html#additional-resources-13"><i class="fa fa-check"></i><b>16.4</b> Additional resources</a>
 <ul>
-<li class="chapter" data-level="16.8.1" data-path="causation.html"><a href="causation.html#books"><i class="fa fa-check"></i><b>16.8.1</b> Books</a></li>
-<li class="chapter" data-level="16.8.2" data-path="causation.html"><a href="causation.html#tutorials-1"><i class="fa fa-check"></i><b>16.8.2</b> Tutorials</a></li>
-<li class="chapter" data-level="16.8.3" data-path="causation.html"><a href="causation.html#misc-10"><i class="fa fa-check"></i><b>16.8.3</b> Misc</a></li>
+<li class="chapter" data-level="16.4.1" data-path="model-comparison.html"><a href="model-comparison.html#datacamp-course"><i class="fa fa-check"></i><b>16.4.1</b> Datacamp course</a></li>
+<li class="chapter" data-level="16.4.2" data-path="model-comparison.html"><a href="model-comparison.html#reading-1"><i class="fa fa-check"></i><b>16.4.2</b> Reading</a></li>
 </ul></li>
-<li class="chapter" data-level="16.9" data-path="causation.html"><a href="causation.html#session-info-15"><i class="fa fa-check"></i><b>16.9</b> Session info</a></li>
+<li class="chapter" data-level="16.5" data-path="model-comparison.html"><a href="model-comparison.html#session-info-15"><i class="fa fa-check"></i><b>16.5</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html"><i class="fa fa-check"></i><b>17</b> Linear mixed effects models 1</a>
 <ul>
 <li class="chapter" data-level="17.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#learning-goals-8"><i class="fa fa-check"></i><b>17.1</b> Learning goals</a></li>
 <li class="chapter" data-level="17.2" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10"><i class="fa fa-check"></i><b>17.2</b> Load packages and set plotting theme</a></li>
 <li class="chapter" data-level="17.3" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#dependence"><i class="fa fa-check"></i><b>17.3</b> Dependence</a></li>
-<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-15"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a>
+<li class="chapter" data-level="17.4" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#additional-resources-14"><i class="fa fa-check"></i><b>17.4</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="17.4.1" data-path="linear-mixed-effects-models-1.html"><a href="linear-mixed-effects-models-1.html#readings"><i class="fa fa-check"></i><b>17.4.1</b> Readings</a></li>
 </ul></li>
@@ -644,7 +634,7 @@ div.csl-indent {
 <li class="chapter" data-level="18.4.2" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#different-slopes"><i class="fa fa-check"></i><b>18.4.2</b> Different slopes</a></li>
 <li class="chapter" data-level="18.4.3" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#simpsons-paradox"><i class="fa fa-check"></i><b>18.4.3</b> Simpson’s paradox</a></li>
 </ul></li>
-<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-16"><i class="fa fa-check"></i><b>18.5</b> Additional resources</a>
+<li class="chapter" data-level="18.5" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#additional-resources-15"><i class="fa fa-check"></i><b>18.5</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="18.5.1" data-path="linear-mixed-effects-models-2.html"><a href="linear-mixed-effects-models-2.html#readings-1"><i class="fa fa-check"></i><b>18.5.1</b> Readings</a></li>
 </ul></li>
@@ -665,7 +655,7 @@ div.csl-indent {
 <li class="chapter" data-level="19.5.2" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#repeated-measures-anova"><i class="fa fa-check"></i><b>19.5.2</b> Repeated-measures ANOVA</a></li>
 <li class="chapter" data-level="19.5.3" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#mixed-anova"><i class="fa fa-check"></i><b>19.5.3</b> Mixed ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#additional-resources-17"><i class="fa fa-check"></i><b>19.6</b> Additional resources</a>
+<li class="chapter" data-level="19.6" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#additional-resources-16"><i class="fa fa-check"></i><b>19.6</b> Additional resources</a>
 <ul>
 <li class="chapter" data-level="19.6.1" data-path="linear-mixed-effects-models-3.html"><a href="linear-mixed-effects-models-3.html#readings-2"><i class="fa fa-check"></i><b>19.6.1</b> Readings</a></li>
 </ul></li>
@@ -699,33 +689,44 @@ div.csl-indent {
 <li class="chapter" data-level="20.7.1" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#linear-model"><i class="fa fa-check"></i><b>20.7.1</b> Linear model</a></li>
 <li class="chapter" data-level="20.7.2" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#linear-mixed-effects-model"><i class="fa fa-check"></i><b>20.7.2</b> Linear mixed effects model</a></li>
 </ul></li>
-<li class="chapter" data-level="20.8" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#session-info-19"><i class="fa fa-check"></i><b>20.8</b> Session info</a></li>
+<li class="chapter" data-level="20.8" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>20.8</b> Logistic mixed effects model</a></li>
+<li class="chapter" data-level="20.9" data-path="linear-mixed-effects-models-4.html"><a href="linear-mixed-effects-models-4.html#session-info-19"><i class="fa fa-check"></i><b>20.9</b> Session info</a></li>
 </ul></li>
-<li class="chapter" data-level="21" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html"><i class="fa fa-check"></i><b>21</b> Generalized linear model</a>
+<li class="chapter" data-level="21" data-path="causation.html"><a href="causation.html"><i class="fa fa-check"></i><b>21</b> Causation</a>
 <ul>
-<li class="chapter" data-level="21.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#learning-goals-12"><i class="fa fa-check"></i><b>21.1</b> Learning goals</a></li>
-<li class="chapter" data-level="21.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-packages-and-set-plotting-theme-14"><i class="fa fa-check"></i><b>21.2</b> Load packages and set plotting theme</a></li>
-<li class="chapter" data-level="21.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#load-data-set"><i class="fa fa-check"></i><b>21.3</b> Load data set</a></li>
-<li class="chapter" data-level="21.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-regression"><i class="fa fa-check"></i><b>21.4</b> Logistic regression</a>
+<li class="chapter" data-level="21.1" data-path="causation.html"><a href="causation.html#learning-goals-12"><i class="fa fa-check"></i><b>21.1</b> Learning goals</a></li>
+<li class="chapter" data-level="21.2" data-path="causation.html"><a href="causation.html#recommended-reading"><i class="fa fa-check"></i><b>21.2</b> Recommended reading</a></li>
+<li class="chapter" data-level="21.3" data-path="causation.html"><a href="causation.html#load-packages-and-set-plotting-theme-14"><i class="fa fa-check"></i><b>21.3</b> Load packages and set plotting theme</a></li>
+<li class="chapter" data-level="21.4" data-path="causation.html"><a href="causation.html#bayesian-networks"><i class="fa fa-check"></i><b>21.4</b> Bayesian networks</a>
 <ul>
-<li class="chapter" data-level="21.4.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#interpreting-the-parameters"><i class="fa fa-check"></i><b>21.4.1</b> Interpreting the parameters</a></li>
-<li class="chapter" data-level="21.4.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#binary-predictor"><i class="fa fa-check"></i><b>21.4.2</b> Binary predictor</a></li>
-<li class="chapter" data-level="21.4.3" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#continuous-predictor"><i class="fa fa-check"></i><b>21.4.3</b> Continuous predictor</a></li>
-<li class="chapter" data-level="21.4.4" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#several-predictors"><i class="fa fa-check"></i><b>21.4.4</b> Several predictors</a></li>
-<li class="chapter" data-level="21.4.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#using-the-ggeffects-package"><i class="fa fa-check"></i><b>21.4.5</b> Using the “ggeffects” package</a></li>
+<li class="chapter" data-level="21.4.1" data-path="causation.html"><a href="causation.html#sprinkler-example"><i class="fa fa-check"></i><b>21.4.1</b> Sprinkler example</a></li>
 </ul></li>
-<li class="chapter" data-level="21.5" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#simulate-a-logistic-regression"><i class="fa fa-check"></i><b>21.5</b> Simulate a logistic regression</a>
+<li class="chapter" data-level="21.5" data-path="causation.html"><a href="causation.html#controlling-for-variables"><i class="fa fa-check"></i><b>21.5</b> Controlling for variables</a>
 <ul>
-<li class="chapter" data-level="21.5.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#calculate-the-models-likelihood"><i class="fa fa-check"></i><b>21.5.1</b> Calculate the model’s likelihood</a></li>
+<li class="chapter" data-level="21.5.1" data-path="causation.html"><a href="causation.html#illustration-of-the-d-separation-algorithm"><i class="fa fa-check"></i><b>21.5.1</b> Illustration of the d-separation algorithm</a></li>
+<li class="chapter" data-level="21.5.2" data-path="causation.html"><a href="causation.html#good-controls"><i class="fa fa-check"></i><b>21.5.2</b> Good controls</a></li>
+<li class="chapter" data-level="21.5.3" data-path="causation.html"><a href="causation.html#bad-controls"><i class="fa fa-check"></i><b>21.5.3</b> Bad controls</a></li>
 </ul></li>
-<li class="chapter" data-level="21.6" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#testing-hypotheses"><i class="fa fa-check"></i><b>21.6</b> Testing hypotheses</a></li>
-<li class="chapter" data-level="21.7" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#logistic-mixed-effects-model"><i class="fa fa-check"></i><b>21.7</b> Logistic mixed effects model</a></li>
-<li class="chapter" data-level="21.8" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#additional-information"><i class="fa fa-check"></i><b>21.8</b> Additional information</a>
+<li class="chapter" data-level="21.6" data-path="causation.html"><a href="causation.html#mediation"><i class="fa fa-check"></i><b>21.6</b> Mediation</a>
 <ul>
-<li class="chapter" data-level="21.8.1" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#misc-11"><i class="fa fa-check"></i><b>21.8.1</b> Misc</a></li>
-<li class="chapter" data-level="21.8.2" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#datacamp-7"><i class="fa fa-check"></i><b>21.8.2</b> Datacamp</a></li>
+<li class="chapter" data-level="21.6.1" data-path="causation.html"><a href="causation.html#generate-data"><i class="fa fa-check"></i><b>21.6.1</b> Generate data</a></li>
+<li class="chapter" data-level="21.6.2" data-path="causation.html"><a href="causation.html#method-1-baron-kennys-1986-indirect-effect-method"><i class="fa fa-check"></i><b>21.6.2</b> Method 1: Baron &amp; Kenny’s (1986) indirect effect method</a></li>
+<li class="chapter" data-level="21.6.3" data-path="causation.html"><a href="causation.html#method-2-sobel-test"><i class="fa fa-check"></i><b>21.6.3</b> Method 2: Sobel Test</a></li>
+<li class="chapter" data-level="21.6.4" data-path="causation.html"><a href="causation.html#method-3-bootstrapping"><i class="fa fa-check"></i><b>21.6.4</b> Method 3: Bootstrapping</a></li>
+<li class="chapter" data-level="21.6.5" data-path="causation.html"><a href="causation.html#be-careful-about-mediation"><i class="fa fa-check"></i><b>21.6.5</b> Be careful about mediation!</a></li>
 </ul></li>
-<li class="chapter" data-level="21.9" data-path="generalized-linear-model.html"><a href="generalized-linear-model.html#session-info-20"><i class="fa fa-check"></i><b>21.9</b> Session info</a></li>
+<li class="chapter" data-level="21.7" data-path="causation.html"><a href="causation.html#moderation"><i class="fa fa-check"></i><b>21.7</b> Moderation</a>
+<ul>
+<li class="chapter" data-level="21.7.1" data-path="causation.html"><a href="causation.html#generate-data-1"><i class="fa fa-check"></i><b>21.7.1</b> Generate data</a></li>
+<li class="chapter" data-level="21.7.2" data-path="causation.html"><a href="causation.html#moderation-analysis"><i class="fa fa-check"></i><b>21.7.2</b> Moderation analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="21.8" data-path="causation.html"><a href="causation.html#additional-resources-17"><i class="fa fa-check"></i><b>21.8</b> Additional resources</a>
+<ul>
+<li class="chapter" data-level="21.8.1" data-path="causation.html"><a href="causation.html#books"><i class="fa fa-check"></i><b>21.8.1</b> Books</a></li>
+<li class="chapter" data-level="21.8.2" data-path="causation.html"><a href="causation.html#tutorials-1"><i class="fa fa-check"></i><b>21.8.2</b> Tutorials</a></li>
+<li class="chapter" data-level="21.8.3" data-path="causation.html"><a href="causation.html#misc-11"><i class="fa fa-check"></i><b>21.8.3</b> Misc</a></li>
+</ul></li>
+<li class="chapter" data-level="21.9" data-path="causation.html"><a href="causation.html#session-info-20"><i class="fa fa-check"></i><b>21.9</b> Session info</a></li>
 </ul></li>
 <li class="chapter" data-level="22" data-path="bayesian-data-analysis-1.html"><a href="bayesian-data-analysis-1.html"><i class="fa fa-check"></i><b>22</b> Bayesian data analysis 1</a>
 <ul>
@@ -893,84 +894,84 @@ div.csl-indent {
 </div>
 <div id="load-packages-and-set-plotting-theme-10" class="section level2 hasAnchor" number="17.2">
 <h2><span class="header-section-number">17.2</span> Load packages and set plotting theme<a href="linear-mixed-effects-models-1.html#load-packages-and-set-plotting-theme-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb979"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb979-1"><a href="linear-mixed-effects-models-1.html#cb979-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)        <span class="co"># for knitting RMarkdown </span></span>
-<span id="cb979-2"><a href="linear-mixed-effects-models-1.html#cb979-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>)   <span class="co"># for making nice tables</span></span>
-<span id="cb979-3"><a href="linear-mixed-effects-models-1.html#cb979-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)      <span class="co"># for cleaning column names</span></span>
-<span id="cb979-4"><a href="linear-mixed-effects-models-1.html#cb979-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;broom.mixed&quot;</span>)  <span class="co"># for tidying up linear models </span></span>
-<span id="cb979-5"><a href="linear-mixed-effects-models-1.html#cb979-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)    <span class="co"># for making figure panels</span></span>
-<span id="cb979-6"><a href="linear-mixed-effects-models-1.html#cb979-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;lme4&quot;</span>)         <span class="co"># for linear mixed effects models</span></span>
-<span id="cb979-7"><a href="linear-mixed-effects-models-1.html#cb979-7" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)    <span class="co"># for wrangling, plotting, etc. </span></span></code></pre></div>
-<div class="sourceCode" id="cb980"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb980-1"><a href="linear-mixed-effects-models-1.html#cb980-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
-<span id="cb980-2"><a href="linear-mixed-effects-models-1.html#cb980-2" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))) <span class="co">#set the default text size</span></span>
-<span id="cb980-3"><a href="linear-mixed-effects-models-1.html#cb980-3" tabindex="-1"></a></span>
-<span id="cb980-4"><a href="linear-mixed-effects-models-1.html#cb980-4" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb980-5"><a href="linear-mixed-effects-models-1.html#cb980-5" tabindex="-1"></a>               <span class="at">fig.show =</span> <span class="st">&quot;hold&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb959"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb959-1"><a href="linear-mixed-effects-models-1.html#cb959-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;knitr&quot;</span>)        <span class="co"># for knitting RMarkdown </span></span>
+<span id="cb959-2"><a href="linear-mixed-effects-models-1.html#cb959-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;kableExtra&quot;</span>)   <span class="co"># for making nice tables</span></span>
+<span id="cb959-3"><a href="linear-mixed-effects-models-1.html#cb959-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;janitor&quot;</span>)      <span class="co"># for cleaning column names</span></span>
+<span id="cb959-4"><a href="linear-mixed-effects-models-1.html#cb959-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;broom.mixed&quot;</span>)  <span class="co"># for tidying up linear models </span></span>
+<span id="cb959-5"><a href="linear-mixed-effects-models-1.html#cb959-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;patchwork&quot;</span>)    <span class="co"># for making figure panels</span></span>
+<span id="cb959-6"><a href="linear-mixed-effects-models-1.html#cb959-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;lme4&quot;</span>)         <span class="co"># for linear mixed effects models</span></span>
+<span id="cb959-7"><a href="linear-mixed-effects-models-1.html#cb959-7" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)    <span class="co"># for wrangling, plotting, etc. </span></span></code></pre></div>
+<div class="sourceCode" id="cb960"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb960-1"><a href="linear-mixed-effects-models-1.html#cb960-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="co">#set the theme </span></span>
+<span id="cb960-2"><a href="linear-mixed-effects-models-1.html#cb960-2" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))) <span class="co">#set the default text size</span></span>
+<span id="cb960-3"><a href="linear-mixed-effects-models-1.html#cb960-3" tabindex="-1"></a></span>
+<span id="cb960-4"><a href="linear-mixed-effects-models-1.html#cb960-4" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">comment =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb960-5"><a href="linear-mixed-effects-models-1.html#cb960-5" tabindex="-1"></a>               <span class="at">fig.show =</span> <span class="st">&quot;hold&quot;</span>)</span></code></pre></div>
 </div>
 <div id="dependence" class="section level2 hasAnchor" number="17.3">
 <h2><span class="header-section-number">17.3</span> Dependence<a href="linear-mixed-effects-models-1.html#dependence" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s generate a data set in which two observations from the same participants are dependent, and then let’s also shuffle this data set to see whether taking into account the dependence in the data matters.</p>
-<div class="sourceCode" id="cb981"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb981-1"><a href="linear-mixed-effects-models-1.html#cb981-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb981-2"><a href="linear-mixed-effects-models-1.html#cb981-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb981-3"><a href="linear-mixed-effects-models-1.html#cb981-3" tabindex="-1"></a></span>
-<span id="cb981-4"><a href="linear-mixed-effects-models-1.html#cb981-4" tabindex="-1"></a>df.dependence <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
-<span id="cb981-5"><a href="linear-mixed-effects-models-1.html#cb981-5" tabindex="-1"></a>                       <span class="at">condition1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>),</span>
-<span id="cb981-6"><a href="linear-mixed-effects-models-1.html#cb981-6" tabindex="-1"></a>                       <span class="at">condition2 =</span> condition1 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="fl">0.2</span>, <span class="at">sd =</span> <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb981-7"><a href="linear-mixed-effects-models-1.html#cb981-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition2shuffled =</span> <span class="fu">sample</span>(condition2)) <span class="co"># shuffles the condition label</span></span></code></pre></div>
+<div class="sourceCode" id="cb961"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb961-1"><a href="linear-mixed-effects-models-1.html#cb961-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
+<span id="cb961-2"><a href="linear-mixed-effects-models-1.html#cb961-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb961-3"><a href="linear-mixed-effects-models-1.html#cb961-3" tabindex="-1"></a></span>
+<span id="cb961-4"><a href="linear-mixed-effects-models-1.html#cb961-4" tabindex="-1"></a>df.dependence <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">participant =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
+<span id="cb961-5"><a href="linear-mixed-effects-models-1.html#cb961-5" tabindex="-1"></a>                       <span class="at">condition1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>),</span>
+<span id="cb961-6"><a href="linear-mixed-effects-models-1.html#cb961-6" tabindex="-1"></a>                       <span class="at">condition2 =</span> condition1 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="fl">0.2</span>, <span class="at">sd =</span> <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb961-7"><a href="linear-mixed-effects-models-1.html#cb961-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition2shuffled =</span> <span class="fu">sample</span>(condition2)) <span class="co"># shuffles the condition label</span></span></code></pre></div>
 <p>Let’s visualize the original and shuffled data set:</p>
-<div class="sourceCode" id="cb982"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb982-1"><a href="linear-mixed-effects-models-1.html#cb982-1" tabindex="-1"></a>df.plot <span class="ot">=</span> df.dependence <span class="sc">%&gt;%</span> </span>
-<span id="cb982-2"><a href="linear-mixed-effects-models-1.html#cb982-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb982-3"><a href="linear-mixed-effects-models-1.html#cb982-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;condition&quot;</span>,</span>
-<span id="cb982-4"><a href="linear-mixed-effects-models-1.html#cb982-4" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb982-5"><a href="linear-mixed-effects-models-1.html#cb982-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">str_replace</span>(condition, <span class="st">&quot;condition&quot;</span>, <span class="st">&quot;&quot;</span>))</span>
-<span id="cb982-6"><a href="linear-mixed-effects-models-1.html#cb982-6" tabindex="-1"></a></span>
-<span id="cb982-7"><a href="linear-mixed-effects-models-1.html#cb982-7" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.plot <span class="sc">%&gt;%</span> </span>
-<span id="cb982-8"><a href="linear-mixed-effects-models-1.html#cb982-8" tabindex="-1"></a>              <span class="fu">filter</span>(condition <span class="sc">!=</span> <span class="st">&quot;2shuffled&quot;</span>), </span>
-<span id="cb982-9"><a href="linear-mixed-effects-models-1.html#cb982-9" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb982-10"><a href="linear-mixed-effects-models-1.html#cb982-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> participant), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb982-11"><a href="linear-mixed-effects-models-1.html#cb982-11" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb982-12"><a href="linear-mixed-effects-models-1.html#cb982-12" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>, </span>
-<span id="cb982-13"><a href="linear-mixed-effects-models-1.html#cb982-13" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
-<span id="cb982-14"><a href="linear-mixed-effects-models-1.html#cb982-14" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">21</span>, </span>
-<span id="cb982-15"><a href="linear-mixed-effects-models-1.html#cb982-15" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb982-16"><a href="linear-mixed-effects-models-1.html#cb982-16" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb982-17"><a href="linear-mixed-effects-models-1.html#cb982-17" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;original&quot;</span>,</span>
-<span id="cb982-18"><a href="linear-mixed-effects-models-1.html#cb982-18" tabindex="-1"></a>       <span class="at">tag =</span> <span class="st">&quot;a)&quot;</span>)</span>
-<span id="cb982-19"><a href="linear-mixed-effects-models-1.html#cb982-19" tabindex="-1"></a></span>
-<span id="cb982-20"><a href="linear-mixed-effects-models-1.html#cb982-20" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.plot <span class="sc">%&gt;%</span> </span>
-<span id="cb982-21"><a href="linear-mixed-effects-models-1.html#cb982-21" tabindex="-1"></a>              <span class="fu">filter</span>(condition <span class="sc">!=</span> <span class="st">&quot;2&quot;</span>), </span>
-<span id="cb982-22"><a href="linear-mixed-effects-models-1.html#cb982-22" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb982-23"><a href="linear-mixed-effects-models-1.html#cb982-23" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> participant), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb982-24"><a href="linear-mixed-effects-models-1.html#cb982-24" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb982-25"><a href="linear-mixed-effects-models-1.html#cb982-25" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>, </span>
-<span id="cb982-26"><a href="linear-mixed-effects-models-1.html#cb982-26" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
-<span id="cb982-27"><a href="linear-mixed-effects-models-1.html#cb982-27" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">21</span>, </span>
-<span id="cb982-28"><a href="linear-mixed-effects-models-1.html#cb982-28" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb982-29"><a href="linear-mixed-effects-models-1.html#cb982-29" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb982-30"><a href="linear-mixed-effects-models-1.html#cb982-30" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;shuffled&quot;</span>,</span>
-<span id="cb982-31"><a href="linear-mixed-effects-models-1.html#cb982-31" tabindex="-1"></a>       <span class="at">tag =</span> <span class="st">&quot;b)&quot;</span>)</span>
-<span id="cb982-32"><a href="linear-mixed-effects-models-1.html#cb982-32" tabindex="-1"></a></span>
-<span id="cb982-33"><a href="linear-mixed-effects-models-1.html#cb982-33" tabindex="-1"></a>p1 <span class="sc">+</span> p2 </span></code></pre></div>
+<div class="sourceCode" id="cb962"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb962-1"><a href="linear-mixed-effects-models-1.html#cb962-1" tabindex="-1"></a>df.plot <span class="ot">=</span> df.dependence <span class="sc">%&gt;%</span> </span>
+<span id="cb962-2"><a href="linear-mixed-effects-models-1.html#cb962-2" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb962-3"><a href="linear-mixed-effects-models-1.html#cb962-3" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;condition&quot;</span>,</span>
+<span id="cb962-4"><a href="linear-mixed-effects-models-1.html#cb962-4" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb962-5"><a href="linear-mixed-effects-models-1.html#cb962-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">str_replace</span>(condition, <span class="st">&quot;condition&quot;</span>, <span class="st">&quot;&quot;</span>))</span>
+<span id="cb962-6"><a href="linear-mixed-effects-models-1.html#cb962-6" tabindex="-1"></a></span>
+<span id="cb962-7"><a href="linear-mixed-effects-models-1.html#cb962-7" tabindex="-1"></a>p1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.plot <span class="sc">%&gt;%</span> </span>
+<span id="cb962-8"><a href="linear-mixed-effects-models-1.html#cb962-8" tabindex="-1"></a>              <span class="fu">filter</span>(condition <span class="sc">!=</span> <span class="st">&quot;2shuffled&quot;</span>), </span>
+<span id="cb962-9"><a href="linear-mixed-effects-models-1.html#cb962-9" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb962-10"><a href="linear-mixed-effects-models-1.html#cb962-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> participant), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb962-11"><a href="linear-mixed-effects-models-1.html#cb962-11" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb962-12"><a href="linear-mixed-effects-models-1.html#cb962-12" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>, </span>
+<span id="cb962-13"><a href="linear-mixed-effects-models-1.html#cb962-13" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb962-14"><a href="linear-mixed-effects-models-1.html#cb962-14" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">21</span>, </span>
+<span id="cb962-15"><a href="linear-mixed-effects-models-1.html#cb962-15" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb962-16"><a href="linear-mixed-effects-models-1.html#cb962-16" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb962-17"><a href="linear-mixed-effects-models-1.html#cb962-17" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;original&quot;</span>,</span>
+<span id="cb962-18"><a href="linear-mixed-effects-models-1.html#cb962-18" tabindex="-1"></a>       <span class="at">tag =</span> <span class="st">&quot;a)&quot;</span>)</span>
+<span id="cb962-19"><a href="linear-mixed-effects-models-1.html#cb962-19" tabindex="-1"></a></span>
+<span id="cb962-20"><a href="linear-mixed-effects-models-1.html#cb962-20" tabindex="-1"></a>p2 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df.plot <span class="sc">%&gt;%</span> </span>
+<span id="cb962-21"><a href="linear-mixed-effects-models-1.html#cb962-21" tabindex="-1"></a>              <span class="fu">filter</span>(condition <span class="sc">!=</span> <span class="st">&quot;2&quot;</span>), </span>
+<span id="cb962-22"><a href="linear-mixed-effects-models-1.html#cb962-22" tabindex="-1"></a>            <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb962-23"><a href="linear-mixed-effects-models-1.html#cb962-23" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> participant), <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb962-24"><a href="linear-mixed-effects-models-1.html#cb962-24" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb962-25"><a href="linear-mixed-effects-models-1.html#cb962-25" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">&quot;mean&quot;</span>, </span>
+<span id="cb962-26"><a href="linear-mixed-effects-models-1.html#cb962-26" tabindex="-1"></a>               <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb962-27"><a href="linear-mixed-effects-models-1.html#cb962-27" tabindex="-1"></a>               <span class="at">shape =</span> <span class="dv">21</span>, </span>
+<span id="cb962-28"><a href="linear-mixed-effects-models-1.html#cb962-28" tabindex="-1"></a>               <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb962-29"><a href="linear-mixed-effects-models-1.html#cb962-29" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb962-30"><a href="linear-mixed-effects-models-1.html#cb962-30" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;shuffled&quot;</span>,</span>
+<span id="cb962-31"><a href="linear-mixed-effects-models-1.html#cb962-31" tabindex="-1"></a>       <span class="at">tag =</span> <span class="st">&quot;b)&quot;</span>)</span>
+<span id="cb962-32"><a href="linear-mixed-effects-models-1.html#cb962-32" tabindex="-1"></a></span>
+<span id="cb962-33"><a href="linear-mixed-effects-models-1.html#cb962-33" tabindex="-1"></a>p1 <span class="sc">+</span> p2 </span></code></pre></div>
 <p><img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Let’s save the two original and shuffled data set as two separate data sets.</p>
-<div class="sourceCode" id="cb983"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb983-1"><a href="linear-mixed-effects-models-1.html#cb983-1" tabindex="-1"></a><span class="co"># separate the data sets </span></span>
-<span id="cb983-2"><a href="linear-mixed-effects-models-1.html#cb983-2" tabindex="-1"></a>df.original <span class="ot">=</span> df.dependence <span class="sc">%&gt;%</span> </span>
-<span id="cb983-3"><a href="linear-mixed-effects-models-1.html#cb983-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb983-4"><a href="linear-mixed-effects-models-1.html#cb983-4" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;condition&quot;</span>,</span>
-<span id="cb983-5"><a href="linear-mixed-effects-models-1.html#cb983-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb983-6"><a href="linear-mixed-effects-models-1.html#cb983-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">str_replace</span>(condition, <span class="st">&quot;condition&quot;</span>, <span class="st">&quot;&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb983-7"><a href="linear-mixed-effects-models-1.html#cb983-7" tabindex="-1"></a>  <span class="fu">filter</span>(condition <span class="sc">!=</span> <span class="st">&quot;2shuffled&quot;</span>)</span>
-<span id="cb983-8"><a href="linear-mixed-effects-models-1.html#cb983-8" tabindex="-1"></a></span>
-<span id="cb983-9"><a href="linear-mixed-effects-models-1.html#cb983-9" tabindex="-1"></a>df.shuffled <span class="ot">=</span> df.dependence <span class="sc">%&gt;%</span> </span>
-<span id="cb983-10"><a href="linear-mixed-effects-models-1.html#cb983-10" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
-<span id="cb983-11"><a href="linear-mixed-effects-models-1.html#cb983-11" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;condition&quot;</span>,</span>
-<span id="cb983-12"><a href="linear-mixed-effects-models-1.html#cb983-12" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb983-13"><a href="linear-mixed-effects-models-1.html#cb983-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">str_replace</span>(condition, <span class="st">&quot;condition&quot;</span>, <span class="st">&quot;&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb983-14"><a href="linear-mixed-effects-models-1.html#cb983-14" tabindex="-1"></a>  <span class="fu">filter</span>(condition <span class="sc">!=</span> <span class="st">&quot;2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb963"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb963-1"><a href="linear-mixed-effects-models-1.html#cb963-1" tabindex="-1"></a><span class="co"># separate the data sets </span></span>
+<span id="cb963-2"><a href="linear-mixed-effects-models-1.html#cb963-2" tabindex="-1"></a>df.original <span class="ot">=</span> df.dependence <span class="sc">%&gt;%</span> </span>
+<span id="cb963-3"><a href="linear-mixed-effects-models-1.html#cb963-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb963-4"><a href="linear-mixed-effects-models-1.html#cb963-4" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;condition&quot;</span>,</span>
+<span id="cb963-5"><a href="linear-mixed-effects-models-1.html#cb963-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb963-6"><a href="linear-mixed-effects-models-1.html#cb963-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">str_replace</span>(condition, <span class="st">&quot;condition&quot;</span>, <span class="st">&quot;&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb963-7"><a href="linear-mixed-effects-models-1.html#cb963-7" tabindex="-1"></a>  <span class="fu">filter</span>(condition <span class="sc">!=</span> <span class="st">&quot;2shuffled&quot;</span>)</span>
+<span id="cb963-8"><a href="linear-mixed-effects-models-1.html#cb963-8" tabindex="-1"></a></span>
+<span id="cb963-9"><a href="linear-mixed-effects-models-1.html#cb963-9" tabindex="-1"></a>df.shuffled <span class="ot">=</span> df.dependence <span class="sc">%&gt;%</span> </span>
+<span id="cb963-10"><a href="linear-mixed-effects-models-1.html#cb963-10" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>participant,</span>
+<span id="cb963-11"><a href="linear-mixed-effects-models-1.html#cb963-11" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;condition&quot;</span>,</span>
+<span id="cb963-12"><a href="linear-mixed-effects-models-1.html#cb963-12" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb963-13"><a href="linear-mixed-effects-models-1.html#cb963-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">condition =</span> <span class="fu">str_replace</span>(condition, <span class="st">&quot;condition&quot;</span>, <span class="st">&quot;&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb963-14"><a href="linear-mixed-effects-models-1.html#cb963-14" tabindex="-1"></a>  <span class="fu">filter</span>(condition <span class="sc">!=</span> <span class="st">&quot;2&quot;</span>)</span></code></pre></div>
 <p>Let’s run a linear model, and independent samples t-test on the original data set.</p>
-<div class="sourceCode" id="cb984"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb984-1"><a href="linear-mixed-effects-models-1.html#cb984-1" tabindex="-1"></a><span class="co"># linear model (assuming independent samples)</span></span>
-<span id="cb984-2"><a href="linear-mixed-effects-models-1.html#cb984-2" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> value <span class="sc">~</span> condition,</span>
-<span id="cb984-3"><a href="linear-mixed-effects-models-1.html#cb984-3" tabindex="-1"></a>   <span class="at">data =</span> df.original) <span class="sc">%&gt;%</span> </span>
-<span id="cb984-4"><a href="linear-mixed-effects-models-1.html#cb984-4" tabindex="-1"></a>  <span class="fu">summary</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb964"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb964-1"><a href="linear-mixed-effects-models-1.html#cb964-1" tabindex="-1"></a><span class="co"># linear model (assuming independent samples)</span></span>
+<span id="cb964-2"><a href="linear-mixed-effects-models-1.html#cb964-2" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> value <span class="sc">~</span> condition,</span>
+<span id="cb964-3"><a href="linear-mixed-effects-models-1.html#cb964-3" tabindex="-1"></a>   <span class="at">data =</span> df.original) <span class="sc">%&gt;%</span> </span>
+<span id="cb964-4"><a href="linear-mixed-effects-models-1.html#cb964-4" tabindex="-1"></a>  <span class="fu">summary</span>() </span></code></pre></div>
 <pre><code>
 Call:
 lm(formula = value ~ condition, data = df.original)
@@ -987,10 +988,10 @@ condition2    0.1994     0.2864   0.696    0.491
 Residual standard error: 0.9058 on 38 degrees of freedom
 Multiple R-squared:  0.01259,   Adjusted R-squared:  -0.0134 
 F-statistic: 0.4843 on 1 and 38 DF,  p-value: 0.4907</code></pre>
-<div class="sourceCode" id="cb986"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb986-1"><a href="linear-mixed-effects-models-1.html#cb986-1" tabindex="-1"></a><span class="fu">t.test</span>(df.original<span class="sc">$</span>value[df.original<span class="sc">$</span>condition <span class="sc">==</span> <span class="st">&quot;1&quot;</span>],</span>
-<span id="cb986-2"><a href="linear-mixed-effects-models-1.html#cb986-2" tabindex="-1"></a>       df.original<span class="sc">$</span>value[df.original<span class="sc">$</span>condition <span class="sc">==</span> <span class="st">&quot;2&quot;</span>],</span>
-<span id="cb986-3"><a href="linear-mixed-effects-models-1.html#cb986-3" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb986-4"><a href="linear-mixed-effects-models-1.html#cb986-4" tabindex="-1"></a>       <span class="at">paired =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb966"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb966-1"><a href="linear-mixed-effects-models-1.html#cb966-1" tabindex="-1"></a><span class="fu">t.test</span>(df.original<span class="sc">$</span>value[df.original<span class="sc">$</span>condition <span class="sc">==</span> <span class="st">&quot;1&quot;</span>],</span>
+<span id="cb966-2"><a href="linear-mixed-effects-models-1.html#cb966-2" tabindex="-1"></a>       df.original<span class="sc">$</span>value[df.original<span class="sc">$</span>condition <span class="sc">==</span> <span class="st">&quot;2&quot;</span>],</span>
+<span id="cb966-3"><a href="linear-mixed-effects-models-1.html#cb966-3" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb966-4"><a href="linear-mixed-effects-models-1.html#cb966-4" tabindex="-1"></a>       <span class="at">paired =</span> F)</span></code></pre></div>
 <pre><code>
     Welch Two Sample t-test
 
@@ -1004,10 +1005,10 @@ mean of x mean of y
 0.1905239 0.3898767 </code></pre>
 <p>The mean difference between the conditions is extremely small, and non-significant (if we ignore the dependence in the data).</p>
 <p>Let’s fit a linear mixed effects model with a random intercept for each participant:</p>
-<div class="sourceCode" id="cb988"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb988-1"><a href="linear-mixed-effects-models-1.html#cb988-1" tabindex="-1"></a><span class="co"># fit a linear mixed effects model </span></span>
-<span id="cb988-2"><a href="linear-mixed-effects-models-1.html#cb988-2" tabindex="-1"></a><span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
-<span id="cb988-3"><a href="linear-mixed-effects-models-1.html#cb988-3" tabindex="-1"></a>     <span class="at">data =</span> df.original) <span class="sc">%&gt;%</span> </span>
-<span id="cb988-4"><a href="linear-mixed-effects-models-1.html#cb988-4" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb968"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb968-1"><a href="linear-mixed-effects-models-1.html#cb968-1" tabindex="-1"></a><span class="co"># fit a linear mixed effects model </span></span>
+<span id="cb968-2"><a href="linear-mixed-effects-models-1.html#cb968-2" tabindex="-1"></a><span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
+<span id="cb968-3"><a href="linear-mixed-effects-models-1.html#cb968-3" tabindex="-1"></a>     <span class="at">data =</span> df.original) <span class="sc">%&gt;%</span> </span>
+<span id="cb968-4"><a href="linear-mixed-effects-models-1.html#cb968-4" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>Linear mixed model fit by REML [&#39;lmerMod&#39;]
 Formula: value ~ condition + (1 | participant)
    Data: df.original
@@ -1033,14 +1034,14 @@ Correlation of Fixed Effects:
            (Intr)
 condition2 -0.048</code></pre>
 <p>To test for whether condition is a significant predictor, we need to use our model comparison approach:</p>
-<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb990-1"><a href="linear-mixed-effects-models-1.html#cb990-1" tabindex="-1"></a><span class="co"># fit models</span></span>
-<span id="cb990-2"><a href="linear-mixed-effects-models-1.html#cb990-2" tabindex="-1"></a>fit.compact <span class="ot">=</span> <span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
-<span id="cb990-3"><a href="linear-mixed-effects-models-1.html#cb990-3" tabindex="-1"></a>                   <span class="at">data =</span> df.original)</span>
-<span id="cb990-4"><a href="linear-mixed-effects-models-1.html#cb990-4" tabindex="-1"></a>fit.augmented <span class="ot">=</span> <span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
-<span id="cb990-5"><a href="linear-mixed-effects-models-1.html#cb990-5" tabindex="-1"></a>                     <span class="at">data =</span> df.original)</span>
-<span id="cb990-6"><a href="linear-mixed-effects-models-1.html#cb990-6" tabindex="-1"></a></span>
-<span id="cb990-7"><a href="linear-mixed-effects-models-1.html#cb990-7" tabindex="-1"></a><span class="co"># compare via Chisq-test</span></span>
-<span id="cb990-8"><a href="linear-mixed-effects-models-1.html#cb990-8" tabindex="-1"></a><span class="fu">anova</span>(fit.compact, fit.augmented)</span></code></pre></div>
+<div class="sourceCode" id="cb970"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb970-1"><a href="linear-mixed-effects-models-1.html#cb970-1" tabindex="-1"></a><span class="co"># fit models</span></span>
+<span id="cb970-2"><a href="linear-mixed-effects-models-1.html#cb970-2" tabindex="-1"></a>fit.compact <span class="ot">=</span> <span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
+<span id="cb970-3"><a href="linear-mixed-effects-models-1.html#cb970-3" tabindex="-1"></a>                   <span class="at">data =</span> df.original)</span>
+<span id="cb970-4"><a href="linear-mixed-effects-models-1.html#cb970-4" tabindex="-1"></a>fit.augmented <span class="ot">=</span> <span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
+<span id="cb970-5"><a href="linear-mixed-effects-models-1.html#cb970-5" tabindex="-1"></a>                     <span class="at">data =</span> df.original)</span>
+<span id="cb970-6"><a href="linear-mixed-effects-models-1.html#cb970-6" tabindex="-1"></a></span>
+<span id="cb970-7"><a href="linear-mixed-effects-models-1.html#cb970-7" tabindex="-1"></a><span class="co"># compare via Chisq-test</span></span>
+<span id="cb970-8"><a href="linear-mixed-effects-models-1.html#cb970-8" tabindex="-1"></a><span class="fu">anova</span>(fit.compact, fit.augmented)</span></code></pre></div>
 <pre><code>refitting model(s) with ML (instead of REML)</code></pre>
 <pre><code>Data: df.original
 Models:
@@ -1052,10 +1053,10 @@ fit.augmented    4 17.849 24.605  -4.9247    9.849 37.466  1  9.304e-10 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This result is identical to running a paired samples t-test:</p>
-<div class="sourceCode" id="cb993"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb993-1"><a href="linear-mixed-effects-models-1.html#cb993-1" tabindex="-1"></a><span class="fu">t.test</span>(df.original<span class="sc">$</span>value[df.original<span class="sc">$</span>condition <span class="sc">==</span> <span class="st">&quot;1&quot;</span>],</span>
-<span id="cb993-2"><a href="linear-mixed-effects-models-1.html#cb993-2" tabindex="-1"></a>       df.original<span class="sc">$</span>value[df.original<span class="sc">$</span>condition <span class="sc">==</span> <span class="st">&quot;2&quot;</span>],</span>
-<span id="cb993-3"><a href="linear-mixed-effects-models-1.html#cb993-3" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb993-4"><a href="linear-mixed-effects-models-1.html#cb993-4" tabindex="-1"></a>       <span class="at">paired =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb973-1"><a href="linear-mixed-effects-models-1.html#cb973-1" tabindex="-1"></a><span class="fu">t.test</span>(df.original<span class="sc">$</span>value[df.original<span class="sc">$</span>condition <span class="sc">==</span> <span class="st">&quot;1&quot;</span>],</span>
+<span id="cb973-2"><a href="linear-mixed-effects-models-1.html#cb973-2" tabindex="-1"></a>       df.original<span class="sc">$</span>value[df.original<span class="sc">$</span>condition <span class="sc">==</span> <span class="st">&quot;2&quot;</span>],</span>
+<span id="cb973-3"><a href="linear-mixed-effects-models-1.html#cb973-3" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb973-4"><a href="linear-mixed-effects-models-1.html#cb973-4" tabindex="-1"></a>       <span class="at">paired =</span> T)</span></code></pre></div>
 <pre><code>
     Paired t-test
 
@@ -1069,112 +1070,112 @@ mean difference
      -0.1993528 </code></pre>
 <p>But, unlike in the paired samples t-test, the linear mixed effects model explicitly models the variation between participants, and it’s a much more flexible approach for modeling dependence in data.</p>
 <p>Let’s fit a linear model and a linear mixed effects model to the original (non-shuffled) data.</p>
-<div class="sourceCode" id="cb995"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb995-1"><a href="linear-mixed-effects-models-1.html#cb995-1" tabindex="-1"></a><span class="co"># model assuming independence</span></span>
-<span id="cb995-2"><a href="linear-mixed-effects-models-1.html#cb995-2" tabindex="-1"></a>fit.independent <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition,</span>
-<span id="cb995-3"><a href="linear-mixed-effects-models-1.html#cb995-3" tabindex="-1"></a>                     <span class="at">data =</span> df.original)</span>
-<span id="cb995-4"><a href="linear-mixed-effects-models-1.html#cb995-4" tabindex="-1"></a></span>
-<span id="cb995-5"><a href="linear-mixed-effects-models-1.html#cb995-5" tabindex="-1"></a><span class="co"># model assuming dependence</span></span>
-<span id="cb995-6"><a href="linear-mixed-effects-models-1.html#cb995-6" tabindex="-1"></a>fit.dependent <span class="ot">=</span> <span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
-<span id="cb995-7"><a href="linear-mixed-effects-models-1.html#cb995-7" tabindex="-1"></a>                     <span class="at">data =</span> df.original)</span></code></pre></div>
+<div class="sourceCode" id="cb975"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb975-1"><a href="linear-mixed-effects-models-1.html#cb975-1" tabindex="-1"></a><span class="co"># model assuming independence</span></span>
+<span id="cb975-2"><a href="linear-mixed-effects-models-1.html#cb975-2" tabindex="-1"></a>fit.independent <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition,</span>
+<span id="cb975-3"><a href="linear-mixed-effects-models-1.html#cb975-3" tabindex="-1"></a>                     <span class="at">data =</span> df.original)</span>
+<span id="cb975-4"><a href="linear-mixed-effects-models-1.html#cb975-4" tabindex="-1"></a></span>
+<span id="cb975-5"><a href="linear-mixed-effects-models-1.html#cb975-5" tabindex="-1"></a><span class="co"># model assuming dependence</span></span>
+<span id="cb975-6"><a href="linear-mixed-effects-models-1.html#cb975-6" tabindex="-1"></a>fit.dependent <span class="ot">=</span> <span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
+<span id="cb975-7"><a href="linear-mixed-effects-models-1.html#cb975-7" tabindex="-1"></a>                     <span class="at">data =</span> df.original)</span></code></pre></div>
 <p>Let’s visualize the linear model’s predictions:</p>
-<div class="sourceCode" id="cb996"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb996-1"><a href="linear-mixed-effects-models-1.html#cb996-1" tabindex="-1"></a><span class="co"># plot with predictions by fit.independent </span></span>
-<span id="cb996-2"><a href="linear-mixed-effects-models-1.html#cb996-2" tabindex="-1"></a>fit.independent <span class="sc">%&gt;%</span> </span>
-<span id="cb996-3"><a href="linear-mixed-effects-models-1.html#cb996-3" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb996-4"><a href="linear-mixed-effects-models-1.html#cb996-4" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.original <span class="sc">%&gt;%</span></span>
-<span id="cb996-5"><a href="linear-mixed-effects-models-1.html#cb996-5" tabindex="-1"></a>              <span class="fu">select</span>(participant)) <span class="sc">%&gt;%</span> </span>
-<span id="cb996-6"><a href="linear-mixed-effects-models-1.html#cb996-6" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb996-7"><a href="linear-mixed-effects-models-1.html#cb996-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
-<span id="cb996-8"><a href="linear-mixed-effects-models-1.html#cb996-8" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition,</span>
-<span id="cb996-9"><a href="linear-mixed-effects-models-1.html#cb996-9" tabindex="-1"></a>                       <span class="at">y =</span> value,</span>
-<span id="cb996-10"><a href="linear-mixed-effects-models-1.html#cb996-10" tabindex="-1"></a>                       <span class="at">group =</span> participant)) <span class="sc">+</span></span>
-<span id="cb996-11"><a href="linear-mixed-effects-models-1.html#cb996-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb996-12"><a href="linear-mixed-effects-models-1.html#cb996-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb996-13"><a href="linear-mixed-effects-models-1.html#cb996-13" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
-<span id="cb996-14"><a href="linear-mixed-effects-models-1.html#cb996-14" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb996-15"><a href="linear-mixed-effects-models-1.html#cb996-15" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
-<span id="cb996-16"><a href="linear-mixed-effects-models-1.html#cb996-16" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb976"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb976-1"><a href="linear-mixed-effects-models-1.html#cb976-1" tabindex="-1"></a><span class="co"># plot with predictions by fit.independent </span></span>
+<span id="cb976-2"><a href="linear-mixed-effects-models-1.html#cb976-2" tabindex="-1"></a>fit.independent <span class="sc">%&gt;%</span> </span>
+<span id="cb976-3"><a href="linear-mixed-effects-models-1.html#cb976-3" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb976-4"><a href="linear-mixed-effects-models-1.html#cb976-4" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.original <span class="sc">%&gt;%</span></span>
+<span id="cb976-5"><a href="linear-mixed-effects-models-1.html#cb976-5" tabindex="-1"></a>              <span class="fu">select</span>(participant)) <span class="sc">%&gt;%</span> </span>
+<span id="cb976-6"><a href="linear-mixed-effects-models-1.html#cb976-6" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb976-7"><a href="linear-mixed-effects-models-1.html#cb976-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb976-8"><a href="linear-mixed-effects-models-1.html#cb976-8" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition,</span>
+<span id="cb976-9"><a href="linear-mixed-effects-models-1.html#cb976-9" tabindex="-1"></a>                       <span class="at">y =</span> value,</span>
+<span id="cb976-10"><a href="linear-mixed-effects-models-1.html#cb976-10" tabindex="-1"></a>                       <span class="at">group =</span> participant)) <span class="sc">+</span></span>
+<span id="cb976-11"><a href="linear-mixed-effects-models-1.html#cb976-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb976-12"><a href="linear-mixed-effects-models-1.html#cb976-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb976-13"><a href="linear-mixed-effects-models-1.html#cb976-13" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
+<span id="cb976-14"><a href="linear-mixed-effects-models-1.html#cb976-14" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb976-15"><a href="linear-mixed-effects-models-1.html#cb976-15" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
+<span id="cb976-16"><a href="linear-mixed-effects-models-1.html#cb976-16" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>And this is what the residuals look like:</p>
-<div class="sourceCode" id="cb997"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb997-1"><a href="linear-mixed-effects-models-1.html#cb997-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
-<span id="cb997-2"><a href="linear-mixed-effects-models-1.html#cb997-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb997-3"><a href="linear-mixed-effects-models-1.html#cb997-3" tabindex="-1"></a></span>
-<span id="cb997-4"><a href="linear-mixed-effects-models-1.html#cb997-4" tabindex="-1"></a>fit.independent <span class="sc">%&gt;%</span> </span>
-<span id="cb997-5"><a href="linear-mixed-effects-models-1.html#cb997-5" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb997-6"><a href="linear-mixed-effects-models-1.html#cb997-6" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.original <span class="sc">%&gt;%</span></span>
-<span id="cb997-7"><a href="linear-mixed-effects-models-1.html#cb997-7" tabindex="-1"></a>              <span class="fu">select</span>(participant)) <span class="sc">%&gt;%</span> </span>
-<span id="cb997-8"><a href="linear-mixed-effects-models-1.html#cb997-8" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb997-9"><a href="linear-mixed-effects-models-1.html#cb997-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">as.numeric</span>(condition),</span>
-<span id="cb997-10"><a href="linear-mixed-effects-models-1.html#cb997-10" tabindex="-1"></a>         <span class="at">index =</span> index <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">max =</span> <span class="fl">0.3</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb997-11"><a href="linear-mixed-effects-models-1.html#cb997-11" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
-<span id="cb997-12"><a href="linear-mixed-effects-models-1.html#cb997-12" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> index,</span>
-<span id="cb997-13"><a href="linear-mixed-effects-models-1.html#cb997-13" tabindex="-1"></a>                       <span class="at">y =</span> value,</span>
-<span id="cb997-14"><a href="linear-mixed-effects-models-1.html#cb997-14" tabindex="-1"></a>                       <span class="at">group =</span> participant,</span>
-<span id="cb997-15"><a href="linear-mixed-effects-models-1.html#cb997-15" tabindex="-1"></a>                       <span class="at">color =</span> condition)) <span class="sc">+</span></span>
-<span id="cb997-16"><a href="linear-mixed-effects-models-1.html#cb997-16" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb997-17"><a href="linear-mixed-effects-models-1.html#cb997-17" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
-<span id="cb997-18"><a href="linear-mixed-effects-models-1.html#cb997-18" tabindex="-1"></a>              <span class="at">se =</span> F,</span>
-<span id="cb997-19"><a href="linear-mixed-effects-models-1.html#cb997-19" tabindex="-1"></a>              <span class="at">formula =</span> <span class="st">&quot;y ~ 1&quot;</span>,</span>
-<span id="cb997-20"><a href="linear-mixed-effects-models-1.html#cb997-20" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">group =</span> condition)) <span class="sc">+</span></span>
-<span id="cb997-21"><a href="linear-mixed-effects-models-1.html#cb997-21" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend =</span> index,</span>
-<span id="cb997-22"><a href="linear-mixed-effects-models-1.html#cb997-22" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
-<span id="cb997-23"><a href="linear-mixed-effects-models-1.html#cb997-23" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb997-24"><a href="linear-mixed-effects-models-1.html#cb997-24" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb997-25"><a href="linear-mixed-effects-models-1.html#cb997-25" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
-<span id="cb997-26"><a href="linear-mixed-effects-models-1.html#cb997-26" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb997-27"><a href="linear-mixed-effects-models-1.html#cb997-27" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;condition&quot;</span>) <span class="sc">+</span></span>
-<span id="cb997-28"><a href="linear-mixed-effects-models-1.html#cb997-28" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb977"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb977-1"><a href="linear-mixed-effects-models-1.html#cb977-1" tabindex="-1"></a><span class="co"># make example reproducible </span></span>
+<span id="cb977-2"><a href="linear-mixed-effects-models-1.html#cb977-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb977-3"><a href="linear-mixed-effects-models-1.html#cb977-3" tabindex="-1"></a></span>
+<span id="cb977-4"><a href="linear-mixed-effects-models-1.html#cb977-4" tabindex="-1"></a>fit.independent <span class="sc">%&gt;%</span> </span>
+<span id="cb977-5"><a href="linear-mixed-effects-models-1.html#cb977-5" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb977-6"><a href="linear-mixed-effects-models-1.html#cb977-6" tabindex="-1"></a>  <span class="fu">bind_cols</span>(df.original <span class="sc">%&gt;%</span></span>
+<span id="cb977-7"><a href="linear-mixed-effects-models-1.html#cb977-7" tabindex="-1"></a>              <span class="fu">select</span>(participant)) <span class="sc">%&gt;%</span> </span>
+<span id="cb977-8"><a href="linear-mixed-effects-models-1.html#cb977-8" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb977-9"><a href="linear-mixed-effects-models-1.html#cb977-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">as.numeric</span>(condition),</span>
+<span id="cb977-10"><a href="linear-mixed-effects-models-1.html#cb977-10" tabindex="-1"></a>         <span class="at">index =</span> index <span class="sc">+</span> <span class="fu">runif</span>(<span class="fu">n</span>(), <span class="at">min =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">max =</span> <span class="fl">0.3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb977-11"><a href="linear-mixed-effects-models-1.html#cb977-11" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb977-12"><a href="linear-mixed-effects-models-1.html#cb977-12" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> index,</span>
+<span id="cb977-13"><a href="linear-mixed-effects-models-1.html#cb977-13" tabindex="-1"></a>                       <span class="at">y =</span> value,</span>
+<span id="cb977-14"><a href="linear-mixed-effects-models-1.html#cb977-14" tabindex="-1"></a>                       <span class="at">group =</span> participant,</span>
+<span id="cb977-15"><a href="linear-mixed-effects-models-1.html#cb977-15" tabindex="-1"></a>                       <span class="at">color =</span> condition)) <span class="sc">+</span></span>
+<span id="cb977-16"><a href="linear-mixed-effects-models-1.html#cb977-16" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb977-17"><a href="linear-mixed-effects-models-1.html#cb977-17" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,</span>
+<span id="cb977-18"><a href="linear-mixed-effects-models-1.html#cb977-18" tabindex="-1"></a>              <span class="at">se =</span> F,</span>
+<span id="cb977-19"><a href="linear-mixed-effects-models-1.html#cb977-19" tabindex="-1"></a>              <span class="at">formula =</span> <span class="st">&quot;y ~ 1&quot;</span>,</span>
+<span id="cb977-20"><a href="linear-mixed-effects-models-1.html#cb977-20" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">group =</span> condition)) <span class="sc">+</span></span>
+<span id="cb977-21"><a href="linear-mixed-effects-models-1.html#cb977-21" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend =</span> index,</span>
+<span id="cb977-22"><a href="linear-mixed-effects-models-1.html#cb977-22" tabindex="-1"></a>                   <span class="at">yend =</span> fitted),</span>
+<span id="cb977-23"><a href="linear-mixed-effects-models-1.html#cb977-23" tabindex="-1"></a>               <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb977-24"><a href="linear-mixed-effects-models-1.html#cb977-24" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb977-25"><a href="linear-mixed-effects-models-1.html#cb977-25" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
+<span id="cb977-26"><a href="linear-mixed-effects-models-1.html#cb977-26" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb977-27"><a href="linear-mixed-effects-models-1.html#cb977-27" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;condition&quot;</span>) <span class="sc">+</span></span>
+<span id="cb977-28"><a href="linear-mixed-effects-models-1.html#cb977-28" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <p><img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>It’s clear from this residual plot, that fitting two separate lines (or points) is not much better than just fitting one line (or point).</p>
 <p>Let’s visualize the predictions of the linear mixed effects model:</p>
-<div class="sourceCode" id="cb998"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb998-1"><a href="linear-mixed-effects-models-1.html#cb998-1" tabindex="-1"></a><span class="co"># plot with predictions by fit.independent </span></span>
-<span id="cb998-2"><a href="linear-mixed-effects-models-1.html#cb998-2" tabindex="-1"></a>fit.dependent <span class="sc">%&gt;%</span> </span>
-<span id="cb998-3"><a href="linear-mixed-effects-models-1.html#cb998-3" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb998-4"><a href="linear-mixed-effects-models-1.html#cb998-4" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb998-5"><a href="linear-mixed-effects-models-1.html#cb998-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
-<span id="cb998-6"><a href="linear-mixed-effects-models-1.html#cb998-6" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition,</span>
-<span id="cb998-7"><a href="linear-mixed-effects-models-1.html#cb998-7" tabindex="-1"></a>                       <span class="at">y =</span> value,</span>
-<span id="cb998-8"><a href="linear-mixed-effects-models-1.html#cb998-8" tabindex="-1"></a>                       <span class="at">group =</span> participant)) <span class="sc">+</span></span>
-<span id="cb998-9"><a href="linear-mixed-effects-models-1.html#cb998-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb998-10"><a href="linear-mixed-effects-models-1.html#cb998-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb998-11"><a href="linear-mixed-effects-models-1.html#cb998-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
-<span id="cb998-12"><a href="linear-mixed-effects-models-1.html#cb998-12" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb998-13"><a href="linear-mixed-effects-models-1.html#cb998-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
-<span id="cb998-14"><a href="linear-mixed-effects-models-1.html#cb998-14" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb978"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb978-1"><a href="linear-mixed-effects-models-1.html#cb978-1" tabindex="-1"></a><span class="co"># plot with predictions by fit.independent </span></span>
+<span id="cb978-2"><a href="linear-mixed-effects-models-1.html#cb978-2" tabindex="-1"></a>fit.dependent <span class="sc">%&gt;%</span> </span>
+<span id="cb978-3"><a href="linear-mixed-effects-models-1.html#cb978-3" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb978-4"><a href="linear-mixed-effects-models-1.html#cb978-4" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb978-5"><a href="linear-mixed-effects-models-1.html#cb978-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb978-6"><a href="linear-mixed-effects-models-1.html#cb978-6" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> condition,</span>
+<span id="cb978-7"><a href="linear-mixed-effects-models-1.html#cb978-7" tabindex="-1"></a>                       <span class="at">y =</span> value,</span>
+<span id="cb978-8"><a href="linear-mixed-effects-models-1.html#cb978-8" tabindex="-1"></a>                       <span class="at">group =</span> participant)) <span class="sc">+</span></span>
+<span id="cb978-9"><a href="linear-mixed-effects-models-1.html#cb978-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb978-10"><a href="linear-mixed-effects-models-1.html#cb978-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb978-11"><a href="linear-mixed-effects-models-1.html#cb978-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
+<span id="cb978-12"><a href="linear-mixed-effects-models-1.html#cb978-12" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb978-13"><a href="linear-mixed-effects-models-1.html#cb978-13" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
+<span id="cb978-14"><a href="linear-mixed-effects-models-1.html#cb978-14" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Let’s compare the residuals of the linear model with that of the linear mixed effects model:</p>
-<div class="sourceCode" id="cb999"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb999-1"><a href="linear-mixed-effects-models-1.html#cb999-1" tabindex="-1"></a><span class="co"># linear model </span></span>
-<span id="cb999-2"><a href="linear-mixed-effects-models-1.html#cb999-2" tabindex="-1"></a>p1 <span class="ot">=</span> fit.independent <span class="sc">%&gt;%</span> </span>
-<span id="cb999-3"><a href="linear-mixed-effects-models-1.html#cb999-3" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb999-4"><a href="linear-mixed-effects-models-1.html#cb999-4" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb999-5"><a href="linear-mixed-effects-models-1.html#cb999-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
-<span id="cb999-6"><a href="linear-mixed-effects-models-1.html#cb999-6" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
-<span id="cb999-7"><a href="linear-mixed-effects-models-1.html#cb999-7" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span></span>
-<span id="cb999-8"><a href="linear-mixed-effects-models-1.html#cb999-8" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb999-9"><a href="linear-mixed-effects-models-1.html#cb999-9" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>))</span>
-<span id="cb999-10"><a href="linear-mixed-effects-models-1.html#cb999-10" tabindex="-1"></a></span>
-<span id="cb999-11"><a href="linear-mixed-effects-models-1.html#cb999-11" tabindex="-1"></a><span class="co"># linear mixed effects model </span></span>
-<span id="cb999-12"><a href="linear-mixed-effects-models-1.html#cb999-12" tabindex="-1"></a>p2 <span class="ot">=</span> fit.dependent <span class="sc">%&gt;%</span> </span>
-<span id="cb999-13"><a href="linear-mixed-effects-models-1.html#cb999-13" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb999-14"><a href="linear-mixed-effects-models-1.html#cb999-14" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb999-15"><a href="linear-mixed-effects-models-1.html#cb999-15" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
-<span id="cb999-16"><a href="linear-mixed-effects-models-1.html#cb999-16" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
-<span id="cb999-17"><a href="linear-mixed-effects-models-1.html#cb999-17" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span></span>
-<span id="cb999-18"><a href="linear-mixed-effects-models-1.html#cb999-18" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb999-19"><a href="linear-mixed-effects-models-1.html#cb999-19" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>))</span>
-<span id="cb999-20"><a href="linear-mixed-effects-models-1.html#cb999-20" tabindex="-1"></a></span>
-<span id="cb999-21"><a href="linear-mixed-effects-models-1.html#cb999-21" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
+<div class="sourceCode" id="cb979"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb979-1"><a href="linear-mixed-effects-models-1.html#cb979-1" tabindex="-1"></a><span class="co"># linear model </span></span>
+<span id="cb979-2"><a href="linear-mixed-effects-models-1.html#cb979-2" tabindex="-1"></a>p1 <span class="ot">=</span> fit.independent <span class="sc">%&gt;%</span> </span>
+<span id="cb979-3"><a href="linear-mixed-effects-models-1.html#cb979-3" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb979-4"><a href="linear-mixed-effects-models-1.html#cb979-4" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb979-5"><a href="linear-mixed-effects-models-1.html#cb979-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb979-6"><a href="linear-mixed-effects-models-1.html#cb979-6" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
+<span id="cb979-7"><a href="linear-mixed-effects-models-1.html#cb979-7" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb979-8"><a href="linear-mixed-effects-models-1.html#cb979-8" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb979-9"><a href="linear-mixed-effects-models-1.html#cb979-9" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>))</span>
+<span id="cb979-10"><a href="linear-mixed-effects-models-1.html#cb979-10" tabindex="-1"></a></span>
+<span id="cb979-11"><a href="linear-mixed-effects-models-1.html#cb979-11" tabindex="-1"></a><span class="co"># linear mixed effects model </span></span>
+<span id="cb979-12"><a href="linear-mixed-effects-models-1.html#cb979-12" tabindex="-1"></a>p2 <span class="ot">=</span> fit.dependent <span class="sc">%&gt;%</span> </span>
+<span id="cb979-13"><a href="linear-mixed-effects-models-1.html#cb979-13" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb979-14"><a href="linear-mixed-effects-models-1.html#cb979-14" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb979-15"><a href="linear-mixed-effects-models-1.html#cb979-15" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> .,</span>
+<span id="cb979-16"><a href="linear-mixed-effects-models-1.html#cb979-16" tabindex="-1"></a>         <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fitted,</span>
+<span id="cb979-17"><a href="linear-mixed-effects-models-1.html#cb979-17" tabindex="-1"></a>                       <span class="at">y =</span> resid)) <span class="sc">+</span></span>
+<span id="cb979-18"><a href="linear-mixed-effects-models-1.html#cb979-18" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb979-19"><a href="linear-mixed-effects-models-1.html#cb979-19" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>))</span>
+<span id="cb979-20"><a href="linear-mixed-effects-models-1.html#cb979-20" tabindex="-1"></a></span>
+<span id="cb979-21"><a href="linear-mixed-effects-models-1.html#cb979-21" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
 <p><img src="17-linear_mixed_effects_models1_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>The residuals of the linear mixed effects model are much smaller. Let’s test whether taking the individual variation into account is worth it (statistically speaking).</p>
-<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1000-1"><a href="linear-mixed-effects-models-1.html#cb1000-1" tabindex="-1"></a><span class="co"># fit models (without and with dependence)</span></span>
-<span id="cb1000-2"><a href="linear-mixed-effects-models-1.html#cb1000-2" tabindex="-1"></a>fit.compact <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition,</span>
-<span id="cb1000-3"><a href="linear-mixed-effects-models-1.html#cb1000-3" tabindex="-1"></a>                 <span class="at">data =</span> df.original)</span>
-<span id="cb1000-4"><a href="linear-mixed-effects-models-1.html#cb1000-4" tabindex="-1"></a></span>
-<span id="cb1000-5"><a href="linear-mixed-effects-models-1.html#cb1000-5" tabindex="-1"></a>fit.augmented <span class="ot">=</span> <span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
-<span id="cb1000-6"><a href="linear-mixed-effects-models-1.html#cb1000-6" tabindex="-1"></a>                     <span class="at">data =</span> df.original)</span>
-<span id="cb1000-7"><a href="linear-mixed-effects-models-1.html#cb1000-7" tabindex="-1"></a></span>
-<span id="cb1000-8"><a href="linear-mixed-effects-models-1.html#cb1000-8" tabindex="-1"></a><span class="co"># compare models</span></span>
-<span id="cb1000-9"><a href="linear-mixed-effects-models-1.html#cb1000-9" tabindex="-1"></a><span class="co"># note: the lmer model has to be entered as the first argument</span></span>
-<span id="cb1000-10"><a href="linear-mixed-effects-models-1.html#cb1000-10" tabindex="-1"></a><span class="fu">anova</span>(fit.augmented, fit.compact) </span></code></pre></div>
+<div class="sourceCode" id="cb980"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb980-1"><a href="linear-mixed-effects-models-1.html#cb980-1" tabindex="-1"></a><span class="co"># fit models (without and with dependence)</span></span>
+<span id="cb980-2"><a href="linear-mixed-effects-models-1.html#cb980-2" tabindex="-1"></a>fit.compact <span class="ot">=</span> <span class="fu">lm</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition,</span>
+<span id="cb980-3"><a href="linear-mixed-effects-models-1.html#cb980-3" tabindex="-1"></a>                 <span class="at">data =</span> df.original)</span>
+<span id="cb980-4"><a href="linear-mixed-effects-models-1.html#cb980-4" tabindex="-1"></a></span>
+<span id="cb980-5"><a href="linear-mixed-effects-models-1.html#cb980-5" tabindex="-1"></a>fit.augmented <span class="ot">=</span> <span class="fu">lmer</span>(<span class="at">formula =</span> value <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> condition <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> participant),</span>
+<span id="cb980-6"><a href="linear-mixed-effects-models-1.html#cb980-6" tabindex="-1"></a>                     <span class="at">data =</span> df.original)</span>
+<span id="cb980-7"><a href="linear-mixed-effects-models-1.html#cb980-7" tabindex="-1"></a></span>
+<span id="cb980-8"><a href="linear-mixed-effects-models-1.html#cb980-8" tabindex="-1"></a><span class="co"># compare models</span></span>
+<span id="cb980-9"><a href="linear-mixed-effects-models-1.html#cb980-9" tabindex="-1"></a><span class="co"># note: the lmer model has to be entered as the first argument</span></span>
+<span id="cb980-10"><a href="linear-mixed-effects-models-1.html#cb980-10" tabindex="-1"></a><span class="fu">anova</span>(fit.augmented, fit.compact) </span></code></pre></div>
 <pre><code>refitting model(s) with ML (instead of REML)</code></pre>
 <pre><code>Data: df.original
 Models:
@@ -1187,8 +1188,8 @@ fit.augmented    4  17.849  24.605  -4.925    9.849 93.701  1  &lt; 2.2e-16 ***
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Yes, the linear mixed effects model explains the data better than the linear model.</p>
 </div>
-<div id="additional-resources-15" class="section level2 hasAnchor" number="17.4">
-<h2><span class="header-section-number">17.4</span> Additional resources<a href="linear-mixed-effects-models-1.html#additional-resources-15" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="additional-resources-14" class="section level2 hasAnchor" number="17.4">
+<h2><span class="header-section-number">17.4</span> Additional resources<a href="linear-mixed-effects-models-1.html#additional-resources-14" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="readings" class="section level3 hasAnchor" number="17.4.1">
 <h3><span class="header-section-number">17.4.1</span> Readings<a href="linear-mixed-effects-models-1.html#readings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
@@ -1199,10 +1200,10 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div id="session-info-16" class="section level2 hasAnchor" number="17.5">
 <h2><span class="header-section-number">17.5</span> Session info<a href="linear-mixed-effects-models-1.html#session-info-16" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Information about this R session including which version of R was used, and what packages were loaded.</p>
-<div class="sourceCode" id="cb1003"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1003-1"><a href="linear-mixed-effects-models-1.html#cb1003-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
-<pre><code>R version 4.4.1 (2024-06-14)
+<div class="sourceCode" id="cb983"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb983-1"><a href="linear-mixed-effects-models-1.html#cb983-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1221,28 +1222,28 @@ other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
  [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
  [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
-[10] tidyverse_2.0.0     lme4_1.1-35.5       Matrix_1.7-0       
-[13] patchwork_1.2.0     broom.mixed_0.2.9.5 janitor_2.2.0      
-[16] kableExtra_1.4.0    knitr_1.48         
+[10] tidyverse_2.0.0     lme4_1.1-35.5       Matrix_1.7-1       
+[13] patchwork_1.3.0     broom.mixed_0.2.9.6 janitor_2.2.1      
+[16] kableExtra_1.4.0    knitr_1.49         
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.5       xfun_0.45          bslib_0.7.0        lattice_0.22-6    
- [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.4.1        generics_0.1.3    
- [9] parallel_4.4.1     fansi_1.0.6        highr_0.11         pkgconfig_2.0.3   
-[13] RColorBrewer_1.1-3 lifecycle_1.0.4    farver_2.1.2       compiler_4.4.1    
-[17] munsell_0.5.1      codetools_0.2-20   snakecase_0.11.1   htmltools_0.5.8.1 
-[21] sass_0.4.9         yaml_2.3.9         nloptr_2.1.1       pillar_1.9.0      
-[25] furrr_0.3.1        jquerylib_0.1.4    MASS_7.3-61        cachem_1.1.0      
-[29] boot_1.3-30        nlme_3.1-164       parallelly_1.37.1  tidyselect_1.2.1  
-[33] digest_0.6.36      stringi_1.8.4      future_1.33.2      bookdown_0.40     
-[37] listenv_0.9.1      labeling_0.4.3     splines_4.4.1      fastmap_1.2.0     
-[41] grid_4.4.1         colorspace_2.1-0   cli_3.6.3          magrittr_2.0.3    
-[45] utf8_1.2.4         broom_1.0.6        withr_3.0.0        scales_1.3.0      
-[49] backports_1.5.0    timechange_0.3.0   rmarkdown_2.27     globals_0.16.3    
-[53] hms_1.1.3          evaluate_0.24.0    viridisLite_0.4.2  mgcv_1.9-1        
-[57] rlang_1.1.4        Rcpp_1.0.13        glue_1.7.0         xml2_1.3.6        
-[61] minqa_1.2.7        svglite_2.1.3      rstudioapi_0.16.0  jsonlite_1.8.8    
-[65] R6_2.5.1           systemfonts_1.1.0 </code></pre>
+ [1] gtable_0.3.5       xfun_0.49          bslib_0.7.0        lattice_0.22-6    
+ [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.4.2        generics_0.1.3    
+ [9] parallel_4.4.2     fansi_1.0.6        pkgconfig_2.0.3    RColorBrewer_1.1-3
+[13] lifecycle_1.0.4    compiler_4.4.2     farver_2.1.2       munsell_0.5.1     
+[17] codetools_0.2-20   snakecase_0.11.1   htmltools_0.5.8.1  sass_0.4.9        
+[21] yaml_2.3.10        nloptr_2.1.1       pillar_1.9.0       furrr_0.3.1       
+[25] jquerylib_0.1.4    MASS_7.3-64        cachem_1.1.0       boot_1.3-31       
+[29] nlme_3.1-166       parallelly_1.37.1  tidyselect_1.2.1   digest_0.6.36     
+[33] stringi_1.8.4      future_1.33.2      bookdown_0.42      listenv_0.9.1     
+[37] labeling_0.4.3     splines_4.4.2      fastmap_1.2.0      grid_4.4.2        
+[41] colorspace_2.1-0   cli_3.6.3          magrittr_2.0.3     utf8_1.2.4        
+[45] broom_1.0.7        withr_3.0.2        scales_1.3.0       backports_1.5.0   
+[49] timechange_0.3.0   rmarkdown_2.29     globals_0.16.3     hms_1.1.3         
+[53] evaluate_0.24.0    viridisLite_0.4.2  mgcv_1.9-1         rlang_1.1.4       
+[57] Rcpp_1.0.13        glue_1.8.0         xml2_1.3.6         minqa_1.2.7       
+[61] svglite_2.1.3      rstudioapi_0.16.0  jsonlite_1.8.8     R6_2.5.1          
+[65] systemfonts_1.1.0 </code></pre>
 
 </div>
 </div>
@@ -1251,7 +1252,7 @@ loaded via a namespace (and not attached):
           </div>
         </div>
       </div>
-<a href="causation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-comparison.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="linear-mixed-effects-models-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

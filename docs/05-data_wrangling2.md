@@ -1021,7 +1021,7 @@ df.csv = read_csv("data/movies.csv")
 
 ```
 Rows: 2961 Columns: 11
-── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 Delimiter: ","
 chr (3): title, genre, director
 dbl (8): year, duration, gross, budget, cast_facebook_likes, votes, reviews,...
@@ -1142,9 +1142,9 @@ save(df.test, df.starwars, file = "data/test_starwars.RData")
 
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1162,18 +1162,18 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
  [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
- [9] ggplot2_3.5.1   tidyverse_2.0.0 knitr_1.48     
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 knitr_1.49     
 
 loaded via a namespace (and not attached):
  [1] bit_4.0.5         gtable_0.3.5      jsonlite_1.8.8    crayon_1.5.3     
- [5] compiler_4.4.1    tidyselect_1.2.1  parallel_4.4.1    jquerylib_0.1.4  
- [9] scales_1.3.0      yaml_2.3.9        fastmap_1.2.0     R6_2.5.1         
-[13] generics_0.1.3    bookdown_0.40     munsell_0.5.1     bslib_0.7.0      
+ [5] compiler_4.4.2    tidyselect_1.2.1  parallel_4.4.2    jquerylib_0.1.4  
+ [9] scales_1.3.0      yaml_2.3.10       fastmap_1.2.0     R6_2.5.1         
+[13] generics_0.1.3    bookdown_0.42     munsell_0.5.1     bslib_0.7.0      
 [17] pillar_1.9.0      tzdb_0.4.0        rlang_1.1.4       utf8_1.2.4       
-[21] stringi_1.8.4     cachem_1.1.0      xfun_0.45         sass_0.4.9       
-[25] bit64_4.0.5       timechange_0.3.0  cli_3.6.3         withr_3.0.0      
-[29] magrittr_2.0.3    digest_0.6.36     grid_4.4.1        vroom_1.6.5      
+[21] stringi_1.8.4     cachem_1.1.0      xfun_0.49         sass_0.4.9       
+[25] bit64_4.0.5       timechange_0.3.0  cli_3.6.3         withr_3.0.2      
+[29] magrittr_2.0.3    digest_0.6.36     grid_4.4.2        vroom_1.6.5      
 [33] hms_1.1.3         lifecycle_1.0.4   vctrs_0.6.5       evaluate_0.24.0  
-[37] glue_1.7.0        fansi_1.0.6       colorspace_2.1-0  rmarkdown_2.27   
-[41] tools_4.4.1       pkgconfig_2.0.3   htmltools_0.5.8.1
+[37] glue_1.8.0        fansi_1.0.6       colorspace_2.1-0  rmarkdown_2.29   
+[41] tools_4.4.2       pkgconfig_2.0.3   htmltools_0.5.8.1
 ```

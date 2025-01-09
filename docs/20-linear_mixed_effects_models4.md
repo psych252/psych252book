@@ -6,6 +6,7 @@
 - Doing follow-up tests with the `emmeans` package
 - Simulating, plotting, and analyzing models with different random effects structures
 - Bootstrapping confidence intervals for fixed effects 
+- Logistic mixed effects model
 
 ## Load packages and set plotting theme
 
@@ -94,7 +95,7 @@ df.politeness = read_csv("data/politeness_data.csv") %>%
 
 ```
 Rows: 84 Columns: 5
-── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+── Column specification ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 Delimiter: ","
 chr (3): subject, gender, attitude
 dbl (2): scenario, frequency
@@ -379,10 +380,10 @@ Confidence level used: 0.95
 $contrasts
  contrast      estimate    SE   df t.ratio p.value
  inf F - pol F     27.4  8.35 4.08   3.283  0.0295
- inf F - inf M    116.2 21.33 4.00   5.448  0.0055
- inf F - pol M    128.1 21.99 4.73   5.824  0.0025
- pol F - inf M     88.8 21.95 4.70   4.046  0.0112
- pol F - pol M    100.7 22.12 4.00   4.551  0.0104
+ inf F - inf M    116.2 21.30 4.00   5.448  0.0055
+ inf F - pol M    128.1 22.00 4.73   5.824  0.0025
+ pol F - inf M     88.8 21.90 4.70   4.046  0.0112
+ pol F - pol M    100.7 22.10 4.00   4.551  0.0104
  inf M - pol M     11.9  8.46 4.28   1.405  0.2283
 
 Degrees-of-freedom method: kenward-roger 
@@ -1391,6 +1392,170 @@ ggplot(data = df.sleep,
 
 As you'll notice, once we take the dependence in the data into account, the bootstrapped confidence interval is wider than when we ignore the dependence. 
 
+## Logistic mixed effects model
+
+Just like we can build linear mixed effects models using `lmer()` instead of `lm()`, we can also build a logistic mixed effects regression using `glmer()` instead of `glm()`. 
+
+Let's read in some data: 
+
+
+``` r
+# load bdf data set from nlme package
+data(bdf, package = "nlme")
+
+df.language = bdf %>% 
+  clean_names() %>% 
+  filter(repeatgr != 2) %>% 
+  mutate(repeatgr = repeatgr %>% 
+           as.character() %>% 
+           as.numeric())
+
+rm(bdf)
+```
+
+Fit the model, and print out the results: 
+
+
+``` r
+fit =  glmer(repeatgr ~ 1 + ses + minority + (1 | school_nr),
+             data = df.language,
+             family = "binomial")
+
+fit %>%
+  summary()
+```
+
+```
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: repeatgr ~ 1 + ses + minority + (1 | school_nr)
+   Data: df.language
+
+     AIC      BIC   logLik deviance df.resid 
+  1659.1   1682.1   -825.6   1651.1     2279 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-0.9235 -0.4045 -0.3150 -0.2249  5.8372 
+
+Random effects:
+ Groups    Name        Variance Std.Dev.
+ school_nr (Intercept) 0.2489   0.4989  
+Number of obs: 2283, groups:  school_nr, 131
+
+Fixed effects:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -0.506280   0.197568  -2.563  0.01039 *  
+ses         -0.060086   0.007524  -7.986 1.39e-15 ***
+minorityY    0.673605   0.238655   2.823  0.00477 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+          (Intr) ses   
+ses       -0.898       
+minorityY -0.308  0.208
+```
+
+To visualize the results, we can use the `ggeffects` package. 
+
+
+``` r
+ggpredict(model = fit,
+          terms = c("ses [all]", "minority")) %>% 
+  plot()
+```
+
+```
+You are calculating adjusted predictions on the population-level (i.e.
+  `type = "fixed"`) for a *generalized* linear mixed model.
+  This may produce biased estimates due to Jensen's inequality. Consider
+  setting `bias_correction = TRUE` to correct for this bias.
+  See also the documentation of the `bias_correction` argument.
+```
+
+<img src="20-linear_mixed_effects_models4_files/figure-html/unnamed-chunk-47-1.png" width="672" />
+
+And for significance testing, we can use the the `joint_tests()` function from the "emmeans" package
+
+
+``` r
+glmer(formula = repeatgr ~ 1 + ses + minority + (1 | school_nr),
+      data = df.language,
+      family = "binomial") %>% 
+  joint_tests()
+```
+
+```
+ model term df1 df2 F.ratio  Chisq p.value
+ ses          1 Inf  63.784 63.784  <.0001
+ minority     1 Inf   7.967  7.967  0.0048
+```
+
+The results show that there was both a significant effect of ses and of minority. 
+
+Note: This post [here](https://stats.stackexchange.com/questions/400101/using-emmeans-with-clmm-to-look-at-joint-effects) says a little more about the relationship of the F.ratio in the `joint_tests()` function, and what a likelihood ratio test yields. In short, it's roughly the same thing. 
+
+If you'd like to compute the likelihood ratio test, a convenient way of doing so is by using the `mixed()` function from the "afex" package.
+
+
+``` r
+mixed(formula = repeatgr ~ 1 + ses + minority + (1 | school_nr),
+      family = "binomial",
+      data = df.language,
+      method = "LRT")
+```
+
+```
+Contrasts set to contr.sum for the following variables: minority, school_nr
+```
+
+```
+Numerical variables NOT centered on 0: ses
+If in interactions, interpretation of lower order (e.g., main) effects difficult.
+```
+
+```
+Mixed Model Anova Table (Type 3 tests, LRT-method)
+
+Model: repeatgr ~ 1 + ses + minority + (1 | school_nr)
+Data: df.language
+Df full model: 4
+    Effect df     Chisq p.value
+1      ses  1 75.39 ***   <.001
+2 minority  1   7.53 **    .006
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
+```
+And we can compare that the model comparison approach gives us the same result: 
+
+
+``` r
+fit_a =  glmer(repeatgr ~ 1 + ses + minority + (1 | school_nr),
+             data = df.language,
+             family = "binomial")
+
+# dropping ses as a predictor
+fit_c =  glmer(repeatgr ~ 1 +  minority + (1 | school_nr),
+             data = df.language,
+             family = "binomial")
+
+anova(fit_a, fit_c, test = "LRT")
+```
+
+```
+Data: df.language
+Models:
+fit_c: repeatgr ~ 1 + minority + (1 | school_nr)
+fit_a: repeatgr ~ 1 + ses + minority + (1 | school_nr)
+      npar    AIC    BIC  logLik deviance  Chisq Df Pr(>Chisq)    
+fit_c    3 1732.5 1749.7 -863.27   1726.5                         
+fit_a    4 1659.1 1682.1 -825.57   1651.1 75.395  1  < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
 
 ## Session info
 
@@ -1402,9 +1567,9 @@ sessionInfo()
 ```
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1423,43 +1588,43 @@ other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
  [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
  [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
-[10] tidyverse_2.0.0     emmeans_1.10.3      ggeffects_1.7.0    
-[13] boot_1.3-30         modelr_0.1.11       datarium_0.1.0     
-[16] car_3.1-2           carData_3.0-5       afex_1.3-1         
-[19] lme4_1.1-35.5       Matrix_1.7-0        broom.mixed_0.2.9.5
-[22] janitor_2.2.0       kableExtra_1.4.0    knitr_1.48         
+[10] tidyverse_2.0.0     emmeans_1.10.6      ggeffects_2.0.0    
+[13] boot_1.3-31         modelr_0.1.11       datarium_0.1.0     
+[16] car_3.1-3           carData_3.0-5       afex_1.4-1         
+[19] lme4_1.1-35.5       Matrix_1.7-1        broom.mixed_0.2.9.6
+[22] janitor_2.2.1       kableExtra_1.4.0    knitr_1.49         
 
 loaded via a namespace (and not attached):
  [1] gridExtra_2.3       rlang_1.1.4         magrittr_2.0.3     
- [4] snakecase_0.11.1    furrr_0.3.1         compiler_4.4.1     
+ [4] snakecase_0.11.1    furrr_0.3.1         compiler_4.4.2     
  [7] mgcv_1.9-1          systemfonts_1.1.0   vctrs_0.6.5        
 [10] reshape2_1.4.4      pkgconfig_2.0.3     crayon_1.5.3       
 [13] fastmap_1.2.0       backports_1.5.0     labeling_0.4.3     
-[16] utf8_1.2.4          rmarkdown_2.27      tzdb_0.4.0         
+[16] utf8_1.2.4          rmarkdown_2.29      tzdb_0.4.0         
 [19] haven_2.5.4         nloptr_2.1.1        bit_4.0.5          
-[22] xfun_0.45           cachem_1.1.0        jsonlite_1.8.8     
-[25] highr_0.11          broom_1.0.6         parallel_4.4.1     
-[28] cluster_2.1.6       R6_2.5.1            RColorBrewer_1.1-3 
-[31] bslib_0.7.0         stringi_1.8.4       parallelly_1.37.1  
-[34] rpart_4.1.23        jquerylib_0.1.4     numDeriv_2016.8-1.1
-[37] estimability_1.5.1  Rcpp_1.0.13         bookdown_0.40      
-[40] base64enc_0.1-3     splines_4.4.1       nnet_7.3-19        
-[43] timechange_0.3.0    tidyselect_1.2.1    rstudioapi_0.16.0  
-[46] abind_1.4-5         yaml_2.3.9          sjlabelled_1.2.0   
-[49] codetools_0.2-20    listenv_0.9.1       lattice_0.22-6     
-[52] lmerTest_3.1-3      plyr_1.8.9          withr_3.0.0        
-[55] coda_0.19-4.1       evaluate_0.24.0     foreign_0.8-86     
-[58] future_1.33.2       xml2_1.3.6          pillar_1.9.0       
-[61] checkmate_2.3.1     insight_0.20.3      generics_0.1.3     
-[64] vroom_1.6.5         hms_1.1.3           munsell_0.5.1      
-[67] scales_1.3.0        minqa_1.2.7         globals_0.16.3     
-[70] xtable_1.8-4        glue_1.7.0          Hmisc_5.1-3        
-[73] tools_4.4.1         data.table_1.15.4   mvtnorm_1.2-5      
-[76] grid_4.4.1          datawizard_0.12.2   colorspace_2.1-0   
-[79] nlme_3.1-164        htmlTable_2.4.2     Formula_1.2-5      
-[82] cli_3.6.3           fansi_1.0.6         viridisLite_0.4.2  
-[85] svglite_2.1.3       gtable_0.3.5        sass_0.4.9         
-[88] digest_0.6.36       pbkrtest_0.5.3      farver_2.1.2       
-[91] htmlwidgets_1.6.4   htmltools_0.5.8.1   lifecycle_1.0.4    
-[94] bit64_4.0.5         MASS_7.3-61        
+[22] xfun_0.49           cachem_1.1.0        jsonlite_1.8.8     
+[25] broom_1.0.7         parallel_4.4.2      cluster_2.1.6      
+[28] R6_2.5.1            RColorBrewer_1.1-3  bslib_0.7.0        
+[31] stringi_1.8.4       parallelly_1.37.1   rpart_4.1.23       
+[34] jquerylib_0.1.4     numDeriv_2016.8-1.1 estimability_1.5.1 
+[37] Rcpp_1.0.13         bookdown_0.42       base64enc_0.1-3    
+[40] splines_4.4.2       nnet_7.3-19         timechange_0.3.0   
+[43] tidyselect_1.2.1    rstudioapi_0.16.0   abind_1.4-5        
+[46] yaml_2.3.10         sjlabelled_1.2.0    codetools_0.2-20   
+[49] listenv_0.9.1       lattice_0.22-6      lmerTest_3.1-3     
+[52] plyr_1.8.9          withr_3.0.2         coda_0.19-4.1      
+[55] evaluate_0.24.0     foreign_0.8-87      future_1.33.2      
+[58] xml2_1.3.6          pillar_1.9.0        checkmate_2.3.1    
+[61] insight_1.0.0       generics_0.1.3      vroom_1.6.5        
+[64] hms_1.1.3           munsell_0.5.1       scales_1.3.0       
+[67] minqa_1.2.7         globals_0.16.3      xtable_1.8-4       
+[70] glue_1.8.0          Hmisc_5.2-1         tools_4.4.2        
+[73] data.table_1.15.4   mvtnorm_1.2-5       grid_4.4.2         
+[76] datawizard_0.13.0   colorspace_2.1-0    nlme_3.1-166       
+[79] htmlTable_2.4.2     Formula_1.2-5       cli_3.6.3          
+[82] fansi_1.0.6         viridisLite_0.4.2   svglite_2.1.3      
+[85] gtable_0.3.5        sass_0.4.9          digest_0.6.36      
+[88] pbkrtest_0.5.3      farver_2.1.2        htmlwidgets_1.6.4  
+[91] htmltools_0.5.8.1   lifecycle_1.0.4     bit64_4.0.5        
+[94] MASS_7.3-64        
 ```

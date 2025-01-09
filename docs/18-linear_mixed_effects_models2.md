@@ -642,18 +642,16 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 ``` r
-# library("ggeffects")
-
 # using the plot() function
 ggpredict(model = fit.random_intercept_slope,
           terms = "days",
-          type = "fe") %>% 
+          type = "fixed") %>% 
   plot()
 
 # using our own ggplot magic
 df.plot = ggpredict(model = fit.random_intercept_slope,
                     terms = "days",
-                    type = "fe")
+                    type = "fixed")
 
 ggplot(data = df.plot,
        mapping = aes(x = x, 
@@ -661,14 +659,7 @@ ggplot(data = df.plot,
                      ymin = conf.low,
                      ymax = conf.high)) + 
   geom_ribbon(fill = "lightblue") +
-  geom_line(size = 1)
-```
-
-```
-Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.
-This warning is displayed once every 8 hours.
-Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+  geom_line(linewidth = 1)
 ```
 
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-27-1.png" width="672" /><img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-27-2.png" width="672" />
@@ -1178,6 +1169,13 @@ fit.lmer %>%
   theme(legend.position = "none")
 ```
 
+```
+Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+```
+
 <img src="18-linear_mixed_effects_models2_files/figure-html/unnamed-chunk-47-1.png" width="672" />
 
 Lesson learned: taking dependence into account is critical for drawing correct inferences! 
@@ -1201,9 +1199,9 @@ sessionInfo()
 ```
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1222,30 +1220,30 @@ other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
  [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
  [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
-[10] tidyverse_2.0.0     see_0.8.5           performance_0.12.2 
-[13] lme4_1.1-35.5       Matrix_1.7-0        emmeans_1.10.3     
-[16] ggeffects_1.7.0     broom.mixed_0.2.9.5 janitor_2.2.0      
-[19] kableExtra_1.4.0    knitr_1.48         
+[10] tidyverse_2.0.0     see_0.9.0           performance_0.12.4 
+[13] lme4_1.1-35.5       Matrix_1.7-1        emmeans_1.10.6     
+[16] ggeffects_2.0.0     broom.mixed_0.2.9.6 janitor_2.2.1      
+[19] kableExtra_1.4.0    knitr_1.49         
 
 loaded via a namespace (and not attached):
  [1] sjlabelled_1.2.0   tidyselect_1.2.1   viridisLite_0.4.2  farver_2.1.2      
- [5] fastmap_1.2.0      bayestestR_0.14.0  digest_0.6.36      estimability_1.5.1
- [9] timechange_0.3.0   lifecycle_1.0.4    magrittr_2.0.3     compiler_4.4.1    
-[13] rlang_1.1.4        sass_0.4.9         tools_4.4.1        utf8_1.2.4        
-[17] yaml_2.3.9         labeling_0.4.3     xml2_1.3.6         withr_3.0.0       
-[21] datawizard_0.12.2  grid_4.4.1         fansi_1.0.6        xtable_1.8-4      
+ [5] fastmap_1.2.0      bayestestR_0.15.0  digest_0.6.36      estimability_1.5.1
+ [9] timechange_0.3.0   lifecycle_1.0.4    magrittr_2.0.3     compiler_4.4.2    
+[13] rlang_1.1.4        sass_0.4.9         tools_4.4.2        utf8_1.2.4        
+[17] yaml_2.3.10        labeling_0.4.3     xml2_1.3.6         withr_3.0.2       
+[21] datawizard_0.13.0  grid_4.4.2         fansi_1.0.6        xtable_1.8-4      
 [25] colorspace_2.1-0   future_1.33.2      globals_0.16.3     scales_1.3.0      
-[29] MASS_7.3-61        insight_0.20.3     cli_3.6.3          mvtnorm_1.2-5     
-[33] crayon_1.5.3       rmarkdown_2.27     generics_0.1.3     rstudioapi_0.16.0 
-[37] tzdb_0.4.0         minqa_1.2.7        cachem_1.1.0       splines_4.4.1     
-[41] parallel_4.4.1     vctrs_0.6.5        boot_1.3-30        jsonlite_1.8.8    
-[45] bookdown_0.40      patchwork_1.2.0    hms_1.1.3          ggrepel_0.9.5     
+[29] MASS_7.3-64        insight_1.0.0      cli_3.6.3          mvtnorm_1.2-5     
+[33] crayon_1.5.3       rmarkdown_2.29     generics_0.1.3     rstudioapi_0.16.0 
+[37] tzdb_0.4.0         minqa_1.2.7        cachem_1.1.0       splines_4.4.2     
+[41] parallel_4.4.2     vctrs_0.6.5        boot_1.3-31        jsonlite_1.8.8    
+[45] bookdown_0.42      patchwork_1.3.0    hms_1.1.3          ggrepel_0.9.6     
 [49] pbkrtest_0.5.3     listenv_0.9.1      systemfonts_1.1.0  jquerylib_0.1.4   
-[53] glue_1.7.0         parallelly_1.37.1  nloptr_2.1.1       codetools_0.2-20  
+[53] glue_1.8.0         parallelly_1.37.1  nloptr_2.1.1       codetools_0.2-20  
 [57] stringi_1.8.4      gtable_0.3.5       munsell_0.5.1      furrr_0.3.1       
 [61] pillar_1.9.0       htmltools_0.5.8.1  R6_2.5.1           evaluate_0.24.0   
-[65] lattice_0.22-6     haven_2.5.4        highr_0.11         backports_1.5.0   
-[69] broom_1.0.6        snakecase_0.11.1   bslib_0.7.0        Rcpp_1.0.13       
-[73] svglite_2.1.3      coda_0.19-4.1      nlme_3.1-164       mgcv_1.9-1        
-[77] xfun_0.45          pkgconfig_2.0.3   
+[65] lattice_0.22-6     haven_2.5.4        backports_1.5.0    broom_1.0.7       
+[69] snakecase_0.11.1   bslib_0.7.0        Rcpp_1.0.13        svglite_2.1.3     
+[73] coda_0.19-4.1      nlme_3.1-166       mgcv_1.9-1         xfun_0.49         
+[77] pkgconfig_2.0.3   
 ```

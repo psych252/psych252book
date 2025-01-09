@@ -98,8 +98,8 @@ I've generated the figures below using the `DiagrammeR` package. It's a powerful
 <div class="figure">
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-ea75584e66006494a593" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-ea75584e66006494a593">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-5e693f837d956a30a32d" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-5e693f837d956a30a32d">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {11 12 13}\n  2 -> {21 22 23}\n  3 -> {31 32 33}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  11 [label = \"1\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  22 [label = \"2\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  33 [label = \"3\"]\n    \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 <p class="caption">(\#fig:unnamed-chunk-4)Drawing two marbles out of an urn __with__ replacement.</p>
@@ -108,8 +108,8 @@ I've generated the figures below using the `DiagrammeR` package. It's a powerful
 <div class="figure">
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-9ee09ed279de759bb43a" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-9ee09ed279de759bb43a">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-f343e7ed6883bc8c319b" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f343e7ed6883bc8c319b">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 24,\n    fillcolor = lightblue\n    ]\n  \n  # edges between nodes\n  edge [color = black]\n  0 -> {1 2 3}\n  1 -> {12 13}\n  2 -> {21 23}\n  3 -> {31 32}\n  \n  # labels for each node\n  0 [fillcolor = \"black\", width = 0.1]\n  1 [label = \"1\"]\n  2 [label = \"2\"]\n  3 [label = \"3\"]\n  12 [label = \"2\"]\n  13 [label = \"3\"]\n  21 [label = \"1\"]\n  23 [label = \"3\"]\n  31 [label = \"1\"]\n  32 [label = \"2\"]\n  \n  # direction in which arrows are drawn (from left to right)\n  rankdir = LR\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 <p class="caption">(\#fig:unnamed-chunk-5)Drawing two marbles out of an urn __without__ replacement.</p>
@@ -297,8 +297,8 @@ df.suspects %>%
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-9a10e596e9b6eae4e833" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-9a10e596e9b6eae4e833">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-9c0bfedb2f3ea1905b2f" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-9c0bfedb2f3ea1905b2f">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 9,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"p(female)\"]\n  1 -> 3 [label = \"p(male)\"]\n  2 -> 4 [label = \"p(revolver | female)\"] \n  3 -> 4 [label = \"p(revolver | male)\"]\n  \n  \n\n  # labels for each node\n  1 [label = \"Gender?\"]\n  2 [label = \"If female\nuse revolver?\"]\n  3 [label = \"If male\nuse revolver?\"]\n  4 [label = \"Revolver\nused?\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## Probability operations
@@ -345,8 +345,8 @@ df.cards %>%
 
 
 ```{=html}
-<div class="grViz html-widget html-fill-item" id="htmlwidget-8767f5d653868adcb56c" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-8767f5d653868adcb56c">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-00d3798c08f9ecc067d7" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-00d3798c08f9ecc067d7">{"x":{"diagram":"\ndigraph dot{\n  \n  # general settings for all nodes\n  node [\n    shape = circle,\n    style = filled,\n    color = black,\n    label = \"\"\n    fontname = \"Helvetica\",\n    fontsize = 10,\n    fillcolor = lightblue,\n    fixedsize=true,\n    width = 0.8\n    ]\n  \n  # edges between nodes\n  edge [color = black,\n        fontname = \"Helvetica\",\n        fontsize = 10]\n  1 -> 2 [label = \"ill\"]\n  1 -> 3 [label = \"healthy\"]\n  2 -> 4 [label = \"test +\"] \n  2 -> 5 [label = \"test -\"]\n  3 -> 6 [label = \"test +\"]\n  3 -> 7 [label = \"test -\"]\n  \n\n  # labels for each node\n  1 [label = \"10000\npeople\"]\n  2 [label = \"100\"]\n  3 [label = \"9900\"]\n  4 [label = \"95\"]\n  5 [label = \"5\"]\n  6 [label = \"495\"]\n  7 [label = \"9405\"]\n  \n  rankdir=\"LR\"\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ```
 
 ## Getting Bayes right matters
@@ -496,9 +496,9 @@ Information about this R session including which version of R was used, and what
 
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -517,20 +517,20 @@ other attached packages:
  [1] lubridate_1.9.3    forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4       
  [5] purrr_1.0.2        readr_2.1.5        tidyr_1.3.1        tibble_3.2.1      
  [9] ggplot2_3.5.1      tidyverse_2.0.0    DiagrammeR_1.0.11  arrangements_1.1.9
-[13] kableExtra_1.4.0   knitr_1.48        
+[13] kableExtra_1.4.0   knitr_1.49        
 
 loaded via a namespace (and not attached):
  [1] gmp_0.7-4          sass_0.4.9         utf8_1.2.4         generics_0.1.3    
  [5] xml2_1.3.6         stringi_1.8.4      hms_1.1.3          digest_0.6.36     
- [9] magrittr_2.0.3     timechange_0.3.0   evaluate_0.24.0    grid_4.4.1        
-[13] RColorBrewer_1.1-3 bookdown_0.40      fastmap_1.2.0      jsonlite_1.8.8    
+ [9] magrittr_2.0.3     timechange_0.3.0   evaluate_0.24.0    grid_4.4.2        
+[13] RColorBrewer_1.1-3 bookdown_0.42      fastmap_1.2.0      jsonlite_1.8.8    
 [17] fansi_1.0.6        viridisLite_0.4.2  scales_1.3.0       jquerylib_0.1.4   
 [21] cli_3.6.3          crayon_1.5.3       rlang_1.1.4        visNetwork_2.1.2  
-[25] munsell_0.5.1      withr_3.0.0        cachem_1.1.0       yaml_2.3.9        
-[29] tools_4.4.1        tzdb_0.4.0         colorspace_2.1-0   vctrs_0.6.5       
+[25] munsell_0.5.1      withr_3.0.2        cachem_1.1.0       yaml_2.3.10       
+[29] tools_4.4.2        tzdb_0.4.0         colorspace_2.1-0   vctrs_0.6.5       
 [33] R6_2.5.1           lifecycle_1.0.4    htmlwidgets_1.6.4  pkgconfig_2.0.3   
-[37] bslib_0.7.0        pillar_1.9.0       gtable_0.3.5       glue_1.7.0        
-[41] systemfonts_1.1.0  highr_0.11         xfun_0.45          tidyselect_1.2.1  
-[45] rstudioapi_0.16.0  farver_2.1.2       htmltools_0.5.8.1  labeling_0.4.3    
-[49] rmarkdown_2.27     svglite_2.1.3      compiler_4.4.1    
+[37] bslib_0.7.0        pillar_1.9.0       gtable_0.3.5       glue_1.8.0        
+[41] systemfonts_1.1.0  xfun_0.49          tidyselect_1.2.1   rstudioapi_0.16.0 
+[45] farver_2.1.2       htmltools_0.5.8.1  labeling_0.4.3     rmarkdown_2.29    
+[49] svglite_2.1.3      compiler_4.4.2    
 ```

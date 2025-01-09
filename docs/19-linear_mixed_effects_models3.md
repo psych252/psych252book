@@ -259,9 +259,9 @@ sessionInfo()
 ```
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -280,36 +280,37 @@ other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
  [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
  [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
-[10] tidyverse_2.0.0     emmeans_1.10.3      ggeffects_1.7.0    
-[13] boot_1.3-30         modelr_0.1.11       datarium_0.1.0     
-[16] car_3.1-2           carData_3.0-5       afex_1.3-1         
-[19] lme4_1.1-35.5       Matrix_1.7-0        patchwork_1.2.0    
-[22] broom.mixed_0.2.9.5 janitor_2.2.0       kableExtra_1.4.0   
-[25] knitr_1.48         
+[10] tidyverse_2.0.0     emmeans_1.10.6      ggeffects_2.0.0    
+[13] boot_1.3-31         modelr_0.1.11       datarium_0.1.0     
+[16] car_3.1-3           carData_3.0-5       afex_1.4-1         
+[19] lme4_1.1-35.5       Matrix_1.7-1        patchwork_1.3.0    
+[22] broom.mixed_0.2.9.6 janitor_2.2.1       kableExtra_1.4.0   
+[25] knitr_1.49         
 
 loaded via a namespace (and not attached):
- [1] tidyselect_1.2.1    viridisLite_0.4.2   fastmap_1.2.0      
- [4] digest_0.6.36       timechange_0.3.0    estimability_1.5.1 
- [7] lifecycle_1.0.4     magrittr_2.0.3      compiler_4.4.1     
-[10] rlang_1.1.4         sass_0.4.9          tools_4.4.1        
-[13] utf8_1.2.4          yaml_2.3.9          plyr_1.8.9         
-[16] xml2_1.3.6          abind_1.4-5         withr_3.0.0        
-[19] numDeriv_2016.8-1.1 grid_4.4.1          fansi_1.0.6        
-[22] xtable_1.8-4        colorspace_2.1-0    future_1.33.2      
-[25] globals_0.16.3      scales_1.3.0        MASS_7.3-61        
-[28] insight_0.20.3      cli_3.6.3           mvtnorm_1.2-5      
-[31] rmarkdown_2.27      generics_0.1.3      rstudioapi_0.16.0  
-[34] tzdb_0.4.0          reshape2_1.4.4      minqa_1.2.7        
-[37] cachem_1.1.0        splines_4.4.1       parallel_4.4.1     
-[40] vctrs_0.6.5         jsonlite_1.8.8      bookdown_0.40      
-[43] hms_1.1.3           pbkrtest_0.5.3      listenv_0.9.1      
-[46] systemfonts_1.1.0   jquerylib_0.1.4     glue_1.7.0         
-[49] parallelly_1.37.1   nloptr_2.1.1        codetools_0.2-20   
-[52] stringi_1.8.4       gtable_0.3.5        lmerTest_3.1-3     
-[55] munsell_0.5.1       furrr_0.3.1         pillar_1.9.0       
-[58] htmltools_0.5.8.1   R6_2.5.1            evaluate_0.24.0    
-[61] lattice_0.22-6      backports_1.5.0     broom_1.0.6        
-[64] snakecase_0.11.1    bslib_0.7.0         Rcpp_1.0.13        
-[67] svglite_2.1.3       coda_0.19-4.1       nlme_3.1-164       
-[70] xfun_0.45           pkgconfig_2.0.3    
+ [1] tidyselect_1.2.1    viridisLite_0.4.2   farver_2.1.2       
+ [4] fastmap_1.2.0       digest_0.6.36       timechange_0.3.0   
+ [7] estimability_1.5.1  lifecycle_1.0.4     magrittr_2.0.3     
+[10] compiler_4.4.2      rlang_1.1.4         sass_0.4.9         
+[13] tools_4.4.2         utf8_1.2.4          yaml_2.3.10        
+[16] plyr_1.8.9          xml2_1.3.6          abind_1.4-5        
+[19] withr_3.0.2         numDeriv_2016.8-1.1 grid_4.4.2         
+[22] fansi_1.0.6         xtable_1.8-4        colorspace_2.1-0   
+[25] future_1.33.2       globals_0.16.3      scales_1.3.0       
+[28] MASS_7.3-64         insight_1.0.0       cli_3.6.3          
+[31] mvtnorm_1.2-5       rmarkdown_2.29      generics_0.1.3     
+[34] rstudioapi_0.16.0   tzdb_0.4.0          reshape2_1.4.4     
+[37] minqa_1.2.7         cachem_1.1.0        splines_4.4.2      
+[40] parallel_4.4.2      vctrs_0.6.5         jsonlite_1.8.8     
+[43] bookdown_0.42       hms_1.1.3           pbkrtest_0.5.3     
+[46] Formula_1.2-5       listenv_0.9.1       systemfonts_1.1.0  
+[49] jquerylib_0.1.4     glue_1.8.0          parallelly_1.37.1  
+[52] nloptr_2.1.1        codetools_0.2-20    stringi_1.8.4      
+[55] gtable_0.3.5        lmerTest_3.1-3      munsell_0.5.1      
+[58] furrr_0.3.1         pillar_1.9.0        htmltools_0.5.8.1  
+[61] R6_2.5.1            evaluate_0.24.0     lattice_0.22-6     
+[64] backports_1.5.0     broom_1.0.7         snakecase_0.11.1   
+[67] bslib_0.7.0         Rcpp_1.0.13         svglite_2.1.3      
+[70] coda_0.19-4.1       nlme_3.1-166        xfun_0.49          
+[73] pkgconfig_2.0.3    
 ```

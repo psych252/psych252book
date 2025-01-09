@@ -427,9 +427,9 @@ sessionInfo()
 ```
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -448,26 +448,26 @@ other attached packages:
  [1] lubridate_1.9.3     forcats_1.0.0       stringr_1.5.1      
  [4] dplyr_1.1.4         purrr_1.0.2         readr_2.1.5        
  [7] tidyr_1.3.1         tibble_3.2.1        ggplot2_3.5.1      
-[10] tidyverse_2.0.0     lme4_1.1-35.5       Matrix_1.7-0       
-[13] patchwork_1.2.0     broom.mixed_0.2.9.5 janitor_2.2.0      
-[16] kableExtra_1.4.0    knitr_1.48         
+[10] tidyverse_2.0.0     lme4_1.1-35.5       Matrix_1.7-1       
+[13] patchwork_1.3.0     broom.mixed_0.2.9.6 janitor_2.2.1      
+[16] kableExtra_1.4.0    knitr_1.49         
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.5       xfun_0.45          bslib_0.7.0        lattice_0.22-6    
- [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.4.1        generics_0.1.3    
- [9] parallel_4.4.1     fansi_1.0.6        highr_0.11         pkgconfig_2.0.3   
-[13] RColorBrewer_1.1-3 lifecycle_1.0.4    farver_2.1.2       compiler_4.4.1    
-[17] munsell_0.5.1      codetools_0.2-20   snakecase_0.11.1   htmltools_0.5.8.1 
-[21] sass_0.4.9         yaml_2.3.9         nloptr_2.1.1       pillar_1.9.0      
-[25] furrr_0.3.1        jquerylib_0.1.4    MASS_7.3-61        cachem_1.1.0      
-[29] boot_1.3-30        nlme_3.1-164       parallelly_1.37.1  tidyselect_1.2.1  
-[33] digest_0.6.36      stringi_1.8.4      future_1.33.2      bookdown_0.40     
-[37] listenv_0.9.1      labeling_0.4.3     splines_4.4.1      fastmap_1.2.0     
-[41] grid_4.4.1         colorspace_2.1-0   cli_3.6.3          magrittr_2.0.3    
-[45] utf8_1.2.4         broom_1.0.6        withr_3.0.0        scales_1.3.0      
-[49] backports_1.5.0    timechange_0.3.0   rmarkdown_2.27     globals_0.16.3    
-[53] hms_1.1.3          evaluate_0.24.0    viridisLite_0.4.2  mgcv_1.9-1        
-[57] rlang_1.1.4        Rcpp_1.0.13        glue_1.7.0         xml2_1.3.6        
-[61] minqa_1.2.7        svglite_2.1.3      rstudioapi_0.16.0  jsonlite_1.8.8    
-[65] R6_2.5.1           systemfonts_1.1.0 
+ [1] gtable_0.3.5       xfun_0.49          bslib_0.7.0        lattice_0.22-6    
+ [5] tzdb_0.4.0         vctrs_0.6.5        tools_4.4.2        generics_0.1.3    
+ [9] parallel_4.4.2     fansi_1.0.6        pkgconfig_2.0.3    RColorBrewer_1.1-3
+[13] lifecycle_1.0.4    compiler_4.4.2     farver_2.1.2       munsell_0.5.1     
+[17] codetools_0.2-20   snakecase_0.11.1   htmltools_0.5.8.1  sass_0.4.9        
+[21] yaml_2.3.10        nloptr_2.1.1       pillar_1.9.0       furrr_0.3.1       
+[25] jquerylib_0.1.4    MASS_7.3-64        cachem_1.1.0       boot_1.3-31       
+[29] nlme_3.1-166       parallelly_1.37.1  tidyselect_1.2.1   digest_0.6.36     
+[33] stringi_1.8.4      future_1.33.2      bookdown_0.42      listenv_0.9.1     
+[37] labeling_0.4.3     splines_4.4.2      fastmap_1.2.0      grid_4.4.2        
+[41] colorspace_2.1-0   cli_3.6.3          magrittr_2.0.3     utf8_1.2.4        
+[45] broom_1.0.7        withr_3.0.2        scales_1.3.0       backports_1.5.0   
+[49] timechange_0.3.0   rmarkdown_2.29     globals_0.16.3     hms_1.1.3         
+[53] evaluate_0.24.0    viridisLite_0.4.2  mgcv_1.9-1         rlang_1.1.4       
+[57] Rcpp_1.0.13        glue_1.8.0         xml2_1.3.6         minqa_1.2.7       
+[61] svglite_2.1.3      rstudioapi_0.16.0  jsonlite_1.8.8     R6_2.5.1          
+[65] systemfonts_1.1.0 
 ```

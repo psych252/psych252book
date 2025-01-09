@@ -459,18 +459,16 @@ anova(fit1, fit2)
 #### Plotting marginal effects
 
 ```{r}
-# library("ggeffects")
-
 # using the plot() function
 ggpredict(model = fit.random_intercept_slope,
           terms = "days",
-          type = "fe") %>% 
+          type = "fixed") %>% 
   plot()
 
 # using our own ggplot magic
 df.plot = ggpredict(model = fit.random_intercept_slope,
                     terms = "days",
-                    type = "fe")
+                    type = "fixed")
 
 ggplot(data = df.plot,
        mapping = aes(x = x, 
@@ -478,7 +476,7 @@ ggplot(data = df.plot,
                      ymin = conf.low,
                      ymax = conf.high)) + 
   geom_ribbon(fill = "lightblue") +
-  geom_line(size = 1)
+  geom_line(linewidth = 1)
 ```
 
 #### Checking model performance

@@ -902,7 +902,8 @@ fit.mortality2 %>%
 
 ```
 ## Model has log-transformed response. Back-transforming predictions to
-##   original response scale. Standard errors are still on the log-scale.
+##   original response scale. Standard errors are still on the transformed
+##   scale.
 ```
 
 ```
@@ -934,7 +935,8 @@ fit.mortality2 %>%
 
 ```
 ## Model has log-transformed response. Back-transforming predictions to
-##   original response scale. Standard errors are still on the log-scale.
+##   original response scale. Standard errors are still on the transformed
+##   scale.
 ```
 
 <img src="25-assumptions_files/figure-html/unnamed-chunk-27-1.png" width="672" />
@@ -1246,9 +1248,9 @@ sessionInfo()
 ```
 
 ```
-## R version 4.4.1 (2024-06-14)
+## R version 4.4.2 (2024-10-31)
 ## Platform: aarch64-apple-darwin20
-## Running under: macOS Sonoma 14.6
+## Running under: macOS Sequoia 15.2
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1266,47 +1268,47 @@ sessionInfo()
 ## other attached packages:
 ##  [1] lubridate_1.9.3  forcats_1.0.0    stringr_1.5.1    dplyr_1.1.4     
 ##  [5] purrr_1.0.2      readr_2.1.5      tidyr_1.3.1      tibble_3.2.1    
-##  [9] tidyverse_2.0.0  ggrepel_0.9.5    ggplot2_3.5.1    xtable_1.8-4    
-## [13] sjPlot_2.8.16    stargazer_5.2.3  ggeffects_1.7.0  patchwork_1.2.0 
-## [17] janitor_2.2.0    broom_1.0.6      car_3.1-2        carData_3.0-5   
-## [21] brms_2.21.0      Rcpp_1.0.13      lme4_1.1-35.5    Matrix_1.7-0    
-## [25] tidybayes_3.0.6  kableExtra_1.4.0 knitr_1.48      
+##  [9] tidyverse_2.0.0  ggrepel_0.9.6    ggplot2_3.5.1    xtable_1.8-4    
+## [13] sjPlot_2.8.17    stargazer_5.2.3  ggeffects_2.0.0  patchwork_1.3.0 
+## [17] janitor_2.2.1    broom_1.0.7      car_3.1-3        carData_3.0-5   
+## [21] brms_2.22.0      Rcpp_1.0.13      lme4_1.1-35.5    Matrix_1.7-1    
+## [25] tidybayes_3.0.7  kableExtra_1.4.0 knitr_1.49      
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] tensorA_0.36.2.1     rstudioapi_0.16.0    jsonlite_1.8.8      
-##   [4] datawizard_0.12.2    magrittr_2.0.3       estimability_1.5.1  
-##   [7] farver_2.1.2         nloptr_2.1.1         rmarkdown_2.27      
+##   [4] datawizard_0.13.0    magrittr_2.0.3       estimability_1.5.1  
+##   [7] farver_2.1.2         nloptr_2.1.1         rmarkdown_2.29      
 ##  [10] vctrs_0.6.5          minqa_1.2.7          base64enc_0.1-3     
 ##  [13] htmltools_0.5.8.1    distributional_0.4.0 curl_5.2.1          
 ##  [16] haven_2.5.4          Formula_1.2-5        sjmisc_2.8.10       
 ##  [19] sass_0.4.9           StanHeaders_2.32.9   bslib_0.7.0         
-##  [22] htmlwidgets_1.6.4    emmeans_1.10.3       cachem_1.1.0        
+##  [22] htmlwidgets_1.6.4    emmeans_1.10.6       cachem_1.1.0        
 ##  [25] lifecycle_1.0.4      pkgconfig_2.0.3      sjlabelled_1.2.0    
 ##  [28] R6_2.5.1             fastmap_1.2.0        snakecase_0.11.1    
-##  [31] digest_0.6.36        colorspace_2.1-0     Hmisc_5.1-3         
+##  [31] digest_0.6.36        colorspace_2.1-0     Hmisc_5.2-1         
 ##  [34] labeling_0.4.3       fansi_1.0.6          timechange_0.3.0    
-##  [37] abind_1.4-5          mgcv_1.9-1           compiler_4.4.1      
-##  [40] bit64_4.0.5          withr_3.0.0          htmlTable_2.4.2     
-##  [43] backports_1.5.0      inline_0.3.19        performance_0.12.2  
-##  [46] QuickJSR_1.3.0       pkgbuild_1.4.4       highr_0.11          
-##  [49] MASS_7.3-61          sjstats_0.19.0       loo_2.8.0           
-##  [52] tools_4.4.1          foreign_0.8-86       nnet_7.3-19         
-##  [55] glue_1.7.0           nlme_3.1-164         grid_4.4.1          
-##  [58] checkmate_2.3.1      cluster_2.1.6        generics_0.1.3      
-##  [61] gtable_0.3.5         tzdb_0.4.0           data.table_1.15.4   
-##  [64] hms_1.1.3            xml2_1.3.6           utf8_1.2.4          
-##  [67] pillar_1.9.0         ggdist_3.3.2         vroom_1.6.5         
-##  [70] posterior_1.6.0      splines_4.4.1        lattice_0.22-6      
-##  [73] bit_4.0.5            tidyselect_1.2.1     arrayhelpers_1.1-0  
-##  [76] gridExtra_2.3        V8_5.0.0             bookdown_0.40       
-##  [79] svglite_2.1.3        stats4_4.4.1         xfun_0.45           
-##  [82] bridgesampling_1.1-2 matrixStats_1.3.0    rstan_2.32.6        
-##  [85] stringi_1.8.4        yaml_2.3.9           boot_1.3-30         
-##  [88] evaluate_0.24.0      codetools_0.2-20     cli_3.6.3           
-##  [91] rpart_4.1.23         RcppParallel_5.1.8   systemfonts_1.1.0   
-##  [94] munsell_0.5.1        jquerylib_0.1.4      coda_0.19-4.1       
-##  [97] svUnit_1.0.6         parallel_4.4.1       rstantools_2.4.0    
-## [100] bayesplot_1.11.1     Brobdingnag_1.2-9    viridisLite_0.4.2   
-## [103] mvtnorm_1.2-5        scales_1.3.0         insight_0.20.3      
-## [106] crayon_1.5.3         rlang_1.1.4
+##  [37] abind_1.4-5          mgcv_1.9-1           compiler_4.4.2      
+##  [40] bit64_4.0.5          withr_3.0.2          htmlTable_2.4.2     
+##  [43] backports_1.5.0      inline_0.3.19        performance_0.12.4  
+##  [46] QuickJSR_1.3.0       pkgbuild_1.4.4       MASS_7.3-64         
+##  [49] sjstats_0.19.0       loo_2.8.0            tools_4.4.2         
+##  [52] foreign_0.8-87       nnet_7.3-19          glue_1.8.0          
+##  [55] nlme_3.1-166         grid_4.4.2           checkmate_2.3.1     
+##  [58] cluster_2.1.6        generics_0.1.3       gtable_0.3.5        
+##  [61] tzdb_0.4.0           data.table_1.15.4    hms_1.1.3           
+##  [64] xml2_1.3.6           utf8_1.2.4           pillar_1.9.0        
+##  [67] ggdist_3.3.2         vroom_1.6.5          posterior_1.6.0     
+##  [70] splines_4.4.2        lattice_0.22-6       bit_4.0.5           
+##  [73] tidyselect_1.2.1     arrayhelpers_1.1-0   gridExtra_2.3       
+##  [76] V8_5.0.0             bookdown_0.42        svglite_2.1.3       
+##  [79] stats4_4.4.2         xfun_0.49            bridgesampling_1.1-2
+##  [82] matrixStats_1.3.0    rstan_2.32.6         stringi_1.8.4       
+##  [85] yaml_2.3.10          boot_1.3-31          evaluate_0.24.0     
+##  [88] codetools_0.2-20     cli_3.6.3            RcppParallel_5.1.8  
+##  [91] rpart_4.1.23         systemfonts_1.1.0    munsell_0.5.1       
+##  [94] jquerylib_0.1.4      coda_0.19-4.1        svUnit_1.0.6        
+##  [97] parallel_4.4.2       rstantools_2.4.0     bayesplot_1.11.1    
+## [100] Brobdingnag_1.2-9    viridisLite_0.4.2    mvtnorm_1.2-5       
+## [103] scales_1.3.0         insight_1.0.0        crayon_1.5.3        
+## [106] rlang_1.1.4
 ```

@@ -423,7 +423,7 @@ plot(m)
 Draw samples from the posterior distribution: 
 
 
-```r
+``` r
 set.seed(1)
 
 # sampling
@@ -602,9 +602,9 @@ sessionInfo()
 ```
 
 ```
-R version 4.4.1 (2024-06-14)
+R version 4.4.2 (2024-10-31)
 Platform: aarch64-apple-darwin20
-Running under: macOS Sonoma 14.6
+Running under: macOS Sequoia 15.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -622,35 +622,35 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3   forcats_1.0.0     stringr_1.5.1     dplyr_1.1.4      
  [5] purrr_1.0.2       readr_2.1.5       tidyr_1.3.1       tibble_3.2.1     
- [9] tidyverse_2.0.0   broom_1.0.6       extraDistr_1.10.0 gganimate_1.0.9  
-[13] ggplot2_3.5.1     greta_0.4.5       tidybayes_3.0.6   patchwork_1.2.0  
-[17] janitor_2.2.0     knitr_1.48       
+ [9] tidyverse_2.0.0   broom_1.0.7       extraDistr_1.10.0 gganimate_1.0.9  
+[13] ggplot2_3.5.1     greta_0.5.0       tidybayes_3.0.7   patchwork_1.3.0  
+[17] janitor_2.2.1     knitr_1.49       
 
 loaded via a namespace (and not attached):
  [1] svUnit_1.0.6         tidyselect_1.2.1     farver_2.1.2        
  [4] tensorflow_2.16.0    fastmap_1.2.0        tensorA_0.36.2.1    
  [7] tweenr_2.0.3         digest_0.6.36        timechange_0.3.0    
 [10] lifecycle_1.0.4      processx_3.8.4       magrittr_2.0.3      
-[13] posterior_1.6.0      compiler_4.4.1       rlang_1.1.4         
-[16] sass_0.4.9           progress_1.2.3       tools_4.4.1         
-[19] utf8_1.2.4           yaml_2.3.9           labeling_0.4.3      
+[13] posterior_1.6.0      compiler_4.4.2       rlang_1.1.4         
+[16] sass_0.4.9           progress_1.2.3       tools_4.4.2         
+[19] utf8_1.2.4           yaml_2.3.10          labeling_0.4.3      
 [22] prettyunits_1.2.0    reticulate_1.38.0    abind_1.4-5         
-[25] withr_3.0.0          grid_4.4.1           fansi_1.0.6         
+[25] withr_3.0.2          grid_4.4.2           fansi_1.0.6         
 [28] colorspace_2.1-0     future_1.33.2        globals_0.16.3      
-[31] scales_1.3.0         cli_3.6.3            rmarkdown_2.27      
+[31] scales_1.3.0         cli_3.6.3            rmarkdown_2.29      
 [34] crayon_1.5.3         generics_0.1.3       tzdb_0.4.0          
-[37] tfruns_1.5.3         cachem_1.1.0         splines_4.4.1       
-[40] parallel_4.4.1       base64enc_0.1-3      vctrs_0.6.5         
-[43] Matrix_1.7-0         jsonlite_1.8.8       bookdown_0.40       
+[37] tfruns_1.5.3         cachem_1.1.0         splines_4.4.2       
+[40] parallel_4.4.2       base64enc_0.1-3      vctrs_0.6.5         
+[43] Matrix_1.7-1         jsonlite_1.8.8       bookdown_0.42       
 [46] callr_3.7.6          hms_1.1.3            arrayhelpers_1.1-0  
 [49] listenv_0.9.1        ggdist_3.3.2         jquerylib_0.1.4     
-[52] glue_1.7.0           parallelly_1.37.1    codetools_0.2-20    
+[52] glue_1.8.0           parallelly_1.37.1    codetools_0.2-20    
 [55] ps_1.7.7             distributional_0.4.0 stringi_1.8.4       
 [58] gtable_0.3.5         munsell_0.5.1        pillar_1.9.0        
 [61] htmltools_0.5.8.1    R6_2.5.1             evaluate_0.24.0     
-[64] lattice_0.22-6       highr_0.11           png_0.1-8           
-[67] backports_1.5.0      snakecase_0.11.1     bslib_0.7.0         
-[70] Rcpp_1.0.13          nlme_3.1-164         coda_0.19-4.1       
-[73] checkmate_2.3.1      mgcv_1.9-1           whisker_0.4.1       
-[76] xfun_0.45            pkgconfig_2.0.3     
+[64] lattice_0.22-6       png_0.1-8            backports_1.5.0     
+[67] snakecase_0.11.1     bslib_0.7.0          Rcpp_1.0.13         
+[70] nlme_3.1-166         coda_0.19-4.1        checkmate_2.3.1     
+[73] mgcv_1.9-1           whisker_0.4.1        xfun_0.49           
+[76] pkgconfig_2.0.3     
 ```
