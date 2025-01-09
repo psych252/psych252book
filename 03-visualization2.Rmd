@@ -730,7 +730,8 @@ ggplot(data = gapminder,
                      y = lifeExp,
                      size = pop,
                      colour = country)) +
-  geom_point(alpha = 0.7, show.legend = FALSE) +
+  geom_point(alpha = 0.7,
+             show.legend = FALSE) +
   geom_text(data = gapminder %>% 
               filter(country %in% c("United States", "China", "India")), 
             mapping = aes(label = country),
@@ -747,9 +748,8 @@ ggplot(data = gapminder,
   labs(title = "Year: {frame_time}", x = "GDP per capita", y = "life expectancy") +
   transition_time(year) +
   ease_aes("linear")
-# anim_save(filename = "figures/life_gdp_animation.gif") # to save the animation
+  # anim_save(filename = "figures/life_gdp_animation.gif") # to save the animation
 ```
-
 This takes a while to run but it's worth the wait. The plot shows the relationship between GDP per capita (on the x-axis) and life expectancy (on the y-axis) changes across different years for the countries of different continents. The size of each dot represents the population size of the respective country. And different countries are shown in different colors. This animation is not super useful yet in that we don't know which continents and countries the different dots represent. I've added a label to the United States, China, and India. 
 
 Note how little is required to define the `gganimate`-specific information! The `{frame_time}` variable changes the title for each frame. The `transition_time()` variable is set to `year`, and the kind of transition is set as 'linear' in `ease_aes()`. I've saved the animation as a gif in the figures folder. 
